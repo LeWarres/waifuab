@@ -19,6 +19,7 @@ public class Weapon
     public float slow;       // seconds the hit enemy moves at half speed
     public bool pulse;       // no bullet: damages everything in range around the weapon
     public bool strike;      // no bullet: lightning falls straight on the target, instantly
+    public bool beam;        // no bullet: a weak instant ray that crosses every enemy on the line
 
     Material material;
     public Material Material => material ? material : material = TrainSim.Mat(color);
@@ -46,6 +47,7 @@ public class Weapon
         new Weapon { id = "flame", color = new Color(1f, 0.2f, 0f), range = 8f, interval = 0.1f, speed = 20f, damage = 0.5f, splash = 1.5f, firstBiome = 1 }, // Nieve
         new Weapon { id = "freeze", color = new Color(0.5f, 0.7f, 1f), range = 20f, interval = 0.4f, slow = 2f, firstBiome = 3 },                                  // Volcán
         new Weapon { id = "chain", color = Color.cyan, range = 20f, interval = 0.8f, speed = 80f, damage = 1.5f, chain = 3, firstBiome = 5 },                 // Planeta alienígena
+        new Weapon { id = "laser", color = new Color(1f, 0.1f, 0.4f), range = 30f, interval = 0.5f, damage = 0.8f, beam = true },                              // débil, pero atraviesa la línea entera
     };
 
     // The hero's own guns: cousins of the wagon weapons, but shorter-ranged and faster, so they reward flying close.

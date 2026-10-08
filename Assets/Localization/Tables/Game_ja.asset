@@ -59,8 +59,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996233
-    m_Localized: "{0}\u3078\u9032\u3080\n(\u96E3\u6613\u5EA6 +{1}\u3001\u30DE\u30CD\u30FC
-      x{2})"
+    m_Localized: "{0}\u3078\u9032\u3080\n(\u96E3\u6613\u5EA6 +{1}\u3001\u30DE\u30CD\u30FC x{2})"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996234
@@ -108,13 +107,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996245
-    m_Localized: "\u30B9\u30C6\u30A3\u30C3\u30AF\u307E\u305F\u306F\u5341\u5B57\u30AD\u30FC
-      \u5DE6 / \u53F3\uFF1A\u9078\u629E\u3092\u79FB\u52D5        \xD7\uFF1A\u6C7A\u5B9A"
+    m_Localized: "\u30B9\u30C6\u30A3\u30C3\u30AF\u307E\u305F\u306F\u5341\u5B57\u30AD\u30FC \u5DE6 / \u53F3\uFF1A\u9078\u629E\u3092\u79FB\u52D5        \xD7\uFF1A\u6C7A\u5B9A"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996246
-    m_Localized: "A / D \u307E\u305F\u306F\u77E2\u5370\u30AD\u30FC\uFF1A\u9078\u629E\u3092\u79FB\u52D5       
-      \u30B9\u30DA\u30FC\u30B9\uFF1A\u6C7A\u5B9A        \u30AF\u30EA\u30C3\u30AF\u3082\u53EF"
+    m_Localized: "A / D \u307E\u305F\u306F\u77E2\u5370\u30AD\u30FC\uFF1A\u9078\u629E\u3092\u79FB\u52D5        \u30B9\u30DA\u30FC\u30B9\uFF1A\u6C7A\u5B9A        \u30AF\u30EA\u30C3\u30AF\u3082\u53EF"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996247
@@ -138,14 +135,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996252
-    m_Localized: "\u5DE6\u30B9\u30C6\u30A3\u30C3\u30AF\uFF1A\u79FB\u52D5   L2\uFF1A\u30C0\u30C3\u30B7\u30E5  
-      R1 / L1 \u307E\u305F\u306F\u53F3\u30B9\u30C6\u30A3\u30C3\u30AF\uFF1A\u30BF\u30FC\u30B2\u30C3\u30C8  
-      \u5341\u5B57\u30AD\u30FC\uFF1A\u6B66\u5668"
+    m_Localized: "\u5DE6\u30B9\u30C6\u30A3\u30C3\u30AF\uFF1A\u79FB\u52D5   L2\uFF1A\u30C0\u30C3\u30B7\u30E5   R1 / L1 \u307E\u305F\u306F\u53F3\u30B9\u30C6\u30A3\u30C3\u30AF\uFF1A\u30BF\u30FC\u30B2\u30C3\u30C8   \u5341\u5B57\u30AD\u30FC\uFF1A\u6B66\u5668"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996253
-    m_Localized: "WASD\uFF1A\u79FB\u52D5   Shift\uFF1A\u30C0\u30C3\u30B7\u30E5  
-      \u30DE\u30A6\u30B9\uFF1A\u30BF\u30FC\u30B2\u30C3\u30C8   Q / E\uFF1A\u6B66\u5668"
+    m_Localized: "WASD\uFF1A\u79FB\u52D5   Shift\uFF1A\u30C0\u30C3\u30B7\u30E5   \u30DE\u30A6\u30B9\uFF1A\u30BF\u30FC\u30B2\u30C3\u30C8   Q / E\uFF1A\u6B66\u5668"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996254
@@ -361,8 +355,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067200
-    m_Localized: "{0}\n\u7D0D\u54C1\u3067 +{1}\n\u4F53\u529B {2} \xB7 \u7F70\u91D1
-      {3}"
+    m_Localized: "{0}\n\u7D0D\u54C1\u3067 +{1}\n\u4F53\u529B {2} \xB7 \u7F70\u91D1 {3}"
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067201
@@ -411,6 +404,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 185506521755651
     m_Localized: "\u30AE\u30EA\u30AE\u30EA\uFF1A\u5831\u916C\u3082\u30C0\u30E1\u30FC\u30B8\u3082\u306A\u3057"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 206230841602048
+    m_Localized: "\u30EC\u30FC\u30B6\u30FC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 206230870962176
+    m_Localized: "\u5F31\u3044\u304C\u6575\u3092\u8CAB\u901A"
     m_Metadata:
       m_Items: []
   references:

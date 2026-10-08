@@ -119,13 +119,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996245
-    m_Localized: "Stick o cruceta  izquierda / derecha: mover la selecci\xF3n       
-      X: confirmar"
+    m_Localized: "Stick o cruceta  izquierda / derecha: mover la selecci\xF3n        X: confirmar"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996246
-    m_Localized: "A / D o flechas: mover la selecci\xF3n        Espacio: confirmar       
-      o haz clic"
+    m_Localized: "A / D o flechas: mover la selecci\xF3n        Espacio: confirmar        o haz clic"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996247
@@ -149,8 +147,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996252
-    m_Localized: 'Stick izq: mover   L2: correr   R1 / L1 o stick der: objetivo  
-      Cruceta: arma'
+    m_Localized: 'Stick izq: mover   L2: correr   R1 / L1 o stick der: objetivo   Cruceta: arma'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996253
@@ -423,6 +420,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 185506521755651
     m_Localized: "Curva justa: sin premio ni da\xF1o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 206230841602048
+    m_Localized: "Rayo l\xE1ser"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 206230870962176
+    m_Localized: "D\xE9bil, pero atraviesa enemigos"
     m_Metadata:
       m_Items: []
   references:

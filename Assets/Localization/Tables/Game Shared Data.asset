@@ -403,6 +403,14 @@ MonoBehaviour:
     m_Key: qte.tie
     m_Metadata:
       m_Items: []
+  - m_Id: 206230841602048
+    m_Key: weapon.laser.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 206230870962176
+    m_Key: weapon.laser.info
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

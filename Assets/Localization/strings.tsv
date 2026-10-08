@@ -56,6 +56,8 @@ weapon.freeze.name	Congelador	Freeze ray	Congelador	フリーザー
 weapon.freeze.info	Ralentiza al enemigo	Slows the enemy	Deixa o inimigo lento	敵を遅くする
 weapon.chain.name	Rayo en cadena	Chain lightning	Raio em cadeia	チェインライトニング
 weapon.chain.info	Salta entre enemigos	Jumps between enemies	Salta entre inimigos	敵から敵へ連鎖
+weapon.laser.name	Rayo láser	Laser ray	Raio laser	レーザー
+weapon.laser.info	Débil, pero atraviesa enemigos	Weak, but pierces enemies	Fraco, mas atravessa inimigos	弱いが敵を貫通
 menu.skip.money	Saltado: +{0} de dinero	Skipped: +{0} money	Pulado: +{0} de dinheiro	スキップ：マネー +{0}
 menu.skip.health	Saltado: +{0} de vida (tren y jugador)	Skipped: +{0} health (train and player)	Pulado: +{0} de vida (trem e jogador)	スキップ：体力 +{0}（列車とプレイヤー）
 menu.hero	Mejora para el jugador	Player upgrade	Melhoria do jogador	プレイヤーの強化

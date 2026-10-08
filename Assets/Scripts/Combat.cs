@@ -23,13 +23,12 @@ public class Combat : MonoBehaviour
             this.shadows = shadows;
         }
 
-        public void Add(Vector3 position, Vector3 size)
+        public void Add(Vector3 position, Vector3 size) => Add(position, size, Quaternion.identity);
+
+        public void Add(Vector3 position, Vector3 size, Quaternion rotation)
         {
             if (count == matrices.Length) Flush();
-            var m = Matrix4x4.identity;
-            m.m00 = size.x; m.m11 = size.y; m.m22 = size.z;
-            m.m03 = position.x; m.m13 = position.y; m.m23 = position.z;
-            matrices[count++] = m;
+            matrices[count++] = Matrix4x4.TRS(position, rotation, size);
         }
 
         public void Flush()
@@ -130,7 +129,8 @@ public class Combat : MonoBehaviour
     class Bullet
     {
         public Vector3 position, velocity, size;
-        public Enemy target; // null for a flash (explosion, lightning)
+        public Quaternion rotation = Quaternion.identity;
+        public Enemy target; // null for a flash (explosion, lightning, beam)
         public int targetId;
         public bool hero;    // fired by the hero: the only shots that hurt floating goods
         public Weapon weapon;
@@ -342,7 +342,7 @@ public class Combat : MonoBehaviour
     {
         ResolveBlasts(1f + damagePerLevel * level); // kills made by turrets after our Update
         foreach (Enemy e in enemies) e.type.Batch.Add(e.position, new Vector3(e.type.size, e.type.size, e.type.size));
-        foreach (Bullet b in bullets) b.batch.Add(b.position, b.size);
+        foreach (Bullet b in bullets) b.batch.Add(b.position, b.size, b.rotation);
         foreach (EnemyType t in Types) t.Batch.Flush();
         foreach (EnemyType t in Loot) t.Batch.Flush();
         Larva.Batch.Flush();
@@ -489,13 +489,25 @@ public class Combat : MonoBehaviour
         if (weapon.pulse) Explode(from, weapon.range, weapon.Damage(level), weapon);
         else
         {
-            int count = weapon.Targets(level);
-            picked.Clear();
-            for (Enemy e = first; e != null && picked.Count < count; e = Nearest(from, weapon.range, picked))
+            if (weapon.beam)
             {
-                picked.Add(e);
-                if (weapon.strike) Strike(e, weapon, level);
-                else Fire(from, e, weapon, level);
+                if (first != null)
+                {
+                    Vector3 flat = first.position - from;
+                    flat.y = 0f;
+                    if (flat != Vector3.zero) Beam(from, flat.normalized, weapon, level);
+                }
+            }
+            else
+            {
+                int count = weapon.Targets(level);
+                picked.Clear();
+                for (Enemy e = first; e != null && picked.Count < count; e = Nearest(from, weapon.range, picked))
+                {
+                    picked.Add(e);
+                    if (weapon.strike) Strike(e, weapon, level);
+                    else Fire(from, e, weapon, level);
+                }
             }
         }
         heroHit = false;
@@ -528,6 +540,25 @@ public class Combat : MonoBehaviour
         {
             Vector3 d = enemies[i].position - center;
             if (d.x * d.x + d.z * d.z <= radius * radius) Hurt(enemies[i], damage);
+        }
+    }
+
+    // Laser: one instant straight ray. Weak per enemy, but it crosses every enemy standing on the line.
+    public void Beam(Vector3 from, Vector3 direction, Weapon weapon, int level)
+    {
+        float range = weapon.range, damage = weapon.Damage(level);
+        Spawn(from + direction * (range * 0.5f), new Vector3(0.12f, 0.12f, range), weapon.Batch, 0.08f, Quaternion.LookRotation(direction));
+        for (int i = enemies.Count - 1; i >= 0; i--)
+        {
+            Enemy e = enemies[i];
+            Vector3 to = e.position - from;
+            to.y = 0f;
+            float along = Vector3.Dot(to, direction);
+            if (along < 0f || along > range) continue;
+            Vector3 side = e.position - (from + direction * along);
+            side.y = 0f;
+            float radius = e.type.size * 0.5f;
+            if (side.sqrMagnitude <= radius * radius) Hurt(e, damage);
         }
     }
 
@@ -575,7 +606,9 @@ public class Combat : MonoBehaviour
             Add(Larva, at + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)));
     }
 
-    Bullet Spawn(Vector3 position, Vector3 size, Batch batch, float life)
+    Bullet Spawn(Vector3 position, Vector3 size, Batch batch, float life) => Spawn(position, size, batch, life, Quaternion.identity);
+
+    Bullet Spawn(Vector3 position, Vector3 size, Batch batch, float life, Quaternion rotation)
     {
         Bullet b = bulletPool.Count > 0 ? bulletPool.Pop() : new Bullet();
         b.position = position;
@@ -583,6 +616,7 @@ public class Combat : MonoBehaviour
         b.size = size;
         b.batch = batch;
         b.life = life;
+        b.rotation = rotation;
         b.target = null;
         bullets.Add(b);
         return b;

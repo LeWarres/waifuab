@@ -127,8 +127,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996246
-    m_Localized: 'A / D or arrows: move selection        Space: confirm        or
-      click'
+    m_Localized: 'A / D or arrows: move selection        Space: confirm        or click'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996247
@@ -152,8 +151,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996252
-    m_Localized: 'Left stick: move   L2: sprint   R1 / L1 or right stick: target  
-      D-pad: weapon'
+    m_Localized: 'Left stick: move   L2: sprint   R1 / L1 or right stick: target   D-pad: weapon'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996253
@@ -432,6 +430,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 185506521755651
     m_Localized: 'Close call: no reward, no damage'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 206230841602048
+    m_Localized: Laser ray
+    m_Metadata:
+      m_Items: []
+  - m_Id: 206230870962176
+    m_Localized: Weak, but pierces enemies
     m_Metadata:
       m_Items: []
   references:

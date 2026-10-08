@@ -117,13 +117,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996245
-    m_Localized: "Anal\xF3gico ou direcional  esquerda / direita: mover a sele\xE7\xE3o       
-      X: confirmar"
+    m_Localized: "Anal\xF3gico ou direcional  esquerda / direita: mover a sele\xE7\xE3o        X: confirmar"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996246
-    m_Localized: "A / D ou setas: mover a sele\xE7\xE3o        Espa\xE7o: confirmar       
-      ou clique"
+    m_Localized: "A / D ou setas: mover a sele\xE7\xE3o        Espa\xE7o: confirmar        ou clique"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996247
@@ -147,8 +145,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996252
-    m_Localized: "Anal\xF3gico esq: mover   L2: correr   R1 / L1 ou anal\xF3gico
-      dir: alvo   Direcional: arma"
+    m_Localized: "Anal\xF3gico esq: mover   L2: correr   R1 / L1 ou anal\xF3gico dir: alvo   Direcional: arma"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996253
@@ -421,6 +418,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 185506521755651
     m_Localized: "Curva no limite: sem pr\xEAmio nem dano"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 206230841602048
+    m_Localized: Raio laser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 206230870962176
+    m_Localized: Fraco, mas atravessa inimigos
     m_Metadata:
       m_Items: []
   references:
