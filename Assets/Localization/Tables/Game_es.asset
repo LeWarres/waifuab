@@ -405,6 +405,26 @@ MonoBehaviour:
     m_Localized: "Carga entregada +{0}   \xB7   perdida -{1}"
     m_Metadata:
       m_Items: []
+  - m_Id: 185506488201216
+    m_Localized: "\xA1Curva! Pulsa en orden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185506521755648
+    m_Localized: 'Curva superada: +{0} de dinero'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185506521755649
+    m_Localized: 'Curva superada: +{0} de vida'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185506521755650
+    m_Localized: "Mala curva: -{0} a cada vag\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185506521755651
+    m_Localized: "Curva justa: sin premio ni da\xF1o"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

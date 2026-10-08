@@ -1,0 +1,9 @@
+# Unity scenes, prefabs and other YAML assets are merged with Unity's Smart Merge (UnityYAMLMerge),
+# which understands their structure. The driver itself is set once per machine, see SETUP-MERGE.md.
+*.unity       merge=unityyamlmerge eol=lf
+*.prefab      merge=unityyamlmerge eol=lf
+*.asset       merge=unityyamlmerge eol=lf
+*.mat         merge=unityyamlmerge eol=lf
+*.anim        merge=unityyamlmerge eol=lf
+*.controller  merge=unityyamlmerge eol=lf
+*.meta        eol=lf

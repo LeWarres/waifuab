@@ -202,9 +202,9 @@ public class Combat : MonoBehaviour
         {
             Enemy e = enemies[i];
             EnemyType t = e.type;
-            e.position.x -= drift;
             int wagon = train.ClosestWagon(e.position, out Vector3 toWagon);
             if (wagon < 0) break; // train destroyed
+            e.position -= train.Forward(wagon) * drift; // along the track where its wagon is, so it holds through a curve
             float sqr = toWagon.sqrMagnitude, radius = t.size * 0.5f;
 
             // The hero on foot is a target too, whenever closer than the train.
@@ -313,6 +313,17 @@ public class Combat : MonoBehaviour
         Larva.Batch.Flush();
         foreach (Weapon w in Weapon.Wagon) w.Batch.Flush();
         foreach (Weapon w in Weapon.Hero) w.Batch.Flush();
+    }
+
+    // After a curve the world is turned so the train lies along X again; everything on the field turns with it.
+    public void Rotate(Quaternion turn)
+    {
+        foreach (Enemy e in enemies) e.position = turn * e.position;
+        foreach (Bullet b in bullets)
+        {
+            b.position = turn * b.position;
+            b.velocity = turn * b.velocity;
+        }
     }
 
     // Weighted pick among the types unlocked at this difficulty and living in this biome.

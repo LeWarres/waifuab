@@ -43,6 +43,8 @@ public class TrainSim : MonoBehaviour
     class Car
     {
         public Transform body;
+        public Vector3 pos;         // on the ground, under its middle
+        public float heading;       // degrees around Y; not 0 only while it is past a curve's knee
         public float health, maxHealth;
         public Turret mount;
         public int cargo = -1;      // index into Cargos, -1 for an armed wagon
@@ -70,10 +72,31 @@ public class TrainSim : MonoBehaviour
     // Only armed wagons count: the run ends when all of them are down, whatever happens to the cargo.
     public float Health { get { float sum = 0f; foreach (Car c in cars) if (c.cargo < 0) sum += c.health; return sum; } }
     float MaxHealth => wagonMaxHealth * wagons;
+    public bool Damaged => Health < MaxHealth || Player.Health < Player.maxHealth;
+    public bool InEvent => turn.Active;    // the curve's button sequence is on: the hero waits
+    public bool Bending => bendAngle != 0f; // a curve is somewhere on screen
     float Step => wagonSize.x + wagonGap;
 
-    Transform sleepers, poles, station;
+    // A looping row of scenery pieces (sleepers, poles) that can follow the track around a curve.
+    class Strip
+    {
+        public Transform parent;
+        public Vector3[] bases; // where each piece sits on a straight track
+        public float spacing, offset;
+        public bool bent;
+    }
+
+    Strip sleepers, poles;
+    Transform station, railsBack, railsFront;
     float remaining, stationX;
+
+    // The curve. The track is straight up to `knee` (distance ahead of the train's middle) and turned by
+    // `bendAngle` beyond it. The knee scrolls back through the train; once it is out of sight behind, the
+    // whole world is rotated so the train lies along X again and the camera keeps the new view.
+    float knee, bendAngle;
+    float camYaw = 45f;                  // view of the track: 45 up-right, 0 across, -45 down-right, 90 up, -90 down
+    static readonly float[] Views = { -90f, -45f, 0f, 45f, 90f };
+    bool sequenceStarted;
     readonly List<Car> cars = new();     // front to back
     Material wagonMat, deadMat, groundMat, sceneryMat;
     Material[] cargoMats;
@@ -94,6 +117,9 @@ public class TrainSim : MonoBehaviour
         ("normal", 1f, 1f), ("long", 2f, 1f), ("express", 1.5f, 1.7f), ("slow", 0.75f, 0.5f),
     };
     int leg, nextLeg;
+    TurnEvent turn;
+    bool turned;                         // this leg's curve already happened
+    [Range(0f, 1f)] public float turnAt = 0.5f; // share of the trip where the curve comes
     float LegLength => stationGap * Legs[leg].length;
     static string LegName(int leg) => L10n.T("leg." + Legs[leg].id);
 
@@ -137,12 +163,21 @@ public class TrainSim : MonoBehaviour
         cargoMats = new Material[Cargos.Length];
         for (int i = 0; i < Cargos.Length; i++) cargoMats[i] = Mat(Cargos[i].color);
 
-        float length = viewRange * 2f;
-        Box(transform, new Vector3(0f, -0.5f, 0f), new Vector3(length, 1f, length), groundMat, true);
-        // Rails are uniform, so a static pair looks the same as a scrolling one.
-        Box(transform, new Vector3(0f, 0.15f, 0.8f), new Vector3(length, 0.1f, 0.15f), steel);
-        Box(transform, new Vector3(0f, 0.15f, -0.8f), new Vector3(length, 0.1f, 0.15f), steel);
+        float length = viewRange * 4f;
+        Box(transform, new Vector3(0f, -0.5f, 0f), new Vector3(length * 2f, 1f, length * 2f), groundMat, true);
+        // Rails are uniform, so they never scroll: one pair up to the knee, one pair beyond it.
+        railsBack = new GameObject("RailsBack").transform;
+        railsFront = new GameObject("RailsFront").transform;
+        foreach (Transform rails in new[] { railsBack, railsFront })
+        {
+            rails.SetParent(transform, false);
+            float middle = rails == railsBack ? -length * 0.5f : length * 0.5f;
+            Box(rails, new Vector3(middle, 0.15f, 0.8f), new Vector3(length, 0.1f, 0.15f), steel);
+            Box(rails, new Vector3(middle, 0.15f, -0.8f), new Vector3(length, 0.1f, 0.15f), steel);
+        }
+        knee = viewRange;
 
+        turn = gameObject.AddComponent<TurnEvent>();
         for (int i = 0; i < wagons; i++) AddCar(i, -1);
         Mount(0, Weapon.Wagon[0]);
         Player = new GameObject("Player").AddComponent<Player>();
@@ -160,13 +195,92 @@ public class TrainSim : MonoBehaviour
         Box(station, new Vector3(0f, 0.3f, 5.5f), new Vector3(30f, 0.6f, 5f), stone);
         Box(station, new Vector3(0f, 2.1f, 7f), new Vector3(12f, 3f, 2f), sceneryMat);
         remaining = stationX = stationGap;
-        station.localPosition = new Vector3(stationX, 0f, 0f);
+        PlaceTrack();
 
-        var cam = Camera.main.transform;
         Camera.main.orthographic = true;
         Camera.main.orthographicSize = cameraSize;
-        cam.rotation = Quaternion.Euler(30f, 45f, 0f);
+        AimCamera();
+    }
+
+    void AimCamera()
+    {
+        Transform cam = Camera.main.transform;
+        cam.rotation = Quaternion.Euler(30f, camYaw, 0f);
         cam.position = -cam.forward * 60f;
+    }
+
+    // Ground position of the track `s` units ahead of the train's middle (negative = behind), and its heading there.
+    Vector3 Path(float s, out float heading)
+    {
+        heading = s <= knee ? 0f : bendAngle;
+        if (bendAngle == 0f) return new Vector3(s, 0f, 0f);
+        Quaternion turn = Quaternion.Euler(0f, bendAngle, 0f);
+        Vector3 Raw(float d) => d <= knee ? new Vector3(d, 0f, 0f) : new Vector3(knee, 0f, 0f) + turn * new Vector3(d - knee, 0f, 0f);
+        return Raw(s) - Raw(0f);
+    }
+
+    // Puts rails, sleepers, poles, station and (in a curve) the wagons on the track's current shape.
+    void PlaceTrack()
+    {
+        railsBack.localPosition = railsFront.localPosition = Path(knee, out _);
+        railsFront.localRotation = Quaternion.Euler(0f, bendAngle, 0f);
+        Place(sleepers);
+        Place(poles);
+        station.localPosition = Path(stationX, out float stationHeading);
+        station.localRotation = Quaternion.Euler(0f, stationHeading, 0f);
+        if (Bending) Layout();
+    }
+
+    void Place(Strip strip)
+    {
+        if (!Bending)
+        {
+            // Straight track: the pieces never move, only their parent slides by up to one spacing.
+            if (strip.bent)
+            {
+                for (int i = 0; i < strip.bases.Length; i++)
+                    strip.parent.GetChild(i).SetLocalPositionAndRotation(strip.bases[i], Quaternion.identity);
+                strip.bent = false;
+            }
+            strip.parent.localPosition = new Vector3(-strip.offset, 0f, 0f);
+            return;
+        }
+        strip.bent = true;
+        strip.parent.localPosition = Vector3.zero;
+        for (int i = 0; i < strip.bases.Length; i++)
+        {
+            Vector3 b = strip.bases[i];
+            Vector3 onTrack = Path(b.x - strip.offset, out float heading);
+            Quaternion turn = Quaternion.Euler(0f, heading, 0f);
+            strip.parent.GetChild(i).SetLocalPositionAndRotation(onTrack + turn * new Vector3(0f, b.y, b.z), turn);
+        }
+    }
+
+    // A curve appears ahead, towards one of the other views (never more than a quarter turn away).
+    void StartBend()
+    {
+        turned = true;
+        float target;
+        do target = Views[Random.Range(0, Views.Length)];
+        while (target == camYaw || Mathf.Abs(target - camYaw) > 90f);
+        bendAngle = camYaw - target;
+        knee = viewRange;
+        sequenceStarted = false;
+    }
+
+    // The old stretch is out of sight: turn the whole world so the train lies along X again.
+    // The camera turns with it, so nothing moves on screen and the new view simply stays.
+    void EndBend()
+    {
+        Quaternion back = Quaternion.Euler(0f, -bendAngle, 0f);
+        Combat.Instance.Rotate(back);
+        Player.Rotate(back);
+        camYaw -= bendAngle;
+        bendAngle = 0f;
+        knee = viewRange;
+        AimCamera();
+        Layout();
+        PlaceTrack();
     }
 
     void Update()
@@ -185,18 +299,34 @@ public class TrainSim : MonoBehaviour
         float step = Mathf.Min(Speed * Time.deltaTime, remaining);
         remaining -= step;
 
-        Scroll(sleepers, step, sleeperSpacing);
-        Scroll(poles, step, poleSpacing);
+        sleepers.offset = Mathf.Repeat(sleepers.offset + step, sleepers.spacing);
+        poles.offset = Mathf.Repeat(poles.offset + step, poles.spacing);
 
         stationX -= step;
         if (stationX < -viewRange) stationX = remaining; // reuse the one station for the next stop
-        station.localPosition = new Vector3(stationX, 0f, 0f);
+
+        // One curve per trip, early enough that it is fully behind before the station.
+        if (!turned && remaining <= Mathf.Max(LegLength * (1f - turnAt), viewRange * 2f + 20f)) StartBend();
+        if (Bending)
+        {
+            knee -= step;
+            float trainLength = HalfExtents.x * 2f;
+            if (!sequenceStarted && knee <= trainLength * 0.5f)
+            {
+                // The button sequence lasts exactly as long as the train takes to go through the knee.
+                sequenceStarted = true;
+                turn.Begin(trainLength / Mathf.Max(Speed, 1f));
+            }
+            if (knee < -viewRange) EndBend();
+        }
+        PlaceTrack();
 
         if (remaining <= 0f) Arrive();
     }
 
     void Arrive()
     {
+        if (Bending) EndBend();
         Speed = 0f;
         AtStation = true;
         Stations++;
@@ -252,8 +382,9 @@ public class TrainSim : MonoBehaviour
         for (int i = 0; i < cars.Count; i++)
         {
             Car car = cars[i];
-            car.body.localPosition = new Vector3(WagonX(i), 0.2f + car.body.localScale.y * 0.5f, 0f);
-            if (car.mount) car.mount.transform.position = new Vector3(WagonX(i), 0.45f + wagonSize.y, 0f);
+            car.pos = Path(WagonX(i), out car.heading);
+            car.body.SetLocalPositionAndRotation(car.pos + Vector3.up * (0.2f + car.body.localScale.y * 0.5f), Quaternion.Euler(0f, car.heading, 0f));
+            if (car.mount) car.mount.transform.position = car.pos + Vector3.up * (0.45f + wagonSize.y);
         }
     }
 
@@ -262,9 +393,20 @@ public class TrainSim : MonoBehaviour
     // Ground vector from p to the footprint of a wagon (zero when p is inside it).
     Vector3 ToWagon(int i, Vector3 p)
     {
-        float x = WagonX(i), halfX = wagonSize.x * 0.5f, halfZ = wagonSize.z * 0.5f;
-        return new Vector3(Mathf.Clamp(p.x, x - halfX, x + halfX) - p.x, 0f, Mathf.Clamp(p.z, -halfZ, halfZ) - p.z);
+        Car car = cars[i];
+        float halfX = wagonSize.x * 0.5f, halfZ = wagonSize.z * 0.5f;
+        Vector3 local = p - car.pos;
+        if (car.heading == 0f)
+            return new Vector3(Mathf.Clamp(local.x, -halfX, halfX) - local.x, 0f, Mathf.Clamp(local.z, -halfZ, halfZ) - local.z);
+        // Wagon turned by a curve: measure in its own axes, answer in the world's.
+        Quaternion turn = Quaternion.Euler(0f, car.heading, 0f);
+        local = Quaternion.Inverse(turn) * local;
+        return turn * new Vector3(Mathf.Clamp(local.x, -halfX, halfX) - local.x, 0f, Mathf.Clamp(local.z, -halfZ, halfZ) - local.z);
     }
+
+    // Direction a wagon is travelling in: +X, except for wagons already past a curve's knee.
+    public Vector3 Forward(int wagon) =>
+        cars[wagon].heading == 0f ? Vector3.right : Quaternion.Euler(0f, cars[wagon].heading, 0f) * Vector3.right;
 
     // Closest wagon that is still standing, and the ground vector from p to it. -1 if none.
     public int ClosestWagon(Vector3 p, out Vector3 toWagon)
@@ -289,6 +431,12 @@ public class TrainSim : MonoBehaviour
     {
         for (int i = 0; i < cars.Count; i++)
             if (cars[i].Alive && ToWagon(i, p).sqrMagnitude <= radius * radius) Damage(i, amount);
+    }
+
+    public void DamageAll(float amount)
+    {
+        for (int i = 0; i < cars.Count; i++)
+            if (cars[i].Alive) Damage(i, amount);
     }
 
     public void Stun(int wagon, float seconds)
@@ -322,7 +470,7 @@ public class TrainSim : MonoBehaviour
             return;
         }
         if (car.mount) Destroy(car.mount.gameObject);
-        car.mount = Instantiate(turretPrefab, new Vector3(WagonX(wagon), 0.45f + wagonSize.y, 0f), Quaternion.identity, transform);
+        car.mount = Instantiate(turretPrefab, car.pos + Vector3.up * (0.45f + wagonSize.y), Quaternion.identity, transform);
         car.mount.Init(weapon);
     }
 
@@ -366,7 +514,7 @@ public class TrainSim : MonoBehaviour
 
     void Repair() => Repair(repairReward);
 
-    void Repair(float amount)
+    public void Repair(float amount)
     {
         foreach (Car car in cars) car.health = Mathf.Min(car.maxHealth, car.health + amount);
     }
@@ -397,6 +545,7 @@ public class TrainSim : MonoBehaviour
         skipGift = 0;
         pending = null;
         leg = nextLeg;
+        turned = false;
         remaining = LegLength;
         AtStation = false;
     }
@@ -581,7 +730,7 @@ public class TrainSim : MonoBehaviour
         if (GUI.Button(Ui.R(8f, 88f, 170f, 20f), L10n.T("language"), Ui.Normal)) L10n.NextLocale();
         for (int i = 0; i < cars.Count; i++)
         {
-            Vector2 top = Ui.Point(new Vector3(WagonX(i), 1.5f + wagonSize.y, 0f));
+            Vector2 top = Ui.Point(cars[i].pos + Vector3.up * (1.5f + wagonSize.y));
             Ui.Bar(Ui.R(top.x - 18f, top.y - 6f, 36f, 4f), cars[i].health / cars[i].maxHealth);
         }
         if (!MenuOpen || options.Count == 0) return;
@@ -611,20 +760,18 @@ public class TrainSim : MonoBehaviour
     }
 
     // A row of identical pieces looks endless if it wraps by one spacing.
-    static void Scroll(Transform row, float step, float spacing)
+    Strip Row(string name, float spacing, Vector3 offset, Vector3 size, Material mat)
     {
-        var p = row.localPosition;
-        p.x = -Mathf.Repeat(step - p.x, spacing);
-        row.localPosition = p;
-    }
-
-    Transform Row(string name, float spacing, Vector3 offset, Vector3 size, Material mat)
-    {
-        var row = new GameObject(name).transform;
-        row.SetParent(transform, false);
+        var strip = new Strip { parent = new GameObject(name).transform, spacing = spacing };
+        strip.parent.SetParent(transform, false);
+        var bases = new List<Vector3>();
         for (float x = -viewRange; x <= viewRange + spacing; x += spacing)
-            Box(row, offset + Vector3.right * x, size, mat);
-        return row;
+        {
+            bases.Add(offset + Vector3.right * x);
+            Box(strip.parent, bases[bases.Count - 1], size, mat);
+        }
+        strip.bases = bases.ToArray();
+        return strip;
     }
 
     public static Material Mat(Color color) => new Material(Shader.Find("HDRP/Lit")) { color = color, enableInstancing = true };

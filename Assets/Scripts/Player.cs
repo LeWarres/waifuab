@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
         foreach (InputAction button in buttons) Track(button, button.IsPressed() ? 1f : 0f);
 
         // The station is the safe spot: the hero waits while the menu has the controls.
-        if (train.AtStation)
+        if (train.AtStation || train.InEvent)
         {
             target = null;
             return;
@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
         // Flying around the train, never through it: pushed out by the nearest side.
         Vector2 half = train.HalfExtents + Vector2.one * 0.8f;
         float insideX = half.x - Mathf.Abs(p.x), insideZ = half.y - Mathf.Abs(p.z);
-        if (insideX > 0f && insideZ > 0f)
+        if (insideX > 0f && insideZ > 0f && !train.Bending) // mid-curve the train is not a straight box
         {
             if (insideZ <= insideX) p.z = p.z >= 0f ? half.y : -half.y;
             else p.x = p.x >= 0f ? half.x : -half.x;
@@ -185,6 +185,12 @@ public class Player : MonoBehaviour
         if (!Alive) return;
         Health = Mathf.Max(0f, Health - amount * (1f - armor));
         if (!Alive) visuals.SetActive(false); // down: the train carries on alone until the next station
+    }
+
+    public void Rotate(Quaternion turn)
+    {
+        transform.position = turn * transform.position;
+        aim = turn * aim;
     }
 
     public void Heal(float amount) => Health = Mathf.Min(maxHealth, Health + amount);

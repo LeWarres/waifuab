@@ -383,6 +383,26 @@ MonoBehaviour:
     m_Key: cargo.result
     m_Metadata:
       m_Items: []
+  - m_Id: 185506488201216
+    m_Key: qte.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185506521755648
+    m_Key: qte.money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185506521755649
+    m_Key: qte.health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185506521755650
+    m_Key: qte.fail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185506521755651
+    m_Key: qte.tie
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

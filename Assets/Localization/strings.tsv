@@ -90,3 +90,8 @@ cargo.done	Listo\nsalir con esta carga	Done\nleave with this cargo	Pronto\nparti
 cargo.place	{0}: ¿en qué posición del tren?	{0}: where in the train?	{0}: em que posição do trem?	{0}：列車のどこに連結する？
 cargo.slot	Detrás del\nvagón {0}	Behind\nwagon {0}	Atrás do\nvagão {0}	車両 {0} の\n後ろ
 cargo.result	Carga entregada +{0}   ·   perdida -{1}	Cargo delivered +{0}   ·   lost -{1}	Carga entregue +{0}   ·   perdida -{1}	納品 +{0}   ·   損失 -{1}
+qte.title	¡Curva! Pulsa en orden	Curve! Press in order	Curva! Pressione na ordem	カーブ！順番に押せ
+qte.money	Curva superada: +{0} de dinero	Curve cleared: +{0} money	Curva superada: +{0} de dinheiro	カーブ成功：マネー +{0}
+qte.health	Curva superada: +{0} de vida	Curve cleared: +{0} health	Curva superada: +{0} de vida	カーブ成功：体力 +{0}
+qte.fail	Mala curva: -{0} a cada vagón	Bad curve: -{0} to every wagon	Curva ruim: -{0} em cada vagão	カーブ失敗：全車両に -{0}
+qte.tie	Curva justa: sin premio ni daño	Close call: no reward, no damage	Curva no limite: sem prêmio nem dano	ギリギリ：報酬もダメージもなし

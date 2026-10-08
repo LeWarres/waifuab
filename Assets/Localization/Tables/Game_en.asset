@@ -414,6 +414,26 @@ MonoBehaviour:
     m_Localized: "Cargo delivered +{0}   \xB7   lost -{1}"
     m_Metadata:
       m_Items: []
+  - m_Id: 185506488201216
+    m_Localized: Curve! Press in order
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185506521755648
+    m_Localized: 'Curve cleared: +{0} money'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185506521755649
+    m_Localized: 'Curve cleared: +{0} health'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185506521755650
+    m_Localized: 'Bad curve: -{0} to every wagon'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185506521755651
+    m_Localized: 'Close call: no reward, no damage'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
