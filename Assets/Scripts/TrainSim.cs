@@ -28,7 +28,8 @@ public class TrainSim : MonoBehaviour
     public float skipHealth = 10f;                      // ...or this much health to every wagon and the hero
     public float vitalityReward = 10f;                  // max health per hero vitality upgrade
     public int biomeDifficulty = 2;                     // a biome change is worth this many stations of difficulty
-    public int maxCargo = 3;                            // cargo wagons carried at once
+    public int maxCargo = 3;                            // cargo wagons loaded at a station
+    public int maxCars = 10;                            // longest the train gets with goods won on the way
 
     [Header("Track")]
     public float viewRange = 80f;
@@ -72,6 +73,7 @@ public class TrainSim : MonoBehaviour
     // Only armed wagons count: the run ends when all of them are down, whatever happens to the cargo.
     public float Health { get { float sum = 0f; foreach (Car c in cars) if (c.cargo < 0) sum += c.health; return sum; } }
     float MaxHealth => wagonMaxHealth * wagons;
+    public bool CanTakeLoot => cars.Count < maxCars;
     public bool Damaged => Health < MaxHealth || Player.Health < Player.maxHealth;
     public bool InEvent => turn.Active;    // the curve's button sequence is on: the hero waits
     public bool Bending => bendAngle != 0f; // a curve is somewhere on screen
@@ -286,6 +288,12 @@ public class TrainSim : MonoBehaviour
     void Update()
     {
         if (Keyboard.current != null && Keyboard.current.lKey.wasPressedThisFrame) L10n.NextLocale();
+
+        // A long train pulls the camera back so it always fits, whichever way the track runs on screen.
+        Camera view = Camera.main;
+        float wanted = Mathf.Max(cameraSize, (HalfExtents.x + 5f) / view.aspect);
+        view.orthographicSize = Mathf.MoveTowards(view.orthographicSize, wanted, 6f * Time.unscaledDeltaTime);
+
         if (MenuOpen)
         {
             BuildMenu();
@@ -369,12 +377,18 @@ public class TrainSim : MonoBehaviour
             size.y *= 0.6f; // flatbed: lower than an armed wagon
             mat = cargoMats[cargo];
             car.health = car.maxHealth = Cargos[cargo].health;
-            car.reward = Mathf.RoundToInt(Cargos[cargo].reward * Legs[nextLeg].length) * (Biome + 1);
+            car.reward = Mathf.RoundToInt(Cargos[cargo].reward * Legs[AtStation ? nextLeg : leg].length) * (Biome + 1);
             car.penalty = Cargos[cargo].penalty * (Biome + 1);
         }
         car.body = Box(transform, Vector3.zero, size, mat);
         cars.Insert(index, car);
         Layout();
+    }
+
+    // Goods the hero shot down on the way: coupled anywhere behind the locomotive.
+    public void AddLoot(int cargo)
+    {
+        if (CanTakeLoot) AddCar(Random.Range(1, cars.Count + 1), cargo);
     }
 
     void Layout()

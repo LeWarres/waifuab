@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
         Transform cam = Camera.main.transform;
         Vector3 forward = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized, right = cam.right;
         Vector3 walk = (right * input.x + forward * input.y) * (run.IsPressed() ? speed * sprint : speed);
-        Vector3 p = Vector3.ClampMagnitude(Flat(transform.position) + walk * Time.deltaTime, leash);
+        Vector3 p = Vector3.ClampMagnitude(Flat(transform.position) + walk * Time.deltaTime, Mathf.Max(leash, train.HalfExtents.x + 8f));
         // Flying around the train, never through it: pushed out by the nearest side.
         Vector2 half = train.HalfExtents + Vector2.one * 0.8f;
         float insideX = half.x - Mathf.Abs(p.x), insideZ = half.y - Mathf.Abs(p.z);
@@ -137,11 +137,11 @@ public class Player : MonoBehaviour
             {
                 Vector3 cursor = ray.GetPoint(distance);
                 if (Flat(cursor - p).sqrMagnitude > 0.01f) aim = Flat(cursor - p).normalized;
-                Combat.Enemy pointed = combat.Nearest(cursor, 2.5f);
+                Combat.Enemy pointed = combat.Nearest(cursor, 2.5f, null, true);
                 if (pointed != null && Flat(pointed.position - p).sqrMagnitude <= range * range) Lock(pointed);
             }
         }
-        if (target == null) Lock(combat.Nearest(Flat(p), range)); // re-aim: always the enemy closest to the hero
+        if (target == null) Lock(combat.Nearest(Flat(p), range, null, true)); // re-aim: always the enemy closest to the hero
         if (target != null && Flat(target.position - p).sqrMagnitude > 0.01f) aim = Flat(target.position - p).normalized;
         visuals.transform.rotation = Quaternion.LookRotation(aim);
 
@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
         cooldown -= Time.deltaTime;
         if (cooldown > 0f || target == null) return;
         cooldown = slot.weapon.Interval(slot.level);
-        combat.Volley(p, target, slot.weapon, slot.level);
+        combat.Volley(p, target, slot.weapon, slot.level, true);
     }
 
     // Red frame on the ground around whoever is locked, plus a pointer above it.
@@ -177,7 +177,9 @@ public class Player : MonoBehaviour
     void Track(InputAction action, float amount)
     {
         InputControl control = action.activeControl;
-        if (amount >= Deadzone && control != null) UsingGamepad = control.device is Gamepad;
+        if (amount < Deadzone || control == null) return;
+        if (control.device is Pointer && amount < 4f) return; // a nudged mouse is not a change of device
+        UsingGamepad = control.device is Gamepad;
     }
 
     public void Damage(float amount)

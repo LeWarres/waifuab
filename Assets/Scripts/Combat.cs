@@ -58,6 +58,7 @@ public class Combat : MonoBehaviour
         public int biome = -1;   // only spawns in this biome; -1 = everywhere
         public int firstLevel;   // difficulty at which this type starts to appear
         public float weight;     // share of the spawns once it appears; 0 = never spawned directly
+        public int loot = -1;    // floating goods: index of the cargo wagon the hero wins by destroying it
 
         public float explode, explodeDamage;    // on death: hurts enemies and wagons within this radius
         public float chargeRange, chargeSpeed;  // speed multiplier once this close to the train
@@ -109,9 +110,17 @@ public class Combat : MonoBehaviour
         new EnemyType { name = "Coloso", biome = 6, color = new Color(0.1f, 0.1f, 0.12f), health = 60f, speed = 2f, damage = 25f, size = 2.5f, reward = 8, weight = 0.12f, explode = 6f, explodeDamage = 15f, chargeRange = 10f, chargeSpeed = 2.5f },
     };
 
+    // Floating goods, one per kind of cargo. Not enemies: they drift by, ignore the train, and only the hero can break them.
+    public static readonly EnemyType[] Loot =
+    {
+        new EnemyType { name = "Árbol", loot = 0, color = new Color(0.2f, 0.5f, 0.15f), health = 20f, size = 1.6f, reward = 0 },
+        new EnemyType { name = "Roca", loot = 1, color = new Color(0.55f, 0.55f, 0.55f), health = 30f, size = 1.6f, reward = 0 },
+        new EnemyType { name = "Armas", loot = 2, color = new Color(0.9f, 0.75f, 0.2f), health = 14f, size = 1.3f, reward = 0 },
+    };
+
     public class Enemy
     {
-        public Vector3 position;
+        public Vector3 position, velocity; // velocity: only floating goods use it
         public EnemyType type;
         public float hp, maxHp, slowUntil, timer;
         public int index;
@@ -123,6 +132,7 @@ public class Combat : MonoBehaviour
         public Vector3 position, velocity, size;
         public Enemy target; // null for a flash (explosion, lightning)
         public int targetId;
+        public bool hero;    // fired by the hero: the only shots that hurt floating goods
         public Weapon weapon;
         public Batch batch;
         public float life;
@@ -147,6 +157,12 @@ public class Combat : MonoBehaviour
     public float damagePerLevel = 0.05f;
     public float speedDrift = 0.15f;       // how much a faster or slower train drags enemies back or lets them catch up   // +5% enemy damage per difficulty level
 
+    [Header("Floating goods")]
+    public Vector2 lootEvery = new Vector2(12f, 22f); // seconds between one and the next
+    public float lootTime = 8f;                       // seconds it hangs around before flying off
+    public float lootHeight = 2.5f;
+    public float lootDistance = 20f;                  // at least this far from the hero when it appears
+
     [Header("Bullets")]
     public float bulletLife = 2f;
     public float chainRange = 8f;
@@ -162,8 +178,9 @@ public class Combat : MonoBehaviour
 
     TrainSim train;
     Player player;
-    float spawnTimer;
+    float spawnTimer, lootTimer = 8f;
     int level;
+    bool heroHit; // true while a hit made by the hero is being applied
 
     public int EnemyCount => enemies.Count;
     public int BulletCount => bullets.Count;
@@ -195,6 +212,13 @@ public class Combat : MonoBehaviour
             SpawnWave();
         }
 
+        lootTimer -= dt;
+        if (lootTimer <= 0f)
+        {
+            lootTimer = Random.Range(lootEvery.x, lootEvery.y);
+            if (train.CanTakeLoot) SpawnLoot();
+        }
+
         // Enemies head for the closest wagon that is still standing.
         // Faster than cruise: everyone slides towards the rear, so the front arrives sooner and the rear lags.
         float damageScale = 1f + damagePerLevel * level, drift = (train.Speed - train.maxSpeed) * speedDrift * dt;
@@ -202,6 +226,14 @@ public class Combat : MonoBehaviour
         {
             Enemy e = enemies[i];
             EnemyType t = e.type;
+            if (t.loot >= 0)
+            {
+                // Drifts for a while, then speeds away and is gone once out of sight.
+                e.timer -= dt;
+                e.position += e.velocity * (dt * (e.timer > 0f ? 1f : 10f));
+                if (e.timer <= 0f && e.position.x * e.position.x + e.position.z * e.position.z > spawnRadius * spawnRadius) RemoveEnemy(i);
+                continue;
+            }
             int wagon = train.ClosestWagon(e.position, out Vector3 toWagon);
             if (wagon < 0) break; // train destroyed
             e.position -= train.Forward(wagon) * drift; // along the track where its wagon is, so it holds through a curve
@@ -278,8 +310,10 @@ public class Combat : MonoBehaviour
                     Vector3 at = hit.position;
                     float damage = b.weapon.Damage(b.level);
                     if (b.weapon.slow > 0f && !hit.type.slowImmune) hit.slowUntil = now + b.weapon.slow;
+                    heroHit = b.hero;
                     if (b.weapon.splash > 0f) Explode(at, b.weapon.Splash(b.level), damage, b.weapon);
                     else Hurt(hit, damage);
+                    heroHit = false;
 
                     chainSkip.Clear();
                     chainSkip.Add(hit);
@@ -310,6 +344,7 @@ public class Combat : MonoBehaviour
         foreach (Enemy e in enemies) e.type.Batch.Add(e.position, new Vector3(e.type.size, e.type.size, e.type.size));
         foreach (Bullet b in bullets) b.batch.Add(b.position, b.size);
         foreach (EnemyType t in Types) t.Batch.Flush();
+        foreach (EnemyType t in Loot) t.Batch.Flush();
         Larva.Batch.Flush();
         foreach (Weapon w in Weapon.Wagon) w.Batch.Flush();
         foreach (Weapon w in Weapon.Hero) w.Batch.Flush();
@@ -318,7 +353,11 @@ public class Combat : MonoBehaviour
     // After a curve the world is turned so the train lies along X again; everything on the field turns with it.
     public void Rotate(Quaternion turn)
     {
-        foreach (Enemy e in enemies) e.position = turn * e.position;
+        foreach (Enemy e in enemies)
+        {
+            e.position = turn * e.position;
+            e.velocity = turn * e.velocity;
+        }
         foreach (Bullet b in bullets)
         {
             b.position = turn * b.position;
@@ -348,25 +387,54 @@ public class Combat : MonoBehaviour
             Add(type, center + new Vector3(Random.Range(-1.5f, 1.5f), 0f, Random.Range(-1.5f, 1.5f)) * (type.pack - 1));
     }
 
-    void Add(EnemyType type, Vector3 ground)
+    // A random kind of goods appears near the train, floating, and drifts sideways.
+    void SpawnLoot()
+    {
+        // Somewhere clearly on screen (whatever the view and zoom) but away from the hero, so he has to fly over and aim.
+        // Takes the first candidate far enough, or failing that the farthest one tried.
+        Vector3 spot = Vector3.zero;
+        float farthest = -1f;
+        var ground = new Plane(Vector3.up, Vector3.zero);
+        for (int tries = 0; tries < 12 && farthest < lootDistance * lootDistance; tries++)
+        {
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(Random.Range(0.12f, 0.88f), Random.Range(0.25f, 0.7f), 0f));
+            if (!ground.Raycast(ray, out float hit)) continue;
+            Vector3 candidate = ray.GetPoint(hit), fromHero = candidate - player.Position;
+            float sqr = fromHero.x * fromHero.x + fromHero.z * fromHero.z;
+            if (sqr <= farthest) continue;
+            farthest = sqr;
+            spot = candidate;
+        }
+        float angle = Random.value * Mathf.PI * 2f;
+        Enemy e = Add(Loot[Random.Range(0, Loot.Length)], spot);
+        e.position.y = lootHeight;
+        e.velocity = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * 0.8f; // drifts slowly, then leaves along the same line
+        e.timer = lootTime;
+    }
+
+    Enemy Add(EnemyType type, Vector3 ground)
     {
         Enemy e = enemyPool.Count > 0 ? enemyPool.Pop() : new Enemy();
         e.position = new Vector3(ground.x, type.size * 0.5f, ground.z);
         e.type = type;
         e.hp = e.maxHp = type.health * (1f + healthPerLevel * level);
+        e.velocity = Vector3.zero;
         e.slowUntil = 0f;
         e.timer = type.interval;
         e.index = enemies.Count;
         enemies.Add(e);
+        return e;
     }
 
     // ponytail: linear scan; add a spatial grid if enemies reach several thousand.
-    public Enemy Nearest(Vector3 from, float range, List<Enemy> except = null)
+    // loot: also consider floating goods (only the hero aims at those).
+    public Enemy Nearest(Vector3 from, float range, List<Enemy> except = null, bool loot = false)
     {
         Enemy nearest = null;
         float best = range * range;
         for (int i = 0; i < enemies.Count; i++)
         {
+            if (!loot && enemies[i].type.loot >= 0) continue;
             float d = (enemies[i].position - from).sqrMagnitude;
             if (d < best && (except == null || !except.Contains(enemies[i]))) { best = d; nearest = enemies[i]; }
         }
@@ -393,7 +461,7 @@ public class Combat : MonoBehaviour
     // Next enemy in range going clockwise (direction 1) or counter-clockwise (-1) from the current one.
     public Enemy Cycle(Vector3 from, Enemy current, float range, int direction)
     {
-        if (current == null) return Nearest(from, range);
+        if (current == null) return Nearest(from, range, null, true);
         Vector3 start = current.position - from;
         start.y = 0f;
         Enemy pick = null;
@@ -414,21 +482,23 @@ public class Combat : MonoBehaviour
     }
 
     // One trigger pull of a weapon: a pulse, or one shot at `first` plus any extra shots at the next nearest enemies.
-    public void Volley(Vector3 from, Enemy first, Weapon weapon, int level)
+    // hero: the shots come from the hero, so they can break floating goods.
+    public void Volley(Vector3 from, Enemy first, Weapon weapon, int level, bool hero = false)
     {
-        if (weapon.pulse)
+        heroHit = hero;
+        if (weapon.pulse) Explode(from, weapon.range, weapon.Damage(level), weapon);
+        else
         {
-            Explode(from, weapon.range, weapon.Damage(level), weapon);
-            return;
+            int count = weapon.Targets(level);
+            picked.Clear();
+            for (Enemy e = first; e != null && picked.Count < count; e = Nearest(from, weapon.range, picked))
+            {
+                picked.Add(e);
+                if (weapon.strike) Strike(e, weapon, level);
+                else Fire(from, e, weapon, level);
+            }
         }
-        int count = weapon.Targets(level);
-        picked.Clear();
-        for (Enemy e = first; e != null && picked.Count < count; e = Nearest(from, weapon.range, picked))
-        {
-            picked.Add(e);
-            if (weapon.strike) Strike(e, weapon, level);
-            else Fire(from, e, weapon, level);
-        }
+        heroHit = false;
     }
 
     public void Fire(Vector3 from, Enemy target, Weapon weapon, int level)
@@ -439,6 +509,7 @@ public class Combat : MonoBehaviour
         b.weapon = weapon;
         b.velocity = (target.position - from).normalized * weapon.speed;
         b.level = level;
+        b.hero = heroHit;
         b.chain = weapon.Chain(level);
     }
 
@@ -485,6 +556,7 @@ public class Combat : MonoBehaviour
 
     void Hurt(Enemy e, float damage)
     {
+        if (e.type.loot >= 0 && !heroHit) return;
         e.hp -= Mathf.Max(damage - e.type.armor, damage * 0.2f);
         if (e.hp > 0f) return;
         train.money += e.type.reward * (train.Biome + 1);
@@ -497,6 +569,7 @@ public class Combat : MonoBehaviour
         EnemyType t = e.type;
         Vector3 at = e.position;
         RemoveEnemy(e.index);
+        if (killed && t.loot >= 0) train.AddLoot(t.loot);
         if (t.explode > 0f) blasts.Add(new Blast { center = at, type = t });
         for (int i = 0; killed && i < t.split; i++)
             Add(Larva, at + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)));
