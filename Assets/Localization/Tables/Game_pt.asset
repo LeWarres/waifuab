@@ -1,0 +1,408 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Game_pt
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: pt
+  m_SharedData: {fileID: 11400000, guid: 82b42355b833ce54faea02bb5124f246, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1725247488
+    m_Localized: "Esta\xE7\xE3o {0}   {1}   Dificuldade {2}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996224
+    m_Localized: Trem {0} / {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996225
+    m_Localized: "Idioma: Portugu\xEAs (L)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996226
+    m_Localized: "Trem destru\xEDdo. Reiniciar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996227
+    m_Localized: Sim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996228
+    m_Localized: "N\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996229
+    m_Localized: "Antes de partir   \xB7   Pr\xF3ximo trecho: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996230
+    m_Localized: "Reparar +{0} por vag\xE3o\n({1} dinheiro)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996231
+    m_Localized: 'Curar jogador +{0}
+
+      ({1} dinheiro)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996232
+    m_Localized: 'Continuar em
+
+      {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996233
+    m_Localized: 'Mudar para {0}
+
+      (dificuldade +{1}, dinheiro x{2})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996234
+    m_Localized: "Esta\xE7\xE3o: melhoria dos vag\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996235
+    m_Localized: 'Dinheiro +{0}
+
+      para reparar e curar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996236
+    m_Localized: "Pular\nvida ou dinheiro aleat\xF3rio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996237
+    m_Localized: "{0}: em qual vag\xE3o?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996238
+    m_Localized: "Vag\xE3o {0}\n{1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996239
+    m_Localized: Vazio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996240
+    m_Localized: Substitui {0} Nv {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996241
+    m_Localized: Sobe para Nv {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996242
+    m_Localized: "N\xEDvel m\xE1ximo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996243
+    m_Localized: 'Jogador
+
+      {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996244
+    m_Localized: Voltar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996245
+    m_Localized: "Anal\xF3gico ou direcional  esquerda / direita: mover a sele\xE7\xE3o       
+      X: confirmar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996246
+    m_Localized: "A / D ou setas: mover a sele\xE7\xE3o        Espa\xE7o: confirmar       
+      ou clique"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996247
+    m_Localized: Jogador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996248
+    m_Localized: "Ca\xEDdo: volta na esta\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996249
+    m_Localized: '{0}  Nv {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996250
+    m_Localized: Arma nova
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996251
+    m_Localized: Substitui {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996252
+    m_Localized: "Anal\xF3gico esq: mover   L2: correr   R1 / L1 ou anal\xF3gico
+      dir: alvo   Direcional: arma"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996253
+    m_Localized: 'WASD: mover   Shift: correr   Mouse: alvo   Q / E: arma'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996254
+    m_Localized: Deserto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996255
+    m_Localized: Neve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996256
+    m_Localized: Selva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996257
+    m_Localized: "Vulc\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996258
+    m_Localized: "Espa\xE7o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996259
+    m_Localized: "Planeta alien\xEDgena"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996260
+    m_Localized: "Fortaleza alien\xEDgena"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996261
+    m_Localized: Torreta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996262
+    m_Localized: Disparo equilibrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996263
+    m_Localized: "Lan\xE7a-foguetes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996264
+    m_Localized: "Lento, explode em \xE1rea"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996265
+    m_Localized: Metralhadora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996266
+    m_Localized: "Muito r\xE1pida, curto alcance"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996267
+    m_Localized: Espingarda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996268
+    m_Localized: "V\xE1rias balas, alcance muito curto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996269
+    m_Localized: Atirador de elite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996270
+    m_Localized: Muito dano e alcance, lento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996271
+    m_Localized: Pulso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996272
+    m_Localized: Causa dano a tudo ao redor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996273
+    m_Localized: Tempestade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996274
+    m_Localized: "Raios do c\xE9u, um a mais por n\xEDvel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996275
+    m_Localized: "Lan\xE7a-chamas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996276
+    m_Localized: "Fogo em \xE1rea, perto do trem"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996277
+    m_Localized: Congelador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996278
+    m_Localized: Deixa o inimigo lento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996279
+    m_Localized: Raio em cadeia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996280
+    m_Localized: Salta entre inimigos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5041823232000
+    m_Localized: 'Pulado: +{0} de dinheiro'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5041856786432
+    m_Localized: 'Pulado: +{0} de vida (trem e jogador)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144139649024
+    m_Localized: Melhoria do jogador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203456
+    m_Localized: 'Trecho: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203457
+    m_Localized: Normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203458
+    m_Localized: "Longo (dist\xE2ncia dupla)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203459
+    m_Localized: "Expresso (r\xE1pido, v\xEAm pela frente)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203460
+    m_Localized: "Lento (alcan\xE7am por tr\xE1s)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203461
+    m_Localized: 'Velocidade
+
+      +10% de movimento'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203462
+    m_Localized: "Resist\xEAncia\n-10% de dano recebido"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203463
+    m_Localized: "Vida m\xE1xima +{0}\ne cura {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203464
+    m_Localized: Blaster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203465
+    m_Localized: "R\xE1pido, alcance m\xE9dio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203466
+    m_Localized: Granadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203467
+    m_Localized: "Explos\xF5es pequenas e frequentes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203468
+    m_Localized: Submetralhadora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203469
+    m_Localized: "Rajada \xE0 queima-roupa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203470
+    m_Localized: Cano serrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203471
+    m_Localized: 3 balas, chegue perto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203472
+    m_Localized: "Canh\xE3o el\xE9trico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203473
+    m_Localized: Atravessa um segundo inimigo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203474
+    m_Localized: Nova
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203475
+    m_Localized: Onda ao seu redor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203476
+    m_Localized: "Fa\xEDsca"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203477
+    m_Localized: "Raio instant\xE2neo, um a mais por n\xEDvel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646232707072
+    m_Localized: "Carga para a pr\xF3xima esta\xE7\xE3o ({0} / {1})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067200
+    m_Localized: "{0}\n+{1} na entrega\nVida {2} \xB7 multa {3}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067201
+    m_Localized: Madeira
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067202
+    m_Localized: Rocha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067203
+    m_Localized: Armas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067204
+    m_Localized: 'Pronto
+
+      partir com esta carga'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067205
+    m_Localized: "{0}: em que posi\xE7\xE3o do trem?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067206
+    m_Localized: "Atr\xE1s do\nvag\xE3o {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067207
+    m_Localized: "Carga entregue +{0}   \xB7   perdida -{1}"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -1,0 +1,92 @@
+key	es	en	pt	ja
+hud.status	Estación {0}   {1}   Dificultad {2}	Station {0}   {1}   Difficulty {2}	Estação {0}   {1}   Dificuldade {2}	駅 {0}   {1}   難易度 {2}
+hud.train	Tren {0} / {1}	Train {0} / {1}	Trem {0} / {1}	列車 {0} / {1}
+language	Idioma: Español (L)	Language: English (L)	Idioma: Português (L)	言語: 日本語 (L)
+menu.gameover	Tren destruido. ¿Reiniciar?	Train destroyed. Restart?	Trem destruído. Reiniciar?	列車が破壊された。やり直す？
+menu.yes	Sí	Yes	Sim	はい
+menu.no	No	No	Não	いいえ
+menu.route	Antes de salir   ·   Próximo tramo: {0}	Before leaving   ·   Next leg: {0}	Antes de partir   ·   Próximo trecho: {0}	出発前   ·   次の区間：{0}
+menu.repair	Reparar +{0} por vagón\n({1} dinero)	Repair +{0} per wagon\n({1} money)	Reparar +{0} por vagão\n({1} dinheiro)	車両ごとに +{0} 修理\n({1} マネー)
+menu.heal	Curar jugador +{0}\n({1} dinero)	Heal player +{0}\n({1} money)	Curar jogador +{0}\n({1} dinheiro)	プレイヤーを +{0} 回復\n({1} マネー)
+menu.stay	Seguir en\n{0}	Stay in\n{0}	Continuar em\n{0}	{0}に\nとどまる
+menu.change	Cambiar a {0}\n(dificultad +{1}, dinero x{2})	Move to {0}\n(difficulty +{1}, money x{2})	Mudar para {0}\n(dificuldade +{1}, dinheiro x{2})	{0}へ進む\n(難易度 +{1}、マネー x{2})
+menu.upgrade	Estación: mejora para los vagones	Station: wagon upgrade	Estação: melhoria dos vagões	駅：車両の強化
+menu.money	Dinero +{0}\npara reparar y curar	Money +{0}\nfor repairs and healing	Dinheiro +{0}\npara reparar e curar	マネー +{0}\n修理と回復に使う
+menu.skip	Saltar\nvida o dinero al azar	Skip\nrandom health or money	Pular\nvida ou dinheiro aleatório	スキップ\n体力かマネーをランダム
+menu.place	{0}: ¿en qué vagón?	{0}: which wagon?	{0}: em qual vagão?	{0}：どの車両に？
+menu.wagon	Vagón {0}\n{1}	Wagon {0}\n{1}	Vagão {0}\n{1}	車両 {0}\n{1}
+menu.empty	Vacío	Empty	Vazio	空き
+menu.replace	Reemplaza {0} Nv {1}	Replaces {0} Lv {1}	Substitui {0} Nv {1}	{0} Lv {1} と交換
+menu.levelup	Sube a Nv {0}	Upgrade to Lv {0}	Sobe para Nv {0}	Lv {0} に強化
+menu.maxlevel	Nivel máximo	Max level	Nível máximo	最大レベル
+menu.back	Volver	Back	Voltar	戻る
+menu.help.gamepad	Stick o cruceta  izquierda / derecha: mover la selección        X: confirmar	Stick or D-pad  left / right: move selection        X: confirm	Analógico ou direcional  esquerda / direita: mover a seleção        X: confirmar	スティックまたは十字キー 左 / 右：選択を移動        ×：決定
+menu.help.keyboard	A / D o flechas: mover la selección        Espacio: confirmar        o haz clic	A / D or arrows: move selection        Space: confirm        or click	A / D ou setas: mover a seleção        Espaço: confirmar        ou clique	A / D または矢印キー：選択を移動        スペース：決定        クリックも可
+player.name	Jugador	Player	Jogador	プレイヤー
+player.down	Caído: vuelve en la estación	Down: returns at the station	Caído: volta na estação	ダウン：次の駅で復帰
+player.slot	{0}  Nv {1}	{0}  Lv {1}	{0}  Nv {1}	{0}  Lv {1}
+player.newweapon	Arma nueva	New weapon	Arma nova	新しい武器
+player.replace	Reemplaza {0}	Replaces {0}	Substitui {0}	{0} と交換
+player.help.gamepad	Stick izq: mover   L2: correr   R1 / L1 o stick der: objetivo   Cruceta: arma	Left stick: move   L2: sprint   R1 / L1 or right stick: target   D-pad: weapon	Analógico esq: mover   L2: correr   R1 / L1 ou analógico dir: alvo   Direcional: arma	左スティック：移動   L2：ダッシュ   R1 / L1 または右スティック：ターゲット   十字キー：武器
+player.help.keyboard	WASD: mover   Shift: correr   Ratón: objetivo   Q / E: arma	WASD: move   Shift: sprint   Mouse: target   Q / E: weapon	WASD: mover   Shift: correr   Mouse: alvo   Q / E: arma	WASD：移動   Shift：ダッシュ   マウス：ターゲット   Q / E：武器
+biome.desert	Desierto	Desert	Deserto	砂漠
+biome.snow	Nieve	Snow	Neve	雪原
+biome.jungle	Jungla	Jungle	Selva	ジャングル
+biome.volcano	Volcán	Volcano	Vulcão	火山
+biome.space	Espacio	Space	Espaço	宇宙
+biome.alien	Planeta alienígena	Alien planet	Planeta alienígena	エイリアンの惑星
+biome.fortress	Fortaleza alienígena	Alien fortress	Fortaleza alienígena	エイリアンの要塞
+weapon.turret.name	Torreta	Turret	Torreta	タレット
+weapon.turret.info	Disparo equilibrado	Balanced shot	Disparo equilibrado	バランス型の射撃
+weapon.rocket.name	Lanzacohetes	Rocket launcher	Lança-foguetes	ロケットランチャー
+weapon.rocket.info	Lento, explota en área	Slow, explodes in an area	Lento, explode em área	遅いが範囲爆発
+weapon.minigun.name	Ametralladora	Machine gun	Metralhadora	マシンガン
+weapon.minigun.info	Muy rápida, corto alcance	Very fast, short range	Muito rápida, curto alcance	超高速、短射程
+weapon.shotgun.name	Escopeta	Shotgun	Espingarda	ショットガン
+weapon.shotgun.info	Varias balas, muy corto alcance	Several pellets, very short range	Várias balas, alcance muito curto	複数の弾、超短射程
+weapon.sniper.name	Francotirador	Sniper	Atirador de elite	スナイパー
+weapon.sniper.info	Mucho daño y alcance, lento	High damage and range, slow	Muito dano e alcance, lento	高威力・長射程、遅い
+weapon.pulse.name	Pulso	Pulse	Pulso	パルス
+weapon.pulse.info	Daña todo alrededor	Damages everything around	Causa dano a tudo ao redor	周囲すべてにダメージ
+weapon.storm.name	Tormenta	Storm	Tempestade	ストーム
+weapon.storm.info	Rayos del cielo, uno más por nivel	Lightning from the sky, one more per level	Raios do céu, um a mais por nível	空から雷、レベルごとに1本追加
+weapon.flame.name	Lanzallamas	Flamethrower	Lança-chamas	火炎放射器
+weapon.flame.info	Fuego en área, pegado al tren	Area fire, close to the train	Fogo em área, perto do trem	範囲に炎、列車の近くのみ
+weapon.freeze.name	Congelador	Freeze ray	Congelador	フリーザー
+weapon.freeze.info	Ralentiza al enemigo	Slows the enemy	Deixa o inimigo lento	敵を遅くする
+weapon.chain.name	Rayo en cadena	Chain lightning	Raio em cadeia	チェインライトニング
+weapon.chain.info	Salta entre enemigos	Jumps between enemies	Salta entre inimigos	敵から敵へ連鎖
+menu.skip.money	Saltado: +{0} de dinero	Skipped: +{0} money	Pulado: +{0} de dinheiro	スキップ：マネー +{0}
+menu.skip.health	Saltado: +{0} de vida (tren y jugador)	Skipped: +{0} health (train and player)	Pulado: +{0} de vida (trem e jogador)	スキップ：体力 +{0}（列車とプレイヤー）
+menu.hero	Mejora para el jugador	Player upgrade	Melhoria do jogador	プレイヤーの強化
+hud.leg	Tramo: {0}	Leg: {0}	Trecho: {0}	区間：{0}
+leg.normal	Normal	Normal	Normal	通常
+leg.long	Largo (doble distancia)	Long (double distance)	Longo (distância dupla)	長距離（距離2倍）
+leg.express	Exprés (rápido, llegan de frente)	Express (fast, enemies come from the front)	Expresso (rápido, vêm pela frente)	急行（高速、敵は前から）
+leg.slow	Lento (te alcanzan por detrás)	Slow (they catch up from behind)	Lento (alcançam por trás)	徐行（後ろから追いつかれる）
+hero.speed	Velocidad\n+10% de movimiento	Speed\n+10% movement	Velocidade\n+10% de movimento	スピード\n移動 +10%
+hero.armor	Resistencia\n-10% de daño recibido	Resistance\n-10% damage taken	Resistência\n-10% de dano recebido	耐久\n被ダメージ -10%
+hero.vitality	Vida máxima +{0}\ny cura {0}	Max health +{0}\nand heals {0}	Vida máxima +{0}\ne cura {0}	最大体力 +{0}\n{0} 回復
+weapon.blaster.name	Bláster	Blaster	Blaster	ブラスター
+weapon.blaster.info	Rápido, alcance medio	Fast, medium range	Rápido, alcance médio	速射、中射程
+weapon.grenade.name	Granadas	Grenades	Granadas	グレネード
+weapon.grenade.info	Explosión pequeña y frecuente	Small, frequent blasts	Explosões pequenas e frequentes	小さな爆発を連発
+weapon.smg.name	Subfusil	SMG	Submetralhadora	サブマシンガン
+weapon.smg.info	Ráfaga a quemarropa	Point-blank burst	Rajada à queima-roupa	至近距離の連射
+weapon.scatter.name	Recortada	Sawed-off	Cano serrado	ソードオフ
+weapon.scatter.info	3 balas, hay que acercarse	3 pellets, get close	3 balas, chegue perto	3発、接近が必要
+weapon.rail.name	Cañón de riel	Railgun	Canhão elétrico	レールガン
+weapon.rail.info	Atraviesa a un segundo enemigo	Pierces into a second enemy	Atravessa um segundo inimigo	2体目まで貫通
+weapon.nova.name	Nova	Nova	Nova	ノヴァ
+weapon.nova.info	Onda a tu alrededor	Shockwave around you	Onda ao seu redor	自分の周囲に衝撃波
+weapon.spark.name	Chispa	Spark	Faísca	スパーク
+weapon.spark.info	Rayo instantáneo, uno más por nivel	Instant bolt, one more per level	Raio instantâneo, um a mais por nível	即着の雷、レベルごとに1本追加
+menu.cargo	Carga para la próxima estación ({0} / {1})	Cargo for the next station ({0} / {1})	Carga para a próxima estação ({0} / {1})	次の駅への貨物（{0} / {1}）
+cargo.card	{0}\n+{1} al entregar\nVida {2} · multa {3}	{0}\n+{1} on delivery\nHealth {2} · fine {3}	{0}\n+{1} na entrega\nVida {2} · multa {3}	{0}\n納品で +{1}\n体力 {2} · 罰金 {3}
+cargo.wood	Madera	Wood	Madeira	木材
+cargo.rock	Roca	Rock	Rocha	岩石
+cargo.arms	Armas	Weapons	Armas	武器
+cargo.done	Listo\nsalir con esta carga	Done\nleave with this cargo	Pronto\npartir com esta carga	完了\nこの貨物で出発
+cargo.place	{0}: ¿en qué posición del tren?	{0}: where in the train?	{0}: em que posição do trem?	{0}：列車のどこに連結する？
+cargo.slot	Detrás del\nvagón {0}	Behind\nwagon {0}	Atrás do\nvagão {0}	車両 {0} の\n後ろ
+cargo.result	Carga entregada +{0}   ·   perdida -{1}	Cargo delivered +{0}   ·   lost -{1}	Carga entregue +{0}   ·   perdida -{1}	納品 +{0}   ·   損失 -{1}

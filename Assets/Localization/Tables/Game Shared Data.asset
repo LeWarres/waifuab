@@ -1,0 +1,396 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Game Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Game
+  m_TableCollectionNameGuidString: 82b42355b833ce54faea02bb5124f246
+  m_Entries:
+  - m_Id: 1725247488
+    m_Key: hud.status
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996224
+    m_Key: hud.train
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996225
+    m_Key: language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996226
+    m_Key: menu.gameover
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996227
+    m_Key: menu.yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996228
+    m_Key: menu.no
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996229
+    m_Key: menu.route
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996230
+    m_Key: menu.repair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996231
+    m_Key: menu.heal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996232
+    m_Key: menu.stay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996233
+    m_Key: menu.change
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996234
+    m_Key: menu.upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996235
+    m_Key: menu.money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996236
+    m_Key: menu.skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996237
+    m_Key: menu.place
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996238
+    m_Key: menu.wagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996239
+    m_Key: menu.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996240
+    m_Key: menu.replace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996241
+    m_Key: menu.levelup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996242
+    m_Key: menu.maxlevel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996243
+    m_Key: menu.player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996244
+    m_Key: menu.back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996245
+    m_Key: menu.help.gamepad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996246
+    m_Key: menu.help.keyboard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996247
+    m_Key: player.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996248
+    m_Key: player.down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996249
+    m_Key: player.slot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996250
+    m_Key: player.newweapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996251
+    m_Key: player.replace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996252
+    m_Key: player.help.gamepad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996253
+    m_Key: player.help.keyboard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996254
+    m_Key: biome.desert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996255
+    m_Key: biome.snow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996256
+    m_Key: biome.jungle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996257
+    m_Key: biome.volcano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996258
+    m_Key: biome.space
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996259
+    m_Key: biome.alien
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996260
+    m_Key: biome.fortress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996261
+    m_Key: weapon.turret.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996262
+    m_Key: weapon.turret.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996263
+    m_Key: weapon.rocket.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996264
+    m_Key: weapon.rocket.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996265
+    m_Key: weapon.minigun.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996266
+    m_Key: weapon.minigun.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996267
+    m_Key: weapon.shotgun.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996268
+    m_Key: weapon.shotgun.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996269
+    m_Key: weapon.sniper.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996270
+    m_Key: weapon.sniper.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996271
+    m_Key: weapon.pulse.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996272
+    m_Key: weapon.pulse.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996273
+    m_Key: weapon.storm.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996274
+    m_Key: weapon.storm.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996275
+    m_Key: weapon.flame.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996276
+    m_Key: weapon.flame.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996277
+    m_Key: weapon.freeze.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996278
+    m_Key: weapon.freeze.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996279
+    m_Key: weapon.chain.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1762996280
+    m_Key: weapon.chain.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5041823232000
+    m_Key: menu.skip.money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5041856786432
+    m_Key: menu.skip.health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144139649024
+    m_Key: menu.hero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203456
+    m_Key: hud.leg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203457
+    m_Key: leg.normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203458
+    m_Key: leg.long
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203459
+    m_Key: leg.express
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203460
+    m_Key: leg.slow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203461
+    m_Key: hero.speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203462
+    m_Key: hero.armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203463
+    m_Key: hero.vitality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203464
+    m_Key: weapon.blaster.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203465
+    m_Key: weapon.blaster.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203466
+    m_Key: weapon.grenade.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203467
+    m_Key: weapon.grenade.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203468
+    m_Key: weapon.smg.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203469
+    m_Key: weapon.smg.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203470
+    m_Key: weapon.scatter.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203471
+    m_Key: weapon.scatter.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203472
+    m_Key: weapon.rail.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203473
+    m_Key: weapon.rail.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203474
+    m_Key: weapon.nova.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203475
+    m_Key: weapon.nova.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203476
+    m_Key: weapon.spark.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155144173203477
+    m_Key: weapon.spark.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646232707072
+    m_Key: menu.cargo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067200
+    m_Key: cargo.card
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067201
+    m_Key: cargo.wood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067202
+    m_Key: cargo.rock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067203
+    m_Key: cargo.arms
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067204
+    m_Key: cargo.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067205
+    m_Key: cargo.place
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067206
+    m_Key: cargo.slot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170646262067207
+    m_Key: cargo.result
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5135529828365369681
+  references:
+    version: 2
+    RefIds:
+    - rid: 5135529828365369681
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1791448797716
