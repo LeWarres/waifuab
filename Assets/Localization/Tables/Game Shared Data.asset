@@ -411,6 +411,186 @@ MonoBehaviour:
     m_Key: weapon.laser.info
     m_Metadata:
       m_Items: []
+  - m_Id: 266376523886592
+    m_Key: menu.shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441024
+    m_Key: shop.kit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441025
+    m_Key: shop.wagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441026
+    m_Key: shop.wagon.limit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441027
+    m_Key: shop.container
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441028
+    m_Key: shop.container.limit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441029
+    m_Key: shop.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441030
+    m_Key: hud.kits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441031
+    m_Key: cargo.container
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815116722176
+    m_Key: jump.ramp.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276608
+    m_Key: jump.ramp.result
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276609
+    m_Key: jump.needle.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276610
+    m_Key: jump.needle.green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276611
+    m_Key: jump.needle.yellow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276612
+    m_Key: jump.needle.red
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379282173952
+    m_Key: warn.curve.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728384
+    m_Key: warn.jump.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728385
+    m_Key: warn.curve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728386
+    m_Key: warn.ramp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728387
+    m_Key: warn.needle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728388
+    m_Key: key.space
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845293850624
+    m_Key: hud.pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405056
+    m_Key: menu.pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405057
+    m_Key: pause.resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405058
+    m_Key: pause.restart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405059
+    m_Key: pause.quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299458186522624
+    m_Key: pause.restart.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299458215882752
+    m_Key: pause.quit.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304330390712320
+    m_Key: pause.help.gamepad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304330424266752
+    m_Key: pause.help.keyboard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102659649536
+    m_Key: warn.zig.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102689009664
+    m_Key: warn.zig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102689009665
+    m_Key: zig.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102689009666
+    m_Key: zig.result
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048337756160
+    m_Key: zig.stick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048379699200
+    m_Key: zig.keys
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048379699201
+    m_Key: zig.wait
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048379699202
+    m_Key: zig.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567475986313216
+    m_Key: hero.damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450560
+    m_Key: hero.greed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450561
+    m_Key: hero.evolve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450562
+    m_Key: hero.ammo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450563
+    m_Key: hud.hero.stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450564
+    m_Key: offer.cargo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450565
+    m_Key: offer.escort
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -10,12 +10,21 @@ public class Turret : MonoBehaviour
     Combat.Enemy target;
     int targetId;
     float cooldown;
+    const float ModelScale = 1.3f;
 
     public void Init(Weapon weapon)
     {
         Weapon = weapon;
-        TrainSim.Box(transform, Vector3.zero, new Vector3(1f, 0.5f, 1f), weapon.Material);
-        TrainSim.Box(transform, new Vector3(0f, 0.15f, 0.6f), new Vector3(0.2f, 0.2f, 1.2f), weapon.Material); // barrel along +z
+        // The gunner in her turret, barrels along +z; the gun takes the weapon's colour.
+        Transform model = Instantiate(Resources.Load<GameObject>("Models/TurretGirl"), transform).transform;
+        model.localScale = Vector3.one * ModelScale;
+        model.localPosition = Vector3.up * 0.25f * (ModelScale - 1f); // keeps its base on the wagon roof
+        Renderer skin = model.GetComponentInChildren<Renderer>();
+        Material[] mats = skin.sharedMaterials;
+        for (int i = 0; i < mats.Length; i++)
+            if (mats[i].name == "TurretAccent") mats[i] = weapon.Material;
+        skin.sharedMaterials = mats;
+        TrainSim.Toon(skin);
     }
 
     public void LevelUp()

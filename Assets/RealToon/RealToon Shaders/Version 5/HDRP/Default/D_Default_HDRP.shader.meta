@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: 6459b2db96a08ca41b0f9b39dc7ad59e
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _MainTex: {instanceID: 0}
+  - _MCap: {instanceID: 0}
+  - _MCapMask: {instanceID: 0}
+  - _SecondaryCutout: {instanceID: 0}
+  - _MaskTransparency: {instanceID: 0}
+  - _NormalMap: {instanceID: 0}
+  - _OutlineWidthControl: {instanceID: 0}
+  - _ONormMap: {instanceID: 0}
+  - _MaskSelfLit: {instanceID: 0}
+  - _MaskGloss: {instanceID: 0}
+  - _GlossTexture: {instanceID: 0}
+  - _ShadowColorTexture: {instanceID: 0}
+  - _ShadowT: {instanceID: 0}
+  - _PTexture: {instanceID: 0}
+  - _MaskReflection: {instanceID: 0}
+  - _FReflection: {instanceID: 0}
+  - _RefrMask: {instanceID: 0}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

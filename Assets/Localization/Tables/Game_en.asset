@@ -127,7 +127,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996246
-    m_Localized: 'A / D or arrows: move selection        Space: confirm        or click'
+    m_Localized: 'A / D or arrows: move selection        Space: confirm        or
+      click'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996247
@@ -151,11 +152,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996252
-    m_Localized: 'Left stick: move   L2: sprint   R1 / L1 or right stick: target   D-pad: weapon'
+    m_Localized: 'Left stick: move   L2: sprint   R1 / L1 or right stick: target'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996253
-    m_Localized: 'WASD: move   Shift: sprint   Mouse: target   Q / E: weapon'
+    m_Localized: 'WASD: move   Shift: sprint   Mouse: target'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996254
@@ -377,7 +378,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067200
-    m_Localized: "{0}\n+{1} on delivery\nHealth {2} \xB7 fine {3}"
+    m_Localized: "{0}\nCosts {4} \xB7 pays +{1}\nHealth {2} \xB7 fine {3}"
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067201
@@ -438,6 +439,226 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 206230870962176
     m_Localized: Weak, but pierces enemies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376523886592
+    m_Localized: Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441024
+    m_Localized: 'Medkit ({2}/{3})
+
+      +{0} to all on the road
+
+      ({1} money)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441025
+    m_Localized: 'Armed wagon
+
+      one more weapon
+
+      ({0} money)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441026
+    m_Localized: 'Armed wagon
+
+      one per biome:
+
+      move on'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441027
+    m_Localized: 'Container
+
+      pays every station
+
+      ({0} money)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441028
+    m_Localized: 'Permanent container
+
+      one per biome:
+
+      move on'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441029
+    m_Localized: 'Done
+
+      leave the shop'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441030
+    m_Localized: 'Medkits: {0}   ({1} to heal)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441031
+    m_Localized: Container
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815116722176
+    m_Localized: Jump! Press {0} for each wagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276608
+    m_Localized: 'Jump: {0} wagons landed, {1} lost'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276609
+    m_Localized: Jump! Press {0} on green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276610
+    m_Localized: 'Perfect jump: +{0} health'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276611
+    m_Localized: 'Close jump: no reward, no damage'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276612
+    m_Localized: 'Bad jump: -{0} to every wagon'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379282173952
+    m_Localized: CURVE AHEAD!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728384
+    m_Localized: JUMP AHEAD!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728385
+    m_Localized: Press the buttons in order
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728386
+    m_Localized: Press {0} for each wagon as it reaches the ramp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728387
+    m_Localized: Press {0} when the needle is on green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728388
+    m_Localized: Space
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845293850624
+    m_Localized: 'Start / Esc: pause'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405056
+    m_Localized: Paused
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405057
+    m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405058
+    m_Localized: 'Restart
+
+      run'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405059
+    m_Localized: 'Quit
+
+      game'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299458186522624
+    m_Localized: Restart the run? All progress is lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299458215882752
+    m_Localized: Quit the game? All progress is lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304330390712320
+    m_Localized: 'Stick or D-pad: choose     X: confirm'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304330424266752
+    m_Localized: 'W / S or arrows: choose     Space: confirm'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102659649536
+    m_Localized: ZIGZAG!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102689009664
+    m_Localized: Push {0} the way of the arrow, right on each turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102689009665
+    m_Localized: Zigzag! Push {0} the way of the arrow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102689009666
+    m_Localized: 'Zigzag: {0} turns made, {1} missed   +{2} money'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048337756160
+    m_Localized: the stick or D-pad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048379699200
+    m_Localized: A / D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048379699201
+    m_Localized: "Wait for the green zone\u2026  {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048379699202
+    m_Localized: NOW!  {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567475986313216
+    m_Localized: 'Damage
+
+      +20% to your shots'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450560
+    m_Localized: 'Loot
+
+      +25% money per enemy'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450561
+    m_Localized: 'Evolve {0}
+
+      Upgrade to Lv {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450562
+    m_Localized: 'Ammo: {0}
+
+      {1}
+
+      Keeps its level'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450563
+    m_Localized: Dmg {0}%   Spd {1}   Res {2}%   Loot {3}%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450564
+    m_Localized: "Free! {0} wagon\n+{1} on delivery \xB7 fine {2}\nThis trip only"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450565
+    m_Localized: 'Escort! {0} Lv {1}
+
+      Extra armed wagon
+
+      This trip only'
     m_Metadata:
       m_Items: []
   references:

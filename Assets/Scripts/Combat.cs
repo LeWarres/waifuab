@@ -53,7 +53,7 @@ public class Combat : MonoBehaviour
         public string name;
         public Color color;
         public float health, speed, damage, size;
-        public int reward = 1;   // money per kill, multiplied by the biome
+        public int reward = 1;   // money per kill
         public int biome = -1;   // only spawns in this biome; -1 = everywhere
         public int firstLevel;   // difficulty at which this type starts to appear
         public float weight;     // share of the spawns once it appears; 0 = never spawned directly
@@ -151,9 +151,9 @@ public class Combat : MonoBehaviour
     // than a train that takes a good upgrade every station, so skipped or unlucky upgrades get punished.
     [Header("Difficulty")]
     public float spawnRadius = 45f;
-    public float spawnRate = 1f;           // spawns per second at difficulty 0
-    public float spawnRatePerLevel = 0.25f;
-    public float healthPerLevel = 0.08f;   // +8% enemy health per difficulty level
+    public float spawnRate = 1.3f;         // spawns per second at difficulty 0
+    public float spawnRatePerLevel = 0.12f;
+    public float healthPerLevel = 0.045f;  // +4.5% enemy health per difficulty level
     public float damagePerLevel = 0.05f;
     public float speedDrift = 0.15f;       // how much a faster or slower train drags enemies back or lets them catch up   // +5% enemy damage per difficulty level
 
@@ -308,9 +308,9 @@ public class Combat : MonoBehaviour
                 if (toTarget.sqrMagnitude <= reach * reach)
                 {
                     Vector3 at = hit.position;
-                    float damage = b.weapon.Damage(b.level);
                     if (b.weapon.slow > 0f && !hit.type.slowImmune) hit.slowUntil = now + b.weapon.slow;
                     heroHit = b.hero;
+                    float damage = b.weapon.Damage(b.level) * Power;
                     if (b.weapon.splash > 0f) Explode(at, b.weapon.Splash(b.level), damage, b.weapon);
                     else Hurt(hit, damage);
                     heroHit = false;
@@ -382,7 +382,8 @@ public class Combat : MonoBehaviour
         }
 
         float angle = Random.value * Mathf.PI * 2f;
-        var center = new Vector3(Mathf.Cos(angle) * spawnRadius, 0f, Mathf.Sin(angle) * spawnRadius);
+        float radius = Mathf.Max(spawnRadius, train.HalfExtents.x + 25f); // a long train pushes the spawn ring out
+        var center = new Vector3(Mathf.Cos(angle) * radius, 0f, Mathf.Sin(angle) * radius);
         for (int i = 0; i < type.pack; i++)
             Add(type, center + new Vector3(Random.Range(-1.5f, 1.5f), 0f, Random.Range(-1.5f, 1.5f)) * (type.pack - 1));
     }
@@ -486,7 +487,7 @@ public class Combat : MonoBehaviour
     public void Volley(Vector3 from, Enemy first, Weapon weapon, int level, bool hero = false)
     {
         heroHit = hero;
-        if (weapon.pulse) Explode(from, weapon.range, weapon.Damage(level), weapon);
+        if (weapon.pulse) Explode(from, weapon.range, weapon.Damage(level) * Power, weapon);
         else
         {
             if (weapon.beam)
@@ -529,7 +530,7 @@ public class Combat : MonoBehaviour
     public void Strike(Enemy target, Weapon weapon, int level)
     {
         Spawn(new Vector3(target.position.x, 7f, target.position.z), new Vector3(0.3f, 14f, 0.3f), weapon.Batch, 0.12f);
-        Hurt(target, weapon.Damage(level));
+        Hurt(target, weapon.Damage(level) * Power);
     }
 
     // Weapon blast: damages every enemy within radius (measured on the ground) and shows a short flash.
@@ -546,7 +547,7 @@ public class Combat : MonoBehaviour
     // Laser: one instant straight ray. Weak per enemy, but it crosses every enemy standing on the line.
     public void Beam(Vector3 from, Vector3 direction, Weapon weapon, int level)
     {
-        float range = weapon.range, damage = weapon.Damage(level);
+        float range = weapon.range, damage = weapon.Damage(level) * Power;
         Spawn(from + direction * (range * 0.5f), new Vector3(0.12f, 0.12f, range), weapon.Batch, 0.08f, Quaternion.LookRotation(direction));
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
@@ -585,12 +586,14 @@ public class Combat : MonoBehaviour
     void Flash(Vector3 center, float radius, Batch batch) =>
         Spawn(new Vector3(center.x, 0.05f, center.z), new Vector3(radius * 2f, 0.05f, radius * 2f), batch, 0.1f);
 
+    float Power => heroHit ? player.damageBonus : 1f; // the hero's damage upgrades, on the hero's shots only
+
     void Hurt(Enemy e, float damage)
     {
         if (e.type.loot >= 0 && !heroHit) return;
         e.hp -= Mathf.Max(damage - e.type.armor, damage * 0.2f);
         if (e.hp > 0f) return;
-        train.money += e.type.reward * (train.Biome + 1);
+        train.Earn(e.type.reward); // flat: the biome multiplier is on the cargo, where the risk is
         Die(e, true);
     }
 

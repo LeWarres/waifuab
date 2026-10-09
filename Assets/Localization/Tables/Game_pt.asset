@@ -117,11 +117,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996245
-    m_Localized: "Anal\xF3gico ou direcional  esquerda / direita: mover a sele\xE7\xE3o        X: confirmar"
+    m_Localized: "Anal\xF3gico ou direcional  esquerda / direita: mover a sele\xE7\xE3o       
+      X: confirmar"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996246
-    m_Localized: "A / D ou setas: mover a sele\xE7\xE3o        Espa\xE7o: confirmar        ou clique"
+    m_Localized: "A / D ou setas: mover a sele\xE7\xE3o        Espa\xE7o: confirmar       
+      ou clique"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996247
@@ -145,11 +147,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996252
-    m_Localized: "Anal\xF3gico esq: mover   L2: correr   R1 / L1 ou anal\xF3gico dir: alvo   Direcional: arma"
+    m_Localized: "Anal\xF3gico esq: mover   L2: correr   R1 / L1 ou anal\xF3gico
+      dir: alvo"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996253
-    m_Localized: 'WASD: mover   Shift: correr   Mouse: alvo   Q / E: arma'
+    m_Localized: 'WASD: mover   Shift: correr   Mouse: alvo'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996254
@@ -367,7 +370,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067200
-    m_Localized: "{0}\n+{1} na entrega\nVida {2} \xB7 multa {3}"
+    m_Localized: "{0}\nCusta {4} \xB7 paga +{1}\nVida {2} \xB7 multa {3}"
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067201
@@ -426,6 +429,199 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 206230870962176
     m_Localized: Fraco, mas atravessa inimigos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376523886592
+    m_Localized: Loja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441024
+    m_Localized: "Kit m\xE9dico ({2}/{3})\n+{0} em tudo na viagem\n({1} dinheiro)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441025
+    m_Localized: "Vag\xE3o armado\nmais uma arma\n({0} dinheiro)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441026
+    m_Localized: "Vag\xE3o armado\num por bioma:\nmude de bioma"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441027
+    m_Localized: "Cont\xEAiner fixo\npaga a cada esta\xE7\xE3o\n({0} dinheiro)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441028
+    m_Localized: "Cont\xEAiner fixo\num por bioma:\nmude de bioma"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441029
+    m_Localized: 'Pronto
+
+      sair da loja'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441030
+    m_Localized: "Kits m\xE9dicos: {0}   ({1} para curar)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441031
+    m_Localized: "Cont\xEAiner"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815116722176
+    m_Localized: "Salto! Aperte {0} a cada vag\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276608
+    m_Localized: "Salto: {0} vag\xF5es certos, {1} perdidos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276609
+    m_Localized: Salto! Aperte {0} no verde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276610
+    m_Localized: 'Salto perfeito: +{0} de vida'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276611
+    m_Localized: "Salto no limite: sem pr\xEAmio nem dano"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276612
+    m_Localized: "Salto ruim: -{0} em cada vag\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379282173952
+    m_Localized: "CURVA \xC0 FRENTE!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728384
+    m_Localized: "SALTO \xC0 FRENTE!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728385
+    m_Localized: "Aperte os bot\xF5es na ordem"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728386
+    m_Localized: "Aperte {0} a cada vag\xE3o, ao chegar na rampa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728387
+    m_Localized: Aperte {0} quando a agulha estiver no verde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728388
+    m_Localized: "Espa\xE7o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845293850624
+    m_Localized: 'Start / Esc: pausa'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405056
+    m_Localized: Pausa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405057
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405058
+    m_Localized: 'Reiniciar
+
+      partida'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405059
+    m_Localized: 'Sair
+
+      do jogo'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299458186522624
+    m_Localized: Reiniciar a partida? Todo o progresso se perde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299458215882752
+    m_Localized: Sair do jogo? Todo o progresso se perde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304330390712320
+    m_Localized: "Anal\xF3gico ou direcional: escolher     X: confirmar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304330424266752
+    m_Localized: "W / S ou setas: escolher     Espa\xE7o: confirmar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102659649536
+    m_Localized: ZIGUE-ZAGUE!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102689009664
+    m_Localized: Empurre {0} para o lado da seta, bem em cada curva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102689009665
+    m_Localized: Zigue-zague! Empurre {0} para o lado da seta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102689009666
+    m_Localized: 'Zigue-zague: {0} curvas certas, {1} erradas   +{2} de dinheiro'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048337756160
+    m_Localized: "o anal\xF3gico ou direcional"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048379699200
+    m_Localized: A / D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048379699201
+    m_Localized: "Espere a zona verde\u2026  {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048379699202
+    m_Localized: AGORA!  {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567475986313216
+    m_Localized: 'Dano
+
+      +20% nos seus tiros'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450560
+    m_Localized: 'Saque
+
+      +25% de dinheiro por inimigo'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450561
+    m_Localized: 'Evoluir {0}
+
+      Sobe para Nv {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450562
+    m_Localized: "Muni\xE7\xE3o: {0}\n{1}\nMant\xE9m o n\xEDvel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450563
+    m_Localized: Dano {0}%   Vel {1}   Res {2}%   Saque {3}%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450564
+    m_Localized: "Gr\xE1tis! Vag\xE3o de {0}\n+{1} na entrega \xB7 multa {2}\nS\xF3
+      esta viagem"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450565
+    m_Localized: "Escolta! {0} Nv {1}\nVag\xE3o armado extra\nS\xF3 esta viagem"
     m_Metadata:
       m_Items: []
   references:

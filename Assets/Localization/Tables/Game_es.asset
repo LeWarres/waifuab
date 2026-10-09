@@ -119,11 +119,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996245
-    m_Localized: "Stick o cruceta  izquierda / derecha: mover la selecci\xF3n        X: confirmar"
+    m_Localized: "Stick o cruceta  izquierda / derecha: mover la selecci\xF3n       
+      X: confirmar"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996246
-    m_Localized: "A / D o flechas: mover la selecci\xF3n        Espacio: confirmar        o haz clic"
+    m_Localized: "A / D o flechas: mover la selecci\xF3n        Espacio: confirmar       
+      o haz clic"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996247
@@ -147,11 +149,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996252
-    m_Localized: 'Stick izq: mover   L2: correr   R1 / L1 o stick der: objetivo   Cruceta: arma'
+    m_Localized: 'Stick izq: mover   L2: correr   R1 / L1 o stick der: objetivo'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996253
-    m_Localized: "WASD: mover   Shift: correr   Rat\xF3n: objetivo   Q / E: arma"
+    m_Localized: "WASD: mover   Shift: correr   Rat\xF3n: objetivo"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996254
@@ -369,7 +371,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067200
-    m_Localized: "{0}\n+{1} al entregar\nVida {2} \xB7 multa {3}"
+    m_Localized: "{0}\nCuesta {4} \xB7 paga +{1}\nVida {2} \xB7 multa {3}"
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067201
@@ -428,6 +430,199 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 206230870962176
     m_Localized: "D\xE9bil, pero atraviesa enemigos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376523886592
+    m_Localized: Tienda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441024
+    m_Localized: "Botiqu\xEDn ({2}/{3})\n+{0} a todo en ruta\n({1} dinero)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441025
+    m_Localized: "Vag\xF3n armado\nun arma m\xE1s\n({0} dinero)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441026
+    m_Localized: "Vag\xF3n armado\nuno por bioma:\ncambia de bioma"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441027
+    m_Localized: "Contenedor fijo\npaga cada estaci\xF3n\n({0} dinero)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441028
+    m_Localized: 'Contenedor fijo
+
+      uno por bioma:
+
+      cambia de bioma'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441029
+    m_Localized: 'Listo
+
+      salir de la tienda'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441030
+    m_Localized: 'Botiquines: {0}   ({1} para curar)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 266376557441031
+    m_Localized: Contenedor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815116722176
+    m_Localized: "\xA1Salto! Pulsa {0} con cada vag\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276608
+    m_Localized: 'Salto: {0} vagones bien, {1} perdidos'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276609
+    m_Localized: "\xA1Salto! Pulsa {0} en verde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276610
+    m_Localized: 'Salto perfecto: +{0} de vida'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276611
+    m_Localized: "Salto justo: sin premio ni da\xF1o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289815150276612
+    m_Localized: "Mal salto: -{0} a cada vag\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379282173952
+    m_Localized: "\xA1CURVA ADELANTE!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728384
+    m_Localized: "\xA1SALTO ADELANTE!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728385
+    m_Localized: Pulsa los botones en orden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728386
+    m_Localized: "Pulsa {0} con cada vag\xF3n, al llegar a la rampa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728387
+    m_Localized: "Pulsa {0} cuando la aguja est\xE9 en verde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296379315728388
+    m_Localized: Espacio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845293850624
+    m_Localized: 'Start / Esc: pausa'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405056
+    m_Localized: Pausa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405057
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405058
+    m_Localized: 'Reiniciar
+
+      partida'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 298845327405059
+    m_Localized: 'Salir
+
+      del juego'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299458186522624
+    m_Localized: "\xBFReiniciar la partida? Se pierde todo el avance"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299458215882752
+    m_Localized: "\xBFSalir del juego? Se pierde todo el avance"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304330390712320
+    m_Localized: 'Stick o cruceta: elegir     X: confirmar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 304330424266752
+    m_Localized: 'W / S o flechas: elegir     Espacio: confirmar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102659649536
+    m_Localized: "\xA1ZIGZAG!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102689009664
+    m_Localized: Empuja {0} hacia la flecha, justo en cada giro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102689009665
+    m_Localized: "\xA1Zigzag! Empuja {0} hacia la flecha"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 308102689009666
+    m_Localized: 'Zigzag: {0} giros bien, {1} fallados   +{2} de dinero'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048337756160
+    m_Localized: el stick o la cruceta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048379699200
+    m_Localized: A / D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048379699201
+    m_Localized: "Espera a la zona verde\u2026  {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521048379699202
+    m_Localized: "\xA1AHORA!  {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567475986313216
+    m_Localized: "Da\xF1o\n+20% a tus disparos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450560
+    m_Localized: "Bot\xEDn\n+25% de dinero por enemigo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450561
+    m_Localized: 'Evolucionar {0}
+
+      Sube a Nv {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450562
+    m_Localized: "Munici\xF3n: {0}\n{1}\nConserva el nivel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450563
+    m_Localized: "Da\xF1o {0}%   Vel {1}   Res {2}%   Bot\xEDn {3}%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450564
+    m_Localized: "\xA1Gratis! Vag\xF3n de {0}\n+{1} al entregar \xB7 multa {2}\nSolo
+      este viaje"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 567476032450565
+    m_Localized: "\xA1Escolta! {0} Nv {1}\nVag\xF3n armado extra\nSolo este viaje"
     m_Metadata:
       m_Items: []
   references:

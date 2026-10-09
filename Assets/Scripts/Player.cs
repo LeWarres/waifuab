@@ -1,35 +1,29 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// The hero: flies around the train (touches nothing), locks onto one enemy, swaps between
-// carried weapons and shoots. Reads the project-wide input actions, so keyboard+mouse and
+// The hero: flies around the train (touches nothing), locks onto one enemy and shoots with the one
+// weapon it has; upgrades evolve it, change its ammo or raise the hero's stats. Reads the project-wide input actions, so keyboard+mouse and
 // gamepad both work and the active one is whichever device was really used last.
 public class Player : MonoBehaviour
 {
-    public class Slot
-    {
-        public Weapon weapon;
-        public int level = 1;
-    }
-
     public float speed = 12f;
     public float sprint = 1.7f;    // speed multiplier while the sprint button is held
     public float maxHealth = 30f;
     public float hover = 2.5f;     // flying height
     public float leash = 27f;      // how far from the train the hero may wander
-    public int maxSlots = 3;
     public float aimAssist = 20f;  // degrees around the aim line that still pick an enemy
 
     public float armor;            // share of incoming damage ignored, raised by upgrades
     public const float MaxArmor = 0.6f;
+    public float damageBonus = 1f; // multiplies every shot, raised by upgrades
+    public float moneyBonus = 1f;  // multiplies the money from kills, raised by upgrades
+    public Weapon ammo = Weapon.Hero[0]; // what the weapon fires
+    public int level = 1;                // how far the weapon has evolved
 
     public float Health { get; private set; }
     public bool Alive => Health > 0f;
     public bool UsingGamepad { get; private set; }
     public Vector3 Position => transform.position;
-    public readonly List<Slot> slots = new();
-    public Slot Selected => slots[selected];
 
     const float Deadzone = 0.25f;
     static readonly Vector3 SpawnPoint = new Vector3(0f, 2.5f, -4f);
@@ -43,7 +37,6 @@ public class Player : MonoBehaviour
     int targetId;
     Vector3 aim = Vector3.forward;
     float cooldown;
-    int selected;
 
     bool Locked => target != null && target.id == targetId;
 
@@ -51,7 +44,6 @@ public class Player : MonoBehaviour
     {
         this.train = train;
         Health = maxHealth;
-        slots.Add(new Slot { weapon = Weapon.Hero[0] });
 
         transform.position = SpawnPoint;
         visuals = GameObject.CreatePrimitive(PrimitiveType.Capsule);
@@ -90,10 +82,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (next.WasPressedThisFrame()) selected = (selected + 1) % slots.Count;
-        if (previous.WasPressedThisFrame()) selected = (selected + slots.Count - 1) % slots.Count;
-        Slot slot = Selected;
-        float range = slot.weapon.range;
+        float range = ammo.range;
         Combat combat = Combat.Instance;
 
         // Movement relative to the camera, so "up" on the stick is "up" on the screen.
@@ -148,8 +137,8 @@ public class Player : MonoBehaviour
         // Fires on its own whenever there is someone to shoot at.
         cooldown -= Time.deltaTime;
         if (cooldown > 0f || target == null) return;
-        cooldown = slot.weapon.Interval(slot.level);
-        combat.Volley(p, target, slot.weapon, slot.level, true);
+        cooldown = ammo.Interval(level);
+        combat.Volley(p, target, ammo, level, true);
     }
 
     // Red frame on the ground around whoever is locked, plus a pointer above it.
@@ -199,6 +188,8 @@ public class Player : MonoBehaviour
 
     // Station upgrades.
     public void SpeedUp() => speed *= 1.1f;
+    public void DamageUp() => damageBonus += 0.2f;
+    public void GreedUp() => moneyBonus += 0.25f;
     public void ArmorUp() => armor = Mathf.Min(MaxArmor, armor + 0.1f);
     public void VitalityUp(float amount)
     {
@@ -214,54 +205,4 @@ public class Player : MonoBehaviour
         transform.position = SpawnPoint;
         visuals.SetActive(true);
     }
-
-    Slot Find(Weapon weapon) => slots.Find(s => s.weapon == weapon);
-
-    public bool CanTake(Weapon weapon) => Find(weapon) is not { level: >= Weapon.MaxLevel };
-
-    public string TakeLabel(Weapon weapon)
-    {
-        Slot owned = Find(weapon);
-        if (owned != null) return owned.level < Weapon.MaxLevel ? L10n.T("menu.levelup", owned.level + 1) : L10n.T("menu.maxlevel");
-        return slots.Count < maxSlots ? L10n.T("player.newweapon") : L10n.T("player.replace", Selected.weapon.Name);
-    }
-
-    // Same weapon levels up, a new one fills a free slot, and with no slot left it replaces the one in hand.
-    public void Take(Weapon weapon)
-    {
-        Slot owned = Find(weapon);
-        if (owned != null) owned.level++;
-        else if (slots.Count < maxSlots)
-        {
-            slots.Add(new Slot { weapon = weapon });
-            selected = slots.Count - 1;
-        }
-        else slots[selected] = new Slot { weapon = weapon };
-    }
-
-    void OnGUI()
-    {
-        Ui.Begin();
-        if (Alive)
-        {
-            Vector2 head = Ui.Point(transform.position + Vector3.up * 1.6f);
-            Ui.Bar(Ui.R(head.x - 16f, head.y, 32f, 4f), Health / maxHealth);
-        }
-
-        // Top-right card: health, carried weapons (the one in hand is yellow) and the controls in use.
-        float x = Ui.Width - 438f, y = 8f;
-        Ui.Panel(Ui.R(x, y, 430f, 70f));
-        GUI.Label(Ui.R(x + 8f, y + 4f, 98f, 18f), L10n.T("player.name"), Ui.Text);
-        if (Alive)
-        {
-            Ui.Bar(Ui.R(x + 108f, y + 7f, 120f, 12f), Health / maxHealth);
-            GUI.Label(Ui.R(x + 108f, y + 4f, 120f, 18f), $"{Health:0} / {maxHealth:0}", Ui.Small);
-        }
-        else GUI.Label(Ui.R(x + 108f, y + 4f, 300f, 18f), L10n.T("player.down"), Ui.Text);
-        for (int i = 0; i < slots.Count; i++)
-            GUI.Label(Ui.R(x + 8f + i * 139f, y + 26f, 135f, 22f), L10n.T("player.slot", slots[i].weapon.Name, slots[i].level), i == selected ? Ui.Focused : Ui.Normal);
-        string keys = L10n.T(UsingGamepad ? "player.help.gamepad" : "player.help.keyboard");
-        GUI.Label(Ui.R(x + 4f, y + 50f, 420f, 16f), keys, Ui.Small);
-    }
-
 }

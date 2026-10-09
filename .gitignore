@@ -51,3 +51,14 @@ Thumbs.db
 
 # Tooling
 .codegraph/
+
+# Raw renders of the generated icons (large, reproducible)
+/Tools/icons_raw/
+
+# Blender backups and Python caches
+*.blend1
+__pycache__/
+
+# Unity crash recovery scenes
+/Assets/_Recovery/
+/Assets/_Recovery.meta
