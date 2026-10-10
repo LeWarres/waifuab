@@ -302,8 +302,11 @@ public class TrainSim : MonoBehaviour
     string menuTitle;
     int menuKind = -1, focus;
     bool navHeld;
+    static bool firstLoad = true, backToMenu; // the title screen shows on the first load, and when we ask for it back
+    bool mainMenu, settingsMenu;              // the title screen, and its settings page
     InputAction navigate, confirm, stepRight, stepLeft;
-    bool MenuOpen => AtStation || Health <= 0f || Paused;
+    bool ListMenu => Paused || settingsMenu;  // both draw their options as a vertical list
+    bool MenuOpen => mainMenu || AtStation || Health <= 0f || Paused;
 
     // Pause: Start on a gamepad, Esc on the keyboard. Freezes time and opens its own menu.
     public bool Paused { get; private set; }
@@ -467,6 +470,14 @@ public class TrainSim : MonoBehaviour
         Camera.main.orthographic = true;
         Camera.main.orthographicSize = cameraSize;
         AimCamera();
+
+        // The title screen shows on the first load and whenever we come back to it; otherwise the run starts at once.
+        bool boot = firstLoad;
+        mainMenu = firstLoad || backToMenu;
+        firstLoad = false;
+        backToMenu = false;
+        Time.timeScale = mainMenu ? 0f : 1f;
+        if (boot) Display.Apply();
     }
 
     void AimCamera()
@@ -639,7 +650,7 @@ public class TrainSim : MonoBehaviour
     {
         if (Keyboard.current != null && Keyboard.current.lKey.wasPressedThisFrame) L10n.NextLocale();
         // ponytail: reads the devices directly, like the medkit and the button games.
-        if (Health > 0f && ((Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame) ||
+        if (!mainMenu && Health > 0f && ((Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame) ||
                             (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)))
             SetPaused(!Paused);
 
@@ -661,7 +672,7 @@ public class TrainSim : MonoBehaviour
 
         // Repair kit: triangle / Y on a gamepad, R on the keyboard. Not at stations and not mid-sequence.
         // ponytail: reads the devices directly, like the curve's button sequence.
-        if (kits > 0 && !AtStation && !InEvent && !Paused && Health > 0f &&
+        if (kits > 0 && !AtStation && !InEvent && !Paused && !mainMenu && Health > 0f &&
             ((Gamepad.current != null && Gamepad.current.buttonNorth.wasPressedThisFrame) || (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)))
         {
             kits--;
@@ -674,12 +685,13 @@ public class TrainSim : MonoBehaviour
             BuildMenu();
             Navigate();
         }
-        string help = Paused && soundMenu ? (Player.UsingGamepad ? "sound.help.gamepad" : "sound.help.keyboard")
+        string help = soundMenu ? (Player.UsingGamepad ? "sound.help.gamepad" : "sound.help.keyboard")
+            : settingsMenu ? (Player.UsingGamepad ? "settings.help.gamepad" : "settings.help.keyboard")
             : Paused ? (Player.UsingGamepad ? "pause.help.gamepad" : "pause.help.keyboard")
                              : (Player.UsingGamepad ? "menu.help.gamepad" : "menu.help.keyboard");
-        menuView.Render(MenuOpen ? options : null, menuTitle, focus, L10n.T(help), i => options[i].run(), i => focus = i, Paused);
+        menuView.Render(MenuOpen ? options : null, menuTitle, focus, L10n.T(help), i => options[i].run(), i => focus = i, ListMenu);
 
-        if (AtStation || Paused) return;
+        if (AtStation || Paused || mainMenu) return;
 
         // Brake curve: fastest speed that can still stop exactly on the station.
         float target = Mathf.Clamp(Mathf.Sqrt(2f * acceleration * remaining), 0.5f, maxSpeed * Legs[leg].speed * (Zigzag ? zigSpeed : 1f));
@@ -1125,12 +1137,41 @@ public class TrainSim : MonoBehaviour
 
     void Restart()
     {
+        backToMenu = false;
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    void Add(string icon, string label, System.Action run, bool enabled = true, Vector3? anchor = null, Vector2 extent = default) =>
-        options.Add(new Option { icon = icon, label = label, run = run, enabled = enabled, anchor = anchor, extent = extent });
+    // Back to the title screen, dropping the run: reload so a fresh start waits behind the menu.
+    void GoToMainMenu()
+    {
+        backToMenu = true;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    // Leaves the title screen. What is behind it is always a fresh run, so this only starts the clock.
+    void Play()
+    {
+        mainMenu = false;
+        settingsMenu = false;
+        Time.timeScale = 1f;
+    }
+
+    // Ends the run for good: closes the build, or stops play mode when testing in the editor.
+    // Application.Quit does nothing in the editor, which made the game-over "No" look dead.
+    void Quit()
+    {
+        Time.timeScale = 1f;
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    void Add(string icon, string label, System.Action run, bool enabled = true, Vector3? anchor = null, Vector2 extent = default, System.Action<int> adjust = null) =>
+        options.Add(new Option { icon = icon, label = label, run = run, enabled = enabled, anchor = anchor, extent = extent, adjust = adjust });
 
     // A volume in the sound menu: left / right move it a tenth, confirming it (or a click) raises it and wraps round.
     void AddVolume(string icon, string key, float value, int which) =>
@@ -1142,14 +1183,33 @@ public class TrainSim : MonoBehaviour
     {
         options.Clear();
         int kind;
-        if (Paused && confirming != 0)
+        if (mainMenu && settingsMenu)
+        {
+            kind = 12;
+            menuTitle = L10n.T("menu.settings");
+            Add("monitor", L10n.T("settings.mode", L10n.T(Display.ModeKeys[Display.ModeIndex])), () => Display.StepMode(1), true, null, default, Display.StepMode);
+            Add("monitor", L10n.T("settings.resolution", Display.Width, Display.Height), () => Display.StepResolution(1), true, null, default, Display.StepResolution);
+            Add("speed", L10n.T("settings.fps", Display.FpsLabel), () => Display.StepFps(1), true, null, default, Display.StepFps);
+            Add("restart", L10n.T("settings.vsync", L10n.T(Display.VSync ? "menu.yes" : "menu.no")), Display.ToggleVSync, true, null, default, _ => Display.ToggleVSync());
+            Add("back", L10n.T("menu.back"), () => settingsMenu = false);
+        }
+        else if (mainMenu)
+        {
+            kind = 11;
+            menuTitle = L10n.T("menu.title");
+            Add("resume", L10n.T("menu.play"), Play);
+            Add("settings", L10n.T("menu.settings"), () => settingsMenu = true);
+            Add("language", L10n.T("language"), L10n.NextLocale);
+            Add("quit", L10n.T("pause.quit"), Quit);
+        }
+        else if (Paused && confirming != 0)
         {
             // "No" comes first, so it is the one focused when the question opens.
             kind = 9;
-            menuTitle = L10n.T(confirming == 1 ? "pause.restart.ask" : "pause.quit.ask");
+            menuTitle = L10n.T(confirming == 1 ? "pause.restart.ask" : "pause.menu.ask");
             Add("no", L10n.T("menu.no"), () => confirming = 0);
             if (confirming == 1) Add("yes", L10n.T("menu.yes"), Restart);
-            else Add("yes", L10n.T("menu.yes"), Application.Quit);
+            else Add("yes", L10n.T("menu.yes"), GoToMainMenu);
         }
         else if (Paused && soundMenu)
         {
@@ -1169,14 +1229,14 @@ public class TrainSim : MonoBehaviour
             Add("sound", L10n.T("pause.sound"), () => soundMenu = true);
             Add("language", L10n.T("language"), L10n.NextLocale);
             Add("restart", L10n.T("pause.restart"), () => confirming = 1);
-            Add("quit", L10n.T("pause.quit"), () => confirming = 2);
+            Add("quit", L10n.T("pause.menu"), () => confirming = 2);
         }
         else if (Health <= 0f)
         {
             kind = 0;
             menuTitle = L10n.T("menu.gameover");
             Add("yes", L10n.T("menu.yes"), Restart);
-            Add("no", L10n.T("menu.no"), Application.Quit);
+            Add("no", L10n.T("menu.no"), GoToMainMenu);
         }
         else if (stage >= 4)
         {
@@ -1316,13 +1376,13 @@ public class TrainSim : MonoBehaviour
     // Left/right moves the focus (stick, d-pad, A/D, arrows or Q/E); Jump (cross / A button, Space) confirms.
     void Navigate()
     {
-        // The pause menu is a vertical list, so up/down work there too.
+        // The pause and settings menus are vertical lists, so up/down work there too.
         Vector2 move = navigate.ReadValue<Vector2>();
-        float x = Paused && Mathf.Abs(move.y) > Mathf.Abs(move.x) ? -move.y : move.x;
+        float x = ListMenu && Mathf.Abs(move.y) > Mathf.Abs(move.x) ? -move.y : move.x;
         int step = Mathf.Abs(x) > 0.5f ? (int)Mathf.Sign(x) : 0;
         bool tapped = stepRight.WasPressedThisFrame() || stepLeft.WasPressedThisFrame(); // d-pad and Q/E
         if (tapped) step = stepRight.WasPressedThisFrame() ? 1 : -1;
-        if (Paused && options[focus].adjust != null)
+        if (ListMenu && options[focus].adjust != null)
         {
             // On a setting, left and right (and Q / E) change its value instead of moving the selection.
             int side = tapped ? step : Mathf.Abs(move.x) > 0.5f && Mathf.Abs(move.x) > Mathf.Abs(move.y) ? (int)Mathf.Sign(move.x) : 0;

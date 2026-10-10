@@ -127,8 +127,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996246
-    m_Localized: 'A / D or arrows: move selection        Space: confirm        or
-      click'
+    m_Localized: 'A / D or arrows: move selection        Space: confirm        or click'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996247
@@ -723,6 +722,68 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 746880280899584
     m_Localized: Ocean
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104082268160
+    m_Localized: WaifuTren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239680
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239681
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239682
+    m_Localized: 'Main
+
+      menu'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239683
+    m_Localized: Return to the main menu? All progress is lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239684
+    m_Localized: 'Screen: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239685
+    m_Localized: Borderless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239686
+    m_Localized: Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239687
+    m_Localized: Windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239688
+    m_Localized: "Resolution: {0}\xD7{1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239689
+    m_Localized: 'FPS limit: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239690
+    m_Localized: Unlimited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239691
+    m_Localized: 'VSync: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239692
+    m_Localized: 'Up / down: choose     Left / right: adjust     X: change'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239693
+    m_Localized: 'W / S: choose     A / D: adjust     Space: change'
     m_Metadata:
       m_Items: []
   references:

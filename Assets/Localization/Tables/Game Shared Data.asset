@@ -655,6 +655,66 @@ MonoBehaviour:
     m_Key: biome.ocean
     m_Metadata:
       m_Items: []
+  - m_Id: 829104082268160
+    m_Key: menu.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239680
+    m_Key: menu.play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239681
+    m_Key: menu.settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239682
+    m_Key: pause.menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239683
+    m_Key: pause.menu.ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239684
+    m_Key: settings.mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239685
+    m_Key: display.borderless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239686
+    m_Key: display.fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239687
+    m_Key: display.windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239688
+    m_Key: settings.resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239689
+    m_Key: settings.fps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239690
+    m_Key: display.fps.unlimited
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239691
+    m_Key: settings.vsync
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239692
+    m_Key: settings.help.gamepad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239693
+    m_Key: settings.help.keyboard
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

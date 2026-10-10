@@ -119,13 +119,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996245
-    m_Localized: "Stick o cruceta  izquierda / derecha: mover la selecci\xF3n       
-      X: confirmar"
+    m_Localized: "Stick o cruceta  izquierda / derecha: mover la selecci\xF3n        X: confirmar"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996246
-    m_Localized: "A / D o flechas: mover la selecci\xF3n        Espacio: confirmar       
-      o haz clic"
+    m_Localized: "A / D o flechas: mover la selecci\xF3n        Espacio: confirmar        o haz clic"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996247
@@ -617,8 +615,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 567476032450564
-    m_Localized: "\xA1Gratis! Vag\xF3n de {0}\n+{1} al entregar \xB7 multa {2}\nSolo
-      este viaje"
+    m_Localized: "\xA1Gratis! Vag\xF3n de {0}\n+{1} al entregar \xB7 multa {2}\nSolo este viaje"
     m_Metadata:
       m_Items: []
   - m_Id: 567476032450565
@@ -678,8 +675,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 735480049381380
-    m_Localized: 'Arriba / abajo: elegir     Izquierda / derecha: ajustar     X:
-      cambiar'
+    m_Localized: 'Arriba / abajo: elegir     Izquierda / derecha: ajustar     X: cambiar'
     m_Metadata:
       m_Items: []
   - m_Id: 735480049381381
@@ -688,6 +684,66 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 746880280899584
     m_Localized: "Oc\xE9ano"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104082268160
+    m_Localized: WaifuTren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239680
+    m_Localized: Jugar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239681
+    m_Localized: Configuraciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239682
+    m_Localized: "Men\xFA\nprincipal"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239683
+    m_Localized: "\xBFVolver al men\xFA principal? Se pierde todo el avance"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239684
+    m_Localized: 'Pantalla: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239685
+    m_Localized: Sin bordes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239686
+    m_Localized: Pantalla completa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239687
+    m_Localized: Ventana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239688
+    m_Localized: "Resoluci\xF3n: {0}\xD7{1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239689
+    m_Localized: "L\xEDmite de FPS: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239690
+    m_Localized: "Sin l\xEDmite"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239691
+    m_Localized: 'VSync: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239692
+    m_Localized: 'Arriba / abajo: elegir     Izquierda / derecha: ajustar     X: cambiar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239693
+    m_Localized: 'W / S: elegir     A / D: ajustar     Espacio: cambiar'
     m_Metadata:
       m_Items: []
   references:

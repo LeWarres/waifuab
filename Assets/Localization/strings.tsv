@@ -158,3 +158,18 @@ sound.sfx	Efectos: {0}%	Effects: {0}%	Efeitos: {0}%	効果音：{0}%
 sound.mute	Silenciar todo: {0}	Mute everything: {0}	Silenciar tudo: {0}	すべてミュート：{0}
 sound.help.gamepad	Arriba / abajo: elegir     Izquierda / derecha: ajustar     X: cambiar	Up / down: choose     Left / right: adjust     X: change	Cima / baixo: escolher     Esquerda / direita: ajustar     X: mudar	上下：選ぶ     左右：調整     X：変更
 sound.help.keyboard	W / S: elegir     A / D: ajustar     Espacio: cambiar	W / S: choose     A / D: adjust     Space: change	W / S: escolher     A / D: ajustar     Espaço: mudar	W / S：選ぶ     A / D：調整     Space：変更
+menu.title	WaifuTren	WaifuTren	WaifuTren	WaifuTren
+menu.play	Jugar	Play	Jogar	プレイ
+menu.settings	Configuraciones	Settings	Configurações	設定
+pause.menu	Menú\nprincipal	Main\nmenu	Menu\nprincipal	メイン\nメニュー
+pause.menu.ask	¿Volver al menú principal? Se pierde todo el avance	Return to the main menu? All progress is lost	Voltar ao menu principal? Todo o progresso se perde	メインメニューに戻る？ 進行状況はすべて失われる
+settings.mode	Pantalla: {0}	Screen: {0}	Tela: {0}	画面：{0}
+display.borderless	Sin bordes	Borderless	Sem bordas	ボーダーレス
+display.fullscreen	Pantalla completa	Fullscreen	Tela cheia	全画面
+display.windowed	Ventana	Windowed	Janela	ウィンドウ
+settings.resolution	Resolución: {0}×{1}	Resolution: {0}×{1}	Resolução: {0}×{1}	解像度：{0}×{1}
+settings.fps	Límite de FPS: {0}	FPS limit: {0}	Limite de FPS: {0}	FPS上限：{0}
+display.fps.unlimited	Sin límite	Unlimited	Sem limite	無制限
+settings.vsync	VSync: {0}	VSync: {0}	VSync: {0}	VSync：{0}
+settings.help.gamepad	Arriba / abajo: elegir     Izquierda / derecha: ajustar     X: cambiar	Up / down: choose     Left / right: adjust     X: change	Cima / baixo: escolher     Esquerda / direita: ajustar     X: mudar	上下：選ぶ     左右：調整     X：変更
+settings.help.keyboard	W / S: elegir     A / D: ajustar     Espacio: cambiar	W / S: choose     A / D: adjust     Space: change	W / S: escolher     A / D: ajustar     Espaço: mudar	W / S：選ぶ     A / D：調整     Space：変更

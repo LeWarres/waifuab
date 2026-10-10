@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 S, OUT, W = 512, 256, 14          # working size, final size, outline width
 NAVY = (86, 84, 132, 255)          # soft violet-grey line, like the generated icons
-SYMBOLS = ('skip', 'back', 'yes', 'no', 'stay', 'resume', 'restart')
+SYMBOLS = ('skip', 'back', 'yes', 'no', 'stay', 'resume', 'restart', 'settings', 'monitor')
 WHITE = (255, 255, 255, 255)
 TILES = {                          # category: (top colour, bottom colour)
     'wagon': ((120, 200, 255), (50, 130, 230)),
@@ -270,6 +270,16 @@ def restart():
 def quit_():
     i = Icon('danger'); i.rrect((120, 110, 300, 402), 20, (255, 255, 255, 110), 16); i.poly([(250, 216), (340, 216), (340, 160), (430, 256), (340, 352), (340, 296), (250, 296)]); return i
 
+def settings():
+    i = Icon('system')
+    for y, knob in ((176, 200), (256, 322), (336, 196)):
+        i.line([(150, y), (362, y)], SKY, 24); i.circle(knob, y, 46, MINT)
+    return i
+
+def monitor():
+    i = Icon('system'); i.rrect((96, 150, 416, 336), 26, SKY); i.rrect((150, 178, 362, 308), 12, (235, 245, 255, 255), 10)
+    i.rrect((236, 336, 276, 388), 8, (200, 205, 220, 255)); i.rrect((170, 386, 342, 410), 10, (200, 205, 220, 255)); return i
+
 
 ICONS = {
     'turret': turret, 'rocket': rocket, 'minigun': minigun, 'shotgun': shotgun, 'sniper': sniper, 'pulse': pulse, 'storm': storm,
@@ -280,6 +290,7 @@ ICONS = {
     'wood': wood, 'rock': rock, 'arms': arms, 'container': container, 'slot': slot,
     'wagon': wagon, 'repair': repair, 'heal': heal, 'medkit': medkit,
     'stay': stay, 'biome': biome, 'language': language, 'resume': resume, 'restart': restart, 'quit': quit_,
+    'settings': settings, 'monitor': monitor,
 }
 
 if __name__ == '__main__':

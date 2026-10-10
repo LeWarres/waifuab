@@ -117,13 +117,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996245
-    m_Localized: "Anal\xF3gico ou direcional  esquerda / direita: mover a sele\xE7\xE3o       
-      X: confirmar"
+    m_Localized: "Anal\xF3gico ou direcional  esquerda / direita: mover a sele\xE7\xE3o        X: confirmar"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996246
-    m_Localized: "A / D ou setas: mover a sele\xE7\xE3o        Espa\xE7o: confirmar       
-      ou clique"
+    m_Localized: "A / D ou setas: mover a sele\xE7\xE3o        Espa\xE7o: confirmar        ou clique"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996247
@@ -147,8 +145,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996252
-    m_Localized: "Anal\xF3gico esq: mover   L2: correr   R1 / L1 ou anal\xF3gico
-      dir: alvo"
+    m_Localized: "Anal\xF3gico esq: mover   L2: correr   R1 / L1 ou anal\xF3gico dir: alvo"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996253
@@ -616,8 +613,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 567476032450564
-    m_Localized: "Gr\xE1tis! Vag\xE3o de {0}\n+{1} na entrega \xB7 multa {2}\nS\xF3
-      esta viagem"
+    m_Localized: "Gr\xE1tis! Vag\xE3o de {0}\n+{1} na entrega \xB7 multa {2}\nS\xF3 esta viagem"
     m_Metadata:
       m_Items: []
   - m_Id: 567476032450565
@@ -686,6 +682,68 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 746880280899584
     m_Localized: Oceano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104082268160
+    m_Localized: WaifuTren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239680
+    m_Localized: Jogar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239681
+    m_Localized: "Configura\xE7\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239682
+    m_Localized: 'Menu
+
+      principal'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239683
+    m_Localized: Voltar ao menu principal? Todo o progresso se perde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239684
+    m_Localized: 'Tela: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239685
+    m_Localized: Sem bordas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239686
+    m_Localized: Tela cheia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239687
+    m_Localized: Janela
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239688
+    m_Localized: "Resolu\xE7\xE3o: {0}\xD7{1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239689
+    m_Localized: 'Limite de FPS: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239690
+    m_Localized: Sem limite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239691
+    m_Localized: 'VSync: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239692
+    m_Localized: 'Cima / baixo: escolher     Esquerda / direita: ajustar     X: mudar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 829104103239693
+    m_Localized: "W / S: escolher     A / D: ajustar     Espa\xE7o: mudar"
     m_Metadata:
       m_Items: []
   references:
