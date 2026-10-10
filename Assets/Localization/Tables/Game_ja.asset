@@ -611,6 +611,73 @@ MonoBehaviour:
     m_Localized: "\u8B77\u885B\uFF01{0} Lv {1}\n\u8FFD\u52A0\u306E\u6B66\u88C5\u8ECA\u4E21\n\u4ECA\u56DE\u306E\u65C5\u306E\u307F"
     m_Metadata:
       m_Items: []
+  - m_Id: 628753945669632
+    m_Localized: "\u90FD\u5E02"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 676525197570048
+    m_Localized: "{1} \xB7 \u99C5 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 676525231124480
+    m_Localized: "\u96E3\u5EA6 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032011198464
+    m_Localized: "\u7FA4\u308C\u8972\u6765\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947200
+    m_Localized: "\u72D9\u3063\u3066 {0} \u3067\u6483\u3066"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947201
+    m_Localized: "\u6575\uFF1A{0}     \u8ECA\u4E21\uFF1A{1}%     {2}\uFF1A\u5C04\u6483"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947202
+    m_Localized: "\u7FA4\u308C\u3092\u6483\u7834\uFF1A{0} \u6A5F\u6483\u589C\u3001\u30DE\u30CD\u30FC
+      +{1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947203
+    m_Localized: "\u7FA4\u308C\u306B\u8ECA\u4E21\u3092\u7834\u58CA\u3055\u308C\u305F\uFF08{0}
+      \u6A5F\u6483\u589C\uFF09"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480011632640
+    m_Localized: "\u30B5\u30A6\u30F3\u30C9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381376
+    m_Localized: "\u5168\u4F53\u306E\u97F3\u91CF\uFF1A{0}%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381377
+    m_Localized: "\u97F3\u697D\uFF1A{0}%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381378
+    m_Localized: "\u52B9\u679C\u97F3\uFF1A{0}%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381379
+    m_Localized: "\u3059\u3079\u3066\u30DF\u30E5\u30FC\u30C8\uFF1A{0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381380
+    m_Localized: "\u4E0A\u4E0B\uFF1A\u9078\u3076     \u5DE6\u53F3\uFF1A\u8ABF\u6574    
+      X\uFF1A\u5909\u66F4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381381
+    m_Localized: "W / S\uFF1A\u9078\u3076     A / D\uFF1A\u8ABF\u6574     Space\uFF1A\u5909\u66F4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 746880280899584
+    m_Localized: "\u6D77"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

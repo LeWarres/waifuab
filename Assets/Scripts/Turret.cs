@@ -36,6 +36,7 @@ public class Turret : MonoBehaviour
     void Update()
     {
         Combat combat = Combat.Instance;
+        if (combat.Paused) return;
         cooldown -= Time.deltaTime;
         if (Time.time < stunnedUntil) return;
         if (target == null || target.id != targetId)

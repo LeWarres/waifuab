@@ -62,3 +62,4 @@ __pycache__/
 # Unity crash recovery scenes
 /Assets/_Recovery/
 /Assets/_Recovery.meta
+/Tools/sky_raw/

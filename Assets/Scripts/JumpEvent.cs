@@ -157,7 +157,8 @@ public class JumpEvent : MonoBehaviour
             panel.Cue(button, false);
             return;
         }
-        panel.Show(L10n.T("jump.needle.title", button), 0);
+        if (!Active) return;   // the needle: no preview, the warning strip alone announces it
+        panel.Show(button, 0); // nothing to read: the button, right over the needle
         panel.Dial(NeedleAngle(), greenAngle, yellowAngle);
     }
 }

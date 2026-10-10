@@ -66,6 +66,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        // Out of the picture while the game is seen from a gunner's seat.
+        if (visuals.activeSelf != (Alive && !train.Swarming)) visuals.SetActive(Alive && !train.Swarming);
         if (!Alive || Time.timeScale == 0f) return;
 
         // Whatever device was really used last is the one in use (a drifting stick does not count).
@@ -89,7 +91,7 @@ public class Player : MonoBehaviour
         Transform cam = Camera.main.transform;
         Vector3 forward = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized, right = cam.right;
         Vector3 walk = (right * input.x + forward * input.y) * (run.IsPressed() ? speed * sprint : speed);
-        Vector3 p = Vector3.ClampMagnitude(Flat(transform.position) + walk * Time.deltaTime, Mathf.Max(leash, train.HalfExtents.x + 8f));
+        Vector3 p = train.Focus + Vector3.ClampMagnitude(Flat(transform.position) + walk * Time.deltaTime - train.Focus, Mathf.Max(leash, train.Reach));
         // Flying around the train, never through it: pushed out by the nearest side.
         Vector2 half = train.HalfExtents + Vector2.one * 0.8f;
         float insideX = half.x - Mathf.Abs(p.x), insideZ = half.y - Mathf.Abs(p.z);
@@ -144,7 +146,7 @@ public class Player : MonoBehaviour
     // Red frame on the ground around whoever is locked, plus a pointer above it.
     void LateUpdate()
     {
-        if (!Alive || !Locked) return;
+        if (!Alive || !Locked || train.Swarming) return;
         float half = target.type.size * 0.5f + 0.4f, side = half * 2f + 0.15f;
         Vector3 c = new Vector3(target.position.x, 0.08f, target.position.z);
         marker.Add(c + Vector3.forward * half, new Vector3(side, 0.1f, 0.15f));
@@ -175,6 +177,7 @@ public class Player : MonoBehaviour
     {
         if (!Alive) return;
         Health = Mathf.Max(0f, Health - amount * (1f - armor));
+        train.Flash("blood");
         if (!Alive) visuals.SetActive(false); // down: the train carries on alone until the next station
     }
 
@@ -184,7 +187,11 @@ public class Player : MonoBehaviour
         aim = turn * aim;
     }
 
-    public void Heal(float amount) => Health = Mathf.Min(maxHealth, Health + amount);
+    public void Heal(float amount)
+    {
+        if (Health < maxHealth && amount > 0f) train.Flash("healing");
+        Health = Mathf.Min(maxHealth, Health + amount);
+    }
 
     // Station upgrades.
     public void SpeedUp() => speed *= 1.1f;

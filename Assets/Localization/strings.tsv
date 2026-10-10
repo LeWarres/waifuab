@@ -32,7 +32,9 @@ player.help.keyboard	WASD: mover   Shift: correr   Ratón: objetivo	WASD: move  
 biome.desert	Desierto	Desert	Deserto	砂漠
 biome.snow	Nieve	Snow	Neve	雪原
 biome.jungle	Jungla	Jungle	Selva	ジャングル
+biome.ocean	Océano	Ocean	Oceano	海
 biome.volcano	Volcán	Volcano	Vulcão	火山
+biome.city	Ciudad	City	Cidade	都市
 biome.space	Espacio	Space	Espaço	宇宙
 biome.alien	Planeta alienígena	Alien planet	Planeta alienígena	エイリアンの惑星
 biome.fortress	Fortaleza alienígena	Alien fortress	Fortaleza alienígena	エイリアンの要塞
@@ -142,3 +144,17 @@ hero.ammo	Munición: {0}\n{1}\nConserva el nivel	Ammo: {0}\n{1}\nKeeps its level
 hud.hero.stats	Daño {0}%   Vel {1}   Res {2}%   Botín {3}%	Dmg {0}%   Spd {1}   Res {2}%   Loot {3}%	Dano {0}%   Vel {1}   Res {2}%   Saque {3}%	攻撃 {0}%   速度 {1}   耐性 {2}%   戦利品 {3}%
 offer.cargo	¡Gratis! Vagón de {0}\n+{1} al entregar · multa {2}\nSolo este viaje	Free! {0} wagon\n+{1} on delivery · fine {2}\nThis trip only	Grátis! Vagão de {0}\n+{1} na entrega · multa {2}\nSó esta viagem	無料！{0}の貨車\n納品で +{1} · 罰金 {2}\n今回の旅のみ
 offer.escort	¡Escolta! {0} Nv {1}\nVagón armado extra\nSolo este viaje	Escort! {0} Lv {1}\nExtra armed wagon\nThis trip only	Escolta! {0} Nv {1}\nVagão armado extra\nSó esta viagem	護衛！{0} Lv {1}\n追加の武装車両\n今回の旅のみ
+hud.where	{1} · Estación {0}	{1} · Station {0}	{1} · Estação {0}	{1} · 駅 {0}
+hud.level	Dif. {0}	Diff. {0}	Dif. {0}	難度 {0}
+swarm.title	¡ENJAMBRE!	SWARM!	ENXAME!	群れ襲来！
+swarm.warn	Apunta y dispara con {0}	Aim and fire with {0}	Mire e atire com {0}	狙って {0} で撃て
+swarm.hud	Enemigos: {0}     Vagón: {1}%     {2}: disparar	Enemies: {0}     Wagon: {1}%     {2}: fire	Inimigos: {0}     Vagão: {1}%     {2}: atirar	敵：{0}     車両：{1}%     {2}：射撃
+swarm.won	Enjambre destruido: {0} derribados, +{1} dinero	Swarm destroyed: {0} shot down, +{1} money	Enxame destruído: {0} abatidos, +{1} dinheiro	群れを撃破：{0} 機撃墜、マネー +{1}
+swarm.lost	El enjambre destruyó el vagón ({0} derribados)	The swarm wrecked the wagon ({0} shot down)	O enxame destruiu o vagão ({0} abatidos)	群れに車両を破壊された（{0} 機撃墜）
+pause.sound	Sonido	Sound	Som	サウンド
+sound.master	Volumen general: {0}%	Master volume: {0}%	Volume geral: {0}%	全体の音量：{0}%
+sound.music	Música: {0}%	Music: {0}%	Música: {0}%	音楽：{0}%
+sound.sfx	Efectos: {0}%	Effects: {0}%	Efeitos: {0}%	効果音：{0}%
+sound.mute	Silenciar todo: {0}	Mute everything: {0}	Silenciar tudo: {0}	すべてミュート：{0}
+sound.help.gamepad	Arriba / abajo: elegir     Izquierda / derecha: ajustar     X: cambiar	Up / down: choose     Left / right: adjust     X: change	Cima / baixo: escolher     Esquerda / direita: ajustar     X: mudar	上下：選ぶ     左右：調整     X：変更
+sound.help.keyboard	W / S: elegir     A / D: ajustar     Espacio: cambiar	W / S: choose     A / D: adjust     Space: change	W / S: escolher     A / D: ajustar     Espaço: mudar	W / S：選ぶ     A / D：調整     Space：変更

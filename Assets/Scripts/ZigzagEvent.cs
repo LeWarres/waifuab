@@ -23,6 +23,10 @@ public class ZigzagEvent : MonoBehaviour
     int next, hits, misses;
     bool held;      // stick or key still down from the last flick
 
+    // Which way to flick for turn i, as it looks on screen: when the train runs down or left across the
+    // picture, the track's right is the player's left.
+    int Way(int i) => (train.KneeTurn(i) > 0f ? 1 : -1) * (train.ScreenSide < -0.1f ? -1 : 1);
+
     void Awake()
     {
         train = GetComponent<TrainSim>();
@@ -64,7 +68,7 @@ public class ZigzagEvent : MonoBehaviour
 
         float time = TimeTo(next), window = Window;
         // A flick well before the turn is ignored; near it, it has to be on time and the right way.
-        if (pressed && time <= window * 2.5f) Resolve(Mathf.Abs(time) <= window && flick == (train.KneeTurn(next) > 0f ? 1 : -1));
+        if (pressed && time <= window * 2.5f) Resolve(Mathf.Abs(time) <= window && flick == Way(next));
         else if (time < -window) Resolve(false);
     }
 
@@ -110,21 +114,12 @@ public class ZigzagEvent : MonoBehaviour
         missMarks.Flush();
         cueMarks.Flush();
 
-        // The panel: the turns in order, a marker running into the green stretch, and the arrow again right on the turn.
+        // No card over the track: every turn carries its own arrow, and the next one grows, then turns green
+        // (with the white frame closing on it) at the moment to flick.
         if (!Active && (next != 0 || !train.Warning)) return;
-        int count = outcome.Length;
-        string control = L10n.T(train.Player.UsingGamepad ? "zig.stick" : "zig.keys");
-        EventPanel panel = train.Panel;
-        panel.Show(L10n.T("zig.title", control), count);
-        for (int i = 0; i < count && i < train.KneeCount; i++)
-            panel.Box(i, train.KneeTurn(i) > 0f ? "→" : "←", outcome[i] != 0 ? outcome[i] : Active && i == next ? 3 : 0);
-        if (!Active) return;
-
-        float left = TimeTo(next), window = Window, span = lead + window;
-        bool hot = Mathf.Abs(left) <= window;
-        string arrow = train.KneeTurn(next) > 0f ? "→" : "←";
-        panel.Bar((lead - left) / span, 1f - 2f * window / span, 1f);
-        panel.Cue(hot ? L10n.T("zig.now", arrow) : L10n.T("zig.wait", control, arrow), hot);
-        panel.Tag(train.KneePoint(next) + Vector3.up * 3f, arrow, hot);
+        bool hot = Active && Mathf.Abs(TimeTo(next)) <= Window;
+        for (int i = 0; i < outcome.Length && i < train.KneeCount; i++)
+            train.Panel.Mark(train.KneePoint(i) + Vector3.up * 3f, Way(i) > 0 ? "→" : "←",
+                outcome[i] != 0 ? outcome[i] : Active && i == next ? (hot ? 4 : 3) : 0);
     }
 }

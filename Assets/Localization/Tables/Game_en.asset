@@ -661,6 +661,70 @@ MonoBehaviour:
       This trip only'
     m_Metadata:
       m_Items: []
+  - m_Id: 628753945669632
+    m_Localized: City
+    m_Metadata:
+      m_Items: []
+  - m_Id: 676525197570048
+    m_Localized: "{1} \xB7 Station {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 676525231124480
+    m_Localized: Diff. {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032011198464
+    m_Localized: SWARM!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947200
+    m_Localized: Aim and fire with {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947201
+    m_Localized: 'Enemies: {0}     Wagon: {1}%     {2}: fire'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947202
+    m_Localized: 'Swarm destroyed: {0} shot down, +{1} money'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947203
+    m_Localized: The swarm wrecked the wagon ({0} shot down)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480011632640
+    m_Localized: Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381376
+    m_Localized: 'Master volume: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381377
+    m_Localized: 'Music: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381378
+    m_Localized: 'Effects: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381379
+    m_Localized: 'Mute everything: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381380
+    m_Localized: 'Up / down: choose     Left / right: adjust     X: change'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381381
+    m_Localized: 'W / S: choose     A / D: adjust     Space: change'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 746880280899584
+    m_Localized: Ocean
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

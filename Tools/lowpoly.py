@@ -78,7 +78,17 @@ def ring(center, radius, thick, m, name="ring"):
     return _added(m, name, True)
 
 # Joins everything built so far into one object and exports it for Unity.
-def finish(name):
+# paint: bake every part's material colour into vertex colours and leave a single material, for meshes drawn
+# instanced with one material (the enemies): the game's shader multiplies its colour by them.
+def finish(name, folder=None, paint=False):
+    if paint:
+        for ob in parts:
+            shade = ob.data.materials[0].diffuse_color
+            layer = ob.data.color_attributes.new("Col", "BYTE_COLOR", "CORNER")
+            for item in layer.data:
+                item.color_srgb = shade
+            ob.data.materials.clear()
+            ob.data.materials.append(parts[0].data.materials[0] if ob is not parts[0] and parts[0].data.materials else mat("Painted", (1, 1, 1)))
     bpy.ops.object.select_all(action="DESELECT")
     for ob in parts:
         ob.select_set(True)
@@ -92,7 +102,7 @@ def finish(name):
     bpy.ops.mesh.normals_make_consistent(inside=False)
     bpy.ops.object.mode_set(mode="OBJECT")
     parts.clear()
-    folder = os.path.join(ROOT, "Assets", "Resources", "Models")
+    folder = folder or os.path.join(ROOT, "Assets", "Resources", "Models")
     os.makedirs(folder, exist_ok=True)
     bpy.ops.export_scene.fbx(filepath=os.path.join(folder, name + ".fbx"), use_selection=True, apply_scale_options="FBX_SCALE_ALL",
                              axis_forward="-Z", axis_up="Y", bake_space_transform=True, object_types={"MESH"}, mesh_smooth_type="OFF")

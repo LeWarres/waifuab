@@ -42,9 +42,10 @@ public class TrainSim : MonoBehaviour
     public int containerCost = 150, containerCostStep = 75; // same for the permanent cargo wagons
 
     [Header("Track")]
+    [System.NonSerialized] public float exposure = 13.7f;                      // fixed camera exposure (EV100), the same in every biome
+    public float groundTile = 18f;                      // size on the ground of one repeat of the ground texture
     public float viewRange = 80f;
     public float sleeperSpacing = 1.5f;
-    public float poleSpacing = 15f;
     public float stationGap = 400f;    // length of a normal leg
 
     [Header("Camera")]
@@ -54,8 +55,11 @@ public class TrainSim : MonoBehaviour
     class Car
     {
         public Transform body;
-        public Material[] skin;     // its materials while it is alive
+        public Material[][] skins;  // its materials while it is alive, per renderer
         public float lift;          // height of the body's origin over the track
+        public GameObject fire;     // burning while it is a wreck
+        public bool flying;         // over the ravine right now
+        public Vector2Int[] painted; // where in skins the body paint is (renderer, material)
         public Vector3 pos;         // on the ground, under its middle
         public float heading;       // degrees around Y; not 0 only while it is past a curve's knee
         public float health, maxHealth;
@@ -90,6 +94,7 @@ public class TrainSim : MonoBehaviour
     public float Health { get { float sum = 0f; foreach (Car c in cars) if (c.cargo < 0) sum += c.health; return sum; } }
     // For the HUD.
     public string BiomeLabel => BiomeName(Biome);
+    public string BiomeId => Biomes[Biome].id;
     public string LegLabel => LegName(leg);
     public float LegProgress => AtStation ? 1f : 1f - remaining / LegLength;
     public int Kits => kits;
@@ -100,12 +105,26 @@ public class TrainSim : MonoBehaviour
     public bool ShowCarNumbers => MenuOpen && !Paused && (menuKind == 3 || menuKind == 6);
     public EventPanel Panel { get; private set; } // the card the button games are played on
     public void Toast(string text) => hud.Toast(text);
+    public void Flash(string effect) => hud.Flash(effect);
     Hud hud;
     public float MaxHealth { get { float sum = 0f; foreach (Car c in cars) if (c.cargo < 0) sum += c.maxHealth; return sum; } }
     public bool CanTakeLoot => cars.Count < maxCars;
     public bool Damaged => Health < MaxHealth || Player.Health < Player.maxHealth;
-    public bool InEvent => turn.Active || jump.Active || zig.Active; // a button game is on: the hero waits
+    public bool InEvent => turn.Active || jump.Active || zig.Active || swarm.Active; // a button game is on: the hero waits
+    public bool Swarming => swarm.Aiming;                // seen from the gunner's seat right now
+    public Vector3 CarPosition(int i) => cars[i].pos;
+    public void Shake(float seconds) => shake = Mathf.Max(shake, seconds);
+
+    // The gunner the swarm is fought from: the first armed wagon still standing (its turret and its number).
+    public Transform Gunner(out int wagon)
+    {
+        for (wagon = 0; wagon < cars.Count; wagon++)
+            if (cars[wagon].Alive && cars[wagon].mount) return cars[wagon].mount.transform;
+        return null;
+    }
     public bool Bending => knees.Count > 0; // a curve or zigzag is somewhere on screen
+    // Enemies leave the train alone: a button game is on or about to start, or a curve is passing under the wagons.
+    public bool Calm => InEvent || Warning || (Bending && Mathf.Abs(knees[0].x) < HalfExtents.x + 8f);
     public bool Zigzag => eventKind == 4 && Bending;
 
     // How demanding the button games are, 0 (start) to 1 (hardest): they speed up with the difficulty, up to a limit.
@@ -113,7 +132,7 @@ public class TrainSim : MonoBehaviour
     public float Tempo => Mathf.Clamp01(Difficulty / (float)hardestAt);
     float Step => wagonSize.x + wagonGap;
 
-    // A looping row of scenery pieces (sleepers, poles) that can follow the track around a curve.
+    // A looping row of scenery pieces (sleepers, props) that can follow the track around a curve.
     class Strip
     {
         public Transform parent;
@@ -122,8 +141,54 @@ public class TrainSim : MonoBehaviour
         public bool bent;
     }
 
-    Strip sleepers, poles;
+    Strip sleepers;
+    Strip[] sleeperStyles;  // one row per sleeper model; the biome picks which one is out
+    Material railMat, ballastMat, sleeperMat;
+
+    // The track of each biome, in the order of Biomes: sleeper model, then sleeper, bed and rail colours,
+    // and how bright the rails are (above 1 they glow).
+    static readonly (int style, Color sleeper, Color bed, Color rail, float glow)[] Tracks =
+    {
+        (0, new Color(0.42f, 0.27f, 0.14f), new Color(0.66f, 0.56f, 0.38f), new Color(0.45f, 0.47f, 0.5f), 1f),   // desert: wood on sand
+        (0, new Color(0.3f, 0.2f, 0.14f), new Color(0.85f, 0.9f, 0.96f), new Color(0.5f, 0.56f, 0.62f), 1f),     // snow: dark wood on snow
+        (0, new Color(0.3f, 0.33f, 0.14f), new Color(0.25f, 0.2f, 0.12f), new Color(0.4f, 0.38f, 0.33f), 1f),    // jungle: mossy wood on earth
+        (0, new Color(0.5f, 0.34f, 0.2f), new Color(0.42f, 0.29f, 0.17f), new Color(0.5f, 0.52f, 0.56f), 1f),    // ocean: a wooden causeway over the water
+        (1, new Color(0.12f, 0.1f, 0.1f), new Color(0.3f, 0.1f, 0.07f), new Color(1f, 0.45f, 0.1f), 2.2f),       // volcano: basalt, red-hot rails
+        (1, new Color(0.72f, 0.72f, 0.7f), new Color(0.38f, 0.38f, 0.42f), new Color(0.5f, 0.52f, 0.56f), 1f),   // city: concrete on gravel
+        (2, new Color(0.3f, 0.33f, 0.42f), new Color(0.08f, 0.09f, 0.14f), new Color(0.3f, 0.8f, 1f), 2.5f),     // space: metal, blue light
+        (2, new Color(0.45f, 0.2f, 0.55f), new Color(0.2f, 0.08f, 0.28f), new Color(0.2f, 1f, 0.8f), 2.5f),      // alien: violet, teal light
+        (2, new Color(0.1f, 0.12f, 0.12f), new Color(0.05f, 0.07f, 0.07f), new Color(0.35f, 1f, 0.25f), 2.5f),   // fortress: black, green light
+    };
+    float groundScroll;
+    // Scenery: a fixed number of props scattered along the track. One that scrolls out behind comes back ahead as
+    // something else, somewhere else, so the landscape never repeats.
+    class Prop
+    {
+        public Transform body;
+        public GameObject kind;  // the prefab it is a copy of
+        public float s, side, yaw;
+        public int size;         // 0 clutter, 1 ordinary, 2 landmark
+    }
+    public int[] sceneryCount = { 90, 34, 12 }; // most of each size that can be out at once
+    // The landscape comes in stretches, each with its own look: (share of the small, ordinary and big slots in use).
+    static readonly Vector3[] Stretches =
+    {
+        new Vector3(0.75f, 0.7f, 0.6f),   // ordinary
+        new Vector3(0.3f, 0.15f, 0.25f),  // open ground
+        new Vector3(1f, 1f, 0.5f),        // thick
+        new Vector3(0.45f, 0.5f, 1f),     // big things
+        new Vector3(1f, 0.25f, 0.1f),     // carpet of small ones
+    };
+    public Vector2 stretchLength = new Vector2(70f, 150f);
+    Vector3 stretch = Stretches[0];
+    float stretchLeft;
+    GameObject[][] stretchKinds = new GameObject[3][]; // the few kinds, per size, this stretch is made of
+    GameObject[][][] sceneryKinds;              // [biome][size]: what Resources/Scenery/<biome> offers
+    readonly List<Prop> props = new();
+    readonly Dictionary<GameObject, Stack<Transform>> spareProps = new();
+    Transform sceneryRoot;
     Transform station;
+    GameObject[] stationLooks; // by biome
     Transform[] rails;                   // one straight stretch each: up to the first knee, then one per knee
     float remaining, stationX;
 
@@ -136,10 +201,13 @@ public class TrainSim : MonoBehaviour
     readonly Vector3[] kneePos = new Vector3[MaxKnees], kneeDir = new Vector3[MaxKnees];
     readonly float[] kneeHeading = new float[MaxKnees];
     Vector3 pathOrigin;                  // where the train's middle falls on that polyline
-    float camYaw = 45f;                  // view of the track: 45 up-right, 0 across, -45 down-right, 90 up, -90 down
-    static readonly float[] Views = { -90f, -45f, 0f, 45f, 90f };
+    float camYaw = 45f;                  // view of the track: 45 up-right, 0 across, -45 down-right, 90 up, 180 leftwards...
+    static readonly float[] Views = { -135f, -90f, -45f, 0f, 45f, 90f, 135f, 180f }; // all the way round
+    // Which side of the screen the driver's right hand is on: below zero the track's "right" looks left.
+    public float ScreenSide => Vector3.Dot(Camera.main.transform.right, Vector3.back);
     int eventKind, nextEvent;            // this trip's event: 1 curve, 2 ramp jump, 3 needle jump, 4 zigzag
     ZigzagEvent zig;
+    SwarmEvent swarm;
 
     [Header("Zigzag")]
     public float zigAngle = 40f;         // how far each stretch leans off the original heading
@@ -152,13 +220,22 @@ public class TrainSim : MonoBehaviour
     public float KneeS(int i) => knees[i].x;
     public float KneeTurn(int i) => knees[i].y;
     public Vector3 KneePoint(int i) => kneePos[i] - pathOrigin;
-    public float FrontS => WagonX(0) + wagonSize.x * 0.5f; // nose of the locomotive
+    public float FrontS => WagonX(0) + wagonSize.x * 0.5f; // front of the first wagon
+    public float NoseS => WagonX(-1) + 4.4f;               // nose of the locomotive (0.9 ahead of its slot, 3.5 half long)
+    public float flyRoom = 6f;                             // clear space the picture keeps past both ends of the train
+    // Middle of the whole train, locomotive included: what the camera looks at.
+    public Vector3 Focus => Vector3.right * ((NoseS - HalfExtents.x) * 0.5f);
+    public float Reach => (NoseS + HalfExtents.x) * 0.5f + flyRoom; // from Focus to the edge of that clear space
+    // 1 curve, 2 ramp jump, 3 needle jump, 4 zigzag, 5 swarm. The curve twice as likely: it is what changes the view.
+    static readonly int[] EventBag = { 1, 1, 2, 3, 4, 5 };
     bool sequenceStarted;
 
     // The jump: a gap in the track with a ramp, scrolled in like a curve's knee. JumpEvent runs the button game
     // and reads the train through the members below; here the wagons just hop as they cross it.
     JumpEvent jump;
     Transform gap;
+    public float jumpHeight = 3.2f;      // top of the arc over the ravine
+    float shake;                         // seconds of camera jolt left
     float gapS;                          // distance from the train's middle to the ramp, ahead positive
     public bool Jumping { get; private set; }
     public float GapS => gapS;
@@ -175,6 +252,7 @@ public class TrainSim : MonoBehaviour
     const int FreeCargo = 100, Escort = 200;
     Material escortMat;
     GameObject wagonModel;
+    GameObject[] cargoModels; // Resources/Models/Cargo_<id>, by cargo
     Transform loco; // the locomotive: only for show, it rides the track one step ahead of the first wagon
     float moneyCarry; // fraction of a coin left over by the hero's money bonus
     readonly int[] heroOffers = new int[3]; // index into Weapon.Hero (ammo), then speed, armor, vitality, damage, money, evolve
@@ -213,6 +291,7 @@ public class TrainSim : MonoBehaviour
     {
         public string icon, label;
         public System.Action run;
+        public System.Action<int> adjust; // a setting: left / right change it by a step (-1 or +1)
         public bool enabled;
         public Vector3? anchor; // world spot this option is about; framed in yellow while focused
         public Vector2 extent;  // half size (x, z) of that frame
@@ -230,12 +309,14 @@ public class TrainSim : MonoBehaviour
     public bool Paused { get; private set; }
     float scaleBeforePause; // a curve or jump may have been running in slow motion
     int confirming;         // pause menu asking "are you sure?": 0 no, 1 restart, 2 quit
+    bool soundMenu, sideHeld; // pause menu showing the volumes
 
     void SetPaused(bool pause)
     {
         if (pause == Paused) return;
         Paused = pause;
         confirming = 0;
+        soundMenu = false;
         if (pause) scaleBeforePause = Time.timeScale;
         Time.timeScale = pause ? 0f : scaleBeforePause;
     }
@@ -247,7 +328,9 @@ public class TrainSim : MonoBehaviour
         ("desert", new Color(0.76f, 0.66f, 0.42f), new Color(0.3f, 0.2f, 0.1f)),
         ("snow", new Color(0.9f, 0.93f, 0.97f), new Color(0.1f, 0.3f, 0.2f)),
         ("jungle", new Color(0.15f, 0.4f, 0.12f), new Color(0.25f, 0.15f, 0.05f)),
+        ("ocean", new Color(0.15f, 0.54f, 0.84f), new Color(0.5f, 0.36f, 0.2f)),
         ("volcano", new Color(0.2f, 0.08f, 0.06f), new Color(1f, 0.35f, 0f)),
+        ("city", new Color(0.4f, 0.42f, 0.5f), new Color(0.2f, 0.22f, 0.3f)),
         ("space", new Color(0.03f, 0.03f, 0.08f), new Color(0.7f, 0.7f, 0.8f)),
         ("alien", new Color(0.4f, 0.15f, 0.5f), new Color(0.1f, 0.9f, 0.8f)),
         ("fortress", new Color(0.12f, 0.16f, 0.16f), new Color(0.3f, 1f, 0.2f)),
@@ -255,10 +338,12 @@ public class TrainSim : MonoBehaviour
 
     void Awake()
     {
-        Material wood = Mat(new Color(0.3f, 0.2f, 0.1f)), steel = Mat(Color.gray), stone = Mat(Color.white);
+        Material steel = Mat(Color.gray);
         groundMat = Mat(Biomes[0].ground, false);
+        groundMat.mainTextureScale = Vector2.one * (viewRange * 8f / groundTile);
+        PaintGround();
         sceneryMat = Mat(Biomes[0].scenery);
-        wagonMat = Mat(new Color(0.6f, 0.15f, 0.15f));
+        wagonMat = Mat(new Color(0.62f, 0.66f, 0.72f)); // an armed wagon with no weapon yet
         deadMat = Mat(Color.black);
         escortMat = Mat(new Color(0.85f, 0.65f, 0.2f));
         cargoMats = new Material[Cargos.Length];
@@ -267,24 +352,29 @@ public class TrainSim : MonoBehaviour
         float length = viewRange * 4f;
         Box(transform, new Vector3(0f, -0.5f, 0f), new Vector3(length * 2f, 1f, length * 2f), groundMat, true);
         // Rails are uniform, so they never scroll: one pair up to the knee, one pair beyond it.
+        railMat = Mat(Color.gray);
+        ballastMat = Mat(Color.gray, false);
+        sleeperMat = Mat(Color.gray, false);
+        GameObject railModel = Resources.Load<GameObject>("Models/Track_rail"); // one unit long, from its pivot
         rails = new Transform[MaxKnees + 1];
         for (int i = 0; i < rails.Length; i++)
         {
             // One unit long from its pivot; stretched to the length of its part of the track.
             rails[i] = new GameObject("Rails").transform;
             rails[i].SetParent(transform, false);
-            Box(rails[i], new Vector3(0.5f, 0.15f, 0.8f), new Vector3(1f, 0.1f, 0.15f), steel);
-            Box(rails[i], new Vector3(0.5f, 0.15f, -0.8f), new Vector3(1f, 0.1f, 0.15f), steel);
+            Dress(Instantiate(railModel, rails[i]));
         }
-        nextEvent = Random.Range(1, 5);
+        nextEvent = EventBag[Random.Range(0, EventBag.Length)];
 
         zig = gameObject.AddComponent<ZigzagEvent>();
+        swarm = gameObject.AddComponent<SwarmEvent>();
         menuView = gameObject.AddComponent<StationMenu>();
         hud = gameObject.AddComponent<Hud>();
         Panel = gameObject.AddComponent<EventPanel>();
         turn = gameObject.AddComponent<TurnEvent>();
         jump = gameObject.AddComponent<JumpEvent>();
         wagonModel = Resources.Load<GameObject>("Models/Wagon");
+        cargoModels = System.Array.ConvertAll(Cargos, c => Resources.Load<GameObject>("Models/Cargo_" + c.id));
         loco = Instantiate(Resources.Load<GameObject>("Models/Locomotive"), transform).transform;
         loco.localScale = Vector3.one * 1.3f; // as wide as a wagon
         Toon(loco.GetComponentInChildren<Renderer>());
@@ -297,17 +387,78 @@ public class TrainSim : MonoBehaviour
         stepRight = InputSystem.actions.FindAction("Player/Next", true);
         stepLeft = InputSystem.actions.FindAction("Player/Previous", true);
 
-        sleepers = Row("Sleepers", sleeperSpacing, new Vector3(0f, 0.05f, 0f), new Vector3(0.3f, 0.1f, 3f), wood);
-        poles = Row("Poles", poleSpacing, new Vector3(0f, 2f, 10f), new Vector3(0.3f, 4f, 0.3f), sceneryMat);
+        sleeperStyles = new Strip[3];
+        for (int i = 0; i < sleeperStyles.Length; i++)
+        {
+            sleeperStyles[i] = Row("Sleepers", sleeperSpacing, Vector3.zero, Vector3.one, null, Resources.Load<GameObject>("Models/Sleeper_" + i));
+            sleeperStyles[i].parent.gameObject.SetActive(false);
+        }
+        sleepers = sleeperStyles[0];
+        PaintTrack();
+
+        // Sort each biome's props by size: small things go near the track and often, big ones far out and seldom.
+        sceneryRoot = new GameObject("Scenery").transform;
+        sceneryRoot.SetParent(transform, false);
+        sceneryKinds = new GameObject[Biomes.Length][][];
+        for (int b = 0; b < Biomes.Length; b++)
+        {
+            var bySize = new[] { new List<GameObject>(), new List<GameObject>(), new List<GameObject>() };
+            foreach (GameObject kind in Resources.LoadAll<GameObject>("Scenery/" + Biomes[b].id))
+            {
+                Bounds box = default;
+                bool any = false;
+                foreach (MeshRenderer part in kind.GetComponentsInChildren<MeshRenderer>())
+                {
+                    if (any) box.Encapsulate(part.bounds); else box = part.bounds;
+                    any = true;
+                }
+                float tall = box.size.y, wide = Mathf.Max(box.size.x, box.size.z);
+                bySize[tall < 1.3f && wide < 3f ? 0 : tall > 4.2f || wide > 6f ? 2 : 1].Add(kind);
+            }
+            sceneryKinds[b] = System.Array.ConvertAll(bySize, list => list.ToArray());
+        }
+        for (int size = 0; size < sceneryCount.Length; size++)
+            for (int i = 0; i < sceneryCount[size]; i++)
+            {
+                var prop = new Prop { size = size, s = -viewRange + (i + Random.value) * (viewRange * 2f / sceneryCount[size]) };
+                props.Add(prop);
+                Dress(prop);
+            }
+
+        // HDRP adapts exposure to the picture by default, which washes the train out over dark ground.
+        var look = new GameObject("Look").AddComponent<UnityEngine.Rendering.Volume>();
+        look.isGlobal = true;
+        look.priority = 10f;
+        var fixedExposure = look.profile.Add<UnityEngine.Rendering.HighDefinition.Exposure>(true);
+        fixedExposure.mode.value = UnityEngine.Rendering.HighDefinition.ExposureMode.Fixed;
+        fixedExposure.fixedExposure.value = exposure;
+        // Bright, clean anime picture: no filmic curve crushing the colours, a little glow, a little more colour.
+        look.profile.Add<UnityEngine.Rendering.HighDefinition.Tonemapping>(true).mode.value = UnityEngine.Rendering.HighDefinition.TonemappingMode.Neutral;
+        var bloom = look.profile.Add<UnityEngine.Rendering.HighDefinition.Bloom>(true);
+        bloom.intensity.value = 0.15f;
+        bloom.threshold.value = 1f;
+        var grade = look.profile.Add<UnityEngine.Rendering.HighDefinition.ColorAdjustments>(true);
+        grade.saturation.value = 8f;
+        grade.contrast.value = 6f;
 
         station = new GameObject("Station").transform;
         station.SetParent(transform, false);
-        Box(station, new Vector3(0f, 0.3f, 5.5f), new Vector3(30f, 0.6f, 5f), stone);
-        Box(station, new Vector3(0f, 2.1f, 7f), new Vector3(12f, 3f, 2f), sceneryMat);
+        // One station per biome (Tools/make_stations.py): platform and hall in one model, the biome's own out.
+        stationLooks = new GameObject[Biomes.Length];
+        for (int b = 0; b < Biomes.Length; b++)
+        {
+            stationLooks[b] = Instantiate(Resources.Load<GameObject>("Models/Station_" + Biomes[b].id), station);
+            Toon(stationLooks[b].GetComponentInChildren<Renderer>());
+            stationLooks[b].SetActive(b == 0);
+        }
         gap = new GameObject("Gap").transform;
         gap.SetParent(transform, false);
-        Box(gap, new Vector3(3f, 0.16f, 0f), new Vector3(6f, 0.3f, 4f), deadMat); // the missing stretch of track
-        Box(gap, new Vector3(-1.6f, 0.5f, 0f), new Vector3(3.4f, 0.2f, 2.6f), steel).localRotation = Quaternion.Euler(0f, 0f, 14f); // ramp up to it
+        // A ravine across the track with a launch ramp before it and a landing ramp after (Tools/make_jump.py);
+        // its rocks take the colour of the biome's track bed.
+        Material hazard = Mat(new Color(1f, 0.72f, 0.05f));
+        Renderer jumpSkin = Instantiate(Resources.Load<GameObject>("Models/Jump"), gap).GetComponentInChildren<Renderer>();
+        jumpSkin.sharedMaterials = System.Array.ConvertAll(jumpSkin.sharedMaterials, m =>
+            m.name == "JumpRock" ? ballastMat : m.name == "JumpSteel" ? steel : m.name == "JumpHazard" ? hazard : deadMat);
         gap.gameObject.SetActive(false);
 
         remaining = stationX = stationGap;
@@ -322,7 +473,7 @@ public class TrainSim : MonoBehaviour
     {
         Transform cam = Camera.main.transform;
         cam.rotation = Quaternion.Euler(30f, camYaw, 0f);
-        cam.position = -cam.forward * 60f;
+        cam.position = Focus - cam.forward * 60f;
     }
 
     // Works out where every knee is and which way the track runs after it. Cheap; run whenever the knees move.
@@ -359,7 +510,7 @@ public class TrainSim : MonoBehaviour
         rails[piece].localScale = new Vector3(length, 1f, 1f);
     }
 
-    // Puts rails, sleepers, poles, station and (in a curve) the wagons on the track's current shape.
+    // Puts rails, sleepers, scenery, station and (in a curve) the wagons on the track's current shape.
     void PlaceTrack()
     {
         ShapeTrack();
@@ -372,7 +523,16 @@ public class TrainSim : MonoBehaviour
             else SetRails(i + 1, kneePos[i] - pathOrigin, kneeHeading[i], i + 1 < knees.Count ? knees[i + 1].x - knees[i].x : far);
         }
         Place(sleepers);
-        Place(poles);
+        foreach (Prop prop in props)
+        {
+            if (!prop.body) continue;
+            Vector3 on = Path(prop.s, out float heading);
+            Quaternion turn = Quaternion.Euler(0f, heading, 0f);
+            prop.body.SetLocalPositionAndRotation(on + turn * new Vector3(0f, 0f, prop.side), Quaternion.Euler(0f, heading + prop.yaw, 0f));
+            // Not through the station: its platform and hall stand on that strip.
+            bool show = !(prop.side > 2f && prop.side < 16.5f && Mathf.Abs(prop.s - stationX) < 19f);
+            if (prop.body.gameObject.activeSelf != show) prop.body.gameObject.SetActive(show);
+        }
         station.localPosition = Path(stationX, out float stationHeading);
         station.localRotation = Quaternion.Euler(0f, stationHeading, 0f);
         if (Jumping)
@@ -432,22 +592,23 @@ public class TrainSim : MonoBehaviour
     // A curve appears ahead, towards one of the other views (never more than a quarter turn away).
     void StartBend()
     {
-        float target;
-        do target = Views[Random.Range(0, Views.Length)];
-        while (target == camYaw || Mathf.Abs(target - camYaw) > 90f);
-        knees.Add(new Vector2(viewRange, camYaw - target));
+        float by;
+        do by = Mathf.DeltaAngle(Views[Random.Range(0, Views.Length)], camYaw);
+        while (Mathf.Abs(by) < 1f || Mathf.Abs(by) > 91f);
+        knees.Add(new Vector2(viewRange, by));
         sequenceStarted = false;
         turn.Prepare();
     }
 
-    // 4 to 6 sharp turns in a row, leaning one way then the other; the last one puts the track back on its heading.
+    // 4 to 6 sharp turns in a row, leaning one way then the other; the last one swings on past the old
+    // heading, so the train comes out of it going a new way (an eighth or a quarter turn off).
     void StartZigzag()
     {
         int count = Random.Range(4, 7);
         float lean = Random.value < 0.5f ? zigAngle : -zigAngle, heading = 0f;
         for (int i = 0; i < count; i++)
         {
-            float turnBy = i == count - 1 ? -heading : i == 0 ? lean : -2f * heading;
+            float turnBy = i == count - 1 ? -heading - Mathf.Sign(heading) * (Random.value < 0.5f ? 45f : 90f) : i == 0 ? lean : -2f * heading;
             heading += turnBy;
             knees.Add(new Vector2(zigStart + i * zigSpacing, turnBy));
         }
@@ -467,7 +628,7 @@ public class TrainSim : MonoBehaviour
             Quaternion back = Quaternion.Euler(0f, -total, 0f);
             Combat.Instance.Rotate(back);
             Player.Rotate(back);
-            camYaw -= total;
+            camYaw = Mathf.DeltaAngle(0f, camYaw - total); // kept within half a turn either way
             AimCamera();
         }
         PlaceTrack();
@@ -484,8 +645,19 @@ public class TrainSim : MonoBehaviour
 
         // A long train pulls the camera back so it always fits, whichever way the track runs on screen.
         Camera view = Camera.main;
-        float wanted = Mathf.Max(cameraSize, (HalfExtents.x + 5f) / view.aspect) * (Zigzag ? zigZoom : 1f);
+        // Big enough for the train from tail to nose plus flyRoom past each end and to each side, whichever way
+        // the track runs across the picture.
+        float half = Reach, fit = 0f;
+        Vector3 right = view.transform.right, up = view.transform.up;
+        for (int corner = 0; corner < 4; corner++)
+        {
+            var point = new Vector3(corner < 2 ? half : -half, 0f, corner % 2 == 0 ? flyRoom : -flyRoom);
+            fit = Mathf.Max(fit, Mathf.Abs(Vector3.Dot(point, up)), Mathf.Abs(Vector3.Dot(point, right)) / view.aspect);
+        }
+        float wanted = Mathf.Max(cameraSize, fit) * (Zigzag ? zigZoom : 1f);
         view.orthographicSize = Mathf.MoveTowards(view.orthographicSize, wanted, (Paused ? 0f : 9f) * Time.unscaledDeltaTime);
+        shake = Mathf.Max(0f, shake - Time.unscaledDeltaTime);
+        view.transform.position = Focus - view.transform.forward * 60f + Random.insideUnitSphere * shake * 1.5f;
 
         // Repair kit: triangle / Y on a gamepad, R on the keyboard. Not at stations and not mid-sequence.
         // ponytail: reads the devices directly, like the curve's button sequence.
@@ -502,7 +674,8 @@ public class TrainSim : MonoBehaviour
             BuildMenu();
             Navigate();
         }
-        string help = Paused ? (Player.UsingGamepad ? "pause.help.gamepad" : "pause.help.keyboard")
+        string help = Paused && soundMenu ? (Player.UsingGamepad ? "sound.help.gamepad" : "sound.help.keyboard")
+            : Paused ? (Player.UsingGamepad ? "pause.help.gamepad" : "pause.help.keyboard")
                              : (Player.UsingGamepad ? "menu.help.gamepad" : "menu.help.keyboard");
         menuView.Render(MenuOpen ? options : null, menuTitle, focus, L10n.T(help), i => options[i].run(), i => focus = i, Paused);
 
@@ -514,20 +687,41 @@ public class TrainSim : MonoBehaviour
         float step = Mathf.Min(Speed * Time.deltaTime, remaining);
         remaining -= step;
 
+        if (!AtStation && !Zigzag && Speed > maxSpeed) Flash("wind"); // an express leg (not the zigzag: its zoom outgrows the effect)
+        // The ground itself never moves: its texture slides back under the train instead.
+        groundScroll = Mathf.Repeat(groundScroll + step / groundTile, 1f);
+        groundMat.mainTextureOffset = new Vector2(-groundScroll, 0f); // the cube's top face has u running towards -x
         sleepers.offset = Mathf.Repeat(sleepers.offset + step, sleepers.spacing);
-        poles.offset = Mathf.Repeat(poles.offset + step, poles.spacing);
+        // A new stretch of landscape starts ahead, out of sight: props coming round from now on belong to it.
+        stretchLeft -= step;
+        if (stretchLeft <= 0f) NewStretch();
+        foreach (Prop prop in props)
+        {
+            prop.s -= step;
+            if (prop.s >= -viewRange) continue;
+            prop.s += viewRange * 2f + Random.Range(0f, 6f);
+            Dress(prop);
+        }
 
         stationX -= step;
-        if (stationX < -viewRange) stationX = remaining; // reuse the one station for the next stop
+        if (stationX < -viewRange)
+        {
+            // Reuse the one station for the next stop; out of sight is also the moment to change its look.
+            stationX = remaining;
+            for (int b = 0; b < stationLooks.Length; b++) stationLooks[b].SetActive(b == Biome);
+        }
 
         // One event per trip, early enough that it is fully behind before the station.
         float room = nextEvent == 4 ? zigStart + 5f * zigSpacing + viewRange + 30f : viewRange * 2f + 20f;
-        if (!turned && remaining <= Mathf.Max(LegLength * (1f - turnAt), room))
+        float eventAt = Mathf.Max(LegLength * (1f - turnAt), room);
+        if (!turned && remaining <= eventAt)
         {
             turned = true;
             eventKind = nextEvent;
+            if (eventKind == 5 && !swarm.Begin()) eventKind = 1; // nobody left to man a gun: a curve instead
             if (eventKind == 1) StartBend();
             else if (eventKind == 4) StartZigzag();
+            else if (eventKind == 5) { } // SwarmEvent runs itself from here
             else
             {
                 Jumping = true;
@@ -624,11 +818,13 @@ public class TrainSim : MonoBehaviour
             car.reward = Mathf.RoundToInt(Cargos[cargo].reward * Legs[AtStation ? nextLeg : leg].length) * (Biome + 1);
             car.penalty = Cargos[cargo].penalty * (Biome + 1);
         }
-        // Armed wagons are the model (its origin is on the rail); cargo is still a flatbed box.
-        car.body = cargo < 0 ? Instantiate(wagonModel, transform).transform : Box(transform, Vector3.zero, size, mat);
-        car.lift = cargo < 0 ? 0.1f : 0.2f + size.y * 0.5f;
-        if (cargo < 0) Toon(car.body.GetComponentInChildren<Renderer>());
-        car.skin = car.body.GetComponentInChildren<Renderer>().sharedMaterials;
+        // Wagons are models with their origin on the rail; a cargo with no model falls back to a flatbed box.
+        GameObject model = cargo < 0 ? wagonModel : cargoModels[cargo];
+        car.body = model ? Instantiate(model, transform).transform : Box(transform, Vector3.zero, size, mat);
+        car.lift = model ? 0.1f : 0.2f + size.y * 0.5f;
+        if (model) Toon(car.body.GetComponentInChildren<Renderer>());
+        car.skins = System.Array.ConvertAll(car.body.GetComponentsInChildren<MeshRenderer>(), r => r.sharedMaterials);
+        if (cargo < 0) Paint(car, wagonMat);
         cars.Insert(index, car);
         Layout();
     }
@@ -663,7 +859,7 @@ public class TrainSim : MonoBehaviour
         Car car = cars[^1];
         car.temporary = true;
         if (weapon == null) return;
-        car.skin = System.Array.ConvertAll(car.skin, _ => escortMat);
+        car.skins = System.Array.ConvertAll(car.skins, skin => System.Array.ConvertAll(skin, _ => escortMat));
         SetAlive(car, true);
         Mount(cars.Count - 1, weapon);
         while (car.mount.Level < level) car.mount.LevelUp();
@@ -683,21 +879,40 @@ public class TrainSim : MonoBehaviour
             Car car = cars[i];
             car.pos = Path(WagonX(i), out car.heading);
             float hop = Hop(WagonX(i));
-            car.body.SetLocalPositionAndRotation(car.pos + Vector3.up * (car.lift + hop), Quaternion.Euler(0f, car.heading, 0f));
+            car.body.SetLocalPositionAndRotation(car.pos + Vector3.up * (car.lift + hop), Quaternion.Euler(0f, car.heading, Pitch(WagonX(i))));
             if (car.mount) car.mount.transform.position = car.pos + Vector3.up * (0.45f + wagonSize.y + hop);
+            // Touchdown: dust and a jolt.
+            bool flying = hop > 0.9f;
+            if (car.flying && !flying && Jumping)
+            {
+                Combat.Instance.Burst("grenade", car.pos, 2f);
+                shake = 0.3f;
+            }
+            car.flying = flying;
         }
         float ahead = WagonX(-1) + 0.9f; // longer than a wagon
         Vector3 head = Path(ahead, out float turn);
-        loco.SetLocalPositionAndRotation(head + Vector3.up * (0.1f + Hop(ahead)), Quaternion.Euler(0f, turn + 180f, 0f)); // the model's nose is its -x
+        loco.SetLocalPositionAndRotation(head + Vector3.up * (0.1f + Hop(ahead)), Quaternion.Euler(0f, turn + 180f, -Pitch(ahead))); // the model's nose is its -x
     }
 
     // Over the gap (its middle is 3 past the ramp's foot) each wagon flies an arc 5 long either way.
+    // Matching Tools/make_jump.py: the ravine is 9 long from gapS, the launch ramp climbs 1.06 over the 3.6
+    // before it, the landing ramp drops 0.8 over the 3 after it.
+    const float GapLength = 9f, RampLength = 3.6f, RampRise = 1.06f, LandingLength = 3f, LandingRise = 0.8f;
+
+    // Height of a wagon at s: up the ramp, a long arc over the ravine, down the landing ramp.
     float Hop(float s)
     {
         if (!Jumping) return 0f;
-        float off = (s - gapS - 3f) / 5f;
-        return Mathf.Max(0f, 1f - off * off) * 2.2f;
+        float x = s - gapS, off = (x - GapLength * 0.5f) / (GapLength * 0.5f + 1.5f);
+        float arc = (1f - off * off) * jumpHeight;
+        float up = x >= -RampLength && x <= 0f ? (x + RampLength) / RampLength * RampRise : 0f;
+        float down = x >= GapLength && x <= GapLength + LandingLength ? (GapLength + LandingLength - x) / LandingLength * LandingRise : 0f;
+        return Mathf.Max(arc, up, down);
     }
+
+    // Nose up on the way up, down on the way down: the slope of the hop, in degrees.
+    float Pitch(float s) => Jumping ? Mathf.Atan((Hop(s + 0.4f) - Hop(s - 0.4f)) / 0.8f) * Mathf.Rad2Deg * 0.8f : 0f;
 
     int CargoCount { get { int n = 0; foreach (Car c in cars) if (c.cargo >= 0 && !c.permanent && !c.temporary) n++; return n; } } // loaded for this trip
 
@@ -767,8 +982,34 @@ public class TrainSim : MonoBehaviour
     // A destroyed wagon turns black; its weapon stops until the next station, its cargo is lost.
     void SetAlive(Car car, bool alive)
     {
-        car.body.GetComponentInChildren<Renderer>().sharedMaterials = alive ? car.skin : System.Array.ConvertAll(car.skin, _ => deadMat);
+        MeshRenderer[] parts = car.body.GetComponentsInChildren<MeshRenderer>(); // not the fire's own renderer
+        for (int i = 0; i < parts.Length; i++)
+            parts[i].sharedMaterials = alive ? car.skins[i] : System.Array.ConvertAll(car.skins[i], _ => deadMat);
         if (car.mount) car.mount.enabled = alive;
+        if (car.fire) Destroy(car.fire);
+        GameObject flames = alive ? null : Resources.Load<GameObject>("Vfx/fire");
+        if (flames)
+        {
+            car.fire = Instantiate(flames, car.body);
+            car.fire.transform.localPosition = Vector3.up * 1.2f;
+            car.fire.transform.localScale = Vector3.one * 1.5f;
+        }
+    }
+
+    // An armed wagon wears its weapon's colour (plain grey with none): swaps the model's body paint,
+    // the material the model calls WagonYellow, wherever it is.
+    void Paint(Car car, Material paint)
+    {
+        if (car.painted == null)
+        {
+            var spots = new List<Vector2Int>();
+            for (int i = 0; i < car.skins.Length; i++)
+                for (int k = 0; k < car.skins[i].Length; k++)
+                    if (car.skins[i][k].name == "WagonYellow") spots.Add(new Vector2Int(i, k));
+            car.painted = spots.ToArray();
+        }
+        foreach (Vector2Int spot in car.painted) car.skins[spot.x][spot.y] = paint;
+        SetAlive(car, car.Alive);
     }
 
     // Same weapon on the same wagon levels it up, anything else replaces it at level 1.
@@ -778,11 +1019,13 @@ public class TrainSim : MonoBehaviour
         if (car.mount && car.mount.Weapon == weapon)
         {
             car.mount.LevelUp();
+            Combat.Instance.Burst("levelup", car.pos, 2f);
             return;
         }
         if (car.mount) Destroy(car.mount.gameObject);
         car.mount = Instantiate(turretPrefab, car.pos + Vector3.up * (0.45f + wagonSize.y), Quaternion.identity, transform);
         car.mount.Init(weapon);
+        Paint(car, weapon.Material);
     }
 
     // Three different options each: wagon weapons unlocked in this biome plus money (and now and then
@@ -860,14 +1103,17 @@ public class TrainSim : MonoBehaviour
         if (nextBiome)
         {
             Biome++;
-            Tint(groundMat, Biomes[Biome].ground);
+            PaintGround();
+            PaintTrack();
+            NewStretch();
+            foreach (Prop prop in props) Dress(prop); // the whole landscape at once, behind the station menu
             Tint(sceneryMat, Biomes[Biome].scenery);
         }
         skipGift = 0;
         pending = null;
         leg = nextLeg;
         turned = false;
-        nextEvent = Random.Range(1, 5);
+        nextEvent = EventBag[Random.Range(0, EventBag.Length)];
         remaining = LegLength;
         AtStation = false;
     }
@@ -886,6 +1132,11 @@ public class TrainSim : MonoBehaviour
     void Add(string icon, string label, System.Action run, bool enabled = true, Vector3? anchor = null, Vector2 extent = default) =>
         options.Add(new Option { icon = icon, label = label, run = run, enabled = enabled, anchor = anchor, extent = extent });
 
+    // A volume in the sound menu: left / right move it a tenth, confirming it (or a click) raises it and wraps round.
+    void AddVolume(string icon, string key, float value, int which) =>
+        options.Add(new Option { icon = icon, label = L10n.T(key, Mathf.RoundToInt(value * 100f)), enabled = true,
+            run = () => Sound.Step(which, 1), adjust = steps => Sound.Step(which, steps) });
+
     // Rebuilt every frame the menu is open; the state decides which menu it is.
     void BuildMenu()
     {
@@ -900,11 +1151,22 @@ public class TrainSim : MonoBehaviour
             if (confirming == 1) Add("yes", L10n.T("menu.yes"), Restart);
             else Add("yes", L10n.T("menu.yes"), Application.Quit);
         }
+        else if (Paused && soundMenu)
+        {
+            kind = 10;
+            menuTitle = L10n.T("pause.sound");
+            AddVolume("sound", "sound.master", Sound.Master, 0);
+            AddVolume("music", "sound.music", Sound.Music, 1);
+            AddVolume("sfx", "sound.sfx", Sound.Effects, 2);
+            Add("mute", L10n.T("sound.mute", L10n.T(Sound.Muted ? "menu.yes" : "menu.no")), Sound.ToggleMute);
+            Add("back", L10n.T("menu.back"), () => soundMenu = false);
+        }
         else if (Paused)
         {
             kind = 8;
             menuTitle = L10n.T("menu.pause");
             Add("resume", L10n.T("pause.resume"), () => SetPaused(false));
+            Add("sound", L10n.T("pause.sound"), () => soundMenu = true);
             Add("language", L10n.T("language"), L10n.NextLocale);
             Add("restart", L10n.T("pause.restart"), () => confirming = 1);
             Add("quit", L10n.T("pause.quit"), () => confirming = 2);
@@ -990,7 +1252,7 @@ public class TrainSim : MonoBehaviour
                 else if (stat == 2) Add("vitality", L10n.T("hero.vitality", vitalityReward), () => { Player.VitalityUp(vitalityReward); Next(); });
                 else if (stat == 3) Add("arms", L10n.T("hero.damage"), () => { Player.DamageUp(); Next(); });
                 else if (stat == 4) Add("money", L10n.T("hero.greed"), () => { Player.GreedUp(); Next(); });
-                else Add(Player.ammo.id, L10n.T("hero.evolve", Player.ammo.Name, Player.level + 1), () => { Player.level++; Next(); });
+                else Add(Player.ammo.id, L10n.T("hero.evolve", Player.ammo.Name, Player.level + 1), () => { Player.level++; Combat.Instance.Burst("levelup", Player.Position + Vector3.down * 2f, 1.5f); Next(); });
             }
             Add("skip", L10n.T("menu.skip"), Skip);
         }
@@ -1060,6 +1322,15 @@ public class TrainSim : MonoBehaviour
         int step = Mathf.Abs(x) > 0.5f ? (int)Mathf.Sign(x) : 0;
         bool tapped = stepRight.WasPressedThisFrame() || stepLeft.WasPressedThisFrame(); // d-pad and Q/E
         if (tapped) step = stepRight.WasPressedThisFrame() ? 1 : -1;
+        if (Paused && options[focus].adjust != null)
+        {
+            // On a setting, left and right (and Q / E) change its value instead of moving the selection.
+            int side = tapped ? step : Mathf.Abs(move.x) > 0.5f && Mathf.Abs(move.x) > Mathf.Abs(move.y) ? (int)Mathf.Sign(move.x) : 0;
+            if (side != 0 && (tapped || !sideHeld)) options[focus].adjust(side);
+            sideHeld = side != 0 && !tapped;
+            if (tapped || side != 0) step = 0;
+            tapped = false;
+        }
         if (step != 0 && (tapped || !navHeld))
         {
             do focus = (focus + step + options.Count) % options.Count;
@@ -1073,13 +1344,14 @@ public class TrainSim : MonoBehaviour
     void LateUpdate()
     {
         // Warning for the curve, jump or zigzag ahead: what is coming and which button it takes.
-        if (Paused || Approach() < 0f) hud.Warning(null, null);
+        if (!Paused && swarm.Incoming) hud.Warning(L10n.T("swarm.title"), L10n.T("swarm.warn", JumpEvent.ButtonName(Player.UsingGamepad)));
+        else if (Paused || Approach() < 0f) hud.Warning(null, null);
         else
         {
             string button = JumpEvent.ButtonName(Player.UsingGamepad);
             hud.Warning(L10n.T(eventKind == 1 ? "warn.curve.title" : eventKind == 4 ? "warn.zig.title" : "warn.jump.title"),
                 eventKind == 1 ? L10n.T("warn.curve") : eventKind == 4 ? L10n.T("warn.zig", L10n.T(Player.UsingGamepad ? "zig.stick" : "zig.keys"))
-                : L10n.T(eventKind == 2 ? "warn.ramp" : "warn.needle", button));
+                : eventKind == 2 ? L10n.T("warn.ramp", button) : ""); // the needle: just the warning, then it starts
         }
 
         if (!MenuOpen || options.Count == 0 || options[focus].anchor == null) return;
@@ -1094,7 +1366,8 @@ public class TrainSim : MonoBehaviour
     }
 
     // A row of identical pieces looks endless if it wraps by one spacing.
-    Strip Row(string name, float spacing, Vector3 offset, Vector3 size, Material mat)
+    // model: a track piece to use instead of a box (it takes the biome's track materials).
+    Strip Row(string name, float spacing, Vector3 offset, Vector3 size, Material mat, GameObject model = null)
     {
         var strip = new Strip { parent = new GameObject(name).transform, spacing = spacing };
         strip.parent.SetParent(transform, false);
@@ -1102,10 +1375,71 @@ public class TrainSim : MonoBehaviour
         for (float x = -viewRange; x <= viewRange + spacing; x += spacing)
         {
             bases.Add(offset + Vector3.right * x);
-            Box(strip.parent, bases[bases.Count - 1], size, mat);
+            if (model) Dress(Instantiate(model, strip.parent)).transform.localPosition = bases[bases.Count - 1];
+            else Box(strip.parent, bases[bases.Count - 1], size, mat);
         }
         strip.bases = bases.ToArray();
         return strip;
+    }
+
+    // Track models name their materials TrackRail, TrackBallast and TrackSleeper: swapped here for the three
+    // shared ones, so a biome change repaints every piece at once.
+    GameObject Dress(GameObject piece)
+    {
+        Renderer skin = piece.GetComponentInChildren<Renderer>();
+        skin.sharedMaterials = System.Array.ConvertAll(skin.sharedMaterials,
+            m => m.name == "TrackRail" ? railMat : m.name == "TrackBallast" ? ballastMat : sleeperMat);
+        skin.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; // flat on the ground: nothing to cast
+        return piece;
+    }
+
+    void PaintTrack()
+    {
+        var look = Tracks[Biome];
+        Tint(sleeperMat, look.sleeper);
+        Tint(ballastMat, look.bed);
+        Tint(railMat, look.rail * look.glow);
+        Strip style = sleeperStyles[look.style];
+        style.offset = sleepers.offset;
+        sleepers.parent.gameObject.SetActive(false);
+        style.parent.gameObject.SetActive(true);
+        sleepers = style;
+    }
+
+    // Another kind of stretch, made of up to three kinds of prop of each size picked from the biome's.
+    void NewStretch()
+    {
+        Vector3 before = stretch;
+        do stretch = Stretches[Random.Range(0, Stretches.Length)]; while (stretch == before);
+        stretchLeft = Random.Range(stretchLength.x, stretchLength.y);
+        for (int size = 0; size < 3; size++)
+        {
+            var pool = new List<GameObject>(sceneryKinds[Biome][size]);
+            while (pool.Count > 3) pool.RemoveAt(Random.Range(0, pool.Count));
+            stretchKinds[size] = pool.ToArray();
+        }
+    }
+
+    // Gives a scenery slot a new look: another prop of its size from this biome, another distance from the
+    // track, another side, turn and scale. The copy it had goes back to the spares.
+    void Dress(Prop prop)
+    {
+        if (prop.body)
+        {
+            prop.body.gameObject.SetActive(false);
+            spareProps[prop.kind].Push(prop.body);
+            prop.body = null;
+        }
+        GameObject[] kinds = stretchKinds[prop.size] ?? sceneryKinds[Biome][prop.size];
+        if (kinds.Length == 0 || Random.value > stretch[prop.size]) return; // this stretch leaves the slot empty
+        prop.kind = kinds[Random.Range(0, kinds.Length)];
+        if (!spareProps.TryGetValue(prop.kind, out Stack<Transform> spare)) spareProps[prop.kind] = spare = new Stack<Transform>();
+        prop.body = spare.Count > 0 ? spare.Pop() : Instantiate(prop.kind, sceneryRoot).transform;
+        prop.body.gameObject.SetActive(true);
+        prop.body.localScale = Vector3.one * Random.Range(0.8f, 1.25f);
+        prop.yaw = Random.Range(0f, 360f);
+        float away = prop.size == 0 ? Random.Range(4.5f, 14f) : prop.size == 1 ? Random.Range(9f, 20f) : Random.Range(19f, 30f);
+        prop.side = Random.value < 0.5f ? away : -away;
     }
 
     // Every material in the game is a copy of Resources/Toon.mat (RealToon): tune the look there.
@@ -1126,6 +1460,14 @@ public class TrainSim : MonoBehaviour
         return mat;
     }
 
+    // The biome's ground painting from Resources/Ground (Tools/make_ground.py); its plain colour if there is none.
+    void PaintGround()
+    {
+        Texture2D painting = Resources.Load<Texture2D>("Ground/" + Biomes[Biome].id);
+        groundMat.mainTexture = painting;
+        Tint(groundMat, painting ? Color.white : Biomes[Biome].ground);
+    }
+
     public static void Tint(Material mat, Color color) => mat.SetColor(MainColor, color.linear); // an HDR property: Unity does not convert it for us
 
     // An imported model comes with HDRP/Lit materials: swaps each for its toon twin (same colour and texture).
@@ -1137,7 +1479,7 @@ public class TrainSim : MonoBehaviour
             if (!toon || mats[i].shader == toon.shader) continue;
             if (!toons.TryGetValue(mats[i], out Material twin))
             {
-                twin = Mat(mats[i].color);
+                twin = Mat(mats[i].name.StartsWith("Glow") ? mats[i].color * 2.5f : mats[i].color); // Glow...: bright enough to bloom
                 twin.name = mats[i].name;
                 twin.mainTexture = mats[i].mainTexture;
                 toons[mats[i]] = twin;

@@ -38,15 +38,15 @@ public class Weapon
     public static readonly Weapon[] Wagon =
     {
         new Weapon { id = "turret" },
-        new Weapon { id = "rocket", color = new Color(1f, 0.4f, 0f), range = 30f, interval = 1.5f, speed = 18f, damage = 4f, splash = 4f },
-        new Weapon { id = "minigun", color = Color.white, range = 16f, interval = 0.1f, damage = 0.6f },
-        new Weapon { id = "shotgun", color = new Color(0.8f, 0.5f, 0.2f), range = 12f, interval = 0.9f, damage = 1.5f, targets = 5, extraTargets = 1 },
-        new Weapon { id = "sniper", color = Color.red, range = 45f, interval = 2f, speed = 120f, damage = 12f },
+        new Weapon { id = "rocket", color = new Color(0.25f, 0.55f, 0.2f), range = 30f, interval = 1.5f, speed = 18f, damage = 4f, splash = 4f },
+        new Weapon { id = "minigun", color = new Color(0.9f, 0.92f, 0.95f), range = 16f, interval = 0.1f, damage = 0.6f },
+        new Weapon { id = "shotgun", color = new Color(0.55f, 0.33f, 0.14f), range = 12f, interval = 0.9f, damage = 1.5f, targets = 5, extraTargets = 1 },
+        new Weapon { id = "sniper", color = new Color(0.5f, 0.04f, 0.1f), range = 45f, interval = 2f, speed = 120f, damage = 12f },
         new Weapon { id = "pulse", color = Color.magenta, range = 9f, interval = 1.2f, damage = 2.5f, pulse = true },
-        new Weapon { id = "storm", color = new Color(0.7f, 0.8f, 1f), range = 22f, interval = 1.2f, damage = 2.5f, extraTargets = 1, strike = true },
-        new Weapon { id = "flame", color = new Color(1f, 0.2f, 0f), range = 8f, interval = 0.1f, speed = 20f, damage = 0.5f, splash = 1.5f, firstBiome = 1 }, // Nieve
-        new Weapon { id = "freeze", color = new Color(0.5f, 0.7f, 1f), range = 20f, interval = 0.4f, slow = 2f, firstBiome = 3 },                                  // Volcán
-        new Weapon { id = "chain", color = Color.cyan, range = 20f, interval = 0.8f, speed = 80f, damage = 1.5f, chain = 3, firstBiome = 5 },                 // Planeta alienígena
+        new Weapon { id = "storm", color = new Color(0.5f, 0.3f, 0.95f), range = 22f, interval = 1.2f, damage = 2.5f, extraTargets = 1, strike = true },
+        new Weapon { id = "flame", color = new Color(1f, 0.35f, 0f), range = 8f, interval = 0.1f, speed = 20f, damage = 0.5f, splash = 1.5f, firstBiome = 1 }, // Nieve
+        new Weapon { id = "freeze", color = new Color(0.25f, 0.5f, 1f), range = 20f, interval = 0.4f, slow = 2f, firstBiome = 4 },                                  // Volcán
+        new Weapon { id = "chain", color = Color.cyan, range = 20f, interval = 0.8f, speed = 80f, damage = 1.5f, chain = 3, firstBiome = 7 },                 // Planeta alienígena
         new Weapon { id = "laser", color = new Color(1f, 0.1f, 0.4f), range = 30f, interval = 0.5f, damage = 0.8f, beam = true },                              // débil, pero atraviesa la línea entera
     };
 

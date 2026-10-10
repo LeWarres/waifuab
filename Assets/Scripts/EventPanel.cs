@@ -4,7 +4,8 @@ using UnityEngine.UI;
 // The card the button games are played on (curve sequence, ramp jump, needle jump, zigzag): a title,
 // a row of boxes, a timing bar with an optional green zone, a line of text, or a half dial with a needle.
 // Whoever is using it calls Show() every frame and then fills in what it needs; it hides by itself
-// as soon as nobody does.
+// as soon as nobody does. Mark() puts floating labels on spots of the world instead, with no card at all
+// (the zigzag: its arrows sit on the track's own turns).
 public class EventPanel : MonoBehaviour
 {
     class Cell
@@ -18,17 +19,20 @@ public class EventPanel : MonoBehaviour
     static readonly Vector2 DialCentre = new Vector2(0f, -120f);
 
     Canvas canvas;
-    Text title, cue, tagText;
+    Text title, cue;
     readonly Cell[] boxes = new Cell[MaxBoxes];
-    RectTransform bar, barFill, barZone, barMarker, dial, needle, tag;
+    RectTransform bar, barFill, barZone, barMarker, dial, needle;
+    GameObject cardRoot;
+    readonly System.Collections.Generic.List<(RectTransform rect, Slanted back, Text text)> marks = new();
+    int cardFrame = -10, marksFrame = -10, marksUsed;
     readonly Image[] segments = new Image[31];
-    Slanted tagBack;
     int shownFrame = -10;
 
     void Awake()
     {
         canvas = UiKit.NewCanvas("EventPanel", 5);
         RectTransform root = UiKit.Group(canvas.transform, new Vector2(0.5f, 0f), new Vector2(0f, 230f));
+        cardRoot = root.gameObject;
         var shade = new Color(0.05f, 0.1f, 0.25f, 0.35f);
         UiKit.Panel(root, new Vector2(10f, -14f), new Vector2(1240f, 340f), shade, shade, 0.08f);
         Slanted card = UiKit.Panel(root, Vector2.zero, new Vector2(1240f, 340f), UiKit.White, UiKit.Ice, 0.08f);
@@ -63,13 +67,6 @@ public class EventPanel : MonoBehaviour
         needle.pivot = new Vector2(0.5f, 0f);
         UiKit.Panel(dial, DialCentre, new Vector2(40f, 40f), UiKit.Navy, UiKit.Navy, 0f);
 
-        // Floating tag for a spot in the world (the zigzag's next turn).
-        tagBack = UiKit.Panel(canvas.transform, Vector2.zero, new Vector2(110f, 92f), new Color(UiKit.Navy.r, UiKit.Navy.g, UiKit.Navy.b, 0.9f), UiKit.Navy, 0.1f);
-        tag = tagBack.rectTransform;
-        tag.anchorMin = tag.anchorMax = Vector2.zero;
-        tagText = UiKit.Label(tag, UiKit.Heading, 64, UiKit.Gold, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(100f, 86f), true);
-        tagText.fontStyle = FontStyle.Normal;
-
         canvas.gameObject.SetActive(false);
     }
 
@@ -82,8 +79,9 @@ public class EventPanel : MonoBehaviour
     // Call first, every frame the panel should be up. count: how many boxes the row has (0 for none).
     public void Show(string heading, int count)
     {
-        shownFrame = Time.frameCount;
+        shownFrame = cardFrame = Time.frameCount;
         if (!canvas.gameObject.activeSelf) canvas.gameObject.SetActive(true);
+        if (!cardRoot.activeSelf) cardRoot.SetActive(true);
         title.text = heading;
         count = Mathf.Min(count, MaxBoxes);
         float total = count * (BoxSize + BoxGap) - BoxGap;
@@ -94,7 +92,6 @@ public class EventPanel : MonoBehaviour
         }
         bar.gameObject.SetActive(false);
         dial.gameObject.SetActive(false);
-        tag.gameObject.SetActive(false);
         cue.text = "";
     }
 
@@ -140,17 +137,46 @@ public class EventPanel : MonoBehaviour
         needle.localRotation = Quaternion.Euler(0f, 0f, -angle);
     }
 
-    public void Tag(Vector3 world, string text, bool hot)
+    // A label floating over a spot of the world; call for each one, every frame. With no Show() the card stays away.
+    // state: 0 to come, 1 done right, 2 failed, 3 the one to do next, 4 the one to do NOW.
+    public void Mark(Vector3 world, string text, int state)
     {
-        tag.gameObject.SetActive(true);
+        if (marksFrame != Time.frameCount)
+        {
+            marksFrame = Time.frameCount;
+            marksUsed = 0;
+            if (cardFrame != Time.frameCount && cardRoot.activeSelf) cardRoot.SetActive(false);
+        }
+        shownFrame = Time.frameCount;
+        if (!canvas.gameObject.activeSelf) canvas.gameObject.SetActive(true);
+        if (marksUsed == marks.Count)
+        {
+            Slanted back = UiKit.Panel(canvas.transform, Vector2.zero, new Vector2(96f, 82f), UiKit.Navy, UiKit.Navy, 0.1f);
+            back.rectTransform.anchorMin = back.rectTransform.anchorMax = Vector2.zero;
+            Text label = UiKit.Label(back.transform, UiKit.Heading, 58, UiKit.Gold, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(88f, 76f), true);
+            label.fontStyle = FontStyle.Normal;
+            marks.Add((back.rectTransform, back, label));
+        }
+        var mark = marks[marksUsed++];
+        mark.rect.gameObject.SetActive(true);
         Vector3 screen = Camera.main.WorldToScreenPoint(world);
-        tag.anchoredPosition = new Vector2(screen.x, screen.y) / canvas.scaleFactor + Vector2.up * 50f;
-        tagText.text = text;
-        tagText.color = hot ? UiKit.Mint : UiKit.Gold;
+        mark.rect.anchoredPosition = new Vector2(screen.x, screen.y) / canvas.scaleFactor + Vector2.up * 40f;
+        mark.text.text = text;
+        bool current = state >= 3;
+        mark.rect.localScale = Vector3.one * (state == 4 ? 1.5f + Mathf.PingPong(Time.unscaledTime * 4f, 0.25f) : state == 3 ? 1.25f : 0.8f);
+        Color ink = state == 1 || state == 4 ? UiKit.Mint : state == 2 ? UiKit.Rose : state == 3 ? UiKit.Gold : Color.white;
+        mark.text.color = ink;
+        float see = current ? 0.92f : 0.55f; // the ones not up yet stay in the background
+        mark.back.color = mark.back.bottom = new Color(UiKit.Navy.r, UiKit.Navy.g, UiKit.Navy.b, see);
+        if (current) mark.rect.SetAsLastSibling();
     }
 
     void LateUpdate()
     {
         if (canvas.gameObject.activeSelf && Time.frameCount - shownFrame > 1) canvas.gameObject.SetActive(false);
+        // Marks nobody asked for this frame (or the last, whoever's LateUpdate ran first) go away.
+        int keep = Time.frameCount - marksFrame > 1 ? 0 : marksUsed;
+        for (int i = keep; i < marks.Count; i++)
+            if (marks[i].rect.gameObject.activeSelf) marks[i].rect.gameObject.SetActive(false);
     }
 }

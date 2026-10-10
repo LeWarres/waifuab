@@ -14,11 +14,14 @@ public class Combat : MonoBehaviour
         readonly Matrix4x4[] matrices = new Matrix4x4[1023];
         readonly Color color;
         readonly bool shadows;
+        readonly Mesh mesh; // null: a cube
         Material material;
         int count;
 
-        public Batch(Color color, bool shadows)
+        // mesh: a model painted with vertex colours (Tools/make_enemies.py); the batch's colour tints it.
+        public Batch(Color color, bool shadows, Mesh mesh = null)
         {
+            this.mesh = mesh;
             this.color = color;
             this.shadows = shadows;
         }
@@ -35,14 +38,18 @@ public class Combat : MonoBehaviour
         {
             if (count == 0) return;
             if (!cube) cube = Resources.GetBuiltinResource<Mesh>("Cube.fbx");
-            if (!material) material = TrainSim.Mat(color);
+            if (!material)
+            {
+                material = TrainSim.Mat(color);
+                if (mesh) material.SetFloat("_MVCOL", 1f); // RealToon: multiply by the vertex colours
+            }
             var parameters = new RenderParams(material)
             {
                 worldBounds = new Bounds(Vector3.zero, Vector3.one * 500f),
                 shadowCastingMode = shadows ? ShadowCastingMode.On : ShadowCastingMode.Off,
                 receiveShadows = shadows
             };
-            Graphics.RenderMeshInstanced(parameters, cube, 0, matrices, count);
+            Graphics.RenderMeshInstanced(parameters, mesh ? mesh : cube, 0, matrices, count);
             count = 0;
         }
     }
@@ -75,7 +82,16 @@ public class Combat : MonoBehaviour
         public bool spawner;                    // releases a larva
 
         Batch batch;
-        public Batch Batch => batch ??= new Batch(color, true);
+        // Enemies are robots, loot is a balloon carrying its cargo (Tools/make_enemies.py, Tools/make_cargo.py).
+        public Batch Batch => batch ??= new Batch(color, true, Resources.Load<Mesh>(loot >= 0 ? "Models/Balloon_" + loot : "Models/Enemy_" + Shape));
+
+        // Which robot it looks like, read off what it does: the look tells the player what to expect.
+        public string Shape =>
+            heal > 0f ? "drone" : spawner || split > 0 ? "hive" : blink > 0f ? "orb"
+            : ranged > 0f && health < 20f ? "saucer" : armor > 0f || health >= 15f ? "walker" : explode > 0f ? "mine"
+            : speed >= 7f ? "dart" : chargeRange > 0f || health >= 8f ? "diamond" : "saucer";
+        public bool Flies => Shape is "saucer" or "drone" or "orb" or "diamond" or "mine";
+        public bool Spins => Shape is "diamond" or "mine" or "orb";
     }
 
     static readonly EnemyType Larva = new EnemyType { name = "Larva", color = new Color(0.7f, 0.9f, 0.3f), health = 1.5f, speed = 7f, damage = 2f, size = 0.5f };
@@ -96,25 +112,31 @@ public class Combat : MonoBehaviour
         new EnemyType { name = "Nido", biome = 2, color = new Color(0.1f, 0.3f, 0.1f), health = 10f, speed = 3f, damage = 6f, size = 1.4f, reward = 2, weight = 0.25f, split = 3 },
         new EnemyType { name = "Escupidor", biome = 2, color = new Color(0.6f, 1f, 0.2f), health = 4f, speed = 4f, damage = 3f, size = 0.9f, weight = 0.25f, ranged = 12f, interval = 1.5f },
         // Volcán
-        new EnemyType { name = "Gólem", biome = 3, color = new Color(0.35f, 0.05f, 0.02f), health = 25f, speed = 2f, damage = 15f, size = 1.8f, reward = 4, weight = 0.2f, armor = 1f },
-        new EnemyType { name = "Diablillo", biome = 3, color = new Color(1f, 0.1f, 0.1f), health = 3f, speed = 9f, damage = 3f, size = 0.6f, weight = 0.35f, explode = 2.5f, explodeDamage = 5f, slowImmune = true },
+        new EnemyType { name = "Pez volador", biome = 3, color = new Color(0.2f, 0.85f, 0.95f), health = 2f, speed = 9f, damage = 2f, size = 0.6f, weight = 0.3f, pack = 3 },
+        new EnemyType { name = "Boya mina", biome = 3, color = new Color(0.95f, 0.3f, 0.2f), health = 7f, speed = 3f, damage = 5f, size = 1.1f, weight = 0.22f, explode = 3f, explodeDamage = 7f },
+
+        new EnemyType { name = "Gólem", biome = 4, color = new Color(0.35f, 0.05f, 0.02f), health = 25f, speed = 2f, damage = 15f, size = 1.8f, reward = 4, weight = 0.2f, armor = 1f },
+        new EnemyType { name = "Diablillo", biome = 4, color = new Color(1f, 0.1f, 0.1f), health = 3f, speed = 9f, damage = 3f, size = 0.6f, weight = 0.35f, explode = 2.5f, explodeDamage = 5f, slowImmune = true },
         // Espacio
-        new EnemyType { name = "Fantasma", biome = 4, color = new Color(0.7f, 1f, 1f), health = 6f, speed = 3f, damage = 8f, size = 1f, weight = 0.3f, blink = 7f, interval = 2f },
-        new EnemyType { name = "Dron sanador", biome = 4, color = new Color(1f, 0.5f, 0.8f), health = 8f, speed = 3.5f, damage = 2f, size = 0.8f, reward = 2, weight = 0.2f, heal = 4f, healRadius = 7f, interval = 0.5f },
+        new EnemyType { name = "Pandillero", biome = 5, color = new Color(1f, 0.85f, 0.1f), health = 3f, speed = 8f, damage = 3f, size = 0.7f, weight = 0.3f, pack = 3 },
+        new EnemyType { name = "Blindado", biome = 5, color = new Color(0.2f, 0.25f, 0.35f), health = 22f, speed = 2.5f, damage = 8f, size = 1.5f, reward = 4, weight = 0.2f, ranged = 14f, interval = 2f, armor = 0.8f },
+
+        new EnemyType { name = "Fantasma", biome = 6, color = new Color(0.7f, 1f, 1f), health = 6f, speed = 3f, damage = 8f, size = 1f, weight = 0.3f, blink = 7f, interval = 2f },
+        new EnemyType { name = "Dron sanador", biome = 6, color = new Color(1f, 0.5f, 0.8f), health = 8f, speed = 3.5f, damage = 2f, size = 0.8f, reward = 2, weight = 0.2f, heal = 4f, healRadius = 7f, interval = 0.5f },
         // Planeta alienígena
-        new EnemyType { name = "Colmena", biome = 5, color = new Color(0.4f, 0.5f, 0.1f), health = 30f, speed = 1.5f, damage = 10f, size = 2f, reward = 5, weight = 0.15f, spawner = true, interval = 2.5f },
-        new EnemyType { name = "Saboteador", biome = 5, color = new Color(0f, 0.6f, 0.6f), health = 5f, speed = 7f, damage = 2f, size = 0.8f, weight = 0.3f, stun = 5f },
+        new EnemyType { name = "Colmena", biome = 7, color = new Color(0.4f, 0.5f, 0.1f), health = 30f, speed = 1.5f, damage = 10f, size = 2f, reward = 5, weight = 0.15f, spawner = true, interval = 2.5f },
+        new EnemyType { name = "Saboteador", biome = 7, color = new Color(0f, 0.6f, 0.6f), health = 5f, speed = 7f, damage = 2f, size = 0.8f, weight = 0.3f, stun = 5f },
         // Fortaleza alienígena
-        new EnemyType { name = "Centinela", biome = 6, color = new Color(0.5f, 0.55f, 0.6f), health = 15f, speed = 3f, damage = 5f, size = 1.2f, reward = 3, weight = 0.3f, ranged = 16f, interval = 1.2f, armor = 1f },
-        new EnemyType { name = "Coloso", biome = 6, color = new Color(0.1f, 0.1f, 0.12f), health = 60f, speed = 2f, damage = 25f, size = 2.5f, reward = 8, weight = 0.12f, explode = 6f, explodeDamage = 15f, chargeRange = 10f, chargeSpeed = 2.5f },
+        new EnemyType { name = "Centinela", biome = 8, color = new Color(0.5f, 0.55f, 0.6f), health = 15f, speed = 3f, damage = 5f, size = 1.2f, reward = 3, weight = 0.3f, ranged = 16f, interval = 1.2f, armor = 1f },
+        new EnemyType { name = "Coloso", biome = 8, color = new Color(0.1f, 0.1f, 0.12f), health = 60f, speed = 2f, damage = 25f, size = 2.5f, reward = 8, weight = 0.12f, explode = 6f, explodeDamage = 15f, chargeRange = 10f, chargeSpeed = 2.5f },
     };
 
     // Floating goods, one per kind of cargo. Not enemies: they drift by, ignore the train, and only the hero can break them.
     public static readonly EnemyType[] Loot =
     {
-        new EnemyType { name = "Árbol", loot = 0, color = new Color(0.2f, 0.5f, 0.15f), health = 20f, size = 1.6f, reward = 0 },
-        new EnemyType { name = "Roca", loot = 1, color = new Color(0.55f, 0.55f, 0.55f), health = 30f, size = 1.6f, reward = 0 },
-        new EnemyType { name = "Armas", loot = 2, color = new Color(0.9f, 0.75f, 0.2f), health = 14f, size = 1.3f, reward = 0 },
+        new EnemyType { name = "Madera", loot = 0, color = new Color(0.9f, 0.5f, 0.18f), health = 20f, size = 1.6f, reward = 0 },
+        new EnemyType { name = "Roca", loot = 1, color = new Color(0.55f, 0.65f, 0.85f), health = 30f, size = 1.6f, reward = 0 },
+        new EnemyType { name = "Armas", loot = 2, color = new Color(0.4f, 0.7f, 0.25f), health = 14f, size = 1.3f, reward = 0 },
     };
 
     public class Enemy
@@ -146,6 +168,10 @@ public class Combat : MonoBehaviour
     }
 
     public static Combat Instance { get; private set; }
+    public bool Paused => train.Swarming; // turrets hold their fire too
+    public float calmDistance = 15f, calmRetreat = 12f; // how far enemies keep during a button game, and how fast they get there
+    const float ModelScale = 1.4f;  // the robots are slimmer than the cubes they replace
+    const float BurstSize = 0.6f; // effect scale per unit of blast radius
 
     // Difficulty = stations reached + biome jumps. Pressure (enemies x health) grows a little slower
     // than a train that takes a good upgrade every station, so skipped or unlucky upgrades get punished.
@@ -193,6 +219,7 @@ public class Combat : MonoBehaviour
 
     void Update()
     {
+        if (train.Swarming) return; // seen from the gunner's seat: the rest of the fight is put away until it is over
         if (train.AtStation)
         {
             // Stations are safe: wipe the field and stop spawning until the train leaves.
@@ -205,7 +232,9 @@ public class Combat : MonoBehaviour
         level = train.Difficulty;
         player = train.Player;
 
-        spawnTimer -= dt;
+        // A button game or a curve under the train: nobody new arrives, the rest back off and nothing they do counts.
+        bool calm = train.Calm;
+        if (!calm) spawnTimer -= dt;
         while (spawnTimer <= 0f)
         {
             spawnTimer += 1f / (spawnRate + spawnRatePerLevel * level);
@@ -238,6 +267,12 @@ public class Combat : MonoBehaviour
             if (wagon < 0) break; // train destroyed
             e.position -= train.Forward(wagon) * drift; // along the track where its wagon is, so it holds through a curve
             float sqr = toWagon.sqrMagnitude, radius = t.size * 0.5f;
+            if (calm)
+            {
+                float away = Mathf.Sqrt(sqr);
+                if (away < calmDistance && away > 0.01f) e.position -= toWagon * (Mathf.Min(calmDistance - away, calmRetreat * dt) / away);
+                continue;
+            }
 
             // The hero on foot is a target too, whenever closer than the train.
             bool atPlayer = false;
@@ -294,7 +329,7 @@ public class Combat : MonoBehaviour
             if (now < e.slowUntil) speed *= 0.5f;
             e.position += toWagon * (speed * dt / Mathf.Sqrt(sqr));
         }
-        ResolveBlasts(damageScale);
+        ResolveBlasts(calm ? 0f : damageScale);
 
         // Each bullet tracks only its own target: one check per bullet, and it cannot miss or tunnel.
         for (int i = bullets.Count - 1; i >= 0; i--)
@@ -334,14 +369,32 @@ public class Combat : MonoBehaviour
             if (b.life <= 0f) RemoveBullet(i);
             else b.position += b.velocity * dt;
         }
-        ResolveBlasts(damageScale);
+        ResolveBlasts(calm ? 0f : damageScale);
     }
 
     // Drawn after every script has moved, so nothing lags a frame behind.
     void LateUpdate()
     {
+        if (train.Swarming) return; // nothing of the ordinary fight is drawn meanwhile
         ResolveBlasts(1f + damagePerLevel * level); // kills made by turrets after our Update
-        foreach (Enemy e in enemies) e.type.Batch.Add(e.position, new Vector3(e.type.size, e.type.size, e.type.size));
+        // Robots face the train, hover and bob if they fly, and turn on the spot if that is their thing.
+        float clock = Time.time;
+        foreach (Enemy e in enemies)
+        {
+            EnemyType t = e.type;
+            Vector3 at = e.position, toTrain = new Vector3(-at.x, 0f, -at.z);
+            if (t.loot >= 0)
+            {
+                // Floats well clear of the ground, swaying.
+                at.y += 1.6f + Mathf.Sin(clock * 1.5f + e.id) * 0.25f;
+                t.Batch.Add(at, Vector3.one * (t.size * 2.6f), Quaternion.Euler(0f, clock * 20f + e.id * 31f, Mathf.Sin(clock * 1.1f + e.id) * 5f));
+                continue;
+            }
+            Quaternion facing = t.Spins ? Quaternion.Euler(0f, clock * 140f + e.id * 47f, 0f)
+                : toTrain.sqrMagnitude > 0.01f ? Quaternion.LookRotation(toTrain) : Quaternion.identity;
+            if (t.Flies) at.y += 0.7f + Mathf.Sin(clock * 3f + e.id) * 0.18f;
+            t.Batch.Add(at, Vector3.one * (t.size * ModelScale), facing);
+        }
         foreach (Bullet b in bullets) b.batch.Add(b.position, b.size, b.rotation);
         foreach (EnemyType t in Types) t.Batch.Flush();
         foreach (EnemyType t in Loot) t.Batch.Flush();
@@ -530,6 +583,7 @@ public class Combat : MonoBehaviour
     public void Strike(Enemy target, Weapon weapon, int level)
     {
         Spawn(new Vector3(target.position.x, 7f, target.position.z), new Vector3(0.3f, 14f, 0.3f), weapon.Batch, 0.12f);
+        Burst(weapon.id, target.position, 1.5f);
         Hurt(target, weapon.Damage(level) * Power);
     }
 
@@ -537,6 +591,7 @@ public class Combat : MonoBehaviour
     public void Explode(Vector3 center, float radius, float damage, Weapon weapon)
     {
         Flash(center, radius, weapon.Batch);
+        Burst(weapon.id, center, radius * BurstSize);
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
             Vector3 d = enemies[i].position - center;
@@ -563,6 +618,34 @@ public class Combat : MonoBehaviour
         }
     }
 
+    class Pool
+    {
+        public GameObject prefab;
+        public GameObject[] copies = new GameObject[6];
+        public int next;
+    }
+
+    readonly Dictionary<string, Pool> bursts = new();
+
+    // A one-shot VFX Graph effect from Resources/Vfx/<effect>, sized to the blast. Each effect has a few
+    // copies that are replayed in turn; an effect with no prefab (most weapons) simply does nothing.
+    public void Burst(string effect, Vector3 at, float size)
+    {
+        if (!bursts.TryGetValue(effect, out Pool pool))
+            bursts[effect] = pool = new Pool { prefab = Resources.Load<GameObject>("Vfx/" + effect) };
+        if (!pool.prefab) return;
+        pool.next = (pool.next + 1) % pool.copies.Length;
+        GameObject copy = pool.copies[pool.next];
+        if (!copy) pool.copies[pool.next] = copy = Instantiate(pool.prefab);
+        copy.transform.SetPositionAndRotation(at, Quaternion.identity);
+        copy.transform.localScale = Vector3.one * size;
+        foreach (var graph in copy.GetComponentsInChildren<UnityEngine.VFX.VisualEffect>())
+        {
+            graph.Reinit();
+            graph.Play();
+        }
+    }
+
     // Enemy death explosions hurt wagons and other enemies; those deaths can queue more blasts.
     void ResolveBlasts(float damageScale)
     {
@@ -571,6 +654,7 @@ public class Combat : MonoBehaviour
             Blast blast = blasts[n];
             float radius = blast.type.explode;
             Flash(blast.center, radius, blast.type.Batch);
+            Burst("enemy", blast.center, radius * BurstSize);
             train.DamageArea(blast.center, radius, blast.type.explodeDamage * damageScale);
             if (player.Alive && (player.Position - blast.center).sqrMagnitude <= radius * radius)
                 player.Damage(blast.type.explodeDamage * damageScale);

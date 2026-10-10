@@ -624,6 +624,70 @@ MonoBehaviour:
     m_Localized: "Escolta! {0} Nv {1}\nVag\xE3o armado extra\nS\xF3 esta viagem"
     m_Metadata:
       m_Items: []
+  - m_Id: 628753945669632
+    m_Localized: Cidade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 676525197570048
+    m_Localized: "{1} \xB7 Esta\xE7\xE3o {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 676525231124480
+    m_Localized: Dif. {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032011198464
+    m_Localized: ENXAME!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947200
+    m_Localized: Mire e atire com {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947201
+    m_Localized: "Inimigos: {0}     Vag\xE3o: {1}%     {2}: atirar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947202
+    m_Localized: "Enxame destru\xEDdo: {0} abatidos, +{1} dinheiro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947203
+    m_Localized: "O enxame destruiu o vag\xE3o ({0} abatidos)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480011632640
+    m_Localized: Som
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381376
+    m_Localized: 'Volume geral: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381377
+    m_Localized: "M\xFAsica: {0}%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381378
+    m_Localized: 'Efeitos: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381379
+    m_Localized: 'Silenciar tudo: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381380
+    m_Localized: 'Cima / baixo: escolher     Esquerda / direita: ajustar     X: mudar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381381
+    m_Localized: "W / S: escolher     A / D: ajustar     Espa\xE7o: mudar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 746880280899584
+    m_Localized: Oceano
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

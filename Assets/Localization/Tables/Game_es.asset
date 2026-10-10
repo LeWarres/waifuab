@@ -625,6 +625,71 @@ MonoBehaviour:
     m_Localized: "\xA1Escolta! {0} Nv {1}\nVag\xF3n armado extra\nSolo este viaje"
     m_Metadata:
       m_Items: []
+  - m_Id: 628753945669632
+    m_Localized: Ciudad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 676525197570048
+    m_Localized: "{1} \xB7 Estaci\xF3n {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 676525231124480
+    m_Localized: Dif. {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032011198464
+    m_Localized: "\xA1ENJAMBRE!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947200
+    m_Localized: Apunta y dispara con {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947201
+    m_Localized: "Enemigos: {0}     Vag\xF3n: {1}%     {2}: disparar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947202
+    m_Localized: 'Enjambre destruido: {0} derribados, +{1} dinero'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 705032048947203
+    m_Localized: "El enjambre destruy\xF3 el vag\xF3n ({0} derribados)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480011632640
+    m_Localized: Sonido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381376
+    m_Localized: 'Volumen general: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381377
+    m_Localized: "M\xFAsica: {0}%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381378
+    m_Localized: 'Efectos: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381379
+    m_Localized: 'Silenciar todo: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381380
+    m_Localized: 'Arriba / abajo: elegir     Izquierda / derecha: ajustar     X:
+      cambiar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735480049381381
+    m_Localized: 'W / S: elegir     A / D: ajustar     Espacio: cambiar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 746880280899584
+    m_Localized: "Oc\xE9ano"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
