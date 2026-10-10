@@ -75,10 +75,10 @@ public class TrainSim : MonoBehaviour
     // Wood is the safe one, rock is tough, weapons pay best and break easily.
     static readonly (string id, Color color, float health, int reward, int penalty)[] Cargos =
     {
-        ("wood", new Color(0.55f, 0.35f, 0.15f), 40f, 15, 15),
-        ("rock", new Color(0.5f, 0.5f, 0.5f), 80f, 20, 25),
-        ("arms", new Color(0.2f, 0.35f, 0.2f), 25f, 45, 45),
-        ("container", new Color(0.15f, 0.3f, 0.6f), 60f, 10, 0), // the bought, permanent one: never loaded at a station
+        ("wood", new Color(0.55f, 0.35f, 0.15f), 40f * Balance.Scale, 15, 15),
+        ("rock", new Color(0.5f, 0.5f, 0.5f), 80f * Balance.Scale, 20, 25),
+        ("arms", new Color(0.2f, 0.35f, 0.2f), 25f * Balance.Scale, 45, 45),
+        ("container", new Color(0.15f, 0.3f, 0.6f), 60f * Balance.Scale, 10, 0), // the bought, permanent one: never loaded at a station
     };
     const int Loadable = 3, Container = 3;
 
@@ -106,12 +106,15 @@ public class TrainSim : MonoBehaviour
     public EventPanel Panel { get; private set; } // the card the button games are played on
     public void Toast(string text) => hud.Toast(text);
     public void Flash(string effect) => hud.Flash(effect);
+    public void DamageNumber(Vector3 at, float amount, bool onTrain) => hud.DamageNumber(at, amount, onTrain);
     Hud hud;
     public float MaxHealth { get { float sum = 0f; foreach (Car c in cars) if (c.cargo < 0) sum += c.maxHealth; return sum; } }
     public bool CanTakeLoot => cars.Count < maxCars;
     public bool Damaged => Health < MaxHealth || Player.Health < Player.maxHealth;
     public bool InEvent => turn.Active || jump.Active || zig.Active || swarm.Active; // a button game is on: the hero waits
     public bool Swarming => swarm.Aiming;                // seen from the gunner's seat right now
+    // The gunner's camera while the swarm is fought, so the HUD can place its damage numbers from that seat.
+    public Camera SwarmCamera => swarm != null && swarm.Aiming ? swarm.View : null;
     public Vector3 CarPosition(int i) => cars[i].pos;
     public void Shake(float seconds) => shake = Mathf.Max(shake, seconds);
 
@@ -341,6 +344,15 @@ public class TrainSim : MonoBehaviour
 
     void Awake()
     {
+        // The numbers are designed small and scaled here, once per run: the scene carries the unscaled values,
+        // so this is what makes every health pool and payout read ten times bigger. See Balance.Scale.
+        wagonMaxHealth *= Balance.Scale;
+        repairReward *= Balance.Scale;
+        healReward *= Balance.Scale;
+        skipHealth *= Balance.Scale;
+        vitalityReward *= Balance.Scale;
+        kitHeal *= Balance.Scale;
+
         Material steel = Mat(Color.gray);
         groundMat = Mat(Biomes[0].ground, false);
         groundMat.mainTextureScale = Vector2.one * (viewRange * 8f / groundTile);
@@ -986,6 +998,7 @@ public class TrainSim : MonoBehaviour
     {
         Car car = cars[wagon];
         car.health = Mathf.Max(0f, car.health - amount);
+        if (amount > 0f) DamageNumber(CarTop(wagon), amount, true); // the number pops over the wagon that took it
         if (car.Alive) return;
         SetAlive(car, false);
         if (Health <= 0f) Time.timeScale = 0f; // game over, OnGUI offers the restart

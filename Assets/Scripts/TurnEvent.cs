@@ -10,8 +10,8 @@ public class TurnEvent : MonoBehaviour
 {
     public float easyStepTime = 1.2f, hardStepTime = 0.6f; // seconds to press each button, at the start and at the hardest
     public int moneyPerHit = 10;
-    public float healthPerHit = 2f;    // to every wagon and the hero
-    public float damagePerMiss = 3f;   // to every wagon
+    public float healthPerHit = 2f * Balance.Scale;    // to every wagon and the hero
+    public float damagePerMiss = 3f * Balance.Scale;   // to every wagon
     public int faceButtonsAt = 3;      // difficulty from which the face buttons (or WASD) join the arrows
     public int shoulderButtonsAt = 7;  // difficulty from which shoulders and triggers (or Q E Z C) join too
 

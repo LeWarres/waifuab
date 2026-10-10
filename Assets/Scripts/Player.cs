@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     public float speed = 12f;
     public float sprint = 1.7f;    // speed multiplier while the sprint button is held
-    public float maxHealth = 30f;
+    public float maxHealth = 30f * Balance.Scale;
     public float hover = 2.5f;     // flying height
     public float leash = 27f;      // how far from the train the hero may wander
     public float aimAssist = 20f;  // degrees around the aim line that still pick an enemy
@@ -208,7 +208,7 @@ public class Player : MonoBehaviour
     public void OnStation()
     {
         if (Alive) return;
-        Health = 1f;
+        Health = Balance.Scale; // back on their feet with a scratch: the rest is bought
         transform.position = SpawnPoint;
         visuals.SetActive(true);
     }

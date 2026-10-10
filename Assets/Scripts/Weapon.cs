@@ -28,7 +28,7 @@ public class Weapon
     public Combat.Batch Batch => batch ??= new Combat.Batch(color, false);
 
     // Level scaling: level 5 deals 3.4x damage and fires 1.5x faster, about 5x the level 1 output.
-    public float Damage(int level) => damage * (1f + 0.6f * (level - 1));
+    public float Damage(int level) => damage * (1f + 0.6f * (level - 1)) * Balance.Scale;
     public float Interval(int level) => interval * Mathf.Pow(0.9f, level - 1);
     public float Splash(int level) => splash * (1f + 0.1f * (level - 1));
     public int Chain(int level) => chain > 0 ? chain + level - 1 : 0;

@@ -19,11 +19,11 @@ public class SwarmEvent : MonoBehaviour
     public float robotSize = 2.1f;
     public float crashHeight = 3.6f;        // where they hit: the turret, not the wagon's side
     // Both grow with the difficulty exactly like the ordinary enemies' (Combat.healthPerLevel, damagePerLevel).
-    public float robotHealth = 0.8f;        // two shots of a level 1 turret
-    public float crashDamage = 5f;          // to the wagon, per robot that gets through
+    public float robotHealth = 0.8f * Balance.Scale;        // two shots of a level 1 turret
+    public float crashDamage = 5f * Balance.Scale;          // to the wagon, per robot that gets through
     // A shot is worth what the wagon's own weapon deals in that time, so upgrading it keeps the fight fair;
     // never less than a level 1 turret, or the slow support weapons could not win at all.
-    public float fireEvery = 0.11f, leastDamagePerSecond = 4f;
+    public float fireEvery = 0.11f, leastDamagePerSecond = 4f * Balance.Scale;
     public float aimAssist = 3.2f;          // degrees off the sight that still hit
     public float stickSpeed = 120f, mouseSpeed = 0.14f; // degrees a second, degrees a pixel
     public int moneyPerKill = 2;
@@ -36,6 +36,7 @@ public class SwarmEvent : MonoBehaviour
     public bool Active { get; private set; }       // from the warning to the end
     public bool Incoming => Active && Time.unscaledTime < startsAt; // the cloud is still arriving, seen from above
     public bool Aiming => Active && !Incoming;
+    public Camera View => view; // the gunner's camera, so the HUD can place its damage numbers from that seat
 
     class Robot
     {
@@ -234,17 +235,23 @@ public class SwarmEvent : MonoBehaviour
             Vector3 muzzle = target + Vector3.up * 0.6f, end = hit >= 0 ? swarm[hit].position : eye + forward * 60f;
             shots.Add((muzzle, end, now));
             Combat.Instance.Burst("spark", muzzle + (end - muzzle).normalized * 1.2f, 0.5f); // muzzle flash
-            if (hit >= 0 && (swarm[hit].health -= shotDamage) > 0f)
+            if (hit >= 0)
             {
-                Combat.Instance.Burst("spark", swarm[hit].position, 0.9f); // hit, still flying
-                swarm[hit].hitAt = now;
-            }
-            else if (hit >= 0)
-            {
-                Combat.Instance.Burst("grenade", swarm[hit].position, 1.3f);
-                swarm.RemoveAt(hit);
-                kills++;
-                train.Earn(moneyPerKill);
+                Robot robot = swarm[hit];
+                bool down = (robot.health -= shotDamage) <= 0f;
+                train.DamageNumber(robot.position, shotDamage, false); // red, over the robot that was hit
+                if (down)
+                {
+                    Combat.Instance.Burst("grenade", robot.position, 1.3f);
+                    swarm.RemoveAt(hit);
+                    kills++;
+                    train.Earn(moneyPerKill);
+                }
+                else
+                {
+                    Combat.Instance.Burst("spark", robot.position, 0.9f); // hit, still flying
+                    robot.hitAt = now;
+                }
             }
         }
 

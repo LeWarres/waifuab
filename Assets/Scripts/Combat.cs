@@ -250,7 +250,7 @@ public class Combat : MonoBehaviour
 
         // Enemies head for the closest wagon that is still standing.
         // Faster than cruise: everyone slides towards the rear, so the front arrives sooner and the rear lags.
-        float damageScale = 1f + damagePerLevel * level, drift = (train.Speed - train.maxSpeed) * speedDrift * dt;
+        float damageScale = (1f + damagePerLevel * level) * Balance.Scale, drift = (train.Speed - train.maxSpeed) * speedDrift * dt;
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
             Enemy e = enemies[i];
@@ -301,7 +301,7 @@ public class Combat : MonoBehaviour
                 continue;
             }
 
-            if (t.regen > 0f) e.hp = Mathf.Min(e.maxHp, e.hp + t.regen * dt);
+            if (t.regen > 0f) e.hp = Mathf.Min(e.maxHp, e.hp + t.regen * Balance.Scale * dt);
 
             bool inRange = t.ranged > 0f && sqr <= t.ranged * t.ranged;
             if (t.interval > 0f && (e.timer -= dt) <= 0f)
@@ -319,7 +319,7 @@ public class Combat : MonoBehaviour
                 {
                     foreach (Enemy other in enemies)
                         if (other != e && (other.position - e.position).sqrMagnitude <= t.healRadius * t.healRadius)
-                            other.hp = Mathf.Min(other.maxHp, other.hp + t.heal * t.interval);
+                            other.hp = Mathf.Min(other.maxHp, other.hp + t.heal * t.interval * Balance.Scale);
                 }
             }
             if (inRange) continue; // shooters hold their ground
@@ -376,7 +376,7 @@ public class Combat : MonoBehaviour
     void LateUpdate()
     {
         if (train.Swarming) return; // nothing of the ordinary fight is drawn meanwhile
-        ResolveBlasts(1f + damagePerLevel * level); // kills made by turrets after our Update
+        ResolveBlasts((1f + damagePerLevel * level) * Balance.Scale); // kills made by turrets after our Update
         // Robots face the train, hover and bob if they fly, and turn on the spot if that is their thing.
         float clock = Time.time;
         foreach (Enemy e in enemies)
@@ -471,7 +471,7 @@ public class Combat : MonoBehaviour
         Enemy e = enemyPool.Count > 0 ? enemyPool.Pop() : new Enemy();
         e.position = new Vector3(ground.x, type.size * 0.5f, ground.z);
         e.type = type;
-        e.hp = e.maxHp = type.health * (1f + healthPerLevel * level);
+        e.hp = e.maxHp = type.health * (1f + healthPerLevel * level) * Balance.Scale;
         e.velocity = Vector3.zero;
         e.slowUntil = 0f;
         e.timer = type.interval;
@@ -661,7 +661,7 @@ public class Combat : MonoBehaviour
             for (int i = enemies.Count - 1; i >= 0; i--)
             {
                 Vector3 d = enemies[i].position - blast.center;
-                if (d.x * d.x + d.z * d.z <= radius * radius) Hurt(enemies[i], blast.type.explodeDamage);
+                if (d.x * d.x + d.z * d.z <= radius * radius) Hurt(enemies[i], blast.type.explodeDamage * Balance.Scale);
             }
         }
         blasts.Clear();
@@ -675,7 +675,9 @@ public class Combat : MonoBehaviour
     void Hurt(Enemy e, float damage)
     {
         if (e.type.loot >= 0 && !heroHit) return;
-        e.hp -= Mathf.Max(damage - e.type.armor, damage * 0.2f);
+        float applied = Mathf.Max(damage - e.type.armor * Balance.Scale, damage * 0.2f);
+        e.hp -= applied;
+        if (applied > 0f) train.DamageNumber(e.position + Vector3.up * (e.type.size + 0.5f), applied, false); // red, over the enemy
         if (e.hp > 0f) return;
         train.Earn(e.type.reward); // flat: the biome multiplier is on the cargo, where the risk is
         Die(e, true);

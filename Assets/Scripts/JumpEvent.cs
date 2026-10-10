@@ -22,7 +22,7 @@ public class JumpEvent : MonoBehaviour
     public Vector2 needleSweep = new Vector2(2.2f, 4.2f); // how fast the needle swings
     public Vector2 greenWidth = new Vector2(20f, 10f);    // half width of the green zone, out of the dial's 90
     public float yellowAngle = 50f;
-    public float needleHeal = 8f, needleDamage = 10f;
+    public float needleHeal = 8f * Balance.Scale, needleDamage = 10f * Balance.Scale;
 
 
     public bool Active { get; private set; }

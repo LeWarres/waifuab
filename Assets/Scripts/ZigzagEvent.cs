@@ -9,7 +9,7 @@ public class ZigzagEvent : MonoBehaviour
     public float easyWindow = 0.34f, hardWindow = 0.18f; // seconds either side of the turn that still count
     public float lead = 0.9f;                            // seconds of run-up shown on the timing bar
     public int moneyPerHit = 8;
-    public float damagePerMiss = 2f;                     // to every wagon, at once: a little per missed turn
+    public float damagePerMiss = 2f * Balance.Scale;                     // to every wagon, at once: a little per missed turn
 
     public bool Active { get; private set; }
 

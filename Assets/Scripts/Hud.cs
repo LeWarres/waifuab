@@ -41,6 +41,18 @@ public class Hud : MonoBehaviour
     Slanted warnBand, toastPanel, hintPanel;
     float toastUntil;
     readonly List<Text> numbers = new();
+
+    // Floating damage numbers: one text per hit, red over an enemy and yellow over a wagon, rising from the blow.
+    class Popup
+    {
+        public Text text;
+        public Vector3 at;
+        public float birth;
+    }
+
+    readonly List<Popup> popupPool = new();
+    readonly List<Popup> popups = new();
+    const float popupLife = 0.9f;
     Meter trainBar, tripBar, heroBar;
     RawImage ammoIcon;
     Text ammoText;
@@ -153,6 +165,31 @@ public class Hud : MonoBehaviour
         toastUntil = Time.unscaledTime + seconds;
     }
 
+    // A number for one blow: red when the enemy is hurt, yellow when a wagon is, at the point of the hit.
+    public void DamageNumber(Vector3 at, float amount, bool onTrain)
+    {
+        Popup popup;
+        if (popupPool.Count > 0)
+        {
+            popup = popupPool[popupPool.Count - 1];
+            popupPool.RemoveAt(popupPool.Count - 1);
+        }
+        else
+        {
+            Text text = UiKit.Label(world, UiKit.Heading, 46, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(200f, 70f), true);
+            var outline = text.gameObject.AddComponent<Outline>(); // keeps it readable over any ground
+            outline.effectColor = new Color(0f, 0f, 0f, 0.9f);
+            outline.effectDistance = new Vector2(2.5f, -2.5f);
+            popup = new Popup { text = text };
+        }
+        popup.text.text = Mathf.Max(1, Mathf.RoundToInt(amount)).ToString();
+        popup.text.color = onTrain ? UiKit.Gold : new Color(1f, 0.25f, 0.2f);
+        popup.at = at;
+        popup.birth = Time.unscaledTime;
+        popup.text.gameObject.SetActive(true);
+        popups.Add(popup);
+    }
+
     void LateUpdate()
     {
         float zoom = Camera.main.orthographicSize;
@@ -182,6 +219,29 @@ public class Hud : MonoBehaviour
             Vector3 at = Camera.main.WorldToScreenPoint(train.CarTop(i));
             ((RectTransform)pill).anchoredPosition = new Vector2(at.x, at.y) / canvas.scaleFactor + Vector2.up * 40f;
             numbers[i].text = (i + 1).ToString();
+        }
+
+        // Damage numbers: rise away from the blow and fade. Gone early when a menu opens. While the swarm is
+        // fought the picture comes from the gunner's camera, so the numbers are placed with that one instead.
+        Camera view = train.SwarmCamera ?? Camera.main;
+        for (int i = popups.Count - 1; i >= 0; i--)
+        {
+            Popup popup = popups[i];
+            float age = Time.unscaledTime - popup.birth;
+            if (age >= popupLife || train.MenuShown)
+            {
+                popup.text.gameObject.SetActive(false);
+                popupPool.Add(popup);
+                popups.RemoveAt(i);
+                continue;
+            }
+            float k = age / popupLife;
+            Vector3 screen = view.WorldToScreenPoint(popup.at + Vector3.up * (k * 1.9f));
+            popup.text.rectTransform.anchoredPosition = new Vector2(screen.x, screen.y) / canvas.scaleFactor;
+            popup.text.rectTransform.localScale = Vector3.one * (1f + 0.6f * Mathf.Clamp01(1f - k * 5f)); // a little pop as it is born
+            Color colour = popup.text.color;
+            colour.a = 1f - Mathf.Clamp01((k - 0.55f) / 0.45f);
+            popup.text.color = colour;
         }
 
         Player hero = train.Player;
