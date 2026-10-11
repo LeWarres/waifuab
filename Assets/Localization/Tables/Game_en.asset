@@ -43,19 +43,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996229
-    m_Localized: "Before leaving   \xB7   Next leg: {0}"
+    m_Localized: Where to?
     m_Metadata:
       m_Items: []
   - m_Id: 1762996230
-    m_Localized: 'Repair +{0} per wagon
+    m_Localized: 'Repair train
 
-      ({1} money)'
+      +{0} health to every wagon'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996231
-    m_Localized: 'Heal player +{0}
+    m_Localized: 'Heal player
 
-      ({1} money)'
+      +{0} health'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996232
@@ -71,7 +71,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996234
-    m_Localized: 'Station: wagon upgrade'
+    m_Localized: TRAIN upgrade
     m_Metadata:
       m_Items: []
   - m_Id: 1762996235
@@ -81,7 +81,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996236
-    m_Localized: 'Skip
+    m_Localized: 'No thanks
 
       random health or money'
     m_Metadata:
@@ -127,7 +127,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996246
-    m_Localized: 'A / D or arrows: move selection        Space: confirm        or click'
+    m_Localized: 'A / D or arrows: move selection        Space: confirm        or
+      click'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996247
@@ -275,7 +276,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 155144139649024
-    m_Localized: Player upgrade
+    m_Localized: PLAYER upgrade
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203456
@@ -373,11 +374,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 170646232707072
-    m_Localized: Cargo for the next station ({0} / {1})
+    m_Localized: CARGO to sell ({0} / {1})
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067200
-    m_Localized: "{0}\nCosts {4} \xB7 pays +{1}\nHealth {2} \xB7 fine {3}"
+    m_Localized: "{0}\nPays +{1} on arrival\nHealth {2} \xB7 fine {3}"
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067201
@@ -395,11 +396,11 @@ MonoBehaviour:
   - m_Id: 170646262067204
     m_Localized: 'Done
 
-      leave with this cargo'
+      go on with this'
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067205
-    m_Localized: '{0}: where in the train?'
+    m_Localized: '{0}: where does it go?'
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067206
@@ -441,23 +442,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 266376523886592
-    m_Localized: Shop
+    m_Localized: SHOP
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441024
     m_Localized: 'Medkit ({2}/{3})
 
-      +{0} to all on the road
-
-      ({1} money)'
+      +{0} to all, used on the road'
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441025
     m_Localized: 'Armed wagon
 
-      one more weapon
-
-      ({0} money)'
+      one more wagon for weapons'
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441026
@@ -471,9 +468,7 @@ MonoBehaviour:
   - m_Id: 266376557441027
     m_Localized: 'Container
 
-      pays every station
-
-      ({0} money)'
+      pays at every station'
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441028
@@ -784,6 +779,479 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 829104103239693
     m_Localized: 'W / S: choose     A / D: adjust     Space: change'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 896838069989376
+    m_Localized: Gasoline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1041311424917504
+    m_Localized: New Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1041311471054848
+    m_Localized: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470567403520
+    m_Localized: Train
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957952
+    m_Localized: Player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957953
+    m_Localized: Cargo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957954
+    m_Localized: Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957955
+    m_Localized: Route
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957956
+    m_Localized: 'Free: pick 1 for your wagons'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957957
+    m_Localized: Pick the wagon that will carry it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957958
+    m_Localized: 'Free: pick 1 for your character'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957959
+    m_Localized: 'Optional: pay to carry it, earn more if it arrives'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957960
+    m_Localized: Pick where to couple it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957961
+    m_Localized: 'Optional: spend your money on what you need'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957962
+    m_Localized: 'Next leg: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957963
+    m_Localized: FREE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957964
+    m_Localized: SOLD OUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957965
+    m_Localized: BONUS!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1048832743124992
+    m_Localized: Market
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1048832780873728
+    m_Localized: MARKET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1048832780873729
+    m_Localized: Buy what you like, then press Done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1048832780873730
+    m_Localized: CARGO to sell  {0}/{1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1048832780873731
+    m_Localized: SHOP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1048832780873732
+    m_Localized: 'Done
+
+      leave the market'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308540112896
+    m_Localized: 'Pay now, earn more if it arrives     {0}: see the SHOP'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308573667328
+    m_Localized: 'What you buy is yours right away     {0}: see the CARGO'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308573667329
+    m_Localized: Up / down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308573667330
+    m_Localized: W / S
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308573667331
+    m_Localized: 'Left / right: move it along the train     X: couple'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308573667332
+    m_Localized: 'A / D: move it along the train     Space: couple'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308573667333
+    m_Localized: 'Couple
+
+      here'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1052575261863936
+    m_Localized: 'Wagon {0}: {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1052575295418368
+    m_Localized: 'Mount
+
+      here'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1052575295418369
+    m_Localized: 'Left / right: change wagon     X: mount'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1052575295418370
+    m_Localized: 'A / D: change wagon     Space: mount'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763503329280
+    m_Localized: YOUR FLEET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689408
+    m_Localized: Choose your locomotive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689409
+    m_Localized: RicMar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689410
+    m_Localized: ReyMar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689411
+    m_Localized: "Blue and yellow \xB7 original design"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689412
+    m_Localized: "Red and white \xB7 black details"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689413
+    m_Localized: Start journey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689414
+    m_Localized: 'W / S or arrows: choose     Space / Enter: confirm     Esc: back'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689415
+    m_Localized: 'Stick or D-pad: choose     X: confirm     O: back'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807104221184
+    m_Localized: Random
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609792
+    m_Localized: Picks a random available locomotive.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609793
+    m_Localized: Locomotive {0:00}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609794
+    m_Localized: '{0} / {1} locomotives available'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609795
+    m_Localized: Blue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609796
+    m_Localized: Red
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609797
+    m_Localized: Locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609798
+    m_Localized: This locomotive is not available yet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609799
+    m_Localized: Available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609800
+    m_Localized: LOCOMOTIVE DATA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609801
+    m_Localized: 'Maximum speed
+
+      {0} m/s'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609802
+    m_Localized: 'Starting health
+
+      {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609803
+    m_Localized: 'Status
+
+      {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1070062451896320
+    m_Localized: C-279
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1070062485450752
+    m_Localized: "Black and silver \xB7 red trim \xB7 the classic"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1070062485450753
+    m_Localized: Night Skull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1070062485450754
+    m_Localized: "Black \xB7 skull on the nose \xB7 bat wings"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1070062485450755
+    m_Localized: Golem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1070062485450756
+    m_Localized: "Orange and white \xB7 turbine face \xB7 pipes and antennas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1073845890265088
+    m_Localized: Gora-P
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1073845919625216
+    m_Localized: "White \xB7 brown and black face \xB7 blue eyes \xB7 tail on the
+      roof"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1076946193952768
+    m_Localized: Kairi Resha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1076946227507200
+    m_Localized: "Deep blue \xB7 flames \xB7 gold teeth and engine \xB7 red wheels"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1079346141147136
+    m_Localized: R-2D-2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1079346174701568
+    m_Localized: "Grey \xB7 heavy armour \xB7 wedge nose \xB7 twin guns"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1080001404678144
+    m_Localized: R-20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1080001442426880
+    m_Localized: "Rust and moss \xB7 two turbines up front \xB7 landing legs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1081078975901696
+    m_Localized: Giger Machine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1081079013650432
+    m_Localized: "Rusted bronze and black iron \xB7 tusked skull \xB7 bone teeth"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1082532595838976
+    m_Localized: T.exe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1082532629393408
+    m_Localized: "Violet \xB7 mask with red eyes \xB7 eight bone legs that walk"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084670701023232
+    m_Localized: Crochtrain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084670734577664
+    m_Localized: "Green \xB7 crocheted \xB7 button wheels \xB7 pompom"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996235718656
+    m_Localized: RAILWAY OPERATIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078784
+    m_Localized: MY STORY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078785
+    m_Localized: 'Auto: on'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078786
+    m_Localized: 'Auto: off'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078787
+    m_Localized: "Skip \xB7 Start"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078788
+    m_Localized: "Continue  \u203A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078789
+    m_Localized: 'Space / Enter / A: reveal text or continue     Start: skip introduction'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078790
+    m_Localized: A LANDING WITH NO WAY BACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078791
+    m_Localized: WHAT THEY TOOK FROM ME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078792
+    m_Localized: OUT OF THE RING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078793
+    m_Localized: A LIFE ON RAILS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078794
+    m_Localized: THE OFFER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078795
+    m_Localized: TRAIN RANKING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078796
+    m_Localized: "I arrived on this planet eighty years ago. Yes, eighty. That isn't
+      so long for a mecha witch\u2026 though it's starting to feel like an eternity."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078797
+    m_Localized: 'My home was far away. I landed expecting a quick stop: refuel,
+      take a look around, then return to the other mecha witches. How naive I was.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078798
+    m_Localized: The World Government confiscated my ship. For security reasons,
+      they said. They always say that right before taking something that doesn't
+      belong to them.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078799
+    m_Localized: 'My star chart was aboard that ship: my only route home. With no
+      ship and no map, my grand journey became a stay with no end in sight.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078800
+    m_Localized: I had to make a living. I had strength, quick reflexes, and very
+      little patience for orders. So I became a professional wrestler. A glamorous
+      title for hitting people for a living.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078801
+    m_Localized: "For a while, it worked. Applause, matches, championship belts\u2026
+      and enough punches to forget government paperwork. But years passed, audiences
+      changed, and eventually that profession disappeared."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078802
+    m_Localized: Memories don't pay the bills. I found the best-paying job around
+      and traded the ring for a cab. I became a train driver.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078803
+    m_Localized: 'A simple life: pick up cargo, follow the rails, deliver on time.
+      I was good at it. Apparently too good, because one day a man dressed in black
+      showed up.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078804
+    m_Localized: First he praised my transport skills. Then he produced an invitation
+      to the Train Ranking. When someone from the government starts with compliments,
+      you'd better look for the hidden catch.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078805
+    m_Localized: "They advertised it as the planet's greatest competition: the best
+      drivers, fame, money\u2026 and a special reward. The winner could ask the World
+      Government for anything."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078806
+    m_Localized: Anything. My ship. My map. The way back to my home among the mecha
+      witches. For the first time in eighty years, going home was more than an impossible
+      dream.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078807
+    m_Localized: Of course, the Train Ranking was another government scam. Aliens
+      were attacking us, and they needed someone to haul a rock to their base and
+      throw it at them to win the war.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078808
+    m_Localized: "Sounds ridiculous. But it's not like I need a perfect shot down
+      a ventilation duct and space-monk powers to pull this off. A rock should do
+      the trick\u2026 according to them."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078809
+    m_Localized: Getting there is the problem. Those stupid aliens have robots, machines,
+      and absolutely no respect for railway schedules. And they won't be the only
+      ones trying to stop me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078810
+    m_Localized: The other drivers want to win too. They'll do anything to reach
+      the base first and fling that rock at the aliens. At this point, I almost miss
+      my old rivals in the ring.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078811
+    m_Localized: "It's going to be a rough ride. But if my ship waits at the end
+      of these rails, it's worth a shot. All right\u2026 cargo secured, hands on
+      the controls. Time to go home."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1133649887309824
+    m_Localized: Story Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1133649920864256
+    m_Localized: Endless Mode
     m_Metadata:
       m_Items: []
   references:

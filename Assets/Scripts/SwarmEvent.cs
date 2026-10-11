@@ -29,7 +29,7 @@ public class SwarmEvent : MonoBehaviour
     public int moneyPerKill = 2;
     public float warnSeconds = 2.6f, slowMotion = 0.12f;
     public int coverCount = 45;             // robots in the cloud that covers the train before the fight (only for show)
-    [System.NonSerialized] public bool testAtStart = true; // TESTING: the swarm opens every run. Set to false when done.
+    [System.NonSerialized] public bool testAtStart = false; // testing aid: true makes the swarm open every run
     public Color swarmColour = new Color(1f, 0.15f, 0.75f);
     public Color skyColour = new Color(0.95f, 0.95f, 0.95f); // how bright the sky painting comes out
 

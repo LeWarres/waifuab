@@ -43,17 +43,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996229
-    m_Localized: "Antes de salir   \xB7   Pr\xF3ximo tramo: {0}"
+    m_Localized: "\xBFA d\xF3nde vamos?"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996230
-    m_Localized: "Reparar +{0} por vag\xF3n\n({1} dinero)"
+    m_Localized: "Reparar tren\n+{0} de vida a cada vag\xF3n"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996231
-    m_Localized: 'Curar jugador +{0}
+    m_Localized: 'Curar jugador
 
-      ({1} dinero)'
+      +{0} de vida'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996232
@@ -69,7 +69,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996234
-    m_Localized: "Estaci\xF3n: mejora para los vagones"
+    m_Localized: Mejora del TREN
     m_Metadata:
       m_Items: []
   - m_Id: 1762996235
@@ -79,7 +79,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996236
-    m_Localized: 'Saltar
+    m_Localized: 'No quiero
 
       vida o dinero al azar'
     m_Metadata:
@@ -119,11 +119,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996245
-    m_Localized: "Stick o cruceta  izquierda / derecha: mover la selecci\xF3n        X: confirmar"
+    m_Localized: "Stick o cruceta  izquierda / derecha: mover la selecci\xF3n       
+      X: confirmar"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996246
-    m_Localized: "A / D o flechas: mover la selecci\xF3n        Espacio: confirmar        o haz clic"
+    m_Localized: "A / D o flechas: mover la selecci\xF3n        Espacio: confirmar       
+      o haz clic"
     m_Metadata:
       m_Items: []
   - m_Id: 1762996247
@@ -271,7 +273,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 155144139649024
-    m_Localized: Mejora para el jugador
+    m_Localized: Mejora del JUGADOR
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203456
@@ -365,11 +367,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 170646232707072
-    m_Localized: "Carga para la pr\xF3xima estaci\xF3n ({0} / {1})"
+    m_Localized: CARGA para vender ({0} / {1})
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067200
-    m_Localized: "{0}\nCuesta {4} \xB7 paga +{1}\nVida {2} \xB7 multa {3}"
+    m_Localized: "{0}\nCobras +{1} al llegar\nVida {2} \xB7 multa {3}"
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067201
@@ -385,13 +387,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067204
-    m_Localized: 'Listo
-
-      salir con esta carga'
+    m_Localized: "Listo\nseguir sin m\xE1s carga"
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067205
-    m_Localized: "{0}: \xBFen qu\xE9 posici\xF3n del tren?"
+    m_Localized: "{0}: \xBFd\xF3nde la enganchas?"
     m_Metadata:
       m_Items: []
   - m_Id: 170646262067206
@@ -431,15 +431,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 266376523886592
-    m_Localized: Tienda
+    m_Localized: TIENDA
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441024
-    m_Localized: "Botiqu\xEDn ({2}/{3})\n+{0} a todo en ruta\n({1} dinero)"
+    m_Localized: "Botiqu\xEDn ({2}/{3})\n+{0} a todo, se usa en ruta"
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441025
-    m_Localized: "Vag\xF3n armado\nun arma m\xE1s\n({0} dinero)"
+    m_Localized: "Vag\xF3n armado\nun vag\xF3n m\xE1s para armas"
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441026
@@ -447,7 +447,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441027
-    m_Localized: "Contenedor fijo\npaga cada estaci\xF3n\n({0} dinero)"
+    m_Localized: "Contenedor fijo\npaga en cada estaci\xF3n"
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441028
@@ -615,7 +615,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 567476032450564
-    m_Localized: "\xA1Gratis! Vag\xF3n de {0}\n+{1} al entregar \xB7 multa {2}\nSolo este viaje"
+    m_Localized: "\xA1Gratis! Vag\xF3n de {0}\n+{1} al entregar \xB7 multa {2}\nSolo
+      este viaje"
     m_Metadata:
       m_Items: []
   - m_Id: 567476032450565
@@ -675,7 +676,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 735480049381380
-    m_Localized: 'Arriba / abajo: elegir     Izquierda / derecha: ajustar     X: cambiar'
+    m_Localized: 'Arriba / abajo: elegir     Izquierda / derecha: ajustar     X:
+      cambiar'
     m_Metadata:
       m_Items: []
   - m_Id: 735480049381381
@@ -739,11 +741,488 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 829104103239692
-    m_Localized: 'Arriba / abajo: elegir     Izquierda / derecha: ajustar     X: cambiar'
+    m_Localized: 'Arriba / abajo: elegir     Izquierda / derecha: ajustar     X:
+      cambiar'
     m_Metadata:
       m_Items: []
   - m_Id: 829104103239693
     m_Localized: 'W / S: elegir     A / D: ajustar     Espacio: cambiar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 896838069989376
+    m_Localized: Gasolina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1041311424917504
+    m_Localized: Nueva partida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1041311471054848
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470567403520
+    m_Localized: Tren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957952
+    m_Localized: Jugador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957953
+    m_Localized: Carga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957954
+    m_Localized: Tienda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957955
+    m_Localized: Ruta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957956
+    m_Localized: 'Gratis: elige 1 para tus vagones'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957957
+    m_Localized: "Elige el vag\xF3n que la llevar\xE1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957958
+    m_Localized: 'Gratis: elige 1 para tu personaje'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957959
+    m_Localized: "Opcional: pagas por llevarla y cobras m\xE1s si llega entera"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957960
+    m_Localized: "Elige d\xF3nde engancharla"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957961
+    m_Localized: 'Opcional: gasta tu dinero en lo que necesites'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957962
+    m_Localized: "Pr\xF3ximo tramo: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957963
+    m_Localized: GRATIS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957964
+    m_Localized: AGOTADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1047470600957965
+    m_Localized: "\xA1PREMIO!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1048832743124992
+    m_Localized: Mercado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1048832780873728
+    m_Localized: MERCADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1048832780873729
+    m_Localized: Compra lo que quieras y pulsa Listo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1048832780873730
+    m_Localized: CARGA para vender  {0}/{1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1048832780873731
+    m_Localized: TIENDA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1048832780873732
+    m_Localized: 'Listo
+
+      salir del mercado'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308540112896
+    m_Localized: "Pagas ahora y cobras m\xE1s si llega entera     {0}: ver la TIENDA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308573667328
+    m_Localized: 'Lo que compras lo recibes ya     {0}: ver la CARGA'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308573667329
+    m_Localized: Arriba / abajo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308573667330
+    m_Localized: W / S
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308573667331
+    m_Localized: 'Izquierda / derecha: moverla por el tren     X: enganchar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308573667332
+    m_Localized: 'A / D: moverla por el tren     Espacio: enganchar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051308573667333
+    m_Localized: "Enganchar\naqu\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1052575261863936
+    m_Localized: "Vag\xF3n {0}: {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1052575295418368
+    m_Localized: "Montar\naqu\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1052575295418369
+    m_Localized: "Izquierda / derecha: cambiar de vag\xF3n     X: montar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1052575295418370
+    m_Localized: "A / D: cambiar de vag\xF3n     Espacio: montar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763503329280
+    m_Localized: TU FLOTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689408
+    m_Localized: Elige tu locomotora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689409
+    m_Localized: RicMar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689410
+    m_Localized: ReyMar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689411
+    m_Localized: "Azul y amarillo \xB7 dise\xF1o original"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689412
+    m_Localized: "Rojo y blanco \xB7 detalles negros"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689413
+    m_Localized: Comenzar viaje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689414
+    m_Localized: 'W / S o flechas: elegir     Espacio / Enter: confirmar     Esc:
+      volver'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1055763532689415
+    m_Localized: 'Stick o cruceta: elegir     X: confirmar     O: volver'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807104221184
+    m_Localized: Aleatoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609792
+    m_Localized: Elige al azar entre las locomotoras disponibles.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609793
+    m_Localized: Locomotora {0:00}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609794
+    m_Localized: '{0} / {1} locomotoras disponibles'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609795
+    m_Localized: Azul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609796
+    m_Localized: Roja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609797
+    m_Localized: Bloqueada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609798
+    m_Localized: "Esta locomotora todav\xEDa no est\xE1 disponible."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609799
+    m_Localized: Disponible
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609800
+    m_Localized: DATOS DE LOCOMOTORA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609801
+    m_Localized: "Velocidad m\xE1xima\n{0} m/s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609802
+    m_Localized: 'Vida inicial
+
+      {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1058807112609803
+    m_Localized: 'Estado
+
+      {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1070062451896320
+    m_Localized: C-279
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1070062485450752
+    m_Localized: "Negra y plata \xB7 detalles rojos \xB7 la cl\xE1sica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1070062485450753
+    m_Localized: Calavera nocturna
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1070062485450754
+    m_Localized: "Negra \xB7 calavera al frente \xB7 alas de murci\xE9lago"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1070062485450755
+    m_Localized: Golem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1070062485450756
+    m_Localized: "Naranja y blanca \xB7 turbina al frente \xB7 tubos y antenas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1073845890265088
+    m_Localized: Gora-P
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1073845919625216
+    m_Localized: "Blanca \xB7 cara caf\xE9 y negra \xB7 ojos azules \xB7 cola en
+      el techo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1076946193952768
+    m_Localized: Kairi Resha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1076946227507200
+    m_Localized: "Azul profundo \xB7 llamas \xB7 dientes y motor dorados \xB7 ruedas
+      rojas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1079346141147136
+    m_Localized: R-2D-2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1079346174701568
+    m_Localized: "Gris \xB7 blindaje pesado \xB7 nariz en cu\xF1a \xB7 ca\xF1ones
+      dobles"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1080001404678144
+    m_Localized: R-20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1080001442426880
+    m_Localized: "\xD3xido y musgo \xB7 dos turbinas al frente \xB7 patas de aterrizaje"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1081078975901696
+    m_Localized: Giger Machine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1081079013650432
+    m_Localized: "Bronce oxidado y hierro negro \xB7 cr\xE1neo con colmillos \xB7
+      dientes de hueso"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1082532595838976
+    m_Localized: T.exe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1082532629393408
+    m_Localized: "Violeta \xB7 m\xE1scara con ojos rojos \xB7 ocho patas de hueso
+      que caminan"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084670701023232
+    m_Localized: Crochtrain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084670734577664
+    m_Localized: "Verde \xB7 tejida a crochet \xB7 ruedas de bot\xF3n \xB7 pomp\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996235718656
+    m_Localized: OPERACIONES FERROVIARIAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078784
+    m_Localized: MI HISTORIA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078785
+    m_Localized: "Autom\xE1tico: s\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078786
+    m_Localized: "Autom\xE1tico: no"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078787
+    m_Localized: "Omitir \xB7 Start"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078788
+    m_Localized: "Continuar  \u203A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078789
+    m_Localized: "Espacio / Enter / A: completar texto o continuar     Start: omitir
+      introducci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078790
+    m_Localized: UN ATERRIZAJE SIN REGRESO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078791
+    m_Localized: LO QUE ME QUITARON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078792
+    m_Localized: FUERA DEL RING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078793
+    m_Localized: UNA VIDA SOBRE RIELES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078794
+    m_Localized: LA OFERTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078795
+    m_Localized: TRAIN RANKING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078796
+    m_Localized: "Llegu\xE9 a este planeta hace ochenta a\xF1os. S\xED, ochenta.
+      Para una mecha bruja, eso no es tanto tiempo\u2026 aunque ya me est\xE1 pareciendo
+      una eternidad."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078797
+    m_Localized: "Mi hogar estaba muy lejos de aqu\xED. Aterric\xE9 convencida de
+      que ser\xEDa una escala breve. Repostar, mirar un poco alrededor y regresar
+      con las otras mecha brujas. Qu\xE9 ingenua fui."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078798
+    m_Localized: "El Gobierno Mundial me confisc\xF3 la nave. Por seguridad, dijeron.
+      Siempre dicen eso justo antes de quedarse con algo que no les pertenece."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078799
+    m_Localized: "Y dentro de la nave estaba mi mapa estelar: la \xFAnica ruta para
+      volver a casa. Sin nave y sin mapa, mi gran viaje termin\xF3 convertido en
+      una estancia de duraci\xF3n indefinida."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078800
+    m_Localized: "Hab\xEDa que ganarse la vida. Yo ten\xEDa fuerza, reflejos y pocas
+      ganas de recibir \xF3rdenes. As\xED que me convert\xED en luchadora profesional.
+      Wrestler, si queremos que suene elegante."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078801
+    m_Localized: "Durante un tiempo funcion\xF3. Aplausos, combates, cinturones\u2026
+      y suficientes golpes para olvidar el papeleo del gobierno. Pero los a\xF1os
+      pasaron, el p\xFAblico cambi\xF3 y aquel oficio acab\xF3 desapareciendo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078802
+    m_Localized: "Los recuerdos no pagan las cuentas. Busqu\xE9 el trabajo mejor
+      pagado del momento y cambi\xE9 el ring por una cabina. Me hice conductora de
+      trenes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078803
+    m_Localized: "Una vida sencilla: recoger carga, seguir los rieles y entregar
+      a tiempo. Se me daba bien. Demasiado bien, por lo visto, porque un d\xEDa apareci\xF3
+      un hombre vestido de negro."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078804
+    m_Localized: "Primero elogi\xF3 mis habilidades como transportista. Luego sac\xF3
+      una invitaci\xF3n para el Train Ranking. Cuando alguien del gobierno empieza
+      con cumplidos, conviene revisar d\xF3nde escondi\xF3 la trampa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078805
+    m_Localized: "Lo vend\xEDan como la gran competici\xF3n del planeta: los mejores
+      conductores, fama, dinero\u2026 y una recompensa especial. El ganador podr\xEDa
+      pedirle cualquier cosa al Gobierno Mundial."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078806
+    m_Localized: "Cualquier cosa. Mi nave. Mi mapa. El camino de vuelta a mi hogar
+      de mecha brujas. Por primera vez en ochenta a\xF1os, regresar dejaba de ser
+      un sue\xF1o imposible."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078807
+    m_Localized: "Claro que el Train Ranking era otro enga\xF1o del gobierno. Unos
+      aliens nos estaban atacando y necesitaban que alguien llevara una roca hasta
+      su base y se la arrojara para ganar la guerra."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078808
+    m_Localized: "Suena rid\xEDculo. Pero tampoco es que necesite hacer un disparo
+      perfecto en un ducto de ventilaci\xF3n y tener poderes de monje espacial para
+      lograr esa haza\xF1a. Una roca deber\xEDa bastar\u2026 seg\xFAn ellos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078809
+    m_Localized: "El problema es llegar. Esos tontos aliens tienen robots, m\xE1quinas
+      y una evidente falta de respeto por los horarios ferroviarios. Y no ser\xE1n
+      los \xFAnicos que intenten detenerme."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078810
+    m_Localized: "Los otros conductores tambi\xE9n quieren ganar. Har\xE1n lo que
+      sea para alcanzar primero la base y aventarles la roca. A estas alturas, casi
+      echo de menos a mis rivales del ring."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1128996265078811
+    m_Localized: "El camino va a ser pesado. Pero si al final de estos rieles est\xE1
+      mi nave, vale la pena intentarlo. Muy bien\u2026 carga asegurada, manos en
+      los controles. Es hora de volver a casa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1133649887309824
+    m_Localized: Modo Historia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1133649920864256
+    m_Localized: Modo Infinito
     m_Metadata:
       m_Items: []
   references:

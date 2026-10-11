@@ -78,9 +78,11 @@ public class TrainSim : MonoBehaviour
         ("wood", new Color(0.55f, 0.35f, 0.15f), 40f * Balance.Scale, 15, 15),
         ("rock", new Color(0.5f, 0.5f, 0.5f), 80f * Balance.Scale, 20, 25),
         ("arms", new Color(0.2f, 0.35f, 0.2f), 25f * Balance.Scale, 45, 45),
+        ("fuel", new Color(0.85f, 0.12f, 0.1f), 0.1f * Balance.Scale, 110, 30), // goes up at the first scratch, pays a fortune
         ("container", new Color(0.15f, 0.3f, 0.6f), 60f * Balance.Scale, 10, 0), // the bought, permanent one: never loaded at a station
     };
-    const int Loadable = 3, Container = 3;
+    const int Loadable = 4, Fuel = 3, Container = 4;
+    public float fuelBlast = 12f, fuelBlastRadius = 7f; // what a fuel wagon does to its neighbours when it blows (x Balance.Scale)
 
     public float Speed { get; private set; }
     public bool AtStation { get; private set; }
@@ -102,7 +104,7 @@ public class TrainSim : MonoBehaviour
     public float CarFill(int i) => cars[i].health / cars[i].maxHealth;
     public Vector3 CarTop(int i) => cars[i].pos + Vector3.up * (1.5f + wagonSize.y);
     public bool MenuShown => menuView.Visible;
-    public bool ShowCarNumbers => MenuOpen && !Paused && (menuKind == 3 || menuKind == 6);
+    public bool ShowCarNumbers => MenuOpen && !Paused && menuKind == 3;
     public EventPanel Panel { get; private set; } // the card the button games are played on
     public void Toast(string text) => hud.Toast(text);
     public void Flash(string effect) => hud.Flash(effect);
@@ -162,7 +164,8 @@ public class TrainSim : MonoBehaviour
         (2, new Color(0.45f, 0.2f, 0.55f), new Color(0.2f, 0.08f, 0.28f), new Color(0.2f, 1f, 0.8f), 2.5f),      // alien: violet, teal light
         (2, new Color(0.1f, 0.12f, 0.12f), new Color(0.05f, 0.07f, 0.07f), new Color(0.35f, 1f, 0.25f), 2.5f),   // fortress: black, green light
     };
-    float groundScroll;
+    Vector2 groundScroll;
+    Transform ground;
     // Scenery: a fixed number of props scattered along the track. One that scrolls out behind comes back ahead as
     // something else, somewhere else, so the landscape never repeats.
     class Prop
@@ -192,6 +195,10 @@ public class TrainSim : MonoBehaviour
     Transform sceneryRoot;
     Transform station;
     GameObject[] stationLooks; // by biome
+    readonly Transform[] stationGuns = new Transform[2]; // the heavy guns at both ends of the platform
+    // On arrival the station's guns finish off whatever was still chasing the train; the menu waits for them.
+    public bool Clearing => AtStation && Health > 0f && Combat.Instance.EnemyCount > 0;
+    public Transform StationGun(int i) => stationGuns[i];
     Transform[] rails;                   // one straight stretch each: up to the first knee, then one per knee
     float remaining, stationX;
 
@@ -227,7 +234,7 @@ public class TrainSim : MonoBehaviour
     public float NoseS => WagonX(-1) + 4.4f;               // nose of the locomotive (0.9 ahead of its slot, 3.5 half long)
     public float flyRoom = 6f;                             // clear space the picture keeps past both ends of the train
     // Middle of the whole train, locomotive included: what the camera looks at.
-    public Vector3 Focus => Vector3.right * ((NoseS - HalfExtents.x) * 0.5f);
+    public Vector3 Focus => Path((NoseS - HalfExtents.x) * 0.5f, out _); // on the track, also round a curve
     public float Reach => (NoseS + HalfExtents.x) * 0.5f + flyRoom; // from Focus to the edge of that clear space
     // 1 curve, 2 ramp jump, 3 needle jump, 4 zigzag, 5 swarm. The curve twice as likely: it is what changes the view.
     static readonly int[] EventBag = { 1, 1, 2, 3, 4, 5 };
@@ -270,7 +277,7 @@ public class TrainSim : MonoBehaviour
     int WagonPrice => wagonCost + wagonCostStep * wagonsBought;
     int ContainerPrice => containerCost + containerCostStep * containersBought;
     int RepairPrice => repairCost * (repairsBought + 1);
-    int stage;                           // station menus in order: 0 wagon upgrade, 1 hero upgrade, 2 cargo, 3 shop, 4 route
+    int stage;                           // station menus in order: 0 wagon upgrade, 1 hero upgrade, 2 market (cargo and shop), 3 route
     int skipGift;                        // what the last skip paid: 0 nothing, 1 money, 2 health
 
     // Kinds of trip between stations: (text key, length x, speed x). Rolled on arrival, shown before leaving.
@@ -295,6 +302,10 @@ public class TrainSim : MonoBehaviour
         public string icon, label;
         public System.Action run;
         public System.Action<int> adjust; // a setting: left / right change it by a step (-1 or +1)
+        public string badge;    // short tag on the card's corner: "FREE", a price, "FULL"...
+        public int tone;        // of that tag: 1 free (green), 2 price (gold), 3 cannot (red)
+        public bool minor;      // not an offer but a way out (skip, done, back): drawn small and apart
+        public int shelf;       // which row of cards it is on, in a menu with two (the market)
         public bool enabled;
         public Vector3? anchor; // world spot this option is about; framed in yellow while focused
         public Vector2 extent;  // half size (x, z) of that frame
@@ -303,13 +314,28 @@ public class TrainSim : MonoBehaviour
     readonly List<Option> options = new();
     StationMenu menuView; // draws the station menus and the game-over question
     string menuTitle;
+    // Which of the station's five steps the menu is (0 train, 1 player, 2 cargo, 3 shop, 4 route; -1 none), the
+    // one-line explanation under its title, and whether money matters in it (then the purse is shown).
+    int menuStep;
+    string menuSub;
+    bool menuMoney;
+    string[] menuLines;                      // names of the menu's tabs, when it has them (the market)
+    readonly string[] marketLines = new string[2];
+    int marketTab, menuTab;                  // 0 cargo, 1 shop
+    bool shelfHeld, menuCompact;             // compact: only small buttons low on the screen, the train in view
+    Car ghost;                               // the cargo wagon being placed: in the train already, painted red
+    int ghostAt;
+    Material ghostMat;
+    Turret weaponGhost;                      // the weapon being given a wagon: shown on the train, in red
+    int weaponAt;
+    // The very first station of all walks the player through: an arrow on the cards and a louder hint, once.
+    bool Guiding => AtStation && Stations == 1 && PlayerPrefs.GetInt("guide.station", 0) == 0;
     int menuKind = -1, focus;
     bool navHeld;
-    static bool firstLoad = true, backToMenu; // the title screen shows on the first load, and when we ask for it back
-    bool mainMenu, settingsMenu;              // the title screen, and its settings page
+    const bool mainMenu = false, settingsMenu = false; // the title screen is its own scene now (MainMenu.cs)
     InputAction navigate, confirm, stepRight, stepLeft;
     bool ListMenu => Paused || settingsMenu;  // both draw their options as a vertical list
-    bool MenuOpen => mainMenu || AtStation || Health <= 0f || Paused;
+    bool MenuOpen => mainMenu || (AtStation && !Clearing) || Health <= 0f || Paused;
 
     // Pause: Start on a gamepad, Esc on the keyboard. Freezes time and opens its own menu.
     public bool Paused { get; private set; }
@@ -365,7 +391,7 @@ public class TrainSim : MonoBehaviour
         for (int i = 0; i < Cargos.Length; i++) cargoMats[i] = Mat(Cargos[i].color);
 
         float length = viewRange * 4f;
-        Box(transform, new Vector3(0f, -0.5f, 0f), new Vector3(length * 2f, 1f, length * 2f), groundMat, true);
+        ground = Box(transform, new Vector3(0f, -0.5f, 0f), new Vector3(length * 2f, 1f, length * 2f), groundMat, true);
         // Rails are uniform, so they never scroll: one pair up to the knee, one pair beyond it.
         railMat = Mat(Color.gray);
         ballastMat = Mat(Color.gray, false);
@@ -390,9 +416,7 @@ public class TrainSim : MonoBehaviour
         jump = gameObject.AddComponent<JumpEvent>();
         wagonModel = Resources.Load<GameObject>("Models/Wagon");
         cargoModels = System.Array.ConvertAll(Cargos, c => Resources.Load<GameObject>("Models/Cargo_" + c.id));
-        loco = Instantiate(Resources.Load<GameObject>("Models/Locomotive"), transform).transform;
-        loco.localScale = Vector3.one * 1.3f; // as wide as a wagon
-        Toon(loco.GetComponentInChildren<Renderer>());
+        loco = Locomotives.Create(transform, Locomotives.Selected);
         for (int i = 0; i < wagons; i++) AddCar(i, -1);
         Mount(0, Weapon.Wagon[0]);
         Player = new GameObject("Player").AddComponent<Player>();
@@ -458,6 +482,19 @@ public class TrainSim : MonoBehaviour
 
         station = new GameObject("Station").transform;
         station.SetParent(transform, false);
+        GameObject gunModel = Resources.Load<GameObject>("Models/StationGun");
+        for (int i = 0; i < stationGuns.Length; i++)
+        {
+            // A pivot that looks along +z with the model turned round inside it (its barrels point down its -z).
+            stationGuns[i] = new GameObject("StationGun").transform;
+            stationGuns[i].SetParent(station, false);
+            stationGuns[i].localPosition = new Vector3(i == 0 ? -14.5f : 14.5f, 0.6f, 6f);
+            stationGuns[i].localRotation = Quaternion.Euler(0f, 180f, 0f); // at rest: over the track
+            Transform body = Instantiate(gunModel, stationGuns[i]).transform;
+            body.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            body.localScale = Vector3.one * 0.8f;
+            Toon(body.GetComponentInChildren<Renderer>());
+        }
         // One station per biome (Tools/make_stations.py): platform and hall in one model, the biome's own out.
         stationLooks = new GameObject[Biomes.Length];
         for (int b = 0; b < Biomes.Length; b++)
@@ -484,12 +521,7 @@ public class TrainSim : MonoBehaviour
         AimCamera();
 
         // The title screen shows on the first load and whenever we come back to it; otherwise the run starts at once.
-        bool boot = firstLoad;
-        mainMenu = firstLoad || backToMenu;
-        firstLoad = false;
-        backToMenu = false;
-        Time.timeScale = mainMenu ? 0f : 1f;
-        if (boot) Display.Apply();
+        Time.timeScale = 1f;
     }
 
     void AimCamera()
@@ -651,6 +683,7 @@ public class TrainSim : MonoBehaviour
             Quaternion back = Quaternion.Euler(0f, -total, 0f);
             Combat.Instance.Rotate(back);
             Player.Rotate(back);
+            ground.localRotation = back * ground.localRotation; // the ground is part of that world
             camYaw = Mathf.DeltaAngle(0f, camYaw - total); // kept within half a turn either way
             AimCamera();
         }
@@ -701,7 +734,8 @@ public class TrainSim : MonoBehaviour
             : settingsMenu ? (Player.UsingGamepad ? "settings.help.gamepad" : "settings.help.keyboard")
             : Paused ? (Player.UsingGamepad ? "pause.help.gamepad" : "pause.help.keyboard")
                              : (Player.UsingGamepad ? "menu.help.gamepad" : "menu.help.keyboard");
-        menuView.Render(MenuOpen ? options : null, menuTitle, focus, L10n.T(help), i => options[i].run(), i => focus = i, ListMenu);
+        menuView.Render(MenuOpen ? options : null, menuTitle, focus, L10n.T(help), i => options[i].run(), i => focus = i, ListMenu,
+            menuStep, menuSub, menuMoney ? money : -1, menuLines, Guiding && !Paused && Health > 0f, menuTab, tab => { marketTab = tab; focus = 0; }, menuCompact);
 
         if (AtStation || Paused || mainMenu) return;
 
@@ -713,8 +747,12 @@ public class TrainSim : MonoBehaviour
 
         if (!AtStation && !Zigzag && Speed > maxSpeed) Flash("wind"); // an express leg (not the zigzag: its zoom outgrows the effect)
         // The ground itself never moves: its texture slides back under the train instead.
-        groundScroll = Mathf.Repeat(groundScroll + step / groundTile, 1f);
-        groundMat.mainTextureOffset = new Vector2(-groundScroll, 0f); // the cube's top face has u running towards -x
+        // It slides against the way the train's middle is going (round a curve that is not along x), in the
+        // ground's own axes; the cube's top face has u and v running towards -x and -z.
+        Path(0f, out float going);
+        Vector3 slide = Quaternion.Inverse(ground.localRotation) * (Quaternion.Euler(0f, going, 0f) * Vector3.right) * (step / groundTile);
+        groundScroll = new Vector2(Mathf.Repeat(groundScroll.x - slide.x, 1f), Mathf.Repeat(groundScroll.y - slide.z, 1f));
+        groundMat.mainTextureOffset = groundScroll;
         sleepers.offset = Mathf.Repeat(sleepers.offset + step, sleepers.spacing);
         // A new stretch of landscape starts ahead, out of sight: props coming round from now on belong to it.
         stretchLeft -= step;
@@ -997,10 +1035,20 @@ public class TrainSim : MonoBehaviour
     public void Damage(int wagon, float amount)
     {
         Car car = cars[wagon];
+        bool stood = car.Alive;
         car.health = Mathf.Max(0f, car.health - amount);
         if (amount > 0f) DamageNumber(CarTop(wagon), amount, true); // the number pops over the wagon that took it
         if (car.Alive) return;
         SetAlive(car, false);
+        if (stood && car.cargo == Fuel)
+        {
+            // The fuel goes up: a big blast that also hurts the wagons next to it (and can set off another tank).
+            Combat.Instance.Burst("rocket", car.pos + Vector3.up, fuelBlastRadius * 0.6f);
+            Shake(0.5f);
+            for (int i = 0; i < cars.Count; i++)
+                if (cars[i] != car && cars[i].Alive && (cars[i].pos - car.pos).sqrMagnitude <= fuelBlastRadius * fuelBlastRadius)
+                    Damage(i, fuelBlast * Balance.Scale);
+        }
         if (Health <= 0f) Time.timeScale = 0f; // game over, OnGUI offers the restart
     }
 
@@ -1094,6 +1142,8 @@ public class TrainSim : MonoBehaviour
     // Closes the current station menu and opens the next one.
     void Next()
     {
+        CancelGhost();
+        if (weaponGhost) CancelWeapon();
         skipGift = 0;
         pending = null;
         pendingCargo = -1;
@@ -1125,6 +1175,7 @@ public class TrainSim : MonoBehaviour
 
     void Depart(bool nextBiome = false)
     {
+        if (Guiding) PlayerPrefs.SetInt("guide.station", 1); // the walk-through was seen
         if (nextBiome)
         {
             Biome++;
@@ -1144,31 +1195,21 @@ public class TrainSim : MonoBehaviour
     }
 
     // Menu title, led by what the last skip paid (if the previous menu was skipped).
-    string Noted(string title) =>
+    string Noted(string title) => // (kept for whoever still wants the note in a title)
         skipGift == 1 ? L10n.T("menu.skip.money", skipMoney) + "   ·   " + title
         : skipGift == 2 ? L10n.T("menu.skip.health", skipHealth) + "   ·   " + title : title;
 
     void Restart()
     {
-        backToMenu = false;
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    // Back to the title screen, dropping the run: reload so a fresh start waits behind the menu.
+    // Back to the title screen, dropping the run.
     void GoToMainMenu()
     {
-        backToMenu = true;
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    // Leaves the title screen. What is behind it is always a fresh run, so this only starts the clock.
-    void Play()
-    {
-        mainMenu = false;
-        settingsMenu = false;
-        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 
     // Ends the run for good: closes the build, or stops play mode when testing in the editor.
@@ -1186,6 +1227,132 @@ public class TrainSim : MonoBehaviour
     void Add(string icon, string label, System.Action run, bool enabled = true, Vector3? anchor = null, Vector2 extent = default, System.Action<int> adjust = null) =>
         options.Add(new Option { icon = icon, label = label, run = run, enabled = enabled, anchor = anchor, extent = extent, adjust = adjust });
 
+    // Dresses the option just added: a free pick, something with a price, or a way out of the menu.
+    void Tag(string badge, int tone)
+    {
+        Option o = options[^1];
+        o.badge = badge;
+        o.tone = tone;
+        options[^1] = o;
+    }
+    void Free() => Tag(L10n.T("badge.free"), 1);
+    void Priced(int price, bool sold = false) => Tag(sold ? L10n.T("badge.sold") : price.ToString(), sold || money < price ? 3 : 2);
+    Material GhostMat => ghostMat ? ghostMat : ghostMat = Mat(new Color(1f, 0.12f, 0.12f));
+
+    // A weapon was picked: a red copy of it goes on the train, first on a wagon with no weapon if there is one.
+    void BeginMounting(Weapon weapon)
+    {
+        pending = weapon;
+        weaponAt = cars.FindIndex(c => c.cargo < 0 && !c.mount);
+        if (weaponAt < 0) weaponAt = cars.FindIndex(c => c.cargo < 0);
+        weaponGhost = Instantiate(turretPrefab, transform);
+        weaponGhost.Init(weapon);
+        weaponGhost.enabled = false; // for show: it does not fire
+        foreach (Renderer part in weaponGhost.GetComponentsInChildren<Renderer>())
+            part.sharedMaterials = System.Array.ConvertAll(part.sharedMaterials, _ => GhostMat);
+        focus = 0;
+        ShowWeaponGhost();
+    }
+
+    // The red weapon stands where the wagon's own would (that one steps aside while it does), and the wagon
+    // under it turns red too, so it is plain which one is being chosen. Every other wagon has its own colours.
+    void ShowWeaponGhost()
+    {
+        for (int i = 0; i < cars.Count; i++)
+        {
+            bool chosen = weaponGhost && i == weaponAt;
+            if (cars[i].mount) cars[i].mount.gameObject.SetActive(!chosen);
+            if (cars[i].cargo >= 0) continue;
+            SetAlive(cars[i], cars[i].Alive);
+            if (chosen)
+                foreach (MeshRenderer part in cars[i].body.GetComponentsInChildren<MeshRenderer>())
+                    part.sharedMaterials = System.Array.ConvertAll(part.sharedMaterials, _ => GhostMat);
+        }
+        if (weaponGhost) weaponGhost.transform.position = cars[weaponAt].pos + Vector3.up * (0.45f + wagonSize.y);
+    }
+
+    void MoveWeapon(int by)
+    {
+        for (int i = weaponAt + by; i >= 0 && i < cars.Count; i += by)
+            if (cars[i].cargo < 0)
+            {
+                weaponAt = i;
+                break;
+            }
+        ShowWeaponGhost();
+    }
+
+    void MountGhost()
+    {
+        Weapon weapon = pending;
+        int wagon = weaponAt;
+        CancelWeapon();
+        Mount(wagon, weapon);
+        Combat.Instance.Burst("levelup", cars[wagon].pos, 1.6f);
+        Next();
+    }
+
+    void CancelWeapon()
+    {
+        if (weaponGhost) Destroy(weaponGhost.gameObject);
+        weaponGhost = null;
+        pending = null;
+        ShowWeaponGhost();
+    }
+
+    // Buying cargo: the wagon goes into the train at once, at the tail and in red, to be slid into place.
+    void BeginPlacing(int cargo)
+    {
+        pendingCargo = cargo;
+        ghostAt = cars.Count;
+        AddCar(ghostAt, cargo);
+        ghost = cars[ghostAt];
+        foreach (MeshRenderer part in ghost.body.GetComponentsInChildren<MeshRenderer>())
+            part.sharedMaterials = System.Array.ConvertAll(part.sharedMaterials, _ => GhostMat);
+        focus = 0;
+    }
+
+    void MoveGhost(int by)
+    {
+        int to = Mathf.Clamp(ghostAt + by, 1, cars.Count - 1);
+        if (to == ghostAt) return;
+        cars.RemoveAt(ghostAt);
+        cars.Insert(ghostAt = to, ghost);
+        Layout();
+    }
+
+    void PlaceGhost()
+    {
+        money -= CargoPrice(pendingCargo);
+        SetAlive(ghost, true); // its own colours back
+        Combat.Instance.Burst("levelup", ghost.pos, 1.6f);
+        ghost = null;
+        pendingCargo = -1; // back to the market: there may be more to buy
+    }
+
+    void CancelGhost()
+    {
+        if (ghost == null) return;
+        cars.Remove(ghost);
+        Destroy(ghost.body.gameObject);
+        ghost = null;
+        pendingCargo = -1;
+        Layout();
+    }
+
+    void Shelf(int shelf)
+    {
+        Option o = options[^1];
+        o.shelf = shelf;
+        options[^1] = o;
+    }
+    void Minor()
+    {
+        Option o = options[^1];
+        o.minor = true;
+        options[^1] = o;
+    }
+
     // A volume in the sound menu: left / right move it a tenth, confirming it (or a click) raises it and wraps round.
     void AddVolume(string icon, string key, float value, int which) =>
         options.Add(new Option { icon = icon, label = L10n.T(key, Mathf.RoundToInt(value * 100f)), enabled = true,
@@ -1195,27 +1362,13 @@ public class TrainSim : MonoBehaviour
     void BuildMenu()
     {
         options.Clear();
+        menuStep = -1;
+        menuSub = null;
+        menuMoney = false;
+        menuLines = null;
+        menuCompact = false;
         int kind;
-        if (mainMenu && settingsMenu)
-        {
-            kind = 12;
-            menuTitle = L10n.T("menu.settings");
-            Add("monitor", L10n.T("settings.mode", L10n.T(Display.ModeKeys[Display.ModeIndex])), () => Display.StepMode(1), true, null, default, Display.StepMode);
-            Add("monitor", L10n.T("settings.resolution", Display.Width, Display.Height), () => Display.StepResolution(1), true, null, default, Display.StepResolution);
-            Add("speed", L10n.T("settings.fps", Display.FpsLabel), () => Display.StepFps(1), true, null, default, Display.StepFps);
-            Add("restart", L10n.T("settings.vsync", L10n.T(Display.VSync ? "menu.yes" : "menu.no")), Display.ToggleVSync, true, null, default, _ => Display.ToggleVSync());
-            Add("back", L10n.T("menu.back"), () => settingsMenu = false);
-        }
-        else if (mainMenu)
-        {
-            kind = 11;
-            menuTitle = L10n.T("menu.title");
-            Add("resume", L10n.T("menu.play"), Play);
-            Add("settings", L10n.T("menu.settings"), () => settingsMenu = true);
-            Add("language", L10n.T("language"), L10n.NextLocale);
-            Add("quit", L10n.T("pause.quit"), Quit);
-        }
-        else if (Paused && confirming != 0)
+        if (Paused && confirming != 0)
         {
             // "No" comes first, so it is the one focused when the question opens.
             kind = 9;
@@ -1251,131 +1404,151 @@ public class TrainSim : MonoBehaviour
             Add("yes", L10n.T("menu.yes"), Restart);
             Add("no", L10n.T("menu.no"), GoToMainMenu);
         }
-        else if (stage >= 4)
+        else if (stage >= 3)
         {
             kind = 1;
-            menuTitle = L10n.T("menu.route", LegName(nextLeg));
+            menuStep = 3;
+            menuTitle = L10n.T("menu.route");
+            menuSub = L10n.T("sub.route", LegName(nextLeg));
             Add("stay", L10n.T("menu.stay", BiomeName(Biome)), () => Depart());
             if (Biome < Biomes.Length - 1)
                 Add("biome", L10n.T("menu.change", BiomeName(Biome + 1), biomeDifficulty, Biome + 2), () => Depart(true));
         }
-        else if (stage == 3)
-        {
-            // Shop: health now, health for later, and a longer train (one wagon of each kind per biome).
-            kind = 7;
-            menuTitle = L10n.T("menu.shop");
-            Add("repair", L10n.T("menu.repair", repairReward, RepairPrice), () => { money -= RepairPrice; repairsBought++; Repair(); },
-                money >= RepairPrice && Health < MaxHealth);
-            Add("heal", L10n.T("menu.heal", healReward, healCost), () => { money -= healCost; Player.Heal(healReward); },
-                money >= healCost && Player.Health < Player.maxHealth);
-            Add("medkit", L10n.T("shop.kit", kitHeal, kitCost, kits, maxKits), () => { money -= kitCost; kits++; }, money >= kitCost && kits < maxKits);
-            Add("wagon", WagonForSale ? L10n.T("shop.wagon", WagonPrice) : L10n.T("shop.wagon.limit"),
-                () => { money -= WagonPrice; wagonsBought++; AddCar(cars.Count, -1); }, WagonForSale && money >= WagonPrice);
-            Add("container", ContainerForSale ? L10n.T("shop.container", ContainerPrice) : L10n.T("shop.container.limit"),
-                () => { money -= ContainerPrice; containersBought++; AddCar(cars.Count, Container, true); }, ContainerForSale && money >= ContainerPrice);
-            Add("yes", L10n.T("shop.done"), Next);
-        }
         else if (stage == 2 && pendingCargo < 0)
         {
-            // Cargo: up to maxCargo wagons, each paid at the next station if it survives.
+            // The market: two tabs, one row of big cards at a time. CARGO to carry (paid now, sold at the next
+            // station if it survives; up to maxCargo wagons) and the SHOP (health now, medkits, a longer train).
             kind = 5;
-            int loaded = CargoCount;
-            menuTitle = Noted(L10n.T("menu.cargo", loaded, maxCargo));
-            for (int i = 0; i < Loadable; i++)
+            menuStep = 2;
+            menuMoney = true;
+            menuTitle = L10n.T("menu.market");
+            menuLines = marketLines;
+            marketLines[0] = L10n.T("market.cargo", CargoCount, maxCargo);
+            marketLines[1] = L10n.T("market.shop");
+            menuTab = marketTab;
+            menuSub = L10n.T(marketTab == 0 ? "sub.market.cargo" : "sub.market.shop", L10n.T(Player.UsingGamepad ? "market.switch.gamepad" : "market.switch.keyboard"));
+            if (marketTab == 0)
             {
-                int cargo = i;
-                Add(Cargos[i].id, L10n.T("cargo.card", L10n.T("cargo." + Cargos[i].id), CargoReward(i), Cargos[i].health, Cargos[i].penalty * (Biome + 1), CargoPrice(i)),
-                    () => pendingCargo = cargo, loaded < maxCargo && money >= CargoPrice(i));
+                int loaded = CargoCount;
+                for (int i = 0; i < Loadable; i++)
+                {
+                    int cargo = i;
+                    Add(Cargos[i].id, L10n.T("cargo.card", L10n.T("cargo." + Cargos[i].id), CargoReward(i), Cargos[i].health, Cargos[i].penalty * (Biome + 1), CargoPrice(i)),
+                        () => BeginPlacing(cargo), loaded < maxCargo && money >= CargoPrice(i));
+                    Priced(CargoPrice(i), loaded >= maxCargo);
+                }
             }
-            Add("yes", L10n.T("cargo.done"), Next);
+            else
+            {
+                Add("repair", L10n.T("menu.repair", repairReward, RepairPrice), () => { money -= RepairPrice; repairsBought++; Repair(); },
+                    money >= RepairPrice && Health < MaxHealth);
+                Priced(RepairPrice);
+                Add("heal", L10n.T("menu.heal", healReward, healCost), () => { money -= healCost; Player.Heal(healReward); },
+                    money >= healCost && Player.Health < Player.maxHealth);
+                Priced(healCost);
+                Add("medkit", L10n.T("shop.kit", kitHeal, kitCost, kits, maxKits), () => { money -= kitCost; kits++; }, money >= kitCost && kits < maxKits);
+                Priced(kitCost, kits >= maxKits);
+                Add("wagon", WagonForSale ? L10n.T("shop.wagon", WagonPrice) : L10n.T("shop.wagon.limit"),
+                    () => { money -= WagonPrice; wagonsBought++; AddCar(cars.Count, -1); }, WagonForSale && money >= WagonPrice);
+                Priced(WagonPrice, !WagonForSale);
+                Add("container", ContainerForSale ? L10n.T("shop.container", ContainerPrice) : L10n.T("shop.container.limit"),
+                    () => { money -= ContainerPrice; containersBought++; AddCar(cars.Count, Container, true); }, ContainerForSale && money >= ContainerPrice);
+                Priced(ContainerPrice, !ContainerForSale);
+            }
+            Add("yes", L10n.T("market.done"), Next);
+            Minor();
         }
         else if (stage == 2)
         {
-            // Where to couple it: behind any wagon, never ahead of the locomotive.
+            // Where to couple it: the wagon is already in the train, in red, and left / right move it along
+            // (never ahead of the first wagon). Confirming couples it there and paints it; back takes it out.
             kind = 6;
+            menuStep = 2;
+            menuCompact = true;
             menuTitle = L10n.T("cargo.place", L10n.T("cargo." + Cargos[pendingCargo].id));
-            for (int i = cars.Count; i >= 1; i--)
-            {
-                int index = i;
-                Add("slot", L10n.T("cargo.slot", i), () =>
-                    {
-                        money -= CargoPrice(pendingCargo);
-                        AddCar(index, pendingCargo);
-                        pendingCargo = -1;
-                        if (CargoCount >= maxCargo) Next();
-                    },
-                    true, new Vector3(WagonX(i - 1) - Step * 0.5f, 1f, 0f), new Vector2(0.3f, wagonSize.z * 0.5f + 0.15f));
-            }
-            Add("back", L10n.T("menu.back"), () => pendingCargo = -1);
+            menuSub = L10n.T(Player.UsingGamepad ? "sub.place.gamepad" : "sub.place.keyboard");
+            Add("yes", L10n.T("place.here"), PlaceGhost);
+            Minor();
+            Add("back", L10n.T("menu.back"), CancelGhost);
+            Minor();
         }
         else if (stage == 1)
         {
             kind = 4;
-            menuTitle = Noted(L10n.T("menu.hero"));
+            menuStep = 1;
+            menuTitle = L10n.T("menu.hero");
+            menuSub = L10n.T("sub.hero");
             foreach (int offer in heroOffers)
             {
                 int stat = offer - Weapon.Hero.Length;
                 if (stat < 0)
                 {
                     Weapon weapon = Weapon.Hero[offer];
-                    Add(weapon.id, L10n.T("hero.ammo", weapon.Name, weapon.Info), () => { Player.ammo = weapon; Next(); });
+                    Add(weapon.id, L10n.T("hero.ammo", weapon.Name, weapon.Info), () => { Player.ammo = weapon; Next(); }); Free();
                 }
-                else if (stat == 0) Add("speed", L10n.T("hero.speed"), () => { Player.SpeedUp(); Next(); });
-                else if (stat == 1) Add("armor", L10n.T("hero.armor"), () => { Player.ArmorUp(); Next(); });
-                else if (stat == 2) Add("vitality", L10n.T("hero.vitality", vitalityReward), () => { Player.VitalityUp(vitalityReward); Next(); });
-                else if (stat == 3) Add("arms", L10n.T("hero.damage"), () => { Player.DamageUp(); Next(); });
-                else if (stat == 4) Add("money", L10n.T("hero.greed"), () => { Player.GreedUp(); Next(); });
-                else Add(Player.ammo.id, L10n.T("hero.evolve", Player.ammo.Name, Player.level + 1), () => { Player.level++; Combat.Instance.Burst("levelup", Player.Position + Vector3.down * 2f, 1.5f); Next(); });
+                else if (stat == 0) { Add("speed", L10n.T("hero.speed"), () => { Player.SpeedUp(); Next(); }); Free(); }
+                else if (stat == 1) { Add("armor", L10n.T("hero.armor"), () => { Player.ArmorUp(); Next(); }); Free(); }
+                else if (stat == 2) { Add("vitality", L10n.T("hero.vitality", vitalityReward), () => { Player.VitalityUp(vitalityReward); Next(); }); Free(); }
+                else if (stat == 3) { Add("arms", L10n.T("hero.damage"), () => { Player.DamageUp(); Next(); }); Free(); }
+                else if (stat == 4) { Add("money", L10n.T("hero.greed"), () => { Player.GreedUp(); Next(); }); Free(); }
+                else { Add(Player.ammo.id, L10n.T("hero.evolve", Player.ammo.Name, Player.level + 1), () => { Player.level++; Combat.Instance.Burst("levelup", Player.Position + Vector3.down * 2f, 1.5f); Next(); }); Free(); }
             }
             Add("skip", L10n.T("menu.skip"), Skip);
+            Minor();
         }
         else if (pending == null)
         {
             kind = 2;
+            menuStep = 0;
             menuTitle = L10n.T("menu.upgrade");
-            if (cargoEarned > 0 || cargoFined > 0) menuTitle = L10n.T("cargo.result", cargoEarned, cargoFined) + "   ·   " + menuTitle;
+            menuSub = cargoEarned > 0 || cargoFined > 0 ? L10n.T("cargo.result", cargoEarned, cargoFined) + "     " + L10n.T("sub.train") : L10n.T("sub.train");
             foreach (int offer in offers)
             {
                 if (offer < Weapon.Wagon.Length)
                 {
                     Weapon weapon = Weapon.Wagon[offer];
-                    Add(weapon.id, weapon.Name + "\n" + weapon.Info, () => pending = weapon);
+                    Add(weapon.id, weapon.Name + "\n" + weapon.Info, () => BeginMounting(weapon)); Free();
                 }
-                else if (offer == Weapon.Wagon.Length) Add("money", L10n.T("menu.money", moneyReward), () => { money += moneyReward; Next(); });
+                else if (offer == Weapon.Wagon.Length) { Add("money", L10n.T("menu.money", moneyReward), () => { money += moneyReward; Next(); }); Free(); }
                 else if (offer < Escort)
                 {
                     int cargo = offer - FreeCargo;
                     Add(Cargos[cargo].id, L10n.T("offer.cargo", L10n.T("cargo." + Cargos[cargo].id), CargoReward(cargo), Cargos[cargo].penalty * (Biome + 1)),
                         () => { AddTemporary(cargo, null, 0); Next(); });
+                    Tag(L10n.T("badge.bonus"), 2);
                 }
                 else
                 {
                     Weapon weapon = Weapon.Wagon[offer - Escort];
                     int level = WeakestLevel;
-                    Add(weapon.id, L10n.T("offer.escort", weapon.Name, level), () => { AddTemporary(-1, weapon, level); Next(); });
+                    Add(weapon.id, L10n.T("offer.escort", weapon.Name, level), () => { AddTemporary(-1, weapon, level); Next(); }); Tag(L10n.T("badge.bonus"), 2);
                 }
             }
             Add("skip", L10n.T("menu.skip"), Skip);
+            Minor();
         }
         else
         {
+            // Which wagon gets the weapon: it sits on the train already, in red, on the wagon it would go to.
+            // Left / right move it from wagon to wagon; the line under the title says what it would do there.
             kind = 3;
+            menuStep = 0;
+            menuCompact = true;
+            Turret mount = cars[weaponAt].mount;
+            bool same = mount && mount.Weapon == pending, can = !same || mount.Level < Weapon.MaxLevel;
+            string effect = !mount ? L10n.T("menu.empty") : !same ? L10n.T("menu.replace", mount.Weapon.Name, mount.Level)
+                : mount.Level < Weapon.MaxLevel ? L10n.T("menu.levelup", mount.Level + 1) : L10n.T("menu.maxlevel");
             menuTitle = L10n.T("menu.place", pending.Name);
-            // Listed as the wagons appear on screen, left to right, so "right" moves the yellow frame right.
-            for (int i = cars.Count - 1; i >= 0; i--)
-            {
-                if (cars[i].cargo >= 0) continue;
-                int wagon = i;
-                Turret mount = cars[i].mount;
-                bool same = mount && mount.Weapon == pending;
-                string current = !mount ? L10n.T("menu.empty") : !same ? L10n.T("menu.replace", mount.Weapon.Name, mount.Level)
-                    : mount.Level < Weapon.MaxLevel ? L10n.T("menu.levelup", mount.Level + 1) : L10n.T("menu.maxlevel");
-                Add(mount ? mount.Weapon.id : "wagon", L10n.T("menu.wagon", i + 1, current), () => { Mount(wagon, pending); Next(); },
-                    !same || mount.Level < Weapon.MaxLevel, new Vector3(WagonX(i), 0.4f + wagonSize.y, 0f),
-                    new Vector2(wagonSize.x * 0.5f + 0.15f, wagonSize.z * 0.5f + 0.15f));
-            }
-            Add("back", L10n.T("menu.back"), () => pending = null);
+            menuSub = L10n.T("mount.where", weaponAt + 1, effect) + "     " + L10n.T(Player.UsingGamepad ? "sub.mount.gamepad" : "sub.mount.keyboard");
+            Add("yes", L10n.T("mount.here"), MountGhost, can);
+            Minor();
+            Add("back", L10n.T("menu.back"), CancelWeapon);
+            Minor();
         }
+
+        // What skipping the last step gave, said once at the head of the next one.
+        if (skipGift != 0 && menuSub != null && AtStation)
+            menuSub = L10n.T(skipGift == 1 ? "menu.skip.money" : "menu.skip.health", skipGift == 1 ? skipMoney : skipHealth) + "     " + menuSub;
 
         if (kind != menuKind)
         {
@@ -1404,10 +1577,41 @@ public class TrainSim : MonoBehaviour
             if (tapped || side != 0) step = 0;
             tapped = false;
         }
+        if ((ghost != null || weaponGhost) && !Paused)
+        {
+            // Placing a wagon: left / right slide it along the train as it looks on screen; up / down pick
+            // between coupling it and going back.
+            if (step != 0 && (tapped || !navHeld))
+            {
+                Transform cam = Camera.main.transform;
+                float along = Vector3.Dot(cam.right, Vector3.right);
+                if (Mathf.Abs(along) < 0.2f) along = Vector3.Dot(cam.up, Vector3.right); // the train runs up the screen
+                int by = along >= 0f ? -step : step; // the front of the train is index 0
+                if (ghost != null) MoveGhost(by); else MoveWeapon(by);
+            }
+            int pick = Mathf.Abs(move.y) > 0.5f && Mathf.Abs(move.y) > Mathf.Abs(move.x) ? 1 : 0;
+            if (pick != 0 && !shelfHeld) focus = 1 - Mathf.Clamp(focus, 0, 1);
+            shelfHeld = pick != 0;
+            navHeld = step != 0 && !tapped;
+            focus = Mathf.Clamp(focus, 0, options.Count - 1);
+            if (confirm.WasPressedThisFrame() && options[focus].enabled) options[focus].run();
+            return;
+        }
         if (step != 0 && (tapped || !navHeld))
         {
             do focus = (focus + step + options.Count) % options.Count;
             while (!options[focus].enabled);
+        }
+        if (menuLines != null && !ListMenu)
+        {
+            // Tabs: up and down (or the shoulder taps would do too) switch between them.
+            int way = Mathf.Abs(move.y) > 0.5f && Mathf.Abs(move.y) > Mathf.Abs(move.x) ? (move.y > 0f ? -1 : 1) : 0;
+            if (way != 0 && !shelfHeld)
+            {
+                marketTab = 1 - marketTab;
+                focus = 0;
+            }
+            shelfHeld = way != 0;
         }
         navHeld = step != 0 && !tapped;
         if (confirm.WasPressedThisFrame() && options[focus].enabled) options[focus].run();
@@ -1546,6 +1750,7 @@ public class TrainSim : MonoBehaviour
     // An imported model comes with HDRP/Lit materials: swaps each for its toon twin (same colour and texture).
     public static void Toon(Renderer renderer)
     {
+        if (!toon) toon = Resources.Load<Material>("Toon");
         Material[] mats = renderer.sharedMaterials;
         for (int i = 0; i < mats.Length; i++)
         {

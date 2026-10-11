@@ -40,17 +40,22 @@ public class Player : MonoBehaviour
 
     bool Locked => target != null && target.id == targetId;
 
+    // What moves on her as she flies (Animate): both thighs, both shins, the spine; how each stood when she was posed.
+    readonly Transform[] joints = new Transform[5];
+    readonly Quaternion[] posed = new Quaternion[5];
+    readonly Smoke[] flames = new Smoke[2];
+    Vector3 before, lean; // where the hero was last frame; how fast it is going, seen from itself (1 = full speed)
+    float kick;           // 1 on a shot, gone in a moment
+
     public void Init(TrainSim train)
     {
         this.train = train;
         Health = maxHealth;
 
         transform.position = SpawnPoint;
-        visuals = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-        Destroy(visuals.GetComponent<Collider>()); // flying: collides with nothing
-        visuals.GetComponent<Renderer>().sharedMaterial = TrainSim.Mat(new Color(0.1f, 0.4f, 1f));
+        visuals = new GameObject("Hero");
         visuals.transform.SetParent(transform, false);
-        TrainSim.Box(visuals.transform, new Vector3(0f, 0.2f, 0.6f), new Vector3(0.2f, 0.2f, 0.9f), TrainSim.Mat(Color.black)); // gun, along +z
+        Dress();
 
         InputActionAsset actions = InputSystem.actions;
         actions.Enable();
@@ -64,8 +69,102 @@ public class Player : MonoBehaviour
         buttons = new[] { run, next, previous, targetNext, targetPrevious };
     }
 
+    // The hero's looks: the character two units tall about the hero's own middle, facing +z, put once into a
+    // flying pose (legs straight down, arms forward on the rifle); a rifle in her hand, a jetpack on her back
+    // (Tools/make_hero_gear.py) with a flame under each nozzle.
+    void Dress()
+    {
+        Transform body = Instantiate(Resources.Load<GameObject>("Characters/bba/bba"), visuals.transform).transform;
+        Material skin = Resources.Load<Material>("Characters/bba/bba");
+        foreach (Renderer part in body.GetComponentsInChildren<Renderer>()) part.sharedMaterial = skin;
+        Animator rig = body.GetComponent<Animator>();
+        rig.enabled = false; // nothing animates her: the bones stay where they are put here
+        Transform Bone(HumanBodyBones bone) => rig.GetBoneTransform(bone);
+        body.localScale *= 2f / ((Bone(HumanBodyBones.Head).position.y - Bone(HumanBodyBones.LeftFoot).position.y) * 1.15f);
+        // The model comes standing in a fighter's stance, off to one side of its own origin. Squared up to face +z,
+        // then every limb pointed where it should go, whatever way it came: legs straight down, arms out to the rifle.
+        Transform hips = Bone(HumanBodyBones.Hips);
+        void Point(HumanBodyBones from, HumanBodyBones to, Vector3 along)
+        {
+            Transform bone = Bone(from), end = Bone(to);
+            if (bone && end) bone.rotation = Quaternion.FromToRotation(end.position - bone.position, along) * bone.rotation;
+        }
+        hips.rotation = Quaternion.FromToRotation(Flat(Bone(HumanBodyBones.RightUpperArm).position - Bone(HumanBodyBones.LeftUpperArm).position), Vector3.right) * hips.rotation;
+        Point(HumanBodyBones.Hips, HumanBodyBones.Head, Vector3.up);
+        foreach (bool left in new[] { true, false })
+        {
+            Point(left ? HumanBodyBones.LeftUpperLeg : HumanBodyBones.RightUpperLeg, left ? HumanBodyBones.LeftLowerLeg : HumanBodyBones.RightLowerLeg, Vector3.down);
+            Point(left ? HumanBodyBones.LeftLowerLeg : HumanBodyBones.RightLowerLeg, left ? HumanBodyBones.LeftFoot : HumanBodyBones.RightFoot, Vector3.down);
+            Point(left ? HumanBodyBones.LeftFoot : HumanBodyBones.RightFoot, left ? HumanBodyBones.LeftToes : HumanBodyBones.RightToes, new Vector3(0f, -0.6f, 1f));
+        }
+        Point(HumanBodyBones.RightUpperArm, HumanBodyBones.RightLowerArm, new Vector3(0f, -0.5f, 1f));
+        Point(HumanBodyBones.RightLowerArm, HumanBodyBones.RightHand, Vector3.forward);
+        Point(HumanBodyBones.LeftUpperArm, HumanBodyBones.LeftLowerArm, new Vector3(0.1f, -0.4f, 1f));
+        Point(HumanBodyBones.LeftLowerArm, HumanBodyBones.LeftHand, new Vector3(0.45f, 0.1f, 1f));
+        // Her hips over the hero's own middle, so she turns on the spot and the shots leave from her.
+        body.position += Flat(visuals.transform.position - hips.position) + Vector3.up * (visuals.transform.position.y + 0.75f - Bone(HumanBodyBones.Head).position.y);
+
+        Transform Gear(string model, Vector3 at)
+        {
+            Transform gear = Instantiate(Resources.Load<GameObject>(model), visuals.transform).transform;
+            gear.position = at;
+            foreach (Renderer part in gear.GetComponentsInChildren<Renderer>()) TrainSim.Toon(part);
+            return gear;
+        }
+        // Rifle and jetpack ride on her bones, so they go with her when she moves.
+        Gear("Models/HeroRifle", Bone(HumanBodyBones.RightHand).position).SetParent(Bone(HumanBodyBones.RightHand), true);
+        Transform back = Bone(HumanBodyBones.Chest) ?? Bone(HumanBodyBones.Spine);
+        Transform pack = Gear("Models/HeroJetpack", back.position + Vector3.back * 0.22f);
+        pack.SetParent(back, true);
+        var moving = new[] { HumanBodyBones.LeftUpperLeg, HumanBodyBones.RightUpperLeg, HumanBodyBones.LeftLowerLeg, HumanBodyBones.RightLowerLeg, HumanBodyBones.Spine };
+        for (int i = 0; i < joints.Length; i++)
+        {
+            joints[i] = Bone(moving[i]);
+            posed[i] = joints[i].rotation; // she faces +z here, so this is the joint as seen from her
+        }
+        before = transform.position;
+        foreach (float side in new[] { -0.2f, 0.2f })
+        {
+            // Fire out of the nozzle: Smoke's puffs, bright, quick and sent downwards.
+            var flame = new GameObject("Flame").AddComponent<Smoke>();
+            flame.transform.SetParent(pack, false);
+            flame.transform.localPosition = new Vector3(side, -0.52f, -0.22f);
+            flame.colour = new Color(3f, 1.1f, 0.15f); // over 1: it blooms
+            flame.every = 0.025f; flame.life = 0.28f; flame.rise = -6f; flame.size = 0.42f; flame.trail = 0f; flame.wander = 0.6f;
+            flames[side < 0f ? 0 : 1] = flame;
+        }
+    }
+
+    // Life in her, every frame, from how the hero is moving: she leans into her flight and banks into a slide,
+    // her legs trail behind and paddle a little, her chest sways, a shot kicks her back, the jets burn harder at speed.
+    void Animate()
+    {
+        float dt = Time.deltaTime;
+        if (dt <= 0f || !visuals.activeSelf) return;
+        Quaternion facing = Quaternion.LookRotation(aim);
+        Vector3 going = Quaternion.Inverse(facing) * Flat(transform.position - before) / (dt * speed * sprint);
+        before = transform.position;
+        lean = Vector3.Lerp(lean, Vector3.ClampMagnitude(going, 1f), 1f - Mathf.Exp(-7f * dt)); // also swallows the jump of a turn of the world
+        kick = Mathf.Max(0f, kick - dt * 7f);
+        float time = Time.time, paddle = Mathf.Sin(time * 2.3f) * 5f;
+        visuals.transform.rotation = facing * Quaternion.Euler(lean.z * 20f, 0f, -lean.x * 16f);
+        Quaternion turn = visuals.transform.rotation;
+        for (int leg = 0; leg < 2; leg++)
+        {
+            // About her right: the leg swings back; about her front: it swings out to the side.
+            Quaternion thigh = Quaternion.Euler(6f + lean.z * 24f + (leg == 0 ? paddle : -paddle), 0f, -lean.x * 16f + (leg == 0 ? -3f : 3f));
+            joints[leg].rotation = turn * thigh * posed[leg];
+            joints[leg + 2].rotation = turn * thigh * Quaternion.Euler(14f + Mathf.Max(0f, lean.z) * 26f + (leg == 0 ? -paddle : paddle), 0f, 0f) * posed[leg + 2];
+        }
+        joints[4].rotation = turn * Quaternion.Euler(Mathf.Sin(time * 1.7f) * 1.5f - kick * 8f, Mathf.Sin(time * 1.1f) * 3f, 0f) * posed[4];
+        foreach (Smoke flame in flames) flame.size = 0.42f * (1f + lean.magnitude * 0.7f);
+    }
+
     void Update()
     {
+        // A screen left behind (the story's buttons) switches every action off as it goes, after Init switched
+        // them on: back on, for the hero and for the events that read the same actions.
+        if (!move.enabled) InputSystem.actions.Enable();
         // Out of the picture while the game is seen from a gunner's seat.
         if (visuals.activeSelf != (Alive && !train.Swarming)) visuals.SetActive(Alive && !train.Swarming);
         if (!Alive || Time.timeScale == 0f) return;
@@ -134,18 +233,19 @@ public class Player : MonoBehaviour
         }
         if (target == null) Lock(combat.Nearest(Flat(p), range, null, true)); // re-aim: always the enemy closest to the hero
         if (target != null && Flat(target.position - p).sqrMagnitude > 0.01f) aim = Flat(target.position - p).normalized;
-        visuals.transform.rotation = Quaternion.LookRotation(aim);
 
         // Fires on its own whenever there is someone to shoot at.
         cooldown -= Time.deltaTime;
         if (cooldown > 0f || target == null) return;
         cooldown = ammo.Interval(level);
         combat.Volley(p, target, ammo, level, true);
+        kick = 1f;
     }
 
     // Red frame on the ground around whoever is locked, plus a pointer above it.
     void LateUpdate()
     {
+        Animate();
         if (!Alive || !Locked || train.Swarming) return;
         float half = target.type.size * 0.5f + 0.4f, side = half * 2f + 0.15f;
         Vector3 c = new Vector3(target.position.x, 0.08f, target.position.z);

@@ -194,3 +194,17 @@ for x in (-12.5, 12.5):
     ubox(x - 0.9, x + 0.9, 10.6, 12.4, 0.6, 1.4, ARMOR2); ubox(x - 0.6, x + 0.6, 10.9, 12.1, 1.4, 8.6, ARMOR)
     ubox(x - 0.62, x + 0.62, 10.86, 10.9, 2.0, 8.0, LIME); ubox(x - 0.9, x + 0.9, 10.6, 12.4, 8.6, 9.0, ARMOR2); uball(x, 11.5, 9.4, 0.4, LIME)
 finish("Station_fortress")
+
+# ---------------- the station's guns: StationGun, a heavy twin cannon every station has two of ----------------
+# Its own object (origin at its foot, barrels along -z here = towards the track) so the game can turn it.
+GUNBASE = mat("GunBase", (0.2, 0.22, 0.28), 0.4, 0.5); GUNBODY = mat("GunBody", (0.9, 0.9, 0.88)); GUNSTRIPE = mat("GunStripe", (0.95, 0.62, 0.04))
+GUNDARK = mat("GunDark", (0.05, 0.05, 0.06), 0.45, 0.4); GUNGLOW = mat("GlowGun", (1.0, 0.45, 0.1), emit=3.0)
+ucyl(0, 0, 0, 0.5, 1.5, GUNBASE, sides=8); ucyl(0, 0, 0.5, 1.5, 0.9, GUNBASE, sides=8, top=0.7)
+ubox(-1.25, 1.25, -1.0, 1.3, 1.5, 2.9, GUNBODY); ubox(-1.3, 1.3, -1.05, 1.35, 2.0, 2.3, GUNSTRIPE)
+ubox(-1.0, 1.0, 1.3, 1.9, 1.7, 2.7, GUNBASE)                      # counterweight
+ubox(-0.5, 0.5, -0.3, 0.7, 2.9, 3.3, GUNBASE); uball(0, 0.2, 3.45, 0.28, GUNGLOW)  # sensor
+for x in (-0.65, 0.65):
+    cyl((-x, 2.6, 2.3), 0.3, 3.4, "Y", GUNDARK, sides=10)         # barrels, out over the track
+    cyl((-x, 4.2, 2.3), 0.4, 0.5, "Y", GUNSTRIPE, sides=10); cyl((-x, 4.46, 2.3), 0.22, 0.06, "Y", GUNGLOW, sides=10)
+    cyl((-x, 1.2, 2.3), 0.42, 0.5, "Y", GUNBASE, sides=10)
+finish("StationGun")

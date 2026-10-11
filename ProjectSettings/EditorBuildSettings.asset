@@ -6,11 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/OutdoorsScene.unity
-    guid: 8124e5870f4fd4c779e7a5f994e84ad1
+    path: Assets/Scenes/MainMenu.unity
+    guid: e9087d5adeb0f1240a882ceee5d24af8
+  - enabled: 1
+    path: Assets/Scenes/selectHero.unity
+    guid: 3d6ab9c06d29f684ea34d412581f4532
   - enabled: 1
     path: Assets/Scenes/sandScenario.unity
     guid: 5404818dcdde9dd46a840889cfcb1688
+  - enabled: 1
+    path: Assets/Scenes/historiaDialogos.unity
+    guid: 34c2ec73bd26fab44bba77f55d89a110
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: a49e90bca562f1b428002564d27ee3fe, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}

@@ -63,6 +63,7 @@ ICONS = {
     'rock': 'grey rock, boulder, stone ore',
     'arms': 'weapon crate, military wooden crate, ammo box',
     'container': 'shipping container, blue cargo container',
+    'fuel': 'red gasoline jerrycan, bright red fuel can, red metal canister, yellow flame emblem',
     'slot': 'flatbed train car, empty railway wagon, plus sign',
     # shop
     'wagon': 'train car, red railway wagon, cute train carriage',

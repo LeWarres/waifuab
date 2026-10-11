@@ -1,5 +1,5 @@
 # Cargo wagons in the armed wagon's style (yellow, white, black trim, hazard stripes) and the loot balloons.
-#   Cargo_wood, Cargo_rock, Cargo_arms, Cargo_container   -> Assets/Resources/Models
+#   Cargo_wood, Cargo_rock, Cargo_arms, Cargo_fuel, Cargo_container   -> Assets/Resources/Models
 #   Balloon_0 (wood), Balloon_1 (rock), Balloon_2 (arms)  -> the same folder
 #   blender -b --python Tools/make_cargo.py
 # Wagons: 5 long (x), 2 wide (y), standing on the rail (z = 0), real colours in their materials.
@@ -94,6 +94,19 @@ for x in (-2.3, 2.24):
     both(lambda y0, y1: box(x, x + 0.06, y0, y1, 0.75, 2.12, BLACK, "post"), 0.93, 0.98)
 box(-2.32, 2.32, -0.97, 0.97, 2.08, 2.12, BLACK, "top_rail")
 finish("Cargo_container")
+
+# ---- fuel: a red tank that goes up at the first hit ----
+TANK = mat("FuelRed", (0.85, 0.12, 0.1)); FLAME = mat("FuelFlame", (1.0, 0.72, 0.05))
+flatcar()
+cyl((0, 0, 1.45), 0.72, 4.2, "X", TANK, sides=14, name="tank")
+for end in (-1, 1):
+    ball((end * 2.1, 0, 1.45), 0.72, TANK, "tank_end", (0.45, 1, 1))
+for x in (-1.5, 0.0, 1.5):
+    cyl((x, 0, 1.45), 0.75, 0.16, "X", WHITE if x == 0.0 else BLACK, sides=14, name="band")
+    box(x - 0.12, x + 0.12, -0.8, 0.8, 0.75, 0.95, BLACK, "cradle")
+cyl((0.6, 0, 2.25), 0.2, 0.22, "Z", BLACK, sides=8, name="hatch"); box(-1.9, 1.9, -0.12, 0.12, 2.16, 2.2, STEEL, "walkway")
+both(lambda y0, y1: prism([(-0.22, 1.2), (0.22, 1.2), (0.0, 1.75)], y0, y1, FLAME, "flame_sign"), 0.74, 0.76)  # warning flames
+finish("Cargo_fuel")
 
 # ================= loot balloons =================
 BODY = mat("Body", (1.0, 1.0, 1.0)); MID = mat("Mid", (0.55, 0.6, 0.7)); DARK = mat("Dark", (0.12, 0.12, 0.16))

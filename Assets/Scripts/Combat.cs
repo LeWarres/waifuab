@@ -168,7 +168,12 @@ public class Combat : MonoBehaviour
     }
 
     public static Combat Instance { get; private set; }
-    public bool Paused => train.Swarming; // turrets hold their fire too
+    public bool Paused => train.Swarming || train.AtStation; // turrets hold their fire too
+    public int EnemyCount => enemies.Count;
+    public float stationShotEvery = 0.16f; // seconds between shots of the station's guns
+    float stationShotIn;
+    int stationGunTurn;
+    readonly Batch stationShot = new Batch(new Color(4f, 1.6f, 0.2f), false); // their thick bolts
     public float calmDistance = 15f, calmRetreat = 12f; // how far enemies keep during a button game, and how fast they get there
     const float ModelScale = 1.4f;  // the robots are slimmer than the cubes they replace
     const float BurstSize = 0.6f; // effect scale per unit of blast radius
@@ -208,7 +213,6 @@ public class Combat : MonoBehaviour
     int level;
     bool heroHit; // true while a hit made by the hero is being applied
 
-    public int EnemyCount => enemies.Count;
     public int BulletCount => bullets.Count;
 
     void Awake()
@@ -222,9 +226,30 @@ public class Combat : MonoBehaviour
         if (train.Swarming) return; // seen from the gunner's seat: the rest of the fight is put away until it is over
         if (train.AtStation)
         {
-            // Stations are safe: wipe the field and stop spawning until the train leaves.
-            while (enemies.Count > 0) RemoveEnemy(enemies.Count - 1);
-            while (bullets.Count > 0) RemoveBullet(bullets.Count - 1);
+            // Stations are safe. Whoever was still chasing the train stops dead and the station's two heavy guns
+            // pick them off, nearest first, before the menu comes up. No money for these: they are not our kills.
+            // Shots still in the air (ours, and the guns' bolts) fade out; nothing else moves.
+            for (int i = bullets.Count - 1; i >= 0; i--)
+                if ((bullets[i].life -= Time.unscaledDeltaTime * (bullets[i].batch == stationShot ? 1f : 6f)) <= 0f) RemoveBullet(i);
+            if (enemies.Count == 0) return;
+            for (int i = enemies.Count - 1; i >= 0; i--)
+                if (enemies[i].type.loot >= 0) RemoveEnemy(i); // balloons just drift off
+            stationShotIn -= Time.unscaledDeltaTime;
+            if (stationShotIn > 0f || enemies.Count == 0) return;
+            stationShotIn = stationShotEvery;
+            for (int shots = Mathf.CeilToInt(enemies.Count / 12f); shots > 0 && enemies.Count > 0; shots--) // a crowd goes faster
+            {
+                Transform gun = train.StationGun(stationGunTurn++ % 2);
+                Enemy target = enemies[0];
+                foreach (Enemy e in enemies)
+                    if ((e.position - gun.position).sqrMagnitude < (target.position - gun.position).sqrMagnitude) target = e;
+                Vector3 muzzle = gun.position + Vector3.up * 1.9f, to = target.position - muzzle;
+                gun.rotation = Quaternion.LookRotation(new Vector3(to.x, 0f, to.z));
+                Spawn(muzzle + to * 0.5f, new Vector3(0.45f, 0.45f, to.magnitude), stationShot, 0.12f, Quaternion.LookRotation(to));
+                Burst("spark", muzzle + to.normalized * 3.2f, 1.2f);
+                Burst("rocket", target.position, 2.2f);
+                RemoveEnemy(target.index);
+            }
             return;
         }
 
@@ -399,6 +424,7 @@ public class Combat : MonoBehaviour
         foreach (EnemyType t in Types) t.Batch.Flush();
         foreach (EnemyType t in Loot) t.Batch.Flush();
         Larva.Batch.Flush();
+        stationShot.Flush();
         foreach (Weapon w in Weapon.Wagon) w.Batch.Flush();
         foreach (Weapon w in Weapon.Hero) w.Batch.Flush();
     }
@@ -435,8 +461,13 @@ public class Combat : MonoBehaviour
         }
 
         float angle = Random.value * Mathf.PI * 2f;
-        float radius = Mathf.Max(spawnRadius, train.HalfExtents.x + 25f); // a long train pushes the spawn ring out
-        var center = new Vector3(Mathf.Cos(angle) * radius, 0f, Mathf.Sin(angle) * radius);
+        // Always out of the picture: the ring goes round what the camera shows of the ground right now (it pulls
+        // back for a long train and for the zigzag), centred where the camera looks. A fixed ring round the
+        // train's middle put enemies on screen beside the ends of a long train.
+        Camera view = Camera.main;
+        float across = view.orthographicSize * view.aspect, deep = view.orthographicSize / Mathf.Sin(view.transform.eulerAngles.x * Mathf.Deg2Rad);
+        float radius = Mathf.Max(spawnRadius, Mathf.Sqrt(across * across + deep * deep) + 4f);
+        Vector3 center = train.Focus + new Vector3(Mathf.Cos(angle) * radius, 0f, Mathf.Sin(angle) * radius);
         for (int i = 0; i < type.pack; i++)
             Add(type, center + new Vector3(Random.Range(-1.5f, 1.5f), 0f, Random.Range(-1.5f, 1.5f)) * (type.pack - 1));
     }

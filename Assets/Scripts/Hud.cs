@@ -47,12 +47,18 @@ public class Hud : MonoBehaviour
     {
         public Text text;
         public Vector3 at;
-        public float birth;
+        public float birth, amount;
+        public bool onTrain;
     }
 
     readonly List<Popup> popupPool = new();
     readonly List<Popup> popups = new();
     const float popupLife = 0.9f;
+    // Many hits at once (a minigun, a blast over a crowd) must not mean hundreds of texts: hits landing close
+    // together in a short time add up into one number, and there is a top to how many are out.
+    const int MaxPopups = 48;
+    const float MergeTime = 0.18f, MergeDistance = 1.6f;
+    Canvas popupCanvas; // their own canvas: they move every frame, and the rest of the HUD need not be rebuilt for it
     Meter trainBar, tripBar, heroBar;
     RawImage ammoIcon;
     Text ammoText;
@@ -168,15 +174,34 @@ public class Hud : MonoBehaviour
     // A number for one blow: red when the enemy is hurt, yellow when a wagon is, at the point of the hit.
     public void DamageNumber(Vector3 at, float amount, bool onTrain)
     {
-        Popup popup;
-        if (popupPool.Count > 0)
+        Popup popup = null;
+        float now = Time.unscaledTime;
+        for (int i = popups.Count - 1; i >= 0 && now - popups[i].birth <= MergeTime; i--) // newest last
+            if (popups[i].onTrain == onTrain && (popups[i].at - at).sqrMagnitude <= MergeDistance * MergeDistance)
+            {
+                popups[i].amount += amount;
+                popups[i].text.text = Mathf.Max(1, Mathf.RoundToInt(popups[i].amount)).ToString();
+                return;
+            }
+        if (popups.Count >= MaxPopups)
+        {
+            popup = popups[0]; // the oldest gives way
+            popups.RemoveAt(0);
+        }
+        else if (popupPool.Count > 0)
         {
             popup = popupPool[popupPool.Count - 1];
             popupPool.RemoveAt(popupPool.Count - 1);
         }
         else
         {
-            Text text = UiKit.Label(world, UiKit.Heading, 46, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(200f, 70f), true);
+            if (!popupCanvas)
+            {
+                popupCanvas = UiKit.NewCanvas("DamageNumbers", 1);
+                Destroy(popupCanvas.GetComponent<GraphicRaycaster>()); // nothing here is clicked
+            }
+            Text text = UiKit.Label(popupCanvas.transform, UiKit.Heading, 46, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(200f, 70f), true);
+            text.rectTransform.anchorMin = text.rectTransform.anchorMax = Vector2.zero; // placed in screen points
             var outline = text.gameObject.AddComponent<Outline>(); // keeps it readable over any ground
             outline.effectColor = new Color(0f, 0f, 0f, 0.9f);
             outline.effectDistance = new Vector2(2.5f, -2.5f);
@@ -185,7 +210,9 @@ public class Hud : MonoBehaviour
         popup.text.text = Mathf.Max(1, Mathf.RoundToInt(amount)).ToString();
         popup.text.color = onTrain ? UiKit.Gold : new Color(1f, 0.25f, 0.2f);
         popup.at = at;
-        popup.birth = Time.unscaledTime;
+        popup.amount = amount;
+        popup.onTrain = onTrain;
+        popup.birth = now;
         popup.text.gameObject.SetActive(true);
         popups.Add(popup);
     }
