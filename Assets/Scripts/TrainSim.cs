@@ -432,7 +432,7 @@ public class TrainSim : MonoBehaviour
             rails[i].SetParent(transform, false);
             Dress(Instantiate(railModel, rails[i]));
         }
-        nextEvent = EventBag[Random.Range(0, EventBag.Length)];
+        RollEvent(); // the first leg rolls for a boss too, same as every other
 
         zig = gameObject.AddComponent<ZigzagEvent>();
         swarm = gameObject.AddComponent<SwarmEvent>();
@@ -1288,13 +1288,19 @@ public class TrainSim : MonoBehaviour
         pending = null;
         leg = nextLeg;
         turned = false;
-        // The biome's boss: nobody may leave the biome until it is down. Every leg there is another roll, more
-        // likely the longer the player has had to get ready. Once beaten, its biome stops rolling for the rest of the run.
+        RollEvent();
+        remaining = LegLength;
+        AtStation = false;
+    }
+
+    // Which event this leg gets. The biome's boss is the special case: nobody may leave the biome until it is down.
+    // Every leg there is another roll, more likely the longer the player has had to get ready; once beaten, its
+    // biome stops rolling for the rest of the run.
+    void RollEvent()
+    {
         bossNext = Biome < Biomes.Length - 1 && bossBeaten != Biome &&
                    Random.value < Mathf.Min(bossChance + bossChanceStep * Stations, bossChanceMax);
         nextEvent = bossNext ? 6 : EventBag[Random.Range(0, EventBag.Length)];
-        remaining = LegLength;
-        AtStation = false;
     }
 
     // Menu title, led by what the last skip paid (if the previous menu was skipped).
