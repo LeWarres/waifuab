@@ -11,6 +11,8 @@ public class Turret : MonoBehaviour
     int targetId;
     float cooldown;
     const float ModelScale = 1.3f;
+    // The twin barrels, in the turret's own frame (Tools/make_wagon.py: muzzle 1.36 up the barrel, 0.3 up, times ModelScale).
+    static readonly Vector3 MuzzleLocal = new Vector3(0f, 0.465f, 1.77f);
 
     public void Init(Weapon weapon)
     {
@@ -53,6 +55,6 @@ public class Turret : MonoBehaviour
         if (cooldown > 0f) return;
         cooldown = Weapon.Interval(Level);
 
-        combat.Volley(transform.position + Vector3.up * 0.15f, target, Weapon, Level);
+        combat.Volley(transform.TransformPoint(MuzzleLocal), target, Weapon, Level);
     }
 }

@@ -27,10 +27,13 @@ public class Player : MonoBehaviour
 
     const float Deadzone = 0.25f;
     static readonly Vector3 SpawnPoint = new Vector3(0f, 2.5f, -4f);
+    // The rifle's muzzle, in the rifle's own frame (Tools/make_hero_gear.py: barrel tip at 0.65 * (0, -1.54, 0.13)).
+    static readonly Vector3 MuzzleLocal = new Vector3(0f, 0.085f, 1f);
 
     readonly Combat.Batch marker = new Combat.Batch(Color.red, false); // frame around the locked enemy
     TrainSim train;
     GameObject visuals;
+    Transform rifle;
     InputAction move, look, next, previous, targetNext, targetPrevious, run;
     InputAction[] buttons;
     Combat.Enemy target;
@@ -112,7 +115,8 @@ public class Player : MonoBehaviour
             return gear;
         }
         // Rifle and jetpack ride on her bones, so they go with her when she moves.
-        Gear("Models/HeroRifle", Bone(HumanBodyBones.RightHand).position).SetParent(Bone(HumanBodyBones.RightHand), true);
+        rifle = Gear("Models/HeroRifle", Bone(HumanBodyBones.RightHand).position);
+        rifle.SetParent(Bone(HumanBodyBones.RightHand), true);
         Transform back = Bone(HumanBodyBones.Chest) ?? Bone(HumanBodyBones.Spine);
         Transform pack = Gear("Models/HeroJetpack", back.position + Vector3.back * 0.22f);
         pack.SetParent(back, true);
@@ -238,7 +242,8 @@ public class Player : MonoBehaviour
         cooldown -= Time.deltaTime;
         if (cooldown > 0f || target == null) return;
         cooldown = ammo.Interval(level);
-        combat.Volley(p, target, ammo, level, true);
+        // Shots leave the barrel so they line up with the muzzle flash.
+        combat.Volley(rifle ? rifle.TransformPoint(MuzzleLocal) : p, target, ammo, level, true);
         kick = 1f;
     }
 

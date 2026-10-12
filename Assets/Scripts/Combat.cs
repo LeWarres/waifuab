@@ -167,6 +167,13 @@ public class Combat : MonoBehaviour
         public EnemyType type;
     }
 
+    struct MuzzleFlash
+    {
+        public Vector3 at, forward;
+        public Batch batch;
+        public float size, life;
+    }
+
     public static Combat Instance { get; private set; }
     public bool Paused => train.Swarming || train.AtStation; // turrets hold their fire too
     public int EnemyCount => enemies.Count;
@@ -174,6 +181,7 @@ public class Combat : MonoBehaviour
     float stationShotIn;
     int stationGunTurn;
     readonly Batch stationShot = new Batch(new Color(4f, 1.6f, 0.2f), false); // their thick bolts
+    const float StationFlashSize = 2.2f; // the heavy guns leave a much bigger flare than a wagon turret
     public float calmDistance = 15f, calmRetreat = 12f; // how far enemies keep during a button game, and how fast they get there
     const float ModelScale = 1.4f;  // the robots are slimmer than the cubes they replace
     const float BurstSize = 0.6f; // effect scale per unit of blast radius
@@ -202,6 +210,8 @@ public class Combat : MonoBehaviour
     readonly List<Bullet> bullets = new();
     readonly List<Enemy> chainSkip = new(), picked = new();
     readonly List<Blast> blasts = new(); // enemy death explosions, resolved once nothing is being iterated
+    readonly List<MuzzleFlash> flashes = new(); // quick barrel flares, drawn in the weapon's own colour
+    const float FlashLife = 0.09f;
     readonly Stack<Enemy> enemyPool = new();
     readonly Stack<Bullet> bulletPool = new();
 
@@ -244,9 +254,11 @@ public class Combat : MonoBehaviour
                 foreach (Enemy e in enemies)
                     if ((e.position - gun.position).sqrMagnitude < (target.position - gun.position).sqrMagnitude) target = e;
                 Vector3 muzzle = gun.position + Vector3.up * 1.9f, to = target.position - muzzle;
-                gun.rotation = Quaternion.LookRotation(new Vector3(to.x, 0f, to.z));
+                Vector3 aim = new Vector3(to.x, 0f, to.z).normalized;
+                gun.rotation = Quaternion.LookRotation(aim);
                 Spawn(muzzle + to * 0.5f, new Vector3(0.45f, 0.45f, to.magnitude), stationShot, 0.12f, Quaternion.LookRotation(to));
-                Burst("spark", muzzle + to.normalized * 3.2f, 1.2f);
+                AddFlash(muzzle, aim, stationShot, StationFlashSize); // a big flare on the heavy guns
+                Burst("spark", muzzle + aim * 3.2f, 1.6f);
                 Burst("rocket", target.position, 2.2f);
                 RemoveEnemy(target.index);
             }
@@ -321,6 +333,7 @@ public class Combat : MonoBehaviour
                 {
                     train.Damage(wagon, t.damage * damageScale);
                     if (t.stun > 0f) train.Stun(wagon, t.stun);
+                    Burst("smoke", e.position, 0.7f + t.size * 0.4f); // dust where it slams into the wagon
                 }
                 Die(e, false);
                 continue;
@@ -335,7 +348,11 @@ public class Combat : MonoBehaviour
                 if (inRange)
                 {
                     if (atPlayer) player.Damage(t.damage * damageScale);
-                    else train.Damage(wagon, t.damage * damageScale);
+                    else
+                    {
+                        train.Damage(wagon, t.damage * damageScale);
+                        Burst("smoke", e.position + toWagon + Vector3.up * 0.5f, 0.6f + t.size * 0.4f);
+                    }
                     Spawn(e.position + toWagon + Vector3.up, Vector3.one * 0.6f, t.Batch, 0.1f);
                 }
                 else if (t.blink > 0f) e.position += toWagon.normalized * Mathf.Min(t.blink, Mathf.Sqrt(sqr) - radius);
@@ -368,6 +385,7 @@ public class Combat : MonoBehaviour
                 if (toTarget.sqrMagnitude <= reach * reach)
                 {
                     Vector3 at = hit.position;
+                    Burst("smoke", at, 0.6f + hit.type.size * 0.4f); // a puff where the shot lands
                     if (b.weapon.slow > 0f && !hit.type.slowImmune) hit.slowUntil = now + b.weapon.slow;
                     heroHit = b.hero;
                     float damage = b.weapon.Damage(b.level) * Power;
@@ -421,6 +439,7 @@ public class Combat : MonoBehaviour
             t.Batch.Add(at, Vector3.one * (t.size * ModelScale), facing);
         }
         foreach (Bullet b in bullets) b.batch.Add(b.position, b.size, b.rotation);
+        FlashMuzzles(); // barrel flares join the same batches as the shots
         foreach (EnemyType t in Types) t.Batch.Flush();
         foreach (EnemyType t in Loot) t.Batch.Flush();
         Larva.Batch.Flush();
@@ -570,6 +589,7 @@ public class Combat : MonoBehaviour
     // hero: the shots come from the hero, so they can break floating goods.
     public void Volley(Vector3 from, Enemy first, Weapon weapon, int level, bool hero = false)
     {
+        if (first != null || weapon.pulse) Muzzle(from, FlatDir(first, from), weapon);
         heroHit = hero;
         if (weapon.pulse) Explode(from, weapon.range, weapon.Damage(level) * Power, weapon);
         else
@@ -598,6 +618,52 @@ public class Combat : MonoBehaviour
         heroHit = false;
     }
 
+    // The barrel flare that every shot leaves: a spark from the shared pool plus a quick flash in the
+    // weapon's colour, drawn by the weapon's own batch (see FlashMuzzles).
+    public void Muzzle(Vector3 at, Vector3 forward, Weapon weapon)
+    {
+        float size = FlashSize(weapon);
+        Burst("spark", at + forward * (size * 0.5f), size);
+        AddFlash(at, forward, weapon.Batch, size);
+    }
+
+    // A quick star of cubes in the given colour and size, drawn through `batch` (see FlashMuzzles).
+    // The station's heavy guns call this too, with their own bolt colour and a bigger size.
+    public void AddFlash(Vector3 at, Vector3 forward, Batch batch, float size) =>
+        flashes.Add(new MuzzleFlash { at = at, forward = forward, batch = batch, size = size, life = FlashLife });
+
+    static Vector3 FlatDir(Enemy first, Vector3 from)
+    {
+        Vector3 to = first != null ? first.position - from : Vector3.forward;
+        to.y = 0f;
+        return to.sqrMagnitude > 0.0001f ? to.normalized : Vector3.forward;
+    }
+
+    static float FlashSize(Weapon weapon) => Mathf.Clamp(0.3f + weapon.damage * 0.06f, 0.3f, 0.9f);
+
+    // Older flashes shrink to nothing, then vanish.
+    void FlashMuzzles()
+    {
+        for (int i = flashes.Count - 1; i >= 0; i--)
+        {
+            MuzzleFlash f = flashes[i];
+            f.life -= Time.unscaledDeltaTime;
+            if (f.life <= 0f) { flashes.RemoveAt(i); continue; }
+            flashes[i] = f;
+            DrawFlash(f.batch, f.at, f.forward, f.size * (f.life / FlashLife));
+        }
+    }
+
+    // Three cubes make a small star: one down the barrel, one flat across it, one upright. Drawn through the
+    // batch's own colour.
+    static void DrawFlash(Batch batch, Vector3 at, Vector3 forward, float size)
+    {
+        Quaternion face = Quaternion.LookRotation(forward);
+        batch.Add(at + forward * (size * 0.5f), new Vector3(size, size, size * 2.2f), face);
+        batch.Add(at, new Vector3(size * 1.6f, size * 1.6f, size * 0.6f), face);
+        batch.Add(at, new Vector3(size * 0.5f, size * 2.4f, size * 0.5f), face);
+    }
+
     public void Fire(Vector3 from, Enemy target, Weapon weapon, int level)
     {
         Bullet b = Spawn(from, Vector3.one * 0.25f, weapon.Batch, bulletLife);
@@ -618,10 +684,9 @@ public class Combat : MonoBehaviour
         Hurt(target, weapon.Damage(level) * Power);
     }
 
-    // Weapon blast: damages every enemy within radius (measured on the ground) and shows a short flash.
+    // Weapon blast: damages every enemy within radius (measured on the ground). Only the VFX shows it.
     public void Explode(Vector3 center, float radius, float damage, Weapon weapon)
     {
-        Flash(center, radius, weapon.Batch);
         Burst(weapon.id, center, radius * BurstSize);
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
@@ -684,7 +749,6 @@ public class Combat : MonoBehaviour
         {
             Blast blast = blasts[n];
             float radius = blast.type.explode;
-            Flash(blast.center, radius, blast.type.Batch);
             Burst("enemy", blast.center, radius * BurstSize);
             train.DamageArea(blast.center, radius, blast.type.explodeDamage * damageScale);
             if (player.Alive && (player.Position - blast.center).sqrMagnitude <= radius * radius)
@@ -697,9 +761,6 @@ public class Combat : MonoBehaviour
         }
         blasts.Clear();
     }
-
-    void Flash(Vector3 center, float radius, Batch batch) =>
-        Spawn(new Vector3(center.x, 0.05f, center.z), new Vector3(radius * 2f, 0.05f, radius * 2f), batch, 0.1f);
 
     float Power => heroHit ? player.damageBonus : 1f; // the hero's damage upgrades, on the hero's shots only
 
