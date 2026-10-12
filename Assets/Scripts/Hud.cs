@@ -64,6 +64,10 @@ public class Hud : MonoBehaviour
     Text ammoText;
     readonly List<Meter> worldBars = new();
     RectTransform world;
+    Slanted bossPanel;
+    Text bossName;
+    Meter bossBar;
+    float bossUntil;
 
     void Awake()
     {
@@ -169,6 +173,24 @@ public class Hud : MonoBehaviour
         screen.until[0] = Time.unscaledTime + 1.5f;
     }
 
+    // Call every frame while a boss is on the field; it hides itself a moment after the last call.
+    public void Boss(string name, float fraction)
+    {
+        if (bossPanel == null)
+        {
+            var glass = new Color(0.06f, 0.09f, 0.19f, 0.78f);
+            bossPanel = UiKit.Panel(canvas.transform, new Vector2(0f, -74f), new Vector2(780f, 84f), glass, glass, 0.1f);
+            bossPanel.rectTransform.anchorMin = bossPanel.rectTransform.anchorMax = new Vector2(0.5f, 1f);
+            UiKit.Panel(bossPanel.transform, new Vector2(0f, 41f), new Vector2(780f, 6f), UiKit.Rose, UiKit.Rose, 0.1f);
+            bossName = UiKit.Label(bossPanel.transform, UiKit.Heading, 30, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 22f), new Vector2(740f, 34f), true);
+            bossBar = new Meter(bossPanel.transform, new Vector2(0f, -16f), new Vector2(700f, 18f));
+        }
+        bossName.text = name;
+        bossBar.Set(fraction, false);
+        bossBar.colour.color = bossBar.colour.bottom = UiKit.Rose; // a boss does not go green as it is worn down
+        bossUntil = Time.unscaledTime + 0.25f;
+    }
+
     public void Toast(string text, float seconds = 2.5f)
     {
         toastText.text = text;
@@ -255,6 +277,9 @@ public class Hud : MonoBehaviour
         }
         bool toast = Time.unscaledTime < toastUntil;
         if (toastPanel.gameObject.activeSelf != toast) toastPanel.gameObject.SetActive(toast);
+
+        bool boss = Time.unscaledTime < bossUntil && !train.MenuShown;
+        if (bossPanel != null && bossPanel.gameObject.activeSelf != boss) bossPanel.gameObject.SetActive(boss);
 
         // Wagon numbers, to match the cards to the train while placing a weapon or a cargo wagon.
         int tags = train.ShowCarNumbers ? train.CarCount : 0;

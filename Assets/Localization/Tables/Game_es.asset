@@ -1347,6 +1347,68 @@ MonoBehaviour:
     m_Localized: No. WOR-{0:0000}
     m_Metadata:
       m_Items: []
+  - m_Id: 1387934503546880
+    m_Localized: "\xA1JEFE!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518400
+    m_Localized: "{0} se acerca por detr\xE1s: derriba sus cohetes lentos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518401
+    m_Localized: "\xA1Jefe destruido! El paso al siguiente bioma est\xE1 abierto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518402
+    m_Localized: "El jefe se retir\xF3: sigue en el bioma"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518403
+    m_Localized: "Cami\xF3n de carga"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518404
+    m_Localized: "Cami\xF3n helado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518405
+    m_Localized: "Cami\xF3n selv\xE1tico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518406
+    m_Localized: "Cami\xF3n anfibio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518407
+    m_Localized: "Cami\xF3n ardiente"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518408
+    m_Localized: "Cami\xF3n blindado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518409
+    m_Localized: "Cami\xF3n espacial"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518410
+    m_Localized: "Cami\xF3n alien\xEDgena"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518411
+    m_Localized: "Cami\xF3n de asedio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518412
+    m_Localized: 'Cambiar a {0}
+
+      (vence al jefe)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518413
+    m_Localized: Vence al jefe del bioma para avanzar
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

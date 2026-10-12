@@ -1347,6 +1347,66 @@ MonoBehaviour:
     m_Localized: No. WOR-{0:0000}
     m_Metadata:
       m_Items: []
+  - m_Id: 1387934503546880
+    m_Localized: CHEFE!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518400
+    m_Localized: "{0} vem por tr\xE1s: derrube os foguetes lentos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518401
+    m_Localized: "Chefe destru\xEDdo! O caminho para o pr\xF3ximo bioma est\xE1 aberto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518402
+    m_Localized: 'O chefe recuou: continue no bioma'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518403
+    m_Localized: "Caminh\xE3o de carga"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518404
+    m_Localized: "Caminh\xE3o gelado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518405
+    m_Localized: "Caminh\xE3o da selva"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518406
+    m_Localized: "Caminh\xE3o anf\xEDbio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518407
+    m_Localized: "Caminh\xE3o ardente"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518408
+    m_Localized: "Caminh\xE3o blindado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518409
+    m_Localized: "Caminh\xE3o espacial"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518410
+    m_Localized: "Caminh\xE3o alien\xEDgena"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518411
+    m_Localized: "Caminh\xE3o de cerco"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518412
+    m_Localized: "Mudar para {0}\n(ven\xE7a o chefe)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518413
+    m_Localized: "Ven\xE7a o chefe do bioma para avan\xE7ar"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
