@@ -85,6 +85,9 @@ public class TrainSim : MonoBehaviour
     public float fuelBlast = 12f, fuelBlastRadius = 7f; // what a fuel wagon does to its neighbours when it blows (x Balance.Scale)
 
     public float Speed { get; private set; }
+    // How far the world slid backwards past the train this frame: the distance the ground, rails and
+    // everything on them scroll by. Debris (Combat's stains) needs it to stay glued to the ground.
+    public float Scroll { get; private set; }
     public bool AtStation { get; private set; }
     public int Stations { get; private set; } // stations reached so far, drives the difficulty
     public Player Player { get; private set; }
@@ -693,6 +696,7 @@ public class TrainSim : MonoBehaviour
 
     void Update()
     {
+        Scroll = 0f; // the ground only slides while the train is running (below)
         if (Keyboard.current != null && Keyboard.current.lKey.wasPressedThisFrame) L10n.NextLocale();
         // ponytail: reads the devices directly, like the medkit and the button games.
         if (!mainMenu && Health > 0f && ((Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame) ||
@@ -744,6 +748,7 @@ public class TrainSim : MonoBehaviour
         Speed = Mathf.MoveTowards(Speed, target, acceleration * Time.deltaTime);
         float step = Mathf.Min(Speed * Time.deltaTime, remaining);
         remaining -= step;
+        Scroll = step;
 
         if (!AtStation && !Zigzag && Speed > maxSpeed) Flash("wind"); // an express leg (not the zigzag: its zoom outgrows the effect)
         // The ground itself never moves: its texture slides back under the train instead.

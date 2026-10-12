@@ -15,13 +15,15 @@ public class Combat : MonoBehaviour
         readonly Color color;
         readonly bool shadows;
         readonly Mesh mesh; // null: a cube
+        readonly bool round; // ground marks: a flat disc instead of a cube
         Material material;
         int count;
 
         // mesh: a model painted with vertex colours (Tools/make_enemies.py); the batch's colour tints it.
-        public Batch(Color color, bool shadows, Mesh mesh = null)
+        public Batch(Color color, bool shadows, Mesh mesh = null, bool round = false)
         {
             this.mesh = mesh;
+            this.round = round;
             this.color = color;
             this.shadows = shadows;
         }
@@ -38,10 +40,11 @@ public class Combat : MonoBehaviour
         {
             if (count == 0) return;
             if (!cube) cube = Resources.GetBuiltinResource<Mesh>("Cube.fbx");
+            Mesh shape = mesh ? mesh : round ? Disc() : cube;
             if (!material)
             {
                 material = TrainSim.Mat(color);
-                if (mesh) material.SetFloat("_MVCOL", 1f); // RealToon: multiply by the vertex colours
+                if (shape != cube) material.SetFloat("_MVCOL", 1f); // RealToon: multiply by the vertex colours
             }
             var parameters = new RenderParams(material)
             {
@@ -49,7 +52,7 @@ public class Combat : MonoBehaviour
                 shadowCastingMode = shadows ? ShadowCastingMode.On : ShadowCastingMode.Off,
                 receiveShadows = shadows
             };
-            Graphics.RenderMeshInstanced(parameters, mesh ? mesh : cube, 0, matrices, count);
+            Graphics.RenderMeshInstanced(parameters, shape, 0, matrices, count);
             count = 0;
         }
     }
@@ -174,6 +177,14 @@ public class Combat : MonoBehaviour
         public float size, life;
     }
 
+    // A black mark left on the ground where an enemy fell. It is glued to the ground, so it scrolls
+    // back with it, and is dropped once it is behind the train.
+    struct Stain
+    {
+        public Vector3 at;
+        public float size, yaw;
+    }
+
     public static Combat Instance { get; private set; }
     public bool Paused => train.Swarming || train.AtStation; // turrets hold their fire too
     public int EnemyCount => enemies.Count;
@@ -181,6 +192,7 @@ public class Combat : MonoBehaviour
     float stationShotIn;
     int stationGunTurn;
     readonly Batch stationShot = new Batch(new Color(4f, 1.6f, 0.2f), false); // their thick bolts
+    readonly Batch stain = new Batch(new Color(0.02f, 0.02f, 0.025f), false, round: true); // round black marks left by the dead
     const float StationFlashSize = 2.2f; // the heavy guns leave a much bigger flare than a wagon turret
     public float calmDistance = 15f, calmRetreat = 12f; // how far enemies keep during a button game, and how fast they get there
     const float ModelScale = 1.4f;  // the robots are slimmer than the cubes they replace
@@ -211,6 +223,7 @@ public class Combat : MonoBehaviour
     readonly List<Enemy> chainSkip = new(), picked = new();
     readonly List<Blast> blasts = new(); // enemy death explosions, resolved once nothing is being iterated
     readonly List<MuzzleFlash> flashes = new(); // quick barrel flares, drawn in the weapon's own colour
+    readonly List<Stain> stains = new(); // black ground marks that outlive the enemies that fell on them
     const float FlashLife = 0.09f;
     readonly Stack<Enemy> enemyPool = new();
     readonly Stack<Bullet> bulletPool = new();
@@ -440,10 +453,12 @@ public class Combat : MonoBehaviour
         }
         foreach (Bullet b in bullets) b.batch.Add(b.position, b.size, b.rotation);
         FlashMuzzles(); // barrel flares join the same batches as the shots
+        DrawStains(); // the marks the dead left, under everything else
         foreach (EnemyType t in Types) t.Batch.Flush();
         foreach (EnemyType t in Loot) t.Batch.Flush();
         Larva.Batch.Flush();
         stationShot.Flush();
+        stain.Flush();
         foreach (Weapon w in Weapon.Wagon) w.Batch.Flush();
         foreach (Weapon w in Weapon.Hero) w.Batch.Flush();
     }
@@ -461,6 +476,67 @@ public class Combat : MonoBehaviour
             b.position = turn * b.position;
             b.velocity = turn * b.velocity;
         }
+        for (int i = 0; i < stains.Count; i++)
+        {
+            Stain s = stains[i];
+            s.at = turn * s.at;
+            stains[i] = s;
+        }
+    }
+
+    // Slides the ground marks with the ground and lays them down: the main blot plus two smaller ones
+    // nudged around it, so the mark reads as a lumpy stain and not a clean circle.
+    void DrawStains()
+    {
+        float scroll = train.Scroll, behind = -train.viewRange;
+        for (int i = stains.Count - 1; i >= 0; i--)
+        {
+            Stain s = stains[i];
+            s.at.x -= scroll;
+            if (s.at.x < behind)
+            {
+                stains.RemoveAt(i);
+                continue;
+            }
+            stains[i] = s;
+            Quaternion yaw = Quaternion.Euler(0f, s.yaw, 0f);
+            stain.Add(s.at, new Vector3(s.size, 1f, s.size));
+            stain.Add(s.at + yaw * new Vector3(s.size * 0.34f, 0f, 0f), new Vector3(s.size * 0.62f, 1f, s.size * 0.62f));
+            stain.Add(s.at + yaw * new Vector3(0f, 0f, s.size * 0.34f), new Vector3(s.size * 0.58f, 1f, s.size * 0.58f));
+        }
+    }
+
+    // A flat, round mesh for the marks on the ground: a triangle fan in the XZ plane, one unit across.
+    // Drawn with both windings and an up normal so it can never come out invisible from above.
+    static Mesh disc;
+
+    static Mesh Disc()
+    {
+        if (disc) return disc;
+        const int n = 20;
+        var verts = new Vector3[n + 1];
+        var normals = new Vector3[n + 1];
+        var colors = new Color[n + 1];
+        var uv = new Vector2[n + 1];
+        var tris = new int[n * 6];
+        normals[0] = Vector3.up;
+        colors[0] = Color.white;
+        uv[0] = new Vector2(0.5f, 0.5f);
+        for (int i = 0; i < n; i++)
+        {
+            float a = (float)i / n * Mathf.PI * 2f;
+            float x = Mathf.Cos(a) * 0.5f, z = Mathf.Sin(a) * 0.5f;
+            verts[i + 1] = new Vector3(x, 0f, z);
+            normals[i + 1] = Vector3.up;
+            colors[i + 1] = Color.white;
+            uv[i + 1] = new Vector2(x + 0.5f, z + 0.5f);
+            int here = i + 1, next = (i + 1) % n + 1;
+            tris[i * 6] = 0; tris[i * 6 + 1] = next; tris[i * 6 + 2] = here;
+            tris[i * 6 + 3] = 0; tris[i * 6 + 4] = here; tris[i * 6 + 5] = next;
+        }
+        disc = new Mesh { name = "StainDisc", vertices = verts, normals = normals, colors = colors, uv = uv, triangles = tris };
+        disc.RecalculateBounds();
+        return disc;
     }
 
     // Weighted pick among the types unlocked at this difficulty and living in this biome.
@@ -781,6 +857,15 @@ public class Combat : MonoBehaviour
         EnemyType t = e.type;
         Vector3 at = e.position;
         RemoveEnemy(e.index);
+        // Everything that falls leaves a black mark on the ground and a puff of smoke over it; the
+        // floating goods just drift off.
+        if (t.loot < 0)
+        {
+            Vector3 on = new Vector3(at.x, 0.02f, at.z);
+            stains.Add(new Stain { at = on, size = t.size * Random.Range(1.1f, 1.7f), yaw = Random.value * 360f });
+            if (stains.Count > 300) stains.RemoveAt(0);
+            Burst("smoke", new Vector3(at.x, 0.15f, at.z), 0.8f + t.size * 0.5f);
+        }
         if (killed && t.loot >= 0) train.AddLoot(t.loot);
         if (t.explode > 0f) blasts.Add(new Blast { center = at, type = t });
         for (int i = 0; killed && i < t.split; i++)
