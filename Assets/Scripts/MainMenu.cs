@@ -58,8 +58,8 @@ public class MainMenu : MonoBehaviour
         rows.Clear();
         if (!settings)
         {
-            Add(Localized("main.story"), () => SceneManager.LoadScene("historiaDialogos")); // the story, then the journey
-            Add(Localized("main.endless"), () => SceneManager.LoadScene("selectHero"));     // pick a locomotive, straight to the journey
+            Add(Localized("main.story"), () => SelectJourney(true));
+            Add(Localized("main.endless"), () => SelectJourney(false));
             Add(Localized("menu.settings"), () => { settings = true; focus = 0; });
             Add(Localized("main.exit"), Quit);
             return;
@@ -74,6 +74,12 @@ public class MainMenu : MonoBehaviour
         Add(Localized("sound.mute", Localized(Sound.Muted ? "menu.yes" : "menu.no")), Sound.ToggleMute, _ => Sound.ToggleMute());
         Add(Localized("language"), L10n.NextLocale, _ => L10n.NextLocale());
         Add(Localized("menu.back"), () => { settings = false; focus = 2; });
+    }
+
+    void SelectJourney(bool story)
+    {
+        Locomotives.StoryMode = story;
+        SceneManager.LoadScene("selectHero");
     }
 
     void Update()

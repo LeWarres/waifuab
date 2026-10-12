@@ -48,7 +48,7 @@ public class Hud : MonoBehaviour
         public Text text;
         public Vector3 at;
         public float birth, amount;
-        public bool onTrain;
+        public bool onTrain, critical, delivery;
     }
 
     readonly List<Popup> popupPool = new();
@@ -157,7 +157,11 @@ public class Hud : MonoBehaviour
                 main.scalingMode = ParticleSystemScalingMode.Hierarchy;
                 main.useUnscaledTime = true; // or it freezes on screen whenever the game stops: station, pause, slow motion
                 main.loop = false;
+                if (effect == "wind") main.simulationSpace = ParticleSystemSimulationSpace.Local;
             }
+            if (effect == "wind")
+                foreach (ParticleSystemRenderer renderer in made.GetComponentsInChildren<ParticleSystemRenderer>())
+                    renderer.alignment = ParticleSystemRenderSpace.Local;
             screens[effect] = screen = (made.GetComponentInChildren<ParticleSystem>(), made.transform, cam.orthographicSize, new float[1]);
         }
         screen.root.gameObject.SetActive(true);
@@ -172,15 +176,18 @@ public class Hud : MonoBehaviour
     }
 
     // A number for one blow: red when the enemy is hurt, yellow when a wagon is, at the point of the hit.
-    public void DamageNumber(Vector3 at, float amount, bool onTrain)
+    public void DeliveryNumber(Vector3 at, int amount) => DamageNumber(at, Mathf.Abs(amount), false, false,
+        L10n.T("delivery.amount", amount.ToString("+0;-0;0")), amount < 0 ? UiKit.Rose : UiKit.Mint);
+
+    public void DamageNumber(Vector3 at, float amount, bool onTrain, bool critical = false, string caption = null, Color? tint = null)
     {
         Popup popup = null;
         float now = Time.unscaledTime;
         for (int i = popups.Count - 1; i >= 0 && now - popups[i].birth <= MergeTime; i--) // newest last
-            if (popups[i].onTrain == onTrain && (popups[i].at - at).sqrMagnitude <= MergeDistance * MergeDistance)
+            if (caption == null && !popups[i].delivery && popups[i].onTrain == onTrain && popups[i].critical == critical && (popups[i].at - at).sqrMagnitude <= MergeDistance * MergeDistance)
             {
                 popups[i].amount += amount;
-                popups[i].text.text = Mathf.Max(1, Mathf.RoundToInt(popups[i].amount)).ToString();
+                popups[i].text.text = Mathf.Max(1, Mathf.RoundToInt(popups[i].amount)).ToString() + (critical ? "!" : "");
                 return;
             }
         if (popups.Count >= MaxPopups)
@@ -207,11 +214,14 @@ public class Hud : MonoBehaviour
             outline.effectDistance = new Vector2(2.5f, -2.5f);
             popup = new Popup { text = text };
         }
-        popup.text.text = Mathf.Max(1, Mathf.RoundToInt(amount)).ToString();
-        popup.text.color = onTrain ? UiKit.Gold : new Color(1f, 0.25f, 0.2f);
+        popup.text.text = caption ?? Mathf.Max(1, Mathf.RoundToInt(amount)).ToString() + (critical ? "!" : "");
+        popup.text.color = tint ?? (onTrain || critical ? UiKit.Gold : new Color(1f, 0.25f, 0.2f));
+        popup.text.fontSize = critical ? 56 : 46;
         popup.at = at;
         popup.amount = amount;
         popup.onTrain = onTrain;
+        popup.critical = critical;
+        popup.delivery = caption != null;
         popup.birth = now;
         popup.text.gameObject.SetActive(true);
         popups.Add(popup);
@@ -220,9 +230,24 @@ public class Hud : MonoBehaviour
     void LateUpdate()
     {
         float zoom = Camera.main.orthographicSize;
-        foreach (var screen in screens.Values)
+        foreach (var entry in screens)
         {
+            var screen = entry.Value;
             screen.root.localScale = Vector3.one * (zoom / screen.zoom); // keep covering the picture when the camera zooms
+            if (entry.Key == "wind" && train.CarCount > 0)
+            {
+                Camera cam = Camera.main;
+                Vector3 at = train.CarPosition(0);
+                Vector3 direction = cam.WorldToScreenPoint(at + train.Forward(0)) - cam.WorldToScreenPoint(at);
+                if (direction.sqrMagnitude > 0.001f)
+                {
+                    float angle = Mathf.Atan2(direction.y, direction.x);
+                    screen.root.localRotation = Quaternion.Euler(0f, 0f, angle * Mathf.Rad2Deg);
+                    // A rotated fullscreen rectangle needs extra coverage to keep its corners offscreen.
+                    float c = Mathf.Abs(Mathf.Cos(angle)), s = Mathf.Abs(Mathf.Sin(angle));
+                    screen.root.localScale *= Mathf.Max(c + s / cam.aspect, c + s * cam.aspect);
+                }
+            }
             // Gone for good a moment after the last time it was asked for, and never over a menu.
             bool show = Time.unscaledTime < screen.until[0] && !train.MenuShown;
             if (!show && screen.root.gameObject.activeSelf) screen.effect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);

@@ -1225,6 +1225,128 @@ MonoBehaviour:
     m_Localized: Modo Infinito
     m_Metadata:
       m_Items: []
+  - m_Id: 1310116399099904
+    m_Localized: 'Cadencia
+
+      +20% para ti y las torretas
+
+      Actual: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1310116436848640
+    m_Localized: "Probabilidad cr\xEDtica\n+5 puntos para ti y las torretas\nActual:
+      {0}% (m\xE1x. 100%)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1310116436848641
+    m_Localized: "Da\xF1o cr\xEDtico\n+25 puntos para ti y las torretas\nActual:
+      {0}% del da\xF1o normal"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663702347776
+    m_Localized: Informe de entrega
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096512
+    m_Localized: "Vag\xF3n / carga"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096513
+    m_Localized: Valor de entrega
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096514
+    m_Localized: DESTRUIDO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096515
+    m_Localized: "TOTAL \xB7 GANANCIA / P\xC9RDIDA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096516
+    m_Localized: 'Saldo disponible: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096517
+    m_Localized: "Continuar \xB7 A / Enter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096518
+    m_Localized: "No hay carga que entregar en esta estaci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096519
+    m_Localized: "Vag\xF3n de escolta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096520
+    m_Localized: "{0} \xA4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318165650157568
+    m_Localized: BBA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318165683712000
+    m_Localized: test
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318165683712001
+    m_Localized: "HERO \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1325811031683072
+    m_Localized: 'PILOTO
+
+      {0}
+
+      Arma: {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355876179968
+    m_Localized: Crimson Skull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928704
+    m_Localized: Onini
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928705
+    m_Localized: Tzmil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928706
+    m_Localized: Emberforge Sentinel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928707
+    m_Localized: Culu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928708
+    m_Localized: Cerebron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928709
+    m_Localized: Xiuhtecuhtli
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928710
+    m_Localized: Faceless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1355731392868352
+    m_Localized: LICENCIA DE PILOTO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1355731434811392
+    m_Localized: "LOCOMOTORA \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1355731434811393
+    m_Localized: No. WOR-{0:0000}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

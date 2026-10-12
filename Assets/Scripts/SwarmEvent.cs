@@ -222,7 +222,7 @@ public class SwarmEvent : MonoBehaviour
         }
         if (firing && fireIn <= 0f)
         {
-            fireIn = fireEvery;
+            fireIn = fireEvery / Mathf.Max(1f, train.fireRate);
             int hit = -1;
             float best = Mathf.Cos(aimAssist * Mathf.Deg2Rad);
             for (int i = 0; i < swarm.Count; i++)
@@ -238,8 +238,9 @@ public class SwarmEvent : MonoBehaviour
             if (hit >= 0)
             {
                 Robot robot = swarm[hit];
-                bool down = (robot.health -= shotDamage) <= 0f;
-                train.DamageNumber(robot.position, shotDamage, false); // red, over the robot that was hit
+                float damage = train.CriticalDamage(shotDamage, out bool critical);
+                bool down = (robot.health -= damage) <= 0f;
+                train.DamageNumber(robot.position, damage, false, critical);
                 if (down)
                 {
                     Combat.Instance.Burst("grenade", robot.position, 1.3f);

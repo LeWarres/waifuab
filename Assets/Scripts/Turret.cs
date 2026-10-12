@@ -53,7 +53,7 @@ public class Turret : MonoBehaviour
         if (flat != Vector3.zero) transform.rotation = Quaternion.LookRotation(flat);
 
         if (cooldown > 0f) return;
-        cooldown = Weapon.Interval(Level);
+        cooldown = Weapon.Interval(Level) / Mathf.Max(1f, combat.FireRate);
 
         combat.Volley(transform.TransformPoint(MuzzleLocal), target, Weapon, Level);
     }

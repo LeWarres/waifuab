@@ -1147,6 +1147,118 @@ MonoBehaviour:
     m_Key: main.endless
     m_Metadata:
       m_Items: []
+  - m_Id: 1310116399099904
+    m_Key: hero.fireRate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1310116436848640
+    m_Key: hero.criticalChance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1310116436848641
+    m_Key: hero.criticalDamage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663702347776
+    m_Key: delivery.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096512
+    m_Key: delivery.wagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096513
+    m_Key: delivery.value
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096514
+    m_Key: delivery.destroyed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096515
+    m_Key: delivery.total
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096516
+    m_Key: delivery.balance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096517
+    m_Key: delivery.continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096518
+    m_Key: delivery.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096519
+    m_Key: delivery.escort
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096520
+    m_Key: delivery.amount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318165650157568
+    m_Key: hero.character.bba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318165683712000
+    m_Key: hero.character.test
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318165683712001
+    m_Key: loco.hero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1325811031683072
+    m_Key: loco.pilot.data
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355876179968
+    m_Key: hero.character.skullmonk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928704
+    m_Key: hero.character.onini
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928705
+    m_Key: hero.character.tzmil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928706
+    m_Key: hero.character.sentinel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928707
+    m_Key: hero.character.culu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928708
+    m_Key: hero.character.cerebron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928709
+    m_Key: hero.character.xiuhtecuhtli
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928710
+    m_Key: hero.character.faceless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1355731392868352
+    m_Key: license.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1355731434811392
+    m_Key: license.engine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1355731434811393
+    m_Key: license.number
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

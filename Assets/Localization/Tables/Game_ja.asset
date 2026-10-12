@@ -1186,6 +1186,121 @@ MonoBehaviour:
     m_Localized: "\u30A8\u30F3\u30C9\u30EC\u30B9\u30E2\u30FC\u30C9"
     m_Metadata:
       m_Items: []
+  - m_Id: 1310116399099904
+    m_Localized: "\u9023\u5C04\u901F\u5EA6\n\u81EA\u5206\u3068\u7832\u5854\u306B
+      +20%\n\u73FE\u5728\uFF1A{0}%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1310116436848640
+    m_Localized: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u7387\n\u81EA\u5206\u3068\u7832\u5854\u306B
+      +5\u30DD\u30A4\u30F3\u30C8\n\u73FE\u5728\uFF1A{0}%\uFF08\u6700\u5927100%\uFF09"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1310116436848641
+    m_Localized: "\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30C0\u30E1\u30FC\u30B8\n\u81EA\u5206\u3068\u7832\u5854\u306B
+      +25\u30DD\u30A4\u30F3\u30C8\n\u73FE\u5728\uFF1A\u901A\u5E38\u30C0\u30E1\u30FC\u30B8\u306E{0}%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663702347776
+    m_Localized: "\u914D\u9001\u5831\u544A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096512
+    m_Localized: "\u8ECA\u4E21\uFF0F\u7A4D\u8377"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096513
+    m_Localized: "\u914D\u9001\u984D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096514
+    m_Localized: "\u7834\u58CA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096515
+    m_Localized: "\u5408\u8A08 \xB7 \u5229\u76CA\uFF0F\u640D\u5931"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096516
+    m_Localized: "\u6240\u6301\u91D1\uFF1A{0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096517
+    m_Localized: "\u7D9A\u3051\u308B \xB7 A / Enter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096518
+    m_Localized: "\u3053\u306E\u99C5\u3067\u914D\u9001\u3059\u308B\u7A4D\u8377\u306F\u3042\u308A\u307E\u305B\u3093\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096519
+    m_Localized: "\u8B77\u885B\u8ECA\u4E21"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096520
+    m_Localized: "{0} \xA4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318165650157568
+    m_Localized: BBA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318165683712000
+    m_Localized: test
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318165683712001
+    m_Localized: "\u30D2\u30FC\u30ED\u30FC \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1325811031683072
+    m_Localized: "\u30D1\u30A4\u30ED\u30C3\u30C8\n{0}\n\u6B66\u5668\uFF1A{1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355876179968
+    m_Localized: Crimson Skull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928704
+    m_Localized: Onini
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928705
+    m_Localized: Tzmil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928706
+    m_Localized: Emberforge Sentinel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928707
+    m_Localized: Culu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928708
+    m_Localized: Cerebron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928709
+    m_Localized: Xiuhtecuhtli
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928710
+    m_Localized: Faceless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1355731392868352
+    m_Localized: "\u30D1\u30A4\u30ED\u30C3\u30C8\u514D\u8A31"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1355731434811392
+    m_Localized: "\u6A5F\u95A2\u8ECA \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1355731434811393
+    m_Localized: No. WOR-{0:0000}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

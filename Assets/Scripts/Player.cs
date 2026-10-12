@@ -77,11 +77,36 @@ public class Player : MonoBehaviour
     // (Tools/make_hero_gear.py) with a flame under each nozzle.
     void Dress()
     {
-        Transform body = Instantiate(Resources.Load<GameObject>("Characters/bba/bba"), visuals.transform).transform;
-        Material skin = Resources.Load<Material>("Characters/bba/bba");
-        foreach (Renderer part in body.GetComponentsInChildren<Renderer>()) part.sharedMaterial = skin;
+        string who = "Characters/" + Locomotives.Hero + "/" + Locomotives.Hero; // each locomotive has its own
+        Transform body = Instantiate(Resources.Load<GameObject>(who), visuals.transform).transform;
+        Skin(body, who);
         Animator rig = body.GetComponent<Animator>();
         rig.enabled = false; // nothing animates her: the bones stay where they are put here
+        Pose(body, rig);
+    }
+
+    // A character's looks (who: its path in Resources, Characters/<name>/<name>); the selection screen dresses its
+    // previews with this too.
+    public static void Skin(Transform body, string who)
+    {
+        // A toon material of its own beside the model (<name>_toon), or else the one all the other heroes share
+        // (Characters/hero_toon: tune that one to change them all), painted with the picture beside the model
+        // (Tools/extract_character_textures.py takes it out of the model).
+        Material skin = Resources.Load<Material>(who + "_toon");
+        Renderer[] parts = body.GetComponentsInChildren<Renderer>();
+        if (!skin && !skins.TryGetValue(who, out skin))
+        {
+            skin = skins[who] = new Material(Resources.Load<Material>("Characters/hero_toon")) { name = who, mainTexture = Resources.Load<Texture2D>(who) };
+            // Some meshes are in centimetres under a x100: the outline is measured in the mesh's own units.
+            float coarse = parts[0].transform.lossyScale.x / body.lossyScale.x;
+            if (coarse > 1.5f) skin.SetFloat("_OutlineWidth", skin.GetFloat("_OutlineWidth") / coarse);
+        }
+        foreach (Renderer part in parts) part.sharedMaterials = System.Array.ConvertAll(part.sharedMaterials, _ => skin);
+    }
+    static readonly System.Collections.Generic.Dictionary<string, Material> skins = new();
+
+    void Pose(Transform body, Animator rig)
+    {
         Transform Bone(HumanBodyBones bone) => rig.GetBoneTransform(bone);
         body.localScale *= 2f / ((Bone(HumanBodyBones.Head).position.y - Bone(HumanBodyBones.LeftFoot).position.y) * 1.15f);
         // The model comes standing in a fighter's stance, off to one side of its own origin. Squared up to face +z,
@@ -241,7 +266,7 @@ public class Player : MonoBehaviour
         // Fires on its own whenever there is someone to shoot at.
         cooldown -= Time.deltaTime;
         if (cooldown > 0f || target == null) return;
-        cooldown = ammo.Interval(level);
+        cooldown = ammo.Interval(level) / Mathf.Max(1f, train.fireRate);
         // Shots leave the barrel so they line up with the muzzle flash.
         combat.Volley(rifle ? rifle.TransformPoint(MuzzleLocal) : p, target, ammo, level, true);
         kick = 1f;

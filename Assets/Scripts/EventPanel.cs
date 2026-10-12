@@ -95,14 +95,14 @@ public class EventPanel : MonoBehaviour
         cue.text = "";
     }
 
-    // state: 0 to come, 1 done right, 2 failed, 3 the one to do now.
+    // state: 0 to come, 1 done right, 2 failed, 3 the one to do now, 4 destroyed outside this attempt.
     public void Box(int i, string text, int state)
     {
         if (i >= MaxBoxes) return;
         Cell box = boxes[i];
-        box.text.text = text;
-        box.back.color = box.back.bottom = state == 1 ? UiKit.Mint : state == 2 ? UiKit.Rose : state == 3 ? UiKit.Gold : UiKit.Ice;
-        box.text.color = state == 1 || state == 2 ? Color.white : UiKit.Navy;
+        box.text.text = state == 4 ? "X" : text;
+        box.back.color = box.back.bottom = state == 4 ? UiKit.Slate : state == 1 ? UiKit.Mint : state == 2 ? UiKit.Rose : state == 3 ? UiKit.Gold : UiKit.Ice;
+        box.text.color = state == 4 ? UiKit.Ice : state == 1 || state == 2 ? Color.white : UiKit.Navy;
         box.back.rectTransform.localScale = Vector3.one * (state == 3 ? 1.18f : 1f);
     }
 

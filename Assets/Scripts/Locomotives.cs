@@ -3,6 +3,9 @@ using UnityEngine;
 // The selection survives scene loads, restarts and reopening the game.
 public static class Locomotives
 {
+    public static bool StoryMode { get; set; }
+    public static string HeroId(int index) => (index >= 0 && index < Heroes.Length ? Heroes[index] : null) ?? "bba";
+    public static string HeroNameKey(int index) => "hero.character." + HeroId(index);
     // One entry per locomotive, in the order of the selection screen. To add one: its model (Tools/make_locos.py
     // builds them), its picture in Resources/Menu, and its two texts.
     public static readonly string[] Models = { "Models/Locomotive", "Prefabs/Locomotive_RedWhite", "Models/Locomotive_Steam", "Models/Locomotive_Dark", "Models/Locomotive_Future", "Models/Locomotive_Cat", "Models/Locomotive_Shark", "Models/Locomotive_Armor", "Models/Locomotive_Jet", "Models/Locomotive_Beast", "Models/Locomotive_Spider", "Models/Locomotive_Crochet" };
@@ -11,8 +14,11 @@ public static class Locomotives
     public static readonly Vector3[] Stacks = { Vector3.zero, Vector3.zero, new Vector3(-1.75f, 2.65f, 0f), new Vector3(-1.7f, 2.9f, 0f), Vector3.zero, new Vector3(-0.85f, 2.4f, 0f), Vector3.zero, Vector3.zero, Vector3.zero, new Vector3(-0.2f, 2.7f, 0f), new Vector3(-1.9f, 2.4f, 0f), Vector3.zero };
     public static readonly string[] NameKeys = { "loco.classic", "loco.redwhite", "loco.steam", "loco.dark", "loco.future", "loco.cat", "loco.shark", "loco.armor", "loco.jet", "loco.beast", "loco.spider", "loco.crochet" };
     public static readonly string[] DescriptionKeys = { "loco.classic.description", "loco.redwhite.description", "loco.steam.description", "loco.dark.description", "loco.future.description", "loco.cat.description", "loco.shark.description", "loco.armor.description", "loco.jet.description", "loco.beast.description", "loco.spider.description", "loco.crochet.description" };
-    // Not earned yet: on the selection screen, preview and all, but not for taking out. Only the two diesels are open.
-    public static bool Locked(int index) => index > 1;
+    // All locomotives are temporarily available for trying them out.
+    public static bool Locked(int index) => false;
+    // Who flies beside each locomotive: Resources/Characters/<name>/<name>. null: bba.
+    public static readonly string[] Heroes = { null, "skullmonk", "onini", "tzmil", "sentinel", null, "culu", "cerebron", "xiuhtecuhtli", null, "faceless", null };
+    public static string Hero => HeroId(Selected);
     public static int Selected => Mathf.Clamp(PlayerPrefs.GetInt("locomotive.selected", 0), 0, Models.Length - 1);
 
     public static void Select(int index)

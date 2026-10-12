@@ -281,3 +281,31 @@ story.page.15	Los otros conductores también quieren ganar. Harán lo que sea pa
 story.page.16	El camino va a ser pesado. Pero si al final de estos rieles está mi nave, vale la pena intentarlo. Muy bien… carga asegurada, manos en los controles. Es hora de volver a casa.	It's going to be a rough ride. But if my ship waits at the end of these rails, it's worth a shot. All right… cargo secured, hands on the controls. Time to go home.	O caminho vai ser difícil. Mas, se minha nave estiver no fim desses trilhos, vale a pena tentar. Muito bem… carga segura, mãos nos controles. Está na hora de voltar para casa.	厳しい道のりになる。でも、この線路の先に私の船があるなら、挑む価値はある。よし……荷物は固定した。手をレバーに。そろそろ、家に帰ろう。
 main.story	Modo Historia	Story Mode	Modo História	ストーリーモード
 main.endless	Modo Infinito	Endless Mode	Modo Infinito	エンドレスモード
+hero.fireRate	Cadencia\n+20% para ti y las torretas\nActual: {0}%	Fire rate\n+20% for you and turrets\nCurrent: {0}%	Cadência\n+20% para você e as torretas\nAtual: {0}%	連射速度\n自分と砲塔に +20%\n現在：{0}%
+hero.criticalChance	Probabilidad crítica\n+5 puntos para ti y las torretas\nActual: {0}% (máx. 100%)	Critical chance\n+5 points for you and turrets\nCurrent: {0}% (max. 100%)	Chance de crítico\n+5 pontos para você e as torretas\nAtual: {0}% (máx. 100%)	クリティカル率\n自分と砲塔に +5ポイント\n現在：{0}%（最大100%）
+hero.criticalDamage	Daño crítico\n+25 puntos para ti y las torretas\nActual: {0}% del daño normal	Critical damage\n+25 points for you and turrets\nCurrent: {0}% of normal damage	Dano crítico\n+25 pontos para você e as torretas\nAtual: {0}% do dano normal	クリティカルダメージ\n自分と砲塔に +25ポイント\n現在：通常ダメージの{0}%
+delivery.title	Informe de entrega	Delivery report	Relatório de entrega	配送報告
+delivery.wagon	Vagón / carga	Wagon / cargo	Vagão / carga	車両／積荷
+delivery.value	Valor de entrega	Delivery value	Valor da entrega	配送額
+delivery.destroyed	DESTRUIDO	DESTROYED	DESTRUÍDO	破壊
+delivery.total	TOTAL · GANANCIA / PÉRDIDA	TOTAL · PROFIT / LOSS	TOTAL · LUCRO / PREJUÍZO	合計 · 利益／損失
+delivery.balance	Saldo disponible: {0}	Available balance: {0}	Saldo disponível: {0}	所持金：{0}
+delivery.continue	Continuar · A / Enter	Continue · A / Enter	Continuar · A / Enter	続ける · A / Enter
+delivery.empty	No hay carga que entregar en esta estación.	No cargo to deliver at this station.	Não há carga para entregar nesta estação.	この駅で配送する積荷はありません。
+delivery.escort	Vagón de escolta	Escort wagon	Vagão de escolta	護衛車両
+delivery.amount	{0} ¤	{0} ¤	{0} ¤	{0} ¤
+hero.character.bba	BBA	BBA	BBA	BBA
+hero.character.test	test	test	test	test
+loco.hero	HERO · {0}	HERO · {0}	HERO · {0}	ヒーロー · {0}
+loco.pilot.data	PILOTO\n{0}\nArma: {1}	PILOT\n{0}\nWeapon: {1}	PILOTO\n{0}\nArma: {1}	パイロット\n{0}\n武器：{1}
+hero.character.skullmonk	Crimson Skull	Crimson Skull	Crimson Skull	Crimson Skull
+hero.character.onini	Onini	Onini	Onini	Onini
+hero.character.tzmil	Tzmil	Tzmil	Tzmil	Tzmil
+hero.character.sentinel	Emberforge Sentinel	Emberforge Sentinel	Emberforge Sentinel	Emberforge Sentinel
+hero.character.culu	Culu	Culu	Culu	Culu
+hero.character.cerebron	Cerebron	Cerebron	Cerebron	Cerebron
+hero.character.xiuhtecuhtli	Xiuhtecuhtli	Xiuhtecuhtli	Xiuhtecuhtli	Xiuhtecuhtli
+hero.character.faceless	Faceless	Faceless	Faceless	Faceless
+license.title	LICENCIA DE PILOTO	PILOT LICENSE	LICENÇA DE PILOTO	パイロット免許
+license.engine	LOCOMOTORA · {0}	LOCOMOTIVE · {0}	LOCOMOTIVA · {0}	機関車 · {0}
+license.number	No. WOR-{0:0000}	No. WOR-{0:0000}	No. WOR-{0:0000}	No. WOR-{0:0000}

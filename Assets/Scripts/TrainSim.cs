@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.DualShock;
@@ -18,6 +19,9 @@ public class TrainSim : MonoBehaviour
     public Turret turretPrefab;
 
     [Header("Upgrades")]
+    public float fireRate = 1f; // shared by the hero and wagon weapons
+    [Range(0f, 1f)] public float criticalChance = 0.05f;
+    public float criticalMultiplier = 1.5f;
     public int money;
     public int moneyReward = 50;
     public float repairReward = 25f;                    // health given back to every wagon
@@ -106,12 +110,17 @@ public class TrainSim : MonoBehaviour
     public string KitButton => !Player.UsingGamepad ? "R" : Gamepad.current is DualShockGamepad ? "△" : "Y";
     public float CarFill(int i) => cars[i].health / cars[i].maxHealth;
     public Vector3 CarTop(int i) => cars[i].pos + Vector3.up * (1.5f + wagonSize.y);
-    public bool MenuShown => menuView.Visible;
+    public bool MenuShown => menuView.Visible || (deliveryReport && deliveryReport.Visible);
     public bool ShowCarNumbers => MenuOpen && !Paused && menuKind == 3;
     public EventPanel Panel { get; private set; } // the card the button games are played on
     public void Toast(string text) => hud.Toast(text);
     public void Flash(string effect) => hud.Flash(effect);
-    public void DamageNumber(Vector3 at, float amount, bool onTrain) => hud.DamageNumber(at, amount, onTrain);
+    public void DamageNumber(Vector3 at, float amount, bool onTrain, bool critical = false) => hud.DamageNumber(at, amount, onTrain, critical);
+    public float CriticalDamage(float damage, out bool critical)
+    {
+        critical = damage > 0f && Random.value < criticalChance;
+        return critical ? damage * criticalMultiplier : damage;
+    }
     Hud hud;
     public float MaxHealth { get { float sum = 0f; foreach (Car c in cars) if (c.cargo < 0) sum += c.maxHealth; return sum; } }
     public bool CanTakeLoot => cars.Count < maxCars;
@@ -273,6 +282,8 @@ public class TrainSim : MonoBehaviour
     Weapon pending;                      // weapon chosen at the station, waiting for a wagon
     int pendingCargo = -1;               // cargo chosen at the station, waiting for a position
     int cargoEarned, cargoFined;         // what the last delivery paid and cost
+    bool deliveryPending, delivering;
+    DeliveryReport deliveryReport;
     int repairsBought, wagonsBought, containersBought, kits;
     // One of each per biome reached, so a longer train means moving on.
     bool WagonForSale => wagonsBought <= Biome && cars.Count < maxCars;
@@ -338,7 +349,7 @@ public class TrainSim : MonoBehaviour
     const bool mainMenu = false, settingsMenu = false; // the title screen is its own scene now (MainMenu.cs)
     InputAction navigate, confirm, stepRight, stepLeft;
     bool ListMenu => Paused || settingsMenu;  // both draw their options as a vertical list
-    bool MenuOpen => mainMenu || (AtStation && !Clearing) || Health <= 0f || Paused;
+    bool MenuOpen => mainMenu || (AtStation && !Clearing && !deliveryPending) || Health <= 0f || Paused;
 
     // Pause: Start on a gamepad, Esc on the keyboard. Freezes time and opens its own menu.
     public bool Paused { get; private set; }
@@ -729,6 +740,9 @@ public class TrainSim : MonoBehaviour
             Player.Heal(kitHeal);
         }
 
+        if (deliveryReport) deliveryReport.SetVisible(!Paused);
+        if (deliveryPending && !delivering && !Clearing && !Paused && Health > 0f)
+            StartCoroutine(DeliverCargo());
         if (MenuOpen)
         {
             BuildMenu();
@@ -840,14 +854,48 @@ public class TrainSim : MonoBehaviour
         Speed = 0f;
         AtStation = true;
         Stations++;
+        deliveryPending = true;
+        delivering = false;
+        nextLeg = Random.Range(0, Legs.Length);
+        stage = 0;
+    }
 
-        // Cargo is uncoupled here: paid if it made it, fined if it burned. Armed wagons get patched up.
+    // Settle after the station guns finish, including cargo recovered from balloons during the cleanup.
+    IEnumerator DeliverCargo()
+    {
+        delivering = true;
+        var results = new List<DeliveryReport.Entry>();
         cargoEarned = cargoFined = 0;
         for (int i = cars.Count - 1; i >= 0; i--)
         {
             Car car = cars[i];
-            if (car.permanent && car.Alive) cargoEarned += Mathf.RoundToInt(Cargos[Container].reward * Legs[leg].length) * (Biome + 1);
-            if ((car.cargo < 0 && !car.temporary) || car.permanent)
+            bool stays = (car.cargo < 0 && !car.temporary) || car.permanent;
+            if (car.cargo >= 0 || car.temporary)
+            {
+                int value = car.permanent ? (car.Alive ? Mathf.RoundToInt(Cargos[Container].reward * Legs[leg].length) * (Biome + 1) : 0)
+                    : car.Alive ? car.reward : -car.penalty;
+                string id = car.cargo >= 0 ? Cargos[car.cargo].id : "wagon";
+                results.Add(new DeliveryReport.Entry { icon = "delivery_" + id, name = car.cargo >= 0 ? L10n.T("cargo." + id) : L10n.T("delivery.escort"), value = value, destroyed = !car.Alive });
+                if (value >= 0) cargoEarned += value; else cargoFined -= value;
+                Vector3 start = car.body.localPosition, scale = car.body.localScale;
+                hud.DeliveryNumber(car.pos + Vector3.up * 3f, value);
+                Combat.Instance.Burst(car.Alive ? "levelup" : "enemy", car.pos + Vector3.up, 1.5f);
+                for (float t = 0f; t < 1f;)
+                {
+                    if (!Paused)
+                    {
+                        t = Mathf.Min(1f, t + Time.unscaledDeltaTime / 0.8f);
+                        float ease = t * t * (3f - 2f * t);
+                        car.body.localPosition = start + Vector3.up * (ease * (stays ? 1.5f * Mathf.Sin(t * Mathf.PI) : 5f));
+                        if (!stays) car.body.localScale = scale * Mathf.Lerp(1f, 0.05f, ease);
+                        if (car.mount) car.mount.transform.position = car.body.position + Vector3.up * (0.45f + wagonSize.y - car.lift);
+                    }
+                    yield return null;
+                }
+                car.body.localPosition = start;
+                car.body.localScale = scale;
+            }
+            if (stays)
             {
                 // Stays with the train: back on its wheels if it was knocked out.
                 if (car.Alive) continue;
@@ -855,10 +903,28 @@ public class TrainSim : MonoBehaviour
                 SetAlive(car, true);
                 continue;
             }
-            if (car.Alive) cargoEarned += car.reward; else cargoFined += car.penalty; // both 0 for an escort
             if (car.mount) Destroy(car.mount.gameObject);
             Destroy(car.body.gameObject);
             cars.RemoveAt(i);
+            // Close the gap smoothly instead of snapping the remaining train to its new length.
+            var from = new Vector3[cars.Count];
+            for (int j = 0; j < cars.Count; j++) from[j] = cars[j].body.localPosition;
+            Layout();
+            var to = new Vector3[cars.Count];
+            for (int j = 0; j < cars.Count; j++) to[j] = cars[j].body.localPosition;
+            for (float t = 0f; t < 1f;)
+            {
+                if (!Paused)
+                {
+                    t = Mathf.Min(1f, t + Time.unscaledDeltaTime / 0.35f);
+                    for (int j = 0; j < cars.Count; j++)
+                    {
+                        cars[j].body.localPosition = Vector3.Lerp(from[j], to[j], Mathf.SmoothStep(0f, 1f, t));
+                        if (cars[j].mount) cars[j].mount.transform.position = cars[j].body.position + Vector3.up * (0.45f + wagonSize.y - cars[j].lift);
+                    }
+                }
+                yield return null;
+            }
         }
         money = Mathf.Max(0, money + cargoEarned - cargoFined);
         Layout();
@@ -866,7 +932,17 @@ public class TrainSim : MonoBehaviour
         Player.OnStation();
         RollOffers();
         stage = 0;
-        nextLeg = Random.Range(0, Legs.Length);
+        if (!deliveryReport) deliveryReport = gameObject.AddComponent<DeliveryReport>();
+        deliveryReport.Show(results, cargoEarned - cargoFined, money, () => StartCoroutine(CompleteDelivery()));
+    }
+
+    IEnumerator CompleteDelivery()
+    {
+        // Let the report's confirm input expire before enabling upgrade navigation.
+        yield return null;
+        deliveryPending = false;
+        delivering = false;
+        focus = 0;
     }
 
     float WagonX(int i) => ((cars.Count - 1) * 0.5f - i) * Step;
@@ -932,7 +1008,7 @@ public class TrainSim : MonoBehaviour
         while (car.mount.Level < level) car.mount.LevelUp();
     }
 
-    // Goods the hero shot down on the way: coupled anywhere behind the locomotive.
+    // Goods shot down by the hero or station guns: coupled anywhere behind the locomotive.
     public void AddLoot(int cargo)
     {
         if (CanTakeLoot) AddCar(Random.Range(1, cars.Count + 1), cargo);
@@ -1131,6 +1207,9 @@ public class TrainSim : MonoBehaviour
         offerPool.Add(Weapon.Hero.Length + 3);                                    // damage
         offerPool.Add(Weapon.Hero.Length + 4);                                    // money
         if (Player.level < Weapon.MaxLevel) offerPool.Add(Weapon.Hero.Length + 5); // evolve
+        offerPool.Add(Weapon.Hero.Length + 6);                                    // arsenal fire rate
+        if (criticalChance < 1f) offerPool.Add(Weapon.Hero.Length + 7);             // critical chance
+        offerPool.Add(Weapon.Hero.Length + 8);                                    // critical damage
         Draw(heroOffers);
     }
 
@@ -1496,6 +1575,9 @@ public class TrainSim : MonoBehaviour
                 else if (stat == 2) { Add("vitality", L10n.T("hero.vitality", vitalityReward), () => { Player.VitalityUp(vitalityReward); Next(); }); Free(); }
                 else if (stat == 3) { Add("arms", L10n.T("hero.damage"), () => { Player.DamageUp(); Next(); }); Free(); }
                 else if (stat == 4) { Add("money", L10n.T("hero.greed"), () => { Player.GreedUp(); Next(); }); Free(); }
+                else if (stat == 6) { Add("minigun", L10n.T("hero.fireRate", Mathf.RoundToInt(fireRate * 100f)), () => { fireRate += 0.2f; Next(); }); Free(); }
+                else if (stat == 7) { Add("sniper", L10n.T("hero.criticalChance", Mathf.RoundToInt(criticalChance * 100f)), () => { criticalChance = Mathf.Min(1f, criticalChance + 0.05f); Next(); }); Free(); }
+                else if (stat == 8) { Add("arms", L10n.T("hero.criticalDamage", Mathf.RoundToInt(criticalMultiplier * 100f)), () => { criticalMultiplier += 0.25f; Next(); }); Free(); }
                 else { Add(Player.ammo.id, L10n.T("hero.evolve", Player.ammo.Name, Player.level + 1), () => { Player.level++; Combat.Instance.Burst("levelup", Player.Position + Vector3.down * 2f, 1.5f); Next(); }); Free(); }
             }
             Add("skip", L10n.T("menu.skip"), Skip);

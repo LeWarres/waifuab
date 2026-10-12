@@ -16,10 +16,13 @@ public class StoryIntro : MonoBehaviour
     int page, visible;
     float elapsed, reading;
     bool auto=true, leaving;
+    bool placeholder;
 
     void Awake()
     {
         Time.timeScale=1;Display.Apply();
+        placeholder = Locomotives.HeroId(Locomotives.Selected) != "bba";
+        if (placeholder) { BuildPlaceholder(); return; }
         if(!canvas) BuildUI();
         if(!backgrounds) backgrounds=Resources.Load<Texture2D>("Story/prologue");
         next.onClick.AddListener(Advance);
@@ -31,7 +34,16 @@ public class StoryIntro : MonoBehaviour
 
     void Update()
     {
-        if(leaving || pages==null || pages.Length==0) return;
+        if(leaving) return;
+        if (placeholder)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            bool proceed = (Keyboard.current != null && (Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame)) ||
+                (Gamepad.current != null && (Gamepad.current.buttonSouth.wasPressedThisFrame || Gamepad.current.startButton.wasPressedThisFrame));
+            if (elapsed >= 2f || (elapsed > 0.3f && proceed)) Finish();
+            return;
+        }
+        if(pages==null || pages.Length==0) return;
         if(Gamepad.current!=null && Gamepad.current.startButton.wasPressedThisFrame) {Finish();return;}
         bool confirm=(Keyboard.current!=null && (Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame))
             || (Gamepad.current!=null && Gamepad.current.buttonSouth.wasPressedThisFrame);
@@ -44,6 +56,21 @@ public class StoryIntro : MonoBehaviour
             if(auto) reading+=Time.unscaledDeltaTime;
             if(auto && reading>=4f) Advance();
         }
+    }
+
+    void BuildPlaceholder()
+    {
+        if (canvas) canvas.gameObject.SetActive(false);
+        Canvas placeholderCanvas = UiKit.NewCanvas("TestStory", 20);
+        var black = new GameObject("Black", typeof(RectTransform), typeof(UnityEngine.UI.Image)).GetComponent<UnityEngine.UI.Image>();
+        black.transform.SetParent(placeholderCanvas.transform, false);
+        black.color = Color.black;
+        black.rectTransform.anchorMin = Vector2.zero;
+        black.rectTransform.anchorMax = Vector2.one;
+        black.rectTransform.sizeDelta = Vector2.zero;
+        Label(placeholderCanvas.transform, 48, Vector2.zero, new Vector2(600f, 100f), Color.white).text = Localized("hero.character.test");
+        var text = placeholderCanvas.GetComponentInChildren<UnityEngine.UI.Text>();
+        text.alignment = TextAnchor.MiddleCenter;
     }
 
     void Advance()

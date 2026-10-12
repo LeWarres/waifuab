@@ -231,6 +231,7 @@ public class Combat : MonoBehaviour
     const float PlayerRadius = 0.5f;
 
     TrainSim train;
+    public float FireRate => train.fireRate;
     Player player;
     float spawnTimer, lootTimer = 8f;
     int level;
@@ -255,8 +256,6 @@ public class Combat : MonoBehaviour
             for (int i = bullets.Count - 1; i >= 0; i--)
                 if ((bullets[i].life -= Time.unscaledDeltaTime * (bullets[i].batch == stationShot ? 1f : 6f)) <= 0f) RemoveBullet(i);
             if (enemies.Count == 0) return;
-            for (int i = enemies.Count - 1; i >= 0; i--)
-                if (enemies[i].type.loot >= 0) RemoveEnemy(i); // balloons just drift off
             stationShotIn -= Time.unscaledDeltaTime;
             if (stationShotIn > 0f || enemies.Count == 0) return;
             stationShotIn = stationShotEvery;
@@ -273,7 +272,8 @@ public class Combat : MonoBehaviour
                 AddFlash(muzzle, aim, stationShot, StationFlashSize); // a big flare on the heavy guns
                 Burst("spark", muzzle + aim * 3.2f, 1.6f);
                 Burst("rocket", target.position, 2.2f);
-                RemoveEnemy(target.index);
+                if (target.type.loot >= 0) Die(target, true); // recover the balloon's cargo wagon
+                else RemoveEnemy(target.index);
             }
             return;
         }
@@ -832,7 +832,7 @@ public class Combat : MonoBehaviour
             for (int i = enemies.Count - 1; i >= 0; i--)
             {
                 Vector3 d = enemies[i].position - blast.center;
-                if (d.x * d.x + d.z * d.z <= radius * radius) Hurt(enemies[i], blast.type.explodeDamage * Balance.Scale);
+                if (d.x * d.x + d.z * d.z <= radius * radius) Hurt(enemies[i], blast.type.explodeDamage * Balance.Scale, false);
             }
         }
         blasts.Clear();
@@ -840,12 +840,14 @@ public class Combat : MonoBehaviour
 
     float Power => heroHit ? player.damageBonus : 1f; // the hero's damage upgrades, on the hero's shots only
 
-    void Hurt(Enemy e, float damage)
+    void Hurt(Enemy e, float damage, bool weaponHit = true)
     {
         if (e.type.loot >= 0 && !heroHit) return;
+        bool critical = false;
+        if (weaponHit) damage = train.CriticalDamage(damage, out critical);
         float applied = Mathf.Max(damage - e.type.armor * Balance.Scale, damage * 0.2f);
         e.hp -= applied;
-        if (applied > 0f) train.DamageNumber(e.position + Vector3.up * (e.type.size + 0.5f), applied, false); // red, over the enemy
+        if (applied > 0f) train.DamageNumber(e.position + Vector3.up * (e.type.size + 0.5f), applied, false, critical);
         if (e.hp > 0f) return;
         train.Earn(e.type.reward); // flat: the biome multiplier is on the cargo, where the risk is
         Die(e, true);

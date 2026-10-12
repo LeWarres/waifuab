@@ -1254,6 +1254,136 @@ MonoBehaviour:
     m_Localized: Endless Mode
     m_Metadata:
       m_Items: []
+  - m_Id: 1310116399099904
+    m_Localized: 'Fire rate
+
+      +20% for you and turrets
+
+      Current: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1310116436848640
+    m_Localized: 'Critical chance
+
+      +5 points for you and turrets
+
+      Current:
+      {0}% (max. 100%)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1310116436848641
+    m_Localized: 'Critical damage
+
+      +25 points for you and turrets
+
+      Current:
+      {0}% of normal damage'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663702347776
+    m_Localized: Delivery report
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096512
+    m_Localized: Wagon / cargo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096513
+    m_Localized: Delivery value
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096514
+    m_Localized: DESTROYED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096515
+    m_Localized: "TOTAL \xB7 PROFIT / LOSS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096516
+    m_Localized: 'Available balance: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096517
+    m_Localized: "Continue \xB7 A / Enter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096518
+    m_Localized: No cargo to deliver at this station.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096519
+    m_Localized: Escort wagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1313663740096520
+    m_Localized: "{0} \xA4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318165650157568
+    m_Localized: BBA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318165683712000
+    m_Localized: test
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1318165683712001
+    m_Localized: "HERO \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1325811031683072
+    m_Localized: 'PILOT
+
+      {0}
+
+      Weapon: {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355876179968
+    m_Localized: Crimson Skull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928704
+    m_Localized: Onini
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928705
+    m_Localized: Tzmil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928706
+    m_Localized: Emberforge Sentinel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928707
+    m_Localized: Culu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928708
+    m_Localized: Cerebron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928709
+    m_Localized: Xiuhtecuhtli
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1338355913928710
+    m_Localized: Faceless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1355731392868352
+    m_Localized: PILOT LICENSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1355731434811392
+    m_Localized: "LOCOMOTIVE \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1355731434811393
+    m_Localized: No. WOR-{0:0000}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

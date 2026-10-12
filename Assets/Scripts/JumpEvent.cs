@@ -149,7 +149,8 @@ public class JumpEvent : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 int state = Active && i < outcome.Length ? outcome[i] : 0;
-                if (!train.CarAlive(i)) state = 2;
+                // A QTE miss stays red; a wagon destroyed before its attempt is crossed out.
+                if (state != 2 && !train.CarAlive(i)) state = 4;
                 else if (state == 0 && Active && i == car) state = 3;
                 panel.Box(i, (i + 1).ToString(), state);
             }
