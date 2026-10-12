@@ -76,6 +76,8 @@ public class Combat : MonoBehaviour
         public int split;                       // larvae released when killed
         public float armor;                     // removed from every hit (a hit always keeps 20%)
         public bool slowImmune;
+        public bool projectile;                 // a boss's own piece (the rig, its rockets): Combat never moves or
+                                                // draws it, but the hero and the turrets can still lock and shoot it
         public float stun;                      // seconds the wagon's weapon stops after contact
         // One timed ability per type, fired every `interval` seconds:
         public float interval;
@@ -289,7 +291,7 @@ public class Combat : MonoBehaviour
 
         // A button game or a curve under the train: nobody new arrives, the rest back off and nothing they do counts.
         bool calm = train.Calm;
-        if (!calm) spawnTimer -= dt;
+        if (!calm && !train.BossFight) spawnTimer -= dt; // a boss blocks the road: nobody else joins in
         while (spawnTimer <= 0f)
         {
             spawnTimer += 1f / (spawnRate + spawnRatePerLevel * level);
@@ -310,6 +312,7 @@ public class Combat : MonoBehaviour
         {
             Enemy e = enemies[i];
             EnemyType t = e.type;
+            if (t.projectile) continue; // the boss drives its own rig and rockets; Combat only lets them be shot
             if (t.loot >= 0)
             {
                 // Drifts for a while, then speeds away and is gone once out of sight.
@@ -444,6 +447,7 @@ public class Combat : MonoBehaviour
         {
             EnemyType t = e.type;
             Vector3 at = e.position, toTrain = new Vector3(-at.x, 0f, -at.z);
+            if (t.projectile) continue; // the boss draws its own rig and rockets
             if (t.loot >= 0)
             {
                 // Floats well clear of the ground, swaying.
@@ -611,7 +615,28 @@ public class Combat : MonoBehaviour
         return e;
     }
 
-    // ponytail: linear scan; add a spatial grid if enemies reach several thousand.
+    // The boss's rig and its rockets: enemies as far as the hero's and the turrets' guns are concerned (they can
+    // lock on and shoot them), but positioned by BossEvent, not by the AI above. hp is set by the caller.
+    public Enemy AddProjectile(EnemyType type, Vector3 at, float hp)
+    {
+        Enemy e = enemyPool.Count > 0 ? enemyPool.Pop() : new Enemy();
+        e.position = at;
+        e.type = type;
+        e.hp = e.maxHp = hp;
+        e.velocity = Vector3.zero;
+        e.slowUntil = 0f;
+        e.timer = 0f;
+        e.index = enemies.Count;
+        enemies.Add(e);
+        return e;
+    }
+
+    // Take a boss piece back out of the field (a rocket that hit, or one that came down).
+    public void Despawn(Enemy e)
+    {
+        if (e != null && e.index >= 0 && e.index < enemies.Count && enemies[e.index] == e) RemoveEnemy(e.index);
+    }
+
     // loot: also consider floating goods (only the hero aims at those).
     public Enemy Nearest(Vector3 from, float range, List<Enemy> except = null, bool loot = false)
     {

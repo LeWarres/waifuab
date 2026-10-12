@@ -1385,6 +1385,68 @@ MonoBehaviour:
     m_Localized: No. WOR-{0:0000}
     m_Metadata:
       m_Items: []
+  - m_Id: 1387934503546880
+    m_Localized: BOSS!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518400
+    m_Localized: '{0} is rolling in behind: shoot down its slow rockets'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518401
+    m_Localized: Boss destroyed! The way to the next biome is open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518402
+    m_Localized: 'The boss pulled back: stay in the biome'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518403
+    m_Localized: Cargo truck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518404
+    m_Localized: Frozen truck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518405
+    m_Localized: Jungle truck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518406
+    m_Localized: Amphibious truck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518407
+    m_Localized: Blazing truck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518408
+    m_Localized: Armoured truck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518409
+    m_Localized: Space truck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518410
+    m_Localized: Alien truck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518411
+    m_Localized: Siege truck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518412
+    m_Localized: 'Move to {0}
+
+      (beat the boss)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518413
+    m_Localized: Beat the biome's boss to move on
+    m_Metadata:
+      m_Items: []
   - m_Id: 1433624198328320
     m_Localized: NEW
     m_Metadata:

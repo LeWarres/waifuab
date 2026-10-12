@@ -1304,6 +1304,66 @@ MonoBehaviour:
     m_Localized: No. WOR-{0:0000}
     m_Metadata:
       m_Items: []
+  - m_Id: 1387934503546880
+    m_Localized: "\u30DC\u30B9\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518400
+    m_Localized: "{0} \u304C\u5F8C\u65B9\u304B\u3089\u8FEB\u308B\uFF1A\u9045\u3044\u30ED\u30B1\u30C3\u30C8\u3092\u6483\u3061\u843D\u3068\u305B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518401
+    m_Localized: "\u30DC\u30B9\u6483\u7834\uFF01\u6B21\u306E\u30D0\u30A4\u30AA\u30FC\u30E0\u3078\u306E\u9053\u304C\u958B\u3044\u305F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518402
+    m_Localized: "\u30DC\u30B9\u306F\u9000\u3044\u305F\uFF1A\u30D0\u30A4\u30AA\u30FC\u30E0\u306B\u7559\u307E\u308C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518403
+    m_Localized: "\u8CA8\u7269\u30C8\u30E9\u30C3\u30AF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518404
+    m_Localized: "\u6C37\u7D50\u30C8\u30E9\u30C3\u30AF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518405
+    m_Localized: "\u5BC6\u6797\u30C8\u30E9\u30C3\u30AF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518406
+    m_Localized: "\u6C34\u9678\u4E21\u7528\u30C8\u30E9\u30C3\u30AF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518407
+    m_Localized: "\u707C\u71B1\u30C8\u30E9\u30C3\u30AF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518408
+    m_Localized: "\u88C5\u7532\u30C8\u30E9\u30C3\u30AF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518409
+    m_Localized: "\u5B87\u5B99\u30C8\u30E9\u30C3\u30AF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518410
+    m_Localized: "\u7570\u661F\u30C8\u30E9\u30C3\u30AF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518411
+    m_Localized: "\u653B\u56F2\u30C8\u30E9\u30C3\u30AF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518412
+    m_Localized: "{0}\u3078\u9032\u3080\n\uFF08\u30DC\u30B9\u3092\u5012\u305B\uFF09"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518413
+    m_Localized: "\u9032\u3080\u306B\u306F\u30D0\u30A4\u30AA\u30FC\u30E0\u306E\u30DC\u30B9\u3092\u5012\u305B"
+    m_Metadata:
+      m_Items: []
   - m_Id: 1433624198328320
     m_Localized: "\u65B0\u898F"
     m_Metadata:

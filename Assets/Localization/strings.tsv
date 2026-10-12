@@ -312,3 +312,18 @@ license.number	No. WOR-{0:0000}	No. WOR-{0:0000}	No. WOR-{0:0000}	No. WOR-{0:000
 badge.new	NUEVA	NEW	NOVA	新規
 badge.upgrade	SUBE A Nv {0}	UP TO Lv {0}	SOBE P/ Nv {0}	Lv {0} に強化
 badge.maxed	YA AL MÁX	MAXED	JÁ NO MÁX	最大済み
+boss.title	¡JEFE!	BOSS!	CHEFE!	ボス！
+boss.warn	{0} se acerca por detrás: derriba sus cohetes lentos	{0} is rolling in behind: shoot down its slow rockets	{0} vem por trás: derrube os foguetes lentos	{0} が後方から迫る：遅いロケットを撃ち落とせ
+boss.won	¡Jefe destruido! El paso al siguiente bioma está abierto	Boss destroyed! The way to the next biome is open	Chefe destruído! O caminho para o próximo bioma está aberto	ボス撃破！次のバイオームへの道が開いた
+boss.fled	El jefe se retiró: sigue en el bioma	The boss pulled back: stay in the biome	O chefe recuou: continue no bioma	ボスは退いた：バイオームに留まれ
+boss.name.desert	Camión de carga	Cargo truck	Caminhão de carga	貨物トラック
+boss.name.snow	Camión helado	Frozen truck	Caminhão gelado	氷結トラック
+boss.name.jungle	Camión selvático	Jungle truck	Caminhão da selva	密林トラック
+boss.name.ocean	Camión anfibio	Amphibious truck	Caminhão anfíbio	水陸両用トラック
+boss.name.volcano	Camión ardiente	Blazing truck	Caminhão ardente	灼熱トラック
+boss.name.city	Camión blindado	Armoured truck	Caminhão blindado	装甲トラック
+boss.name.space	Camión espacial	Space truck	Caminhão espacial	宇宙トラック
+boss.name.alien	Camión alienígena	Alien truck	Caminhão alienígena	異星トラック
+boss.name.fortress	Camión de asedio	Siege truck	Caminhão de cerco	攻囲トラック
+menu.change.locked	Cambiar a {0}\n(vence al jefe)	Move to {0}\n(beat the boss)	Mudar para {0}\n(vença o chefe)	{0}へ進む\n（ボスを倒せ）
+sub.route.locked	Vence al jefe del bioma para avanzar	Beat the biome's boss to move on	Vença o chefe do bioma para avançar	進むにはバイオームのボスを倒せ

@@ -54,6 +54,7 @@ public class TrainSim : MonoBehaviour
 
     [Header("Camera")]
     public float cameraSize = 14f;
+    [System.NonSerialized] public float cameraZoom = 1f; // extra pull-back, set by a boss's intro and released after
 
     // One wagon of the train. Armed wagons carry a weapon; cargo wagons carry goods for the next station.
     class Car
@@ -126,6 +127,10 @@ public class TrainSim : MonoBehaviour
     public bool CanTakeLoot => cars.Count < maxCars;
     public bool Damaged => Health < MaxHealth || Player.Health < Player.maxHealth;
     public bool InEvent => turn.Active || jump.Active || zig.Active || swarm.Active; // a button game is on: the hero waits
+    public bool BossFight => boss != null && boss.Active; // a boss is on the field: no other enemies join in
+    public bool BossBeaten => bossBeaten == Biome;         // this biome's boss is down, the route is open
+    public void BossDefeated() => bossBeaten = Biome;
+    public void BossBar(string name, float fraction) => hud.Boss(name, fraction);
     public bool Swarming => swarm.Aiming;                // seen from the gunner's seat right now
     // The gunner's camera while the swarm is fought, so the HUD can place its damage numbers from that seat.
     public Camera SwarmCamera => swarm != null && swarm.Aiming ? swarm.View : null;
@@ -227,9 +232,17 @@ public class TrainSim : MonoBehaviour
     static readonly float[] Views = { -135f, -90f, -45f, 0f, 45f, 90f, 135f, 180f }; // all the way round
     // Which side of the screen the driver's right hand is on: below zero the track's "right" looks left.
     public float ScreenSide => Vector3.Dot(Camera.main.transform.right, Vector3.back);
-    int eventKind, nextEvent;            // this trip's event: 1 curve, 2 ramp jump, 3 needle jump, 4 zigzag
+    int eventKind, nextEvent;            // this trip's event: 1 curve, 2 ramp jump, 3 needle jump, 4 zigzag, 5 swarm, 6 boss
     ZigzagEvent zig;
     SwarmEvent swarm;
+    BossEvent boss;
+
+    [Header("Bosses")]
+    public float bossChance = 0.10f;      // chance a leg in a biome turns into its boss, at the first station there
+    public float bossChanceStep = 0.09f;  // more for every station survived this run, since the way out is barred
+    public float bossChanceMax = 0.85f;
+    int bossBeaten = -1;                  // biome whose boss is already down this run; -1 none yet
+    bool bossNext;                        // this leg was rolled to be the boss's
 
     [Header("Zigzag")]
     public float zigAngle = 40f;         // how far each stretch leans off the original heading
@@ -424,10 +437,11 @@ public class TrainSim : MonoBehaviour
             rails[i].SetParent(transform, false);
             Dress(Instantiate(railModel, rails[i]));
         }
-        nextEvent = EventBag[Random.Range(0, EventBag.Length)];
+        RollEvent(); // the first leg rolls for a boss too, same as every other
 
         zig = gameObject.AddComponent<ZigzagEvent>();
         swarm = gameObject.AddComponent<SwarmEvent>();
+        boss = gameObject.AddComponent<BossEvent>();
         menuView = gameObject.AddComponent<StationMenu>();
         hud = gameObject.AddComponent<Hud>();
         Panel = gameObject.AddComponent<EventPanel>();
@@ -730,7 +744,7 @@ public class TrainSim : MonoBehaviour
             var point = new Vector3(corner < 2 ? half : -half, 0f, corner % 2 == 0 ? flyRoom : -flyRoom);
             fit = Mathf.Max(fit, Mathf.Abs(Vector3.Dot(point, up)), Mathf.Abs(Vector3.Dot(point, right)) / view.aspect);
         }
-        float wanted = Mathf.Max(cameraSize, fit) * (Zigzag ? zigZoom : 1f);
+        float wanted = Mathf.Max(cameraSize, fit) * (Zigzag ? zigZoom : 1f) * cameraZoom;
         view.orthographicSize = Mathf.MoveTowards(view.orthographicSize, wanted, (Paused ? 0f : 9f) * Time.unscaledDeltaTime);
         shake = Mathf.Max(0f, shake - Time.unscaledDeltaTime);
         view.transform.position = Focus - view.transform.forward * 60f + Random.insideUnitSphere * shake * 1.5f;
@@ -810,9 +824,10 @@ public class TrainSim : MonoBehaviour
             turned = true;
             eventKind = nextEvent;
             if (eventKind == 5 && !swarm.Begin()) eventKind = 1; // nobody left to man a gun: a curve instead
+            if (eventKind == 6 && !boss.Begin()) eventKind = 1;  // the rig would not load: a curve instead
             if (eventKind == 1) StartBend();
             else if (eventKind == 4) StartZigzag();
-            else if (eventKind == 5) { } // SwarmEvent runs itself from here
+            else if (eventKind == 5 || eventKind == 6) { } // they run themselves from here
             else
             {
                 Jumping = true;
@@ -1291,10 +1306,20 @@ public class TrainSim : MonoBehaviour
         pending = null;
         leg = nextLeg;
         turned = false;
-        nextEvent = EventBag[Random.Range(0, EventBag.Length)];
+        RollEvent();
         remaining = LegLength;
         AtStation = false;
         whistlePending = true;
+    }
+
+    // Which event this leg gets. The biome's boss is the special case: nobody may leave the biome until it is down.
+    // Every leg there is another roll, more likely the longer the player has had to get ready; once beaten, its
+    // biome stops rolling for the rest of the run.
+    void RollEvent()
+    {
+        bossNext = Biome < Biomes.Length - 1 && bossBeaten != Biome &&
+                   Random.value < Mathf.Min(bossChance + bossChanceStep * Stations, bossChanceMax);
+        nextEvent = bossNext ? 6 : EventBag[Random.Range(0, EventBag.Length)];
     }
 
     // Menu title, led by what the last skip paid (if the previous menu was skipped).
@@ -1530,7 +1555,13 @@ public class TrainSim : MonoBehaviour
             menuSub = L10n.T("sub.route", LegName(nextLeg));
             Add("stay", L10n.T("menu.stay", BiomeName(Biome)), () => Depart());
             if (Biome < Biomes.Length - 1)
-                Add("biome", L10n.T("menu.change", BiomeName(Biome + 1), biomeDifficulty, Biome + 2), () => Depart(true));
+            {
+                // The biome's boss stands in the way: no leaving until it is down (and then it is gone for good).
+                bool locked = bossBeaten != Biome;
+                Add("biome", L10n.T(locked ? "menu.change.locked" : "menu.change", BiomeName(Biome + 1), biomeDifficulty, Biome + 2),
+                    () => Depart(true), !locked);
+                if (locked) menuSub = L10n.T("sub.route.locked", BiomeName(Biome + 1));
+            }
         }
         else if (stage == 2 && pendingCargo < 0)
         {
@@ -1755,6 +1786,7 @@ public class TrainSim : MonoBehaviour
     {
         // Warning for the curve, jump or zigzag ahead: what is coming and which button it takes.
         if (!Paused && swarm.Incoming) hud.Warning(L10n.T("swarm.title"), L10n.T("swarm.warn", JumpEvent.ButtonName(Player.UsingGamepad)));
+        else if (!Paused && boss.Incoming) hud.Warning(L10n.T("boss.title"), L10n.T("boss.warn", boss.Name));
         else if (Paused || Approach() < 0f) hud.Warning(null, null);
         else
         {

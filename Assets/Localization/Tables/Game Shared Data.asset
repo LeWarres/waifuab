@@ -1259,6 +1259,66 @@ MonoBehaviour:
     m_Key: license.number
     m_Metadata:
       m_Items: []
+  - m_Id: 1387934503546880
+    m_Key: boss.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518400
+    m_Key: boss.warn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518401
+    m_Key: boss.won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518402
+    m_Key: boss.fled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518403
+    m_Key: boss.name.desert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518404
+    m_Key: boss.name.snow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518405
+    m_Key: boss.name.jungle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518406
+    m_Key: boss.name.ocean
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518407
+    m_Key: boss.name.volcano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518408
+    m_Key: boss.name.city
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518409
+    m_Key: boss.name.space
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518410
+    m_Key: boss.name.alien
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518411
+    m_Key: boss.name.fortress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518412
+    m_Key: menu.change.locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1387934524518413
+    m_Key: sub.route.locked
+    m_Metadata:
+      m_Items: []
   - m_Id: 1433624198328320
     m_Key: badge.new
     m_Metadata:
