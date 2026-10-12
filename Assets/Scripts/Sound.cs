@@ -12,9 +12,41 @@ public static class Sound
     public static bool Muted { get; private set; } = PlayerPrefs.GetInt("sound.mute", 0) == 1;
 
     static readonly List<(AudioSource source, float loudness, bool music)> sources = new();
+    static readonly Dictionary<string, AudioClip> clips = new();
+    static readonly Dictionary<string, int> playedFrame = new();
+    static AudioSource sharedEffects;
+
+    // Keeps button sounds alive during scene changes and works while the game is paused.
+    public static void Play(string clip, float loudness = 0.5f)
+    {
+        if (!Application.isPlaying) return;
+        if (playedFrame.TryGetValue(clip, out int frame) && frame == Time.frameCount) return;
+        if (!clips.TryGetValue(clip, out AudioClip audio) || !audio)
+            clips[clip] = audio = Resources.Load<AudioClip>("SFX/" + clip);
+        if (!audio) return;
+        if (!sharedEffects)
+        {
+            var owner = new GameObject("GameplaySounds");
+            Object.DontDestroyOnLoad(owner);
+            sharedEffects = owner.AddComponent<AudioSource>();
+            sharedEffects.playOnAwake = false;
+            sharedEffects.ignoreListenerPause = true;
+            AsEffect(sharedEffects);
+        }
+        playedFrame[clip] = Time.frameCount;
+        sharedEffects.PlayOneShot(audio, loudness);
+    }
 
     public static AudioSource AsMusic(AudioSource source, float loudness = 1f) => Join(source, loudness, true);
     public static AudioSource AsEffect(AudioSource source, float loudness = 1f) => Join(source, loudness, false);
+
+    public static AudioSource Effect(GameObject owner, string clip, float loudness = 1f)
+    {
+        var source = owner.AddComponent<AudioSource>();
+        source.playOnAwake = false;
+        source.clip = Resources.Load<AudioClip>("SFX/" + clip);
+        return AsEffect(source, loudness);
+    }
 
     static AudioSource Join(AudioSource source, float loudness, bool music)
     {

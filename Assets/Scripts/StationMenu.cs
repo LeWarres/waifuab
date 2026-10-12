@@ -159,7 +159,7 @@ public class StationMenu : MonoBehaviour
     Text title, sub, purse, hint, listTitle, listHint;
     GameObject steps, purseRoot;
     Slanted edge;
-    const int Steps = 4;
+    const int Steps = 5;
     readonly Slanted[] stepPills = new Slanted[Steps];
     readonly Text[] stepTexts = new Text[Steps];
     readonly Slanted[] shelfTags = new Slanted[2];
@@ -174,11 +174,12 @@ public class StationMenu : MonoBehaviour
     {
         new Color(0.25f, 0.64f, 1f),   // train: blue
         new Color(0.62f, 0.45f, 0.95f), // player: violet
-        new Color(0.12f, 0.72f, 0.66f), // market: teal
+        new Color(1f, 0.6f, 0.2f),      // cargo: orange
+        new Color(0.12f, 0.72f, 0.66f), // shop: teal
         new Color(0.36f, 0.43f, 0.56f), // route: slate
     };
     static readonly Color CargoTone = new Color(1f, 0.6f, 0.2f); // the market's top row: orange
-    static readonly string[] StepKeys = { "step.train", "step.hero", "step.market", "step.route" };
+    static readonly string[] StepKeys = { "step.train", "step.hero", "step.cargo", "step.shop", "step.route" };
     Color theme = UiKit.Sky;
     readonly List<Card> cards = new();
     string shown; // what the cards on screen were built from
@@ -194,7 +195,7 @@ public class StationMenu : MonoBehaviour
         steps = stepRow.gameObject;
         for (int i = 0; i < Steps; i++)
         {
-            stepPills[i] = UiKit.Panel(stepRow, new Vector2((i - (Steps - 1) * 0.5f) * 250f, 0f), new Vector2(236f, 50f), UiKit.Ice, UiKit.Ice, 0.25f);
+            stepPills[i] = UiKit.Panel(stepRow, new Vector2((i - (Steps - 1) * 0.5f) * 232f, 0f), new Vector2(220f, 50f), UiKit.Ice, UiKit.Ice, 0.25f);
             stepTexts[i] = UiKit.Label(stepPills[i].transform, UiKit.Heading, 26, UiKit.Navy, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(200f, 44f), true);
         }
         // Title ribbon: what this menu is, and one line saying what to do in it. The purse sits on its right
@@ -304,7 +305,7 @@ public class StationMenu : MonoBehaviour
             if (shelves == null) continue;
             // The open tab is lit in its colour and bigger; the other is plain and says it can be opened.
             bool open = i == tab;
-            Color paint = i == 0 ? CargoTone : Themes[2];
+            Color paint = i == 0 ? CargoTone : Themes[3];
             shelfTexts[i].text = shelves[i];
             shelfTexts[i].color = open ? Color.white : UiKit.Navy;
             shelfTags[i].color = shelfTags[i].bottom = open ? paint : new Color(1f, 1f, 1f, 0.85f);

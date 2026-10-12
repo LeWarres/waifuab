@@ -896,11 +896,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1051308573667331
-    m_Localized: 'Left / right: move it along the train     X: couple'
+    m_Localized: 'Stick or D-pad: move it along the train     X: couple     O: cancel'
     m_Metadata:
       m_Items: []
   - m_Id: 1051308573667332
-    m_Localized: 'A / D: move it along the train     Space: couple'
+    m_Localized: 'WASD or arrows: move it along the train     Space: couple     Backspace:
+      cancel'
     m_Metadata:
       m_Items: []
   - m_Id: 1051308573667333
@@ -920,11 +921,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1052575295418369
-    m_Localized: 'Left / right: change wagon     X: mount'
+    m_Localized: 'Stick or D-pad: change wagon     X: mount     O: cancel'
     m_Metadata:
       m_Items: []
   - m_Id: 1052575295418370
-    m_Localized: 'A / D: change wagon     Space: mount'
+    m_Localized: 'WASD or arrows: change wagon     Space: mount     Backspace: cancel'
     m_Metadata:
       m_Items: []
   - m_Id: 1055763503329280
@@ -1382,6 +1383,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1355731434811393
     m_Localized: No. WOR-{0:0000}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1433624198328320
+    m_Localized: NEW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1433624240271360
+    m_Localized: UP TO Lv {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1433624240271361
+    m_Localized: MAXED
     m_Metadata:
       m_Items: []
   references:

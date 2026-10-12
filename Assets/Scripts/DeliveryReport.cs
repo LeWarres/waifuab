@@ -71,13 +71,15 @@ public class DeliveryReport : MonoBehaviour
     void Update()
     {
         if (!Visible || Time.unscaledTime - openedAt < 0.3f) return;
+        if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame) { Finish(true); return; }
         if ((Keyboard.current != null && (Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame)) ||
             (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)) Finish();
     }
 
-    void Finish()
+    void Finish(bool back = false)
     {
         if (!Visible || Time.unscaledTime - openedAt < 0.3f) return;
+        Sound.Play(back ? "menuback" : "confirm");
         open = false;
         canvas.gameObject.SetActive(false);
         completed?.Invoke();

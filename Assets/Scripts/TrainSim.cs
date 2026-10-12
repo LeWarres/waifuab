@@ -291,7 +291,7 @@ public class TrainSim : MonoBehaviour
     int WagonPrice => wagonCost + wagonCostStep * wagonsBought;
     int ContainerPrice => containerCost + containerCostStep * containersBought;
     int RepairPrice => repairCost * (repairsBought + 1);
-    int stage;                           // station menus in order: 0 wagon upgrade, 1 hero upgrade, 2 market (cargo and shop), 3 route
+    int stage;                           // station menus in order: 0 wagon upgrade, 1 hero upgrade, 2 cargo, 3 shop, 4 route
     int skipGift;                        // what the last skip paid: 0 nothing, 1 money, 2 health
 
     // Kinds of trip between stations: (text key, length x, speed x). Rolled on arrival, shown before leaving.
@@ -306,6 +306,8 @@ public class TrainSim : MonoBehaviour
     public float warnSeconds = 1.5f;                     // how long before a curve or jump the warning shows
     [Range(0.1f, 1f)] public float approachSlow = 0.7f;  // time scale reached just before it starts
     public AudioClip warningSound;                       // played once when the warning appears, if assigned
+    AudioSource whistleSound, wagonBrokenSound;
+    bool whistlePending = true;
     bool warned;
     float LegLength => stationGap * Legs[leg].length;
     static string LegName(int leg) => L10n.T("leg." + Legs[leg].id);
@@ -360,6 +362,7 @@ public class TrainSim : MonoBehaviour
     void SetPaused(bool pause)
     {
         if (pause == Paused) return;
+        Sound.Play("Pause");
         Paused = pause;
         confirming = 0;
         soundMenu = false;
@@ -384,6 +387,8 @@ public class TrainSim : MonoBehaviour
 
     void Awake()
     {
+        whistleSound = Sound.Effect(gameObject, "whistle", 0.55f);
+        wagonBrokenSound = Sound.Effect(gameObject, "vagonroto", 0.6f);
         // The numbers are designed small and scaled here, once per run: the scene carries the unscaled values,
         // so this is what makes every health pool and payout read ten times bigger. See Balance.Scale.
         wagonMaxHealth *= Balance.Scale;
@@ -752,14 +757,19 @@ public class TrainSim : MonoBehaviour
             : settingsMenu ? (Player.UsingGamepad ? "settings.help.gamepad" : "settings.help.keyboard")
             : Paused ? (Player.UsingGamepad ? "pause.help.gamepad" : "pause.help.keyboard")
                              : (Player.UsingGamepad ? "menu.help.gamepad" : "menu.help.keyboard");
-        menuView.Render(MenuOpen ? options : null, menuTitle, focus, L10n.T(help), i => options[i].run(), i => focus = i, ListMenu,
-            menuStep, menuSub, menuMoney ? money : -1, menuLines, Guiding && !Paused && Health > 0f, menuTab, tab => { marketTab = tab; focus = 0; }, menuCompact);
+        menuView.Render(MenuOpen ? options : null, menuTitle, focus, L10n.T(help), ActivateOption, i => { if (focus != i) Sound.Play("click"); focus = i; }, ListMenu,
+            menuStep, menuSub, menuMoney ? money : -1, menuLines, Guiding && !Paused && Health > 0f, menuTab, tab => { Sound.Play("confirm"); marketTab = tab; focus = 0; }, menuCompact);
 
         if (AtStation || Paused || mainMenu) return;
 
         // Brake curve: fastest speed that can still stop exactly on the station.
         float target = Mathf.Clamp(Mathf.Sqrt(2f * acceleration * remaining), 0.5f, maxSpeed * Legs[leg].speed * (Zigzag ? zigSpeed : 1f));
         Speed = Mathf.MoveTowards(Speed, target, acceleration * Time.deltaTime);
+        if (whistlePending && Speed > 0f)
+        {
+            whistlePending = false;
+            if (whistleSound.clip) whistleSound.PlayOneShot(whistleSound.clip);
+        }
         float step = Mathf.Min(Speed * Time.deltaTime, remaining);
         remaining -= step;
         Scroll = step;
@@ -879,6 +889,7 @@ public class TrainSim : MonoBehaviour
                 if (value >= 0) cargoEarned += value; else cargoFined -= value;
                 Vector3 start = car.body.localPosition, scale = car.body.localScale;
                 hud.DeliveryNumber(car.pos + Vector3.up * 3f, value);
+                Sound.Play(car.Alive ? "wagongood" : "wagonbad");
                 Combat.Instance.Burst(car.Alive ? "levelup" : "enemy", car.pos + Vector3.up, 1.5f);
                 for (float t = 0f; t < 1f;)
                 {
@@ -900,6 +911,7 @@ public class TrainSim : MonoBehaviour
                 // Stays with the train: back on its wheels if it was knocked out.
                 if (car.Alive) continue;
                 car.health = car.maxHealth * stationRepair;
+                if (car.health > 0f) Sound.Play("healthup");
                 SetAlive(car, true);
                 continue;
             }
@@ -1121,6 +1133,7 @@ public class TrainSim : MonoBehaviour
         if (amount > 0f) DamageNumber(CarTop(wagon), amount, true); // the number pops over the wagon that took it
         if (car.Alive) return;
         SetAlive(car, false);
+        if (stood && wagonBrokenSound.clip) wagonBrokenSound.PlayOneShot(wagonBrokenSound.clip);
         if (stood && car.cargo == Fuel)
         {
             // The fuel goes up: a big blast that also hurts the wagons next to it (and can set off another tank).
@@ -1238,8 +1251,13 @@ public class TrainSim : MonoBehaviour
 
     public void Repair(float amount)
     {
+        bool healed = false;
         foreach (Car car in cars)
-            if (car.Alive) car.health = Mathf.Min(car.maxHealth, car.health + amount); // a wreck waits for the station
+            if (car.Alive) {
+                healed |= amount > 0f && car.health < car.maxHealth;
+                car.health = Mathf.Min(car.maxHealth, car.health + amount); // a wreck waits for the station
+            }
+        if (healed) Sound.Play("healthup");
     }
 
     // No upgrade taken: a coin flip between some money and some health for train and hero.
@@ -1276,6 +1294,7 @@ public class TrainSim : MonoBehaviour
         nextEvent = EventBag[Random.Range(0, EventBag.Length)];
         remaining = LegLength;
         AtStation = false;
+        whistlePending = true;
     }
 
     // Menu title, led by what the last skip paid (if the previous menu was skipped).
@@ -1323,11 +1342,30 @@ public class TrainSim : MonoBehaviour
     void Priced(int price, bool sold = false) => Tag(sold ? L10n.T("badge.sold") : price.ToString(), sold || money < price ? 3 : 2);
     Material GhostMat => ghostMat ? ghostMat : ghostMat = Mat(new Color(1f, 0.12f, 0.12f));
 
-    // A weapon was picked: a red copy of it goes on the train, first on a wagon with no weapon if there is one.
+    // The train's copy of a weapon that has most to gain from another: the lowest level one. null: it has none.
+    Turret Owned(Weapon weapon)
+    {
+        Turret found = null;
+        foreach (Car car in cars)
+            if (car.cargo < 0 && car.mount && car.mount.Weapon == weapon && (found == null || car.mount.Level < found.Level)) found = car.mount;
+        return found;
+    }
+
+    // The next wagon that can carry a weapon, going that way along the train from this one. -1: none.
+    int ArmedFrom(int from, int by)
+    {
+        for (int i = from + by; i >= 0 && i < cars.Count; i += by)
+            if (cars[i].cargo < 0) return i;
+        return -1;
+    }
+
+    // A weapon was picked: a red copy of it goes on the train, on the wagon where it does most: the one that
+    // has it already and can still level up, else one with no weapon, else the first.
     void BeginMounting(Weapon weapon)
     {
         pending = weapon;
-        weaponAt = cars.FindIndex(c => c.cargo < 0 && !c.mount);
+        Turret owned = Owned(weapon);
+        weaponAt = owned && owned.Level < Weapon.MaxLevel ? cars.FindIndex(c => c.mount == owned) : cars.FindIndex(c => c.cargo < 0 && !c.mount);
         if (weaponAt < 0) weaponAt = cars.FindIndex(c => c.cargo < 0);
         weaponGhost = Instantiate(turretPrefab, transform);
         weaponGhost.Init(weapon);
@@ -1357,12 +1395,8 @@ public class TrainSim : MonoBehaviour
 
     void MoveWeapon(int by)
     {
-        for (int i = weaponAt + by; i >= 0 && i < cars.Count; i += by)
-            if (cars[i].cargo < 0)
-            {
-                weaponAt = i;
-                break;
-            }
+        int to = ArmedFrom(weaponAt, by);
+        if (to >= 0) weaponAt = to;
         ShowWeaponGhost();
     }
 
@@ -1488,10 +1522,10 @@ public class TrainSim : MonoBehaviour
             Add("yes", L10n.T("menu.yes"), Restart);
             Add("no", L10n.T("menu.no"), GoToMainMenu);
         }
-        else if (stage >= 3)
+        else if (stage >= 4)
         {
             kind = 1;
-            menuStep = 3;
+            menuStep = 4;
             menuTitle = L10n.T("menu.route");
             menuSub = L10n.T("sub.route", LegName(nextLeg));
             Add("stay", L10n.T("menu.stay", BiomeName(Biome)), () => Depart());
@@ -1500,30 +1534,33 @@ public class TrainSim : MonoBehaviour
         }
         else if (stage == 2 && pendingCargo < 0)
         {
-            // The market: two tabs, one row of big cards at a time. CARGO to carry (paid now, sold at the next
-            // station if it survives; up to maxCargo wagons) and the SHOP (health now, medkits, a longer train).
+            // CARGO to carry, a step of its own: paid now, sold at the next station if it survives; up to
+            // maxCargo wagons. Then, as the next step, the shop.
             kind = 5;
             menuStep = 2;
             menuMoney = true;
-            menuTitle = L10n.T("menu.market");
-            menuLines = marketLines;
-            marketLines[0] = L10n.T("market.cargo", CargoCount, maxCargo);
-            marketLines[1] = L10n.T("market.shop");
-            menuTab = marketTab;
-            menuSub = L10n.T(marketTab == 0 ? "sub.market.cargo" : "sub.market.shop", L10n.T(Player.UsingGamepad ? "market.switch.gamepad" : "market.switch.keyboard"));
-            if (marketTab == 0)
+            menuTitle = L10n.T("menu.cargo", CargoCount, maxCargo);
+            menuSub = L10n.T("sub.cargo");
+            int loaded = CargoCount;
+            for (int i = 0; i < Loadable; i++)
             {
-                int loaded = CargoCount;
-                for (int i = 0; i < Loadable; i++)
-                {
-                    int cargo = i;
-                    Add(Cargos[i].id, L10n.T("cargo.card", L10n.T("cargo." + Cargos[i].id), CargoReward(i), Cargos[i].health, Cargos[i].penalty * (Biome + 1), CargoPrice(i)),
-                        () => BeginPlacing(cargo), loaded < maxCargo && money >= CargoPrice(i));
-                    Priced(CargoPrice(i), loaded >= maxCargo);
-                }
+                int cargo = i;
+                Add(Cargos[i].id, L10n.T("cargo.card", L10n.T("cargo." + Cargos[i].id), CargoReward(i), Cargos[i].health, Cargos[i].penalty * (Biome + 1), CargoPrice(i)),
+                    () => BeginPlacing(cargo), loaded < maxCargo && money >= CargoPrice(i));
+                Priced(CargoPrice(i), loaded >= maxCargo);
             }
-            else
+            Add("yes", L10n.T("cargo.done"), Next);
+            Minor();
+        }
+        else if (stage == 3)
+        {
+            // The SHOP: health now, medkits, a longer train.
             {
+                kind = 7;
+                menuStep = 3;
+                menuMoney = true;
+                menuTitle = L10n.T("menu.shop");
+                menuSub = L10n.T("sub.shop");
                 Add("repair", L10n.T("menu.repair", repairReward, RepairPrice), () => { money -= RepairPrice; repairsBought++; Repair(); },
                     money >= RepairPrice && Health < MaxHealth);
                 Priced(RepairPrice);
@@ -1539,7 +1576,7 @@ public class TrainSim : MonoBehaviour
                     () => { money -= ContainerPrice; containersBought++; AddCar(cars.Count, Container, true); }, ContainerForSale && money >= ContainerPrice);
                 Priced(ContainerPrice, !ContainerForSale);
             }
-            Add("yes", L10n.T("market.done"), Next);
+            Add("yes", L10n.T("shop.done"), Next);
             Minor();
         }
         else if (stage == 2)
@@ -1593,8 +1630,13 @@ public class TrainSim : MonoBehaviour
             {
                 if (offer < Weapon.Wagon.Length)
                 {
+                    // The tag says what it would be for this train: one it has, raised a level, or a new one.
                     Weapon weapon = Weapon.Wagon[offer];
-                    Add(weapon.id, weapon.Name + "\n" + weapon.Info, () => BeginMounting(weapon)); Free();
+                    Turret owned = Owned(weapon);
+                    Add(weapon.id, weapon.Name + "\n" + weapon.Info, () => BeginMounting(weapon));
+                    if (owned == null) Tag(L10n.T("badge.new"), 1);
+                    else if (owned.Level < Weapon.MaxLevel) Tag(L10n.T("badge.upgrade", owned.Level + 1), 2);
+                    else Tag(L10n.T("badge.maxed"), 3);
                 }
                 else if (offer == Weapon.Wagon.Length) { Add("money", L10n.T("menu.money", moneyReward), () => { money += moneyReward; Next(); }); Free(); }
                 else if (offer < Escort)
@@ -1647,8 +1689,23 @@ public class TrainSim : MonoBehaviour
     }
 
     // Left/right moves the focus (stick, d-pad, A/D, arrows or Q/E); Jump (cross / A button, Space) confirms.
+    void ActivateOption(int index)
+    {
+        if (index < 0 || index >= options.Count || !options[index].enabled) return;
+        Sound.Play(options[index].icon == "back" || options[index].icon == "no" ? "menuback" : "confirm");
+        options[index].run();
+    }
+
     void Navigate()
     {
+        if ((Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame) || (Keyboard.current != null && Keyboard.current.backspaceKey.wasPressedThisFrame))
+        {
+            // Cancel the current submenu or placement before leaving its parent menu.
+            int back = options.FindIndex(option => option.enabled && (option.icon == "back" || option.icon == "no"));
+            if (back >= 0) ActivateOption(back);
+            else if (Paused) { Sound.Play("menuback"); SetPaused(false); }
+            return;
+        }
         // The pause and settings menus are vertical lists, so up/down work there too.
         Vector2 move = navigate.ReadValue<Vector2>();
         float x = ListMenu && Mathf.Abs(move.y) > Mathf.Abs(move.x) ? -move.y : move.x;
@@ -1659,49 +1716,38 @@ public class TrainSim : MonoBehaviour
         {
             // On a setting, left and right (and Q / E) change its value instead of moving the selection.
             int side = tapped ? step : Mathf.Abs(move.x) > 0.5f && Mathf.Abs(move.x) > Mathf.Abs(move.y) ? (int)Mathf.Sign(move.x) : 0;
-            if (side != 0 && (tapped || !sideHeld)) options[focus].adjust(side);
+            if (side != 0 && (tapped || !sideHeld)) { options[focus].adjust(side); Sound.Play("confirm"); }
             sideHeld = side != 0 && !tapped;
             if (tapped || side != 0) step = 0;
             tapped = false;
         }
         if ((ghost != null || weaponGhost) && !Paused)
         {
-            // Placing a wagon: left / right slide it along the train as it looks on screen; up / down pick
-            // between coupling it and going back.
-            if (step != 0 && (tapped || !navHeld))
+            // Placing a wagon or a weapon: the stick pushed any way along the train's line on the screen slides
+            // it that way, so a train that runs up the picture takes up and down too. Nothing moves onto the
+            // buttons: the confirm button places it, the back button (circle / B, Backspace) takes it away.
+            Transform cam = Camera.main.transform;
+            var line = new Vector2(Vector3.Dot(cam.right, Vector3.right), Vector3.Dot(cam.up, Vector3.right)).normalized;
+            float push = Vector2.Dot(move, line);
+            int slide = tapped ? (line.x >= 0f ? step : -step) : Mathf.Abs(push) > 0.3f ? (int)Mathf.Sign(push) : 0; // low: a train at a slant still takes plain up or down
+            if (slide != 0 && (tapped || !navHeld))
             {
-                Transform cam = Camera.main.transform;
-                float along = Vector3.Dot(cam.right, Vector3.right);
-                if (Mathf.Abs(along) < 0.2f) along = Vector3.Dot(cam.up, Vector3.right); // the train runs up the screen
-                int by = along >= 0f ? -step : step; // the front of the train is index 0
-                if (ghost != null) MoveGhost(by); else MoveWeapon(by);
+                if (ghost != null) MoveGhost(-slide); else MoveWeapon(-slide); // the front of the train is index 0
+                Sound.Play("click");
             }
-            int pick = Mathf.Abs(move.y) > 0.5f && Mathf.Abs(move.y) > Mathf.Abs(move.x) ? 1 : 0;
-            if (pick != 0 && !shelfHeld) focus = 1 - Mathf.Clamp(focus, 0, 1);
-            shelfHeld = pick != 0;
-            navHeld = step != 0 && !tapped;
-            focus = Mathf.Clamp(focus, 0, options.Count - 1);
-            if (confirm.WasPressedThisFrame() && options[focus].enabled) options[focus].run();
+            navHeld = slide != 0 && !tapped;
+            focus = 0;
+            if (confirm.WasPressedThisFrame()) ActivateOption(focus);
             return;
         }
         if (step != 0 && (tapped || !navHeld))
         {
             do focus = (focus + step + options.Count) % options.Count;
             while (!options[focus].enabled);
-        }
-        if (menuLines != null && !ListMenu)
-        {
-            // Tabs: up and down (or the shoulder taps would do too) switch between them.
-            int way = Mathf.Abs(move.y) > 0.5f && Mathf.Abs(move.y) > Mathf.Abs(move.x) ? (move.y > 0f ? -1 : 1) : 0;
-            if (way != 0 && !shelfHeld)
-            {
-                marketTab = 1 - marketTab;
-                focus = 0;
-            }
-            shelfHeld = way != 0;
+            Sound.Play("click");
         }
         navHeld = step != 0 && !tapped;
-        if (confirm.WasPressedThisFrame() && options[focus].enabled) options[focus].run();
+        if (confirm.WasPressedThisFrame()) ActivateOption(focus);
     }
 
     // Yellow frame and arrow in the world on whatever the focused option refers to.
@@ -1716,6 +1762,22 @@ public class TrainSim : MonoBehaviour
             hud.Warning(L10n.T(eventKind == 1 ? "warn.curve.title" : eventKind == 4 ? "warn.zig.title" : "warn.jump.title"),
                 eventKind == 1 ? L10n.T("warn.curve") : eventKind == 4 ? L10n.T("warn.zig", L10n.T(Player.UsingGamepad ? "zig.stick" : "zig.keys"))
                 : eventKind == 2 ? L10n.T("warn.ramp", button) : ""); // the needle: just the warning, then it starts
+        }
+
+        if (MenuOpen && !Paused && (ghost != null || weaponGhost))
+        {
+            // Being placed: an arrow each way it can still go, on the train itself, pointing as it would move
+            // on the screen. That it can be moved at all is the thing nobody guessed.
+            int at = ghost != null ? ghostAt : weaponAt;
+            for (int way = -1; way <= 1; way += 2)
+            {
+                int to = ghost != null ? at + way : ArmedFrom(at, way);
+                if (to < (ghost != null ? 1 : 0) || to > cars.Count - 1) continue;
+                Vector3 from = cars[at].pos, spot = ghost != null ? from + (cars[to].pos - from).normalized * Step * 0.8f : cars[to].pos;
+                Vector3 a = Camera.main.WorldToScreenPoint(from), b = Camera.main.WorldToScreenPoint(spot);
+                string arrow = Mathf.Abs(b.x - a.x) >= Mathf.Abs(b.y - a.y) ? (b.x > a.x ? "→" : "←") : (b.y > a.y ? "↑" : "↓");
+                Panel.Mark(spot + Vector3.up * wagonSize.y, arrow, 3);
+            }
         }
 
         if (!MenuOpen || options.Count == 0 || options[focus].anchor == null) return;
@@ -1795,7 +1857,8 @@ public class TrainSim : MonoBehaviour
             prop.body = null;
         }
         GameObject[] kinds = stretchKinds[prop.size] ?? sceneryKinds[Biome][prop.size];
-        if (kinds.Length == 0 || Random.value > stretch[prop.size]) return; // this stretch leaves the slot empty
+        float share = stretch[prop.size] * (Biomes[Biome].id == "ocean" ? 0.4f : 1f); // open water: most of it stays empty
+        if (kinds.Length == 0 || Random.value > share) return; // this stretch leaves the slot empty
         prop.kind = kinds[Random.Range(0, kinds.Length)];
         if (!spareProps.TryGetValue(prop.kind, out Stack<Transform> spare)) spareProps[prop.kind] = spare = new Stack<Transform>();
         prop.body = spare.Count > 0 ? spare.Pop() : Instantiate(prop.kind, sceneryRoot).transform;

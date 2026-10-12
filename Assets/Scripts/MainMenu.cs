@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
         public string label;
         public System.Action run;
         public System.Action<int> adjust; // a setting: left / right change it
+        public bool back;
     }
 
     const int MaxRows = 10;
@@ -39,15 +40,22 @@ public class MainMenu : MonoBehaviour
         for(int i=0;i<MaxRows;i++) {
             var clicks=lines[i].GetComponent<Clicks>() ?? lines[i].gameObject.AddComponent<Clicks>();
             clicks.index=i;
-            clicks.click=index=>{focus=index;Build();rows[index].run();};
-            clicks.hover=index=>focus=index;
+            clicks.click=index=>{focus=index;Build();Activate(index);};
+            clicks.hover=index=>{if(focus!=index) Sound.Play("click");focus=index;};
         }
         InputSystem.actions.Enable();
         move = InputSystem.actions.FindAction("Player/Move", true);
         confirm = InputSystem.actions.FindAction("Player/Jump", true);
     }
 
-    void Add(string label, System.Action run, System.Action<int> adjust = null) => rows.Add(new Row { label = label, run = run, adjust = adjust });
+    void Add(string label, System.Action run, System.Action<int> adjust = null, bool back = false) => rows.Add(new Row { label = label, run = run, adjust = adjust, back = back });
+
+    void Activate(int index)
+    {
+        if(index<0 || index>=rows.Count) return;
+        Sound.Play(rows[index].back ? "menuback" : "confirm");
+        rows[index].run();
+    }
 
     void Volume(string key, float value, int which) =>
         Add(Localized(key, Mathf.RoundToInt(value * 100f)), () => Sound.Step(which, 1), steps => Sound.Step(which, steps));
@@ -73,7 +81,7 @@ public class MainMenu : MonoBehaviour
         Volume("sound.sfx", Sound.Effects, 2);
         Add(Localized("sound.mute", Localized(Sound.Muted ? "menu.yes" : "menu.no")), Sound.ToggleMute, _ => Sound.ToggleMute());
         Add(Localized("language"), L10n.NextLocale, _ => L10n.NextLocale());
-        Add(Localized("menu.back"), () => { settings = false; focus = 2; });
+        Add(Localized("menu.back"), () => { settings = false; focus = 2; }, back: true);
     }
 
     void SelectJourney(bool story)
@@ -90,12 +98,13 @@ public class MainMenu : MonoBehaviour
         // Up / down choose, left / right change a setting, confirm runs the line. One step per push of the stick.
         Vector2 stick = move.ReadValue<Vector2>();
         bool vertical = Mathf.Abs(stick.y) > 0.5f && Mathf.Abs(stick.y) >= Mathf.Abs(stick.x), sideways = Mathf.Abs(stick.x) > 0.5f && !vertical;
-        if (!held && vertical) focus = (focus + (stick.y > 0f ? -1 : 1) + rows.Count) % rows.Count;
-        else if (!held && sideways && rows[focus].adjust != null) rows[focus].adjust(stick.x > 0f ? 1 : -1);
+        if (!held && vertical) { focus = (focus + (stick.y > 0f ? -1 : 1) + rows.Count) % rows.Count; Sound.Play("click"); }
+        else if (!held && sideways && rows[focus].adjust != null) { rows[focus].adjust(stick.x > 0f ? 1 : -1); Sound.Play("confirm"); }
         held = vertical || sideways;
         if (move.activeControl != null && held) pad = move.activeControl.device is Gamepad;
-        if (confirm.WasPressedThisFrame()) rows[focus].run();
-        if (settings && Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) { settings = false; focus = 2; }
+        if (confirm.WasPressedThisFrame()) Activate(focus);
+        if (settings && ((Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) ||
+            (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))) { Sound.Play("menuback"); settings = false; focus = 2; }
 
         Build(); // what was just changed shows at once
         RefreshUI();

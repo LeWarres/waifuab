@@ -1259,6 +1259,18 @@ MonoBehaviour:
     m_Key: license.number
     m_Metadata:
       m_Items: []
+  - m_Id: 1433624198328320
+    m_Key: badge.new
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1433624240271360
+    m_Key: badge.upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1433624240271361
+    m_Key: badge.maxed
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

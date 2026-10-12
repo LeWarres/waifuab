@@ -201,13 +201,13 @@ sub.market.cargo	Pagas ahora y cobras más si llega entera     {0}: ver la TIEND
 sub.market.shop	Lo que compras lo recibes ya     {0}: ver la CARGA	What you buy is yours right away     {0}: see the CARGO	O que comprar recebe na hora     {0}: ver a CARGA	買ったものはすぐ手に入る     {0}：貨物へ
 market.switch.gamepad	Arriba / abajo	Up / down	Cima / baixo	上下
 market.switch.keyboard	W / S	W / S	W / S	W / S
-sub.place.gamepad	Izquierda / derecha: moverla por el tren     X: enganchar	Left / right: move it along the train     X: couple	Esquerda / direita: mover pelo trem     X: engatar	左右：列車の上を移動     X：連結
-sub.place.keyboard	A / D: moverla por el tren     Espacio: enganchar	A / D: move it along the train     Space: couple	A / D: mover pelo trem     Espaço: engatar	A / D：列車の上を移動     Space：連結
+sub.place.gamepad	Stick o cruceta: moverla por el tren     X: enganchar     O: cancelar	Stick or D-pad: move it along the train     X: couple     O: cancel	Analógico ou direcional: mover pelo trem     X: engatar     O: cancelar	スティック / 十字キー：列車の上を移動     ×：連結     ○：やめる
+sub.place.keyboard	WASD o flechas: moverla por el tren     Espacio: enganchar     Retroceso: cancelar	WASD or arrows: move it along the train     Space: couple     Backspace: cancel	WASD ou setas: mover pelo trem     Espaço: engatar     Backspace: cancelar	WASD / 矢印：列車の上を移動     Space：連結     Backspace：やめる
 place.here	Enganchar\naquí	Couple\nhere	Engatar\naqui	連結\nここに
 mount.where	Vagón {0}: {1}	Wagon {0}: {1}	Vagão {0}: {1}	車両 {0}：{1}
 mount.here	Montar\naquí	Mount\nhere	Montar\naqui	搭載\nここに
-sub.mount.gamepad	Izquierda / derecha: cambiar de vagón     X: montar	Left / right: change wagon     X: mount	Esquerda / direita: mudar de vagão     X: montar	左右：車両を変更     X：搭載
-sub.mount.keyboard	A / D: cambiar de vagón     Espacio: montar	A / D: change wagon     Space: mount	A / D: mudar de vagão     Espaço: montar	A / D：車両を変更     Space：搭載
+sub.mount.gamepad	Stick o cruceta: cambiar de vagón     X: montar     O: cancelar	Stick or D-pad: change wagon     X: mount     O: cancel	Analógico ou direcional: mudar de vagão     X: montar     O: cancelar	スティック / 十字キー：車両を変更     ×：搭載     ○：やめる
+sub.mount.keyboard	WASD o flechas: cambiar de vagón     Espacio: montar     Retroceso: cancelar	WASD or arrows: change wagon     Space: mount     Backspace: cancel	WASD ou setas: mudar de vagão     Espaço: montar     Backspace: cancelar	WASD / 矢印：車両を変更     Space：搭載     Backspace：やめる
 loco.collection	TU FLOTA	YOUR FLEET	SUA FROTA	車両コレクション
 loco.select	Elige tu locomotora	Choose your locomotive	Escolha sua locomotiva	機関車を選択
 loco.classic	RicMar	RicMar	RicMar	RicMar
@@ -309,3 +309,6 @@ hero.character.faceless	Faceless	Faceless	Faceless	Faceless
 license.title	LICENCIA DE PILOTO	PILOT LICENSE	LICENÇA DE PILOTO	パイロット免許
 license.engine	LOCOMOTORA · {0}	LOCOMOTIVE · {0}	LOCOMOTIVA · {0}	機関車 · {0}
 license.number	No. WOR-{0:0000}	No. WOR-{0:0000}	No. WOR-{0:0000}	No. WOR-{0:0000}
+badge.new	NUEVA	NEW	NOVA	新規
+badge.upgrade	SUBE A Nv {0}	UP TO Lv {0}	SOBE P/ Nv {0}	Lv {0} に強化
+badge.maxed	YA AL MÁX	MAXED	JÁ NO MÁX	最大済み

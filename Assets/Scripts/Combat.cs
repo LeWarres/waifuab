@@ -236,6 +236,7 @@ public class Combat : MonoBehaviour
     float spawnTimer, lootTimer = 8f;
     int level;
     bool heroHit; // true while a hit made by the hero is being applied
+    AudioSource laserSound, stationLaserSound;
 
     public int BulletCount => bullets.Count;
 
@@ -243,6 +244,8 @@ public class Combat : MonoBehaviour
     {
         Instance = this;
         train = GetComponent<TrainSim>();
+        laserSound = Sound.Effect(gameObject, "Laser", 0.3f);
+        stationLaserSound = Sound.Effect(gameObject, "biglaser_soft", 0.4f);
     }
 
     void Update()
@@ -259,6 +262,8 @@ public class Combat : MonoBehaviour
             stationShotIn -= Time.unscaledDeltaTime;
             if (stationShotIn > 0f || enemies.Count == 0) return;
             stationShotIn = stationShotEvery;
+            // A crowd produces simultaneous shots; layering the same clip made the first volley too loud.
+            if (stationLaserSound.clip) stationLaserSound.PlayOneShot(stationLaserSound.clip);
             for (int shots = Mathf.CeilToInt(enemies.Count / 12f); shots > 0 && enemies.Count > 0; shots--) // a crowd goes faster
             {
                 Transform gun = train.StationGun(stationGunTurn++ % 2);
@@ -774,6 +779,7 @@ public class Combat : MonoBehaviour
     // Laser: one instant straight ray. Weak per enemy, but it crosses every enemy standing on the line.
     public void Beam(Vector3 from, Vector3 direction, Weapon weapon, int level)
     {
+        if (weapon.id == "laser" && laserSound.clip) laserSound.PlayOneShot(laserSound.clip);
         float range = weapon.range, damage = weapon.Damage(level) * Power;
         Spawn(from + direction * (range * 0.5f), new Vector3(0.12f, 0.12f, range), weapon.Batch, 0.08f, Quaternion.LookRotation(direction));
         for (int i = enemies.Count - 1; i >= 0; i--)

@@ -92,14 +92,19 @@ public class Player : MonoBehaviour
         // A toon material of its own beside the model (<name>_toon), or else the one all the other heroes share
         // (Characters/hero_toon: tune that one to change them all), painted with the picture beside the model
         // (Tools/extract_character_textures.py takes it out of the model).
-        Material skin = Resources.Load<Material>(who + "_toon");
         Renderer[] parts = body.GetComponentsInChildren<Renderer>();
-        if (!skin && !skins.TryGetValue(who, out skin))
+        if (!skins.TryGetValue(who, out Material skin))
         {
-            skin = skins[who] = new Material(Resources.Load<Material>("Characters/hero_toon")) { name = who, mainTexture = Resources.Load<Texture2D>(who) };
-            // Some meshes are in centimetres under a x100: the outline is measured in the mesh's own units.
-            float coarse = parts[0].transform.lossyScale.x / body.lossyScale.x;
-            if (coarse > 1.5f) skin.SetFloat("_OutlineWidth", skin.GetFloat("_OutlineWidth") / coarse);
+            // Always a copy: what a run does to it must not reach the material on disk.
+            Material own = Resources.Load<Material>(who + "_toon");
+            skin = skins[who] = new Material(own ? own : Resources.Load<Material>("Characters/hero_toon")) { name = who };
+            if (!own)
+            {
+                skin.mainTexture = Resources.Load<Texture2D>(who);
+                // Some meshes are in centimetres under a x100: the outline is measured in the mesh's own units.
+                float coarse = parts[0].transform.lossyScale.x / body.lossyScale.x;
+                if (coarse > 1.5f) skin.SetFloat("_OutlineWidth", skin.GetFloat("_OutlineWidth") / coarse);
+            }
         }
         foreach (Renderer part in parts) part.sharedMaterials = System.Array.ConvertAll(part.sharedMaterials, _ => skin);
     }
@@ -319,7 +324,7 @@ public class Player : MonoBehaviour
 
     public void Heal(float amount)
     {
-        if (Health < maxHealth && amount > 0f) train.Flash("healing");
+        if (Health < maxHealth && amount > 0f) { train.Flash("healing"); Sound.Play("healthup"); }
         Health = Mathf.Min(maxHealth, Health + amount);
     }
 
@@ -339,6 +344,7 @@ public class Player : MonoBehaviour
     {
         if (Alive) return;
         Health = Balance.Scale; // back on their feet with a scratch: the rest is bought
+        Sound.Play("healthup");
         transform.position = SpawnPoint;
         visuals.SetActive(true);
     }

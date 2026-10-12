@@ -243,7 +243,7 @@ Material:
     - _MCapIntensity: 1
     - _MVCOL: 0
     - _MVWriMas: 40
-    - _MaiColPo: 0.8
+    - _MaiColPo: 0.45
     - _MaxFadDistance: 2
     - _Metallic: 0
     - _MinFadDistance: 0
@@ -423,14 +423,14 @@ Material:
     - _GlossColor: {r: 1, g: 1, b: 1, a: 1}
     - _Glow_Color: {r: 1, g: 1, b: 1, a: 1}
     - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _MainColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 0.82, g: 0.82, b: 0.82, a: 1}
     - _ObjPosi: {r: 0, g: 0, b: 0, a: 0}
     - _ObjectForward: {r: 0, g: 0, b: 0, a: 0}
     - _ObjectRight: {r: 0, g: 0, b: 0, a: 0}
     - _OutResi: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0.12, g: 0.1, b: 0.26, a: 1}
     - _OutlineOffset: {r: 0, g: 0, b: 0, a: 1}
-    - _OverallShadowColor: {r: 0.85, g: 0.9, b: 0.95, a: 1}
+    - _OverallShadowColor: {r: 0.7, g: 0.74, b: 0.86, a: 1}
     - _PTCol: {r: 0, g: 0, b: 0, a: 1}
     - _PrevPosition: {r: 0, g: 0, b: 0, a: 0}
     - _RefracColor: {r: 1, g: 1, b: 1, a: 1}

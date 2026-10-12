@@ -25,9 +25,9 @@ public class StoryIntro : MonoBehaviour
         if (placeholder) { BuildPlaceholder(); return; }
         if(!canvas) BuildUI();
         if(!backgrounds) backgrounds=Resources.Load<Texture2D>("Story/prologue");
-        next.onClick.AddListener(Advance);
-        automatic.onClick.AddListener(()=>{auto=!auto;reading=0;UpdateAutomaticLabel();});
-        skip.onClick.AddListener(Finish);
+        next.onClick.AddListener(()=>{Sound.Play("confirm");Advance();});
+        automatic.onClick.AddListener(()=>{Sound.Play("confirm");auto=!auto;reading=0;UpdateAutomaticLabel();});
+        skip.onClick.AddListener(()=>{Sound.Play("confirm");Finish();});
         if(pages==null || pages.Length==0) {Finish();return;}
         ShowPage(0,false);
     }
@@ -35,19 +35,22 @@ public class StoryIntro : MonoBehaviour
     void Update()
     {
         if(leaving) return;
+        if(Gamepad.current!=null && Gamepad.current.buttonEast.wasPressedThisFrame) {
+            Sound.Play("menuback");leaving=true;SceneManager.LoadScene("selectHero");return;
+        }
         if (placeholder)
         {
             elapsed += Time.unscaledDeltaTime;
             bool proceed = (Keyboard.current != null && (Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame)) ||
                 (Gamepad.current != null && (Gamepad.current.buttonSouth.wasPressedThisFrame || Gamepad.current.startButton.wasPressedThisFrame));
-            if (elapsed >= 2f || (elapsed > 0.3f && proceed)) Finish();
+            if (elapsed >= 2f || (elapsed > 0.3f && proceed)) { if(proceed) Sound.Play("confirm"); Finish(); }
             return;
         }
         if(pages==null || pages.Length==0) return;
-        if(Gamepad.current!=null && Gamepad.current.startButton.wasPressedThisFrame) {Finish();return;}
+        if(Gamepad.current!=null && Gamepad.current.startButton.wasPressedThisFrame) {Sound.Play("confirm");Finish();return;}
         bool confirm=(Keyboard.current!=null && (Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame))
             || (Gamepad.current!=null && Gamepad.current.buttonSouth.wasPressedThisFrame);
-        if(confirm) {Advance();return;}
+        if(confirm) {Sound.Play("confirm");Advance();return;}
         elapsed+=Time.unscaledDeltaTime;
         art.color=new Color(1,1,1,Mathf.Clamp01(elapsed/.5f));
         int count=Mathf.Min(currentText.Length,Mathf.FloorToInt(elapsed*34));

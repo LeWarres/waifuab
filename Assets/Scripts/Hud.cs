@@ -215,7 +215,7 @@ public class Hud : MonoBehaviour
             popup = new Popup { text = text };
         }
         popup.text.text = caption ?? Mathf.Max(1, Mathf.RoundToInt(amount)).ToString() + (critical ? "!" : "");
-        popup.text.color = tint ?? (onTrain || critical ? UiKit.Gold : new Color(1f, 0.25f, 0.2f));
+        popup.text.color = tint ?? (critical ? new Color(1f, 0.55f, 0.1f) : onTrain ? UiKit.Gold : new Color(1f, 0.25f, 0.2f)); // a critical: orange, and it ends in "!"
         popup.text.fontSize = critical ? 56 : 46;
         popup.at = at;
         popup.amount = amount;

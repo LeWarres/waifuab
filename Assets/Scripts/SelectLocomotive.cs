@@ -67,15 +67,16 @@ public class SelectLocomotive : MonoBehaviour
         panel.raycastTarget=true;
         var clicks=panel.GetComponent<Clicks>() ?? panel.gameObject.AddComponent<Clicks>();
         clicks.index=index;clicks.click=Activate;
-        clicks.hover=i=>{focus=i;if(i<=RandomSlot) selected=i;Refresh();};
+        clicks.hover=i=>{if(focus!=i) Sound.Play("click");focus=i;if(i<=RandomSlot) selected=i;Refresh();};
     }
 
     void Activate(int index)
     {
         if(leaving) return;
+        if(index==Start && !Available) return;
+        Sound.Play(index==Back ? "menuback" : "confirm");
         focus=index;
         if(index<=RandomSlot) {selected=index;Refresh();return;}
-        if(index==Start && !Available) return;
         leaving=true;
         if(index==Start) {
             int choice=selected;
@@ -261,6 +262,7 @@ public class SelectLocomotive : MonoBehaviour
         bool vertical=Mathf.Abs(stick.y)>.5f && Mathf.Abs(stick.y)>=Mathf.Abs(stick.x);
         bool horizontal=Mathf.Abs(stick.x)>.5f && !vertical;
         if(!held && (vertical||horizontal)) {
+            Sound.Play("click");
             if(focus<=RandomSlot) {
                 if(vertical && stick.y<0 && focus+Columns>RandomSlot) focus=Start;
                 else {
@@ -274,7 +276,7 @@ public class SelectLocomotive : MonoBehaviour
         if(held && move.activeControl!=null) pad=move.activeControl.device is Gamepad;
         var keyboard=Keyboard.current;
         if(confirm.WasPressedThisFrame() || (keyboard!=null && keyboard.enterKey.wasPressedThisFrame)) {
-            if(focus<=RandomSlot) {if(Available) focus=Start;}
+            if(focus<=RandomSlot) {if(Available) {focus=Start;Sound.Play("confirm");}}
             else Activate(focus);
         }
         if((keyboard!=null && keyboard.escapeKey.wasPressedThisFrame) || (Gamepad.current!=null && Gamepad.current.buttonEast.wasPressedThisFrame)) Activate(Back);
