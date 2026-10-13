@@ -1329,7 +1329,8 @@ public class TrainSim : MonoBehaviour
     void RollEvent()
     {
         bossNext = Biome == 0 && bossBeaten != Biome &&
-                   Random.value < Mathf.Min(bossChance + bossChanceStep * Stations, bossChanceMax);
+                   Stations >= 3 && // at least 3 stations reached before first boss
+                   Random.value < Mathf.Min(bossChance + bossChanceStep * (Stations - 3), bossChanceMax);
         nextEvent = bossNext ? 6 : EventBag[Random.Range(0, EventBag.Length)];
     }
 
