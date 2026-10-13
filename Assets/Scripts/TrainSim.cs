@@ -238,9 +238,9 @@ public class TrainSim : MonoBehaviour
     BossEvent boss;
 
     [Header("Bosses")]
-    // TEST: chance forced high so the boss shows up on the first leg; revert to 0.10 / 0.09 / 0.85.
-    public float bossChance = 1f;         // chance a desert leg turns into the boss, at the first station there
-    public float bossChanceStep = 0f;     // more for every station survived this run, since the way out is barred
+
+    public float bossChance = 0.10f;      // chance a desert leg turns into the boss, at the first station there
+    public float bossChanceStep = 0.09f;  // more for every station survived this run, since the way out is barred
     public float bossChanceMax = 1f;
     int bossBeaten = -1;                  // biome whose boss is already down this run; -1 none yet
     bool bossNext;                        // this leg was rolled to be the boss's
