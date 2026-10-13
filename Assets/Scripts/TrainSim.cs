@@ -238,9 +238,10 @@ public class TrainSim : MonoBehaviour
     BossEvent boss;
 
     [Header("Bosses")]
-    public float bossChance = 0.10f;      // chance a leg in a biome turns into its boss, at the first station there
-    public float bossChanceStep = 0.09f;  // more for every station survived this run, since the way out is barred
-    public float bossChanceMax = 0.85f;
+    // TEST: chance forced high so the boss shows up on the first leg; revert to 0.10 / 0.09 / 0.85.
+    public float bossChance = 1f;         // chance a desert leg turns into the boss, at the first station there
+    public float bossChanceStep = 0f;     // more for every station survived this run, since the way out is barred
+    public float bossChanceMax = 1f;
     int bossBeaten = -1;                  // biome whose boss is already down this run; -1 none yet
     bool bossNext;                        // this leg was rolled to be the boss's
 
@@ -1322,12 +1323,12 @@ public class TrainSim : MonoBehaviour
         whistlePending = true;
     }
 
-    // Which event this leg gets. The biome's boss is the special case: nobody may leave the biome until it is down.
-    // Every leg there is another roll, more likely the longer the player has had to get ready; once beaten, its
-    // biome stops rolling for the rest of the run.
+    // Which event this leg gets. The desert boss is the special case: nobody may leave the desert until it is down.
+    // Only the desert rig is built so far; every leg there is another roll, more likely the longer the player has
+    // had to get ready, and once beaten it never comes back for the rest of the run.
     void RollEvent()
     {
-        bossNext = Biome < Biomes.Length - 1 && bossBeaten != Biome &&
+        bossNext = Biome == 0 && bossBeaten != Biome &&
                    Random.value < Mathf.Min(bossChance + bossChanceStep * Stations, bossChanceMax);
         nextEvent = bossNext ? 6 : EventBag[Random.Range(0, EventBag.Length)];
     }
@@ -1566,8 +1567,9 @@ public class TrainSim : MonoBehaviour
             Add("stay", L10n.T("menu.stay", BiomeName(Biome)), () => Depart());
             if (Biome < Biomes.Length - 1)
             {
-                // The biome's boss stands in the way: no leaving until it is down (and then it is gone for good).
-                bool locked = bossBeaten != Biome;
+                // The desert's boss stands in the way: no leaving until it is down (and then it is gone for good).
+                // The other biomes have no boss yet, so their route out is always open.
+                bool locked = Biome == 0 && bossBeaten != Biome;
                 Add("biome", L10n.T(locked ? "menu.change.locked" : "menu.change", BiomeName(Biome + 1), biomeDifficulty, Biome + 2),
                     () => Depart(true), !locked);
                 if (locked) menuSub = L10n.T("sub.route.locked", BiomeName(Biome + 1));

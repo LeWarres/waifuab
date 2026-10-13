@@ -86,9 +86,11 @@ public class Combat : MonoBehaviour
         public float heal, healRadius;          // health per second given to enemies around it
         public bool spawner;                    // releases a larva
 
+        public Mesh customMesh;                  // override the mesh used to draw this enemy type (projectiles, etc.)
+
         Batch batch;
         // Enemies are robots, loot is a balloon carrying its cargo (Tools/make_enemies.py, Tools/make_cargo.py).
-        public Batch Batch => batch ??= new Batch(color, true, Resources.Load<Mesh>(loot >= 0 ? "Models/Balloon_" + loot : "Models/Enemy_" + Shape));
+        public Batch Batch => batch ??= new Batch(color, true, customMesh ? customMesh : Resources.Load<Mesh>(loot >= 0 ? "Models/Balloon_" + loot : "Models/Enemy_" + Shape));
 
         // Which robot it looks like, read off what it does: the look tells the player what to expect.
         public string Shape =>
@@ -846,6 +848,15 @@ public class Combat : MonoBehaviour
         {
             graph.Reinit();
             graph.Play();
+        }
+        // A one-shot effect has to end by itself: fire carries a looping ParticleSystem that would otherwise
+        // burn for the rest of the run. Stop it, clear the loop and replay, so it dies out after a single pass.
+        foreach (ParticleSystem system in copy.GetComponentsInChildren<ParticleSystem>())
+        {
+            system.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            var main = system.main;
+            main.loop = false;
+            system.Play();
         }
     }
 

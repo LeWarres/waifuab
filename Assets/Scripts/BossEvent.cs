@@ -23,11 +23,12 @@ public class BossEvent : MonoBehaviour
     public float rocketEvery = 1.5f;     // seconds between two volleys, before the difficulty speeds it up
     public float rocketSpeed = 10f;      // slow on purpose: easy to line up a shot
     public float rocketTurn = 60f;       // degrees a second a rocket can steer towards the train
+    public float rocketArc = 45f;        // the tube is angled this far up, so the rocket flies a curve onto the train
     public float rocketHealth = 2.4f * Balance.Scale; // a couple of hits to bring one down
     public float rocketDamage = 5f * Balance.Scale;   // to the wagon a rocket reaches
 
     [Header("The fight")]
-    public float bossHealth = 75f * Balance.Scale;    // unscaled hits at difficulty 0, grows with it
+    public float bossHealth = 150f * Balance.Scale;   // unscaled hits at difficulty 0, grows with it
     public float healthPerDifficulty = 0.12f;         // +12% of the rig's health per difficulty
     public float rampSpeed = 30f;                     // how fast it accelerates in beside the train
 
@@ -37,11 +38,7 @@ public class BossEvent : MonoBehaviour
         name = "Boss", color = new Color(0.6f, 0.2f, 0.15f), health = 0f, speed = 0f, damage = 0f, size = 4f,
         reward = 250, loot = -1, projectile = true,
     };
-    static readonly Combat.EnemyType Rocket = new Combat.EnemyType
-    {
-        name = "Rocket", color = new Color(1f, 0.5f, 0.15f), health = 0f, speed = 0f, damage = 0f, size = 0.9f,
-        reward = 2, loot = -1, projectile = true,
-    };
+    static Combat.EnemyType Rocket;
 
     // One entry per biome, in the order of TrainSim.Biomes. The desert one is the reference; the rest lean on
     // the same hull with their own name, colour and a little more health further along.
@@ -59,7 +56,7 @@ public class BossEvent : MonoBehaviour
         new Boss { id = "fortress", accent = new Color(0.45f, 1.00f, 0.35f), healthMul = 2.80f },
     };
 
-    class Shell { public Combat.Enemy e; public int id, car; public Vector3 at; }
+    class Shell { public Combat.Enemy e; public int id, car; public Vector3 at; public float smokeIn; }
 
     public bool Active { get; private set; }               // from the intro to the end
     public bool Incoming => Active && Time.unscaledTime < startsAt; // the rig is still rolling in, seen from above
@@ -77,7 +74,27 @@ public class BossEvent : MonoBehaviour
     int mode;               // 0 chasing behind, 1 running level with the train
     float modeTimer, phase, side = 1f, fireIn, startZoom, startsAt, nextDust;
 
-    void Awake() => train = GetComponent<TrainSim>();
+    void Awake()
+    {
+        train = GetComponent<TrainSim>();
+        if (Rocket == null)
+        {
+            Rocket = new Combat.EnemyType
+            {
+                name = "Rocket",
+                color = new Color(1f, 0.5f, 0.15f),
+                health = 0f,
+                speed = 0f,
+                damage = 0f,
+                size = 0.9f,
+                reward = 2,
+                loot = -1,
+                projectile = true,
+            };
+        }
+        if (Rocket.customMesh == null)
+            Rocket.customMesh = Resources.Load<Mesh>("Models/BossRocket");
+    }
 
     // False only when the rig's model is missing; TrainSim then picks another event for that leg.
     public bool Begin()
@@ -178,7 +195,7 @@ public class BossEvent : MonoBehaviour
         want.y = 0f;
         rig.position = Vector3.MoveTowards(rig.position, want, speed * dt);
 
-        Vector3 face = mode == 0 ? dir : center - rig.position;
+        Vector3 face = dir; // always parallel to the train: pulling alongside must not turn the nose into its flank
         face.y = 0f;
         if (face.sqrMagnitude > 0.04f)
             rig.rotation = Quaternion.Slerp(rig.rotation, Quaternion.LookRotation(face, Vector3.up), rampSpeed * dt);
@@ -189,7 +206,8 @@ public class BossEvent : MonoBehaviour
         if (now < nextDust) return;
         nextDust = now + 0.05f;
         Vector3 at = rig.TransformPoint(new Vector3(Random.Range(-1.7f, 1.7f), 0.25f, -3.6f));
-        Combat.Instance.Burst("smoke", at, 1.2f);
+        Combat.Instance.Burst("dust", at, 1.8f);
+        Combat.Instance.Burst("dust", at, 1.6f);
     }
 
     void Fire(float dt)
@@ -198,20 +216,66 @@ public class BossEvent : MonoBehaviour
         fireIn -= dt;
         if (fireIn > 0f) return;
         fireIn = rocketEvery / (1f + 0.03f * train.Difficulty);
+        // Base volley
         Launch();
-        if (Random.value < 0.35f) Launch(); // a second tube now and then
+        if (Random.value < 0.35f) Launch();
+        // Extra rockets aimed at the hero: triple the hero share
+        int extra = 0;
+        for (int tries = 0; tries < 8 && extra < 2; tries++)
+        {
+            bool atHeroWas = Random.value < 0.7f; // bias to hero
+            // force hero by temporarily adjusting logic? easier: launch with atHero=true
+        }
+        // simpler: launch twice more if targeting hero
+        Launch(true);
+        Launch(true);
+        Launch(true);
     }
 
-    void Launch()
+    void Launch(bool forceHero = false)
     {
         int car = RandomCar();
-        if (car < 0) return;
+        if (car < 0) car = 0;
         Vector3 local = new Vector3(Random.Range(-0.66f, 0.66f), Random.value < 0.5f ? 4.78f : 5.12f, 1.6f);
         Vector3 muzzle = rig.TransformPoint(local);
-        Vector3 aim = train.CarTop(car);
+        Vector3 aim;
+        bool atHero = (forceHero || Random.value < 0.5f) && train.Player != null && train.Player.Alive;
+        if (atHero)
+            aim = train.Player.Position + Vector3.up * 0.8f;
+        else
+        {
+            int pick = RandomCar();
+            if (pick < 0 || pick >= train.CarCount) pick = 0;
+            aim = train.CarTop(pick);
+        }
+        bool curved = Random.value < 0.5f;
         Combat.Enemy e = Combat.Instance.AddProjectile(Rocket, muzzle, rocketHealth * (1f + 0.05f * train.Difficulty));
-        e.velocity = (aim - muzzle).normalized * rocketSpeed;
-        live.Add(new Shell { e = e, id = e.id, car = car, at = muzzle });
+        // Half the rockets fly a curve (launched up) and half go relatively straight at the target for variety.
+        if (curved)
+        {
+            Vector3 flat = Ground(aim - muzzle);
+            float pitch = Random.Range(rocketArc * 0.75f, rocketArc * 1.25f) * Mathf.Deg2Rad;
+            Vector3 loft = flat * Mathf.Cos(pitch) + Vector3.up * Mathf.Sin(pitch);
+            e.velocity = Quaternion.AngleAxis(Random.Range(-10f, 10f), Vector3.up) * loft * rocketSpeed;
+        }
+        else
+        {
+            Vector3 to = aim - muzzle;
+            Vector3 flat = Ground(to);
+            // a little loft so they don't hug the ground too much, but mostly straight
+            float pitch = Random.Range(4f, 10f) * Mathf.Deg2Rad;
+            Vector3 loft = flat * Mathf.Cos(pitch) + Vector3.up * Mathf.Sin(pitch);
+            e.velocity = Quaternion.AngleAxis(Random.Range(-6f, 6f), Vector3.up) * loft * rocketSpeed;
+        }
+        int targetCar = atHero ? -1 : 0;
+        // find the actual car we aimed at
+        if (!atHero)
+        {
+            int pick = RandomCar();
+            if (pick >= 0 && pick < train.CarCount) targetCar = pick;
+            else targetCar = 0;
+        }
+        live.Add(new Shell { e = e, id = e.id, car = targetCar, at = muzzle });
         Combat.Instance.Burst("spark", muzzle, 0.6f);
     }
 
@@ -227,13 +291,24 @@ public class BossEvent : MonoBehaviour
                 live.RemoveAt(i);
                 continue;
             }
-            Vector3 aim = train.CarAlive(r.car) ? train.CarTop(r.car) : train.Focus + Vector3.up * 1.6f;
+            Vector3 aim;
+            if (r.car == -1) aim = train.Player.Position + Vector3.up * 0.8f;
+            else aim = (r.car >= 0 && r.car < train.CarCount && train.CarAlive(r.car)) ? train.CarTop(r.car) : (train.Player.Position + Vector3.up * 0.8f);
             Vector3 to = aim - r.e.position;
             Vector3 dir = to.sqrMagnitude > 0.01f ? Vector3.RotateTowards(r.e.velocity.normalized, to.normalized, rocketTurn * Mathf.Deg2Rad * dt, 0f) : r.e.velocity.normalized;
             r.e.velocity = dir * rocketSpeed;
             r.e.position += r.e.velocity * dt;
             r.at = r.e.position;
-            Combat.Instance.Burst("smoke", r.e.position, 0.45f); // its trail
+            // The trail is the exhaust flame itself, with a thin grey wake under it: fire the eye can follow.
+            Vector3 back = -r.e.velocity.normalized;
+            Vector3 trailPos = r.e.position + back * 0.8f; // trailing behind the rocket, not above
+            Combat.Instance.Burst("rocket", trailPos, 0.55f);
+            r.smokeIn -= dt;
+            if (r.smokeIn <= 0f)
+            {
+                r.smokeIn = 0.09f;
+                Combat.Instance.Burst("smoke", trailPos, 0.3f);
+            }
 
             if (r.e.position.y <= 0.15f) // buried itself in the ground
             {
@@ -242,9 +317,16 @@ public class BossEvent : MonoBehaviour
                 live.RemoveAt(i);
                 continue;
             }
-            if (to.sqrMagnitude <= 2.2f * 2.2f) // reached its wagon
+            if (to.sqrMagnitude <= 2.2f * 2.2f) // reached its target
             {
-                train.Damage(r.car, rocketDamage * (1f + 0.05f * train.Difficulty));
+                if (r.car >= 0 && r.car < train.CarCount && train.CarAlive(r.car))
+                {
+                    train.Damage(r.car, rocketDamage * (1f + 0.05f * train.Difficulty));
+                }
+                else if (r.car == -1)
+                {
+                    train.Player.Damage(rocketDamage * (1f + 0.05f * train.Difficulty));
+                }
                 train.Shake(0.18f);
                 Combat.Instance.Burst("rocket", r.e.position, 1.3f);
                 Combat.Instance.Despawn(r.e);
@@ -256,8 +338,18 @@ public class BossEvent : MonoBehaviour
     void Win()
     {
         Vector3 at = rig ? rig.position + Vector3.up * 1.8f : Vector3.zero;
-        Combat.Instance.Burst("fire", at, 3.6f);
         Combat.Instance.Burst("grenade", at, 2.6f);
+        // The rig's fire is left burning on the ground behind the train: it slides back with the landscape and goes
+        // out on its own, so it never hangs on the screen once the train has run past the wreck (see Wreck).
+        GameObject fire = Resources.Load<GameObject>("Vfx/fire");
+        if (fire)
+        {
+            GameObject wreck = Instantiate(fire, at, Quaternion.identity);
+            wreck.transform.localScale = Vector3.one * 3.6f;
+            Wreck burning = wreck.AddComponent<Wreck>();
+            burning.train = train;
+            burning.wagon = midCar;
+        }
         train.Shake(0.7f);
         train.BossDefeated(); // the way out of this biome is open, and this rig is done for the run
         End("boss.won");
