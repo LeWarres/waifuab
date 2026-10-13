@@ -181,6 +181,58 @@ public class StationMenu : MonoBehaviour
     static readonly Color CargoTone = new Color(1f, 0.6f, 0.2f); // the market's top row: orange
     static readonly string[] StepKeys = { "step.train", "step.hero", "step.cargo", "step.shop", "step.route" };
     Color theme = UiKit.Sky;
+
+    // The train seen from the side, engine on the left, in a picture across the menu (TrainSim films it), with a
+    // tag under every wagon saying what it carries: whichever way the real one runs on the screen and whatever
+    // stands in front of it. Shown while something is being given a place on it.
+    public struct Slot
+    {
+        public string icon, tag, label; // tag: the wagon's number
+        public int state;               // 0 as it is, 1 the place being chosen, 2 out of the question
+        public float x;                 // where the wagon is across the picture, 0 to 1
+    }
+    class Tile
+    {
+        public Slanted back;
+        public RawImage icon;
+        public Text label;
+    }
+    public const float PictureWide = 1500f, PictureTall = 290f;
+    readonly List<Tile> tiles = new();
+    RectTransform trainRow;
+    RawImage trainPicture;
+    int trainFrame = -1;
+
+    // Call before Render, every frame it should show.
+    public void Train(IList<Slot> slots, Texture picture)
+    {
+        trainFrame = Time.frameCount;
+        trainPicture.texture = picture;
+        for (int i = 0; i < Mathf.Max(slots.Count, tiles.Count); i++)
+        {
+            if (i == tiles.Count)
+            {
+                var made = new Tile { back = UiKit.Panel(trainRow, Vector2.zero, new Vector2(150f, 58f), UiKit.White, UiKit.White, 0.1f) };
+                made.icon = UiKit.Picture(made.back.transform, null, new Vector2(-48f, 0f), 46f);
+                made.label = UiKit.Label(made.back.transform, UiKit.Heading, 22, UiKit.Navy, TextAnchor.MiddleCenter, new Vector2(24f, 0f), new Vector2(92f, 52f), true);
+                tiles.Add(made);
+            }
+            Tile tile = tiles[i];
+            tile.back.gameObject.SetActive(i < slots.Count);
+            if (i >= slots.Count) continue;
+            Slot slot = slots[i];
+            bool chosen = slot.state == 1, out_ = slot.state == 2;
+            tile.back.rectTransform.anchoredPosition = new Vector2((slot.x - 0.5f) * PictureWide, -155f - (chosen ? 8f : 0f));
+            tile.back.rectTransform.localScale = Vector3.one * (chosen ? 1.25f + Mathf.Sin(Time.unscaledTime * 6f) * 0.04f : 0.95f);
+            tile.back.color = tile.back.bottom = chosen ? UiKit.Rose : out_ ? new Color(UiKit.Navy.r, UiKit.Navy.g, UiKit.Navy.b, 0.75f) : UiKit.White;
+            UiKit.SetIcon(tile.icon, slot.icon);
+            tile.icon.color = out_ ? new Color(1f, 1f, 1f, 0.5f) : Color.white;
+            tile.label.text = slot.tag + (string.IsNullOrEmpty(slot.label) ? "" : " · " + slot.label);
+            tile.label.color = chosen || out_ ? Color.white : UiKit.Navy;
+            if (chosen) tile.back.transform.SetAsLastSibling();
+        }
+    }
+
     readonly List<Card> cards = new();
     string shown; // what the cards on screen were built from
     float age;    // seconds since they were built, for the entrance
@@ -212,6 +264,13 @@ public class StationMenu : MonoBehaviour
         purse = UiKit.Label(wallet.transform, UiKit.Heading, 44, UiKit.Gold, TextAnchor.MiddleLeft, new Vector2(36f, 0f), new Vector2(140f, 60f), true);
 
         row = UiKit.Group(canvas.transform, new Vector2(0.5f, 0f), new Vector2(0f, 395f));
+        trainRow = UiKit.Group(canvas.transform, new Vector2(0.5f, 1f), new Vector2(0f, -575f));
+        UiKit.Panel(trainRow, new Vector2(0f, 30f), new Vector2(PictureWide + 40f, PictureTall + 30f), UiKit.White, UiKit.Ice, 0.03f);
+        trainPicture = new GameObject("TrainFromTheSide", typeof(RectTransform), typeof(RawImage)).GetComponent<RawImage>();
+        trainPicture.transform.SetParent(trainRow, false);
+        trainPicture.raycastTarget = false;
+        trainPicture.rectTransform.sizeDelta = new Vector2(PictureWide, PictureTall);
+        trainPicture.rectTransform.anchoredPosition = new Vector2(0f, 30f);
 
         Slanted strip = UiKit.Panel(canvas.transform, new Vector2(0f, 60f), new Vector2(1160f, 54f), new Color(UiKit.Navy.r, UiKit.Navy.g, UiKit.Navy.b, 0.88f), UiKit.Navy, 0.25f);
         strip.rectTransform.anchorMin = strip.rectTransform.anchorMax = new Vector2(0.5f, 0f);
@@ -264,8 +323,11 @@ public class StationMenu : MonoBehaviour
         // controls bar goes, so the train stays in view (placing a wagon).
         shelves = list ? null : lines;
         tabPicked = pickTab;
-        row.anchoredPosition = new Vector2(0f, compact ? 215f : shelves != null ? 365f : 395f); // under the tabs, when there are any
+        // compact: the two buttons, small, in the bottom right corner.
+        row.anchoredPosition = new Vector2(compact ? 660f : 0f, compact ? 175f : shelves != null ? 365f : 395f); // under the tabs, when there are any
+        row.localScale = Vector3.one * (compact ? 0.8f : 1f);
         lowered = compact;
+        trainRow.gameObject.SetActive(!list && trainFrame == Time.frameCount);
         if (options == null || options.Count == 0)
         {
             if (Visible) canvas.gameObject.SetActive(false);

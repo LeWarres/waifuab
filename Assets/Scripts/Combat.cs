@@ -64,6 +64,8 @@ public class Combat : MonoBehaviour
         public Color color;
         public float health, speed, damage, size;
         public int reward = 1;   // money per kill
+        public bool Fodder => fodder || health <= 6f; // the rank and file: they come in crowds, each one weak (Combat.Crowd)
+        public bool fodder;                             // set once its numbers were cut down for that
         public int biome = -1;   // only spawns in this biome; -1 = everywhere
         public int firstLevel;   // difficulty at which this type starts to appear
         public float weight;     // share of the spawns once it appears; 0 = never spawned directly
@@ -151,7 +153,7 @@ public class Combat : MonoBehaviour
         public Vector3 position, velocity; // velocity: only floating goods use it
         public EnemyType type;
         public float hp, maxHp, slowUntil, timer;
-        public int index;
+        public int index, pick; // pick: a number of its own, which decides the wagon it goes for
         public int id; // changes when the enemy dies; whoever targets it compares ids to notice
     }
 
@@ -160,6 +162,7 @@ public class Combat : MonoBehaviour
         public Vector3 position, velocity, size;
         public Quaternion rotation = Quaternion.identity;
         public Enemy target; // null for a flash (explosion, lightning, beam)
+        public bool free;    // aimed at nobody: flies straight and hits the first enemy in its way
         public int targetId;
         public bool hero;    // fired by the hero: the only shots that hurt floating goods
         public Weapon weapon;
@@ -206,10 +209,20 @@ public class Combat : MonoBehaviour
     // than a train that takes a good upgrade every station, so skipped or unlucky upgrades get punished.
     [Header("Difficulty")]
     public float spawnRadius = 45f;
-    public float spawnRate = 1.3f;         // spawns per second at difficulty 0
-    public float spawnRatePerLevel = 0.12f;
-    public float healthPerLevel = 0.045f;  // +4.5% enemy health per difficulty level
-    public float damagePerLevel = 0.05f;
+    [System.NonSerialized] public float spawnRate = 6.5f;         // spawns per second at difficulty 0
+    [System.NonSerialized] public float spawnRatePerLevel = 1f;
+    // A screen full of enemies that fall fast: the small ones come this many times over, each with a share of
+    // the health, damage and pay their type says, so the whole of them weighs what a fifth as many used to.
+    // The big ones keep their numbers and their strength, and stand out in the crowd.
+    public const float Crowd = 5f, FodderHealth = 0.24f, FodderDamage = 0.15f, FodderMoney = 0.22f;
+    // Every so often a horde: a pack of the small ones all at once, from all round.
+    [System.NonSerialized] public Vector2 hordeEvery = new Vector2(12f, 18f);
+    [System.NonSerialized] public int hordeSize = 28, hordeMax = 110;
+    [System.NonSerialized] public float healthPerLevel = 0.12f;   // +12% enemy health per difficulty level
+    [System.NonSerialized] public float damagePerLevel = 0.08f;   // +8% enemy damage per difficulty level
+    // The three knobs to turn first when the whole game feels too easy or too hard: every enemy's health and
+    // damage, and the money a kill pays, against what their types say.
+    [System.NonSerialized] public float enemyHealth = 1f, enemyDamage = 1.1f, killMoney = 0.7f;
     public float speedDrift = 0.15f;       // how much a faster or slower train drags enemies back or lets them catch up   // +5% enemy damage per difficulty level
 
     [Header("Floating goods")]
@@ -237,7 +250,8 @@ public class Combat : MonoBehaviour
     TrainSim train;
     public float FireRate => train.fireRate;
     Player player;
-    float spawnTimer, lootTimer = 8f;
+    float spawnTimer, lootTimer = 8f, hordeTimer = 8f;
+    static bool thinned;
     int level;
     bool heroHit; // true while a hit made by the hero is being applied
     AudioSource laserSound, stationLaserSound;
@@ -248,6 +262,13 @@ public class Combat : MonoBehaviour
     {
         Instance = this;
         train = GetComponent<TrainSim>();
+        if (!thinned)
+        {
+            // Once per run of the program: the types are shared, and a restart comes through here again.
+            thinned = true;
+            foreach (EnemyType type in Types)
+                if (type.Fodder) { type.damage *= FodderDamage; type.explodeDamage *= FodderDamage; type.health *= FodderHealth; type.fodder = true; }
+        }
         laserSound = Sound.Effect(gameObject, "Laser", 0.3f);
         stationLaserSound = Sound.Effect(gameObject, "biglaser_soft", 0.4f);
     }
@@ -262,6 +283,13 @@ public class Combat : MonoBehaviour
             // Shots still in the air (ours, and the guns' bolts) fade out; nothing else moves.
             for (int i = bullets.Count - 1; i >= 0; i--)
                 if ((bullets[i].life -= Time.unscaledDeltaTime * (bullets[i].batch == stationShot ? 1f : 6f)) <= 0f) RemoveBullet(i);
+            // Only what is in the picture is worth the guns' time: whoever is out of it is simply gone.
+            Camera view = Camera.main;
+            for (int i = enemies.Count - 1; i >= 0; i--)
+            {
+                Vector3 seen = view.WorldToViewportPoint(enemies[i].position);
+                if (seen.x < -0.03f || seen.x > 1.03f || seen.y < -0.03f || seen.y > 1.03f) RemoveEnemy(i);
+            }
             if (enemies.Count == 0) return;
             stationShotIn -= Time.unscaledDeltaTime;
             if (stationShotIn > 0f || enemies.Count == 0) return;
@@ -299,6 +327,11 @@ public class Combat : MonoBehaviour
             spawnTimer += 1f / (spawnRate + spawnRatePerLevel * level);
             SpawnWave();
         }
+        if (!calm && !train.BossFight && !train.AtStation && (hordeTimer -= dt) <= 0f)
+        {
+            hordeTimer = Random.Range(hordeEvery.x, hordeEvery.y);
+            SpawnWave(Mathf.Min(hordeMax, hordeSize + level * 4));
+        }
 
         lootTimer -= dt;
         if (lootTimer <= 0f)
@@ -309,7 +342,7 @@ public class Combat : MonoBehaviour
 
         // Enemies head for the closest wagon that is still standing.
         // Faster than cruise: everyone slides towards the rear, so the front arrives sooner and the rear lags.
-        float damageScale = (1f + damagePerLevel * level) * Balance.Scale, drift = (train.Speed - train.maxSpeed) * speedDrift * dt;
+        float damageScale = (1f + damagePerLevel * level) * enemyDamage * Balance.Scale, drift = (train.Speed - train.maxSpeed) * speedDrift * dt;
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
             Enemy e = enemies[i];
@@ -317,14 +350,18 @@ public class Combat : MonoBehaviour
             if (t.projectile) continue; // the boss drives its own rig and rockets; Combat only lets them be shot
             if (t.loot >= 0)
             {
-                // Drifts for a while, then speeds away and is gone once out of sight.
+                // Drifts for a while, then speeds away. It only exists in the picture: out of it, it is gone.
                 e.timer -= dt;
                 e.position += e.velocity * (dt * (e.timer > 0f ? 1f : 10f));
-                if (e.timer <= 0f && e.position.x * e.position.x + e.position.z * e.position.z > spawnRadius * spawnRadius) RemoveEnemy(i);
+                Vector3 seen = Camera.main.WorldToViewportPoint(e.position);
+                if (seen.x < -0.05f || seen.x > 1.05f || seen.y < -0.05f || seen.y > 1.05f) RemoveEnemy(i);
                 continue;
             }
-            int wagon = train.ClosestWagon(e.position, out Vector3 toWagon);
+            // Each goes for a wagon of its own; one that runs into another wagon on the way hits that one.
+            int wagon = train.WagonFor(e.pick, e.position, out Vector3 toWagon);
             if (wagon < 0) break; // train destroyed
+            int near = train.ClosestWagon(e.position, out Vector3 toNear);
+            if (near != wagon && toNear.sqrMagnitude < (t.size * 0.5f + 0.5f) * (t.size * 0.5f + 0.5f)) { wagon = near; toWagon = toNear; }
             e.position -= train.Forward(wagon) * drift; // along the track where its wagon is, so it holds through a curve
             float sqr = toWagon.sqrMagnitude, radius = t.size * 0.5f;
             if (calm)
@@ -401,10 +438,23 @@ public class Combat : MonoBehaviour
         {
             Bullet b = bullets[i];
             Enemy hit = b.target;
+            if (b.free)
+            {
+                // Whoever it runs into first: one pass over the enemies per free bullet.
+                hit = null;
+                Vector3 flat = new Vector3(b.position.x, 0f, b.position.z);
+                foreach (Enemy e in enemies)
+                {
+                    if (e.type.projectile) continue;
+                    float near = b.weapon.speed * dt + e.type.size * 0.5f + 0.3f, dx = e.position.x - flat.x, dz = e.position.z - flat.z;
+                    if (dx * dx + dz * dz <= near * near) { hit = e; break; }
+                }
+                if (hit != null) { b.free = false; b.target = hit; b.targetId = hit.id; }
+            }
             if (hit != null && hit.id == b.targetId)
             {
                 Vector3 toTarget = hit.position - b.position;
-                float reach = b.weapon.speed * dt + hit.type.size * 0.5f;
+                float reach = b.weapon.speed * dt + hit.type.size * 0.5f + 0.3f;
                 if (toTarget.sqrMagnitude <= reach * reach)
                 {
                     Vector3 at = hit.position;
@@ -412,7 +462,7 @@ public class Combat : MonoBehaviour
                     if (b.weapon.slow > 0f && !hit.type.slowImmune) hit.slowUntil = now + b.weapon.slow;
                     heroHit = b.hero;
                     float damage = b.weapon.Damage(b.level) * Power;
-                    if (b.weapon.splash > 0f) Explode(at, b.weapon.Splash(b.level), damage, b.weapon);
+                    if (b.weapon.Splash(b.level) > 0f) Explode(at, b.weapon.Splash(b.level), damage, b.weapon);
                     else Hurt(hit, damage);
                     heroHit = false;
 
@@ -442,7 +492,7 @@ public class Combat : MonoBehaviour
     void LateUpdate()
     {
         if (train.Swarming) return; // nothing of the ordinary fight is drawn meanwhile
-        ResolveBlasts((1f + damagePerLevel * level) * Balance.Scale); // kills made by turrets after our Update
+        ResolveBlasts((1f + damagePerLevel * level) * enemyDamage * Balance.Scale); // kills made by turrets after our Update
         // Robots face the train, hover and bob if they fly, and turn on the spot if that is their thing.
         float clock = Time.time;
         foreach (Enemy e in enemies)
@@ -551,19 +601,21 @@ public class Combat : MonoBehaviour
     }
 
     // Weighted pick among the types unlocked at this difficulty and living in this biome.
-    void SpawnWave()
+    // horde: that many of one small kind, together, instead of the usual one (or its pack).
+    void SpawnWave(int horde = 0)
     {
         int biome = train.Biome;
+        // The big ones are as many as ever, so they take a smaller share of the many more spawns; a horde has none.
+        float Share(EnemyType t) => t.firstLevel > level || (t.biome >= 0 && t.biome != biome) ? 0f : t.Fodder ? t.weight : horde > 0 ? 0f : t.weight / Crowd;
         float total = 0f;
-        foreach (EnemyType t in Types)
-            if (t.firstLevel <= level && (t.biome < 0 || t.biome == biome)) total += t.weight;
+        foreach (EnemyType t in Types) total += Share(t);
         float roll = Random.value * total;
         EnemyType type = Types[0];
         foreach (EnemyType t in Types)
         {
-            if (t.firstLevel > level || (t.biome >= 0 && t.biome != biome)) continue;
+            if (Share(t) <= 0f) continue;
             type = t;
-            if ((roll -= t.weight) <= 0f) break;
+            if ((roll -= Share(t)) <= 0f) break;
         }
 
         float angle = Random.value * Mathf.PI * 2f;
@@ -574,6 +626,17 @@ public class Combat : MonoBehaviour
         float across = view.orthographicSize * view.aspect, deep = view.orthographicSize / Mathf.Sin(view.transform.eulerAngles.x * Mathf.Deg2Rad);
         float radius = Mathf.Max(spawnRadius, Mathf.Sqrt(across * across + deep * deep) + 4f);
         Vector3 center = train.Focus + new Vector3(Mathf.Cos(angle) * radius, 0f, Mathf.Sin(angle) * radius);
+        if (horde > 0)
+        {
+            // From every side at once, each from a point of its own on the ring: a tide closing in, not a clump
+            // falling on one end of the train.
+            for (int i = 0; i < horde; i++)
+            {
+                float from = Random.value * Mathf.PI * 2f, far = radius + Random.Range(0f, 8f);
+                Add(type, train.Focus + new Vector3(Mathf.Cos(from) * far, 0f, Mathf.Sin(from) * far));
+            }
+            return;
+        }
         for (int i = 0; i < type.pack; i++)
             Add(type, center + new Vector3(Random.Range(-1.5f, 1.5f), 0f, Random.Range(-1.5f, 1.5f)) * (type.pack - 1));
     }
@@ -608,9 +671,10 @@ public class Combat : MonoBehaviour
         Enemy e = enemyPool.Count > 0 ? enemyPool.Pop() : new Enemy();
         e.position = new Vector3(ground.x, type.size * 0.5f, ground.z);
         e.type = type;
-        e.hp = e.maxHp = type.health * (1f + healthPerLevel * level) * Balance.Scale;
+        e.hp = e.maxHp = type.health * (1f + healthPerLevel * level) * enemyHealth * Balance.Scale;
         e.velocity = Vector3.zero;
         e.slowUntil = 0f;
+        e.pick = Random.Range(0, 1000);
         e.timer = type.interval;
         e.index = enemies.Count;
         enemies.Add(e);
@@ -708,7 +772,9 @@ public class Combat : MonoBehaviour
                 {
                     Vector3 flat = first.position - from;
                     flat.y = 0f;
-                    if (flat != Vector3.zero) Beam(from, flat.normalized, weapon, level);
+                    int ways = weapon.Directions(level);
+                    if (flat != Vector3.zero)
+                        for (int way = 0; way < ways; way++) Beam(from, Quaternion.Euler(0f, way * 360f / ways, 0f) * flat.normalized, weapon, level);
                 }
             }
             else
@@ -720,6 +786,19 @@ public class Combat : MonoBehaviour
                     picked.Add(e);
                     if (weapon.strike) Strike(e, weapon, level);
                     else Fire(from, e, weapon, level);
+                }
+                // The fan: the other ways leave evenly round the aimed one, at nobody in particular.
+                int ways = weapon.Directions(level);
+                Vector3 aimed = FlatDir(first, from);
+                for (int way = 1; way < ways && first != null; way++)
+                {
+                    Bullet b = Spawn(from, Vector3.one * 0.25f, weapon.Batch, weapon.range / weapon.speed);
+                    b.free = true;
+                    b.weapon = weapon;
+                    b.velocity = Quaternion.Euler(0f, way * 360f / ways, 0f) * aimed * weapon.speed;
+                    b.level = level;
+                    b.hero = heroHit;
+                    b.chain = weapon.Chain(level);
                 }
             }
         }
@@ -891,7 +970,7 @@ public class Combat : MonoBehaviour
         e.hp -= applied;
         if (applied > 0f) train.DamageNumber(e.position + Vector3.up * (e.type.size + 0.5f), applied, false, critical);
         if (e.hp > 0f) return;
-        train.Earn(e.type.reward); // flat: the biome multiplier is on the cargo, where the risk is
+        train.Earn(e.type.reward * killMoney * (e.type.Fodder ? FodderMoney : 1f)); // flat: the biome multiplier is on the cargo, where the risk is
         Die(e, true);
     }
 
@@ -901,13 +980,10 @@ public class Combat : MonoBehaviour
         EnemyType t = e.type;
         Vector3 at = e.position;
         RemoveEnemy(e.index);
-        // Everything that falls leaves a black mark on the ground and a puff of smoke over it; the
-        // floating goods just drift off.
+        // Everything that falls leaves a puff of smoke; the floating goods just drift off. (The black marks they
+        // used to leave on the ground are off: by the hundred they made a mess of it. DrawStains still draws any.)
         if (t.loot < 0)
         {
-            Vector3 on = new Vector3(at.x, 0.02f, at.z);
-            stains.Add(new Stain { at = on, size = t.size * Random.Range(1.1f, 1.7f), yaw = Random.value * 360f });
-            if (stains.Count > 300) stains.RemoveAt(0);
             Burst("smoke", new Vector3(at.x, 0.15f, at.z), 0.8f + t.size * 0.5f);
         }
         if (killed && t.loot >= 0) train.AddLoot(t.loot);
@@ -928,6 +1004,7 @@ public class Combat : MonoBehaviour
         b.life = life;
         b.rotation = rotation;
         b.target = null;
+        b.free = false;
         bullets.Add(b);
         return b;
     }

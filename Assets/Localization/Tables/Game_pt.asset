@@ -865,12 +865,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1051308573667331
-    m_Localized: "Anal\xF3gico ou direcional: mover pelo trem     X: engatar    
-      O: cancelar"
+    m_Localized: 'Esquerda / direita: mover pelo trem     X: engatar     O: cancelar'
     m_Metadata:
       m_Items: []
   - m_Id: 1051308573667332
-    m_Localized: "WASD ou setas: mover pelo trem     Espa\xE7o: engatar     Backspace:
+    m_Localized: "A / D ou setas: mover pelo trem     Espa\xE7o: engatar     Backspace:
       cancelar"
     m_Metadata:
       m_Items: []
@@ -891,12 +890,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1052575295418369
-    m_Localized: "Anal\xF3gico ou direcional: mudar de vag\xE3o     X: montar    
-      O: cancelar"
+    m_Localized: "Esquerda / direita: mudar de vag\xE3o     X: montar     O: cancelar"
     m_Metadata:
       m_Items: []
   - m_Id: 1052575295418370
-    m_Localized: "WASD ou setas: mudar de vag\xE3o     Espa\xE7o: montar     Backspace:
+    m_Localized: "A / D ou setas: mudar de vag\xE3o     Espa\xE7o: montar     Backspace:
       cancelar"
     m_Metadata:
       m_Items: []
@@ -1421,6 +1419,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1433624240271361
     m_Localized: "J\xC1 NO M\xC1X"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1726429638504448
+    m_Localized: Nv {0}
     m_Metadata:
       m_Items: []
   references:

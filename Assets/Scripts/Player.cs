@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     public float speed = 12f;
     public float sprint = 1.7f;    // speed multiplier while the sprint button is held
-    public float maxHealth = 30f * Balance.Scale;
+    public float maxHealth = 25f * Balance.Scale;
     public float hover = 2.5f;     // flying height
     public float leash = 27f;      // how far from the train the hero may wander
     public float aimAssist = 20f;  // degrees around the aim line that still pick an enemy
@@ -201,6 +201,9 @@ public class Player : MonoBehaviour
         if (!move.enabled) InputSystem.actions.Enable();
         // Out of the picture while the game is seen from a gunner's seat.
         if (visuals.activeSelf != (Alive && !train.Swarming)) visuals.SetActive(Alive && !train.Swarming);
+        // Badly hurt: the blood stays on the picture for as long as the hero is at a fifth of his health or less,
+        // and goes the moment he is healed past it. (Flash plays it again each time it runs out.)
+        if (Alive && Health <= maxHealth * 0.2f) train.Flash("blood");
         if (!Alive || Time.timeScale == 0f) return;
 
         // Whatever device was really used last is the one in use (a drifting stick does not count).
@@ -312,7 +315,6 @@ public class Player : MonoBehaviour
     {
         if (!Alive) return;
         Health = Mathf.Max(0f, Health - amount * (1f - armor));
-        train.Flash("blood");
         if (!Alive) visuals.SetActive(false); // down: the train carries on alone until the next station
     }
 

@@ -15,7 +15,8 @@ public class TrainSim : MonoBehaviour
     public float wagonGap = 0.5f;
     public float maxSpeed = 20f;       // cruise speed of a normal leg
     public float acceleration = 6f;
-    public float wagonMaxHealth = 50f; // train health is the sum of its armed wagons
+    // The numbers of the balance are not kept by the scene: what is written here is what the game plays with.
+    [System.NonSerialized] public float wagonMaxHealth = 40f; // train health is the sum of its armed wagons
     public Turret turretPrefab;
 
     [Header("Upgrades")]
@@ -23,27 +24,27 @@ public class TrainSim : MonoBehaviour
     [Range(0f, 1f)] public float criticalChance = 0.05f;
     public float criticalMultiplier = 1.5f;
     public int money;
-    public int moneyReward = 50;
+    [System.NonSerialized] public int moneyReward = 35;
     public float repairReward = 25f;                    // health given back to every wagon
-    public int repairCost = 75;                         // first paid repair; each one bought raises the price by this much
-    [Range(0f, 1f)] public float stationRepair = 0.25f; // share of health a destroyed wagon gets back at a station
+    [System.NonSerialized] public int repairCost = 90;                         // first paid repair; each one bought raises the price by this much
+    [Range(0f, 1f)] [System.NonSerialized] public float stationRepair = 0.15f; // share of health a destroyed wagon gets back at a station
     public float healReward = 10f;                      // health the hero gets per purchase
-    public int healCost = 40;
-    public int skipMoney = 25;                          // skipping the upgrade gives this...
+    [System.NonSerialized] public int healCost = 50;
+    [System.NonSerialized] public int skipMoney = 20;                          // skipping the upgrade gives this...
     public float skipHealth = 10f;                      // ...or this much health to every wagon and the hero
     public float vitalityReward = 10f;                  // max health per hero vitality upgrade
     public int biomeDifficulty = 3;                     // a biome change is worth this many stations of difficulty
-    [Range(0f, 1f)] public float cargoCost = 0.4f;      // share of its pay a cargo wagon costs to load
-    [Range(0f, 1f)] public float bonusOfferChance = 0.25f; // a wagon offer turns into a free cargo wagon or an escort
+    [Range(0f, 1f)] [System.NonSerialized] public float cargoCost = 0.5f;      // share of its pay a cargo wagon costs to load
+    [Range(0f, 1f)] [System.NonSerialized] public float bonusOfferChance = 0.18f; // a wagon offer turns into a free cargo wagon or an escort
     public int maxCargo = 3;                            // cargo wagons loaded at a station
     public int maxCars = 12;                            // longest the train ever gets
 
     [Header("Shop")]
-    public int kitCost = 60;
+    [System.NonSerialized] public int kitCost = 80;
     public float kitHeal = 20f;                         // a kit repairs every standing wagon and the hero, on the road
     public int maxKits = 3;
-    public int wagonCost = 200, wagonCostStep = 100;       // first armed wagon, and how much dearer each next one is
-    public int containerCost = 150, containerCostStep = 75; // same for the permanent cargo wagons
+    [System.NonSerialized] public int wagonCost = 260, wagonCostStep = 140;       // first armed wagon, and how much dearer each next one is
+    [System.NonSerialized] public int containerCost = 190, containerCostStep = 95; // same for the permanent cargo wagons
 
     [Header("Track")]
     [System.NonSerialized] public float exposure = 13.7f;                      // fixed camera exposure (EV100), the same in every biome
@@ -138,11 +139,14 @@ public class TrainSim : MonoBehaviour
     public void Shake(float seconds) => shake = Mathf.Max(shake, seconds);
 
     // The gunner the swarm is fought from: the first armed wagon still standing (its turret and its number).
+    // Any armed wagon still standing, a different one each time: the swarm does not always fall on the first.
     public Transform Gunner(out int wagon)
     {
-        for (wagon = 0; wagon < cars.Count; wagon++)
-            if (cars[wagon].Alive && cars[wagon].mount) return cars[wagon].mount.transform;
-        return null;
+        int standing = 0;
+        wagon = -1;
+        for (int i = 0; i < cars.Count; i++)
+            if (cars[i].Alive && cars[i].mount && Random.Range(0, ++standing) == 0) wagon = i;
+        return wagon < 0 ? null : cars[wagon].mount.transform;
     }
     public bool Bending => knees.Count > 0; // a curve or zigzag is somewhere on screen
     // Enemies leave the train alone: a button game is on or about to start, or a curve is passing under the wagons.
@@ -357,6 +361,53 @@ public class TrainSim : MonoBehaviour
     int ghostAt;
     Material ghostMat;
     Turret weaponGhost;                      // the weapon being given a wagon: shown on the train, in red
+    readonly List<StationMenu.Slot> trainSlots = new(); // the train as the menu draws it while something is being placed
+
+    Camera sideCam;          // films the train from the side for that drawing
+    RenderTexture sideView;
+
+    // The side camera, square on to the train with the engine on the left, far enough off to take all of it in.
+    // It sees only a thin slice of the world around the track: the train, the rails and the ground under them.
+    void AimSideCamera()
+    {
+        if (!sideCam)
+        {
+            sideView = new RenderTexture((int)StationMenu.PictureWide, (int)StationMenu.PictureTall, 24);
+            sideCam = new GameObject("SideView").AddComponent<Camera>();
+            sideCam.orthographic = true;
+            sideCam.targetTexture = sideView;
+            var data = sideCam.gameObject.AddComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData>();
+            data.clearColorMode = UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData.ClearColorMode.Color;
+            data.backgroundColorHDR = new Color(0.66f, 0.84f, 1f);
+        }
+        Vector3 along = loco.position - cars[0].pos;
+        along.y = 0f;
+        along.Normalize();
+        Vector3 head = loco.position + along * 4.2f, tail = cars[cars.Count - 1].pos - along * (wagonSize.x * 0.5f + 0.6f);
+        float aspect = StationMenu.PictureWide / StationMenu.PictureTall;
+        sideCam.orthographicSize = Mathf.Max(2.5f, (head - tail).magnitude * 0.5f / aspect);
+        sideCam.transform.rotation = Quaternion.LookRotation(Vector3.Cross(Vector3.up, along), Vector3.up) * Quaternion.Euler(8f, 0f, 0f);
+        sideCam.transform.position = (head + tail) * 0.5f + Vector3.up * (sideCam.orthographicSize * 0.72f) - sideCam.transform.forward * 30f;
+        sideCam.nearClipPlane = 30f - 2.6f;
+        sideCam.farClipPlane = 30f + 2.6f;
+    }
+
+    // One tag of that drawing per wagon. chosen: the wagon being picked; what: what would go there.
+    void DrawTrain(int chosen, string what, string effect, bool weapons)
+    {
+        AimSideCamera();
+        for (int i = 0; i < cars.Count; i++)
+        {
+            Car car = cars[i];
+            var slot = new StationMenu.Slot { tag = (i + 1).ToString(), x = sideCam.WorldToViewportPoint(car.pos).x };
+            if (i == chosen) { slot.icon = what; slot.label = effect; slot.state = 1; }
+            else if (car.cargo >= 0) { slot.icon = Cargos[car.cargo].id; slot.state = weapons ? 2 : 0; } // cargo carries no weapon
+            else if (car.mount) { slot.icon = car.mount.Weapon.id; slot.label = L10n.T("strip.level", car.mount.Level); }
+            else { slot.icon = "slot"; slot.label = L10n.T("menu.empty"); }
+            trainSlots.Add(slot);
+        }
+    }
+
     int weaponAt;
     // The very first station of all walks the player through: an arrow on the cards and a louder hint, once.
     bool Guiding => AtStation && Stations == 1 && PlayerPrefs.GetInt("guide.station", 0) == 0;
@@ -772,6 +823,8 @@ public class TrainSim : MonoBehaviour
             : settingsMenu ? (Player.UsingGamepad ? "settings.help.gamepad" : "settings.help.keyboard")
             : Paused ? (Player.UsingGamepad ? "pause.help.gamepad" : "pause.help.keyboard")
                              : (Player.UsingGamepad ? "menu.help.gamepad" : "menu.help.keyboard");
+        if (MenuOpen && trainSlots.Count > 0) menuView.Train(trainSlots, sideView);
+        if (sideCam) sideCam.enabled = MenuOpen && trainSlots.Count > 0; // it films only while its picture is on show
         menuView.Render(MenuOpen ? options : null, menuTitle, focus, L10n.T(help), ActivateOption, i => { if (focus != i) Sound.Play("click"); focus = i; }, ListMenu,
             menuStep, menuSub, menuMoney ? money : -1, menuLines, Guiding && !Paused && Health > 0f, menuTab, tab => { Sound.Play("confirm"); marketTab = tab; focus = 0; }, menuCompact);
 
@@ -1131,6 +1184,20 @@ public class TrainSim : MonoBehaviour
             closest = i;
         }
         return closest;
+    }
+
+    // The standing wagon an enemy has picked for itself (pick: any number of its own), so a crowd spreads along the
+    // whole train instead of heaping up on the nearest wagon and moving on together when it falls.
+    public int WagonFor(int pick, Vector3 p, out Vector3 toWagon)
+    {
+        int standing = 0;
+        foreach (Car car in cars) if (car.Alive) standing++;
+        toWagon = default;
+        if (standing == 0) return -1;
+        int nth = pick % standing;
+        for (int i = 0; i < cars.Count; i++)
+            if (cars[i].Alive && nth-- == 0) { toWagon = ToWagon(i, p); return i; }
+        return -1;
     }
 
     // Enemy explosion: hurts every standing wagon it reaches.
@@ -1518,6 +1585,7 @@ public class TrainSim : MonoBehaviour
     {
         options.Clear();
         menuStep = -1;
+        trainSlots.Clear();
         menuSub = null;
         menuMoney = false;
         menuLines = null;
@@ -1632,6 +1700,7 @@ public class TrainSim : MonoBehaviour
             menuCompact = true;
             menuTitle = L10n.T("cargo.place", L10n.T("cargo." + Cargos[pendingCargo].id));
             menuSub = L10n.T(Player.UsingGamepad ? "sub.place.gamepad" : "sub.place.keyboard");
+            DrawTrain(ghostAt, Cargos[pendingCargo].id, L10n.T("cargo." + Cargos[pendingCargo].id), false);
             Add("yes", L10n.T("place.here"), PlaceGhost);
             Minor();
             Add("back", L10n.T("menu.back"), CancelGhost);
@@ -1713,6 +1782,7 @@ public class TrainSim : MonoBehaviour
                 : mount.Level < Weapon.MaxLevel ? L10n.T("menu.levelup", mount.Level + 1) : L10n.T("menu.maxlevel");
             menuTitle = L10n.T("menu.place", pending.Name);
             menuSub = L10n.T("mount.where", weaponAt + 1, effect) + "     " + L10n.T(Player.UsingGamepad ? "sub.mount.gamepad" : "sub.mount.keyboard");
+            DrawTrain(weaponAt, pending.id, effect, true);
             Add("yes", L10n.T("mount.here"), MountGhost, can);
             Minor();
             Add("back", L10n.T("menu.back"), CancelWeapon);
@@ -1767,16 +1837,13 @@ public class TrainSim : MonoBehaviour
         }
         if ((ghost != null || weaponGhost) && !Paused)
         {
-            // Placing a wagon or a weapon: the stick pushed any way along the train's line on the screen slides
-            // it that way, so a train that runs up the picture takes up and down too. Nothing moves onto the
-            // buttons: the confirm button places it, the back button (circle / B, Backspace) takes it away.
-            Transform cam = Camera.main.transform;
-            var line = new Vector2(Vector3.Dot(cam.right, Vector3.right), Vector3.Dot(cam.up, Vector3.right)).normalized;
-            float push = Vector2.Dot(move, line);
-            int slide = tapped ? (line.x >= 0f ? step : -step) : Mathf.Abs(push) > 0.3f ? (int)Mathf.Sign(push) : 0; // low: a train at a slant still takes plain up or down
+            // Placing a wagon or a weapon: left and right move it along the row of tiles the menu draws, engine
+            // on the left, whichever way the train itself runs on the screen. Nothing moves onto the buttons:
+            // the confirm button places it, the back button (circle / B, Backspace) takes it away.
+            int slide = tapped ? step : Mathf.Abs(move.x) > 0.5f ? (int)Mathf.Sign(move.x) : 0;
             if (slide != 0 && (tapped || !navHeld))
             {
-                if (ghost != null) MoveGhost(-slide); else MoveWeapon(-slide); // the front of the train is index 0
+                if (ghost != null) MoveGhost(slide); else MoveWeapon(slide); // right: towards the tail
                 Sound.Play("click");
             }
             navHeld = slide != 0 && !tapped;
@@ -1807,22 +1874,6 @@ public class TrainSim : MonoBehaviour
             hud.Warning(L10n.T(eventKind == 1 ? "warn.curve.title" : eventKind == 4 ? "warn.zig.title" : "warn.jump.title"),
                 eventKind == 1 ? L10n.T("warn.curve") : eventKind == 4 ? L10n.T("warn.zig", L10n.T(Player.UsingGamepad ? "zig.stick" : "zig.keys"))
                 : eventKind == 2 ? L10n.T("warn.ramp", button) : ""); // the needle: just the warning, then it starts
-        }
-
-        if (MenuOpen && !Paused && (ghost != null || weaponGhost))
-        {
-            // Being placed: an arrow each way it can still go, on the train itself, pointing as it would move
-            // on the screen. That it can be moved at all is the thing nobody guessed.
-            int at = ghost != null ? ghostAt : weaponAt;
-            for (int way = -1; way <= 1; way += 2)
-            {
-                int to = ghost != null ? at + way : ArmedFrom(at, way);
-                if (to < (ghost != null ? 1 : 0) || to > cars.Count - 1) continue;
-                Vector3 from = cars[at].pos, spot = ghost != null ? from + (cars[to].pos - from).normalized * Step * 0.8f : cars[to].pos;
-                Vector3 a = Camera.main.WorldToScreenPoint(from), b = Camera.main.WorldToScreenPoint(spot);
-                string arrow = Mathf.Abs(b.x - a.x) >= Mathf.Abs(b.y - a.y) ? (b.x > a.x ? "→" : "←") : (b.y > a.y ? "↑" : "↓");
-                Panel.Mark(spot + Vector3.up * wagonSize.y, arrow, 3);
-            }
         }
 
         if (!MenuOpen || options.Count == 0 || options[focus].anchor == null) return;

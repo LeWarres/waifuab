@@ -864,11 +864,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1051308573667331
-    m_Localized: 'Stick o cruceta: moverla por el tren     X: enganchar     O: cancelar'
+    m_Localized: 'Izquierda / derecha: moverla por el tren     X: enganchar     O:
+      cancelar'
     m_Metadata:
       m_Items: []
   - m_Id: 1051308573667332
-    m_Localized: 'WASD o flechas: moverla por el tren     Espacio: enganchar    
+    m_Localized: 'A / D o flechas: moverla por el tren     Espacio: enganchar    
       Retroceso: cancelar'
     m_Metadata:
       m_Items: []
@@ -885,11 +886,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1052575295418369
-    m_Localized: "Stick o cruceta: cambiar de vag\xF3n     X: montar     O: cancelar"
+    m_Localized: "Izquierda / derecha: cambiar de vag\xF3n     X: montar     O: cancelar"
     m_Metadata:
       m_Items: []
   - m_Id: 1052575295418370
-    m_Localized: "WASD o flechas: cambiar de vag\xF3n     Espacio: montar     Retroceso:
+    m_Localized: "A / D o flechas: cambiar de vag\xF3n     Espacio: montar     Retroceso:
       cancelar"
     m_Metadata:
       m_Items: []
@@ -1421,6 +1422,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1433624240271361
     m_Localized: "YA AL M\xC1X"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1726429638504448
+    m_Localized: Nv {0}
     m_Metadata:
       m_Items: []
   references:

@@ -201,13 +201,13 @@ sub.market.cargo	Pagas ahora y cobras más si llega entera     {0}: ver la TIEND
 sub.market.shop	Lo que compras lo recibes ya     {0}: ver la CARGA	What you buy is yours right away     {0}: see the CARGO	O que comprar recebe na hora     {0}: ver a CARGA	買ったものはすぐ手に入る     {0}：貨物へ
 market.switch.gamepad	Arriba / abajo	Up / down	Cima / baixo	上下
 market.switch.keyboard	W / S	W / S	W / S	W / S
-sub.place.gamepad	Stick o cruceta: moverla por el tren     X: enganchar     O: cancelar	Stick or D-pad: move it along the train     X: couple     O: cancel	Analógico ou direcional: mover pelo trem     X: engatar     O: cancelar	スティック / 十字キー：列車の上を移動     ×：連結     ○：やめる
-sub.place.keyboard	WASD o flechas: moverla por el tren     Espacio: enganchar     Retroceso: cancelar	WASD or arrows: move it along the train     Space: couple     Backspace: cancel	WASD ou setas: mover pelo trem     Espaço: engatar     Backspace: cancelar	WASD / 矢印：列車の上を移動     Space：連結     Backspace：やめる
+sub.place.gamepad	Izquierda / derecha: moverla por el tren     X: enganchar     O: cancelar	Left / right: move it along the train     X: couple     O: cancel	Esquerda / direita: mover pelo trem     X: engatar     O: cancelar	左右：列車の上を移動     ×：連結     ○：やめる
+sub.place.keyboard	A / D o flechas: moverla por el tren     Espacio: enganchar     Retroceso: cancelar	A / D or arrows: move it along the train     Space: couple     Backspace: cancel	A / D ou setas: mover pelo trem     Espaço: engatar     Backspace: cancelar	A / D / 矢印：列車の上を移動     Space：連結     Backspace：やめる
 place.here	Enganchar\naquí	Couple\nhere	Engatar\naqui	連結\nここに
 mount.where	Vagón {0}: {1}	Wagon {0}: {1}	Vagão {0}: {1}	車両 {0}：{1}
 mount.here	Montar\naquí	Mount\nhere	Montar\naqui	搭載\nここに
-sub.mount.gamepad	Stick o cruceta: cambiar de vagón     X: montar     O: cancelar	Stick or D-pad: change wagon     X: mount     O: cancel	Analógico ou direcional: mudar de vagão     X: montar     O: cancelar	スティック / 十字キー：車両を変更     ×：搭載     ○：やめる
-sub.mount.keyboard	WASD o flechas: cambiar de vagón     Espacio: montar     Retroceso: cancelar	WASD or arrows: change wagon     Space: mount     Backspace: cancel	WASD ou setas: mudar de vagão     Espaço: montar     Backspace: cancelar	WASD / 矢印：車両を変更     Space：搭載     Backspace：やめる
+sub.mount.gamepad	Izquierda / derecha: cambiar de vagón     X: montar     O: cancelar	Left / right: change wagon     X: mount     O: cancel	Esquerda / direita: mudar de vagão     X: montar     O: cancelar	左右：車両を変更     ×：搭載     ○：やめる
+sub.mount.keyboard	A / D o flechas: cambiar de vagón     Espacio: montar     Retroceso: cancelar	A / D or arrows: change wagon     Space: mount     Backspace: cancel	A / D ou setas: mudar de vagão     Espaço: montar     Backspace: cancelar	A / D / 矢印：車両を変更     Space：搭載     Backspace：やめる
 loco.collection	TU FLOTA	YOUR FLEET	SUA FROTA	車両コレクション
 loco.select	Elige tu locomotora	Choose your locomotive	Escolha sua locomotiva	機関車を選択
 loco.classic	RicMar	RicMar	RicMar	RicMar
@@ -327,3 +327,4 @@ boss.name.alien	Camión alienígena	Alien truck	Caminhão alienígena	異星ト�
 boss.name.fortress	Camión de asedio	Siege truck	Caminhão de cerco	攻囲トラック
 menu.change.locked	Cambiar a {0}\n(vence al jefe)	Move to {0}\n(beat the boss)	Mudar para {0}\n(vença o chefe)	{0}へ進む\n（ボスを倒せ）
 sub.route.locked	Vence al jefe del bioma para avanzar	Beat the biome's boss to move on	Vença o chefe do bioma para avançar	進むにはバイオームのボスを倒せ
+strip.level	Nv {0}	Lv {0}	Nv {0}	Lv {0}

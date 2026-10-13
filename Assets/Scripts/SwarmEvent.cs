@@ -24,7 +24,7 @@ public class SwarmEvent : MonoBehaviour
     // A shot is worth what the wagon's own weapon deals in that time, so upgrading it keeps the fight fair;
     // never less than a level 1 turret, or the slow support weapons could not win at all.
     public float fireEvery = 0.11f, leastDamagePerSecond = 4f * Balance.Scale;
-    public float aimAssist = 3.2f;          // degrees off the sight that still hit
+    public float aimAssist = 7f;          // degrees off the sight that still hit
     public float stickSpeed = 120f, mouseSpeed = 0.14f; // degrees a second, degrees a pixel
     public int moneyPerKill = 2;
     public float warnSeconds = 2.6f, slowMotion = 0.12f;

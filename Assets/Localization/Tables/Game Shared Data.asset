@@ -1331,6 +1331,10 @@ MonoBehaviour:
     m_Key: badge.maxed
     m_Metadata:
       m_Items: []
+  - m_Id: 1726429638504448
+    m_Key: strip.level
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
