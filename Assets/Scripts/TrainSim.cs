@@ -776,16 +776,26 @@ public class TrainSim : MonoBehaviour
 
         if (AtStation || Paused || mainMenu) return;
 
-        // Brake curve: fastest speed that can still stop exactly on the station.
-        float target = Mathf.Clamp(Mathf.Sqrt(2f * acceleration * remaining), 0.5f, maxSpeed * Legs[leg].speed * (Zigzag ? zigSpeed : 1f));
-        Speed = Mathf.MoveTowards(Speed, target, acceleration * Time.deltaTime);
+        // Brake curve: fastest speed that can still stop exactly on the station. A boss on the field is the
+        // exception: the train runs on at cruise but makes no headway, so the station is never reached mid-fight.
+        float step;
+        if (BossFight)
+        {
+            Speed = Mathf.MoveTowards(Speed, maxSpeed, acceleration * Time.deltaTime);
+            step = Speed * Time.deltaTime;
+        }
+        else
+        {
+            float target = Mathf.Clamp(Mathf.Sqrt(2f * acceleration * remaining), 0.5f, maxSpeed * Legs[leg].speed * (Zigzag ? zigSpeed : 1f));
+            Speed = Mathf.MoveTowards(Speed, target, acceleration * Time.deltaTime);
+            step = Mathf.Min(Speed * Time.deltaTime, remaining);
+            remaining -= step;
+        }
         if (whistlePending && Speed > 0f)
         {
             whistlePending = false;
             if (whistleSound.clip) whistleSound.PlayOneShot(whistleSound.clip);
         }
-        float step = Mathf.Min(Speed * Time.deltaTime, remaining);
-        remaining -= step;
         Scroll = step;
 
         if (!AtStation && !Zigzag && Speed > maxSpeed) Flash("wind"); // an express leg (not the zigzag: its zoom outgrows the effect)
@@ -808,7 +818,7 @@ public class TrainSim : MonoBehaviour
             Dress(prop);
         }
 
-        stationX -= step;
+        if (!BossFight) stationX -= step; // the station waits off ahead for as long as a boss holds the leg
         if (stationX < -viewRange)
         {
             // Reuse the one station for the next stop; out of sight is also the moment to change its look.
@@ -869,7 +879,7 @@ public class TrainSim : MonoBehaviour
         }
         warned = approach >= 0f;
 
-        if (remaining <= 0f) Arrive();
+        if (remaining <= 0f && !BossFight) Arrive(); // never arrive with a boss still on the field
     }
 
     void Arrive()
