@@ -460,9 +460,7 @@ MonoBehaviour:
   - m_Id: 266376557441026
     m_Localized: 'Armed wagon
 
-      one per biome:
-
-      move on'
+      limit of 3 reached'
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441027
@@ -1461,6 +1459,387 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1726429638504448
     m_Localized: Lv {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960132907008
+    m_Localized: "Ch. {0} \xB7 {1} \xB7 {2}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655744
+    m_Localized: DUEL!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655745
+    m_Localized: Chapter complete!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655746
+    m_Localized: Pick one upgrade to keep for the chapters ahead
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655747
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655748
+    m_Localized: CHAPTER {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655749
+    m_Localized: locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655750
+    m_Localized: 'Keep
+
+      Hero weapon: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655751
+    m_Localized: 'Keep
+
+      Wagon with {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655752
+    m_Localized: 'Keep
+
+      A level on the Hero weapon'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655753
+    m_Localized: 'Keep
+
+      +10% speed'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655754
+    m_Localized: 'Keep
+
+      -10% damage taken'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655755
+    m_Localized: 'Keep
+
+      Extra max health'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655756
+    m_Localized: 'Keep
+
+      +20% damage'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655757
+    m_Localized: 'Keep
+
+      +25% money'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655758
+    m_Localized: 'Keep
+
+      +20% fire rate'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655759
+    m_Localized: 'Keep
+
+      +5 critical chance'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655760
+    m_Localized: 'Keep
+
+      +25 critical damage'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655761
+    m_Localized: THE TRAIN RANKING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655762
+    m_Localized: THE CITY THAT NEVER SLEEPS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655763
+    m_Localized: RAILS AMONG THE STARS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655764
+    m_Localized: THE ALIENS' PLANET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655765
+    m_Localized: THE BASE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655766
+    m_Localized: 'Onini and her C-279 fell behind, smoking in the sand. First round
+      of the Train Ranking: done.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655767
+    m_Localized: 'The man in black called to congratulate me. He sounded like someone
+      who never expected me to win. Next stop: the city.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655768
+    m_Localized: 'The city. Skyscrapers, billboards and elevated tracks everywhere.
+      Here the robots don''t come from the desert: they crawl out of the alleys.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655769
+    m_Localized: Cerebron is waiting in his R-2D-2, an armoured train with more guns
+      than windows. They say he thinks too much. I'd rather speed up.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655770
+    m_Localized: The R-2D-2 stopped halfway across the bridge, its armour dented.
+      Cerebron muttered something about odds. He forgot to factor in my stubbornness.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655771
+    m_Localized: At the end of the city stands an orbital elevator. Nobody told me
+      the Train Ranking ran off the planet too.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655772
+    m_Localized: Space. The rails float over nothing, and the silence is so deep
+      I can hear the engine beat. I haven't seen the stars this close in eighty years.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655773
+    m_Localized: 'Somewhere up there is my home. But first, the orange Golem blocks
+      the line. Sentinel doesn''t talk: he only shoots.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655774
+    m_Localized: The Golem died in a shower of sparks and drifted, slowly spinning,
+      into the void. Sentinel waved before he was gone. Odd, but polite.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655775
+    m_Localized: The government's coordinates point to an ugly green planet. That's
+      where the stupid aliens live. And that's where I deliver the rock.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655776
+    m_Localized: The alien planet. Everything glows, everything throbs, and everything
+      tries to eat my train. Even the plants have teeth.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655777
+    m_Localized: Faceless drives T.exe, the spider. It walks the rails as if they
+      were its own. It has no face, but I'd swear it's laughing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655778
+    m_Localized: T.exe ended up with its legs in the air. Faceless faded away as
+      if it had never been there. I'd rather not think about it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655779
+    m_Localized: 'In the distance stands the alien base: a green fortress on a mountain.
+      Only one driver left between the rock and where it belongs.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655780
+    m_Localized: The fortress. Walls, turrets and a whole army waiting. The government
+      called it "a simple delivery". Sure it is.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655781
+    m_Localized: 'Tzmil and her Night Skull wait on the final straight. She wants
+      her wish too. Too bad: this time I''m not losing.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655782
+    m_Localized: The Night Skull went dark and the rock flew straight into the base.
+      The crash was heard across the whole planet. The stupid aliens surrendered
+      that same night.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655783
+    m_Localized: 'I won the Train Ranking. The World Government had to keep its word:
+      my ship, my map, all of it back. I set course for home, to the other mecha
+      witches.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655784
+    m_Localized: "Although, to be honest\u2026 I'm going to miss the sound of the
+      rails.   THE END"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276164661248
+    m_Localized: Chapters
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215680
+    m_Localized: 'Space / Enter / A: continue'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215681
+    m_Localized: A steam engine? Seriously, Onini?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215682
+    m_Localized: The C-279 is older than your licence, witch. And first place in
+      the Ranking is mine.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215683
+    m_Localized: Sorry. I need that wish more than you do.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215684
+    m_Localized: "Tch\u2026 next time you won't even see my smoke."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215685
+    m_Localized: Next time I'll already be home.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215686
+    m_Localized: My calculations give you a 3% chance of getting through this city.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215687
+    m_Localized: And what are the odds I crack that brain of yours?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215688
+    m_Localized: The government promised me a new body if I win. I won't lose it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215689
+    m_Localized: "Calculation error\u2026 I left out the variable \"stubborn witch\"."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215690
+    m_Localized: Nobody ever does.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215691
+    m_Localized: "\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215692
+    m_Localized: Not a talker? Fine. I didn't come to chat either.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215693
+    m_Localized: 'Order received: nobody reaches high orbit. Not even you.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215694
+    m_Localized: "Mission\u2026 failed. Safe travels, driver."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215695
+    m_Localized: Thanks, big guy. You too.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215696
+    m_Localized: You're late. The aliens offered me more than the government.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215697
+    m_Localized: You work for them? What did they promise you, a face?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215698
+    m_Localized: Your train. Eight legs beat two rails.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215699
+    m_Localized: "It doesn't matter\u2026 every rail ends at the same base."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215700
+    m_Localized: Well, mine ends with a rock at its door.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215701
+    m_Localized: So you're the witch everyone talks about.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215702
+    m_Localized: And you're the last one left. You want the wish too?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215703
+    m_Localized: I want my people out of this war. If I'm the one who throws the
+      rock, the government owes it to me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215704
+    m_Localized: "Throw that rock, witch\u2026 and end this for both of us."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215705
+    m_Localized: Done. And then I'm going home.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2524637377671168
+    m_Localized: Bombs! Shoot them down before they land
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2524637411225600
+    m_Localized: Boarders! Robots are jumping at your train
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2524637411225601
+    m_Localized: Engine overheated! Double damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528843870318592
+    m_Localized: "Eternal container\nFREE \xB7 pays at every station"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528843870318593
+    m_Localized: RARE!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686475969048576
+    m_Localized: 'Attack: {0}! Press in order'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185920
+    m_Localized: '{0} on the rival!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185921
+    m_Localized: 'Missed: the rival turns {0} on you'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185922
+    m_Localized: 'Half right: nothing happens'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185923
+    m_Localized: The rival hits you with {0}!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185924
+    m_Localized: 'You: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185925
+    m_Localized: 'Rival: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185926
+    m_Localized: Jammed guns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185927
+    m_Localized: Broken armour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185928
+    m_Localized: Confusion
     m_Metadata:
       m_Items: []
   references:

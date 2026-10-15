@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Text operationsLabel;
     [SerializeField] Text hint;
     InputAction move, confirm;
-    bool settings, held, pad;
+    bool settings, story, held, pad; // story: the page of story chapters
     int focus;
 
     void Awake()
@@ -64,9 +64,25 @@ public class MainMenu : MonoBehaviour
     void Build()
     {
         rows.Clear();
+        if (story)
+        {
+            // BBA's chapters: every one up to the first not beaten yet can be played; the rest show what is to come.
+            Story.Part[] route = Story.Route("bba");
+            int reached = PlayerPrefs.GetInt("story.bba.reached", 0);
+            for (int i = 0; i < route.Length; i++)
+            {
+                int chapter = i;
+                string name = Localized("story.chapter.number").Replace("{0}", (i + 1).ToString()) + "  ·  " + Localized("biome." + TrainSim.IdOfBiome(route[i].biome));
+                if (i <= reached) Add(name + "  —  " + Localized($"story.bba.{i}.title"), () => StartChapter(chapter));
+                else Add(name + "  —  " + Localized("story.locked"), () => { });
+            }
+            Add(Localized("menu.back"), () => { story = false; focus = 0; }, back: true);
+            return;
+        }
         if (!settings)
         {
-            Add(Localized("main.story"), () => SelectJourney(true));
+            Add(Localized("main.story"), () => SelectJourney(true)); // a new story: the locomotive, the prologue, chapter 1
+            if (PlayerPrefs.GetInt("story.bba.reached", 0) > 0) Add(Localized("main.chapters"), () => { story = true; focus = 0; }); // or one already reached
             Add(Localized("main.endless"), () => SelectJourney(false));
             Add(Localized("menu.settings"), () => { settings = true; focus = 0; });
             Add(Localized("main.exit"), Quit);
@@ -84,9 +100,19 @@ public class MainMenu : MonoBehaviour
         Add(Localized("menu.back"), () => { settings = false; focus = 2; }, back: true);
     }
 
+    // Story mode is BBA's for now: her locomotive, the chapter picked, its opening told first.
+    void StartChapter(int chapter)
+    {
+        Locomotives.StoryMode = true;
+        if (Story.Route(Locomotives.Hero) == null) Locomotives.Select(0); // a locomotive whose hero has this story
+        Story.Play(chapter);
+        SceneManager.LoadScene("historiaDialogos");
+    }
+
     void SelectJourney(bool story)
     {
         Locomotives.StoryMode = story;
+        if (story) Story.Play(0);
         SceneManager.LoadScene("selectHero");
     }
 
@@ -103,8 +129,8 @@ public class MainMenu : MonoBehaviour
         held = vertical || sideways;
         if (move.activeControl != null && held) pad = move.activeControl.device is Gamepad;
         if (confirm.WasPressedThisFrame()) Activate(focus);
-        if (settings && ((Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) ||
-            (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))) { Sound.Play("menuback"); settings = false; focus = 2; }
+        if ((settings || story) && ((Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) ||
+            (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame))) { Sound.Play("menuback"); focus = settings ? 2 : 0; settings = story = false; }
 
         Build(); // what was just changed shows at once
         RefreshUI();

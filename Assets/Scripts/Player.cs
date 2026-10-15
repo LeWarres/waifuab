@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public Weapon ammo = Weapon.Hero[0]; // what the weapon fires
     public int level = 1;                // how far the weapon has evolved
 
+    public static System.Func<Vector2> Bot; // AutoPlay steering in place of the stick, when set
     public float Health { get; private set; }
     public bool Alive => Health > 0f;
     public bool UsingGamepad { get; private set; }
@@ -207,8 +208,9 @@ public class Player : MonoBehaviour
         if (!Alive || Time.timeScale == 0f) return;
 
         // Whatever device was really used last is the one in use (a drifting stick does not count).
-        Vector2 input = Vector2.ClampMagnitude(move.ReadValue<Vector2>(), 1f);
+        Vector2 input = Vector2.ClampMagnitude(Bot != null ? Bot() : move.ReadValue<Vector2>(), 1f);
         if (input.magnitude < Deadzone) input = Vector2.zero;
+        if (train.Confused) input = -input;
         Track(move, input.magnitude);
         Track(look, look.ReadValue<Vector2>().magnitude);
         foreach (InputAction button in buttons) Track(button, button.IsPressed() ? 1f : 0f);

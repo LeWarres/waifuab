@@ -76,6 +76,8 @@ public class DeliveryReport : MonoBehaviour
             (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)) Finish();
     }
 
+    public void Close() => Finish();
+
     void Finish(bool back = false)
     {
         if (!Visible || Time.unscaledTime - openedAt < 0.3f) return;

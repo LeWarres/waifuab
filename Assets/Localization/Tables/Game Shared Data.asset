@@ -1335,6 +1335,354 @@ MonoBehaviour:
     m_Key: strip.level
     m_Metadata:
       m_Items: []
+  - m_Id: 2507960132907008
+    m_Key: hud.chapter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655744
+    m_Key: story.duel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655745
+    m_Key: story.won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655746
+    m_Key: story.keep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655747
+    m_Key: story.next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655748
+    m_Key: story.chapter.number
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655749
+    m_Key: story.locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655750
+    m_Key: keep.ammo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655751
+    m_Key: keep.wagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655752
+    m_Key: keep.evolve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655753
+    m_Key: keep.speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655754
+    m_Key: keep.armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655755
+    m_Key: keep.vitality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655756
+    m_Key: keep.damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655757
+    m_Key: keep.greed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655758
+    m_Key: keep.fireRate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655759
+    m_Key: keep.critChance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655760
+    m_Key: keep.critDamage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655761
+    m_Key: story.bba.0.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655762
+    m_Key: story.bba.1.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655763
+    m_Key: story.bba.2.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655764
+    m_Key: story.bba.3.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655765
+    m_Key: story.bba.4.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655766
+    m_Key: story.bba.0.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655767
+    m_Key: story.bba.0.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655768
+    m_Key: story.bba.1.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655769
+    m_Key: story.bba.1.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655770
+    m_Key: story.bba.1.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655771
+    m_Key: story.bba.1.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655772
+    m_Key: story.bba.2.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655773
+    m_Key: story.bba.2.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655774
+    m_Key: story.bba.2.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655775
+    m_Key: story.bba.2.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655776
+    m_Key: story.bba.3.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655777
+    m_Key: story.bba.3.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655778
+    m_Key: story.bba.3.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655779
+    m_Key: story.bba.3.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655780
+    m_Key: story.bba.4.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655781
+    m_Key: story.bba.4.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655782
+    m_Key: story.bba.4.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655783
+    m_Key: story.bba.4.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655784
+    m_Key: story.bba.4.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276164661248
+    m_Key: main.chapters
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215680
+    m_Key: talk.help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215681
+    m_Key: story.bba.0.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215682
+    m_Key: story.bba.0.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215683
+    m_Key: story.bba.0.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215684
+    m_Key: story.bba.0.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215685
+    m_Key: story.bba.0.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215686
+    m_Key: story.bba.1.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215687
+    m_Key: story.bba.1.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215688
+    m_Key: story.bba.1.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215689
+    m_Key: story.bba.1.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215690
+    m_Key: story.bba.1.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215691
+    m_Key: story.bba.2.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215692
+    m_Key: story.bba.2.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215693
+    m_Key: story.bba.2.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215694
+    m_Key: story.bba.2.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215695
+    m_Key: story.bba.2.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215696
+    m_Key: story.bba.3.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215697
+    m_Key: story.bba.3.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215698
+    m_Key: story.bba.3.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215699
+    m_Key: story.bba.3.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215700
+    m_Key: story.bba.3.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215701
+    m_Key: story.bba.4.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215702
+    m_Key: story.bba.4.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215703
+    m_Key: story.bba.4.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215704
+    m_Key: story.bba.4.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215705
+    m_Key: story.bba.4.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2524637377671168
+    m_Key: rival.bombs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2524637411225600
+    m_Key: rival.boarders
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2524637411225601
+    m_Key: rival.weak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528546250895360
+    m_Key: "l\xEDmite de 3 alcanzado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528546280255488
+    m_Key: limit of 3 reached
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528546280255489
+    m_Key: limite de 3 atingido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528843870318592
+    m_Key: offer.eternal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528843870318593
+    m_Key: badge.rare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686475969048576
+    m_Key: battle.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185920
+    m_Key: battle.hit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185921
+    m_Key: battle.back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185922
+    m_Key: battle.even
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185923
+    m_Key: rival.hex
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185924
+    m_Key: battle.you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185925
+    m_Key: battle.them
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185926
+    m_Key: status.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185927
+    m_Key: status.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185928
+    m_Key: status.2
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

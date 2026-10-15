@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class StoryIntro : MonoBehaviour
 {
-    [System.Serializable] public class Page { public int image; public string textKey; }
+    [System.Serializable] public class Page { public int image, number; public string textKey, titleKey; } // number, titleKey: a story chapter's, over the picture
     public string gameScene="sandScenario";
     public Texture2D backgrounds;
     public Page[] pages;
@@ -25,6 +25,7 @@ public class StoryIntro : MonoBehaviour
         if (placeholder) { BuildPlaceholder(); return; }
         if(!canvas) BuildUI();
         if(!backgrounds) backgrounds=Resources.Load<Texture2D>("Story/prologue");
+        if(Story.Active) pages=Story.Pages(); // story mode: this chapter's opening, after the last one's ending
         next.onClick.AddListener(()=>{Sound.Play("confirm");Advance();});
         automatic.onClick.AddListener(()=>{Sound.Play("confirm");auto=!auto;reading=0;UpdateAutomaticLabel();});
         skip.onClick.AddListener(()=>{Sound.Play("confirm");Finish();});
@@ -36,7 +37,7 @@ public class StoryIntro : MonoBehaviour
     {
         if(leaving) return;
         if(Gamepad.current!=null && Gamepad.current.buttonEast.wasPressedThisFrame) {
-            Sound.Play("menuback");leaving=true;SceneManager.LoadScene("selectHero");return;
+            Sound.Play("menuback");leaving=true;SceneManager.LoadScene(Story.Active ? "MainMenu" : "selectHero");return;
         }
         if (placeholder)
         {
@@ -88,7 +89,7 @@ public class StoryIntro : MonoBehaviour
     void Finish()
     {
         if(leaving) return;
-        leaving=true;SceneManager.LoadScene(gameScene);
+        leaving=true;SceneManager.LoadScene(Story.Active && Story.Over ? "MainMenu" : gameScene); // the story told to its end: back to the title
     }
 
     public void ShowPage(int index,bool complete)
@@ -101,7 +102,8 @@ public class StoryIntro : MonoBehaviour
         art.texture=backgrounds;
         art.uvRect=new Rect((image%3)/3f, image<3 ? .5f:0, 1f/3,.5f);
         art.color=Color.white;
-        chapter.text=(image+1).ToString("00")+"  /  "+Localized("story.chapter."+image);
+        chapter.text=string.IsNullOrEmpty(pages[page].titleKey) ? (image+1).ToString("00")+"  /  "+Localized("story.chapter."+image)
+            : Localized("story.chapter.number").Replace("{0}",pages[page].number.ToString())+"  /  "+Localized(pages[page].titleKey);
         progress.text=(page+1).ToString("00")+" / "+pages.Length.ToString("00");
         RefreshLabels();
     }

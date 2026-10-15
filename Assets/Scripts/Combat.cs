@@ -195,6 +195,24 @@ public class Combat : MonoBehaviour
     public static Combat Instance { get; private set; }
     public bool Paused => train.Swarming || train.AtStation; // turrets hold their fire too
     public int EnemyCount => enemies.Count;
+
+    // A pack of the plain small ones put down at a spot (the rival's boarders): from there they go for the train.
+    public void Drop(Vector3 at, int count)
+    {
+        for (int i = 0; i < count; i++)
+            Add(Types[0], at + new Vector3(Random.Range(-2.5f, 2.5f), 0f, Random.Range(-2.5f, 2.5f)));
+    }
+
+    // Everyone off the field at once (not a boss's or the rival's own pieces): the duel is fought alone.
+    public void ClearField()
+    {
+        for (int i = enemies.Count - 1; i >= 0; i--)
+            if (!enemies[i].type.projectile)
+            {
+                Burst("smoke", enemies[i].position, 0.8f);
+                RemoveEnemy(i);
+            }
+    }
     public float stationShotEvery = 0.16f; // seconds between shots of the station's guns
     float stationShotIn;
     int stationGunTurn;
@@ -209,12 +227,12 @@ public class Combat : MonoBehaviour
     // than a train that takes a good upgrade every station, so skipped or unlucky upgrades get punished.
     [Header("Difficulty")]
     public float spawnRadius = 45f;
-    [System.NonSerialized] public float spawnRate = 6.5f;         // spawns per second at difficulty 0
-    [System.NonSerialized] public float spawnRatePerLevel = 1f;
+    [System.NonSerialized] public float spawnRate = 4f;         // spawns per second at difficulty 0
+    [System.NonSerialized] public float spawnRatePerLevel = 0.7f;
     // A screen full of enemies that fall fast: the small ones come this many times over, each with a share of
     // the health, damage and pay their type says, so the whole of them weighs what a fifth as many used to.
     // The big ones keep their numbers and their strength, and stand out in the crowd.
-    public const float Crowd = 5f, FodderHealth = 0.24f, FodderDamage = 0.15f, FodderMoney = 0.22f;
+    public const float BigDamage = 0.5f, Crowd = 5f, FodderHealth = 0.24f, FodderDamage = 0.1f, FodderMoney = 0.22f;
     // Every so often a horde: a pack of the small ones all at once, from all round.
     [System.NonSerialized] public Vector2 hordeEvery = new Vector2(12f, 18f);
     [System.NonSerialized] public int hordeSize = 28, hordeMax = 110;
@@ -268,6 +286,7 @@ public class Combat : MonoBehaviour
             thinned = true;
             foreach (EnemyType type in Types)
                 if (type.Fodder) { type.damage *= FodderDamage; type.explodeDamage *= FodderDamage; type.health *= FodderHealth; type.fodder = true; }
+                else { type.damage *= BigDamage; type.explodeDamage *= BigDamage; } // the big ones come among a crowd now: a softer blow each
         }
         laserSound = Sound.Effect(gameObject, "Laser", 0.3f);
         stationLaserSound = Sound.Effect(gameObject, "biglaser_soft", 0.4f);

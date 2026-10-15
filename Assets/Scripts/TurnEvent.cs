@@ -49,15 +49,17 @@ public class TurnEvent : MonoBehaviour
     bool preview;       // sequence chosen and on screen, not started yet: time to read it
     string resultKey;
     float resultValue;
+    string heading;                     // a duel's phrase: its own title,
+    System.Action<int, int> battle;     // and where its (hits, length) go instead of the curve's rewards
 
     void Awake() => train = GetComponent<TrainSim>();
 
     float StepTime => Mathf.Lerp(easyStepTime, hardStepTime, train.Tempo);
 
     // The curve is in sight: choose the sequence and show it, so the player can get ready.
-    public void Prepare()
+    public void Prepare(int length = 0)
     {
-        sequence = new int[Random.Range(4, 9)];
+        sequence = new int[length > 0 ? length : Random.Range(4, 9)];
         outcome = new int[sequence.Length];
         // The lists go arrows, face buttons, shoulders: a harder game draws from more of them.
         int pool = train.Difficulty >= shoulderButtonsAt ? 12 : train.Difficulty >= faceButtonsAt ? 8 : 4;
@@ -75,6 +77,27 @@ public class TurnEvent : MonoBehaviour
         timer = StepTime;
         Active = true;
         Time.timeScale = Mathf.Clamp(passage / (sequence.Length * StepTime), 0.05f, 1f);
+    }
+
+    // A phrase of the story duel (RivalEvent): length buttons at once, in slow motion; done gets the hits.
+    public void Phrase(int length, string title, float slow, System.Action<int, int> done)
+    {
+        Prepare(length);
+        preview = false;
+        heading = title;
+        battle = done;
+        timer = StepTime;
+        Active = true;
+        Time.timeScale = slow;
+    }
+
+    // The duel ended mid-phrase: drop it and leave the time scale to whoever ended it.
+    public void Drop()
+    {
+        if (battle == null) return;
+        Active = false;
+        battle = null;
+        heading = null;
     }
 
     void Update()
@@ -104,6 +127,14 @@ public class TurnEvent : MonoBehaviour
     {
         Active = false;
         Time.timeScale = 1f;
+        if (battle != null)
+        {
+            System.Action<int, int> done = battle;
+            battle = null;
+            heading = null;
+            done(hits, sequence.Length);
+            return;
+        }
 
         int misses = sequence.Length - hits;
         if (hits > misses)
@@ -162,7 +193,7 @@ public class TurnEvent : MonoBehaviour
 
         string[] symbols = !usingPad ? Keys : Gamepad.current is DualShockGamepad ? PlayStation : Xbox;
         EventPanel panel = train.Panel;
-        panel.Show(L10n.T(Active ? "qte.title" : "warn.curve"), sequence.Length);
+        panel.Show(heading ?? L10n.T(Active ? "qte.title" : "warn.curve"), sequence.Length);
         for (int i = 0; i < sequence.Length; i++)
             panel.Box(i, symbols[sequence[i]], outcome[i] != 0 ? outcome[i] : Active && i == step ? 3 : 0);
         if (Active) panel.Bar(timer / StepTime);

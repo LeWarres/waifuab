@@ -443,7 +443,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441026
-    m_Localized: "Vag\xF3n armado\nuno por bioma:\ncambia de bioma"
+    m_Localized: "Vag\xF3n armado\nl\xEDmite de 3 alcanzado"
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441027
@@ -1426,6 +1426,388 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1726429638504448
     m_Localized: Nv {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960132907008
+    m_Localized: "Cap. {0} \xB7 {1} \xB7 {2}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655744
+    m_Localized: "\xA1DUELO!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655745
+    m_Localized: "\xA1Cap\xEDtulo superado!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655746
+    m_Localized: "Elige una mejora para conservar en los cap\xEDtulos siguientes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655747
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655748
+    m_Localized: "CAP\xCDTULO {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655749
+    m_Localized: bloqueado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655750
+    m_Localized: 'Conservar
+
+      Arma del Hero: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655751
+    m_Localized: "Conservar\nVag\xF3n con {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655752
+    m_Localized: 'Conservar
+
+      Un nivel del arma del Hero'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655753
+    m_Localized: 'Conservar
+
+      +10% de velocidad'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655754
+    m_Localized: "Conservar\n-10% de da\xF1o recibido"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655755
+    m_Localized: "Conservar\nVida m\xE1xima extra"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655756
+    m_Localized: "Conservar\n+20% de da\xF1o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655757
+    m_Localized: 'Conservar
+
+      +25% de dinero'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655758
+    m_Localized: 'Conservar
+
+      +20% de cadencia'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655759
+    m_Localized: "Conservar\n+5 de probabilidad cr\xEDtica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655760
+    m_Localized: "Conservar\n+25 de da\xF1o cr\xEDtico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655761
+    m_Localized: EL TRAIN RANKING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655762
+    m_Localized: LA CIUDAD QUE NO DUERME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655763
+    m_Localized: RIELES ENTRE ESTRELLAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655764
+    m_Localized: EL PLANETA DE LOS ALIENS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655765
+    m_Localized: LA BASE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655766
+    m_Localized: "Onini y su C-279 se quedaron atr\xE1s, echando humo en la arena.
+      Primera ronda del Train Ranking: superada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655767
+    m_Localized: "El hombre de negro llam\xF3 para felicitarme. Ten\xEDa la voz de
+      alguien que no esperaba verme ganar. Siguiente parada: la ciudad."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655768
+    m_Localized: "La ciudad. Rascacielos, anuncios y v\xEDas elevadas por todas partes.
+      Aqu\xED los robots no vienen del desierto: salen de los callejones."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655769
+    m_Localized: "Me espera Cerebron en su R-2D-2, un tren blindado con m\xE1s ca\xF1ones
+      que ventanas. Dicen que piensa demasiado. Yo prefiero acelerar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655770
+    m_Localized: "El R-2D-2 se detuvo a mitad del puente con el blindaje abollado.
+      Cerebron murmur\xF3 algo sobre probabilidades. Le falt\xF3 calcular mi terquedad."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655771
+    m_Localized: "Al final de la ciudad hay un elevador orbital. Nadie me dijo que
+      el Train Ranking tambi\xE9n corr\xEDa fuera del planeta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655772
+    m_Localized: "El espacio. Los rieles flotan sobre la nada y el silencio es tan
+      grande que oigo latir el motor. Hac\xEDa ochenta a\xF1os que no ve\xEDa las
+      estrellas tan cerca."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655773
+    m_Localized: "En alg\xFAn lugar de all\xE1 arriba est\xE1 mi hogar. Pero antes,
+      el Golem naranja bloquea la v\xEDa. Sentinel no habla: solo dispara."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655774
+    m_Localized: "El Golem se apag\xF3 entre chispas y qued\xF3 girando despacio
+      en el vac\xEDo. Sentinel me salud\xF3 con la mano antes de perderse de vista.
+      Raro, pero educado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655775
+    m_Localized: "Las coordenadas del gobierno apuntan a un planeta verde y feo.
+      Ah\xED viven los tontos aliens. Y ah\xED tengo que entregar la roca."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655776
+    m_Localized: El planeta alien. Todo brilla, todo late y todo intenta comerse
+      mi tren. Hasta las plantas tienen dientes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655777
+    m_Localized: "Faceless conduce a T.exe, la ara\xF1a. Camina sobre los rieles
+      como si fueran suyos. No tiene cara, pero jurar\xEDa que se est\xE1 riendo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655778
+    m_Localized: "T.exe qued\xF3 con las patas al aire. Faceless se desvaneci\xF3
+      como si nunca hubiera estado ah\xED. Prefiero no pensar en eso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655779
+    m_Localized: "Al fondo ya se ve la base alien: una fortaleza verde sobre una
+      monta\xF1a. Solo queda un conductor entre la roca y su destino."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655780
+    m_Localized: "La fortaleza. Murallas, torretas y un ej\xE9rcito entero esperando.
+      El gobierno lo llam\xF3 \"una entrega sencilla\". Claro que s\xED."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655781
+    m_Localized: "Tzmil y su Calavera nocturna me esperan en la \xFAltima recta.
+      Ella tambi\xE9n quiere su deseo. L\xE1stima: esta vez no pienso perder."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655782
+    m_Localized: "La Calavera nocturna se apag\xF3 y la roca vol\xF3 directo a la
+      base. El estruendo se oy\xF3 en todo el planeta. Los tontos aliens se rindieron
+      esa misma noche."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655783
+    m_Localized: "Gan\xE9 el Train Ranking. El Gobierno Mundial tuvo que cumplir:
+      mi nave, mi mapa, todo de vuelta. Puse rumbo a casa, con las otras mecha brujas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655784
+    m_Localized: "Aunque, para ser sincera\u2026 voy a extra\xF1ar el sonido de los
+      rieles.   FIN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276164661248
+    m_Localized: "Cap\xEDtulos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215680
+    m_Localized: 'Espacio / Enter / A: continuar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215681
+    m_Localized: "\xBFUna locomotora de vapor? \xBFEn serio, Onini?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215682
+    m_Localized: "La C-279 tiene m\xE1s a\xF1os que tu licencia, bruja. Y el primer
+      puesto del Ranking es m\xEDo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215683
+    m_Localized: "Lo siento. Necesito ese deseo m\xE1s que t\xFA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215684
+    m_Localized: "Tch\u2026 la pr\xF3xima vez no te dejar\xE9 ni ver mi humo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215685
+    m_Localized: "La pr\xF3xima vez yo ya estar\xE9 en casa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215686
+    m_Localized: "Mis c\xE1lculos te dan un 3% de probabilidad de cruzar esta ciudad."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215687
+    m_Localized: "\xBFY cu\xE1nto le das a que te parta ese cerebro?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215688
+    m_Localized: "El gobierno me prometi\xF3 un cuerpo nuevo si gano. No pienso perderlo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215689
+    m_Localized: "Error de c\xE1lculo\u2026 no consider\xE9 la variable \"bruja testaruda\"."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215690
+    m_Localized: Nadie la considera nunca.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215691
+    m_Localized: "\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215692
+    m_Localized: "\xBFNo hablas? Bien. Yo tampoco vine a charlar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215693
+    m_Localized: "Orden recibida: nadie llega a la \xF3rbita alta. Ni t\xFA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215694
+    m_Localized: "Misi\xF3n\u2026 fallida. Buen viaje, conductora."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215695
+    m_Localized: "Gracias, grandote. T\xFA tambi\xE9n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215696
+    m_Localized: "Llegas tarde. Los aliens me ofrecieron m\xE1s que el gobierno."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215697
+    m_Localized: "\xBFTrabajas para ellos? \xBFY qu\xE9 te prometieron, una cara?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215698
+    m_Localized: Tu tren. Ocho patas son mejores que dos rieles.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215699
+    m_Localized: "No importa\u2026 todos los rieles terminan en la misma base."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215700
+    m_Localized: "Pues el m\xEDo termina con una roca en su puerta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215701
+    m_Localized: "As\xED que t\xFA eres la bruja de la que todos hablan."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215702
+    m_Localized: "Y t\xFA la \xFAltima que me queda. \xBFTambi\xE9n quieres el deseo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215703
+    m_Localized: "Quiero que mi pueblo deje de pelear esta guerra. Si la roca la
+      lanzo yo, el gobierno me lo deber\xE1 a m\xED."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215704
+    m_Localized: "Lanza esa roca, bruja\u2026 y termina con esto por las dos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215705
+    m_Localized: Hecho. Y luego me voy a casa.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2524637377671168
+    m_Localized: "\xA1Bombas! Derr\xEDbalas antes de que caigan"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2524637411225600
+    m_Localized: "\xA1Abordaje! Robots saltan hacia tu tren"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2524637411225601
+    m_Localized: "\xA1Motor sobrecalentado! Da\xF1o x2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528546250895360
+    m_Localized: Armed wagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528546280255488
+    m_Localized: "Vag\xE3o armado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528546280255489
+    m_Localized: "\u6B66\u88C5\u8ECA\u4E21"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528843870318592
+    m_Localized: "Contenedor eterno\nGRATIS \xB7 paga en cada estaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528843870318593
+    m_Localized: "\xA1RARO!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686475969048576
+    m_Localized: "\xA1Ataque: {0}! Pulsa en orden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185920
+    m_Localized: "\xA1{0} al rival!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185921
+    m_Localized: 'Fallaste: el rival te devuelve {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185922
+    m_Localized: 'A medias: no pasa nada'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185923
+    m_Localized: "\xA1El rival te lanza {0}!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185924
+    m_Localized: "T\xFA: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185925
+    m_Localized: 'Rival: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185926
+    m_Localized: Armas atascadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185927
+    m_Localized: Blindaje roto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185928
+    m_Localized: "Confusi\xF3n"
     m_Metadata:
       m_Items: []
   references:

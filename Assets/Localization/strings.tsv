@@ -102,7 +102,7 @@ qte.tie	Curva justa: sin premio ni daño	Close call: no reward, no damage	Curva 
 menu.shop	TIENDA	SHOP	LOJA	ショップ
 shop.kit	Botiquín ({2}/{3})\n+{0} a todo, se usa en ruta	Medkit ({2}/{3})\n+{0} to all, used on the road	Kit médico ({2}/{3})\n+{0} em tudo, usado na viagem	救急キット ({2}/{3})\n走行中に全体 +{0}
 shop.wagon	Vagón armado\nun vagón más para armas	Armed wagon\none more wagon for weapons	Vagão armado\nmais um vagão para armas	武装車両\n武器用の車両を追加
-shop.wagon.limit	Vagón armado\nuno por bioma:\ncambia de bioma	Armed wagon\none per biome:\nmove on	Vagão armado\num por bioma:\nmude de bioma	武装車両\nバイオームごとに1台\n先へ進もう
+shop.wagon.limit	Vagón armado\nlímite de 3 alcanzado	Armed wagon\nlimit of 3 reached	Vagão armado\nlimite de 3 atingido	武装車両\n上限3台に到達
 shop.container	Contenedor fijo\npaga en cada estación	Container\npays at every station	Contêiner fixo\npaga em cada estação	常設コンテナ\n駅ごとに報酬
 shop.container.limit	Contenedor fijo\nuno por bioma:\ncambia de bioma	Permanent container\none per biome:\nmove on	Contêiner fixo\num por bioma:\nmude de bioma	常設コンテナ\nバイオームごとに1台\n先へ進もう
 shop.done	Listo\nsalir de la tienda	Done\nleave the shop	Pronto\nsair da loja	完了\nショップを出る
@@ -328,3 +328,87 @@ boss.name.fortress	Camión de asedio	Siege truck	Caminhão de cerco	攻囲トラ
 menu.change.locked	Cambiar a {0}\n(vence al jefe)	Move to {0}\n(beat the boss)	Mudar para {0}\n(vença o chefe)	{0}へ進む\n（ボスを倒せ）
 sub.route.locked	Vence al jefe del bioma para avanzar	Beat the biome's boss to move on	Vença o chefe do bioma para avançar	進むにはバイオームのボスを倒せ
 strip.level	Nv {0}	Lv {0}	Nv {0}	Lv {0}
+hud.chapter	Cap. {0} · {1} · {2}	Ch. {0} · {1} · {2}	Cap. {0} · {1} · {2}	第{0}章 · {1} · {2}
+story.duel	¡DUELO!	DUEL!	DUELO!	決闘！
+story.won	¡Capítulo superado!	Chapter complete!	Capítulo concluído!	チャプタークリア！
+story.keep	Elige una mejora para conservar en los capítulos siguientes	Pick one upgrade to keep for the chapters ahead	Escolha uma melhoria para manter nos próximos capítulos	次のチャプターに持ち越す強化を1つ選ぶ
+story.next	Continuar	Continue	Continuar	次へ
+story.chapter.number	CAPÍTULO {0}	CHAPTER {0}	CAPÍTULO {0}	第{0}章
+story.locked	bloqueado	locked	bloqueado	ロック中
+keep.ammo	Conservar\nArma del Hero: {0}	Keep\nHero weapon: {0}	Manter\nArma do Hero: {0}	持ち越し\nヒーローの武器：{0}
+keep.wagon	Conservar\nVagón con {0}	Keep\nWagon with {0}	Manter\nVagão com {0}	持ち越し\n{0} 付きの車両
+keep.evolve	Conservar\nUn nivel del arma del Hero	Keep\nA level on the Hero weapon	Manter\nUm nível da arma do Hero	持ち越し\nヒーロー武器のレベル+1
+keep.speed	Conservar\n+10% de velocidad	Keep\n+10% speed	Manter\n+10% de velocidade	持ち越し\nスピード +10%
+keep.armor	Conservar\n-10% de daño recibido	Keep\n-10% damage taken	Manter\n-10% de dano recebido	持ち越し\n被ダメージ -10%
+keep.vitality	Conservar\nVida máxima extra	Keep\nExtra max health	Manter\nVida máxima extra	持ち越し\n最大体力アップ
+keep.damage	Conservar\n+20% de daño	Keep\n+20% damage	Manter\n+20% de dano	持ち越し\nダメージ +20%
+keep.greed	Conservar\n+25% de dinero	Keep\n+25% money	Manter\n+25% de dinheiro	持ち越し\nマネー +25%
+keep.fireRate	Conservar\n+20% de cadencia	Keep\n+20% fire rate	Manter\n+20% de cadência	持ち越し\n連射速度 +20%
+keep.critChance	Conservar\n+5 de probabilidad crítica	Keep\n+5 critical chance	Manter\n+5 de chance crítica	持ち越し\nクリティカル率 +5
+keep.critDamage	Conservar\n+25 de daño crítico	Keep\n+25 critical damage	Manter\n+25 de dano crítico	持ち越し\nクリティカルダメージ +25
+story.bba.0.title	EL TRAIN RANKING	THE TRAIN RANKING	O TRAIN RANKING	トレインランキング
+story.bba.1.title	LA CIUDAD QUE NO DUERME	THE CITY THAT NEVER SLEEPS	A CIDADE QUE NUNCA DORME	眠らない街
+story.bba.2.title	RIELES ENTRE ESTRELLAS	RAILS AMONG THE STARS	TRILHOS ENTRE ESTRELAS	星々のレール
+story.bba.3.title	EL PLANETA DE LOS ALIENS	THE ALIENS' PLANET	O PLANETA DOS ALIENS	エイリアンの惑星
+story.bba.4.title	LA BASE	THE BASE	A BASE	基地
+story.bba.0.outro.1	Onini y su C-279 se quedaron atrás, echando humo en la arena. Primera ronda del Train Ranking: superada.	Onini and her C-279 fell behind, smoking in the sand. First round of the Train Ranking: done.	Onini e sua C-279 ficaram para trás, soltando fumaça na areia. Primeira rodada do Train Ranking: vencida.	オニニと C-279 は砂の上で煙を上げて置き去りに。トレインランキング第1ラウンド、突破。
+story.bba.0.outro.2	El hombre de negro llamó para felicitarme. Tenía la voz de alguien que no esperaba verme ganar. Siguiente parada: la ciudad.	The man in black called to congratulate me. He sounded like someone who never expected me to win. Next stop: the city.	O homem de preto ligou para me parabenizar. Tinha a voz de quem não esperava me ver ganhar. Próxima parada: a cidade.	黒服の男から祝いの電話。私が勝つとは思っていなかった声だった。次の停車駅は、街。
+story.bba.1.intro.1	La ciudad. Rascacielos, anuncios y vías elevadas por todas partes. Aquí los robots no vienen del desierto: salen de los callejones.	The city. Skyscrapers, billboards and elevated tracks everywhere. Here the robots don't come from the desert: they crawl out of the alleys.	A cidade. Arranha-céus, anúncios e trilhos elevados por todo lado. Aqui os robôs não vêm do deserto: saem dos becos.	街。超高層ビル、看板、そこらじゅうの高架線。ここのロボットは砂漠からではなく、路地裏から湧いてくる。
+story.bba.1.intro.2	Me espera Cerebron en su R-2D-2, un tren blindado con más cañones que ventanas. Dicen que piensa demasiado. Yo prefiero acelerar.	Cerebron is waiting in his R-2D-2, an armoured train with more guns than windows. They say he thinks too much. I'd rather speed up.	Cerebron me espera em seu R-2D-2, um trem blindado com mais canhões que janelas. Dizem que ele pensa demais. Eu prefiro acelerar.	セレブロンが R-2D-2 で待っている。窓より大砲の多い装甲列車だ。考えすぎるやつらしい。私はアクセルを踏むほうが好き。
+story.bba.1.outro.1	El R-2D-2 se detuvo a mitad del puente con el blindaje abollado. Cerebron murmuró algo sobre probabilidades. Le faltó calcular mi terquedad.	The R-2D-2 stopped halfway across the bridge, its armour dented. Cerebron muttered something about odds. He forgot to factor in my stubbornness.	O R-2D-2 parou no meio da ponte com a blindagem amassada. Cerebron murmurou algo sobre probabilidades. Esqueceu de calcular minha teimosia.	R-2D-2 は装甲をへこませて橋の途中で停止。セレブロンは確率がどうとかつぶやいた。私の頑固さは計算に入れ忘れたらしい。
+story.bba.1.outro.2	Al final de la ciudad hay un elevador orbital. Nadie me dijo que el Train Ranking también corría fuera del planeta.	At the end of the city stands an orbital elevator. Nobody told me the Train Ranking ran off the planet too.	No fim da cidade há um elevador orbital. Ninguém me disse que o Train Ranking também corria fora do planeta.	街の果てには軌道エレベーター。トレインランキングが惑星の外まで続くなんて、誰も言っていなかった。
+story.bba.2.intro.1	El espacio. Los rieles flotan sobre la nada y el silencio es tan grande que oigo latir el motor. Hacía ochenta años que no veía las estrellas tan cerca.	Space. The rails float over nothing, and the silence is so deep I can hear the engine beat. I haven't seen the stars this close in eighty years.	O espaço. Os trilhos flutuam sobre o nada e o silêncio é tão grande que ouço o motor bater. Fazia oitenta anos que eu não via as estrelas tão perto.	宇宙。レールは虚空に浮かび、静けさの中でエンジンの鼓動が聞こえる。星をこんなに近くで見るのは八十年ぶりだ。
+story.bba.2.intro.2	En algún lugar de allá arriba está mi hogar. Pero antes, el Golem naranja bloquea la vía. Sentinel no habla: solo dispara.	Somewhere up there is my home. But first, the orange Golem blocks the line. Sentinel doesn't talk: he only shoots.	Em algum lugar lá em cima está meu lar. Mas antes, o Golem laranja bloqueia a linha. Sentinel não fala: só atira.	この上のどこかに私の故郷がある。でもその前に、オレンジのゴーレムが線路をふさぐ。センチネルはしゃべらない。撃つだけだ。
+story.bba.2.outro.1	El Golem se apagó entre chispas y quedó girando despacio en el vacío. Sentinel me saludó con la mano antes de perderse de vista. Raro, pero educado.	The Golem died in a shower of sparks and drifted, slowly spinning, into the void. Sentinel waved before he was gone. Odd, but polite.	O Golem apagou entre faíscas e ficou girando devagar no vazio. Sentinel acenou antes de sumir. Estranho, mas educado.	ゴーレムは火花を散らして止まり、ゆっくり回りながら虚空へ漂っていった。センチネルは消える前に手を振った。変だけど、礼儀正しい。
+story.bba.2.outro.2	Las coordenadas del gobierno apuntan a un planeta verde y feo. Ahí viven los tontos aliens. Y ahí tengo que entregar la roca.	The government's coordinates point to an ugly green planet. That's where the stupid aliens live. And that's where I deliver the rock.	As coordenadas do governo apontam para um planeta verde e feio. É lá que vivem os aliens bobos. E é lá que tenho que entregar a pedra.	政府の座標が指すのは緑色の醜い惑星。おバカなエイリアンの住処だ。そしてそこに岩を届けなきゃならない。
+story.bba.3.intro.1	El planeta alien. Todo brilla, todo late y todo intenta comerse mi tren. Hasta las plantas tienen dientes.	The alien planet. Everything glows, everything throbs, and everything tries to eat my train. Even the plants have teeth.	O planeta alien. Tudo brilha, tudo pulsa e tudo tenta comer meu trem. Até as plantas têm dentes.	エイリアンの惑星。何もかもが光り、脈打ち、私の列車を食べようとする。植物にまで歯がある。
+story.bba.3.intro.2	Faceless conduce a T.exe, la araña. Camina sobre los rieles como si fueran suyos. No tiene cara, pero juraría que se está riendo.	Faceless drives T.exe, the spider. It walks the rails as if they were its own. It has no face, but I'd swear it's laughing.	Faceless pilota o T.exe, a aranha. Anda sobre os trilhos como se fossem dela. Não tem rosto, mas eu juraria que está rindo.	フェイスレスが操る蜘蛛、T.exe。線路を自分のもののように歩く。顔はないのに、笑っている気がする。
+story.bba.3.outro.1	T.exe quedó con las patas al aire. Faceless se desvaneció como si nunca hubiera estado ahí. Prefiero no pensar en eso.	T.exe ended up with its legs in the air. Faceless faded away as if it had never been there. I'd rather not think about it.	O T.exe ficou de pernas para o ar. Faceless desapareceu como se nunca tivesse estado ali. Prefiro não pensar nisso.	T.exe は脚を上にひっくり返った。フェイスレスは最初からいなかったように消えた。考えないことにしよう。
+story.bba.3.outro.2	Al fondo ya se ve la base alien: una fortaleza verde sobre una montaña. Solo queda un conductor entre la roca y su destino.	In the distance stands the alien base: a green fortress on a mountain. Only one driver left between the rock and where it belongs.	Ao fundo já se vê a base alien: uma fortaleza verde sobre uma montanha. Só resta uma condutora entre a pedra e seu destino.	遠くにエイリアンの基地が見える。山の上の緑の要塞。岩と目的地の間に残る運転手は、あと一人。
+story.bba.4.intro.1	La fortaleza. Murallas, torretas y un ejército entero esperando. El gobierno lo llamó "una entrega sencilla". Claro que sí.	The fortress. Walls, turrets and a whole army waiting. The government called it "a simple delivery". Sure it is.	A fortaleza. Muralhas, torres e um exército inteiro esperando. O governo chamou isso de "uma entrega simples". Claro.	要塞。城壁、砲台、待ち構える大軍。政府はこれを「簡単な配達」と呼んだ。ええ、そうでしょうとも。
+story.bba.4.intro.2	Tzmil y su Calavera nocturna me esperan en la última recta. Ella también quiere su deseo. Lástima: esta vez no pienso perder.	Tzmil and her Night Skull wait on the final straight. She wants her wish too. Too bad: this time I'm not losing.	Tzmil e sua Caveira noturna me esperam na reta final. Ela também quer seu desejo. Pena: desta vez eu não vou perder.	ツミルとナイトスカルが最後の直線で待っている。彼女も願いが欲しいのだ。残念、今回は負けるつもりはない。
+story.bba.4.outro.1	La Calavera nocturna se apagó y la roca voló directo a la base. El estruendo se oyó en todo el planeta. Los tontos aliens se rindieron esa misma noche.	The Night Skull went dark and the rock flew straight into the base. The crash was heard across the whole planet. The stupid aliens surrendered that same night.	A Caveira noturna apagou e a pedra voou direto na base. O estrondo foi ouvido no planeta inteiro. Os aliens bobos se renderam naquela mesma noite.	ナイトスカルが沈黙し、岩はまっすぐ基地へ。轟音は惑星中に響いた。おバカなエイリアンはその夜のうちに降伏した。
+story.bba.4.outro.2	Gané el Train Ranking. El Gobierno Mundial tuvo que cumplir: mi nave, mi mapa, todo de vuelta. Puse rumbo a casa, con las otras mecha brujas.	I won the Train Ranking. The World Government had to keep its word: my ship, my map, all of it back. I set course for home, to the other mecha witches.	Ganhei o Train Ranking. O Governo Mundial teve que cumprir: minha nave, meu mapa, tudo de volta. Tracei o rumo para casa, para as outras mecha bruxas.	トレインランキングに優勝。世界政府は約束を守るしかなかった。船も地図も全部返ってきた。仲間のメカ魔女たちが待つ故郷へ、針路をとる。
+story.bba.4.outro.3	Aunque, para ser sincera… voy a extrañar el sonido de los rieles.   FIN	Although, to be honest… I'm going to miss the sound of the rails.   THE END	Mas, para ser sincera… vou sentir falta do som dos trilhos.   FIM	でも正直に言うと……レールの音が恋しくなりそう。   おわり
+main.chapters	Capítulos	Chapters	Capítulos	チャプター
+talk.help	Espacio / Enter / A: continuar	Space / Enter / A: continue	Espaço / Enter / A: continuar	スペース / Enter / A：次へ
+story.bba.0.before.1	¿Una locomotora de vapor? ¿En serio, Onini?	A steam engine? Seriously, Onini?	Uma locomotiva a vapor? Sério, Onini?	蒸気機関車？本気なの、オニニ？
+story.bba.0.before.2	La C-279 tiene más años que tu licencia, bruja. Y el primer puesto del Ranking es mío.	The C-279 is older than your licence, witch. And first place in the Ranking is mine.	A C-279 é mais velha que a sua licença, bruxa. E o primeiro lugar do Ranking é meu.	C-279 はあんたの免許より年季が入ってるんだよ、魔女。ランキング1位はあたしのものだ。
+story.bba.0.before.3	Lo siento. Necesito ese deseo más que tú.	Sorry. I need that wish more than you do.	Desculpe. Eu preciso desse desejo mais que você.	ごめんね。その願い、あなたより私のほうが必要なの。
+story.bba.0.after.1	Tch… la próxima vez no te dejaré ni ver mi humo.	Tch… next time you won't even see my smoke.	Tch… da próxima vez você nem vai ver minha fumaça.	ちっ……次は煙すら見せてやらないからね。
+story.bba.0.after.2	La próxima vez yo ya estaré en casa.	Next time I'll already be home.	Da próxima vez eu já vou estar em casa.	次のときには、私はもう家にいるわ。
+story.bba.1.before.1	Mis cálculos te dan un 3% de probabilidad de cruzar esta ciudad.	My calculations give you a 3% chance of getting through this city.	Meus cálculos te dão 3% de chance de atravessar esta cidade.	私の計算では、君がこの街を抜ける確率は3%だ。
+story.bba.1.before.2	¿Y cuánto le das a que te parta ese cerebro?	And what are the odds I crack that brain of yours?	E qual a chance de eu rachar esse seu cérebro?	じゃあ、その脳みそを私が叩き割る確率は？
+story.bba.1.before.3	El gobierno me prometió un cuerpo nuevo si gano. No pienso perderlo.	The government promised me a new body if I win. I won't lose it.	O governo me prometeu um corpo novo se eu ganhar. Não vou perdê-lo.	勝てば新しい体をくれると政府が約束した。失うわけにはいかない。
+story.bba.1.after.1	Error de cálculo… no consideré la variable "bruja testaruda".	Calculation error… I left out the variable "stubborn witch".	Erro de cálculo… não considerei a variável "bruxa teimosa".	計算ミス……「頑固な魔女」という変数を入れ忘れた。
+story.bba.1.after.2	Nadie la considera nunca.	Nobody ever does.	Ninguém nunca considera.	みんな入れ忘れるのよ。
+story.bba.2.before.1	…	…	…	……
+story.bba.2.before.2	¿No hablas? Bien. Yo tampoco vine a charlar.	Not a talker? Fine. I didn't come to chat either.	Não fala? Tudo bem. Eu também não vim conversar.	しゃべらないの？いいわ、私もおしゃべりしに来たわけじゃない。
+story.bba.2.before.3	Orden recibida: nadie llega a la órbita alta. Ni tú.	Order received: nobody reaches high orbit. Not even you.	Ordem recebida: ninguém chega à órbita alta. Nem você.	命令受信。高軌道には誰も行かせない。君もだ。
+story.bba.2.after.1	Misión… fallida. Buen viaje, conductora.	Mission… failed. Safe travels, driver.	Missão… falhou. Boa viagem, condutora.	任務……失敗。よい旅を、運転手。
+story.bba.2.after.2	Gracias, grandote. Tú también.	Thanks, big guy. You too.	Valeu, grandão. Você também.	ありがと、大きいの。あなたもね。
+story.bba.3.before.1	Llegas tarde. Los aliens me ofrecieron más que el gobierno.	You're late. The aliens offered me more than the government.	Você chegou tarde. Os aliens me ofereceram mais que o governo.	遅かったね。エイリアンは政府より多くを約束してくれた。
+story.bba.3.before.2	¿Trabajas para ellos? ¿Y qué te prometieron, una cara?	You work for them? What did they promise you, a face?	Você trabalha para eles? E o que te prometeram, um rosto?	あいつらの手先なの？何を約束されたの、顔？
+story.bba.3.before.3	Tu tren. Ocho patas son mejores que dos rieles.	Your train. Eight legs beat two rails.	Seu trem. Oito patas são melhores que dois trilhos.	君の列車さ。8本の脚は2本のレールに勝る。
+story.bba.3.after.1	No importa… todos los rieles terminan en la misma base.	It doesn't matter… every rail ends at the same base.	Não importa… todos os trilhos terminam na mesma base.	どうでもいい……すべてのレールは同じ基地で終わる。
+story.bba.3.after.2	Pues el mío termina con una roca en su puerta.	Well, mine ends with a rock at its door.	Pois o meu termina com uma pedra na porta deles.	私のレールは、その玄関に岩を置いて終わるのよ。
+story.bba.4.before.1	Así que tú eres la bruja de la que todos hablan.	So you're the witch everyone talks about.	Então você é a bruxa de quem todos falam.	あんたが噂の魔女ってわけ。
+story.bba.4.before.2	Y tú la última que me queda. ¿También quieres el deseo?	And you're the last one left. You want the wish too?	E você é a última que falta. Também quer o desejo?	そしてあなたが最後の一人。あなたも願いが欲しいの？
+story.bba.4.before.3	Quiero que mi pueblo deje de pelear esta guerra. Si la roca la lanzo yo, el gobierno me lo deberá a mí.	I want my people out of this war. If I'm the one who throws the rock, the government owes it to me.	Quero que meu povo pare de lutar esta guerra. Se eu lançar a pedra, o governo vai me dever isso.	私の民をこの戦争から解放したい。岩を投げるのが私なら、政府は私に借りができる。
+story.bba.4.after.1	Lanza esa roca, bruja… y termina con esto por las dos.	Throw that rock, witch… and end this for both of us.	Lance essa pedra, bruxa… e acabe com isso por nós duas.	その岩を投げて、魔女……二人のために終わらせて。
+story.bba.4.after.2	Hecho. Y luego me voy a casa.	Done. And then I'm going home.	Feito. E depois eu vou para casa.	任せて。そのあとは家に帰るわ。
+rival.bombs	¡Bombas! Derríbalas antes de que caigan	Bombs! Shoot them down before they land	Bombas! Derrube antes que caiam	爆弾！落ちる前に撃ち落とせ
+rival.boarders	¡Abordaje! Robots saltan hacia tu tren	Boarders! Robots are jumping at your train	Abordagem! Robôs pulam para o seu trem	乗り込み！ロボットが列車に飛び移ってくる
+rival.weak	¡Motor sobrecalentado! Daño x2	Engine overheated! Double damage	Motor superaquecido! Dano x2	エンジン過熱！ダメージ2倍
+offer.eternal	Contenedor eterno\nGRATIS · paga en cada estación	Eternal container\nFREE · pays at every station	Contêiner eterno\nGRÁTIS · paga em cada estação	永久コンテナ\n無料・駅ごとに報酬
+badge.rare	¡RARO!	RARE!	RARO!	レア！
+battle.title	¡Ataque: {0}! Pulsa en orden	Attack: {0}! Press in order	Ataque: {0}! Pressione na ordem	攻撃：{0}！順番に押せ
+battle.hit	¡{0} al rival!	{0} on the rival!	{0} no rival!	ライバルに{0}！
+battle.back	Fallaste: el rival te devuelve {0}	Missed: the rival turns {0} on you	Errou: o rival devolve {0}	失敗：ライバルが{0}を返してきた
+battle.even	A medias: no pasa nada	Half right: nothing happens	Pela metade: nada acontece	半分成功：何も起きない
+rival.hex	¡El rival te lanza {0}!	The rival hits you with {0}!	O rival lança {0} em você!	ライバルの{0}！
+battle.you	Tú: {0}	You: {0}	Você: {0}	自分：{0}
+battle.them	Rival: {0}	Rival: {0}	Rival: {0}	相手：{0}
+status.0	Armas atascadas	Jammed guns	Armas travadas	武器詰まり
+status.1	Blindaje roto	Broken armour	Blindagem quebrada	装甲破損
+status.2	Confusión	Confusion	Confusão	混乱

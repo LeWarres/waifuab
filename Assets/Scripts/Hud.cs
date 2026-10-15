@@ -323,7 +323,7 @@ public class Hud : MonoBehaviour
 
         Player hero = train.Player;
         float health = train.Health, max = train.MaxHealth;
-        where.text = L10n.T("hud.where", train.Stations, train.BiomeLabel);
+        where.text = Story.Active ? L10n.T("hud.chapter", Story.Chapter + 1, train.BiomeLabel, train.StoryTime) : L10n.T("hud.where", train.Stations, train.BiomeLabel);
         level.text = L10n.T("hud.level", train.Difficulty);
         trainBar.Set(health / max);
         trainText.text = $"{Mathf.Round(health)}/{Mathf.Round(max)}";

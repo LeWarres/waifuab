@@ -444,7 +444,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441026
-    m_Localized: "Vag\xE3o armado\num por bioma:\nmude de bioma"
+    m_Localized: "Vag\xE3o armado\nlimite de 3 atingido"
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441027
@@ -1423,6 +1423,377 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1726429638504448
     m_Localized: Nv {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960132907008
+    m_Localized: "Cap. {0} \xB7 {1} \xB7 {2}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655744
+    m_Localized: DUELO!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655745
+    m_Localized: "Cap\xEDtulo conclu\xEDdo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655746
+    m_Localized: "Escolha uma melhoria para manter nos pr\xF3ximos cap\xEDtulos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655747
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655748
+    m_Localized: "CAP\xCDTULO {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655749
+    m_Localized: bloqueado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655750
+    m_Localized: 'Manter
+
+      Arma do Hero: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655751
+    m_Localized: "Manter\nVag\xE3o com {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655752
+    m_Localized: "Manter\nUm n\xEDvel da arma do Hero"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655753
+    m_Localized: 'Manter
+
+      +10% de velocidade'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655754
+    m_Localized: 'Manter
+
+      -10% de dano recebido'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655755
+    m_Localized: "Manter\nVida m\xE1xima extra"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655756
+    m_Localized: 'Manter
+
+      +20% de dano'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655757
+    m_Localized: 'Manter
+
+      +25% de dinheiro'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655758
+    m_Localized: "Manter\n+20% de cad\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655759
+    m_Localized: "Manter\n+5 de chance cr\xEDtica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655760
+    m_Localized: "Manter\n+25 de dano cr\xEDtico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655761
+    m_Localized: O TRAIN RANKING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655762
+    m_Localized: A CIDADE QUE NUNCA DORME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655763
+    m_Localized: TRILHOS ENTRE ESTRELAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655764
+    m_Localized: O PLANETA DOS ALIENS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655765
+    m_Localized: A BASE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655766
+    m_Localized: "Onini e sua C-279 ficaram para tr\xE1s, soltando fuma\xE7a na areia.
+      Primeira rodada do Train Ranking: vencida."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655767
+    m_Localized: "O homem de preto ligou para me parabenizar. Tinha a voz de quem
+      n\xE3o esperava me ver ganhar. Pr\xF3xima parada: a cidade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655768
+    m_Localized: "A cidade. Arranha-c\xE9us, an\xFAncios e trilhos elevados por todo
+      lado. Aqui os rob\xF4s n\xE3o v\xEAm do deserto: saem dos becos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655769
+    m_Localized: "Cerebron me espera em seu R-2D-2, um trem blindado com mais canh\xF5es
+      que janelas. Dizem que ele pensa demais. Eu prefiro acelerar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655770
+    m_Localized: O R-2D-2 parou no meio da ponte com a blindagem amassada. Cerebron
+      murmurou algo sobre probabilidades. Esqueceu de calcular minha teimosia.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655771
+    m_Localized: "No fim da cidade h\xE1 um elevador orbital. Ningu\xE9m me disse
+      que o Train Ranking tamb\xE9m corria fora do planeta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655772
+    m_Localized: "O espa\xE7o. Os trilhos flutuam sobre o nada e o sil\xEAncio \xE9
+      t\xE3o grande que ou\xE7o o motor bater. Fazia oitenta anos que eu n\xE3o via
+      as estrelas t\xE3o perto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655773
+    m_Localized: "Em algum lugar l\xE1 em cima est\xE1 meu lar. Mas antes, o Golem
+      laranja bloqueia a linha. Sentinel n\xE3o fala: s\xF3 atira."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655774
+    m_Localized: "O Golem apagou entre fa\xEDscas e ficou girando devagar no vazio.
+      Sentinel acenou antes de sumir. Estranho, mas educado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655775
+    m_Localized: "As coordenadas do governo apontam para um planeta verde e feio.
+      \xC9 l\xE1 que vivem os aliens bobos. E \xE9 l\xE1 que tenho que entregar a
+      pedra."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655776
+    m_Localized: "O planeta alien. Tudo brilha, tudo pulsa e tudo tenta comer meu
+      trem. At\xE9 as plantas t\xEAm dentes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655777
+    m_Localized: "Faceless pilota o T.exe, a aranha. Anda sobre os trilhos como se
+      fossem dela. N\xE3o tem rosto, mas eu juraria que est\xE1 rindo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655778
+    m_Localized: "O T.exe ficou de pernas para o ar. Faceless desapareceu como se
+      nunca tivesse estado ali. Prefiro n\xE3o pensar nisso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655779
+    m_Localized: "Ao fundo j\xE1 se v\xEA a base alien: uma fortaleza verde sobre
+      uma montanha. S\xF3 resta uma condutora entre a pedra e seu destino."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655780
+    m_Localized: "A fortaleza. Muralhas, torres e um ex\xE9rcito inteiro esperando.
+      O governo chamou isso de \"uma entrega simples\". Claro."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655781
+    m_Localized: "Tzmil e sua Caveira noturna me esperam na reta final. Ela tamb\xE9m
+      quer seu desejo. Pena: desta vez eu n\xE3o vou perder."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655782
+    m_Localized: A Caveira noturna apagou e a pedra voou direto na base. O estrondo
+      foi ouvido no planeta inteiro. Os aliens bobos se renderam naquela mesma noite.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655783
+    m_Localized: 'Ganhei o Train Ranking. O Governo Mundial teve que cumprir: minha
+      nave, meu mapa, tudo de volta. Tracei o rumo para casa, para as outras mecha
+      bruxas.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2507960170655784
+    m_Localized: "Mas, para ser sincera\u2026 vou sentir falta do som dos trilhos.  
+      FIM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276164661248
+    m_Localized: "Cap\xEDtulos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215680
+    m_Localized: "Espa\xE7o / Enter / A: continuar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215681
+    m_Localized: "Uma locomotiva a vapor? S\xE9rio, Onini?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215682
+    m_Localized: "A C-279 \xE9 mais velha que a sua licen\xE7a, bruxa. E o primeiro
+      lugar do Ranking \xE9 meu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215683
+    m_Localized: "Desculpe. Eu preciso desse desejo mais que voc\xEA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215684
+    m_Localized: "Tch\u2026 da pr\xF3xima vez voc\xEA nem vai ver minha fuma\xE7a."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215685
+    m_Localized: "Da pr\xF3xima vez eu j\xE1 vou estar em casa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215686
+    m_Localized: "Meus c\xE1lculos te d\xE3o 3% de chance de atravessar esta cidade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215687
+    m_Localized: "E qual a chance de eu rachar esse seu c\xE9rebro?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215688
+    m_Localized: "O governo me prometeu um corpo novo se eu ganhar. N\xE3o vou perd\xEA-lo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215689
+    m_Localized: "Erro de c\xE1lculo\u2026 n\xE3o considerei a vari\xE1vel \"bruxa
+      teimosa\"."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215690
+    m_Localized: "Ningu\xE9m nunca considera."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215691
+    m_Localized: "\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215692
+    m_Localized: "N\xE3o fala? Tudo bem. Eu tamb\xE9m n\xE3o vim conversar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215693
+    m_Localized: "Ordem recebida: ningu\xE9m chega \xE0 \xF3rbita alta. Nem voc\xEA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215694
+    m_Localized: "Miss\xE3o\u2026 falhou. Boa viagem, condutora."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215695
+    m_Localized: "Valeu, grand\xE3o. Voc\xEA tamb\xE9m."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215696
+    m_Localized: "Voc\xEA chegou tarde. Os aliens me ofereceram mais que o governo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215697
+    m_Localized: "Voc\xEA trabalha para eles? E o que te prometeram, um rosto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215698
+    m_Localized: "Seu trem. Oito patas s\xE3o melhores que dois trilhos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215699
+    m_Localized: "N\xE3o importa\u2026 todos os trilhos terminam na mesma base."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215700
+    m_Localized: Pois o meu termina com uma pedra na porta deles.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215701
+    m_Localized: "Ent\xE3o voc\xEA \xE9 a bruxa de quem todos falam."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215702
+    m_Localized: "E voc\xEA \xE9 a \xFAltima que falta. Tamb\xE9m quer o desejo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215703
+    m_Localized: "Quero que meu povo pare de lutar esta guerra. Se eu lan\xE7ar a
+      pedra, o governo vai me dever isso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215704
+    m_Localized: "Lance essa pedra, bruxa\u2026 e acabe com isso por n\xF3s duas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2510276198215705
+    m_Localized: Feito. E depois eu vou para casa.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2524637377671168
+    m_Localized: Bombas! Derrube antes que caiam
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2524637411225600
+    m_Localized: "Abordagem! Rob\xF4s pulam para o seu trem"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2524637411225601
+    m_Localized: Motor superaquecido! Dano x2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528843870318592
+    m_Localized: "Cont\xEAiner eterno\nGR\xC1TIS \xB7 paga em cada esta\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2528843870318593
+    m_Localized: RARO!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686475969048576
+    m_Localized: 'Ataque: {0}! Pressione na ordem'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185920
+    m_Localized: '{0} no rival!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185921
+    m_Localized: 'Errou: o rival devolve {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185922
+    m_Localized: 'Pela metade: nada acontece'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185923
+    m_Localized: "O rival lan\xE7a {0} em voc\xEA!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185924
+    m_Localized: "Voc\xEA: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185925
+    m_Localized: 'Rival: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185926
+    m_Localized: Armas travadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185927
+    m_Localized: Blindagem quebrada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2686476015185928
+    m_Localized: "Confus\xE3o"
     m_Metadata:
       m_Items: []
   references:
