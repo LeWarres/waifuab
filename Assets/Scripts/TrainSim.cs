@@ -51,7 +51,9 @@ public class TrainSim : MonoBehaviour
     public float groundTile = 18f;                      // size on the ground of one repeat of the ground texture
     public float viewRange = 80f;
     public float sleeperSpacing = 1.5f;
-    [System.NonSerialized] public float stationGap = 1200f; // length of a normal leg: about a minute of riding
+    [System.NonSerialized] public float stationGap = 1200f;    // the shortest a normal leg can be: about a minute of riding
+    [System.NonSerialized] public float stationGapMax = 2400f; // the longest: each leg is somewhere in between, at random
+    float legScale = 1f;                                       // this leg's share of that, 1 to stationGapMax / stationGap
 
     [Header("Camera")]
     public float cameraSize = 14f;
@@ -100,12 +102,33 @@ public class TrainSim : MonoBehaviour
     public int Biome { get; private set; }
     // A story chapter grows harder with its clock (and each chapter starts harder than the one before) instead of
     // with stations and biome changes.
-    public int Difficulty => Story.Active ? Story.Chapter * 3 + (int)(storyClock / 100f) : Stations + Biome * biomeDifficulty;
+    // In a story it climbs gently for the first minutes, while the weapons are few, and ever faster after: 2 at 4
+    // minutes, 9 at 10, 24 at the end of the chapter.
+    public int Difficulty => Story.Active ? Story.Chapter * 3 + (int)(storyClock / 100f + 3f * Mathf.Pow(storyClock / 600f, 2f)) : Stations + Biome * biomeDifficulty;
     float storyClock;           // seconds ridden in this story chapter (not counting stations or pauses)
     bool duel, duelCalled, chapterWon; // the rival is out / was called for / is beaten and the upgrade to keep is being chosen
     Talk talk;                  // the words with the rival, before the duel and after it
     RivalEvent rival;           // the rival's locomotive, on a track of its own
     readonly List<string> taken = new(); // every upgrade taken in this chapter, as Story tokens
+
+    // The hero's upgrades (Story tokens), each up to MaxPassive levels, like Vampire Survivors' passive items. One
+    // of them, owned with a weapon at its top level, evolves that weapon (Weapon.evolvesWith).
+    // regen: the train and the hero mend slowly; area: blasts and sweeps wider; amount: more shots; luck: more prizes
+    // and golden chests; duration: slows, boomerangs and cuts last longer.
+    public static readonly string[] Passives = { "speed", "armor", "vitality", "damage", "greed", "fireRate", "critChance", "critDamage", "regen", "area", "amount", "luck", "duration" };
+    public static readonly string[] PassiveIcons = { "speed", "armor", "vitality", "arms", "money", "minigun", "sniper", "rail", "regen", "area", "amount", "luck", "duration" };
+    public float regenPerLevel = 0.15f * Balance.Scale; // health a second, per level of regeneration, to every wagon (half to the hero)
+    public const int MaxPassive = 5;
+    readonly Dictionary<string, int> passiveLevels = new();
+    public readonly List<string> passiveOrder = new(); // in the order they were first taken, for the HUD
+    public int PassiveLevel(string id) => id != null && passiveLevels.TryGetValue(id, out int n) ? n : 0;
+    // The hero's weapon is at its top level and its partner upgrade is owned: a boss's chest evolves it.
+    bool CanEvolve => Player.level == Weapon.MaxLevel && PassiveLevel(Player.ammo.evolvesWith) > 0;
+    // The first wagon whose weapon is at its top level with its partner upgrade owned, or null.
+    Turret Evolvable => cars.Find(c => c.mount && c.mount.Level == Weapon.MaxLevel && PassiveLevel(c.mount.Weapon.evolvesWith) > 0)?.mount;
+    bool evolutionsMenu; // the pause menu's list of every evolution
+    public bool EvolutionsOpen => Paused && evolutionsMenu;
+    string keptPassive; // the upgrade handed on to the next chapter, with its level: drawn when the chapter is won
     void Took(string token) { if (Story.Active) taken.Add(token); }
     // What the HUD shows of a chapter's clock: the time still to ride, then the duel.
     public string StoryTime => duel ? L10n.T("story.duel") + rival.StatusLine() : $"{(int)(Left / 60f):0}:{(int)(Left % 60f):00}";
@@ -141,7 +164,81 @@ public class TrainSim : MonoBehaviour
     public bool InEvent => turn.Active || jump.Active || zig.Active || swarm.Active; // a button game is on: the hero waits
     public bool BossFight => (boss != null && boss.Active) || (rival != null && rival.Active); // a boss or the rival is on the field: no other enemies join in
     public bool BossBeaten => bossBeaten == Biome;         // this biome's boss is down, the route is open
-    public void BossDefeated() => bossBeaten = Biome;
+    public void BossDefeated()
+    {
+        bossBeaten = Biome;
+        OpenChest();
+    }
+
+    // A boss's or mini boss's chest, as in Vampire Survivors: it evolves a weapon if that is earned (top level and its
+    // partner upgrade owned; the hero's first, then a wagon's), the only way to evolve; otherwise it raises two things
+    // already owned by a level each, at random (the hero's weapon, a wagon's weapon or one of the hero's upgrades),
+    // now and then four.
+    public int Chests { get; private set; } // opened this run, for the bot's notes
+    public void OpenChest()
+    {
+        Chests++;
+        Combat.Instance.Burst("levelup", Player.Position + Vector3.down * 2f, 3f);
+        if (CanEvolve)
+        {
+            Player.level = Weapon.Evolved;
+            Shake(0.4f);
+            hud.Toast(L10n.T("chest.evolution", Player.ammo.Name, Player.ammo.EvolvedName), 4f);
+            return;
+        }
+        Turret ready = Evolvable;
+        if (ready)
+        {
+            ready.Evolve();
+            Combat.Instance.Burst("levelup", ready.transform.position, 3f);
+            Shake(0.4f);
+            hud.Toast(L10n.T("chest.evolution", ready.Weapon.Name, ready.Weapon.EvolvedName), 4f);
+            return;
+        }
+        var won = new List<string>();
+        int rolls = Random.value < goldenChest + 0.08f * PassiveLevel("luck") ? 4 : 2;
+        for (int roll = 0; roll < rolls; roll++)
+        {
+            var choices = new List<System.Action>();
+            var names = new List<string>();
+            // Weapons count twice: a chest is mostly for them, as in Vampire Survivors.
+            for (int twice = 0; twice < 2; twice++)
+            {
+                if (Player.level < Weapon.MaxLevel) { choices.Add(() => Player.level++); names.Add(Player.ammo.Name); }
+                for (int i = 0; i < cars.Count; i++)
+                {
+                    int at = i;
+                    Turret gun = cars[i].mount;
+                    if (gun && gun.Level < Weapon.MaxLevel) { choices.Add(() => Mount(at, gun.Weapon)); names.Add(gun.Weapon.Name); }
+                }
+            }
+            foreach (string id in passiveOrder)
+                if (PassiveLevel(id) < MaxPassive) { string pick = id; choices.Add(() => Apply(pick)); names.Add(L10n.T("passive." + id)); }
+            if (choices.Count == 0) break;
+            int n = Random.Range(0, choices.Count);
+            choices[n]();
+            won.Add(names[n] + " +1");
+        }
+        hud.Toast(won.Count == 0 ? L10n.T("chest.empty") : L10n.T(rolls == 4 ? "chest.golden" : "chest.open", string.Join("  ·  ", won)), 4f);
+    }
+
+    // What the train and the hero are armed with, for the HUD: the hero's weapon first, then every kind of wagon
+    // weapon once, at the highest level it is mounted at.
+    public List<(Weapon weapon, int level)> Arsenal()
+    {
+        arsenal.Clear();
+        arsenal.Add((Player.ammo, Player.level));
+        foreach (Car car in cars)
+        {
+            if (!car.mount) continue;
+            int known = arsenal.FindIndex(1, a => a.weapon == car.mount.Weapon);
+            if (known < 0) arsenal.Add((car.mount.Weapon, car.mount.Level));
+            else if (car.mount.Level > arsenal[known].level) arsenal[known] = (car.mount.Weapon, car.mount.Level);
+        }
+        return arsenal;
+    }
+    readonly List<(Weapon weapon, int level)> arsenal = new();
+    public float goldenChest = 0.2f; // chance a chest raises four things instead of two
 
     // For AutoPlay, the bot that plays fast to measure the difficulty: what is on screen and a way to answer it.
     public static bool NoEvents;                            // it cannot play the button games: none come
@@ -365,7 +462,7 @@ public class TrainSim : MonoBehaviour
     AudioSource whistleSound, wagonBrokenSound;
     bool whistlePending = true;
     bool warned;
-    float LegLength => stationGap * Legs[leg].length;
+    float LegLength => stationGap * legScale * Legs[leg].length;
     static string LegName(int leg) => L10n.T("leg." + Legs[leg].id);
 
     // The open menu as a flat list, so mouse, keyboard and gamepad all drive the same options.
@@ -469,6 +566,7 @@ public class TrainSim : MonoBehaviour
         Paused = pause;
         confirming = 0;
         soundMenu = false;
+        evolutionsMenu = false;
         if (pause) scaleBeforePause = Time.timeScale;
         Time.timeScale = pause ? 0f : scaleBeforePause;
     }
@@ -603,7 +701,8 @@ public class TrainSim : MonoBehaviour
         // Bright, clean anime picture: no filmic curve crushing the colours, a little glow, a little more colour.
         look.profile.Add<UnityEngine.Rendering.HighDefinition.Tonemapping>(true).mode.value = UnityEngine.Rendering.HighDefinition.TonemappingMode.Neutral;
         var bloom = look.profile.Add<UnityEngine.Rendering.HighDefinition.Bloom>(true);
-        bloom.intensity.value = 0.15f;
+        bloom.intensity.value = 0.6f;
+        bloom.scatter.value = 0.7f; // shots and flashes are pushed past white: they glow, the rest stays clean
         bloom.threshold.value = 1f;
         var grade = look.profile.Add<UnityEngine.Rendering.HighDefinition.ColorAdjustments>(true);
         grade.saturation.value = 8f;
@@ -823,6 +922,13 @@ public class TrainSim : MonoBehaviour
     void Update()
     {
         Scroll = 0f; // the ground only slides while the train is running (below)
+        // Regeneration: the wagons and the hero mend a little every moment, between stations too.
+        float regen = regenPerLevel * PassiveLevel("regen") * Time.deltaTime;
+        if (regen > 0f && Health > 0f && !Paused)
+        {
+            Repair(regen, true);
+            if (Player && Player.Alive) Player.Heal(regen * 0.5f, true);
+        }
         if (Story.Active && !AtStation && !Paused && !chapterWon && Health > 0f)
         {
             // The chapter's clock; when it runs out, the rival comes alongside as soon as nothing else is on.
@@ -1354,29 +1460,29 @@ public class TrainSim : MonoBehaviour
     {
         offerPool.Clear();
         for (int i = 0; i < Weapon.Wagon.Length; i++)
-            if (Weapon.Wagon[i].firstBiome <= Biome) offerPool.Add(i);
+            if (Story.Active || Weapon.Wagon[i].firstBiome <= Biome) offerPool.Add(i); // the story offers every weapon from the start
         offerPool.Add(Weapon.Wagon.Length);
         Draw(offers);
-        if (cars.Count < maxCars && Random.value < bonusOfferChance)
+        if (cars.Count < maxCars && Random.value < bonusOfferChance + 0.04f * PassiveLevel("luck"))
             offers[Random.Range(0, offers.Length)] = Random.value < 0.5f ? FreeCargo + Random.Range(0, Loadable)
                 : Escort + offerPool[Random.Range(0, offerPool.Count - 1)]; // the pool's last entry is money
         if (cars.Count < maxCars && Random.value < eternalOfferChance) offers[Random.Range(0, offers.Length)] = Eternal;
 
         offerPool.Clear();
         for (int i = 0; i < Weapon.Hero.Length; i++)
-            if (Weapon.Hero[i].firstBiome <= Biome && Weapon.Hero[i] != Player.ammo) offerPool.Add(i);
+            if ((Story.Active || Weapon.Hero[i].firstBiome <= Biome) && Weapon.Hero[i] != Player.ammo) offerPool.Add(i);
         int ammo = offerPool.Count > 0 ? offerPool[Random.Range(0, offerPool.Count)] : -1;
         offerPool.Clear();
         if (ammo >= 0) offerPool.Add(ammo);                                        // one other ammo at most
-        offerPool.Add(Weapon.Hero.Length);                                        // speed
-        if (Player.armor < Player.MaxArmor) offerPool.Add(Weapon.Hero.Length + 1); // armor
-        offerPool.Add(Weapon.Hero.Length + 2);                                    // vitality
-        offerPool.Add(Weapon.Hero.Length + 3);                                    // damage
-        offerPool.Add(Weapon.Hero.Length + 4);                                    // money
-        if (Player.level < Weapon.MaxLevel) offerPool.Add(Weapon.Hero.Length + 5); // evolve
-        offerPool.Add(Weapon.Hero.Length + 6);                                    // arsenal fire rate
-        if (criticalChance < 1f) offerPool.Add(Weapon.Hero.Length + 7);             // critical chance
-        offerPool.Add(Weapon.Hero.Length + 8);                                    // critical damage
+        // The upgrades: speed, armor, vitality, damage, money, (5: a level on the weapon), arsenal fire rate, critical
+        // chance, critical damage; none past its top level.
+        for (int stat = 0; stat <= Passives.Length; stat++)
+        {
+            if (stat == 5) { if (Player.level < Weapon.MaxLevel) offerPool.Add(Weapon.Hero.Length + 5); continue; }
+            if (PassiveLevel(Passives[stat < 5 ? stat : stat - 1]) >= MaxPassive) continue;
+            if ((stat == 1 && Player.armor >= Player.MaxArmor) || (stat == 7 && criticalChance >= 1f)) continue;
+            offerPool.Add(Weapon.Hero.Length + stat);
+        }
         Draw(heroOffers);
     }
 
@@ -1414,7 +1520,7 @@ public class TrainSim : MonoBehaviour
 
     void Repair() => Repair(repairReward);
 
-    public void Repair(float amount)
+    public void Repair(float amount, bool quiet = false) // quiet: a trickle (regeneration), no sound
     {
         bool healed = false;
         foreach (Car car in cars)
@@ -1422,7 +1528,7 @@ public class TrainSim : MonoBehaviour
                 healed |= amount > 0f && car.health < car.maxHealth;
                 car.health = Mathf.Min(car.maxHealth, car.health + amount); // a wreck waits for the station
             }
-        if (healed) Sound.Play("healthup");
+        if (healed && !quiet) Sound.Play("healthup");
     }
 
     // No upgrade taken: a coin flip between some money and some health for train and hero.
@@ -1458,6 +1564,8 @@ public class TrainSim : MonoBehaviour
         leg = nextLeg;
         turned = false;
         RollEvent();
+        // Never the same ride twice; the first three legs stay short so the first upgrades and repairs come soon.
+        legScale = Stations < 3 ? 1f : Random.Range(1f, stationGapMax / stationGap);
         remaining = LegLength;
         AtStation = false;
         whistlePending = true;
@@ -1485,9 +1593,14 @@ public class TrainSim : MonoBehaviour
     void Apply(string token)
     {
         string[] part = token.Split(':');
+        if (System.Array.IndexOf(Passives, part[0]) >= 0)
+        {
+            if (PassiveLevel(part[0]) == 0) passiveOrder.Add(part[0]);
+            passiveLevels[part[0]] = PassiveLevel(part[0]) + 1;
+        }
         switch (part[0])
         {
-            case "ammo": Player.ammo = System.Array.Find(Weapon.Hero, w => w.id == part[1]) ?? Player.ammo; break;
+            case "ammo": Switch(System.Array.Find(Weapon.Hero, w => w.id == part[1]) ?? Player.ammo); break;
             case "evolve": Player.level = Mathf.Min(Weapon.MaxLevel, Player.level + 1); break;
             case "speed": Player.SpeedUp(); break;
             case "armor": Player.ArmorUp(); break;
@@ -1509,9 +1622,16 @@ public class TrainSim : MonoBehaviour
     }
 
     // The upgrade to keep was picked: the story goes on with the chapter's ending and the next one's opening.
+    // A new ammo for the hero; an evolution belongs to the weapon it came from, so the level drops back to the top.
+    void Switch(Weapon ammo)
+    {
+        Player.ammo = ammo;
+        if (Player.level > Weapon.MaxLevel) Player.level = Weapon.MaxLevel;
+    }
+
     void EndChapter(string keep)
     {
-        Story.Win(keep);
+        Story.Win(keep, keptPassive);
         Time.timeScale = 1f;
         SceneManager.LoadScene("historiaDialogos");
     }
@@ -1711,6 +1831,13 @@ public class TrainSim : MonoBehaviour
             if (confirming == 1) Add("yes", L10n.T("menu.yes"), Restart);
             else Add("yes", L10n.T("menu.yes"), GoToMainMenu);
         }
+        else if (Paused && evolutionsMenu)
+        {
+            // The list itself is drawn by the HUD over everything (Hud.Evolutions); here only the way back.
+            kind = 10;
+            menuTitle = L10n.T("pause.evolutions");
+            Add("back", L10n.T("menu.back"), () => evolutionsMenu = false);
+        }
         else if (Paused && soundMenu)
         {
             kind = 10;
@@ -1727,6 +1854,7 @@ public class TrainSim : MonoBehaviour
             menuTitle = L10n.T("menu.pause");
             Add("resume", L10n.T("pause.resume"), () => SetPaused(false));
             Add("sound", L10n.T("pause.sound"), () => soundMenu = true);
+            Add("evolutions", L10n.T("pause.evolutions"), () => evolutionsMenu = true);
             Add("language", L10n.T("language"), L10n.NextLocale);
             Add("restart", L10n.T("pause.restart"), () => confirming = 1);
             Add("quit", L10n.T("pause.menu"), () => confirming = 2);
@@ -1736,7 +1864,12 @@ public class TrainSim : MonoBehaviour
             // Three of the upgrades taken in this chapter, at random: the one picked goes on to the next chapters.
             kind = 8;
             menuTitle = L10n.T("story.won");
-            menuSub = L10n.T("story.keep");
+            if (keptPassive == null && passiveOrder.Count > 0)
+            {
+                string id = passiveOrder[Random.Range(0, passiveOrder.Count)];
+                keptPassive = id + "*" + PassiveLevel(id);
+            }
+            menuSub = L10n.T("story.keep") + (keptPassive == null ? "" : "     " + L10n.T("keep.passive", L10n.T("passive." + keptPassive.Split('*')[0]), keptPassive.Split('*')[1]));
             var pool = new List<string>(new HashSet<string>(taken));
             while (pool.Count > 3) pool.RemoveAt(Random.Range(0, pool.Count));
             if (keepOffer == null) keepOffer = pool;
@@ -1846,17 +1979,22 @@ public class TrainSim : MonoBehaviour
                 if (stat < 0)
                 {
                     Weapon weapon = Weapon.Hero[offer];
-                    Add(weapon.id, L10n.T("hero.ammo", weapon.Name, weapon.Info), () => { Player.ammo = weapon; Took("ammo:" + weapon.id); Next(); }); Free();
+                    Add(weapon.id, L10n.T("hero.ammo", weapon.Name, weapon.Info), () => { Switch(weapon); Took("ammo:" + weapon.id); Next(); }); Free();
                 }
-                else if (stat == 0) { Add("speed", L10n.T("hero.speed"), () => { Player.SpeedUp(); Took("speed"); Next(); }); Free(); }
-                else if (stat == 1) { Add("armor", L10n.T("hero.armor"), () => { Player.ArmorUp(); Took("armor"); Next(); }); Free(); }
-                else if (stat == 2) { Add("vitality", L10n.T("hero.vitality", vitalityReward), () => { Player.VitalityUp(vitalityReward); Took("vitality"); Next(); }); Free(); }
-                else if (stat == 3) { Add("arms", L10n.T("hero.damage"), () => { Player.DamageUp(); Took("damage"); Next(); }); Free(); }
-                else if (stat == 4) { Add("money", L10n.T("hero.greed"), () => { Player.GreedUp(); Took("greed"); Next(); }); Free(); }
-                else if (stat == 6) { Add("minigun", L10n.T("hero.fireRate", Mathf.RoundToInt(fireRate * 100f)), () => { fireRate += 0.2f; Took("fireRate"); Next(); }); Free(); }
-                else if (stat == 7) { Add("sniper", L10n.T("hero.criticalChance", Mathf.RoundToInt(criticalChance * 100f)), () => { criticalChance = Mathf.Min(1f, criticalChance + 0.05f); Took("critChance"); Next(); }); Free(); }
-                else if (stat == 8) { Add("arms", L10n.T("hero.criticalDamage", Mathf.RoundToInt(criticalMultiplier * 100f)), () => { criticalMultiplier += 0.25f; Took("critDamage"); Next(); }); Free(); }
-                else { Add(Player.ammo.id, L10n.T("hero.evolve", Player.ammo.Name, Player.level + 1), () => { Player.level++; Took("evolve"); Combat.Instance.Burst("levelup", Player.Position + Vector3.down * 2f, 1.5f); Next(); }); Free(); }
+                else if (stat == 5) { Add(Player.ammo.id, L10n.T("hero.evolve", Player.ammo.Name, Player.level + 1), () => { Player.level++; Took("evolve"); Combat.Instance.Burst("levelup", Player.Position + Vector3.down * 2f, 1.5f); Next(); }); Free(); }
+                else
+                {
+                    string id = Passives[stat < 5 ? stat : stat - 1];
+                    string label = stat switch
+                    {
+                        0 => L10n.T("hero.speed"), 1 => L10n.T("hero.armor"), 2 => L10n.T("hero.vitality", vitalityReward), 3 => L10n.T("hero.damage"),
+                        4 => L10n.T("hero.greed"), 6 => L10n.T("hero.fireRate", Mathf.RoundToInt(fireRate * 100f)),
+                        7 => L10n.T("hero.criticalChance", Mathf.RoundToInt(criticalChance * 100f)), 8 => L10n.T("hero.criticalDamage", Mathf.RoundToInt(criticalMultiplier * 100f)),
+                        _ => L10n.T("hero." + id),
+                    };
+                    Add(PassiveIcons[System.Array.IndexOf(Passives, id)], label, () => { Apply(id); Took(id); Next(); });
+                    Tag(L10n.T("badge.upgrade", PassiveLevel(id) + 1), 1);
+                }
             }
             Add("skip", L10n.T("menu.skip"), Skip);
             Minor();

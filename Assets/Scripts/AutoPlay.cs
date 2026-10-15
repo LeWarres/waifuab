@@ -3,8 +3,8 @@ using UnityEngine;
 
 // A bot that plays on its own, sped up, to measure how hard the game is: it flies the hero (closes in on the
 // nearest enemy, keeps at about two thirds of its weapon's reach, circles, falls back to the train when hurt),
-// takes every station's first upgrade, repairs when the train is hurt, buys wagons when it can, and skips the
-// cargo. It cannot play the button games, so while it plays none come (TrainSim.NoEvents). Every minute of game
+// builds on what it has at the stations (a level on a weapon it carries before anything new), repairs when the
+// train is hurt, buys wagons when it can, and skips the cargo. It cannot play the button games, so while it plays none come (TrainSim.NoEvents). Every minute of game
 // time it notes how things stand in Log. Not part of the game: added from the editor while playing.
 public class AutoPlay : MonoBehaviour
 {
@@ -15,7 +15,6 @@ public class AutoPlay : MonoBehaviour
 
     TrainSim train;
     float nextNote, nextChoice, orbit = 1f;
-    int picks;
     bool fighting;
     float lastHealth;
 
@@ -75,10 +74,13 @@ public class AutoPlay : MonoBehaviour
         switch (kind)
         {
             case 0: Note("TRAIN DESTROYED"); Over = true; Time.timeScale = 1f; return;
-            case 2: // the wagon offer: the first card, or the next one if that weapon is already at its top
-                Pick(picks++ % Mathf.Max(1, train.OptionCount - 1));
+            case 2: // the wagon offer: a level on a weapon already carried, else the first card
+                Pick(Owned(false) >= 0 ? Owned(false) : 0);
                 break;
-            case 3: if (train.OptionEnabled(0)) { train.Choose(0); picks = 0; } else train.Choose(1); break;
+            case 4: // the hero: a level on her weapon, else an upgrade; never another weapon
+                Pick(Owned(true) >= 0 ? Owned(true) : NotAmmo());
+                break;
+            case 3: if (train.OptionEnabled(0)) train.Choose(0); else train.Choose(1); break;
             case 5: train.Choose(train.OptionCount - 1); break; // no cargo
             case 7: // the shop
                 if (train.Health < train.MaxHealth * 0.75f && train.OptionEnabled(0)) train.Choose(0);
@@ -89,6 +91,26 @@ public class AutoPlay : MonoBehaviour
             case 8: Note("CHAPTER WON"); train.Choose(0); Over = true; Time.timeScale = 1f; return;
             default: Pick(0); break; // hero upgrade, route, placing cargo: the first
         }
+    }
+
+    // Like a player who builds on what they have: the card of a weapon already carried (the hero's, or the wagons').
+    int Owned(bool hero)
+    {
+        for (int i = 0; i < train.OptionCount; i++)
+        {
+            if (!train.OptionEnabled(i)) continue;
+            string icon = train.OptionIcon(i);
+            if (hero ? icon == train.Player.ammo.id : train.Arsenal().FindIndex(1, a => a.weapon.id == icon && a.level < Weapon.MaxLevel) >= 0) return i;
+        }
+        return -1;
+    }
+
+    // The first card that is not another weapon for the hero.
+    int NotAmmo()
+    {
+        for (int i = 0; i < train.OptionCount; i++)
+            if (train.OptionEnabled(i) && System.Array.FindIndex(Weapon.Hero, w => w.id == train.OptionIcon(i)) < 0) return i;
+        return 0;
     }
 
     int Find(string icon)
@@ -111,6 +133,22 @@ public class AutoPlay : MonoBehaviour
         Player hero = train.Player;
         Log.Append($"{what} t={Time.time / 60f:0.0}m clock={train.StoryClock / 60f:0.0}m dif={train.Difficulty} st={train.Stations} " +
                    $"train={train.Health:0}/{train.MaxHealth:0} hero={(hero ? hero.Health : 0f):0} lv={(hero ? hero.level : 0)} money={train.money} " +
-                   $"cars={train.CarCount} enemies={Combat.Instance.EnemyCount} duel={train.Dueling} boss={train.BossFight && !train.Dueling} station={train.AtStation}\n");
+                   $"cars={train.CarCount} enemies={Combat.Instance.EnemyCount} duel={train.Dueling} boss={train.BossFight && !train.Dueling} station={train.AtStation} " +
+                   $"chests={train.Chests} mini={Combat.Instance.MiniBossesBeaten} arms={Arms()} upgrades={Upgrades()}\n");
+    }
+
+    // The weapons as id+level (the hero's first), and the hero's upgrades as id+level.
+    string Arms()
+    {
+        var s = new StringBuilder();
+        foreach (var a in train.Arsenal()) s.Append(a.weapon.id).Append(a.level).Append(',');
+        return s.ToString();
+    }
+
+    string Upgrades()
+    {
+        var s = new StringBuilder();
+        foreach (string id in train.passiveOrder) s.Append(id).Append(train.PassiveLevel(id)).Append(',');
+        return s.ToString();
     }
 }

@@ -334,11 +334,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203470
-    m_Localized: Cano serrado
+    m_Localized: Bumerangue
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203471
-    m_Localized: 3 balas, chegue perto
+    m_Localized: "L\xE2minas que v\xE3o e voltam atravessando tudo, uma a mais por
+      n\xEDvel"
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203472
@@ -362,7 +363,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203477
-    m_Localized: "Raio instant\xE2neo, um a mais por n\xEDvel"
+    m_Localized: "Orbes que giram ao seu redor, um a mais por n\xEDvel"
     m_Metadata:
       m_Items: []
   - m_Id: 170646232707072
@@ -1794,6 +1795,257 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2686476015185928
     m_Localized: "Confus\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2700152973635584
+    m_Localized: Masamune
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2700153007190016
+    m_Localized: "Corte de ar que atravessa todos; no n\xEDvel 5, um drag\xE3o azul
+      em zigue-zague"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896949112832
+    m_Localized: "Evolu\xE7\xE3o! {0}\nvira {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667264
+    m_Localized: "EVOLU\xC7\xC3O!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667265
+    m_Localized: '{0}  EVO'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667266
+    m_Localized: "E mant\xE9m ao acaso: {0} Nv {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667267
+    m_Localized: "Drag\xE3o Azul"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667268
+    m_Localized: "Cora\xE7\xE3o Solar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667269
+    m_Localized: Chakram
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667270
+    m_Localized: Escudo de Orbes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667271
+    m_Localized: Velocidade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667272
+    m_Localized: Armadura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667273
+    m_Localized: Vitalidade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667274
+    m_Localized: Dano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667275
+    m_Localized: Saque
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896986861568
+    m_Localized: "Cad\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896986861569
+    m_Localized: "Cr\xEDtico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896986861570
+    m_Localized: "Dano cr\xEDtico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2722214454833152
+    m_Localized: "Ba\xFA do chefe! {0} evolui para {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2722214488387584
+    m_Localized: "Ba\xFA do chefe!  {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2722214488387585
+    m_Localized: "Ba\xFA dourado!  {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2722214488387586
+    m_Localized: "Ba\xFA do chefe! Tudo no m\xE1ximo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810516201472
+    m_Localized: "Evolu\xE7\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755904
+    m_Localized: "Evolu\xE7\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755905
+    m_Localized: "Arma no n\xEDvel 5 + sua melhoria, e derrote um chefe: o ba\xFA
+      a evolui"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755906
+    m_Localized: "Espa\xE7o / Esc / B: voltar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755907
+    m_Localized: "{0} + {1}  \xB7  Her\xF3i"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755908
+    m_Localized: "{0} + {1}  \xB7  Vag\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755909
+    m_Localized: Estrela Blaster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755910
+    m_Localized: "Bomba de Fragmenta\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755911
+    m_Localized: Tempestade de Chumbo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755912
+    m_Localized: "Canh\xE3o de \xCDons"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755913
+    m_Localized: Rosa de Balas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755914
+    m_Localized: "Enxame de M\xEDsseis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755915
+    m_Localized: Chuva de Chumbo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755916
+    m_Localized: Chumbo Dourado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755917
+    m_Localized: "Olho de Falc\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755918
+    m_Localized: Pulso Vital
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755919
+    m_Localized: Tempestade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755920
+    m_Localized: Anel de Fogo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950208
+    m_Localized: Nevasca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950209
+    m_Localized: "Rede El\xE9trica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950210
+    m_Localized: Prisma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950211
+    m_Localized: "Regenera\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950212
+    m_Localized: "\xC1rea"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950213
+    m_Localized: Quantidade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950214
+    m_Localized: Sorte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950215
+    m_Localized: "Dura\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950216
+    m_Localized: "Regenera\xE7\xE3o\nO trem e o her\xF3i se curam aos poucos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950217
+    m_Localized: "\xC1rea\n+12% no tamanho de explos\xF5es e varreduras"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950218
+    m_Localized: "Quantidade\nUm disparo a mais a cada 2 n\xEDveis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950219
+    m_Localized: "Sorte\nMais pr\xEAmios e ba\xFAs dourados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950220
+    m_Localized: "Dura\xE7\xE3o\nLentid\xE3o, bumerangues e cortes duram +20%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950221
+    m_Localized: "Manter\nRegenera\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950222
+    m_Localized: "Manter\n+12% de \xE1rea"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950223
+    m_Localized: 'Manter
+
+      Quantidade de disparos'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950224
+    m_Localized: 'Manter
+
+      Sorte'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950225
+    m_Localized: "Manter\n+20% de dura\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2732727704301568
+    m_Localized: "Mini chefe! Derrube-o por um ba\xFA \xB7 chegue perto e aperte
+      {0} para atra\xED-lo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2732727737856000
+    m_Localized: Mini chefe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2741642185748480
+    m_Localized: "O mini chefe est\xE1 atr\xE1s de voc\xEA! Afaste-o dos vag\xF5es"
     m_Metadata:
       m_Items: []
   references:

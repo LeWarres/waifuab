@@ -342,11 +342,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203470
-    m_Localized: Sawed-off
+    m_Localized: Boomerang
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203471
-    m_Localized: 3 pellets, get close
+    m_Localized: Blades that fly out and back through everything, one more per level
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203472
@@ -370,7 +370,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203477
-    m_Localized: Instant bolt, one more per level
+    m_Localized: Orbs that circle around you, one more per level
     m_Metadata:
       m_Items: []
   - m_Id: 170646232707072
@@ -1840,6 +1840,274 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2686476015185928
     m_Localized: Confusion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2700152973635584
+    m_Localized: Masamune
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2700153007190016
+    m_Localized: An air slash through everyone; at level 5, a blue dragon in a zigzag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896949112832
+    m_Localized: 'Evolution! {0}
+
+      becomes {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667264
+    m_Localized: EVOLUTION!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667265
+    m_Localized: '{0}  EVO'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667266
+    m_Localized: 'And kept at random: {0} Lv {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667267
+    m_Localized: Blue Dragon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667268
+    m_Localized: Solar Heart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667269
+    m_Localized: Chakram
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667270
+    m_Localized: Orb Shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667271
+    m_Localized: Speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667272
+    m_Localized: Armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667273
+    m_Localized: Vitality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667274
+    m_Localized: Damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667275
+    m_Localized: Loot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896986861568
+    m_Localized: Fire rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896986861569
+    m_Localized: Critical
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896986861570
+    m_Localized: Critical damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2722214454833152
+    m_Localized: Boss chest! {0} evolves into {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2722214488387584
+    m_Localized: Boss chest!  {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2722214488387585
+    m_Localized: Golden chest!  {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2722214488387586
+    m_Localized: Boss chest! Everything is maxed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810516201472
+    m_Localized: Evolutions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755904
+    m_Localized: Evolutions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755905
+    m_Localized: 'A weapon at level 5 + its upgrade, then beat a boss: its chest
+      evolves it'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755906
+    m_Localized: 'Space / Esc / B: back'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755907
+    m_Localized: "{0} + {1}  \xB7  Hero"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755908
+    m_Localized: "{0} + {1}  \xB7  Wagon"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755909
+    m_Localized: Blaster Star
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755910
+    m_Localized: Cluster Bomb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755911
+    m_Localized: Lead Storm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755912
+    m_Localized: Ion Cannon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755913
+    m_Localized: Bullet Rose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755914
+    m_Localized: Missile Swarm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755915
+    m_Localized: Lead Rain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755916
+    m_Localized: Golden Buckshot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755917
+    m_Localized: Hawk Eye
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755918
+    m_Localized: Vital Pulse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755919
+    m_Localized: Tempest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755920
+    m_Localized: Ring of Fire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950208
+    m_Localized: Blizzard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950209
+    m_Localized: Power Grid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950210
+    m_Localized: Prism
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950211
+    m_Localized: Regeneration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950212
+    m_Localized: Area
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950213
+    m_Localized: Amount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950214
+    m_Localized: Luck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950215
+    m_Localized: Duration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950216
+    m_Localized: 'Regeneration
+
+      The train and the hero mend slowly'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950217
+    m_Localized: 'Area
+
+      +12% size of blasts and sweeps'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950218
+    m_Localized: 'Amount
+
+      One more shot every 2 levels'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950219
+    m_Localized: 'Luck
+
+      More prizes and golden chests'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950220
+    m_Localized: 'Duration
+
+      Slows, boomerangs and cuts last +20%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950221
+    m_Localized: 'Keep
+
+      Regeneration'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950222
+    m_Localized: 'Keep
+
+      +12% area'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950223
+    m_Localized: 'Keep
+
+      Shot amount'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950224
+    m_Localized: 'Keep
+
+      Luck'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950225
+    m_Localized: 'Keep
+
+      +20% duration'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2732727704301568
+    m_Localized: "Mini boss! Bring it down for a chest \xB7 get close and press {0}
+      to draw it"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2732727737856000
+    m_Localized: Mini boss
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2741642185748480
+    m_Localized: The mini boss is after you! Lead it away from the wagons
     m_Metadata:
       m_Items: []
   references:

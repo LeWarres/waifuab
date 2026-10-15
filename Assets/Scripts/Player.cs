@@ -35,6 +35,10 @@ public class Player : MonoBehaviour
     TrainSim train;
     GameObject visuals;
     Transform rifle;
+    Transform sword;               // the Masamune, in the same hand: shown instead of the rifle while it is the ammo
+    Transform arm;                 // her sword arm, swung for a cut
+    Quaternion armLocal, armPosed; // how it hangs, and how it stood when she was posed
+    float slash;                   // 1 as a cut starts, down to 0 as the arm comes back
     InputAction move, look, next, previous, targetNext, targetPrevious, run;
     InputAction[] buttons;
     Combat.Enemy target;
@@ -114,6 +118,60 @@ public class Player : MonoBehaviour
     void Pose(Transform body, Animator rig)
     {
         Transform Bone(HumanBodyBones bone) => rig.GetBoneTransform(bone);
+        Stand(body, rig, visuals.transform.position);
+
+        Transform Gear(string model, Vector3 at)
+        {
+            Transform gear = Instantiate(Resources.Load<GameObject>(model), visuals.transform).transform;
+            gear.position = at;
+            foreach (Renderer part in gear.GetComponentsInChildren<Renderer>()) TrainSim.Toon(part);
+            return gear;
+        }
+        // Rifle and jetpack ride on her bones, so they go with her when she moves.
+        rifle = Gear("Models/HeroRifle", Bone(HumanBodyBones.RightHand).position);
+        rifle.SetParent(Bone(HumanBodyBones.RightHand), true);
+        sword = Gear("Models/HeroSword", Bone(HumanBodyBones.RightHand).position);
+        sword.SetParent(Bone(HumanBodyBones.RightHand), true);
+        sword.gameObject.SetActive(false);
+        arm = Bone(HumanBodyBones.RightUpperArm);
+        armLocal = arm.localRotation;
+        armPosed = arm.rotation;
+        Transform back = Bone(HumanBodyBones.Chest) ?? Bone(HumanBodyBones.Spine);
+        Transform pack = Gear("Models/HeroJetpack", back.position + Vector3.back * 0.22f);
+        pack.SetParent(back, true);
+        var moving = new[] { HumanBodyBones.LeftUpperLeg, HumanBodyBones.RightUpperLeg, HumanBodyBones.LeftLowerLeg, HumanBodyBones.RightLowerLeg, HumanBodyBones.Spine };
+        for (int i = 0; i < joints.Length; i++)
+        {
+            joints[i] = Bone(moving[i]);
+            posed[i] = joints[i].rotation; // she faces +z here, so this is the joint as seen from her
+        }
+        before = transform.position;
+        foreach (float side in new[] { -0.2f, 0.2f })
+        {
+            // Fire out of the nozzle: Smoke's puffs, bright, quick and sent downwards.
+            var flame = new GameObject("Flame").AddComponent<Smoke>();
+            flame.transform.SetParent(pack, false);
+            flame.transform.localPosition = new Vector3(side, -0.52f, -0.22f);
+            flame.colour = new Color(3f, 1.1f, 0.15f); // over 1: it blooms
+            flame.every = 0.025f; flame.life = 0.28f; flame.rise = -6f; flame.size = 0.42f; flame.trail = 0f; flame.wander = 0.6f;
+            flames[side < 0f ? 0 : 1] = flame;
+        }
+    }
+
+    // The swing of the hero's sword arm, for slash going from 1 as the cut
+    // starts down to 0: from the right across to the left, quick, then back. Degrees about the up axis.
+    public static float CutYaw(float slash)
+    {
+        if (slash <= 0f) return 0f;
+        float p = 1f - slash;
+        return p < 0.4f ? Mathf.Lerp(70f, -110f, Mathf.SmoothStep(0f, 1f, p / 0.4f)) : Mathf.Lerp(-110f, 0f, (p - 0.4f) / 0.6f);
+    }
+
+    // A character in the hero's stance: two units tall, squared up to face +z with its middle at centre, legs
+    // straight down, arms forward as if on a rifle. The hero flies in it; the Masamune wagon's swordsman stands in it.
+    public static void Stand(Transform body, Animator rig, Vector3 centre)
+    {
+        Transform Bone(HumanBodyBones bone) => rig.GetBoneTransform(bone);
         body.localScale *= 2f / ((Bone(HumanBodyBones.Head).position.y - Bone(HumanBodyBones.LeftFoot).position.y) * 1.15f);
         // The model comes standing in a fighter's stance, off to one side of its own origin. Squared up to face +z,
         // then every limb pointed where it should go, whatever way it came: legs straight down, arms out to the rifle.
@@ -135,39 +193,8 @@ public class Player : MonoBehaviour
         Point(HumanBodyBones.RightLowerArm, HumanBodyBones.RightHand, Vector3.forward);
         Point(HumanBodyBones.LeftUpperArm, HumanBodyBones.LeftLowerArm, new Vector3(0.1f, -0.4f, 1f));
         Point(HumanBodyBones.LeftLowerArm, HumanBodyBones.LeftHand, new Vector3(0.45f, 0.1f, 1f));
-        // Her hips over the hero's own middle, so she turns on the spot and the shots leave from her.
-        body.position += Flat(visuals.transform.position - hips.position) + Vector3.up * (visuals.transform.position.y + 0.75f - Bone(HumanBodyBones.Head).position.y);
-
-        Transform Gear(string model, Vector3 at)
-        {
-            Transform gear = Instantiate(Resources.Load<GameObject>(model), visuals.transform).transform;
-            gear.position = at;
-            foreach (Renderer part in gear.GetComponentsInChildren<Renderer>()) TrainSim.Toon(part);
-            return gear;
-        }
-        // Rifle and jetpack ride on her bones, so they go with her when she moves.
-        rifle = Gear("Models/HeroRifle", Bone(HumanBodyBones.RightHand).position);
-        rifle.SetParent(Bone(HumanBodyBones.RightHand), true);
-        Transform back = Bone(HumanBodyBones.Chest) ?? Bone(HumanBodyBones.Spine);
-        Transform pack = Gear("Models/HeroJetpack", back.position + Vector3.back * 0.22f);
-        pack.SetParent(back, true);
-        var moving = new[] { HumanBodyBones.LeftUpperLeg, HumanBodyBones.RightUpperLeg, HumanBodyBones.LeftLowerLeg, HumanBodyBones.RightLowerLeg, HumanBodyBones.Spine };
-        for (int i = 0; i < joints.Length; i++)
-        {
-            joints[i] = Bone(moving[i]);
-            posed[i] = joints[i].rotation; // she faces +z here, so this is the joint as seen from her
-        }
-        before = transform.position;
-        foreach (float side in new[] { -0.2f, 0.2f })
-        {
-            // Fire out of the nozzle: Smoke's puffs, bright, quick and sent downwards.
-            var flame = new GameObject("Flame").AddComponent<Smoke>();
-            flame.transform.SetParent(pack, false);
-            flame.transform.localPosition = new Vector3(side, -0.52f, -0.22f);
-            flame.colour = new Color(3f, 1.1f, 0.15f); // over 1: it blooms
-            flame.every = 0.025f; flame.life = 0.28f; flame.rise = -6f; flame.size = 0.42f; flame.trail = 0f; flame.wander = 0.6f;
-            flames[side < 0f ? 0 : 1] = flame;
-        }
+        // Its hips over the middle, so it turns on the spot and the shots leave from it.
+        body.position += Flat(centre - hips.position) + Vector3.up * (centre.y + 0.75f - Bone(HumanBodyBones.Head).position.y);
     }
 
     // Life in her, every frame, from how the hero is moving: she leans into her flight and banks into a slide,
@@ -192,6 +219,18 @@ public class Player : MonoBehaviour
             joints[leg + 2].rotation = turn * thigh * Quaternion.Euler(14f + Mathf.Max(0f, lean.z) * 26f + (leg == 0 ? -paddle : paddle), 0f, 0f) * posed[leg + 2];
         }
         joints[4].rotation = turn * Quaternion.Euler(Mathf.Sin(time * 1.7f) * 1.5f - kick * 8f, Mathf.Sin(time * 1.1f) * 3f, 0f) * posed[4];
+        if (arm)
+        {
+            bool blade = ammo.style == Weapon.Slash;
+            if (sword.gameObject.activeSelf != blade) { sword.gameObject.SetActive(blade); rifle.gameObject.SetActive(!blade); }
+            slash = Mathf.Max(0f, slash - dt * 3f);
+            if (slash > 0f)
+            {
+                // The cut: the sword arm sweeps from her right across to her left, quick, then comes back.
+                arm.rotation = turn * Quaternion.Euler(0f, CutYaw(slash), 0f) * armPosed;
+            }
+            else arm.localRotation = armLocal;
+        }
         foreach (Smoke flame in flames) flame.size = 0.42f * (1f + lean.magnitude * 0.7f);
     }
 
@@ -278,7 +317,9 @@ public class Player : MonoBehaviour
         if (cooldown > 0f || target == null) return;
         cooldown = ammo.Interval(level) / Mathf.Max(1f, train.fireRate);
         // Shots leave the barrel so they line up with the muzzle flash.
-        combat.Volley(rifle ? rifle.TransformPoint(MuzzleLocal) : p, target, ammo, level, true);
+        bool cut = ammo.style == Weapon.Slash;
+        if (cut) slash = 1f;
+        combat.Volley(cut || !rifle ? p : rifle.TransformPoint(MuzzleLocal), target, ammo, level, true);
         kick = 1f;
     }
 
@@ -326,9 +367,9 @@ public class Player : MonoBehaviour
         aim = turn * aim;
     }
 
-    public void Heal(float amount)
+    public void Heal(float amount, bool quiet = false) // quiet: a trickle (regeneration), no flash or sound
     {
-        if (Health < maxHealth && amount > 0f) { train.Flash("healing"); Sound.Play("healthup"); }
+        if (Health < maxHealth && amount > 0f && !quiet) { train.Flash("healing"); Sound.Play("healthup"); }
         Health = Mathf.Min(maxHealth, Health + amount);
     }
 

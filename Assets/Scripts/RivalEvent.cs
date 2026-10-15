@@ -18,8 +18,8 @@ public class RivalEvent : MonoBehaviour
     public float trackLength = 320f;  // of the rails laid for it, centred on the train
     public float fireEvery = 1.3f;    // seconds between two shots of one of its guns, at difficulty 0
     public float shotDamage = 4f * Balance.Scale;
-    public float health = 900f * Balance.Scale;
-    public float perDifficulty = 0.05f; // more health and harder shots for every level of difficulty
+    public float health = 1300f * Balance.Scale;
+    public float perDifficulty = 0.03f; // more health and harder shots for every level of difficulty
     public float bombDamage = 6f * Balance.Scale, bombHealth = 2.5f * Balance.Scale, bombFlight = 2.6f;
     public float introSeconds = 2.4f;
     public float zoom = 1.4f;          // the picture pulls back this far so both trains fit

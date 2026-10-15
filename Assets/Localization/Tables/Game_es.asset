@@ -335,11 +335,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203470
-    m_Localized: Recortada
+    m_Localized: "Bumer\xE1n"
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203471
-    m_Localized: 3 balas, hay que acercarse
+    m_Localized: "Cuchillas que van y vuelven atravesando todo, una m\xE1s por nivel"
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203472
@@ -363,7 +363,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 155144173203477
-    m_Localized: "Rayo instant\xE1neo, uno m\xE1s por nivel"
+    m_Localized: "Orbes que giran a tu alrededor, uno m\xE1s por nivel"
     m_Metadata:
       m_Items: []
   - m_Id: 170646232707072
@@ -1808,6 +1808,256 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2686476015185928
     m_Localized: "Confusi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2700152973635584
+    m_Localized: Masamune
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2700153007190016
+    m_Localized: "Tajo de aire que atraviesa a todos; a nivel 5, un drag\xF3n azul
+      en zigzag"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896949112832
+    m_Localized: "\xA1Evoluci\xF3n! {0}\nse convierte en {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667264
+    m_Localized: "\xA1EVOLUCI\xD3N!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667265
+    m_Localized: '{0}  EVO'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667266
+    m_Localized: 'Y se conserva al azar: {0} Nv {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667267
+    m_Localized: "Drag\xF3n Azul"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667268
+    m_Localized: "Coraz\xF3n Solar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667269
+    m_Localized: Chakram
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667270
+    m_Localized: Escudo de Orbes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667271
+    m_Localized: Velocidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667272
+    m_Localized: Armadura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667273
+    m_Localized: Vitalidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667274
+    m_Localized: "Da\xF1o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896982667275
+    m_Localized: "Bot\xEDn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896986861568
+    m_Localized: Cadencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896986861569
+    m_Localized: "Cr\xEDtico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2718896986861570
+    m_Localized: "Da\xF1o cr\xEDtico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2722214454833152
+    m_Localized: "\xA1Cofre del jefe! {0} evoluciona a {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2722214488387584
+    m_Localized: "\xA1Cofre del jefe!  {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2722214488387585
+    m_Localized: "\xA1Cofre dorado!  {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2722214488387586
+    m_Localized: "\xA1Cofre del jefe! Todo est\xE1 al m\xE1ximo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810516201472
+    m_Localized: Evoluciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755904
+    m_Localized: Evoluciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755905
+    m_Localized: 'Arma a nivel 5 + su mejora, y derrota a un jefe: su cofre la evoluciona'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755906
+    m_Localized: 'Espacio / Esc / B: volver'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755907
+    m_Localized: "{0} + {1}  \xB7  H\xE9roe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755908
+    m_Localized: "{0} + {1}  \xB7  Vag\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755909
+    m_Localized: "Estrella Bl\xE1ster"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755910
+    m_Localized: Bomba Racimo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755911
+    m_Localized: Tormenta de Plomo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755912
+    m_Localized: "Ca\xF1\xF3n de Iones"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755913
+    m_Localized: Rosa de Balas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755914
+    m_Localized: Enjambre de Misiles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755915
+    m_Localized: Lluvia de Plomo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755916
+    m_Localized: "Perdig\xF3n Dorado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755917
+    m_Localized: "Ojo de Halc\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755918
+    m_Localized: Pulso Vital
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755919
+    m_Localized: Tempestad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810549755920
+    m_Localized: Anillo de Fuego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950208
+    m_Localized: Ventisca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950209
+    m_Localized: "Red El\xE9ctrica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950210
+    m_Localized: Prisma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950211
+    m_Localized: "Regeneraci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950212
+    m_Localized: "\xC1rea"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950213
+    m_Localized: Cantidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950214
+    m_Localized: Suerte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950215
+    m_Localized: "Duraci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950216
+    m_Localized: "Regeneraci\xF3n\nEl tren y el h\xE9roe se curan poco a poco"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950217
+    m_Localized: "\xC1rea\n+12% de tama\xF1o de explosiones y barridos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950218
+    m_Localized: "Cantidad\nUn disparo m\xE1s cada 2 niveles"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950219
+    m_Localized: "Suerte\nM\xE1s premios y cofres dorados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950220
+    m_Localized: "Duraci\xF3n\nRalentizar, bumeranes y cortes duran +20%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950221
+    m_Localized: "Conservar\nRegeneraci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950222
+    m_Localized: "Conservar\n+12% de \xE1rea"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950223
+    m_Localized: 'Conservar
+
+      Cantidad de disparos'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950224
+    m_Localized: 'Conservar
+
+      Suerte'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2727810553950225
+    m_Localized: "Conservar\n+20% de duraci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2732727704301568
+    m_Localized: "\xA1Mini jefe! Derr\xEDbalo para un cofre \xB7 ac\xE9rcate y pulsa
+      {0} para que te siga"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2732727737856000
+    m_Localized: Mini jefe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2741642185748480
+    m_Localized: "\xA1El mini jefe te sigue! Al\xE9jalo de los vagones"
     m_Metadata:
       m_Items: []
   references:

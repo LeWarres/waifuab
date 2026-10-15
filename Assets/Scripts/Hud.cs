@@ -61,6 +61,9 @@ public class Hud : MonoBehaviour
     Canvas popupCanvas; // their own canvas: they move every frame, and the rest of the HUD need not be rebuilt for it
     Meter trainBar, tripBar, heroBar;
     RawImage ammoIcon;
+    // Under the train's card, two rows of boxes: the weapons carried (the hero's first) and the hero's upgrades,
+    // each with its level.
+    readonly List<(RawImage icon, Text level)> weapons = new(), passives = new();
     Text ammoText;
     readonly List<Meter> worldBars = new();
     RectTransform world;
@@ -97,6 +100,25 @@ public class Hud : MonoBehaviour
         Slanted bag = UiKit.Panel(left, new Vector2(222f, -130f), new Vector2(140f, 40f), glass, glass, 0.12f);
         UiKit.Picture(bag.transform, "medkit", new Vector2(-44f, 0f), 28f);
         kits = UiKit.Label(bag.transform, UiKit.Body, 18, Color.white, TextAnchor.MiddleLeft, new Vector2(18f, 0f), new Vector2(86f, 28f), true);
+        // Square see-through boxes side by side, Vampire Survivors style: five drawn even when empty, one more for
+        // every thing past five.
+        void Boxes(List<(RawImage, Text)> row, int count, float y, Color edge)
+        {
+            var fill = new Color(0f, 0f, 0f, 0.22f);
+            for (int i = 0; i < count; i++)
+            {
+                Slanted box = UiKit.Panel(left, new Vector2(20f + i * 40f, y), new Vector2(40f, 40f), fill, fill, 0f);
+                foreach (var (at, size) in new[] { (new Vector2(0f, 19f), new Vector2(40f, 2f)), (new Vector2(0f, -19f), new Vector2(40f, 2f)),
+                                                   (new Vector2(-19f, 0f), new Vector2(2f, 40f)), (new Vector2(19f, 0f), new Vector2(2f, 40f)) })
+                    UiKit.Panel(box.transform, at, size, edge, edge, 0f);
+                RawImage icon = UiKit.Picture(box.transform, null, new Vector2(0f, 1f), 32f);
+                Text lv = UiKit.Label(box.transform, UiKit.Heading, 13, UiKit.Gold, TextAnchor.LowerRight, new Vector2(1f, 0f), new Vector2(36f, 38f), true);
+                row.Add((icon, lv));
+            }
+        }
+        var line = new Color(1f, 1f, 1f, 0.35f);
+        Boxes(weapons, 14, -178f, line);
+        Boxes(passives, TrainSim.Passives.Length, -218f, line);
 
         // ---- hero, top right: weapon and health; the stats only at a station, the controls only at the start ----
         RectTransform right = UiKit.Group(canvas.transform, new Vector2(1f, 1f), new Vector2(-26f, -22f));
@@ -191,6 +213,17 @@ public class Hud : MonoBehaviour
         bossUntil = Time.unscaledTime + 0.25f;
     }
 
+    const int BaseBoxes = 5;
+
+    // A box on screen (slot), with or without a symbol in it (shown).
+    static void Show((RawImage icon, Text level) box, bool shown, bool slot)
+    {
+        GameObject frame = box.icon.transform.parent.gameObject;
+        if (frame.activeSelf != slot) frame.SetActive(slot);
+        if (box.icon.enabled != shown) box.icon.enabled = shown;
+        if (!shown) box.level.text = "";
+    }
+
     public void Toast(string text, float seconds = 2.5f)
     {
         toastText.text = text;
@@ -249,8 +282,68 @@ public class Hud : MonoBehaviour
         popups.Add(popup);
     }
 
+    // ---- the pause menu's Evolutions: every weapon, the upgrade that evolves it, and what it becomes ----
+    Canvas evolutions;
+    readonly List<(Weapon weapon, RawImage gun, RawImage passive, Text name)> recipes = new();
+
+    // Shown while the pause menu has it open; what is owned is lit, the rest faded, the evolved ones in gold.
+    void Evolutions()
+    {
+        if (!train.EvolutionsOpen)
+        {
+            if (evolutions && evolutions.gameObject.activeSelf) evolutions.gameObject.SetActive(false);
+            return;
+        }
+        if (!evolutions) BuildEvolutions();
+        if (!evolutions.gameObject.activeSelf) evolutions.gameObject.SetActive(true);
+        var faded = new Color(1f, 1f, 1f, 0.3f);
+        var arsenal = train.Arsenal();
+        foreach (var r in recipes)
+        {
+            int level = 0;
+            foreach (var a in arsenal) if (a.weapon == r.weapon) level = a.level;
+            bool partner = train.PassiveLevel(r.weapon.evolvesWith) > 0;
+            r.gun.color = level > 0 ? Color.white : faded;
+            r.passive.color = partner ? Color.white : faded;
+            r.name.color = level >= Weapon.Evolved ? UiKit.Gold : level > 0 && partner ? Color.white : new Color(0.75f, 0.8f, 0.95f, 0.6f);
+        }
+    }
+
+    void BuildEvolutions()
+    {
+        evolutions = UiKit.NewCanvas("Evolutions", 15); // over the pause menu
+        Transform root = evolutions.transform;
+        var shade = new Color(0.03f, 0.05f, 0.12f, 1f); // solid: the pause menu stays hidden under it
+        var dim = new Color(0.8f, 0.87f, 1f, 0.72f);
+        UiKit.Panel(root, Vector2.zero, new Vector2(2600f, 1500f), shade, shade, 0f);
+        UiKit.Label(root, UiKit.Heading, 46, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 480f), new Vector2(1600f, 60f), true).text = L10n.T("evo.title");
+        UiKit.Label(root, UiKit.Body, 22, dim, TextAnchor.MiddleCenter, new Vector2(0f, 436f), new Vector2(1700f, 32f), true).text = L10n.T("evo.rule");
+        var all = new List<(Weapon, bool)>();
+        foreach (Weapon w in Weapon.Hero) all.Add((w, true));
+        foreach (Weapon w in Weapon.Wagon) all.Add((w, false));
+        var row = new Color(1f, 1f, 1f, 0.05f);
+        for (int i = 0; i < all.Count; i++)
+        {
+            var (weapon, hero) = all[i];
+            int passive = System.Array.IndexOf(TrainSim.Passives, weapon.evolvesWith);
+            RectTransform line = UiKit.Group(root, new Vector2(0.5f, 0.5f), new Vector2(i < 10 ? -470f : 470f, 370f - (i % 10) * 78f));
+            UiKit.Panel(line, Vector2.zero, new Vector2(900f, 70f), row, row, 0f);
+            RawImage gun = UiKit.Picture(line, weapon.id, new Vector2(-400f, 0f), 56f);
+            UiKit.Label(line, UiKit.Heading, 30, dim, TextAnchor.MiddleCenter, new Vector2(-348f, 0f), new Vector2(30f, 40f), true).text = "+";
+            RawImage partner = UiKit.Picture(line, passive >= 0 ? TrainSim.PassiveIcons[passive] : null, new Vector2(-296f, 0f), 56f);
+            UiKit.Label(line, UiKit.Heading, 30, dim, TextAnchor.MiddleCenter, new Vector2(-240f, 0f), new Vector2(40f, 40f), true).text = "=";
+            Text name = UiKit.Label(line, UiKit.Heading, 26, Color.white, TextAnchor.MiddleLeft, new Vector2(0f, 10f), new Vector2(420f, 34f), true);
+            name.text = weapon.EvolvedName;
+            UiKit.Label(line, UiKit.Body, 17, dim, TextAnchor.MiddleLeft, new Vector2(0f, -18f), new Vector2(420f, 24f), true).text =
+                L10n.T(hero ? "evo.hero" : "evo.wagon", weapon.Name, passive >= 0 ? L10n.T("passive." + weapon.evolvesWith) : "");
+            recipes.Add((weapon, gun, partner, name));
+        }
+        UiKit.Label(root, UiKit.Body, 20, dim, TextAnchor.MiddleCenter, new Vector2(0f, -440f), new Vector2(1600f, 30f), true).text = L10n.T("evo.help");
+    }
+
     void LateUpdate()
     {
+        Evolutions();
         float zoom = Camera.main.orthographicSize;
         foreach (var entry in screens)
         {
@@ -335,7 +428,27 @@ public class Hud : MonoBehaviour
         heroBar.Set(hero.Health / hero.maxHealth);
         heroText.text = hero.Alive ? $"{hero.Health:0}/{hero.maxHealth:0}" : "0";
         UiKit.SetIcon(ammoIcon, hero.ammo.id);
-        ammoText.text = hero.Alive ? L10n.T("player.slot", hero.ammo.Name, hero.level) : L10n.T("player.down");
+        ammoText.text = !hero.Alive ? L10n.T("player.down") : hero.level >= Weapon.Evolved ? L10n.T("player.evo", hero.ammo.EvolvedName) : L10n.T("player.slot", hero.ammo.Name, hero.level);
+        var arsenal = train.Arsenal();
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            bool shown = i < arsenal.Count;
+            Show(weapons[i], shown, i < Mathf.Max(BaseBoxes, arsenal.Count));
+            if (!shown) continue;
+            UiKit.SetIcon(weapons[i].icon, arsenal[i].weapon.id);
+            int lv = arsenal[i].level;
+            weapons[i].level.text = lv >= Weapon.Evolved ? "EVO" : lv >= Weapon.MaxLevel ? "MAX" : lv.ToString();
+        }
+        for (int i = 0; i < passives.Count; i++)
+        {
+            bool shown = i < train.passiveOrder.Count;
+            Show(passives[i], shown, i < Mathf.Max(BaseBoxes, train.passiveOrder.Count));
+            if (!shown) continue;
+            string id = train.passiveOrder[i];
+            UiKit.SetIcon(passives[i].icon, TrainSim.PassiveIcons[System.Array.IndexOf(TrainSim.Passives, id)]);
+            int lv = train.PassiveLevel(id);
+            passives[i].level.text = lv >= TrainSim.MaxPassive ? "MAX" : lv.ToString();
+        }
         // One quiet line under the hero: the stats while shopping, the controls for the first stretch of a run.
         hint.text = train.AtStation ? L10n.T("hud.hero.stats", Mathf.RoundToInt(hero.damageBonus * 100f), hero.speed.ToString("0.#"),
                 Mathf.RoundToInt(hero.armor * 100f), Mathf.RoundToInt(hero.moneyBonus * 100f))

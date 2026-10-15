@@ -14,9 +14,29 @@ public class Turret : MonoBehaviour
     // The twin barrels, in the turret's own frame (Tools/make_wagon.py: muzzle 1.36 up the barrel, 0.3 up, times ModelScale).
     static readonly Vector3 MuzzleLocal = new Vector3(0f, 0.465f, 1.77f);
 
+    Samurai samurai; // the Masamune's wagon: instead of the gunner, a swordsman (Onini) on the roof
+
     public void Init(Weapon weapon)
     {
         Weapon = weapon;
+        if (weapon.style == Weapon.Slash)
+        {
+            const string Who = "Characters/onini/onini";
+            Quaternion was = transform.rotation;
+            transform.rotation = Quaternion.identity; // posed facing the turret's own forward
+            Transform body = Instantiate(Resources.Load<GameObject>(Who), transform).transform;
+            Player.Skin(body, Who);
+            Animator rig = body.GetComponent<Animator>();
+            rig.enabled = false;
+            Player.Stand(body, rig, transform.position + Vector3.up * 1.05f);
+            Transform blade = Instantiate(Resources.Load<GameObject>("Models/HeroSword"), transform).transform;
+            blade.localScale = Vector3.one * 1.15f;
+            foreach (Renderer part in blade.GetComponentsInChildren<Renderer>()) TrainSim.Toon(part);
+            samurai = body.gameObject.AddComponent<Samurai>();
+            samurai.Init(transform, rig, blade);
+            transform.rotation = was;
+            return;
+        }
         // The gunner in her turret, barrels along +z; the gun takes the weapon's colour.
         Transform model = Instantiate(Resources.Load<GameObject>("Models/TurretGirl"), transform).transform;
         model.localScale = Vector3.one * ModelScale;
@@ -31,7 +51,14 @@ public class Turret : MonoBehaviour
 
     public void LevelUp()
     {
+        if (Level >= Weapon.MaxLevel) return; // past the top only by evolving
         Level++;
+        transform.localScale = Vector3.one * (1f + 0.15f * (Level - 1)); // bigger turret = higher level
+    }
+
+    public void Evolve()
+    {
+        Level = Weapon.Evolved;
         transform.localScale = Vector3.one * (1f + 0.15f * (Level - 1)); // bigger turret = higher level
     }
 
@@ -55,6 +82,7 @@ public class Turret : MonoBehaviour
         if (cooldown > 0f) return;
         cooldown = Weapon.Interval(Level) / Mathf.Max(1f, combat.FireRate);
 
-        combat.Volley(transform.TransformPoint(MuzzleLocal), target, Weapon, Level);
+        if (samurai) samurai.Cut();
+        combat.Volley(samurai ? transform.position + Vector3.up * 1.3f : transform.TransformPoint(MuzzleLocal), target, Weapon, Level);
     }
 }

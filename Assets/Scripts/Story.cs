@@ -45,14 +45,20 @@ public static class Story
         {
             string token = PlayerPrefs.GetString("story." + Hero + ".keep." + i, "");
             if (token != "") kept.Add(token);
+            // and the upgrade handed down at random with its level, "<id>*<level>": that many of it
+            string[] passive = PlayerPrefs.GetString("story." + Hero + ".passive." + i, "").Split('*');
+            if (passive.Length == 2 && int.TryParse(passive[1], out int times))
+                for (int n = 0; n < times; n++) kept.Add(passive[0]);
         }
         return kept;
     }
 
-    // The chapter is beaten; keep: the upgrade the player chose to take along (null: none).
-    public static void Win(string keep)
+    // The chapter is beaten; keep: the upgrade the player chose to take along (null: none); passive: one of the
+    // hero's upgrades with its level, "<id>*<level>", handed down at random (null: none).
+    public static void Win(string keep, string passive)
     {
         PlayerPrefs.SetString("story." + Hero + ".keep." + Chapter, keep ?? "");
+        PlayerPrefs.SetString("story." + Hero + ".passive." + Chapter, passive ?? "");
         PlayerPrefs.SetInt("story." + Hero + ".reached", Mathf.Min(Mathf.Max(Reached, Chapter + 1), Route(Hero).Length - 1));
         PlayerPrefs.Save();
         JustWon = true;
@@ -113,11 +119,8 @@ public static class Story
     {
         string[] part = token.Split(':');
         Weapon weapon = part.Length > 1 ? System.Array.Find(part[0] == "ammo" ? Weapon.Hero : Weapon.Wagon, w => w.id == part[1]) : null;
-        icon = weapon != null ? weapon.id : part[0] switch
-        {
-            "speed" => "speed", "armor" => "armor", "vitality" => "vitality", "greed" => "money", "fireRate" => "minigun",
-            "critChance" => "sniper", "evolve" => "blaster", _ => "arms",
-        };
+        int passive = System.Array.IndexOf(TrainSim.Passives, part[0]);
+        icon = weapon != null ? weapon.id : passive >= 0 ? TrainSim.PassiveIcons[passive] : part[0] == "evolve" ? "blaster" : "arms";
         if (weapon != null) return L10n.T(part[0] == "ammo" ? "keep.ammo" : "keep.wagon", weapon.Name);
         return L10n.T("keep." + part[0]);
     }

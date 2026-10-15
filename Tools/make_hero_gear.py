@@ -46,3 +46,17 @@ for x in (-0.2, 0.2):
     box(x - 0.04, x + 0.04, -0.02, 0.02, -0.2, 0.34, DARK, "strap")
     prism([(0.3, 0.1), (0.52, -0.05), (0.52, 0.02), (0.3, 0.24)], x - 0.015, x + 0.015, RED, "fin").rotation_euler[2] = math.radians(90)
 finish("HeroJetpack")
+
+# ---------------- katana (the Masamune) ----------------
+# Same frame as the rifle: origin in the middle of the grip, the blade along -Y.
+GOLD = mat("GearGold", (0.95, 0.72, 0.2), 0.35, 0.8)
+box(-0.022, 0.022, -0.14, 0.14, -0.025, 0.025, DARK, "handle")
+for y in (-0.1, -0.03, 0.04, 0.11):
+    box(-0.025, 0.025, y - 0.018, y + 0.018, -0.028, 0.028, WHITE, "wrap")
+cyl((0, 0.15, 0), 0.03, 0.03, "Y", GOLD, sides=10, name="pommel")
+cyl((0, -0.155, 0), 0.075, 0.025, "Y", GOLD, sides=12, name="guard")
+box(-0.012, 0.012, -1.0, -0.17, -0.004, 0.05, STEEL, "blade")
+box(-0.006, 0.006, -1.0, -0.17, -0.016, -0.004, GLOW, "edge")
+mesh("tip", [(-0.012, -1.0, -0.016), (0.012, -1.0, -0.016), (0.012, -1.0, 0.05), (-0.012, -1.0, 0.05), (0, -1.14, 0.0)],
+     [(0, 1, 2, 3), (0, 4, 1), (1, 4, 2), (2, 4, 3), (3, 4, 0)], GLOW)
+finish("HeroSword")
