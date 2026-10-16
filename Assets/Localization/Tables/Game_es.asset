@@ -2112,6 +2112,36 @@ MonoBehaviour:
     m_Localized: "\xA1Embestida! El cami\xF3n va contra el vag\xF3n marcado"
     m_Metadata:
       m_Items: []
+  - m_Id: 2900571670786048
+    m_Localized: "\xBFQu\xE9 habr\xE1 dentro?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146176
+    m_Localized: Cofre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146177
+    m_Localized: "\xA1Cofre raro!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146178
+    m_Localized: "\xA1\xA1COFRE LEGENDARIO!!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146179
+    m_Localized: '{0}
+
+      Nv {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146180
+    m_Localized: Dinero +{0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146181
+    m_Localized: 'Espacio / A / clic: continuar'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

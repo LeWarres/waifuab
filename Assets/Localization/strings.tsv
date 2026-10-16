@@ -486,3 +486,10 @@ truck.won	¡Camión vencido! Su vagón de cohetes se une al tren	Truck beaten! I
 weapon.truck.name	Cohetes del Camión	Truck Rockets	Foguetes do Caminhão	トラックロケット
 weapon.truck.info	El vagón del mid boss: cohetes que se curvan. Solo sube de nivel	The mid boss wagon: curling rockets. Only levels up	O vagão do chefe: foguetes curvos. Só sobe de nível	中ボスの車両：曲がるロケット。レベルアップのみ
 boss.ram	¡Embestida! El camión va contra el vagón marcado	Ram! The truck is going for the marked wagon	Investida! O caminhão vai contra o vagão marcado	突進！トラックが印の車両を狙う
+chest.opening	¿Qué habrá dentro?	What could be inside?	O que será que tem dentro?	中身は何だ？
+chest.common	Cofre	Chest	Baú	宝箱
+chest.rare	¡Cofre raro!	Rare chest!	Baú raro!	レア宝箱！
+chest.legendary	¡¡COFRE LEGENDARIO!!	LEGENDARY CHEST!!	BAÚ LENDÁRIO!!	伝説の宝箱！！
+chest.level	{0}\nNv {1}	{0}\nLv {1}	{0}\nNv {1}	{0}\nLv {1}
+chest.money	Dinero +{0}	Money +{0}	Dinheiro +{0}	マネー +{0}
+chest.continue	Espacio / A / clic: continuar	Space / A / click: continue	Espaço / A / clique: continuar	Space / A / クリック：続ける

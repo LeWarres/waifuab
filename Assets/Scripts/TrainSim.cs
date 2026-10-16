@@ -280,57 +280,74 @@ public class TrainSim : MonoBehaviour
         }
     }
 
-    // A boss's or mini boss's chest, as in Vampire Survivors: it evolves a weapon if that is earned (top level and its
-    // partner upgrade owned; the hero's first, then a wagon's), the only way to evolve; otherwise it raises two things
-    // already owned by a level each, at random (the hero's weapon, a wagon's weapon or one of the hero's upgrades),
-    // now and then four.
+    // A boss's or mini boss's chest, as in Vampire Survivors, opened with some show (Chest): one prize, three, or with
+    // much luck five. Each is an evolution if one is earned (top level and its partner upgrade owned; the hero's
+    // first, then a wagon's), the only way to evolve; otherwise a level on something already owned, at random (the
+    // hero's weapon, a wagon's weapon or one of the hero's upgrades); with nothing left to raise, money.
     public int Chests { get; private set; } // opened this run, for the bot's notes
     public void OpenChest()
     {
         Chests++;
         Combat.Instance.Burst("levelup", Player.Position + Vector3.down * 2f, 3f);
-        if (CanEvolve)
-        {
-            Player.level = Weapon.Evolved;
-            Shake(0.4f);
-            hud.Toast(L10n.T("chest.evolution", Player.ammo.Name, Player.ammo.EvolvedName), 4f);
-            return;
-        }
-        Turret ready = Evolvable;
-        if (ready)
-        {
-            ready.Evolve();
-            Combat.Instance.Burst("levelup", ready.transform.position, 3f);
-            Shake(0.4f);
-            hud.Toast(L10n.T("chest.evolution", ready.Weapon.Name, ready.Weapon.EvolvedName), 4f);
-            return;
-        }
-        var won = new List<string>();
-        int rolls = Random.value < goldenChest + 0.08f * PassiveLevel("luck") ? 4 : 2;
+        // One prize mostly; three now and then; five only with a lot of luck.
+        int luck = PassiveLevel("luck");
+        int rolls = Random.value < 0.03f + 0.01f * luck ? 5 : Random.value < 0.22f + 0.03f * luck ? 3 : 1;
+        var prizes = new List<Chest.Prize>();
         for (int roll = 0; roll < rolls; roll++)
         {
-            var choices = new List<System.Action>();
-            var names = new List<string>();
-            // Weapons count twice: a chest is mostly for them, as in Vampire Survivors.
+            // An evolution first, if one is earned (the hero's, then a wagon's): the only way to evolve.
+            if (CanEvolve)
+            {
+                Player.level = Weapon.Evolved;
+                prizes.Add(new Chest.Prize { icon = Player.ammo.id, label = Player.ammo.EvolvedName, evolution = true });
+                continue;
+            }
+            Turret ready = Evolvable;
+            if (ready)
+            {
+                ready.Evolve();
+                Combat.Instance.Burst("levelup", ready.transform.position, 3f);
+                prizes.Add(new Chest.Prize { icon = ready.Weapon.id, label = ready.Weapon.EvolvedName, evolution = true });
+                continue;
+            }
+            // Else a level on something already owned; weapons count twice, as in Vampire Survivors.
+            var choices = new List<System.Func<Chest.Prize>>();
             for (int twice = 0; twice < 2; twice++)
             {
-                if (Player.level < Weapon.MaxLevel) { choices.Add(() => Player.level++); names.Add(Player.ammo.Name); }
+                if (Player.level < Weapon.MaxLevel)
+                    choices.Add(() => { Player.level++; return new Chest.Prize { icon = Player.ammo.id, label = L10n.T("chest.level", Player.ammo.Name, Player.level) }; });
                 for (int i = 0; i < cars.Count; i++)
                 {
                     int at = i;
                     Turret gun = cars[i].mount;
-                    if (gun && gun.Level < Weapon.MaxLevel) { choices.Add(() => Mount(at, gun.Weapon)); names.Add(gun.Weapon.Name); }
+                    if (gun && gun.Level < Weapon.MaxLevel)
+                        choices.Add(() => { Mount(at, gun.Weapon); return new Chest.Prize { icon = gun.Weapon.id, label = L10n.T("chest.level", gun.Weapon.Name, gun.Level) }; });
                 }
             }
             foreach (string id in passiveOrder)
-                if (PassiveLevel(id) < MaxPassive) { string pick = id; choices.Add(() => Apply(pick)); names.Add(L10n.T("passive." + id)); }
-            if (choices.Count == 0) break;
-            int n = Random.Range(0, choices.Count);
-            choices[n]();
-            won.Add(names[n] + " +1");
+                if (PassiveLevel(id) < MaxPassive)
+                {
+                    string pick = id;
+                    choices.Add(() =>
+                    {
+                        Apply(pick);
+                        return new Chest.Prize { icon = PassiveIcons[System.Array.IndexOf(Passives, pick)], label = L10n.T("chest.level", L10n.T("passive." + pick), PassiveLevel(pick)) };
+                    });
+                }
+            if (choices.Count == 0)
+            {
+                money += moneyReward;
+                prizes.Add(new Chest.Prize { icon = "money", label = L10n.T("chest.money", moneyReward) });
+                continue;
+            }
+            prizes.Add(choices[Random.Range(0, choices.Count)]());
         }
-        hud.Toast(won.Count == 0 ? L10n.T("chest.empty") : L10n.T(rolls == 4 ? "chest.golden" : "chest.open", string.Join("  ·  ", won)), 4f);
+        if (!chest) chest = gameObject.AddComponent<Chest>();
+        chest.Show(prizes);
     }
+    Chest chest;
+    public bool ChestOpen => chest && chest.Open;
+    public void CloseChest() { if (chest) chest.Close(); }
 
     // What the train and the hero are armed with, for the HUD: the hero's weapon first, then every wagon's, front
     // to back (two wagons with the same weapon are two, each at its own level).
@@ -343,7 +360,6 @@ public class TrainSim : MonoBehaviour
         return arsenal;
     }
     readonly List<(Weapon weapon, int level)> arsenal = new();
-    public float goldenChest = 0.2f; // chance a chest raises four things instead of two
 
     // For AutoPlay, the bot that plays fast to measure the difficulty: what is on screen and a way to answer it.
     public static bool NoEvents;                            // it cannot play the button games: none come

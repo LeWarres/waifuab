@@ -2102,6 +2102,36 @@ MonoBehaviour:
     m_Localized: "Investida! O caminh\xE3o vai contra o vag\xE3o marcado"
     m_Metadata:
       m_Items: []
+  - m_Id: 2900571670786048
+    m_Localized: "O que ser\xE1 que tem dentro?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146176
+    m_Localized: "Ba\xFA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146177
+    m_Localized: "Ba\xFA raro!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146178
+    m_Localized: "BA\xDA LEND\xC1RIO!!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146179
+    m_Localized: '{0}
+
+      Nv {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146180
+    m_Localized: Dinheiro +{0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146181
+    m_Localized: "Espa\xE7o / A / clique: continuar"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

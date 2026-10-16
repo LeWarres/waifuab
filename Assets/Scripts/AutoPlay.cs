@@ -68,6 +68,7 @@ public class AutoPlay : MonoBehaviour
         lastHealth = train.Health;
         if (train.Talking) { train.SkipTalk(); return; }
         if (train.DeliveryOpen) { train.CloseDelivery(); return; }
+        if (train.ChestOpen) { train.CloseChest(); return; }
         int kind = train.MenuKind;
         if (kind < 0 || Time.unscaledTime < nextChoice) return;
         nextChoice = Time.unscaledTime + 0.15f;

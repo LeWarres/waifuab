@@ -61,6 +61,7 @@ ICONS = {
     'evolutions': 'glowing upward arrow over a sword, evolution upgrade, golden sparkle',
     'truck': 'armored orange truck with a rocket launcher on its back, military truck',
     'lever': 'railway switch lever, red handle, track junction lever',
+    'chest': 'ornate golden treasure chest, closed, glowing gems, wooden with gold trim',
     # hero stats
     'speed': 'winged boot, sneaker with wings, speed',
     'armor': 'shield, blue shield, metal trim',

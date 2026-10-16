@@ -2166,6 +2166,36 @@ MonoBehaviour:
     m_Localized: Ram! The truck is going for the marked wagon
     m_Metadata:
       m_Items: []
+  - m_Id: 2900571670786048
+    m_Localized: What could be inside?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146176
+    m_Localized: Chest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146177
+    m_Localized: Rare chest!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146178
+    m_Localized: LEGENDARY CHEST!!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146179
+    m_Localized: '{0}
+
+      Lv {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146180
+    m_Localized: Money +{0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146181
+    m_Localized: 'Space / A / click: continue'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

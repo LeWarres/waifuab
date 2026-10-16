@@ -2017,6 +2017,36 @@ MonoBehaviour:
     m_Localized: "\u7A81\u9032\uFF01\u30C8\u30E9\u30C3\u30AF\u304C\u5370\u306E\u8ECA\u4E21\u3092\u72D9\u3046"
     m_Metadata:
       m_Items: []
+  - m_Id: 2900571670786048
+    m_Localized: "\u4E2D\u8EAB\u306F\u4F55\u3060\uFF1F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146176
+    m_Localized: "\u5B9D\u7BB1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146177
+    m_Localized: "\u30EC\u30A2\u5B9D\u7BB1\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146178
+    m_Localized: "\u4F1D\u8AAC\u306E\u5B9D\u7BB1\uFF01\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146179
+    m_Localized: '{0}
+
+      Lv {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146180
+    m_Localized: "\u30DE\u30CD\u30FC +{0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146181
+    m_Localized: "Space / A / \u30AF\u30EA\u30C3\u30AF\uFF1A\u7D9A\u3051\u308B"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1979,6 +1979,34 @@ MonoBehaviour:
     m_Key: boss.ram
     m_Metadata:
       m_Items: []
+  - m_Id: 2900571670786048
+    m_Key: chest.opening
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146176
+    m_Key: chest.common
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146177
+    m_Key: chest.rare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146178
+    m_Key: chest.legendary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146179
+    m_Key: chest.level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146180
+    m_Key: chest.money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2900571700146181
+    m_Key: chest.continue
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
