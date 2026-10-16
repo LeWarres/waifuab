@@ -88,6 +88,10 @@ public class AutoPlay : MonoBehaviour
                 else if (Find("wagon") >= 0 && train.OptionEnabled(Find("wagon"))) train.Choose(Find("wagon"));
                 else train.Choose(train.OptionCount - 1);
                 break;
+            case 11: // the junction: the truck only with the train in good shape, like a careful player
+                Note(train.Health > train.MaxHealth * 0.75f ? "TRUCK" : "SKIP TRUCK");
+                train.Choose(train.Health > train.MaxHealth * 0.75f ? 0 : 1);
+                break;
             case 8: Note("CHAPTER WON"); train.Choose(0); Over = true; Time.timeScale = 1f; return;
             default: Pick(0); break; // hero upgrade, route, placing cargo: the first
         }

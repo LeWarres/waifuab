@@ -620,7 +620,7 @@ MonoBehaviour:
   - m_Id: 567476032450560
     m_Localized: 'Loot
 
-      +25% money per enemy'
+      +15% money per enemy'
     m_Metadata:
       m_Items: []
   - m_Id: 567476032450561
@@ -1534,7 +1534,7 @@ MonoBehaviour:
   - m_Id: 2507960170655757
     m_Localized: 'Keep
 
-      +25% money'
+      +15% money'
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655758
@@ -1958,7 +1958,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755909
-    m_Localized: Blaster Star
+    m_Localized: Plasma Comet
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755910
@@ -1966,7 +1966,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755911
-    m_Localized: Lead Storm
+    m_Localized: Drone Squad
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755912
@@ -1974,7 +1974,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755913
-    m_Localized: Bullet Rose
+    m_Localized: Barrage
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755914
@@ -1982,7 +1982,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755915
-    m_Localized: Lead Rain
+    m_Localized: Lead Hurricane
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755916
@@ -2108,6 +2108,62 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2741642185748480
     m_Localized: The mini boss is after you! Lead it away from the wagons
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2822797182447616
+    m_Localized: 'Already carries {0} Lv {1}: it stays'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2822797216002048
+    m_Localized: ANOTHER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2822797216002049
+    m_Localized: NO FREE WAGON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033721761792
+    m_Localized: Y junction!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316224
+    m_Localized: "{0}: the truck (mid boss)   \xB7   {1}: stay on track"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316225
+    m_Localized: Space
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316226
+    m_Localized: 'Go for the truck
+
+      Mid boss: beaten, it leaves its wagon'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316227
+    m_Localized: 'Stay on track
+
+      No mid boss'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316228
+    m_Localized: Staying on track
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316229
+    m_Localized: Truck beaten! Its rocket wagon joins the train
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316230
+    m_Localized: Truck Rockets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316231
+    m_Localized: 'The mid boss wagon: curling rockets. Only levels up'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2873224766763008
+    m_Localized: Ram! The truck is going for the marked wagon
     m_Metadata:
       m_Items: []
   references:

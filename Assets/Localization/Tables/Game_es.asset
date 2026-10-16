@@ -597,7 +597,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 567476032450560
-    m_Localized: "Bot\xEDn\n+25% de dinero por enemigo"
+    m_Localized: "Bot\xEDn\n+15% de dinero por enemigo"
     m_Metadata:
       m_Items: []
   - m_Id: 567476032450561
@@ -1493,7 +1493,7 @@ MonoBehaviour:
   - m_Id: 2507960170655757
     m_Localized: 'Conservar
 
-      +25% de dinero'
+      +15% de dinero'
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655758
@@ -1924,7 +1924,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755909
-    m_Localized: "Estrella Bl\xE1ster"
+    m_Localized: Cometa de Plasma
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755910
@@ -1932,7 +1932,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755911
-    m_Localized: Tormenta de Plomo
+    m_Localized: "Escuadr\xF3n de Drones"
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755912
@@ -1940,7 +1940,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755913
-    m_Localized: Rosa de Balas
+    m_Localized: Bombardeo
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755914
@@ -1948,7 +1948,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755915
-    m_Localized: Lluvia de Plomo
+    m_Localized: "Hurac\xE1n de Plomo"
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755916
@@ -2058,6 +2058,58 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2741642185748480
     m_Localized: "\xA1El mini jefe te sigue! Al\xE9jalo de los vagones"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2822797182447616
+    m_Localized: 'Ya lleva {0} Nv {1}: no se cambia'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2822797216002048
+    m_Localized: OTRA COPIA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2822797216002049
+    m_Localized: "SIN VAG\xD3N LIBRE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033721761792
+    m_Localized: "\xA1Cruce en Y!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316224
+    m_Localized: "{0}: el cami\xF3n (mid boss)   \xB7   {1}: seguir la v\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316225
+    m_Localized: Espacio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316226
+    m_Localized: "Ir por el cami\xF3n\nMid boss: vencido, te deja su vag\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316227
+    m_Localized: "Seguir la v\xEDa\nSin mid boss"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316228
+    m_Localized: "Seguimos la v\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316229
+    m_Localized: "\xA1Cami\xF3n vencido! Su vag\xF3n de cohetes se une al tren"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316230
+    m_Localized: "Cohetes del Cami\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316231
+    m_Localized: "El vag\xF3n del mid boss: cohetes que se curvan. Solo sube de nivel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2873224766763008
+    m_Localized: "\xA1Embestida! El cami\xF3n va contra el vag\xF3n marcado"
     m_Metadata:
       m_Items: []
   references:

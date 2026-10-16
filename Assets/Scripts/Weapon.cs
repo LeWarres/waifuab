@@ -32,6 +32,8 @@ public class Weapon
     // Flame: puffs that swell as they go. Shard: a spinning ice crystal. Pellets: a spray of small shot.
     // Slash: the hero's sword cuts the air, a crescent through everyone; at the last level a blue dragon in a zigzag.
     public const int Straight = 0, Lob = 1, Swirl = 2, Boomerang = 3, Orbit = 4, Wobble = 5, Flame = 6, Shard = 7, Pellets = 8, Slash = 9;
+    // Shots only evolutions make: the Plasma Comet's comet (the blaster) and the Barrage's falling shells (the turret).
+    public const int Comet = 10, Shell = 11;
 
     Material material;
     public Material Material => material ? material : material = TrainSim.Mat(color);
@@ -47,11 +49,29 @@ public class Weapon
     public int Targets(int level) => targets + extraTargets * (level - 1);
     // A fanning weapon: one way up to level 2, two at level 3, three at 4, five at 5. The first shot is the aimed
     // one; the others leave evenly round it and fly free, hitting whatever they meet.
-    public int Directions(int level) => !fan || level < 3 ? 1 : level == 3 ? 2 : level == 4 ? 3 : level == 5 ? 5 : 8; // evolved: all round
+    // Evolved, it fans no more: it has its own special instead (the Plasma Comet, the Barrage, the Prism).
+    public int Directions(int level) => !fan || level < 3 || level >= Evolved ? 1 : level == 3 ? 2 : level == 4 ? 3 : 5;
 
     // Level 1 output is close to 4-8 damage per second each; they differ in reach and in how they handle crowds.
     // The road is thick with enemies, so nothing stays a one-enemy weapon as it evolves: every level it shoots at
     // one more of them, or its shot bursts wider, or it goes through one more.
+    // The mid boss's wagon, won by beating the truck (TrainSim.GiveTruck): its curling rockets. Never offered at a
+    // station and never evolved; it only levels up.
+    public static readonly Weapon Truck = new Weapon
+    {
+        id = "truck", color = new Color(0.9f, 0.55f, 0.15f), range = 28f, interval = 1.4f, speed = 18f, damage = 4f, splash = 3.5f,
+        targets = 2, extraTargets = 1, style = Swirl,
+    };
+
+    // Each hero's weapon, for good (Locomotives.Heroes' ids): it levels up and evolves, it is never swapped.
+    static readonly System.Collections.Generic.Dictionary<string, string> HeroWeapons = new()
+    {
+        { "bba", "blaster" }, { "skullmonk", "nova" }, { "onini", "masamune" }, { "tzmil", "scatter" }, { "sentinel", "rail" },
+        { "culu", "grenade" }, { "cerebron", "spark" }, { "xiuhtecuhtli", "smg" }, { "faceless", "rail" },
+    };
+    public static Weapon ForHero(string hero) =>
+        HeroWeapons.TryGetValue(hero, out string id) ? System.Array.Find(Hero, w => w.id == id) ?? Hero[0] : Hero[0];
+
     public static readonly Weapon[] Wagon =
     {
         new Weapon { id = "turret", fan = true, evolvesWith = "amount" },

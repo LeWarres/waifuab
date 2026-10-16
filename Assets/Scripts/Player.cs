@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
     {
         this.train = train;
         Health = maxHealth;
+        ammo = Weapon.ForHero(Locomotives.Hero); // the hero's own, for good
 
         transform.position = SpawnPoint;
         visuals = new GameObject("Hero");
@@ -376,7 +377,7 @@ public class Player : MonoBehaviour
     // Station upgrades.
     public void SpeedUp() => speed *= 1.1f;
     public void DamageUp() => damageBonus += 0.2f;
-    public void GreedUp() => moneyBonus += 0.25f;
+    public void GreedUp() => moneyBonus += 0.15f;
     public void ArmorUp() => armor = Mathf.Min(MaxArmor, armor + 0.1f);
     public void VitalityUp(float amount)
     {

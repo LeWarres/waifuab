@@ -599,7 +599,7 @@ MonoBehaviour:
   - m_Id: 567476032450560
     m_Localized: 'Saque
 
-      +25% de dinheiro por inimigo'
+      +15% de dinheiro por inimigo'
     m_Metadata:
       m_Items: []
   - m_Id: 567476032450561
@@ -1493,7 +1493,7 @@ MonoBehaviour:
   - m_Id: 2507960170655757
     m_Localized: 'Manter
 
-      +25% de dinheiro'
+      +15% de dinheiro'
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655758
@@ -1912,7 +1912,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755909
-    m_Localized: Estrela Blaster
+    m_Localized: Cometa de Plasma
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755910
@@ -1920,7 +1920,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755911
-    m_Localized: Tempestade de Chumbo
+    m_Localized: "Esquadr\xE3o de Drones"
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755912
@@ -1928,7 +1928,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755913
-    m_Localized: Rosa de Balas
+    m_Localized: Bombardeio
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755914
@@ -1936,7 +1936,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755915
-    m_Localized: Chuva de Chumbo
+    m_Localized: "Furac\xE3o de Chumbo"
     m_Metadata:
       m_Items: []
   - m_Id: 2727810549755916
@@ -2046,6 +2046,60 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2741642185748480
     m_Localized: "O mini chefe est\xE1 atr\xE1s de voc\xEA! Afaste-o dos vag\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2822797182447616
+    m_Localized: "J\xE1 leva {0} Nv {1}: n\xE3o se troca"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2822797216002048
+    m_Localized: "OUTRA C\xD3PIA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2822797216002049
+    m_Localized: "SEM VAG\xC3O LIVRE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033721761792
+    m_Localized: Cruzamento em Y!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316224
+    m_Localized: "{0}: o caminh\xE3o (chefe)   \xB7   {1}: seguir a via"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316225
+    m_Localized: "Espa\xE7o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316226
+    m_Localized: "Ir atr\xE1s do caminh\xE3o\nChefe: vencido, deixa seu vag\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316227
+    m_Localized: 'Seguir a via
+
+      Sem chefe'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316228
+    m_Localized: Seguindo a via
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316229
+    m_Localized: "Caminh\xE3o vencido! Seu vag\xE3o de foguetes entra no trem"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316230
+    m_Localized: "Foguetes do Caminh\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316231
+    m_Localized: "O vag\xE3o do chefe: foguetes curvos. S\xF3 sobe de n\xEDvel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2873224766763008
+    m_Localized: "Investida! O caminh\xE3o vai contra o vag\xE3o marcado"
     m_Metadata:
       m_Items: []
   references:

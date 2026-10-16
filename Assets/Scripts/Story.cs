@@ -64,6 +64,10 @@ public static class Story
         JustWon = true;
     }
 
+    // The truck's wagon won in a chapter rides on into the next one only (at the level it had), never further.
+    public static void KeepTruck(int level) => PlayerPrefs.SetInt($"story.{Hero}.truck.{Chapter}", level);
+    public static int CarriedTruck => Chapter > 0 ? PlayerPrefs.GetInt($"story.{Hero}.truck.{Chapter - 1}", 0) : 0;
+
     // Starting a chapter from the menu: its opening pages are told first.
     public static void Play(int chapter)
     {

@@ -175,6 +175,7 @@ public class Combat : MonoBehaviour
         public Vector3 position, velocity; // velocity: only floating goods use it
         public EnemyType type;
         public float hp, maxHp, slowUntil, timer;
+        public float markedUntil; // the Hawk Eye's mark: everything hurts it twice as much meanwhile
         public int index, pick; // pick: a number of its own, which decides the wagon it goes for
         public int id; // changes when the enemy dies; whoever targets it compares ids to notice
     }
@@ -195,6 +196,8 @@ public class Combat : MonoBehaviour
         public float age, span;    // seconds since fired; a boomerang's or an orbit's whole flight
         public float phase;        // an orbit's angle; a swirl's way of curling, a wobble's beat
         public bool back;          // a boomerang on its way home
+        public bool split;         // a Missile Swarm rocket: it bursts into small ones on the way
+        public float power = 1f;   // share of the weapon's damage this one carries
         public Vector3 from, dir;  // where it was fired from; a boomerang's way out
         public readonly List<int> hits = new(); // piercing shots: who was already hit on this pass
     }
@@ -249,6 +252,40 @@ public class Combat : MonoBehaviour
     {
         new Batch(new Color(1f, 0.2f, 0.35f), false, glow: 4f), new Batch(new Color(0.3f, 1f, 0.45f), false, glow: 4f), new Batch(new Color(0.3f, 0.5f, 1f), false, glow: 4f),
     };
+    readonly Batch cometCore = new Batch(new Color(0.85f, 0.95f, 1f), false, glow: 5f);           // the Plasma Comet's head
+    readonly Batch shellMark = new Batch(new Color(1f, 0.15f, 0.1f), false, round: true, glow: 2f); // where a Barrage shell will land
+    float nextComet;                                                                              // when the hero's next comet may go
+    float spiral;                                                                                 // the Lead Hurricane's turn
+    readonly Batch reticle = new Batch(new Color(1f, 0.85f, 0.2f), false, glow: 3f);             // the Hawk Eye's mark on an enemy
+
+    // The Drone Squad's two drones, circling the hero.
+    Vector3 Drone(int k)
+    {
+        float a = Time.time * 2.4f + k * Mathf.PI;
+        return player.Position + new Vector3(Mathf.Cos(a) * 1.7f, 0.9f, Mathf.Sin(a) * 1.7f);
+    }
+
+    // The Power Grid: lightning between the target and up to six enemies around it, each linked to the next and back
+    // to the middle, a net that hurts all of them at once.
+    void Web(Enemy centre, Weapon weapon, int level)
+    {
+        chainSkip.Clear();
+        chainSkip.Add(centre);
+        Vector3 last = centre.position;
+        float damage = weapon.Damage(level) * Power;
+        for (int k = 0; k < 6; k++)
+        {
+            Enemy next = Nearest(centre.position, 9f * Area, chainSkip);
+            if (next == null) break;
+            chainSkip.Add(next);
+            Bolt(last + Vector3.up, next.position + Vector3.up, weapon.Batch, 3, 0.5f, 0.22f, 0.16f);
+            Bolt(centre.position + Vector3.up, next.position + Vector3.up, weapon.Batch, 3, 0.6f, 0.16f, 0.16f);
+            last = next.position;
+            Hurt(next, damage);
+        }
+        Burst(weapon.id, centre.position, 2f);
+        Hurt(centre, damage);
+    }
     readonly Batch healRing = new Batch(new Color(0.5f, 1f, 0.45f), false, glow: 3f);        // the Solar Heart's mending beat
     readonly Batch dragonDark = new Batch(new Color(0.05f, 0.14f, 0.55f), false);             // the Masamune dragon's deep blue hide, outlined
     readonly Batch dragonScale = new Batch(new Color(0.2f, 0.5f, 1f), false, glow: 1.4f);   // its scales, a lighter blue
@@ -308,7 +345,7 @@ public class Combat : MonoBehaviour
     static bool thinned;
     int level;
     bool heroHit; // true while a hit made by the hero is being applied
-    AudioSource laserSound, stationLaserSound;
+    AudioSource stationLaserSound;
 
     public int BulletCount => bullets.Count;
 
@@ -324,7 +361,6 @@ public class Combat : MonoBehaviour
                 if (type.Fodder) { type.damage *= FodderDamage; type.explodeDamage *= FodderDamage; type.health *= FodderHealth; type.fodder = true; }
                 else { type.damage *= BigDamage; type.explodeDamage *= BigDamage; } // the big ones come among a crowd now: a softer blow each
         }
-        laserSound = Sound.Effect(gameObject, "Laser", 0.3f);
         stationLaserSound = Sound.Effect(gameObject, "biglaser_soft", 0.4f);
     }
 
@@ -518,6 +554,51 @@ public class Combat : MonoBehaviour
         {
             Bullet b = bullets[i];
             b.age += dt;
+            if (b.style == Weapon.Comet)
+            {
+                // Through everyone in its way, then it bursts in a ring at the end of its run.
+                b.position += b.velocity * dt;
+                Pierce(b, 1.5f);
+                if ((b.life -= dt) > 0f) continue;
+                heroHit = b.hero;
+                Explode(b.position, 4f, b.weapon.Damage(b.level) * Power * 2f, b.weapon);
+                heroHit = false;
+                Ring(b.position, 4f * Area, b.batch);
+                Burst("levelup", b.position, 2.5f);
+                RemoveBullet(i);
+                continue;
+            }
+            if (b.split && b.age > 0.45f)
+            {
+                // The Missile Swarm: the rocket bursts into five small ones, each after an enemy of its own.
+                b.split = false;
+                Burst("rocket", b.position, 1.4f);
+                picked.Clear();
+                for (int k = 0; k < 5; k++)
+                {
+                    Enemy prey = Nearest(b.position, b.weapon.range, picked);
+                    if (prey == null) break;
+                    picked.Add(prey);
+                    heroHit = b.hero;
+                    Fire(b.position, prey, b.weapon, b.level);
+                    heroHit = false;
+                    Bullet mini = bullets[bullets.Count - 1];
+                    mini.size = Vector3.one * 0.14f;
+                    mini.power = 0.45f;
+                }
+            }
+            if (b.style == Weapon.Shell)
+            {
+                // Straight down from the sky; on the ground, a blast.
+                b.position += b.velocity * dt;
+                if (b.position.y > 0.3f) continue;
+                Vector3 ground = new Vector3(b.position.x, 0f, b.position.z);
+                Explode(ground, 3f, b.weapon.Damage(b.level) * Power * 3f, b.weapon);
+                Burst("rocket", ground, 2.4f);
+                train.Shake(0.06f);
+                RemoveBullet(i);
+                continue;
+            }
             if (b.style == Weapon.Boomerang || b.style == Weapon.Orbit || b.style == Weapon.Slash)
             {
                 if (b.age >= b.span) { RemoveBullet(i); continue; }
@@ -568,16 +649,22 @@ public class Combat : MonoBehaviour
                     Burst("smoke", at, 0.6f + hit.type.size * 0.4f); // a puff where the shot lands
                     if (b.weapon.slow > 0f && !hit.type.slowImmune) hit.slowUntil = now + b.weapon.slow * Duration;
                     heroHit = b.hero;
-                    float damage = b.weapon.Damage(b.level) * Power, splash = b.weapon.Splash(b.level);
+                    float damage = b.weapon.Damage(b.level) * Power * b.power, splash = b.weapon.Splash(b.level);
                     bool evolved = b.level >= Weapon.Evolved;
                     if (evolved && b.weapon.style == Weapon.Pellets) splash = Mathf.Max(splash, 2f); // Golden Buckshot: every pellet bursts
                     if (splash > 0f) Explode(at, splash, damage, b.weapon);
                     else Hurt(hit, damage);
                     if (evolved && b.weapon.style == Weapon.Lob) // the Cluster Bomb: four more blasts around the first
                         for (int k = 0; k < 4; k++) Explode(at + Quaternion.Euler(0f, k * 90f + 45f, 0f) * Vector3.forward * splash, splash * 0.6f, damage * 0.5f, b.weapon);
-                    if (evolved && b.weapon.slow > 0f) // the Blizzard: everyone around is slowed too
+                    if (evolved && b.weapon.slow > 0f) // the Blizzard: a burst of frost, and everyone in it slowed too
+                    {
+                        Ring(at, 3.5f * Area, b.batch);
                         foreach (Enemy near in enemies)
                             if (!near.type.slowImmune && (near.position - at).sqrMagnitude < 12f * Area * Area) near.slowUntil = now + b.weapon.slow * Duration;
+                    }
+                    if (evolved && b.weapon.id == "sniper") // the Hawk Eye: everyone around the shot is marked, and takes double
+                        foreach (Enemy near in enemies)
+                            if ((near.position - at).sqrMagnitude < 25f * Area * Area) near.markedUntil = now + 4f * Duration;
                     heroHit = false;
 
                     chainSkip.Clear();
@@ -631,6 +718,23 @@ public class Combat : MonoBehaviour
             t.Batch.Add(at, Vector3.one * (t.size * ModelScale), facing);
         }
         foreach (Bullet b in bullets) DrawBullet(b, clock);
+        if (player && player.Alive && player.ammo.id == "smg" && player.level >= Weapon.Evolved)
+            for (int k = 0; k < 2; k++)
+            {
+                // Each drone: a body and a spinning rotor.
+                Vector3 at = Drone(k);
+                player.ammo.Batch.Add(at, new Vector3(0.5f, 0.25f, 0.5f), Quaternion.Euler(0f, clock * 90f, 0f));
+                player.ammo.Batch.Add(at + Vector3.up * 0.2f, new Vector3(1.1f, 0.04f, 0.12f), Quaternion.Euler(0f, clock * 1500f, 0f));
+            }
+        foreach (Enemy e in enemies)
+            if (clock < e.markedUntil)
+                for (int k = 0; k < 4; k++)
+                {
+                    // A reticle of four bars round it, turning.
+                    Quaternion q = Quaternion.Euler(0f, clock * 120f + k * 90f, 0f);
+                    float r = e.type.size * 0.9f + 0.5f;
+                    reticle.Add(e.position + Vector3.up * 0.3f + q * Vector3.forward * r, new Vector3(0.6f, 0.08f, 0.12f), q);
+                }
         FlashMuzzles(); // barrel flares join the same batches as the shots
         DrawStains(); // the marks the dead left, under everything else
         foreach (EnemyType t in Types) t.Batch.Flush();
@@ -640,11 +744,15 @@ public class Combat : MonoBehaviour
         stationShot.Flush();
         dragonDark.Flush();
         healRing.Flush();
+        cometCore.Flush();
+        reticle.Flush();
+        shellMark.Flush();
         foreach (Batch b in prism) b.Flush();
         dragonScale.Flush();
         dragonFire.Flush();
         stain.Flush();
         foreach (Weapon w in Weapon.Wagon) w.Batch.Flush();
+        Weapon.Truck.Batch.Flush();
         foreach (Weapon w in Weapon.Hero) w.Batch.Flush();
     }
 
@@ -890,6 +998,7 @@ public class Combat : MonoBehaviour
         e.hp = e.maxHp = type.health * (1f + healthPerLevel * level) * enemyHealth * Balance.Scale;
         e.velocity = Vector3.zero;
         e.slowUntil = 0f;
+        e.markedUntil = 0f;
         e.pick = Random.Range(0, 1000);
         e.timer = type.interval;
         e.index = enemies.Count;
@@ -989,6 +1098,29 @@ public class Combat : MonoBehaviour
         if (b.style == Weapon.Slash)
         {
             DrawSlash(b, clock);
+            return;
+        }
+        if (b.style == Weapon.Comet)
+        {
+            // A white-hot head in a blue blaze, a long tail of pieces shrinking and flickering behind it.
+            Vector3 back = -b.velocity.normalized;
+            Quaternion heading = Quaternion.LookRotation(b.velocity);
+            cometCore.Add(b.position, Vector3.one * 1.1f, Quaternion.Euler(clock * 400f, clock * 300f, 0f));
+            b.batch.Add(b.position, Vector3.one * 1.7f, Quaternion.Euler(clock * -250f, clock * 180f, 45f));
+            for (int k = 1; k <= 7; k++)
+            {
+                float s = 1.5f * (1f - k / 8f), flick = 0.8f + 0.3f * Mathf.Sin(clock * 30f + k * 1.7f);
+                b.batch.Add(b.position + back * (k * 0.9f) + Random.insideUnitSphere * 0.15f, new Vector3(s, s, 1.2f) * flick, heading);
+            }
+            return;
+        }
+        if (b.style == Weapon.Shell)
+        {
+            // A glowing shell falling fast, and a red mark on the ground where it will land, growing as it nears.
+            b.batch.Add(b.position, new Vector3(0.6f, 2.2f, 0.6f), Quaternion.identity);
+            b.batch.Add(b.position + Vector3.up * 1.8f, new Vector3(0.25f, 2.4f, 0.25f), Quaternion.identity);
+            float near = Mathf.Clamp01(1f - b.position.y / 18f);
+            shellMark.Add(new Vector3(b.position.x, 0.08f, b.position.z), new Vector3(1f, 0.02f, 1f) * (1.5f + 3f * near), Quaternion.identity);
             return;
         }
         if (b.style == Weapon.Boomerang)
@@ -1276,8 +1408,6 @@ public class Combat : MonoBehaviour
             else
             {
                 int count = weapon.Targets(level) + Amount;
-                // Evolved: the Missile Swarm fires three rockets, Lead Rain and Lead Storm two streams.
-                int shots = !evolved ? 1 : weapon.style == Weapon.Swirl ? 3 : weapon.style == Weapon.Wobble ? 2 : 1;
                 picked.Clear();
                 for (Enemy e = first; e != null && picked.Count < count; e = Nearest(from, weapon.range, picked))
                 {
@@ -1285,10 +1415,60 @@ public class Combat : MonoBehaviour
                     if (weapon.strike) Strike(e, weapon, level);
                     else if (weapon.style == Weapon.Boomerang) Throw(from, e, weapon, level);
                     else if (evolved && weapon.id == "rail") Beam(from, FlatDir(e, from), weapon, level); // the Ion Cannon
+                    else if (evolved && weapon.id == "chain") Web(e, weapon, level);                      // the Power Grid
                     else
                     {
-                        for (int s = 0; s < shots; s++) Fire(from, e, weapon, level);
+                        Fire(from, e, weapon, level);
+                        if (evolved && weapon.style == Weapon.Swirl) bullets[bullets.Count - 1].split = true; // the Missile Swarm
+                        if (evolved && weapon.id == "sniper") Bolt(from, e.position, weapon.Batch, 1, 0f, 0.35f, 0.18f); // the Hawk Eye's streak
+                        if (evolved && hero && weapon.id == "smg") // the Drone Squad: each drone fires as well
+                            for (int k = 0; k < 2; k++) Fire(Drone(k), e, weapon, level);
                         if (weapon.style == Weapon.Pellets) Pellets(from, FlatDir(e, from), weapon);
+                    }
+                }
+                if (evolved && weapon.id == "minigun" && first != null)
+                {
+                    // The Lead Hurricane: two arms of a spiral of bullets turning out from the wagon, besides the aimed stream.
+                    spiral += 23f;
+                    for (int k = 0; k < 2; k++)
+                    {
+                        Bullet s = Spawn(from, Vector3.one * 0.25f, weapon.Batch, weapon.range / weapon.speed);
+                        s.free = true;
+                        s.weapon = weapon;
+                        s.velocity = Quaternion.Euler(0f, spiral + k * 180f, 0f) * Vector3.forward * weapon.speed;
+                        s.style = Weapon.Straight;
+                        s.level = level;
+                        s.hero = heroHit;
+                    }
+                }
+                if (evolved && weapon.id == "blaster" && first != null && Time.time >= nextComet)
+                {
+                    // The Plasma Comet: every second or so, a comet along the aim, through the crowd.
+                    nextComet = Time.time + 1.1f;
+                    Vector3 aim = FlatDir(first, from);
+                    for (int k = 0; k <= Amount; k++)
+                    {
+                        Bullet c = Spawn(from, Vector3.one, weapon.Batch, 26f / 22f * Duration);
+                        c.weapon = weapon;
+                        c.level = level;
+                        c.hero = heroHit;
+                        c.style = Weapon.Comet;
+                        c.velocity = Quaternion.Euler(0f, (k - Amount * 0.5f) * 12f, 0f) * aim * 22f;
+                    }
+                    Burst("spark", from + aim, 2f);
+                }
+                if (evolved && weapon.id == "turret" && first != null && Random.value < 0.25f)
+                {
+                    // The Barrage: now and then a shell called down from the sky near its target.
+                    for (int k = 0; k < 1 + Amount; k++)
+                    {
+                        Vector3 at = first.position + new Vector3(Random.Range(-3f, 3f), 0f, Random.Range(-3f, 3f));
+                        Bullet s = Spawn(new Vector3(at.x, 18f, at.z), Vector3.one, weapon.Batch, 9f);
+                        s.weapon = weapon;
+                        s.level = level;
+                        s.hero = heroHit;
+                        s.style = Weapon.Shell;
+                        s.velocity = Vector3.down * 36f;
                     }
                 }
                 if (evolved && weapon.style == Weapon.Flame && first != null)
@@ -1425,7 +1605,6 @@ public class Combat : MonoBehaviour
     // Laser: one instant straight ray. Weak per enemy, but it crosses every enemy standing on the line.
     public void Beam(Vector3 from, Vector3 direction, Weapon weapon, int level, Batch look = null)
     {
-        if (weapon.id == "laser" && laserSound.clip) laserSound.PlayOneShot(laserSound.clip);
         bool evolved = level >= Weapon.Evolved;
         float range = weapon.range * (evolved ? 2f : 1f), damage = weapon.Damage(level) * Power, thick = evolved ? 0.6f : 0.28f;
         Spawn(from + direction * (range * 0.5f), new Vector3(thick, thick, range), look ?? weapon.Batch, evolved ? 0.14f : 0.08f, Quaternion.LookRotation(direction));
@@ -1507,6 +1686,7 @@ public class Combat : MonoBehaviour
         if (e.type.loot >= 0 && !heroHit) return;
         bool critical = false;
         if (weaponHit) damage = train.CriticalDamage(damage, out critical);
+        if (Time.time < e.markedUntil) damage *= 2f;
         float applied = Mathf.Max(damage - e.type.armor * Balance.Scale, damage * 0.2f);
         e.hp -= applied;
         if (applied > 0f) train.DamageNumber(e.position + Vector3.up * (e.type.size + 0.5f), applied, false, critical);
@@ -1558,6 +1738,8 @@ public class Combat : MonoBehaviour
         b.style = 0;
         b.age = 0f;
         b.back = false;
+        b.split = false;
+        b.power = 1f;
         b.from = position;
         b.hits.Clear();
         bullets.Add(b);

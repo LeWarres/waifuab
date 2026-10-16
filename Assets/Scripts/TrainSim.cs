@@ -51,8 +51,8 @@ public class TrainSim : MonoBehaviour
     public float groundTile = 18f;                      // size on the ground of one repeat of the ground texture
     public float viewRange = 80f;
     public float sleeperSpacing = 1.5f;
-    [System.NonSerialized] public float stationGap = 1200f;    // the shortest a normal leg can be: about a minute of riding
-    [System.NonSerialized] public float stationGapMax = 2400f; // the longest: each leg is somewhere in between, at random
+    [System.NonSerialized] public float stationGap = 600f;     // the shortest a normal leg can be: about half a minute of riding
+    [System.NonSerialized] public float stationGapMax = 1200f; // the longest: each leg is somewhere in between, at random
     float legScale = 1f;                                       // this leg's share of that, 1 to stationGapMax / stationGap
 
     [Header("Camera")]
@@ -103,8 +103,8 @@ public class TrainSim : MonoBehaviour
     // A story chapter grows harder with its clock (and each chapter starts harder than the one before) instead of
     // with stations and biome changes.
     // In a story it climbs gently for the first minutes, while the weapons are few, and ever faster after: 2 at 4
-    // minutes, 9 at 10, 24 at the end of the chapter.
-    public int Difficulty => Story.Active ? Story.Chapter * 3 + (int)(storyClock / 100f + 3f * Mathf.Pow(storyClock / 600f, 2f)) : Stations + Biome * biomeDifficulty;
+    // minutes, 10 at 10, 29 at the end of the chapter.
+    public int Difficulty => Story.Active ? Story.Chapter * 3 + (int)(storyClock / 90f + 4f * Mathf.Pow(storyClock / 600f, 2f)) : Stations + Biome * biomeDifficulty;
     float storyClock;           // seconds ridden in this story chapter (not counting stations or pauses)
     bool duel, duelCalled, chapterWon; // the rival is out / was called for / is beaten and the upgrade to keep is being chosen
     Talk talk;                  // the words with the rival, before the duel and after it
@@ -119,6 +119,8 @@ public class TrainSim : MonoBehaviour
     public static readonly string[] PassiveIcons = { "speed", "armor", "vitality", "arms", "money", "minigun", "sniper", "rail", "regen", "area", "amount", "luck", "duration" };
     public float regenPerLevel = 0.15f * Balance.Scale; // health a second, per level of regeneration, to every wagon (half to the hero)
     public const int MaxPassive = 5;
+    public const int MaxOwnedPassives = 5;      // different upgrades the hero can hold at once
+    const int HeroMoney = 20, HeroHealth = 21;  // the hero's cards when nothing else is left: money, health
     readonly Dictionary<string, int> passiveLevels = new();
     public readonly List<string> passiveOrder = new(); // in the order they were first taken, for the HUD
     public int PassiveLevel(string id) => id != null && passiveLevels.TryGetValue(id, out int n) ? n : 0;
@@ -127,6 +129,17 @@ public class TrainSim : MonoBehaviour
     // The first wagon whose weapon is at its top level with its partner upgrade owned, or null.
     Turret Evolvable => cars.Find(c => c.mount && c.mount.Level == Weapon.MaxLevel && PassiveLevel(c.mount.Weapon.evolvesWith) > 0)?.mount;
     bool evolutionsMenu; // the pause menu's list of every evolution
+
+    // Story: a Y junction at JunctionAt seconds of the chapter. One way leads to the mid boss (the truck, BossEvent),
+    // the other goes on without it. Beaten, the truck leaves its wagon (GiveTruck).
+    const float JunctionAt = 15f * 60f;
+    bool junction, junctionAsked;
+    Car truckCar;      // the truck's wagon on this train, if any
+    bool truckCarried; // it came from the chapter before: it goes no further
+    public float junctionHard = 14f;   // the junction's truck: a real fight, with this many times the health
+    Transform junctionLook, lever; // the branch line leaving the track, and the lever at the switch
+    float junctionS;               // where along the track the switch is (as the knees: it slides back as the train runs)
+    float leverTo;                 // where the lever is thrown to (degrees)
     public bool EvolutionsOpen => Paused && evolutionsMenu;
     string keptPassive; // the upgrade handed on to the next chapter, with its level: drawn when the chapter is won
     void Took(string token) { if (Story.Active) taken.Add(token); }
@@ -167,7 +180,104 @@ public class TrainSim : MonoBehaviour
     public void BossDefeated()
     {
         bossBeaten = Biome;
+        GiveTruck(1, false);
         OpenChest();
+    }
+
+    // The truck's wagon, at the tail: its rockets, a look of its own (Turret), and it levels up like any other.
+    void GiveTruck(int level, bool carried)
+    {
+        AddCar(cars.Count, -1);
+        int at = cars.Count - 1;
+        for (int l = 0; l < level; l++) Mount(at, Weapon.Truck);
+        truckCar = cars[at];
+        truckCarried = carried;
+        if (!carried) hud.Toast(L10n.T("truck.won"), 4f);
+    }
+
+    // The branch line, ahead on the track: rails and sleepers leaving it at an angle, one side or the other, and a
+    // switch lever on the far side. It slides back with the ground (Update) and the choice opens at the switch.
+    void LayJunction()
+    {
+        junctionLook = new GameObject("Junction").transform;
+        junctionS = NoseS + 70f;
+        float side = Random.value < 0.5f ? 1f : -1f;
+        Transform branch = new GameObject("Branch").transform;
+        branch.SetParent(junctionLook, false);
+        branch.localRotation = Quaternion.Euler(0f, -side * BranchAngle, 0f); // +x on: it bends off towards +z * side
+        this.branch = branch;
+        Dress(Instantiate(Resources.Load<GameObject>("Models/Track_rail"), branch)).transform.localScale = new Vector3(110f, 1f, 1f);
+        GameObject sleeper = Resources.Load<GameObject>("Models/Sleeper_0");
+        for (float x = 1.5f; x < 110f; x += 1.5f)
+            Dress(Instantiate(sleeper, branch)).transform.localPosition = Vector3.right * x;
+        Transform Part(PrimitiveType shape, Transform parent, Vector3 at, Vector3 size, Color colour)
+        {
+            GameObject part = GameObject.CreatePrimitive(shape);
+            Destroy(part.GetComponent<Collider>());
+            part.transform.SetParent(parent, false);
+            part.transform.localPosition = at;
+            part.transform.localScale = size;
+            part.GetComponent<Renderer>().sharedMaterial = Mat(colour);
+            return part.transform;
+        }
+        Transform stand = new GameObject("Lever").transform;
+        stand.SetParent(junctionLook, false);
+        stand.localPosition = new Vector3(-1.5f, 0f, -side * 4f);
+        stand.localScale = Vector3.one * 1.7f;
+        Part(PrimitiveType.Cube, stand, new Vector3(0f, 0.35f, 0f), new Vector3(1.4f, 0.7f, 0.9f), new Color(0.25f, 0.26f, 0.3f));
+        Part(PrimitiveType.Cube, stand, new Vector3(0f, 0.72f, 0f), new Vector3(1.5f, 0.06f, 1f), new Color(0.95f, 0.75f, 0.1f));
+        lever = new GameObject("Arm").transform;
+        lever.SetParent(stand, false);
+        lever.localPosition = Vector3.up * 0.7f;
+        Part(PrimitiveType.Cube, lever, new Vector3(0f, 0.9f, 0f), new Vector3(0.16f, 1.8f, 0.16f), new Color(0.7f, 0.72f, 0.78f));
+        Part(PrimitiveType.Sphere, lever, new Vector3(0f, 1.85f, 0f), Vector3.one * 0.5f, new Color(0.95f, 0.15f, 0.12f));
+        lever.localRotation = Quaternion.identity; // upright until thrown
+        leverSide = side;
+        PlaceJunction();
+    }
+    float leverSide;
+    Transform branch;
+    const float BranchAngle = 24f;
+
+    // On the track at the switch, turned as the track is there.
+    void PlaceJunction()
+    {
+        Vector3 at = Path(junctionS, out float heading);
+        junctionLook.SetPositionAndRotation(at, Quaternion.Euler(0f, heading, 0f));
+    }
+
+    // Going on means going off along the branch: a knee at the switch turns the real track (and the train) that way,
+    // and what stays drawn is the old line running straight on, left behind.
+    void TakeBranch()
+    {
+        if (!junctionLook) return;
+        knees.Add(new Vector2(junctionS, -leverSide * BranchAngle));
+        sequenceStarted = true; // no button game for this one
+        eventKind = 0;
+        turned = true;          // and no other event on this leg
+        branch.localRotation = Quaternion.identity;
+    }
+
+    void Junction(bool fight)
+    {
+        junction = false;
+        Time.timeScale = 1f;
+        leverTo = (fight ? 1f : -1f) * leverSide * 35f; // thrown one way for the branch, the other for the line
+        // The junction's truck matches the train: the more weapon levels on board, the more health it has.
+        int power = 0;
+        foreach (var a in Arsenal()) power += a.level;
+        boss.hard = junctionHard * Mathf.Max(1f, power / 24f);
+        if (fight && boss.Begin())
+        {
+            turned = true;                                      // the truck instead of this leg's event
+            remaining = Mathf.Max(remaining, stationGapMax * 1.5f); // and road enough to fight it before the station
+        }
+        else
+        {
+            boss.hard = 1f;
+            Toast(L10n.T("junction.went"));
+            if (!Bending) TakeBranch();
+        }
     }
 
     // A boss's or mini boss's chest, as in Vampire Survivors: it evolves a weapon if that is earned (top level and its
@@ -222,19 +332,14 @@ public class TrainSim : MonoBehaviour
         hud.Toast(won.Count == 0 ? L10n.T("chest.empty") : L10n.T(rolls == 4 ? "chest.golden" : "chest.open", string.Join("  ·  ", won)), 4f);
     }
 
-    // What the train and the hero are armed with, for the HUD: the hero's weapon first, then every kind of wagon
-    // weapon once, at the highest level it is mounted at.
+    // What the train and the hero are armed with, for the HUD: the hero's weapon first, then every wagon's, front
+    // to back (two wagons with the same weapon are two, each at its own level).
     public List<(Weapon weapon, int level)> Arsenal()
     {
         arsenal.Clear();
         arsenal.Add((Player.ammo, Player.level));
         foreach (Car car in cars)
-        {
-            if (!car.mount) continue;
-            int known = arsenal.FindIndex(1, a => a.weapon == car.mount.Weapon);
-            if (known < 0) arsenal.Add((car.mount.Weapon, car.mount.Level));
-            else if (car.mount.Level > arsenal[known].level) arsenal[known] = (car.mount.Weapon, car.mount.Level);
-        }
+            if (car.mount) arsenal.Add((car.mount.Weapon, car.mount.Level));
         return arsenal;
     }
     readonly List<(Weapon weapon, int level)> arsenal = new();
@@ -415,6 +520,7 @@ public class TrainSim : MonoBehaviour
     public float CarSpacing => Step;
     public float CarS(int i) => WagonX(i);
     public bool CarAlive(int i) => cars[i].Alive;
+    public float CarMaxHealth(int i) => cars[i].maxHealth;
     public void HurtCar(int i, float share) => Damage(i, cars[i].maxHealth * share);
     readonly List<Car> cars = new();     // front to back
     Material wagonMat, deadMat, groundMat, sceneryMat;
@@ -537,7 +643,7 @@ public class TrainSim : MonoBehaviour
             var slot = new StationMenu.Slot { tag = (i + 1).ToString(), x = sideCam.WorldToViewportPoint(car.pos).x };
             if (i == chosen) { slot.icon = what; slot.label = effect; slot.state = 1; }
             else if (car.cargo >= 0) { slot.icon = Cargos[car.cargo].id; slot.state = weapons ? 2 : 0; } // cargo carries no weapon
-            else if (car.mount) { slot.icon = car.mount.Weapon.id; slot.label = L10n.T("strip.level", car.mount.Level); }
+            else if (car.mount) { slot.icon = car.mount.Weapon.id; slot.label = car.mount.Level >= Weapon.Evolved ? "EVO" : L10n.T("strip.level", car.mount.Level); }
             else { slot.icon = "slot"; slot.label = L10n.T("menu.empty"); }
             trainSlots.Add(slot);
         }
@@ -551,7 +657,7 @@ public class TrainSim : MonoBehaviour
     const bool mainMenu = false, settingsMenu = false; // the title screen is its own scene now (MainMenu.cs)
     InputAction navigate, confirm, stepRight, stepLeft;
     bool ListMenu => Paused || settingsMenu;  // both draw their options as a vertical list
-    bool MenuOpen => mainMenu || chapterWon || (AtStation && !Clearing && !deliveryPending) || Health <= 0f || Paused;
+    bool MenuOpen => mainMenu || chapterWon || junction || (AtStation && !Clearing && !deliveryPending) || Health <= 0f || Paused;
 
     // Pause: Start on a gamepad, Esc on the keyboard. Freezes time and opens its own menu.
     public bool Paused { get; private set; }
@@ -643,11 +749,11 @@ public class TrainSim : MonoBehaviour
         cargoModels = System.Array.ConvertAll(Cargos, c => Resources.Load<GameObject>("Models/Cargo_" + c.id));
         loco = Locomotives.Create(transform, Locomotives.Selected);
         for (int i = 0; i < wagons; i++) AddCar(i, -1);
-        Mount(0, Weapon.Wagon[0]);
-        Mount(1, Weapon.Wagon[0]); // both wagons armed from the start: the legs are long, the first upgrade a minute away
+        Mount(0, Weapon.Wagon[0]); // two wagons to start with, one armed: the other waits for the first weapon won
         Player = new GameObject("Player").AddComponent<Player>();
         Player.Init(this);
         if (Story.Active) foreach (string token in Story.Kept()) Apply(token); // what earlier chapters handed down
+        if (Story.Active && Story.CarriedTruck > 0) GiveTruck(Story.CarriedTruck, true); // the truck's wagon, one chapter on
         navigate = InputSystem.actions.FindAction("Player/Move", true);
         confirm = InputSystem.actions.FindAction("Player/Jump", true);
         stepRight = InputSystem.actions.FindAction("Player/Next", true);
@@ -933,6 +1039,21 @@ public class TrainSim : MonoBehaviour
         {
             // The chapter's clock; when it runs out, the rival comes alongside as soon as nothing else is on.
             storyClock += Time.deltaTime;
+            if (!junctionLook && !junctionAsked && storyClock >= JunctionAt && !BossFight && !InEvent && !Warning && !Bending && !duelCalled)
+                LayJunction();
+            if (junctionLook && !junctionAsked && junctionS - NoseS < -15f)
+            {
+                // It went by while something else was on: it is laid again further along.
+                Destroy(junctionLook.gameObject);
+                junctionLook = null;
+            }
+            if (junctionLook && !junctionAsked && junctionS - NoseS <= 4f && !BossFight && !InEvent)
+            {
+                // The Y junction: the game stops at the lever until a way is chosen.
+                junctionAsked = junction = true;
+                Time.timeScale = 0f;
+                Sound.Play("Pause");
+            }
             if (!duelCalled && storyClock >= Story.Seconds && !BossFight && !InEvent && !Warning && !Bending)
             {
                 // Time is up: the rival pulls alongside, a few words are traded over the stopped game, then the duel.
@@ -944,6 +1065,8 @@ public class TrainSim : MonoBehaviour
         }
         if (Keyboard.current != null && Keyboard.current.lKey.wasPressedThisFrame) L10n.NextLocale();
         // ponytail: reads the devices directly, like the medkit and the button games.
+        if (junction && ((Gamepad.current != null && Gamepad.current.buttonWest.wasPressedThisFrame) || (Keyboard.current != null && Keyboard.current.qKey.wasPressedThisFrame)))
+            Junction(false); // the junction's second way, on its own button
         if (!mainMenu && Health > 0f && !talk.Open && ((Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame) ||
                             (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)))
             SetPaused(!Paused);
@@ -1014,6 +1137,13 @@ public class TrainSim : MonoBehaviour
             if (whistleSound.clip) whistleSound.PlayOneShot(whistleSound.clip);
         }
         Scroll = step;
+        if (junctionLook)
+        {
+            junctionS -= step;
+            PlaceJunction();
+            lever.localRotation = Quaternion.RotateTowards(lever.localRotation, Quaternion.Euler(leverTo, 0f, 0f), 240f * Time.unscaledDeltaTime);
+            if (junctionS < -viewRange * 0.9f) { Destroy(junctionLook.gameObject); junctionLook = null; } // gone before the world turns back
+        }
 
         if (!AtStation && !Zigzag && Speed > maxSpeed) Flash("wind"); // an express leg (not the zigzag: its zoom outgrows the effect)
         // The ground itself never moves: its texture slides back under the train instead.
@@ -1110,7 +1240,6 @@ public class TrainSim : MonoBehaviour
         delivering = false;
         nextLeg = Random.Range(0, Legs.Length);
         stage = 0;
-        secondPick = false;
     }
 
     // Settle after the station guns finish, including cargo recovered from balloons during the cleanup.
@@ -1125,7 +1254,7 @@ public class TrainSim : MonoBehaviour
             bool stays = (car.cargo < 0 && !car.temporary) || car.permanent;
             if (car.cargo >= 0 || car.temporary)
             {
-                int value = car.permanent ? (car.Alive ? Mathf.RoundToInt(Cargos[Container].reward * Legs[leg].length) * (Biome + 1) : 0)
+                int value = car.permanent ? (car.Alive ? Mathf.RoundToInt(Cargos[Container].reward * Legs[leg].length * CargoShare) * (Biome + 1) : 0)
                     : car.Alive ? car.reward : -car.penalty;
                 string id = car.cargo >= 0 ? Cargos[car.cargo].id : "wagon";
                 results.Add(new DeliveryReport.Entry { icon = "delivery_" + id, name = car.cargo >= 0 ? L10n.T("cargo." + id) : L10n.T("delivery.escort"), value = value, destroyed = !car.Alive });
@@ -1187,7 +1316,6 @@ public class TrainSim : MonoBehaviour
         Player.OnStation();
         RollOffers();
         stage = 0;
-        secondPick = false;
         if (!deliveryReport) deliveryReport = gameObject.AddComponent<DeliveryReport>();
         deliveryReport.Show(results, cargoEarned - cargoFined, money, () => StartCoroutine(CompleteDelivery()));
     }
@@ -1237,7 +1365,9 @@ public class TrainSim : MonoBehaviour
         moneyCarry -= whole;
     }
 
-    int CargoReward(int cargo) => Mathf.RoundToInt(Cargos[cargo].reward * Legs[nextLeg].length) * (Biome + 1);
+    // The legs are short now and the stations many: each delivery pays this share of what a long leg did.
+    const float CargoShare = 0.6f;
+    int CargoReward(int cargo) => Mathf.RoundToInt(Cargos[cargo].reward * Legs[nextLeg].length * CargoShare) * (Biome + 1);
     int CargoPrice(int cargo) => Mathf.RoundToInt(CargoReward(cargo) * cargoCost);
 
     // Lowest level among the mounted weapons: an escort comes no better than the weakest wagon.
@@ -1458,31 +1588,42 @@ public class TrainSim : MonoBehaviour
     // a one-trip prize instead of one of them), and for the hero mostly stats, plus one other ammo.
     void RollOffers()
     {
+        // Only weapons the train can take: a new one needs a wagon with no weapon, one it has needs a copy below the
+        // top. Whatever is missing is made up with money and health.
         offerPool.Clear();
+        bool free = cars.Exists(c => c.cargo < 0 && !c.mount);
         for (int i = 0; i < Weapon.Wagon.Length; i++)
-            if (Story.Active || Weapon.Wagon[i].firstBiome <= Biome) offerPool.Add(i); // the story offers every weapon from the start
-        offerPool.Add(Weapon.Wagon.Length);
+        {
+            Turret owned = Owned(Weapon.Wagon[i]);
+            if ((Story.Active || Weapon.Wagon[i].firstBiome <= Biome) && (free || (owned && owned.Level < Weapon.MaxLevel))) // the story offers every weapon from the start
+                offerPool.Add(i);
+        }
+        offerPool.Add(Weapon.Wagon.Length);     // money
+        offerPool.Add(Weapon.Wagon.Length + 1); // health
+        while (offerPool.Count < offers.Length) offerPool.Add(offerPool.Count % 2 == 0 ? Weapon.Wagon.Length : Weapon.Wagon.Length + 1);
         Draw(offers);
         if (cars.Count < maxCars && Random.value < bonusOfferChance + 0.04f * PassiveLevel("luck"))
             offers[Random.Range(0, offers.Length)] = Random.value < 0.5f ? FreeCargo + Random.Range(0, Loadable)
-                : Escort + offerPool[Random.Range(0, offerPool.Count - 1)]; // the pool's last entry is money
+                : Escort + Random.Range(0, Weapon.Wagon.Length); // an escort comes with its own wagon
         if (cars.Count < maxCars && Random.value < eternalOfferChance) offers[Random.Range(0, offers.Length)] = Eternal;
 
-        offerPool.Clear();
-        for (int i = 0; i < Weapon.Hero.Length; i++)
-            if ((Story.Active || Weapon.Hero[i].firstBiome <= Biome) && Weapon.Hero[i] != Player.ammo) offerPool.Add(i);
-        int ammo = offerPool.Count > 0 ? offerPool[Random.Range(0, offerPool.Count)] : -1;
-        offerPool.Clear();
-        if (ammo >= 0) offerPool.Add(ammo);                                        // one other ammo at most
+        offerPool.Clear(); // the hero's weapon is her own for good: only her upgrades and its levels are offered
         // The upgrades: speed, armor, vitality, damage, money, (5: a level on the weapon), arsenal fire rate, critical
         // chance, critical damage; none past its top level.
+        // At most MaxOwnedPassives different ones: once she has that many, only those are raised further. Whatever
+        // is missing is made up with money and health.
+        bool full = passiveOrder.Count >= MaxOwnedPassives;
         for (int stat = 0; stat <= Passives.Length; stat++)
         {
             if (stat == 5) { if (Player.level < Weapon.MaxLevel) offerPool.Add(Weapon.Hero.Length + 5); continue; }
-            if (PassiveLevel(Passives[stat < 5 ? stat : stat - 1]) >= MaxPassive) continue;
+            string id = Passives[stat < 5 ? stat : stat - 1];
+            if (PassiveLevel(id) >= MaxPassive || (full && PassiveLevel(id) == 0)) continue;
             if ((stat == 1 && Player.armor >= Player.MaxArmor) || (stat == 7 && criticalChance >= 1f)) continue;
             offerPool.Add(Weapon.Hero.Length + stat);
         }
+        offerPool.Add(Weapon.Hero.Length + HeroMoney);
+        offerPool.Add(Weapon.Hero.Length + HeroHealth);
+        while (offerPool.Count < heroOffers.Length) offerPool.Add(Weapon.Hero.Length + (offerPool.Count % 2 == 0 ? HeroMoney : HeroHealth));
         Draw(heroOffers);
     }
 
@@ -1496,10 +1637,6 @@ public class TrainSim : MonoBehaviour
         }
     }
 
-    // The legs are long and the stations few, so each is worth two upgrades for the train and two for the hero:
-    // after the first pick of those steps the same step comes again with fresh cards.
-    bool secondPick;
-
     // Closes the current station menu and opens the next one.
     void Next()
     {
@@ -1508,13 +1645,6 @@ public class TrainSim : MonoBehaviour
         skipGift = 0;
         pending = null;
         pendingCargo = -1;
-        if (stage <= 1 && !secondPick)
-        {
-            secondPick = true;
-            RollOffers();
-            return;
-        }
-        secondPick = false;
         stage++;
     }
 
@@ -1543,7 +1673,6 @@ public class TrainSim : MonoBehaviour
             Player.Heal(skipHealth);
         }
         pending = null;
-        secondPick = false;
         stage++;
     }
 
@@ -1576,7 +1705,7 @@ public class TrainSim : MonoBehaviour
     // had to get ready, and once beaten it never comes back for the rest of the run.
     void RollEvent()
     {
-        bossNext = (Story.Active || Biome == 0) && bossBeaten != Biome && !duelCalled && // in a story: any biome's truck, as a boss on the way
+        bossNext = !Story.Active && Biome == 0 && bossBeaten != Biome && !duelCalled && // in a story it waits at the junction instead
                    Stations >= 3 && // at least 3 stations reached before first boss
                    Random.value < Mathf.Min(bossChance + bossChanceStep * (Stations - 3), bossChanceMax);
         nextEvent = bossNext ? 6 : EventBag[Random.Range(0, EventBag.Length)];
@@ -1600,7 +1729,7 @@ public class TrainSim : MonoBehaviour
         }
         switch (part[0])
         {
-            case "ammo": Switch(System.Array.Find(Weapon.Hero, w => w.id == part[1]) ?? Player.ammo); break;
+            case "ammo": break; // from before weapons were fixed: nothing to hand back
             case "evolve": Player.level = Mathf.Min(Weapon.MaxLevel, Player.level + 1); break;
             case "speed": Player.SpeedUp(); break;
             case "armor": Player.ArmorUp(); break;
@@ -1622,15 +1751,9 @@ public class TrainSim : MonoBehaviour
     }
 
     // The upgrade to keep was picked: the story goes on with the chapter's ending and the next one's opening.
-    // A new ammo for the hero; an evolution belongs to the weapon it came from, so the level drops back to the top.
-    void Switch(Weapon ammo)
-    {
-        Player.ammo = ammo;
-        if (Player.level > Weapon.MaxLevel) Player.level = Weapon.MaxLevel;
-    }
-
     void EndChapter(string keep)
     {
+        Story.KeepTruck(truckCar != null && truckCar.mount && !truckCarried ? truckCar.mount.Level : 0);
         Story.Win(keep, keptPassive);
         Time.timeScale = 1f;
         SceneManager.LoadScene("historiaDialogos");
@@ -1831,6 +1954,15 @@ public class TrainSim : MonoBehaviour
             if (confirming == 1) Add("yes", L10n.T("menu.yes"), Restart);
             else Add("yes", L10n.T("menu.yes"), GoToMainMenu);
         }
+        else if (junction)
+        {
+            kind = 11;
+            menuTitle = L10n.T("junction.title");
+            menuSub = L10n.T("junction.sub", Player.UsingGamepad ? (Gamepad.current is DualShockGamepad ? "✕" : "A") : L10n.T("junction.confirm"),
+                             Player.UsingGamepad ? (Gamepad.current is DualShockGamepad ? "□" : "X") : "Q");
+            Add("truck", L10n.T("junction.fight"), () => Junction(true));
+            Add("lever", L10n.T("junction.skip"), () => Junction(false));
+        }
         else if (Paused && evolutionsMenu)
         {
             // The list itself is drawn by the HUD over everything (Hud.Evolutions); here only the way back.
@@ -1971,15 +2103,17 @@ public class TrainSim : MonoBehaviour
         {
             kind = 4;
             menuStep = 1;
-            menuTitle = L10n.T("menu.hero") + (secondPick ? "  (2/2)" : "  (1/2)");
+            menuTitle = L10n.T("menu.hero");
             menuSub = L10n.T("sub.hero");
             foreach (int offer in heroOffers)
             {
                 int stat = offer - Weapon.Hero.Length;
-                if (stat < 0)
+                if (stat == HeroMoney) { Add("money", L10n.T("menu.money", moneyReward), () => { money += moneyReward; Next(); }); Free(); }
+                else if (stat == HeroHealth)
                 {
-                    Weapon weapon = Weapon.Hero[offer];
-                    Add(weapon.id, L10n.T("hero.ammo", weapon.Name, weapon.Info), () => { Switch(weapon); Took("ammo:" + weapon.id); Next(); }); Free();
+                    float mend = skipHealth * 2.5f;
+                    Add("heal", L10n.T("menu.repair", Mathf.RoundToInt(mend)), () => { Repair(mend); Player.Heal(mend); Next(); });
+                    Free();
                 }
                 else if (stat == 5) { Add(Player.ammo.id, L10n.T("hero.evolve", Player.ammo.Name, Player.level + 1), () => { Player.level++; Took("evolve"); Combat.Instance.Burst("levelup", Player.Position + Vector3.down * 2f, 1.5f); Next(); }); Free(); }
                 else
@@ -2003,21 +2137,29 @@ public class TrainSim : MonoBehaviour
         {
             kind = 2;
             menuStep = 0;
-            menuTitle = L10n.T("menu.upgrade") + (secondPick ? "  (2/2)" : "  (1/2)");
+            menuTitle = L10n.T("menu.upgrade");
             menuSub = cargoEarned > 0 || cargoFined > 0 ? L10n.T("cargo.result", cargoEarned, cargoFined) + "     " + L10n.T("sub.train") : L10n.T("sub.train");
             foreach (int offer in offers)
             {
                 if (offer < Weapon.Wagon.Length)
                 {
-                    // The tag says what it would be for this train: one it has, raised a level, or a new one.
+                    // A wagon's weapon stays for good: a card raises a copy the train has, or goes on a wagon with
+                    // no weapon (another copy too, levelled on its own). The tag says which; with neither, it is shut.
                     Weapon weapon = Weapon.Wagon[offer];
                     Turret owned = Owned(weapon);
-                    Add(weapon.id, weapon.Name + "\n" + weapon.Info, () => BeginMounting(weapon));
-                    if (owned == null) Tag(L10n.T("badge.new"), 1);
-                    else if (owned.Level < Weapon.MaxLevel) Tag(L10n.T("badge.upgrade", owned.Level + 1), 2);
-                    else Tag(L10n.T("badge.maxed"), 3);
+                    bool raise = owned && owned.Level < Weapon.MaxLevel, free = cars.Exists(c => c.cargo < 0 && !c.mount);
+                    Add(weapon.id, weapon.Name + "\n" + weapon.Info, () => BeginMounting(weapon), raise || free);
+                    if (raise) Tag(L10n.T("badge.upgrade", owned.Level + 1), 2);
+                    else if (free) Tag(L10n.T(owned == null ? "badge.new" : "badge.copy"), 1);
+                    else Tag(L10n.T(owned == null ? "badge.nowagon" : "badge.maxed"), 3);
                 }
                 else if (offer == Weapon.Wagon.Length) { Add("money", L10n.T("menu.money", moneyReward), () => { money += moneyReward; Next(); }); Free(); }
+                else if (offer == Weapon.Wagon.Length + 1)
+                {
+                    float mend = skipHealth * 2.5f;
+                    Add("repair", L10n.T("menu.repair", Mathf.RoundToInt(mend)), () => { Repair(mend); Player.Heal(mend); Next(); });
+                    Free();
+                }
                 else if (offer == Eternal)
                 {
                     Add("container", L10n.T("offer.eternal"), () => { AddCar(cars.Count, Container, true); Next(); });
@@ -2048,8 +2190,8 @@ public class TrainSim : MonoBehaviour
             menuStep = 0;
             menuCompact = true;
             Turret mount = cars[weaponAt].mount;
-            bool same = mount && mount.Weapon == pending, can = !same || mount.Level < Weapon.MaxLevel;
-            string effect = !mount ? L10n.T("menu.empty") : !same ? L10n.T("menu.replace", mount.Weapon.Name, mount.Level)
+            bool same = mount && mount.Weapon == pending, can = !mount || (same && mount.Level < Weapon.MaxLevel); // a weapon is never swapped
+            string effect = !mount ? L10n.T("menu.empty") : !same ? L10n.T("menu.locked", mount.Weapon.Name, mount.Level)
                 : mount.Level < Weapon.MaxLevel ? L10n.T("menu.levelup", mount.Level + 1) : L10n.T("menu.maxlevel");
             menuTitle = L10n.T("menu.place", pending.Name);
             menuSub = L10n.T("mount.where", weaponAt + 1, effect) + "     " + L10n.T(Player.UsingGamepad ? "sub.mount.gamepad" : "sub.mount.keyboard");

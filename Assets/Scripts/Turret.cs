@@ -19,6 +19,18 @@ public class Turret : MonoBehaviour
     public void Init(Weapon weapon)
     {
         Weapon = weapon;
+        if (weapon == Weapon.Truck)
+        {
+            // The truck's own rig, small, riding the roof: the wagon won from the mid boss looks like it.
+            Transform rig = Instantiate(Resources.Load<GameObject>("Models/Boss"), transform).transform;
+            foreach (Renderer part in rig.GetComponentsInChildren<Renderer>()) TrainSim.Toon(part);
+            Bounds size = new Bounds(rig.position, Vector3.zero);
+            foreach (Renderer part in rig.GetComponentsInChildren<Renderer>()) size.Encapsulate(part.bounds);
+            float fit = 4.2f / Mathf.Max(size.size.x, size.size.z, 0.01f);
+            rig.localScale *= fit;
+            rig.localPosition = Vector3.up * (-0.4f - (size.min.y - transform.position.y) * fit);
+            return;
+        }
         if (weapon.style == Weapon.Slash)
         {
             const string Who = "Characters/onini/onini";

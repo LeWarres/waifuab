@@ -1927,6 +1927,58 @@ MonoBehaviour:
     m_Key: miniboss.taunted
     m_Metadata:
       m_Items: []
+  - m_Id: 2822797182447616
+    m_Key: menu.locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2822797216002048
+    m_Key: badge.copy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2822797216002049
+    m_Key: badge.nowagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033721761792
+    m_Key: junction.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316224
+    m_Key: junction.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316225
+    m_Key: junction.confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316226
+    m_Key: junction.fight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316227
+    m_Key: junction.skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316228
+    m_Key: junction.went
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316229
+    m_Key: truck.won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316230
+    m_Key: weapon.truck.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2831033755316231
+    m_Key: weapon.truck.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2873224766763008
+    m_Key: boss.ram
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

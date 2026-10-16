@@ -31,6 +31,9 @@ public class BossEvent : MonoBehaviour
     public float bossHealth = 150f * Balance.Scale;   // unscaled hits at difficulty 0, grows with it
     public float healthPerDifficulty = 0.12f;         // +12% of the rig's health per difficulty
     public float rampSpeed = 30f;                     // how fast it accelerates in beside the train
+    [System.NonSerialized] public float hard = 1f;    // the story's mid boss at the junction: this many times the health,
+                                                      // and rockets 1.6 times as hard, 2.5 times as tough to shoot down and
+                                                      // 1.8 times as often; set before Begin, back to 1 at the end
 
     // Same shape as Combat.EnemyType so the hero and the turrets can lock onto the rig and the rockets.
     static readonly Combat.EnemyType Rig = new Combat.EnemyType
@@ -72,6 +75,11 @@ public class BossEvent : MonoBehaviour
     Boss type;
 
     int mode;               // 0 chasing behind, 1 running level with the train
+    // The junction's truck (hard > 1) also rams: it picks a wagon (marked "!"), lines up beside it, then slams into
+    // it for a share of that wagon's health. Nothing shoots that down: the way out is to finish the truck first.
+    public float ramEvery = 9f, ramShare = 0.3f, ramWindUp = 1.6f;
+    int ramCar = -1;
+    float ramIn, ramWind;
     float modeTimer, phase, side = 1f, fireIn, startZoom, startsAt, nextDust;
 
     void Awake()
@@ -109,7 +117,7 @@ public class BossEvent : MonoBehaviour
         Skin();
 
         Combat combat = Combat.Instance;
-        maxHp = bossHealth * type.healthMul * (1f + healthPerDifficulty * train.Difficulty);
+        maxHp = bossHealth * type.healthMul * (1f + healthPerDifficulty * train.Difficulty) * hard;
         boss = combat.AddProjectile(Rig, new Vector3(0f, 2f, 0f), maxHp);
         bossId = boss.id;
 
@@ -124,6 +132,8 @@ public class BossEvent : MonoBehaviour
 
         Active = true;
         mode = 0;
+        ramCar = -1;
+        ramIn = ramEvery * 0.6f;
         modeTimer = Random.Range(3.5f, 7f);
         phase = Random.value * 10f;
         side = Random.value < 0.5f ? -1f : 1f;
@@ -192,13 +202,44 @@ public class BossEvent : MonoBehaviour
         float lateral = mode == 0 ? Mathf.Sin(now * 0.55f + phase) * weave : side * alongside;
         Vector3 want = center + dir * ahead + right * lateral;
         if (Incoming) want = center - dir * (approach + Mathf.Lerp(34f, 0f, 1f - (startsAt - Time.unscaledTime) / introSeconds));
+        float pace = speed;
+        if (hard > 1f && !Incoming && Ram(right, ref want, dt)) pace = speed * 1.8f;
         want.y = 0f;
-        rig.position = Vector3.MoveTowards(rig.position, want, speed * dt);
+        rig.position = Vector3.MoveTowards(rig.position, want, pace * dt);
 
         Vector3 face = dir; // always parallel to the train: pulling alongside must not turn the nose into its flank
         face.y = 0f;
         if (face.sqrMagnitude > 0.04f)
             rig.rotation = Quaternion.Slerp(rig.rotation, Quaternion.LookRotation(face, Vector3.up), rampSpeed * dt);
+    }
+
+    // The ram, if one is on: where the truck heads for instead. True while it is charging.
+    bool Ram(Vector3 right, ref Vector3 want, float dt)
+    {
+        if (ramCar < 0)
+        {
+            if ((ramIn -= dt) > 0f) return false;
+            int alive = 0;
+            for (int i = 0; i < train.CarCount; i++) if (train.CarAlive(i) && Random.Range(0, ++alive) == 0) ramCar = i;
+            if (ramCar < 0) return false;
+            ramWind = ramWindUp;
+            side = Random.value < 0.5f ? -1f : 1f;
+            train.Toast(L10n.T("boss.ram"));
+        }
+        if (ramCar >= train.CarCount || !train.CarAlive(ramCar)) { ramCar = -1; ramIn = 3f; return false; }
+        Vector3 car = train.CarPosition(ramCar);
+        train.Panel.Mark(car + Vector3.up * 3.5f, "!", 4);
+        if ((ramWind -= dt) > 0f) { want = car + right * (side * 9f); return false; } // lining up
+        want = car + right * (side * 2.6f);
+        Vector3 gap = rig.position - want;
+        gap.y = 0f;
+        if (gap.magnitude > 1.5f) return true;
+        train.Damage(ramCar, train.CarMaxHealth(ramCar) * ramShare);
+        train.Shake(0.6f);
+        Combat.Instance.Burst("grenade", car + Vector3.up, 2.4f);
+        ramCar = -1;
+        ramIn = ramEvery;
+        return false;
     }
 
     void Dust(float now)
@@ -215,7 +256,7 @@ public class BossEvent : MonoBehaviour
         if (Incoming) return;
         fireIn -= dt;
         if (fireIn > 0f) return;
-        fireIn = rocketEvery / (1f + 0.03f * train.Difficulty);
+        fireIn = rocketEvery / (1f + 0.03f * train.Difficulty) / (hard > 1f ? 1.8f : 1f);
         // Base volley
         Launch();
         if (Random.value < 0.35f) Launch();
@@ -249,7 +290,7 @@ public class BossEvent : MonoBehaviour
             aim = train.CarTop(pick);
         }
         bool curved = Random.value < 0.5f;
-        Combat.Enemy e = Combat.Instance.AddProjectile(Rocket, muzzle, rocketHealth * (1f + 0.05f * train.Difficulty));
+        Combat.Enemy e = Combat.Instance.AddProjectile(Rocket, muzzle, rocketHealth * (1f + 0.05f * train.Difficulty) * (hard > 1f ? 2.5f : 1f));
         // Half the rockets fly a curve (launched up) and half go relatively straight at the target for variety.
         if (curved)
         {
@@ -321,11 +362,11 @@ public class BossEvent : MonoBehaviour
             {
                 if (r.car >= 0 && r.car < train.CarCount && train.CarAlive(r.car))
                 {
-                    train.Damage(r.car, rocketDamage * (1f + 0.05f * train.Difficulty));
+                    train.Damage(r.car, rocketDamage * (1f + 0.05f * train.Difficulty) * (hard > 1f ? 1.6f : 1f));
                 }
                 else if (r.car == -1)
                 {
-                    train.Player.Damage(rocketDamage * (1f + 0.05f * train.Difficulty));
+                    train.Player.Damage(rocketDamage * (1f + 0.05f * train.Difficulty) * (hard > 1f ? 1.6f : 1f));
                 }
                 train.Shake(0.18f);
                 Combat.Instance.Burst("rocket", r.e.position, 1.3f);
@@ -358,6 +399,7 @@ public class BossEvent : MonoBehaviour
     void End(string key)
     {
         Active = false;
+        hard = 1f;
         train.cameraZoom = 1f;
         Combat combat = Combat.Instance;
         if (combat)

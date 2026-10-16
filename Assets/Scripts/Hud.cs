@@ -301,7 +301,7 @@ public class Hud : MonoBehaviour
         foreach (var r in recipes)
         {
             int level = 0;
-            foreach (var a in arsenal) if (a.weapon == r.weapon) level = a.level;
+            foreach (var a in arsenal) if (a.weapon == r.weapon) level = Mathf.Max(level, a.level);
             bool partner = train.PassiveLevel(r.weapon.evolvesWith) > 0;
             r.gun.color = level > 0 ? Color.white : faded;
             r.passive.color = partner ? Color.white : faded;

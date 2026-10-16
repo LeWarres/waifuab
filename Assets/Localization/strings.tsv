@@ -139,7 +139,7 @@ zig.keys	A / D	A / D	A / D	A / D
 zig.wait	Espera a la zona verde…  {1}	Wait for the green zone…  {1}	Espere a zona verde…  {1}	緑のゾーンまで待て…  {1}
 zig.now	¡AHORA!  {0}	NOW!  {0}	AGORA!  {0}	今だ！  {0}
 hero.damage	Daño\n+20% a tus disparos	Damage\n+20% to your shots	Dano\n+20% nos seus tiros	ダメージ\nショット +20%
-hero.greed	Botín\n+25% de dinero por enemigo	Loot\n+25% money per enemy	Saque\n+25% de dinheiro por inimigo	戦利品\n敵からのマネー +25%
+hero.greed	Botín\n+15% de dinero por enemigo	Loot\n+15% money per enemy	Saque\n+15% de dinheiro por inimigo	戦利品\n敵からのマネー +15%
 hero.evolve	Evolucionar {0}\nSube a Nv {1}	Evolve {0}\nUpgrade to Lv {1}	Evoluir {0}\nSobe para Nv {1}	{0} を進化\nLv {1} に強化
 hero.ammo	Munición: {0}\n{1}\nConserva el nivel	Ammo: {0}\n{1}\nKeeps its level	Munição: {0}\n{1}\nMantém o nível	弾薬：{0}\n{1}\nレベルはそのまま
 hud.hero.stats	Daño {0}%   Vel {1}   Res {2}%   Botín {3}%	Dmg {0}%   Spd {1}   Res {2}%   Loot {3}%	Dano {0}%   Vel {1}   Res {2}%   Saque {3}%	攻撃 {0}%   速度 {1}   耐性 {2}%   戦利品 {3}%
@@ -342,7 +342,7 @@ keep.speed	Conservar\n+10% de velocidad	Keep\n+10% speed	Manter\n+10% de velocid
 keep.armor	Conservar\n-10% de daño recibido	Keep\n-10% damage taken	Manter\n-10% de dano recebido	持ち越し\n被ダメージ -10%
 keep.vitality	Conservar\nVida máxima extra	Keep\nExtra max health	Manter\nVida máxima extra	持ち越し\n最大体力アップ
 keep.damage	Conservar\n+20% de daño	Keep\n+20% damage	Manter\n+20% de dano	持ち越し\nダメージ +20%
-keep.greed	Conservar\n+25% de dinero	Keep\n+25% money	Manter\n+25% de dinheiro	持ち越し\nマネー +25%
+keep.greed	Conservar\n+15% de dinero	Keep\n+15% money	Manter\n+15% de dinheiro	持ち越し\nマネー +15%
 keep.fireRate	Conservar\n+20% de cadencia	Keep\n+20% fire rate	Manter\n+20% de cadência	持ち越し\n連射速度 +20%
 keep.critChance	Conservar\n+5 de probabilidad crítica	Keep\n+5 critical chance	Manter\n+5 de chance crítica	持ち越し\nクリティカル率 +5
 keep.critDamage	Conservar\n+25 de daño crítico	Keep\n+25 critical damage	Manter\n+25 de dano crítico	持ち越し\nクリティカルダメージ +25
@@ -440,13 +440,13 @@ evo.rule	Arma a nivel 5 + su mejora, y derrota a un jefe: su cofre la evoluciona
 evo.help	Espacio / Esc / B: volver	Space / Esc / B: back	Espaço / Esc / B: voltar	Space / Esc / B：戻る
 evo.hero	{0} + {1}  ·  Héroe	{0} + {1}  ·  Hero	{0} + {1}  ·  Herói	{0} + {1}  ·  ヒーロー
 evo.wagon	{0} + {1}  ·  Vagón	{0} + {1}  ·  Wagon	{0} + {1}  ·  Vagão	{0} + {1}  ·  車両
-weapon.blaster.evo	Estrella Bláster	Blaster Star	Estrela Blaster	ブラスタースター
+weapon.blaster.evo	Cometa de Plasma	Plasma Comet	Cometa de Plasma	プラズマ彗星
 weapon.grenade.evo	Bomba Racimo	Cluster Bomb	Bomba de Fragmentação	クラスター爆弾
-weapon.smg.evo	Tormenta de Plomo	Lead Storm	Tempestade de Chumbo	鉛の嵐
+weapon.smg.evo	Escuadrón de Drones	Drone Squad	Esquadrão de Drones	ドローン部隊
 weapon.rail.evo	Cañón de Iones	Ion Cannon	Canhão de Íons	イオン砲
-weapon.turret.evo	Rosa de Balas	Bullet Rose	Rosa de Balas	弾丸の薔薇
+weapon.turret.evo	Bombardeo	Barrage	Bombardeio	砲撃
 weapon.rocket.evo	Enjambre de Misiles	Missile Swarm	Enxame de Mísseis	ミサイルの群れ
-weapon.minigun.evo	Lluvia de Plomo	Lead Rain	Chuva de Chumbo	鉛の雨
+weapon.minigun.evo	Huracán de Plomo	Lead Hurricane	Furacão de Chumbo	鉛の竜巻
 weapon.shotgun.evo	Perdigón Dorado	Golden Buckshot	Chumbo Dourado	黄金の散弾
 weapon.sniper.evo	Ojo de Halcón	Hawk Eye	Olho de Falcão	鷹の目
 weapon.pulse.evo	Pulso Vital	Vital Pulse	Pulso Vital	生命の鼓動
@@ -473,3 +473,16 @@ keep.duration	Conservar\n+20% de duración	Keep\n+20% duration	Manter\n+20% de d
 miniboss.coming	¡Mini jefe! Derríbalo para un cofre · acércate y pulsa {0} para que te siga	Mini boss! Bring it down for a chest · get close and press {0} to draw it	Mini chefe! Derrube-o por um baú · chegue perto e aperte {0} para atraí-lo	ミニボス！倒すと宝箱・近づいて{0}で引きつける
 miniboss.name	Mini jefe	Mini boss	Mini chefe	ミニボス
 miniboss.taunted	¡El mini jefe te sigue! Aléjalo de los vagones	The mini boss is after you! Lead it away from the wagons	O mini chefe está atrás de você! Afaste-o dos vagões	ミニボスが追ってくる！車両から引き離せ
+menu.locked	Ya lleva {0} Nv {1}: no se cambia	Already carries {0} Lv {1}: it stays	Já leva {0} Nv {1}: não se troca	{0} Lv {1} 搭載済み：交換不可
+badge.copy	OTRA COPIA	ANOTHER	OUTRA CÓPIA	2つ目
+badge.nowagon	SIN VAGÓN LIBRE	NO FREE WAGON	SEM VAGÃO LIVRE	空き車両なし
+junction.title	¡Cruce en Y!	Y junction!	Cruzamento em Y!	Y字分岐！
+junction.sub	{0}: el camión (mid boss)   ·   {1}: seguir la vía	{0}: the truck (mid boss)   ·   {1}: stay on track	{0}: o caminhão (chefe)   ·   {1}: seguir a via	{0}：トラック（中ボス）  ·  {1}：そのまま進む
+junction.confirm	Espacio	Space	Espaço	Space
+junction.fight	Ir por el camión\nMid boss: vencido, te deja su vagón	Go for the truck\nMid boss: beaten, it leaves its wagon	Ir atrás do caminhão\nChefe: vencido, deixa seu vagão	トラックへ\n中ボス：倒すと車両を獲得
+junction.skip	Seguir la vía\nSin mid boss	Stay on track\nNo mid boss	Seguir a via\nSem chefe	そのまま進む\n中ボスなし
+junction.went	Seguimos la vía	Staying on track	Seguindo a via	そのまま進む
+truck.won	¡Camión vencido! Su vagón de cohetes se une al tren	Truck beaten! Its rocket wagon joins the train	Caminhão vencido! Seu vagão de foguetes entra no trem	トラック撃破！ロケット車両が列車に加わる
+weapon.truck.name	Cohetes del Camión	Truck Rockets	Foguetes do Caminhão	トラックロケット
+weapon.truck.info	El vagón del mid boss: cohetes que se curvan. Solo sube de nivel	The mid boss wagon: curling rockets. Only levels up	O vagão do chefe: foguetes curvos. Só sobe de nível	中ボスの車両：曲がるロケット。レベルアップのみ
+boss.ram	¡Embestida! El camión va contra el vagón marcado	Ram! The truck is going for the marked wagon	Investida! O caminhão vai contra o vagão marcado	突進！トラックが印の車両を狙う
