@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // The biome boss: once in a while, instead of the leg's usual event, a war rig rolls up on the train's flank
-// and starts lobbing slow homing rockets at it. The rockets can be shot down; the rig itself is one long
+// and starts lobbing bombs at it, each on a slow curve onto a wagon under a flashing alert. Only the hero can shoot
+// them down (the turrets cannot even aim at them): the rig keeps her busy while the guns work on it. The rig is one long
 // health pool the hero and the wagons wear down. The picture pulls way back to take the rig in, then settles
 // into the usual isometric view. Beat it and the way out of the biome opens for the rest of the run.
 // TrainSim rolls for it (See TrainSim.bossChance) and gates the route on BossBeaten.
@@ -19,13 +20,13 @@ public class BossEvent : MonoBehaviour
     public float weave = 6.5f;           // how far it swings side to side
     public float speed = 30f;            // its speed on the ground (chasing and weaving)
 
-    [Header("Rockets")]
-    public float rocketEvery = 1.5f;     // seconds between two volleys, before the difficulty speeds it up
-    public float rocketSpeed = 10f;      // slow on purpose: easy to line up a shot
-    public float rocketTurn = 60f;       // degrees a second a rocket can steer towards the train
-    public float rocketArc = 45f;        // the tube is angled this far up, so the rocket flies a curve onto the train
-    public float rocketHealth = 2.4f * Balance.Scale; // a couple of hits to bring one down
-    public float rocketDamage = 5f * Balance.Scale;   // to the wagon a rocket reaches
+    [Header("Bombs")]
+    public float bombEvery = 3.2f;       // seconds between two volleys, before the difficulty speeds it up
+    public float bombFlight = 3.4f;      // seconds from the tube to the wagon: the hero's time to shoot it down
+    public float bombArc = 7f;           // how high the curve goes
+    public float bombCurl = 5f;          // and how far it swings to one side
+    public float rocketHealth = 2.4f * Balance.Scale; // a couple of the hero's hits to bring one down
+    public float rocketDamage = 4f * Balance.Scale;   // to the wagon a bomb reaches
 
     [Header("The fight")]
     public float bossHealth = 150f * Balance.Scale;   // unscaled hits at difficulty 0, grows with it
@@ -59,7 +60,7 @@ public class BossEvent : MonoBehaviour
         new Boss { id = "fortress", accent = new Color(0.45f, 1.00f, 0.35f), healthMul = 2.80f },
     };
 
-    class Shell { public Combat.Enemy e; public int id, car; public Vector3 at; public float smokeIn; }
+    class Shell { public Combat.Enemy e; public int id, car; public Vector3 at, from, curl; public float t, smokeIn; }
 
     public bool Active { get; private set; }               // from the intro to the end
     public bool Incoming => Active && Time.unscaledTime < startsAt; // the rig is still rolling in, seen from above
@@ -75,10 +76,12 @@ public class BossEvent : MonoBehaviour
     Boss type;
 
     int mode;               // 0 chasing behind, 1 running level with the train
-    // The junction's truck (hard > 1) also rams: it picks a wagon (marked "!"), lines up beside it, then slams into
-    // it for a share of that wagon's health. Nothing shoots that down: the way out is to finish the truck first.
+    // The junction's truck (hard > 1) also rams: it picks a wagon (marked "!"), lines up beside it, then charges, and
+    // a button game starts. Most buttons right and the truck swerves off; most wrong and it slams into the wagon
+    // for a share of that wagon's health.
     public float ramEvery = 9f, ramShare = 0.3f, ramWindUp = 1.6f;
     int ramCar = -1;
+    int ramGame; // 0 not yet, 1 being played, 2 lost (it hits), 3 won (it swerves off)
     float ramIn, ramWind;
     float modeTimer, phase, side = 1f, fireIn, startZoom, startsAt, nextDust;
 
@@ -98,6 +101,7 @@ public class BossEvent : MonoBehaviour
                 reward = 2,
                 loot = -1,
                 projectile = true,
+                heroOnly = true,
             };
         }
         if (Rocket.customMesh == null)
@@ -223,6 +227,7 @@ public class BossEvent : MonoBehaviour
             for (int i = 0; i < train.CarCount; i++) if (train.CarAlive(i) && Random.Range(0, ++alive) == 0) ramCar = i;
             if (ramCar < 0) return false;
             ramWind = ramWindUp;
+            ramGame = 0;
             side = Random.value < 0.5f ? -1f : 1f;
             train.Toast(L10n.T("boss.ram"));
         }
@@ -230,11 +235,28 @@ public class BossEvent : MonoBehaviour
         Vector3 car = train.CarPosition(ramCar);
         train.Panel.Mark(car + Vector3.up * 3.5f, "!", 4);
         if ((ramWind -= dt) > 0f) { want = car + right * (side * 9f); return false; } // lining up
+        if (ramGame == 0)
+        {
+            ramGame = 1;
+            GetComponent<TurnEvent>().Phrase(4 + Mathf.Min(2, train.Difficulty / 8), L10n.T("boss.ram.qte"), 0.2f, (hits, length) => ramGame = hits * 2 > length ? 3 : 2);
+        }
+        if (ramGame == 1) { want = car + right * (side * 5.5f); return true; } // closing in while the buttons are played
+        if (ramGame == 3) // dodged: it swerves away and falls back
+        {
+            train.Toast(L10n.T("boss.ram.dodged"));
+            Combat.Instance.Burst("dust", rig.position, 2.4f);
+            ramCar = -1;
+            ramIn = ramEvery;
+            mode = 0;
+            modeTimer = Random.Range(3.5f, 7f);
+            return false;
+        }
         want = car + right * (side * 2.6f);
         Vector3 gap = rig.position - want;
         gap.y = 0f;
         if (gap.magnitude > 1.5f) return true;
         train.Damage(ramCar, train.CarMaxHealth(ramCar) * ramShare);
+        train.Toast(L10n.T("boss.ram.hit"));
         train.Shake(0.6f);
         Combat.Instance.Burst("grenade", car + Vector3.up, 2.4f);
         ramCar = -1;
@@ -256,90 +278,45 @@ public class BossEvent : MonoBehaviour
         if (Incoming) return;
         fireIn -= dt;
         if (fireIn > 0f) return;
-        fireIn = rocketEvery / (1f + 0.03f * train.Difficulty) / (hard > 1f ? 1.8f : 1f);
-        // Base volley
+        fireIn = bombEvery / (1f + 0.03f * train.Difficulty) / (hard > 1f ? 1.3f : 1f);
         Launch();
-        if (Random.value < 0.35f) Launch();
-        // Extra rockets aimed at the hero: triple the hero share
-        int extra = 0;
-        for (int tries = 0; tries < 8 && extra < 2; tries++)
-        {
-            bool atHeroWas = Random.value < 0.7f; // bias to hero
-            // force hero by temporarily adjusting logic? easier: launch with atHero=true
-        }
-        // simpler: launch twice more if targeting hero
-        Launch(true);
-        Launch(true);
-        Launch(true);
+        if (Random.value < (hard > 1f ? 0.6f : 0.35f)) Launch();
     }
 
-    void Launch(bool forceHero = false)
+    // A bomb onto a standing wagon: up out of a tube and down on a curve, slow enough for the hero to shoot it.
+    void Launch()
     {
         int car = RandomCar();
-        if (car < 0) car = 0;
-        Vector3 local = new Vector3(Random.Range(-0.66f, 0.66f), Random.value < 0.5f ? 4.78f : 5.12f, 1.6f);
-        Vector3 muzzle = rig.TransformPoint(local);
-        Vector3 aim;
-        bool atHero = (forceHero || Random.value < 0.5f) && train.Player != null && train.Player.Alive;
-        if (atHero)
-            aim = train.Player.Position + Vector3.up * 0.8f;
-        else
-        {
-            int pick = RandomCar();
-            if (pick < 0 || pick >= train.CarCount) pick = 0;
-            aim = train.CarTop(pick);
-        }
-        bool curved = Random.value < 0.5f;
-        Combat.Enemy e = Combat.Instance.AddProjectile(Rocket, muzzle, rocketHealth * (1f + 0.05f * train.Difficulty) * (hard > 1f ? 2.5f : 1f));
-        // Half the rockets fly a curve (launched up) and half go relatively straight at the target for variety.
-        if (curved)
-        {
-            Vector3 flat = Ground(aim - muzzle);
-            float pitch = Random.Range(rocketArc * 0.75f, rocketArc * 1.25f) * Mathf.Deg2Rad;
-            Vector3 loft = flat * Mathf.Cos(pitch) + Vector3.up * Mathf.Sin(pitch);
-            e.velocity = Quaternion.AngleAxis(Random.Range(-10f, 10f), Vector3.up) * loft * rocketSpeed;
-        }
-        else
-        {
-            Vector3 to = aim - muzzle;
-            Vector3 flat = Ground(to);
-            // a little loft so they don't hug the ground too much, but mostly straight
-            float pitch = Random.Range(4f, 10f) * Mathf.Deg2Rad;
-            Vector3 loft = flat * Mathf.Cos(pitch) + Vector3.up * Mathf.Sin(pitch);
-            e.velocity = Quaternion.AngleAxis(Random.Range(-6f, 6f), Vector3.up) * loft * rocketSpeed;
-        }
-        int targetCar = atHero ? -1 : 0;
-        // find the actual car we aimed at
-        if (!atHero)
-        {
-            int pick = RandomCar();
-            if (pick >= 0 && pick < train.CarCount) targetCar = pick;
-            else targetCar = 0;
-        }
-        live.Add(new Shell { e = e, id = e.id, car = targetCar, at = muzzle });
+        if (car < 0) return;
+        Vector3 muzzle = rig.TransformPoint(new Vector3(Random.Range(-0.66f, 0.66f), Random.value < 0.5f ? 4.78f : 5.12f, 1.6f));
+        Combat.Enemy e = Combat.Instance.AddProjectile(Rocket, muzzle, rocketHealth * (1f + 0.05f * train.Difficulty) * (hard > 1f ? 1.5f : 1f));
+        Vector3 across = Vector3.Cross(Vector3.up, Ground(train.CarTop(car) - muzzle));
+        live.Add(new Shell { e = e, id = e.id, car = car, at = muzzle, from = muzzle, curl = across * (Random.Range(-1f, 1f) * bombCurl) });
         Combat.Instance.Burst("spark", muzzle, 0.6f);
     }
 
-    // Rockets home slowly on the wagon they were aimed at; a shot-down one pops where it was.
+    // Bombs ride their curve onto the wagon they were aimed at; a shot-down one pops where it was.
     void Aim(float dt)
     {
         for (int i = live.Count - 1; i >= 0; i--)
         {
             Shell r = live[i];
-            if (r.e == null || r.e.id != r.id) // brought down by a gun (Combat already paid the reward)
+            if (r.e == null || r.e.id != r.id) // brought down by the hero (Combat already paid the reward)
             {
                 Combat.Instance.Burst("grenade", r.at, 1.1f);
                 live.RemoveAt(i);
                 continue;
             }
-            Vector3 aim;
-            if (r.car == -1) aim = train.Player.Position + Vector3.up * 0.8f;
-            else aim = (r.car >= 0 && r.car < train.CarCount && train.CarAlive(r.car)) ? train.CarTop(r.car) : (train.Player.Position + Vector3.up * 0.8f);
-            Vector3 to = aim - r.e.position;
-            Vector3 dir = to.sqrMagnitude > 0.01f ? Vector3.RotateTowards(r.e.velocity.normalized, to.normalized, rocketTurn * Mathf.Deg2Rad * dt, 0f) : r.e.velocity.normalized;
-            r.e.velocity = dir * rocketSpeed;
-            r.e.position += r.e.velocity * dt;
+            if (!train.CarAlive(r.car)) { int other = RandomCar(); if (other >= 0) r.car = other; } // its wagon is gone: another one
+            // A curve from the tube to the wagon (which moves on under it): up, over to one side, down.
+            r.t = Mathf.Min(1f, r.t + dt / bombFlight);
+            Vector3 aim = train.CarTop(r.car), mid = (r.from + aim) * 0.5f + Vector3.up * bombArc + r.curl;
+            float t = r.t, u = 1f - t;
+            Vector3 was = r.e.position;
+            r.e.position = u * u * r.from + 2f * u * t * mid + t * t * aim;
+            r.e.velocity = (r.e.position - was) / Mathf.Max(dt, 0.0001f);
             r.at = r.e.position;
+            train.Panel.Mark(r.e.position + Vector3.up * 1.2f, "!", 5);
             // The trail is the exhaust flame itself, with a thin grey wake under it: fire the eye can follow.
             Vector3 back = -r.e.velocity.normalized;
             Vector3 trailPos = r.e.position + back * 0.8f; // trailing behind the rocket, not above
@@ -351,23 +328,9 @@ public class BossEvent : MonoBehaviour
                 Combat.Instance.Burst("smoke", trailPos, 0.3f);
             }
 
-            if (r.e.position.y <= 0.15f) // buried itself in the ground
+            if (r.t >= 1f) // down on the wagon
             {
-                Combat.Instance.Burst("grenade", r.e.position, 1.1f);
-                Combat.Instance.Despawn(r.e);
-                live.RemoveAt(i);
-                continue;
-            }
-            if (to.sqrMagnitude <= 2.2f * 2.2f) // reached its target
-            {
-                if (r.car >= 0 && r.car < train.CarCount && train.CarAlive(r.car))
-                {
-                    train.Damage(r.car, rocketDamage * (1f + 0.05f * train.Difficulty) * (hard > 1f ? 1.6f : 1f));
-                }
-                else if (r.car == -1)
-                {
-                    train.Player.Damage(rocketDamage * (1f + 0.05f * train.Difficulty) * (hard > 1f ? 1.6f : 1f));
-                }
+                if (train.CarAlive(r.car)) train.Damage(r.car, rocketDamage * (1f + 0.05f * train.Difficulty) * (hard > 1f ? 1.3f : 1f));
                 train.Shake(0.18f);
                 Combat.Instance.Burst("rocket", r.e.position, 1.3f);
                 Combat.Instance.Despawn(r.e);
@@ -400,6 +363,8 @@ public class BossEvent : MonoBehaviour
     {
         Active = false;
         hard = 1f;
+        if (ramGame == 1 && ramCar >= 0) { GetComponent<TurnEvent>().Drop(); Time.timeScale = 1f; } // a ram's buttons cut short
+        ramCar = -1;
         train.cameraZoom = 1f;
         Combat combat = Combat.Instance;
         if (combat)

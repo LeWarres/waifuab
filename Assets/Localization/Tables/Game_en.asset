@@ -2271,6 +2271,18 @@ MonoBehaviour:
     m_Localized: You were thrown out ({0} robots out) and the wagon took a beating
     m_Metadata:
       m_Items: []
+  - m_Id: 3183640160055296
+    m_Localized: DODGE THE RAM!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3183640201998336
+    m_Localized: Dodged! The truck swerves away
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3183640201998337
+    m_Localized: The truck rammed the wagon!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

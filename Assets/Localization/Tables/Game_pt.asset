@@ -2206,6 +2206,18 @@ MonoBehaviour:
     m_Localized: "Voc\xEA foi expulso ({0} rob\xF4s fora) e o vag\xE3o foi danificado"
     m_Metadata:
       m_Items: []
+  - m_Id: 3183640160055296
+    m_Localized: DESVIE DA INVESTIDA!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3183640201998336
+    m_Localized: "Desviado! O caminh\xE3o se afasta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3183640201998337
+    m_Localized: "O caminh\xE3o bateu no vag\xE3o!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

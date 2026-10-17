@@ -510,3 +510,6 @@ brawl.hud	Quedan: {0}     Vida: {1}%	Left: {0}     Health: {1}%	Restam: {0}     
 brawl.hint	{0}: combo     {1}: patada     {2}: esquivar	{0}: combo     {1}: kick     {2}: dodge	{0}: combo     {1}: chute     {2}: esquivar	{0}：コンボ     {1}：キック     {2}：回避
 brawl.won	Vagón limpio: {0} robots fuera, +{1} dinero	Wagon cleared: {0} robots out, +{1} money	Vagão limpo: {0} robôs fora, +{1} dinheiro	車両奪還：ロボット {0} 体撃退、マネー +{1}
 brawl.lost	Te sacaron del vagón ({0} robots fuera) y dañaron el vagón	You were thrown out ({0} robots out) and the wagon took a beating	Você foi expulso ({0} robôs fora) e o vagão foi danificado	車両から叩き出された（{0} 体撃退）車両が損傷
+boss.ram.qte	¡ESQUIVA LA EMBESTIDA!	DODGE THE RAM!	DESVIE DA INVESTIDA!	突進をかわせ！
+boss.ram.dodged	¡Esquivado! El camión se aparta	Dodged! The truck swerves away	Desviado! O caminhão se afasta	かわした！トラックが離れていく
+boss.ram.hit	¡El camión embistió el vagón!	The truck rammed the wagon!	O caminhão bateu no vagão!	トラックが車両に激突！

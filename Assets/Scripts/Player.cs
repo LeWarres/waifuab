@@ -310,6 +310,7 @@ public class Player : MonoBehaviour
                 if (pointed != null && Flat(pointed.position - p).sqrMagnitude <= range * range) Lock(pointed);
             }
         }
+        if (!Locked || !target.type.heroOnly) { Combat.Enemy bomb = combat.Threat(Flat(p), range); if (bomb != null) Lock(bomb); } // a bomb only she can stop comes first
         if (target == null) Lock(combat.Nearest(Flat(p), range, null, true)); // re-aim: always the enemy closest to the hero
         if (target != null && Flat(target.position - p).sqrMagnitude > 0.01f) aim = Flat(target.position - p).normalized;
 

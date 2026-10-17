@@ -2218,6 +2218,18 @@ MonoBehaviour:
     m_Localized: "Te sacaron del vag\xF3n ({0} robots fuera) y da\xF1aron el vag\xF3n"
     m_Metadata:
       m_Items: []
+  - m_Id: 3183640160055296
+    m_Localized: "\xA1ESQUIVA LA EMBESTIDA!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3183640201998336
+    m_Localized: "\xA1Esquivado! El cami\xF3n se aparta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3183640201998337
+    m_Localized: "\xA1El cami\xF3n embisti\xF3 el vag\xF3n!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

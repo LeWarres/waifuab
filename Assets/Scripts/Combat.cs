@@ -82,6 +82,7 @@ public class Combat : MonoBehaviour
         public int split;                       // larvae released when killed
         public float armor;                     // removed from every hit (a hit always keeps 20%)
         public bool slowImmune;
+        public bool heroOnly;                   // only the hero's shots hurt it, and the turrets never aim at it (the truck's bombs)
         public bool projectile;                 // a boss's own piece (the rig, its rockets): Combat never moves or
                                                 // draws it, but the hero and the turrets can still lock and shoot it
         public float stun;                      // seconds the wagon's weapon stops after contact
@@ -1129,9 +1130,23 @@ public class Combat : MonoBehaviour
         float best = range * range;
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (!loot && enemies[i].type.loot >= 0) continue;
+            if (!loot && (enemies[i].type.loot >= 0 || enemies[i].type.heroOnly)) continue;
             float d = (enemies[i].position - from).sqrMagnitude;
             if (d < best && (except == null || !except.Contains(enemies[i]))) { best = d; nearest = enemies[i]; }
+        }
+        return nearest;
+    }
+
+    // The nearest of what only the hero can bring down (the truck's bombs), if one is in reach: it goes first.
+    public Enemy Threat(Vector3 from, float range)
+    {
+        Enemy nearest = null;
+        float best = range * range;
+        foreach (Enemy e in enemies)
+        {
+            if (!e.type.heroOnly) continue;
+            float d = (e.position - from).sqrMagnitude;
+            if (d < best) { best = d; nearest = e; }
         }
         return nearest;
     }
@@ -1777,7 +1792,7 @@ public class Combat : MonoBehaviour
 
     void Hurt(Enemy e, float damage, bool weaponHit = true)
     {
-        if (e.type.loot >= 0 && !heroHit) return;
+        if ((e.type.loot >= 0 || e.type.heroOnly) && !heroHit) return;
         bool critical = false;
         if (weaponHit) damage = train.CriticalDamage(damage, out critical);
         if (Time.time < e.markedUntil) damage *= 2f;

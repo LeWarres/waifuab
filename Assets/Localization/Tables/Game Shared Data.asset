@@ -2079,6 +2079,18 @@ MonoBehaviour:
     m_Key: brawl.lost
     m_Metadata:
       m_Items: []
+  - m_Id: 3183640160055296
+    m_Key: boss.ram.qte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3183640201998336
+    m_Key: boss.ram.dodged
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3183640201998337
+    m_Key: boss.ram.hit
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

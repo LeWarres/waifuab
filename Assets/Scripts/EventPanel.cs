@@ -169,6 +169,13 @@ public class EventPanel : MonoBehaviour
         float see = current ? 0.92f : 0.55f; // the ones not up yet stay in the background
         mark.back.color = mark.back.bottom = new Color(UiKit.Navy.r, UiKit.Navy.g, UiKit.Navy.b, see);
         if (current) mark.rect.SetAsLastSibling();
+        if (state == 5) // an alert: small, flashing red and yellow (the truck's bombs)
+        {
+            bool red = Mathf.Repeat(Time.unscaledTime * 5f, 1f) < 0.5f;
+            mark.back.color = mark.back.bottom = red ? new Color(0.95f, 0.15f, 0.1f, 0.95f) : new Color(1f, 0.85f, 0.1f, 0.95f);
+            mark.text.color = red ? new Color(1f, 0.9f, 0.2f) : new Color(0.85f, 0.1f, 0.05f);
+            mark.rect.localScale = Vector3.one * 0.55f;
+        }
     }
 
     void LateUpdate()
