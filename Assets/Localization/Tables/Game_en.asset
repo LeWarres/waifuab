@@ -2260,7 +2260,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3145475462344706
-    m_Localized: '{0}: combo     {1}: kick     {2}: dodge'
+    m_Localized: '{0}: combo     {1}: kick     {2}: dodge     {3}: grab'
     m_Metadata:
       m_Items: []
   - m_Id: 3145475462344707
@@ -2268,7 +2268,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3145475462344708
-    m_Localized: You were thrown out ({0} robots out) and the wagon took a beating
+    m_Localized: 'You were thrown out ({0} robots out): they wrecked a wagon!'
     m_Metadata:
       m_Items: []
   - m_Id: 3183640160055296
@@ -2281,6 +2281,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3183640201998337
     m_Localized: The truck rammed the wagon!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3195572661334016
+    m_Localized: Mash {0} to break free!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3195572699082752
+    m_Localized: Broke free!
     m_Metadata:
       m_Items: []
   references:

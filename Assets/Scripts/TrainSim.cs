@@ -165,6 +165,8 @@ public class TrainSim : MonoBehaviour
     // The ultimate: charged by enemies shot down (not by the station's guns), fired with the kit's old button.
     [System.NonSerialized] public float ultimateKills = 450f; // a strong attack: it takes a good while to earn again
     float ultimateCharge;
+    UltimateCutIn ultimateCutIn;
+    public bool UltimatePresenting => ultimateCutIn && ultimateCutIn.Active;
     public float UltimateFill => Mathf.Clamp01(ultimateCharge / ultimateKills);
     public bool UltimateReady => ultimateCharge >= ultimateKills;
     public int Kills { get; private set; } // enemies shot down this run (the station's guns do not count)
@@ -196,7 +198,6 @@ public class TrainSim : MonoBehaviour
     public bool Damaged => Health < MaxHealth || Player.Health < Player.maxHealth;
     public bool InEvent => turn.Active || jump.Active || zig.Active || swarm.Active || brawl.Active; // a button game is on: the hero waits
     public bool BossFight => (boss != null && boss.Active) || (rival != null && rival.Active); // a boss or the rival is on the field: no other enemies join in
-    public bool BossBeaten => bossBeaten == Biome;         // this biome's boss is down, the route is open
     public void BossDefeated()
     {
         bossBeaten = Biome;
@@ -632,9 +633,8 @@ public class TrainSim : MonoBehaviour
     string menuSub;
     bool menuMoney;
     string[] menuLines;                      // names of the menu's tabs, when it has them (the market)
-    readonly string[] marketLines = new string[2];
     int marketTab, menuTab;                  // 0 cargo, 1 shop
-    bool shelfHeld, menuCompact;             // compact: only small buttons low on the screen, the train in view
+    bool menuCompact;             // compact: only small buttons low on the screen, the train in view
     Car ghost;                               // the cargo wagon being placed: in the train already, painted red
     int ghostAt;
     Material ghostMat;
@@ -714,7 +714,6 @@ public class TrainSim : MonoBehaviour
         Time.timeScale = pause ? 0f : scaleBeforePause;
     }
     static string BiomeName(int biome) => L10n.T("biome." + Biomes[biome].id);
-    public static string IdOfBiome(int biome) => Biomes[biome].id;
 
     // In travel order; the last one is the final world.
     static readonly (string id, Color ground, Color scenery)[] Biomes =
@@ -1066,6 +1065,14 @@ public class TrainSim : MonoBehaviour
     void Update()
     {
         Scroll = 0f; // the ground only slides while the train is running (below)
+        if (UltimatePresenting) return;
+        // Temporary shortcut for trying the ultimate without waiting for kills.
+        if (Keyboard.current != null && Keyboard.current.nKey.wasPressedThisFrame && !Paused && Health > 0f && !UltimateReady)
+        {
+            ultimateCharge = ultimateKills;
+            ultimateAnnounce = true;
+            Sound.Play("newcard");
+        }
         // Regeneration: the wagons and the hero mend a little every moment, between stations too.
         float regen = regenPerLevel * PassiveLevel("regen") * Time.deltaTime;
         if (regen > 0f && Health > 0f && !Paused)
@@ -1130,7 +1137,7 @@ public class TrainSim : MonoBehaviour
         if (ultimateAnnounce && UltimateReady && !Alerting && !hud.Toasting && !AtStation && !Paused)
         {
             ultimateAnnounce = false;
-            hud.Toast(L10n.T("ultimate.ready", KitButton), 2.5f);
+            hud.UltimateReady();
         }
         bool special = (Gamepad.current != null && Gamepad.current.buttonNorth.wasPressedThisFrame) || (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame);
         if (special && !AtStation && !InEvent && !Paused && !mainMenu && Health > 0f)
@@ -1144,7 +1151,9 @@ public class TrainSim : MonoBehaviour
             else if (UltimateReady && Player.Alive && !Alerting)
             {
                 ultimateCharge = 0f;
-                Combat.Instance.Ultimate(Player.Position, Player.ammo);
+                if (!ultimateCutIn) ultimateCutIn = gameObject.AddComponent<UltimateCutIn>();
+                ultimateCutIn.Play(() => Combat.Instance.Ultimate(Player.Position, Player.ammo));
+                if (UltimatePresenting) return;
             }
         }
 
@@ -1764,11 +1773,6 @@ public class TrainSim : MonoBehaviour
         nextEvent = bossNext ? 6 : EventBag[Random.Range(0, EventBag.Length)];
     }
 
-    // Menu title, led by what the last skip paid (if the previous menu was skipped).
-    string Noted(string title) => // (kept for whoever still wants the note in a title)
-        skipGift == 1 ? L10n.T("menu.skip.money", skipMoney) + "   ·   " + title
-        : skipGift == 2 ? L10n.T("menu.skip.health", skipHealth) + "   ·   " + title : title;
-
     List<string> keepOffer; // the three upgrades shown when the chapter is won, fixed once drawn
 
     // Hands back an upgrade kept from an earlier chapter (a Story token).
@@ -1963,8 +1967,9 @@ public class TrainSim : MonoBehaviour
             if (pick < 0) break;
             pick = prefer[pick];
             money -= CargoPrice(pick);
-            AddCar(cars.Count, pick);
-            Combat.Instance.Burst("levelup", cars[cars.Count - 1].pos, 1.6f);
+            int at = Random.Range(1, cars.Count + 1); // anywhere behind the first wagon, as a hand-placed one can go
+            AddCar(at, pick);
+            Combat.Instance.Burst("levelup", cars[at].pos, 1.6f);
             bought++;
         }
         if (bought == 0) Sound.Play("menuback");
@@ -1989,12 +1994,6 @@ public class TrainSim : MonoBehaviour
         Layout();
     }
 
-    void Shelf(int shelf)
-    {
-        Option o = options[^1];
-        o.shelf = shelf;
-        options[^1] = o;
-    }
     void Minor()
     {
         Option o = options[^1];
@@ -2357,7 +2356,7 @@ public class TrainSim : MonoBehaviour
     {
         // Warning for the curve, jump or zigzag ahead: what is coming and which button it takes.
         if (!Paused && swarm.Incoming) hud.Warning(L10n.T("swarm.title"), L10n.T("swarm.warn", JumpEvent.ButtonName(Player.UsingGamepad)));
-        if (!Paused && brawl.Incoming) hud.Warning(L10n.T("brawl.title"), L10n.T("brawl.warn"));
+        if (!Paused && brawl.Alarm) hud.Warning(L10n.T("brawl.title"), L10n.T("brawl.warn"));
         else if (!Paused && boss.Incoming) hud.Warning(L10n.T("boss.title"), L10n.T("boss.warn", boss.Name));
         else if (Paused || Approach() < 0f) hud.Warning(null, null);
         else

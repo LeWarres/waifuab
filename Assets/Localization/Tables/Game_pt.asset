@@ -2195,7 +2195,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3145475462344706
-    m_Localized: '{0}: combo     {1}: chute     {2}: esquivar'
+    m_Localized: "{0}: combo     {1}: chute     {2}: esquivar     {3}: agarr\xE3o"
     m_Metadata:
       m_Items: []
   - m_Id: 3145475462344707
@@ -2203,7 +2203,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3145475462344708
-    m_Localized: "Voc\xEA foi expulso ({0} rob\xF4s fora) e o vag\xE3o foi danificado"
+    m_Localized: "Voc\xEA foi expulso ({0} rob\xF4s fora): destru\xEDram um vag\xE3o!"
     m_Metadata:
       m_Items: []
   - m_Id: 3183640160055296
@@ -2216,6 +2216,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3183640201998337
     m_Localized: "O caminh\xE3o bateu no vag\xE3o!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3195572661334016
+    m_Localized: "Aperte {0} r\xE1pido para se soltar!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3195572699082752
+    m_Localized: "Voc\xEA se soltou!"
     m_Metadata:
       m_Items: []
   references:

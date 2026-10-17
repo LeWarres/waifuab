@@ -141,7 +141,7 @@ public class RivalEvent : MonoBehaviour
 
     void Update()
     {
-        if (!Active || train.Paused) return;
+        if (!Active || train.Paused || train.UltimatePresenting) return;
         if (train.Health <= 0f) { End(); return; }
         if (body == null || body.id != bodyId) { Win(); return; } // its engine is wrecked
 

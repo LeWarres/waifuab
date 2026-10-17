@@ -26,6 +26,9 @@ public class AutoPlay : MonoBehaviour
         Note("start");
     }
 
+    // A test bot never outlives the play session it was added in: it must not be there when someone plays.
+    void OnApplicationQuit() => Destroy(this);
+
     void OnDestroy()
     {
         TrainSim.NoEvents = false;

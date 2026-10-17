@@ -20,6 +20,33 @@ public static class BrawlClipsSetup
     static AnimationClip F(string path) => Clip(Fighter + path + ".FBX");
     static AnimationClip W(string name) => Clip(Wrestler + name + ".fbx");
 
+    // A wrestler clip set up to play once or loop; paired: set up as the pack's own demo has them (root position and
+    // turn baked into the pose, based on the centre of mass), so the demo's spacing of the two bodies lines them up.
+    static AnimationClip W(string name, bool loop, bool paired = false)
+    {
+        string path = Wrestler + name + ".fbx";
+        var importer = (ModelImporter)AssetImporter.GetAtPath(path);
+        ModelImporterClipAnimation[] clips = importer.clipAnimations.Length > 0 ? importer.clipAnimations : importer.defaultClipAnimations;
+        bool changed = false;
+        foreach (ModelImporterClipAnimation c in clips)
+        {
+            if (c.loopTime == loop && (!paired || (c.lockRootPositionXZ && !c.keepOriginalPositionXZ && c.lockRootRotation && c.keepOriginalOrientation))) continue;
+            changed = true;
+            c.loopTime = loop;
+            if (!paired) continue;
+            c.lockRootRotation = c.keepOriginalOrientation = true;
+            c.lockRootHeightY = c.keepOriginalPositionY = true;
+            c.lockRootPositionXZ = true;
+            c.keepOriginalPositionXZ = false;
+        }
+        if (changed)
+        {
+            importer.clipAnimations = clips;
+            importer.SaveAndReimport();
+        }
+        return Clip(path);
+    }
+
     [MenuItem("Tools/Brawl/Build Clips")]
     public static void Run()
     {
@@ -42,11 +69,27 @@ public static class BrawlClipsSetup
         clips.boarder = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Wrestler_Finishers_Volume2/Art/Models/Android_SkeletalMesh.fbx");
         clips.boarderIdle = W("Idle01");
         clips.boarderWalk = W("Walk_Forward");
+        clips.boarderBack = W("Walk_Back");
         clips.boarderLeft = W("Walk_Left");
         clips.boarderRight = W("Walk_Right");
         clips.boarderDown = F("4_Damages/5__KnockDown/Fighter@KnockDown_Back_Big");
-        clips.boarderAttacks = new[] { W("Attack_Punch01"), W("Attack_Punch02"), W("Attack_Kick01") };
-        clips.boarderHits = new[] { W("HitReaction_01"), W("HitReaction_02"), W("HitReaction_03") };
+        clips.boarderAttacks = new[] { W("Attack_Punch01", false), W("Attack_Punch02", false), W("Attack_Kick01", false) };
+        clips.boarderHits = new[] { W("HitReaction_01", false), W("HitReaction_02", false), W("HitReaction_03", false) };
+        clips.guard = F("1_Movements/18__Blocking/Fighter@Blocking_Loop");
+        clips.guardHit = F("1_Movements/18__Blocking/Fighter@Blocking_Accept");
+        clips.getUp = W("LayOnBack_GetUp01", false);
+        clips.lying = W("LayOnBack_Idle", true);
+        string[] throws = { "BackControl_Suplex", "HipThrow", "PowerBomb", "Underarm_FlipToss", "BehindScoopSlam" };
+        clips.throwBy = throws.Select(t => W("Paired_" + t + "_Att", false, true)).ToArray();
+        clips.throwOf = throws.Select(t => W("Paired_" + t + "_Vic", false, true)).ToArray();
+        clips.holdBy = W("Paired_HeadLock_Start_Att", false, true);
+        clips.holdOf = W("Paired_HeadLock_Start_Vic", false, true);
+        clips.heldBy = W("Paired_HeadLock_Loop_Att", true, true);
+        clips.heldOf = W("Paired_HeadLock_Loop_Vic", true, true);
+        clips.letGoBy = W("Paired_HeadLock_End_Att", false, true);
+        clips.letGoOf = W("Paired_HeadLock_End_Vic", false, true);
+        clips.slamBy = W("Paired_HeadLock_DDT_Att", false, true);
+        clips.slamOf = W("Paired_HeadLock_DDT_Vic", false, true);
         EditorUtility.SetDirty(clips);
         AssetDatabase.SaveAssets();
         Debug.Log("BrawlClips built");

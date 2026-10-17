@@ -6,27 +6,34 @@ using UnityEngine.Playables;
 using UnityEngine.UI;
 
 // The boarding: robots jump onto an armed wagon and the hero goes in after them. The game is then seen from
-// behind the hero, inside the wagon: a light combo, a heavy kick and a dodge, until every boarder is down or the
-// hero is. Time runs slow outside, like the swarm's (SwarmEvent); TrainSim starts it as the leg's event. The
-// moves are clips of the two animation packs (BrawlClips), played through a small playable graph each.
+// behind the hero, inside the wagon: a light combo, a heavy kick, a dodge and a grab into a throw (a suplex,
+// a powerbomb...), until every boarder is down or the hero is. The boarders take turns, cover up, chain blows,
+// get round behind her, and grab her too: a headlock she breaks by pressing fast, or a DDT. Outside, time
+// stands still (the train, the enemies, the road) until it is over: won, and all goes on; lost (the hero down),
+// and the boarders wreck a wagon. TrainSim starts it as the leg's event. The moves are clips of the two animation packs (BrawlClips), played through a small playable graph each.
 public class BrawlEvent : MonoBehaviour
 {
-    public Vector2Int boarderCount = new Vector2Int(5, 7); // 5 or 6
-    public float warnSeconds = 2.2f, slowMotion = 0.12f;
+    public Vector2Int boarderCount = new Vector2Int(3, 4); // 3: a quick fight
+    // Before the fight, seen from outside: the boarders ride in on speeders (Tools/make_speeder.py), two from one
+    // side and one from the other, pull level with the wagon, the alarm goes and they leap onto it.
+    public float approachSeconds = 2.8f, alarmSeconds = 1.6f;
     public float heroSpeed = 5.5f, dodgeSpeed = 12f, dodgeTime = 0.38f;
-    public float reach = 1.9f, heavyReach = 2.5f, heavyCooldown = 1.2f;
-    public float lightDamage = 12f, heavyDamage = 28f, boarderHealth = 100f; // the hero's damage bonus multiplies these
+    public float reach = 1.9f, heavyReach = 2.5f, heavyCooldown = 1.2f, grabCooldown = 6f; // the grab's wait counts from the end of the throw
+    // A boarder takes two throws at most, at any difficulty (a throw grows with its health); the hero's damage bonus
+    // multiplies these.
+    public float lightDamage = 12f, heavyDamage = 28f, throwDamage = 45f, boarderHealth = 80f;
     public float blow = 1.4f * Balance.Scale;  // a boarder's hit on the hero, grown with the difficulty like the enemies'
+    public float slamBlows = 3.5f;             // the DDT at the end of a headlock not broken, in blows
     public float boarderSpeed = 2.8f;
     public int maxAttackers = 2;               // the others wait their turn around the hero
     public int moneyPerBoarder = 4;
-    public float lostShare = 0.35f;            // what the wagon loses if the hero goes down in there
     public float stickSpeed = 140f, mouseSpeed = 0.15f;
     [System.NonSerialized] public bool testAtStart = false; // testing aid: true makes the boarding open every run
 
     public bool Active { get; private set; }       // from the warning to the end
     public bool Incoming => Active && Time.unscaledTime < startsAt;
     public bool Fighting => Active && !Incoming;
+    public bool Alarm => Incoming && Time.unscaledTime >= approachUntil; // they are alongside: the warning is up
     public Camera View => view;
 
     // The wagon's inside, built once far over the world, so nothing of the run shows through its windows but the
@@ -39,12 +46,16 @@ public class BrawlEvent : MonoBehaviour
         new Color(0.7f, 0.35f, 1f), new Color(1f, 0.6f, 0.15f), new Color(1f, 0.9f, 0.25f), new Color(1f, 0.4f, 0.8f),
     };
 
-    const int Free = 0, Attacking = 1, Hurt = 2, Down = 3, Dodging = 4, Kicking = 5;
+    // What a body is doing. The hero: Free, Attacking, Kicking, Dodging, Hurt, Throwing, Held, Floored, Down. A boarder:
+    // Free, Attacking, Grabbing, Holding (the hero in its headlock), Guarding, Hurt, Thrown, Down.
+    const int Free = 0, Attacking = 1, Hurt = 2, Down = 3, Dodging = 4, Kicking = 5, Throwing = 6, Held = 7, Floored = 8,
+              Guarding = 9, Grabbing = 10, Holding = 11, Thrown = 12;
 
     // A humanoid body played by hand: a mixer of every clip it has used, fading to the one it plays now.
     class Rig
     {
         public readonly Transform root;
+        public readonly Animator animator;
         PlayableGraph graph;
         AnimationMixerPlayable mixer;
         readonly List<AnimationClip> clips = new();
@@ -57,6 +68,7 @@ public class BrawlEvent : MonoBehaviour
         public Rig(Transform root, Animator animator)
         {
             this.root = root;
+            this.animator = animator;
             animator.runtimeAnimatorController = null;
             animator.applyRootMotion = false;
             animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
@@ -108,6 +120,7 @@ public class BrawlEvent : MonoBehaviour
         public float health, until, nextAttack, side;
         public int move;
         public bool landed;      // this attack's blow is dealt
+        public bool chain;       // a second blow follows this one if it lands
         public Vector3 push;     // knocked back, sliding to a stop
         public Vector3 Position { get => rig.root.position; set => rig.root.position = value; }
     }
@@ -120,12 +133,20 @@ public class BrawlEvent : MonoBehaviour
     Material groundPaint;
     readonly List<Rect> crates = new(); // what nobody walks through, on the floor (x, z about the room's middle)
     Rig hero;
+    Transform heroBody;  // her model, under the root: grown back to an android's size while in a throw or a hold
+    Vector3 heroSize;
     readonly List<Boarder> boarders = new();
     Canvas board;
     Text counter, hint;
     int wagon, kills, heroMove, combo;
     bool queued, heroLanded;
     float startsAt, heroUntil, safeUntil, kickReady, endsAt, yaw, pitch;
+    Boarder partner;                     // the one in the hero's throw, or holding her
+    int throwPick, holdPhase;
+    float level = 1f;                    // the boarders' health against the difficulty's
+    float nextStrike, nextGrab, grabReady, stopUntil, mash, mashUntil, distance = 5.2f;
+    Slanted mashPanel, mashFill, mashTime;
+    Text mashText;
     Vector3 dodgeWay;
     string ending;
 
@@ -140,6 +161,11 @@ public class BrawlEvent : MonoBehaviour
         view.fieldOfView = 62f;
         view.nearClipPlane = 0.1f;
         view.depth = 10f;
+        // No motion blur in here: with time stopped outside, HDRP's last-frame history stalls and smears everything.
+        var hd = view.gameObject.AddComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData>();
+        hd.customRenderingSettings = true;
+        hd.renderingPathCustomFrameSettingsOverrideMask.mask[(uint)UnityEngine.Rendering.HighDefinition.FrameSettingsField.MotionBlur] = true;
+        hd.renderingPathCustomFrameSettings.SetEnabled(UnityEngine.Rendering.HighDefinition.FrameSettingsField.MotionBlur, false);
         view.enabled = false;
 
         board = UiKit.NewCanvas("Brawl", 6);
@@ -150,6 +176,14 @@ public class BrawlEvent : MonoBehaviour
         Slanted help = UiKit.Panel(board.transform, new Vector2(0f, 60f), new Vector2(760f, 40f), glass, glass, 0.12f);
         help.rectTransform.anchorMin = help.rectTransform.anchorMax = new Vector2(0.5f, 0f);
         hint = UiKit.Label(help.transform, UiKit.Body, 20, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(740f, 34f), true);
+        // Breaking a headlock: the button to press, how far along, how long is left.
+        mashPanel = UiKit.Panel(board.transform, new Vector2(0f, 230f), new Vector2(540f, 110f), glass, glass, 0.12f);
+        mashText = UiKit.Label(mashPanel.transform, UiKit.Heading, 34, UiKit.Gold, TextAnchor.MiddleCenter, new Vector2(0f, 22f), new Vector2(520f, 50f), true);
+        UiKit.Panel(mashPanel.transform, new Vector2(0f, -20f), new Vector2(484f, 20f), new Color(0f, 0f, 0f, 0.5f), new Color(0f, 0f, 0f, 0.5f), 0f);
+        mashFill = UiKit.Panel(mashPanel.transform, new Vector2(-240f, -20f), new Vector2(0f, 16f), UiKit.Mint, UiKit.Mint, 0f);
+        mashTime = UiKit.Panel(mashPanel.transform, new Vector2(-240f, -40f), new Vector2(480f, 6f), UiKit.Rose, UiKit.Rose, 0f);
+        mashFill.rectTransform.pivot = mashTime.rectTransform.pivot = new Vector2(0f, 0.5f);
+        mashPanel.gameObject.SetActive(false);
         board.gameObject.SetActive(false);
     }
 
@@ -168,19 +202,25 @@ public class BrawlEvent : MonoBehaviour
         Active = true;
         ending = null;
         kills = 0;
-        startsAt = Time.unscaledTime + warnSeconds;
+        approachUntil = Time.unscaledTime + approachSeconds;
+        startsAt = approachUntil + alarmSeconds;
         groundPaint.mainTexture = Resources.Load<Texture2D>("Ground/" + train.BiomeId);
 
         // The hero comes in at the back end, the boarders spread through the rest of the wagon.
         hero.root.position = Inside + new Vector3(-HalfLength + 2f, 0f, 0f);
         hero.root.rotation = Quaternion.Euler(0f, 90f, 0f);
         heroMove = Free;
+        partner = null;
+        safeUntil = grabReady = 0f;
+        nextStrike = startsAt + 1f;
+        nextGrab = startsAt + 4f;
         hero.Play(moves.idle);
         yaw = 90f;
         pitch = 20f;
         int count = Random.Range(boarderCount.x, boarderCount.y);
+        Mount(count);
         while (boarders.Count < count) boarders.Add(NewBoarder(boarders.Count));
-        float level = 1f + Combat.Instance.healthPerLevel * train.Difficulty;
+        level = 1f + Combat.Instance.healthPerLevel * train.Difficulty;
         for (int i = 0; i < boarders.Count; i++)
         {
             Boarder b = boarders[i];
@@ -203,7 +243,7 @@ public class BrawlEvent : MonoBehaviour
     {
         var root = new GameObject("Boarder").transform;
         root.SetParent(room, false);
-        Animator body = Body(moves.boarder, root);
+        Animator body = Body(moves.boarder, root, out pairScale);
         var b = new Boarder { rig = new Rig(root, body), colour = Paint[i % Paint.Length] };
         b.skin = TrainSim.Mat(b.colour);
         foreach (Renderer part in body.GetComponentsInChildren<Renderer>())
@@ -211,15 +251,18 @@ public class BrawlEvent : MonoBehaviour
         return b;
     }
 
-    // A humanoid model under root, its feet on root and 1.8 tall.
-    static Animator Body(GameObject model, Transform root)
+    // A humanoid model under root, its feet on root and about this tall. (scale: how much it was grown.)
+    // The heroes come long-legged: 1.6 puts them about level with the androids at 1.8.
+    static Animator Body(GameObject model, Transform root, float height = 1.8f) => Body(model, root, out _, height);
+    static Animator Body(GameObject model, Transform root, out float scale, float height = 1.8f)
     {
         Transform body = Instantiate(model, root).transform;
         body.localPosition = Vector3.zero;
         body.localRotation = Quaternion.identity;
         Animator rig = body.GetComponentInChildren<Animator>();
         float tall = rig.GetBoneTransform(HumanBodyBones.Head).position.y - rig.GetBoneTransform(HumanBodyBones.LeftFoot).position.y;
-        body.localScale *= 1.8f / (tall * 1.12f);
+        scale = height / (tall * 1.12f);
+        body.localScale *= scale;
         return rig;
     }
 
@@ -283,9 +326,11 @@ public class BrawlEvent : MonoBehaviour
         var heroRoot = new GameObject("BrawlHero").transform;
         heroRoot.SetParent(room, false);
         string who = "Characters/" + Locomotives.Hero + "/" + Locomotives.Hero;
-        Animator body = Body(Resources.Load<GameObject>(who), heroRoot);
+        Animator body = Body(Resources.Load<GameObject>(who), heroRoot, 1.6f);
         Player.Skin(body.transform, who);
         hero = new Rig(heroRoot, body);
+        heroBody = body.transform;
+        heroSize = heroBody.localScale;
         room.gameObject.SetActive(false);
     }
 
@@ -322,25 +367,40 @@ public class BrawlEvent : MonoBehaviour
         return at;
     }
 
-    void Place(Transform body, Vector3 to) => body.position = Inside + Clear(to - Inside, 0.45f);
+    void Place(Transform body, Vector3 to) { to.y = Inside.y; body.position = Inside + Clear(to - Inside, 0.85f); } // on the floor, inside, with room for the arms
 
     // ---------------------------------------------------------------- the fight
+    // How hard it is grows with the difficulty: blows come closer together, the boarders cover up and chain hits
+    // more, and a headlock takes more presses to break.
+    float Hardness => Mathf.Clamp01(train.Difficulty / 30f);
+    float StrikeGap => Mathf.Lerp(0.9f, 0.4f, Hardness);      // seconds between two boarders starting an attack
+    float GuardChance => Mathf.Lerp(0.2f, 0.5f, Hardness);    // a boarder in front covering up from a light swing
+    float ChainChance => Mathf.Lerp(0.25f, 0.6f, Hardness);   // a second blow straight after the first
+    float Rest => Random.Range(1f, 2f) * Mathf.Lerp(1f, 0.6f, Hardness); // a boarder's own pause after attacking
+    int MashNeed => 9 + Mathf.Min(11, train.Difficulty / 3);
+
     void Update()
     {
         // Testing aid: M on the keyboard starts a boarding on the spot.
         if (!Active && Keyboard.current != null && Keyboard.current.mKey.wasPressedThisFrame && !train.Paused && !train.AtStation && !train.InEvent && !train.BossFight) Begin();
         if (!Active || train.Paused) return;
         if (train.AtStation) { End(null); return; }
-        if (Incoming) return;
+        if (Incoming) { Arrive(); return; }
         float dt = Mathf.Min(Time.unscaledDeltaTime, 0.05f), now = Time.unscaledTime;
         if (!view.enabled)
         {
             view.enabled = true;
             room.gameObject.SetActive(true);
+            foreach (Rider r in riders) r.body.gameObject.SetActive(false);
             board.gameObject.SetActive(true);
-            Time.timeScale = slowMotion; // the train all but stops while this is played
+            Time.timeScale = 0f; // everything outside waits: the fight runs on real time
         }
-        groundPaint.mainTextureOffset += new Vector2(dt * 0.9f, 0f); // the ride goes on outside
+        // The effects in here play by hand: with time stopped outside they would stand still.
+        for (int i = effects.Count - 1; i >= 0; i--)
+        {
+            if (!effects[i].graph || now > effects[i].until) { effects.RemoveAt(i); continue; }
+            effects[i].graph.Simulate(dt);
+        }
 
         if (ending != null)
         {
@@ -349,37 +409,85 @@ public class BrawlEvent : MonoBehaviour
         else if (!train.CarAlive(wagon)) Finish("brawl.lost", now);
         else if (!train.Player.Alive && heroMove != Down)
         {
+            if (partner != null) { Settle(partner.rig, moves.boarderIdle); partner.move = Free; partner = null; }
             heroMove = Down;
             hero.Play(moves.down);
-            train.HurtCar(wagon, lostShare);
+            // Lost: the boarders wreck a wagon, any one still standing.
+            int alive = 0, wreck = -1;
+            for (int i = 0; i < train.CarCount; i++) if (train.CarAlive(i) && Random.Range(0, ++alive) == 0) wreck = i;
+            if (wreck >= 0) train.HurtCar(wreck, 1f);
             Finish("brawl.lost", now);
         }
 
         HeroUpdate(dt, now);
-        // The nearest ones may attack; the others wait their turn further off.
+        if (heroMove == Held) Hold(dt, now);
+        // The nearest one leads, the next tries to get round behind, the rest wait their turn further off.
         var order = boarders.FindAll(b => b.rig.root.gameObject.activeSelf && b.move != Down);
         order.Sort((a, c) => Flat(a.Position - hero.root.position).sqrMagnitude.CompareTo(Flat(c.Position - hero.root.position).sqrMagnitude));
-        int attacking = order.FindAll(b => b.move == Attacking).Count;
-        for (int i = 0; i < order.Count; i++) BoarderUpdate(order[i], i < maxAttackers, ref attacking, dt, now);
-        // Nobody stands inside anybody else.
+        int attacking = order.FindAll(b => b.move == Attacking || b.move == Grabbing || b.move == Holding).Count;
+        for (int i = 0; i < order.Count; i++) BoarderUpdate(order[i], i, ref attacking, dt, now);
+        // Nobody stands inside anybody else (those locked in a hold or a throw excepted).
         for (int i = 0; i < order.Count; i++)
         {
+            if (Paired(order[i])) continue;
             Vector3 apart = Flat(order[i].Position - hero.root.position);
-            if (apart.sqrMagnitude < 0.81f) Place(order[i].rig.root, hero.root.position + apart.normalized * 0.9f);
+            if (apart.sqrMagnitude < 0.81f && heroMove != Held && heroMove != Throwing) Place(order[i].rig.root, hero.root.position + apart.normalized * 0.9f);
             for (int j = i + 1; j < order.Count; j++)
             {
+                if (Paired(order[j])) continue;
                 Vector3 gap = Flat(order[j].Position - order[i].Position);
                 if (gap.sqrMagnitude < 0.64f) Place(order[j].rig.root, order[i].Position + (gap.sqrMagnitude > 0.0001f ? gap.normalized : Vector3.right) * 0.8f);
             }
         }
         if (ending == null && order.Count == 0) Finish("brawl.won", now);
 
-        hero.Tick(dt);
-        foreach (Boarder b in boarders) if (b.rig.root.gameObject.activeSelf) b.rig.Tick(dt);
+        // A blow that lands holds everything still for a moment: it gives the hits their weight.
+        float play = now < stopUntil ? dt * 0.12f : dt;
+        // The paired moves are made for two bodies of a size: in one, she is the androids' size (1.8 against her 1.6).
+        bool paired = heroMove == Throwing || heroMove == Held;
+        heroBody.localScale = Vector3.MoveTowards(heroBody.localScale, heroSize * (paired ? 1.8f / 1.6f : 1f), heroSize.x * dt);
+        hero.Tick(play);
+        foreach (Boarder b in boarders) if (b.rig.root.gameObject.activeSelf) b.rig.Tick(play);
         Follow(dt);
         counter.text = L10n.T("brawl.hud", order.Count, Mathf.RoundToInt(train.Player.Health / train.Player.maxHealth * 100f));
+        // The grab's key shows its wait while it cannot be used.
+        float wait = grabReady - now;
+        string grabKey = heroMove == Throwing ? "<color=#ffffff60>" + Key(3) + "</color>" : wait > 0f ? "<color=#ffffff60>" + Key(3) + " " + Mathf.CeilToInt(wait) + "s</color>" : Key(3);
+        hint.text = L10n.T("brawl.hint", Key(0), Key(1), Key(2), grabKey);
+        bool mashing = heroMove == Held && holdPhase == 1;
+        if (mashPanel.gameObject.activeSelf != mashing) mashPanel.gameObject.SetActive(mashing);
+        if (mashing)
+        {
+            mashText.text = L10n.T("brawl.mash", Key(2));
+            mashFill.rectTransform.sizeDelta = new Vector2(480f * Mathf.Clamp01(mash / MashNeed), 16f);
+            mashTime.rectTransform.sizeDelta = new Vector2(480f * Mathf.Clamp01((mashUntil - now) / MashSeconds), 6f);
+            mashPanel.rectTransform.localScale = Vector3.one * (1f + 0.05f * Mathf.Sin(now * 30f)); // shaking with the struggle
+        }
+    }
+
+    // The button for a move, as the device in use names it: 0 combo, 1 kick, 2 dodge (and breaking a hold), 3 grab.
+    string Key(int which)
+    {
         bool pad = train.Player.UsingGamepad, ps = Gamepad.current is UnityEngine.InputSystem.DualShock.DualShockGamepad;
-        hint.text = L10n.T("brawl.hint", !pad ? "J" : ps ? "□" : "X", !pad ? "K" : ps ? "△" : "Y", !pad ? L10n.T("key.space") : ps ? "✕" : "A");
+        if (!pad) return which == 0 ? "J" : which == 1 ? "K" : which == 2 ? L10n.T("key.space") : "L";
+        return which == 0 ? (ps ? "□" : "X") : which == 1 ? (ps ? "△" : "Y") : which == 2 ? (ps ? "✕" : "A") : (ps ? "○" : "B");
+    }
+
+    // An effect in here: time stands still outside, so it is played by hand, on real time.
+    readonly List<(UnityEngine.VFX.VisualEffect graph, float until)> effects = new();
+    readonly List<ParticleSystem> unscaled = new();
+    void Effect(string name, Vector3 at, float size)
+    {
+        Combat combat = Combat.Instance;
+        GameObject copy = combat.Burst(name, at, size);
+        if (!copy) return;
+        foreach (var graph in copy.GetComponentsInChildren<UnityEngine.VFX.VisualEffect>()) effects.Add((graph, Time.unscaledTime + 3f));
+        foreach (ParticleSystem system in copy.GetComponentsInChildren<ParticleSystem>())
+        {
+            var main = system.main;
+            main.useUnscaledTime = true;
+            unscaled.Add(system);
+        }
     }
 
     void Finish(string key, float now)
@@ -390,18 +498,69 @@ public class BrawlEvent : MonoBehaviour
 
     static Vector3 Flat(Vector3 v) { v.y = 0f; return v; }
 
+    static bool Paired(Boarder b) => b.move == Thrown || b.move == Holding;
+    bool Standing(Boarder b) => b.rig.root.gameObject.activeSelf && b.move != Down && !Paired(b);
+
     Boarder Nearest(float within, Vector3 from)
     {
         Boarder best = null;
         float least = within * within;
         foreach (Boarder b in boarders)
         {
-            if (!b.rig.root.gameObject.activeSelf || b.move == Down) continue;
+            if (!Standing(b)) continue;
             float d = Flat(b.Position - from).sqrMagnitude;
             if (d < least) { least = d; best = b; }
         }
         return best;
     }
+
+    // Two bodies in one move, spaced as the pack's demo scene has each pair (Assets/Wrestler_Finishers_Volume2's
+    // Demo, before it was trimmed): the one it is done to stands this far off the doer, in the doer's own frame
+    // (x right, z ahead), turned to face it. Each clip's root is its body's centre at the start (BrawlClipsSetup).
+    static readonly Dictionary<string, Vector3> PairSpacing = new()
+    {
+        { "Wrestling_Paired_BackControl_Suplex_Att", new Vector3(0.035f, 0f, -0.457f) },
+        { "Wrestling_Paired_HipThrow_Att", new Vector3(-0.02f, 0f, 0.834f) },
+        { "Wrestling_Paired_PowerBomb_Att", new Vector3(0f, 0f, 1.271f) },
+        { "Wrestling_Paired_Underarm_FlipToss_Att", new Vector3(-0.027f, 0f, 0.837f) },
+        { "Wrestling_Paired_BehindScoopSlam_Att", new Vector3(-0.027f, 0f, 0.837f) },
+        { "Wrestling_Paired_HeadLock_Start_Att", new Vector3(-0.126f, 0f, 0.981f) },
+        { "Wrestling_Paired_HeadLock_Loop_Att", new Vector3(0.122f, 0f, 0.469f) },
+        { "Wrestling_Paired_HeadLock_End_Att", new Vector3(0.122f, 0f, 0.404f) },
+        { "Wrestling_Paired_HeadLock_DDT_Att", new Vector3(0.122f, 0f, 0.469f) },
+    };
+    static float pairScale = 1f; // the androids' size here against the demo's
+    const float PairRoom = 1.4f;  // how far off the walls and crates a pair keeps
+
+    void Pair(Rig by, Rig of, AnimationClip byClip, AnimationClip ofClip, float fade = 0.12f, float rate = 1f)
+    {
+        // The doer's spot is where its body is now (out of one move into the next, it has moved off its root).
+        Vector3 hips = by.animator.GetBoneTransform(HumanBodyBones.Hips).position;
+        by.root.position = new Vector3(hips.x, by.root.position.y, hips.z);
+        Vector3 spacing = by.root.rotation * (PairSpacing.TryGetValue(byClip.name, out Vector3 s) ? s : new Vector3(0f, 0f, 0.8f)) * pairScale;
+        // Both well inside the wagon, the move swinging bodies about: the pair is shifted off a wall or a crate as one.
+        by.root.position = Inside + Clear(by.root.position - Inside, PairRoom);
+        Vector3 other = by.root.position + spacing, kept = Inside + Clear(other - Inside, PairRoom);
+        by.root.position = Inside + Clear(by.root.position + kept - other - Inside, PairRoom);
+        of.root.SetPositionAndRotation(by.root.position + spacing, by.root.rotation * Quaternion.Euler(0f, 180f, 0f));
+        by.Play(byClip, true, rate, fade);
+        of.Play(ofClip, true, rate, fade);
+    }
+    // The wrestling clips are slow for a fight this quick: the throws, the DDT and getting up are played faster.
+    const float ThrowRate = 1.7f, SlamRate = 1.3f, GetUpRate = 2.5f;
+    float GetUpTime => moves.getUp.length / GetUpRate;
+
+    // Out of a paired move: the body's spot becomes where the clip left it, then the next clip at once (a fade would
+    // drag the body back towards the old spot).
+    void Settle(Rig r, AnimationClip next)
+    {
+        Vector3 hips = r.animator.GetBoneTransform(HumanBodyBones.Hips).position;
+        r.root.position = Inside + Clear(new Vector3(hips.x, Inside.y, hips.z) - Inside, 1f); // lying, a body reaches further
+        r.Play(next, true, next == moves.getUp ? GetUpRate : 1f, 0.01f);
+    }
+
+    // The hero can be hit or grabbed: on her feet and not in the middle of a dodge, a throw or a hold.
+    bool Open(float now) => (heroMove == Free || heroMove == Attacking || heroMove == Kicking || heroMove == Hurt) && now >= safeUntil && ending == null;
 
     void HeroUpdate(float dt, float now)
     {
@@ -411,11 +570,12 @@ public class BrawlEvent : MonoBehaviour
         bool light = (pad != null && pad.buttonWest.wasPressedThisFrame) || (keys != null && keys.jKey.wasPressedThisFrame) || (mouse != null && mouse.leftButton.wasPressedThisFrame);
         bool heavy = (pad != null && pad.buttonNorth.wasPressedThisFrame) || (keys != null && keys.kKey.wasPressedThisFrame) || (mouse != null && mouse.rightButton.wasPressedThisFrame);
         bool dodge = (pad != null && pad.buttonSouth.wasPressedThisFrame) || (keys != null && keys.spaceKey.wasPressedThisFrame);
+        bool grab = (pad != null && pad.buttonEast.wasPressedThisFrame) || (keys != null && keys.lKey.wasPressedThisFrame);
         Vector2 input = Vector2.ClampMagnitude(move.ReadValue<Vector2>(), 1f);
         if (input.magnitude < 0.2f) input = Vector2.zero;
         Vector3 way = Quaternion.Euler(0f, yaw, 0f) * new Vector3(input.x, 0f, input.y);
         Vector3 at = hero.root.position;
-        if (Player.Bot != null) // AutoPlay: walk up to the nearest and punch, dodge now and then
+        if (Player.Bot != null) // AutoPlay: walk up to the nearest and punch, grab now and then, dodge a grab coming
         {
             Boarder target = Nearest(30f, at);
             way = target != null ? Flat(target.Position - at) : Vector3.zero;
@@ -423,10 +583,11 @@ public class BrawlEvent : MonoBehaviour
             way = far > 1.5f ? way / far : Vector3.zero;
             light = far <= 1.8f;
             heavy = light && Random.value < 0.02f;
-            dodge = false;
+            grab = far <= 1.5f && Random.value < 0.004f;
+            dodge = boarders.Exists(b => b.move == Grabbing && Flat(b.Position - at).magnitude < 2f) && Random.value < 0.05f;
             if (far <= 1.5f && far > 0f) hero.root.rotation = Quaternion.LookRotation(Flat(target.Position - at));
         }
-        if (ending != null) { light = heavy = dodge = false; way = Vector3.zero; }
+        if (ending != null) { light = heavy = dodge = grab = false; way = Vector3.zero; }
 
         void Face(Vector3 toward, float rate)
         {
@@ -443,19 +604,61 @@ public class BrawlEvent : MonoBehaviour
             Vector3 facing = hero.root.forward;
             foreach (Boarder b in boarders)
             {
-                if (!b.rig.root.gameObject.activeSelf || b.move == Down) continue;
+                if (!Standing(b)) continue;
                 Vector3 to = Flat(b.Position - at);
                 if (to.magnitude > range || Vector3.Angle(facing, to) > cone) continue;
                 HitBoarder(b, damage, knock, to.normalized, now);
+                stopUntil = now + (knock ? 0.09f : 0.05f);
             }
+        }
+        bool Grab() // the nearest boarder in arm's reach: thrown, whatever it was doing (a guard does not help)
+        {
+            Boarder b = now >= grabReady ? Nearest(1.7f, at) : null;
+            if (b == null) return false;
+            grabReady = float.MaxValue; // until the throw is over
+            hero.root.rotation = Quaternion.LookRotation(Flat(b.Position - at));
+            partner = b;
+            b.move = Thrown;
+            throwPick = Random.Range(0, moves.throwBy.Length);
+            Pair(hero, b.rig, moves.throwBy[throwPick], moves.throwOf[throwPick], 0.12f, ThrowRate);
+            TrainSim.Tint(b.skin, b.colour);
+            heroMove = Throwing;
+            heroLanded = false;
+            safeUntil = now + moves.throwBy[throwPick].length / ThrowRate * 0.6f; // nobody hits her while she lifts it (the landing is open)
+            return true;
         }
 
         switch (heroMove)
         {
             case Down:
+            case Held:
                 return;
             case Hurt:
+            case Floored:
                 if (now >= heroUntil) heroMove = Free;
+                return;
+            case Throwing:
+                if (!heroLanded && hero.Done >= 0.68f) // the body hits the floor
+                {
+                    heroLanded = true;
+                    Vector3 slammed = partner.rig.animator.GetBoneTransform(HumanBodyBones.Hips).position;
+                    Wound(partner, throwDamage * level * train.Player.damageBonus, slammed + Vector3.up * 0.5f);
+                    Effect("dust", Flat(slammed) + Vector3.up * Inside.y, 0.7f);
+                    Effect("spark", slammed, 1.3f);
+                    stopUntil = now + 0.14f;
+                }
+                if (hero.Done >= 0.97f)
+                {
+                    Settle(hero, moves.idle);
+                    bool alive = partner.health > 0f;
+                    Settle(partner.rig, alive ? moves.getUp : moves.lying);
+                    partner.move = alive ? Hurt : Down;
+                    partner.until = now + GetUpTime * 0.85f;
+                    partner.nextAttack = partner.until + 0.6f;
+                    partner = null;
+                    heroMove = Free;
+                    grabReady = now + grabCooldown;
+                }
                 return;
             case Dodging:
                 float left = (heroUntil - now) / dodgeTime;
@@ -474,13 +677,15 @@ public class BrawlEvent : MonoBehaviour
                 }
                 if (light && !kick && hero.Done > 0.2f) queued = true;
                 if (dodge && heroLanded) { StartDodge(way); return; } // a dodge cuts a move short once its blow is dealt
-                if (queued && combo < moves.combo.Length - 1 && hero.Done >= 0.6f) { StartCombo(combo + 1); return; }
+                if (grab && heroLanded && Grab()) return;             // and so does a grab: punches into a throw
+                if (queued && combo < moves.combo.Length - 1 && hero.Done >= 0.6f) { StartCombo(combo + 1, now); return; }
                 if (hero.Done >= (kick ? 0.85f : 0.8f)) heroMove = Free;
                 return;
         }
         // Free.
         if (dodge) { StartDodge(way); return; }
-        if (light) { StartCombo(0); return; }
+        if (grab && Grab()) return;
+        if (light) { StartCombo(0, now); return; }
         if (heavy && now >= kickReady)
         {
             heroMove = Kicking;
@@ -494,13 +699,23 @@ public class BrawlEvent : MonoBehaviour
         hero.Play(way.sqrMagnitude > 0.01f ? moves.run : moves.idle, false, 1f, 0.15f);
     }
 
-    void StartCombo(int step)
+    void StartCombo(int step, float now)
     {
         heroMove = Attacking;
         combo = step;
         queued = false;
         heroLanded = false;
         hero.Play(moves.combo[step], true, 1.35f, 0.08f);
+        // Whoever stands in front of the swing may cover up: punches on a guard do little, a kick or a grab breaks it.
+        foreach (Boarder b in boarders)
+        {
+            if (!Standing(b) || b.move != Free) continue;
+            Vector3 to = Flat(b.Position - hero.root.position);
+            if (to.magnitude > reach + 0.6f || Vector3.Angle(hero.root.forward, to) > 70f || Random.value >= GuardChance) continue;
+            b.move = Guarding;
+            b.until = now + 0.9f;
+            b.rig.Play(moves.guard, true, 1f, 0.06f);
+        }
     }
 
     void StartDodge(Vector3 way)
@@ -513,34 +728,61 @@ public class BrawlEvent : MonoBehaviour
         hero.Play(moves.dodge, true, 1.4f, 0.05f);
     }
 
+    // The damage itself, and a boarder brought down by it; true if that was the end of it.
+    bool Wound(Boarder b, float damage, Vector3 at)
+    {
+        damage = train.CriticalDamage(damage, out bool critical);
+        b.health -= damage;
+        train.DamageNumber(at + Vector3.up * 0.6f, damage, false, critical);
+        if (b.health > 0f) return false;
+        Effect("enemy", at, 1.4f);
+        kills++;
+        train.Charge(); // a kill like any other: the counter and the ultimate
+        train.Earn(moneyPerBoarder);
+        return true;
+    }
+
     void HitBoarder(Boarder b, float damage, bool knock, Vector3 away, float now)
     {
-        damage = train.CriticalDamage(damage * train.Player.damageBonus, out bool critical);
-        b.health -= damage;
         Vector3 chest = b.Position + Vector3.up * 1.2f;
-        train.DamageNumber(chest + Vector3.up * 0.6f, damage, false, critical);
-        Combat.Instance.Burst("spark", chest - away * 0.3f, knock ? 1.2f : 0.8f);
         TrainSim.Tint(b.skin, b.colour);
+        if (b.move == Guarding && !knock) // on the guard: a little, and it holds
+        {
+            Wound(b, damage * train.Player.damageBonus * 0.15f, chest);
+            Effect("spark", chest - away * 0.4f, 0.5f);
+            b.push = away * 1.5f;
+            b.rig.Play(moves.guardHit, true, 1.3f, 0.04f);
+            b.until = Mathf.Max(b.until, now + 0.4f);
+            if (b.health <= 0f) { b.move = Down; b.rig.Play(moves.boarderDown, true, 1f, 0.08f); }
+            return;
+        }
+        if (b.move == Attacking && b.rig.Done >= 0.15f && !knock) // a blow already thrown is not stopped by a punch: only a kick or a grab
+        {
+            Effect("spark", chest - away * 0.3f, 0.7f);
+            if (Wound(b, damage * train.Player.damageBonus, chest)) { b.move = Down; b.rig.Play(moves.boarderDown, true, 1f, 0.08f); }
+            return;
+        }
+        bool broken = b.move == Guarding; // a kick through the guard: staggered for longer
+        Effect("spark", chest - away * 0.3f, knock ? 1.2f : 0.8f);
         b.push = away * (knock ? 7f : 2.5f);
-        if (b.health <= 0f)
+        if (Wound(b, damage * train.Player.damageBonus, chest))
         {
             b.move = Down;
             b.rig.Play(moves.boarderDown, true, 1f, 0.08f);
             b.rig.root.rotation = Quaternion.LookRotation(-away);
-            Combat.Instance.Burst("enemy", chest, 1.4f);
-            kills++;
-            train.Charge(); // a kill like any other: the counter and the ultimate
-            train.Earn(moneyPerBoarder);
             return;
         }
         b.move = Hurt;
-        b.until = now + (knock ? 0.75f : 0.45f);
+        b.until = now + (broken ? 1f : knock ? 0.75f : 0.45f);
         b.nextAttack = Mathf.Max(b.nextAttack, b.until + 0.4f);
         b.rig.Play(moves.boarderHits[Random.Range(0, moves.boarderHits.Length)], true, 1.2f, 0.05f);
     }
 
-    void BoarderUpdate(Boarder b, bool close, ref int attacking, float dt, float now)
+    // rank: how near the hero this one is among those standing. The nearest leads, the second circles round to her
+    // back, the others keep off until a place opens. One strike at a time is started, StrikeGap apart.
+    void BoarderUpdate(Boarder b, int rank, ref int attacking, float dt, float now)
     {
+        if (Paired(b)) return; // the throw or the hold moves it
         b.push = Vector3.MoveTowards(b.push, Vector3.zero, 14f * dt);
         if (b.push.sqrMagnitude > 0f) Place(b.rig.root, b.Position + b.push * dt);
         Vector3 to = Flat(hero.root.position - b.Position);
@@ -551,54 +793,185 @@ public class BrawlEvent : MonoBehaviour
             return;
         }
         if (far > 0.01f) b.rig.root.rotation = Quaternion.RotateTowards(b.rig.root.rotation, Quaternion.LookRotation(to), 300f * dt);
+        if (b.move == Guarding)
+        {
+            if (now >= b.until) b.move = Free;
+            return;
+        }
         if (b.move == Attacking)
         {
-            // The wind-up shows: it glows hotter until the blow.
+            // A step in while winding up, and it glows hotter until the blow.
+            if (b.rig.Done < 0.38f && far > 1.1f) Place(b.rig.root, b.Position + to / far * (3.2f * dt));
             float windup = Mathf.Clamp01(b.rig.Done / 0.42f);
             TrainSim.Tint(b.skin, Color.Lerp(b.colour, new Color(1f, 0.95f, 0.9f) * 2.2f, b.landed ? 0f : windup * windup));
             if (!b.landed && b.rig.Done >= 0.42f)
             {
                 b.landed = true;
-                if (far <= reach && Vector3.Angle(b.rig.root.forward, to) < 60f && now >= safeUntil && heroMove != Down && ending == null) HitHero(b, to, now);
+                bool hit = far <= reach && Vector3.Angle(b.rig.root.forward, to) < 60f && Open(now);
+                if (hit) HitHero(to, now);
+                if (hit && b.chain && Train(b)) return; // straight into a second blow
             }
             if (b.rig.Done >= 0.9f)
             {
                 b.move = Free;
-                b.nextAttack = now + Random.Range(0.9f, 1.8f);
+                b.nextAttack = now + Rest;
                 attacking--;
             }
             return;
         }
-        if (ending != null) { b.rig.Play(moves.boarderIdle, false); return; }
-        // Free: the near ones come in close and strike in turn, the others circle further off.
-        if (close && far <= 1.6f && now >= b.nextAttack && attacking < maxAttackers && heroMove != Down)
+        if (b.move == Grabbing)
         {
+            // Purple and coming in fast, arms out: dodge it or hit it before it gets hold.
+            TrainSim.Tint(b.skin, Color.Lerp(b.colour, new Color(0.8f, 0.3f, 1.6f), 0.5f + 0.5f * Mathf.Sin(now * 20f)));
+            if (far > 1.05f) Place(b.rig.root, b.Position + to / far * (4.2f * dt));
+            b.rig.Play(moves.boarderWalk, false, 1.5f, 0.1f);
+            if (far <= 1.2f && Open(now)) { Seize(b, now); return; }
+            if (now >= b.until) // missed: off balance a moment, open to a punish
+            {
+                TrainSim.Tint(b.skin, b.colour);
+                b.move = Hurt;
+                b.until = now + 0.6f;
+                b.nextAttack = now + Rest;
+                b.rig.Play(moves.boarderHits[0], true, 1f, 0.1f);
+                attacking--;
+            }
+            return;
+        }
+        if (ending != null || heroMove == Down) { b.rig.Play(moves.boarderIdle, false); return; }
+        // Free: its turn to strike, when it is near the front, has rested, and the last strike was long enough ago.
+        bool behind = Vector3.Angle(hero.root.forward, -to) > 100f; // at her back: it does not wait for the gap while she is busy
+        bool turn = rank < 2 && now >= b.nextAttack && (now >= nextStrike || (behind && heroMove == Attacking)) && attacking < maxAttackers && Open(now);
+        if (turn && far <= 2.3f)
+        {
+            nextStrike = now + StrikeGap * Random.Range(0.8f, 1.3f);
+            attacking++;
+            if (now >= nextGrab && Random.value < 0.3f)
+            {
+                b.move = Grabbing;
+                b.until = now + 0.9f;
+                nextGrab = now + Mathf.Lerp(7f, 4f, Hardness);
+                return;
+            }
+            b.chain = Random.value < ChainChance;
             b.move = Attacking;
             b.landed = false;
-            attacking++;
             b.rig.Play(moves.boarderAttacks[Random.Range(0, moves.boarderAttacks.Length)], true, 1f, 0.1f);
             return;
         }
-        float want = close ? 1.3f : 3.4f;
-        Vector3 step;
-        AnimationClip walk;
-        if (far > want + 0.3f) { step = to / far; walk = moves.boarderWalk; }
-        else if (far < want - 0.4f) { step = -to / Mathf.Max(far, 0.01f) * 0.7f; walk = moves.boarderWalk; }
-        else
-        {
-            step = Vector3.Cross(Vector3.up, to / Mathf.Max(far, 0.01f)) * (b.side * 0.5f);
-            walk = b.side > 0f ? moves.boarderLeft : moves.boarderRight;
-            if (Random.value < dt * 0.3f) b.side = -b.side;
-        }
-        Place(b.rig.root, b.Position + step * (boarderSpeed * dt));
+        // Where to stand: the leader in front of her, the second round at her back, the rest in a ring further off.
+        Vector3 spot;
+        if (rank == 0) spot = b.Position + (far > 1.4f ? to / far * (far - 1.4f) : -to / Mathf.Max(far, 0.01f) * (1.4f - far));
+        else if (rank == 1) spot = hero.root.position + Quaternion.Euler(0f, b.side * 140f, 0f) * hero.root.forward * 1.7f;
+        else spot = hero.root.position - to / Mathf.Max(far, 0.01f) * 3.6f + Vector3.Cross(Vector3.up, to / Mathf.Max(far, 0.01f)) * (b.side * 0.8f);
+        Vector3 go = Flat(spot - b.Position);
+        if (Random.value < dt * 0.25f) b.side = -b.side;
+        if (go.magnitude < 0.25f) { b.rig.Play(moves.boarderIdle, false, 1f, 0.2f); return; }
+        Vector3 step = go.normalized * Mathf.Min(boarderSpeed * dt, go.magnitude);
+        Place(b.rig.root, b.Position + step);
+        // The walk that matches the way it goes, seen from where it faces (the hero).
+        float ahead = Vector3.Dot(go.normalized, b.rig.root.forward), across = Vector3.Dot(go.normalized, b.rig.root.right);
+        AnimationClip walk = Mathf.Abs(ahead) >= Mathf.Abs(across) ? (ahead > 0f ? moves.boarderWalk : moves.boarderBack) : across > 0f ? moves.boarderRight : moves.boarderLeft;
         b.rig.Play(walk, false, 1f, 0.2f);
     }
 
-    void HitHero(Boarder b, Vector3 to, float now)
+    // Straight into a second blow of a chain: a different one, no rest between.
+    bool Train(Boarder b)
+    {
+        b.chain = false;
+        b.landed = false;
+        AnimationClip next = moves.boarderAttacks[Random.Range(0, moves.boarderAttacks.Length)];
+        b.rig.Play(next, true, 1.15f, 0.08f);
+        return true;
+    }
+
+    // ---------------------------------------------------------------- a boarder's headlock
+    const float MashSeconds = 2.4f;
+
+    void Seize(Boarder b, float now)
+    {
+        TrainSim.Tint(b.skin, b.colour);
+        b.move = Holding;
+        partner = b;
+        heroMove = Held;
+        holdPhase = 0;
+        mash = 0f;
+        Pair(b.rig, hero, moves.holdBy, moves.holdOf);
+        Sound.Play("wagonbad", 0.3f);
+    }
+
+    // 0 getting her in it, 1 held (press to break free before time runs out), 2 let go, 3 the DDT.
+    void Hold(float dt, float now)
+    {
+        Boarder b = partner;
+        switch (holdPhase)
+        {
+            case 0:
+                if (b.rig.Done < 0.95f) return;
+                holdPhase = 1;
+                mashUntil = now + MashSeconds;
+                Pair(b.rig, hero, moves.heldBy, moves.heldOf, 0.15f);
+                return;
+            case 1:
+                bool press = (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame) || (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
+                          || (Player.Bot != null && Random.value < dt * 7f);
+                if (press) { mash += 1f; stopUntil = now + 0.03f; }
+                mash = Mathf.Max(0f, mash - dt * 1.5f); // stop pressing and the hold tightens again
+                if (mash >= MashNeed)
+                {
+                    holdPhase = 2;
+                    Pair(b.rig, hero, moves.letGoBy, moves.letGoOf, 0.1f);
+                    train.Toast(L10n.T("brawl.free"));
+                }
+                else if (now >= mashUntil)
+                {
+                    holdPhase = 3;
+                    heroLanded = false;
+                    Pair(b.rig, hero, moves.slamBy, moves.slamOf, 0.1f, SlamRate);
+                }
+                return;
+            case 2:
+                if (b.rig.Done < 0.9f) return;
+                Settle(hero, moves.idle);
+                Settle(b.rig, moves.boarderHits[1]);
+                heroMove = Free;
+                safeUntil = now + 0.6f;
+                b.move = Hurt; // shoved off: a moment to hit back
+                b.until = now + 0.9f;
+                b.nextAttack = now + Rest + 0.8f;
+                b.push = Flat(b.Position - hero.root.position).normalized * 4f;
+                partner = null;
+                return;
+            case 3:
+                if (!heroLanded && b.rig.Done >= 0.55f) // her head into the floor
+                {
+                    heroLanded = true;
+                    Vector3 head = hero.animator.GetBoneTransform(HumanBodyBones.Head).position;
+                    train.Player.Damage(blow * slamBlows * (1f + Combat.Instance.damagePerLevel * train.Difficulty));
+                    Effect("spark", head, 1.4f);
+                    Effect("dust", Flat(head) + Vector3.up * Inside.y, 0.7f);
+                    Sound.Play("wagonbad", 0.5f);
+                    stopUntil = now + 0.16f;
+                }
+                if (b.rig.Done < 0.95f) return;
+                Settle(b.rig, moves.boarderIdle);
+                b.move = Free;
+                b.nextAttack = now + Rest + 1f;
+                partner = null;
+                if (!train.Player.Alive) return; // Update lays her down
+                Settle(hero, moves.getUp);
+                heroMove = Floored;
+                heroUntil = now + GetUpTime * 0.8f;
+                safeUntil = heroUntil + 0.5f;
+                return;
+        }
+    }
+
+    void HitHero(Vector3 to, float now)
     {
         train.Player.Damage(blow * (1f + Combat.Instance.damagePerLevel * train.Difficulty));
-        Combat.Instance.Burst("spark", hero.root.position + Vector3.up * 1.3f, 0.9f);
+        Effect("spark", hero.root.position + Vector3.up * 1.3f, 0.9f);
         Sound.Play("wagonbad", 0.35f);
+        stopUntil = now + 0.08f;
         if (!train.Player.Alive) return; // Update takes it from here
         heroMove = Hurt;
         heroUntil = now + 0.4f;
@@ -616,12 +989,107 @@ public class BrawlEvent : MonoBehaviour
         pitch = Mathf.Clamp(pitch - (pointer ? aim.y * mouseSpeed : aim.y * stickSpeed * dt * 0.5f), 5f, 40f);
         // Over the right shoulder, so the hero does not hide whoever is in front of her.
         Vector3 target = hero.root.position + Vector3.up * 1.7f + Quaternion.Euler(0f, yaw, 0f) * Vector3.right * 0.8f;
-        Vector3 eye = target - Quaternion.Euler(pitch, yaw, 0f) * Vector3.forward * 5.2f - Inside;
+        // Further back for a throw or a hold: two bodies in one move need the room.
+        distance = Mathf.MoveTowards(distance, heroMove == Held || heroMove == Throwing ? 6.8f : 5.2f, 4f * dt);
+        Vector3 eye = target - Quaternion.Euler(pitch, yaw, 0f) * Vector3.forward * distance - Inside;
         eye.x = Mathf.Clamp(eye.x, -HalfLength + 0.3f, HalfLength - 0.3f);
         eye.z = Mathf.Clamp(eye.z, -HalfWidth + 0.3f, HalfWidth - 0.3f);
         eye.y = Mathf.Clamp(eye.y, 0.6f, Height - 0.35f);
         view.transform.position = Inside + eye;
         view.transform.LookAt(target);
+    }
+
+    // ---------------------------------------------------------------- the ride in
+    class Rider { public Transform body; public Vector3 hips; public float side, along; public int look; }
+    readonly List<Rider> riders = new();
+    Combat.Batch speederLook;
+    readonly List<(Vector3 at, Quaternion turn)> speeders = new();
+    float approachUntil, nextDust;
+    int riding;
+    const float SpeederSize = 3.4f;                                   // the model is a unit long
+    static readonly Vector3 Saddle = new Vector3(0f, 0.225f, -0.14f); // on the model (Unity's axes: +z ahead)
+
+    // One rider per boarder, in its colours, sat astride (bones set once, nothing animates it).
+    void Mount(int count)
+    {
+        speederLook ??= new Combat.Batch(Color.white, true, Resources.Load<Mesh>("Models/Speeder"));
+        while (riders.Count < count)
+        {
+            var root = new GameObject("Rider").transform;
+            Animator rig = Body(moves.boarder, root);
+            Material skin = TrainSim.Mat(Paint[riders.Count % Paint.Length]);
+            foreach (Renderer part in rig.GetComponentsInChildren<Renderer>()) part.sharedMaterials = System.Array.ConvertAll(part.sharedMaterials, _ => skin);
+            rig.runtimeAnimatorController = null;
+            rig.enabled = false;
+            Sit(rig);
+            riders.Add(new Rider { body = root, hips = root.InverseTransformPoint(rig.GetBoneTransform(HumanBodyBones.Hips).position) });
+        }
+        riding = count;
+        float side = Random.value < 0.5f ? -1f : 1f;
+        for (int i = 0; i < riders.Count; i++)
+        {
+            riders[i].body.gameObject.SetActive(i < count);
+            riders[i].side = i < 2 ? side : -side;              // two from one side, one from the other
+            riders[i].along = i == 0 ? -2.8f : i == 1 ? 2.8f : 0f;
+            riders[i].look = i;
+        }
+    }
+
+    // Sat on a speeder: leaning into the wind, thighs forward, feet on the pedals, hands on the bars.
+    static void Sit(Animator rig)
+    {
+        Transform Bone(HumanBodyBones b) => rig.GetBoneTransform(b);
+        void Point(HumanBodyBones from, HumanBodyBones to, Vector3 along)
+        {
+            Transform bone = Bone(from), end = Bone(to);
+            if (bone && end) bone.rotation = Quaternion.FromToRotation(end.position - bone.position, along) * bone.rotation;
+        }
+        Point(HumanBodyBones.Hips, HumanBodyBones.Head, new Vector3(0f, 1f, 0.45f));
+        foreach (float s in new[] { -1f, 1f })
+        {
+            bool left = s < 0f;
+            Point(left ? HumanBodyBones.LeftUpperLeg : HumanBodyBones.RightUpperLeg, left ? HumanBodyBones.LeftLowerLeg : HumanBodyBones.RightLowerLeg, new Vector3(s * 0.25f, -0.35f, 1f));
+            Point(left ? HumanBodyBones.LeftLowerLeg : HumanBodyBones.RightLowerLeg, left ? HumanBodyBones.LeftFoot : HumanBodyBones.RightFoot, new Vector3(s * 0.05f, -1f, -0.1f));
+            Point(left ? HumanBodyBones.LeftUpperArm : HumanBodyBones.RightUpperArm, left ? HumanBodyBones.LeftLowerArm : HumanBodyBones.RightLowerArm, new Vector3(s * 0.3f, -0.35f, 1f));
+            Point(left ? HumanBodyBones.LeftLowerArm : HumanBodyBones.RightLowerArm, left ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand, new Vector3(0f, 0.25f, 1f));
+        }
+    }
+
+    // In from far out on the flanks, curving in to run level with the wagon; at the alarm each rider leaps onto
+    // its roof and the empty speeders peel away.
+    void Arrive()
+    {
+        float now = Time.unscaledTime;
+        Vector3 wagonAt = train.CarPosition(wagon), ahead = Flat(train.Forward(wagon)).normalized, across = Vector3.Cross(Vector3.up, ahead);
+        float t = Mathf.Clamp01(1f - (approachUntil - now) / approachSeconds), eased = 1f - (1f - t) * (1f - t) * (1f - t);
+        float leap = Mathf.Clamp01((now - approachUntil) / (alarmSeconds * 0.6f));
+        bool dust = now >= nextDust;
+        if (dust) nextDust = now + 0.07f;
+        speeders.Clear();
+        for (int i = 0; i < riding; i++)
+        {
+            Rider r = riders[i];
+            Vector3 to = wagonAt + across * (r.side * 3.8f) + ahead * r.along + Vector3.up * 0.8f;
+            Vector3 from = to + across * (r.side * 34f) - ahead * 10f;
+            Vector3 at = Vector3.Lerp(from, to, eased) + Vector3.up * (Mathf.Sin(now * 6f + r.look) * 0.08f);
+            at += across * (r.side * 14f * leap * leap); // riderless, off again
+            Vector3 heading = Vector3.Slerp((to - from).normalized, ahead, eased);
+            Quaternion turn = Quaternion.LookRotation(heading) * Quaternion.Euler(0f, 0f, r.side * 25f * (1f - eased));
+            speeders.Add((at, turn));
+            if (dust && t < 1f) Combat.Instance.Burst("dust", new Vector3(at.x, 0.1f, at.z), 0.9f);
+            if (leap >= 1f) { r.body.gameObject.SetActive(false); continue; }
+            // On the saddle; at the alarm up in an arc onto the wagon's roof.
+            Vector3 seat = at + turn * (Saddle * SpeederSize), roof = wagonAt + ahead * (r.along * 0.4f) + Vector3.up * 2.4f;
+            Vector3 hips = Vector3.Lerp(seat, roof, leap) + Vector3.up * (Mathf.Sin(leap * Mathf.PI) * 2.2f);
+            r.body.SetPositionAndRotation(hips - turn * r.hips, turn);
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (!Incoming || speederLook == null) return;
+        foreach (var s in speeders) speederLook.Add(s.at, Vector3.one * SpeederSize, s.turn);
+        speederLook.Flush();
     }
 
     void End(string key)
@@ -630,7 +1098,11 @@ public class BrawlEvent : MonoBehaviour
         view.enabled = false;
         if (room) room.gameObject.SetActive(false);
         board.gameObject.SetActive(false);
+        foreach (Rider r in riders) r.body.gameObject.SetActive(false);
         Time.timeScale = 1f;
+        effects.Clear();
+        foreach (ParticleSystem system in unscaled) if (system) { var main = system.main; main.useUnscaledTime = false; } // the pool's copies, back to game time
+        unscaled.Clear();
         if (key != null) train.Toast(L10n.T(key, kills, kills * moneyPerBoarder));
     }
 

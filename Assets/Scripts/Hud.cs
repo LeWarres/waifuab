@@ -65,7 +65,12 @@ public class Hud : MonoBehaviour
     Text killsText; // top middle: enemies shot down
     Text ultimateText;
     Slanted ultimatePanel, ultimateEdge;
-    public bool Toasting => Time.unscaledTime < toastUntil;
+    Slanted ultimateNotice;
+    Text ultimateNoticeText;
+    CanvasGroup ultimateNoticeFade;
+    float ultimateNoticeUntil;
+    const float UltimateNoticeSeconds = 2.5f;
+    public bool Toasting => Time.unscaledTime < toastUntil || Time.unscaledTime < ultimateNoticeUntil;
     // Under the train's card, two rows of boxes: the weapons carried (the hero's first) and the hero's upgrades,
     // each with its level.
     readonly List<(RawImage icon, Text level)> weapons = new(), passives = new();
@@ -164,7 +169,29 @@ public class Hud : MonoBehaviour
         toastPanel.rectTransform.anchorMin = toastPanel.rectTransform.anchorMax = new Vector2(0.5f, 0f);
         toastText = UiKit.Label(toastPanel.transform, UiKit.Heading, 38, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(1040f, 70f), true);
         toastPanel.gameObject.SetActive(false);
+
+        ultimateNotice = UiKit.Panel(canvas.transform, Vector2.zero, new Vector2(760f, 82f), dark, dark, 0.12f);
+        ultimateNotice.gameObject.name = "UltimateReadyNotice";
+        ultimateNoticeFade = ultimateNotice.gameObject.AddComponent<CanvasGroup>();
+        ultimateNoticeFade.blocksRaycasts = false;
+        ultimateNoticeFade.interactable = false;
+        ultimateNoticeText = UiKit.Label(ultimateNotice.transform, UiKit.Heading, 30, Color.white, TextAnchor.MiddleCenter,
+            Vector2.zero, new Vector2(600f, 65f), true);
+        foreach (float x in new[] { -330f, 330f })
+        {
+            var triangle = new GameObject("Warning", typeof(RectTransform), typeof(CanvasRenderer), typeof(UltimateWarning)).GetComponent<UltimateWarning>();
+            triangle.transform.SetParent(ultimateNotice.transform, false);
+            triangle.rectTransform.anchoredPosition = new Vector2(x, 0f);
+            triangle.rectTransform.sizeDelta = new Vector2(46f, 44f);
+            triangle.color = UiKit.Gold;
+            triangle.raycastTarget = false;
+            UiKit.Label(triangle.transform, UiKit.Heading, 30, UiKit.Navy, TextAnchor.MiddleCenter,
+                new Vector2(0f, -7f), new Vector2(28f, 34f)).text = "!";
+        }
+        ultimateNotice.gameObject.SetActive(false);
     }
+
+    public void UltimateReady() => ultimateNoticeUntil = Time.unscaledTime + UltimateNoticeSeconds;
 
     // Call every frame; null hides it. Flashes gold and orange.
     public void Warning(string title, string detail)
@@ -358,6 +385,7 @@ public class Hud : MonoBehaviour
 
     void LateUpdate()
     {
+        if (train.UltimatePresenting) return;
         Evolutions();
         float zoom = Camera.main.orthographicSize;
         foreach (var entry in screens)
@@ -385,6 +413,18 @@ public class Hud : MonoBehaviour
         }
         bool toast = Time.unscaledTime < toastUntil;
         if (toastPanel.gameObject.activeSelf != toast) toastPanel.gameObject.SetActive(toast);
+
+        if (!train.UltimateReady) ultimateNoticeUntil = 0f;
+        bool notice = Time.unscaledTime < ultimateNoticeUntil && !train.Paused && !train.MenuShown && !train.Alerting;
+        ultimateNotice.gameObject.SetActive(notice);
+        if (notice)
+        {
+            float left = ultimateNoticeUntil - Time.unscaledTime;
+            float age = UltimateNoticeSeconds - left;
+            ultimateNoticeText.text = L10n.T("ultimate.ready", train.KitButton);
+            ultimateNoticeFade.alpha = Mathf.Min(Mathf.Clamp01(age / 0.15f), Mathf.Clamp01(left / 0.25f));
+            ultimateNotice.rectTransform.localScale = Vector3.one * (1f + 0.025f * Mathf.Sin(age * 8f));
+        }
 
         bool boss = Time.unscaledTime < bossUntil && !train.MenuShown;
         if (bossPanel != null && bossPanel.gameObject.activeSelf != boss) bossPanel.gameObject.SetActive(boss);

@@ -37,7 +37,6 @@ public static class Sound
         sharedEffects.PlayOneShot(audio, loudness);
     }
 
-    public static AudioSource AsMusic(AudioSource source, float loudness = 1f) => Join(source, loudness, true);
     public static AudioSource AsEffect(AudioSource source, float loudness = 1f) => Join(source, loudness, false);
 
     public static AudioSource Effect(GameObject owner, string clip, float loudness = 1f)

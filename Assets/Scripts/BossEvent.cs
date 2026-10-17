@@ -163,7 +163,7 @@ public class BossEvent : MonoBehaviour
 
     void Update()
     {
-        if (!Active || train.Paused) return;
+        if (!Active || train.Paused || train.UltimatePresenting) return;
         if (train.Health <= 0f) { End(null); return; }
         if (boss == null || boss.id != bossId) { Win(); return; } // shot to bits
         if (train.AtStation) { End("boss.fled"); return; }

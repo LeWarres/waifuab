@@ -95,20 +95,13 @@ public class Combat : MonoBehaviour
 
         public Mesh customMesh;                  // override the mesh used to draw this enemy type (projectiles, etc.)
         public string model;                     // a model of its own in its own colours (Models/<model>): drawn untinted
-        public bool flies;                       // with a model of its own: it hovers (else it walks on the ground)
+        public bool flies;                       // it hovers (else it walks on the ground); a balloon that flies also spins
 
         Batch batch;
-        // Enemies are robots, loot is a balloon carrying its cargo (Tools/make_enemies.py, Tools/make_cargo.py).
+        // Enemies are robots with a model each, loot is a balloon carrying its cargo (Tools/make_mechs.py, Tools/make_cargo.py).
         public Batch Batch => batch ??= new Batch(model != null ? Color.white : color, true,
-            customMesh ? customMesh : Resources.Load<Mesh>(model != null ? "Models/" + model : loot >= 0 ? "Models/Balloon_" + loot : "Models/Enemy_" + Shape));
-
-        // Which robot it looks like, read off what it does: the look tells the player what to expect.
-        public string Shape =>
-            heal > 0f ? "drone" : spawner || split > 0 ? "hive" : blink > 0f ? "orb"
-            : ranged > 0f && health < 20f ? "saucer" : armor > 0f || health >= 15f ? "walker" : explode > 0f ? "mine"
-            : speed >= 7f ? "dart" : chargeRange > 0f || health >= 8f ? "diamond" : "saucer";
-        public bool Flies => model != null ? flies : Shape is "saucer" or "drone" or "orb" or "diamond" or "mine";
-        public bool Spins => model == null && Shape is "diamond" or "mine" or "orb"; // a model of its own faces its way
+            customMesh ? customMesh : Resources.Load<Mesh>(model != null ? "Models/" + model : "Models/Balloon_" + loot));
+        public bool Spins => model == null && flies; // a model of its own faces its way
     }
 
     static readonly EnemyType Larva = new EnemyType { name = "Larva", color = new Color(0.7f, 0.9f, 0.3f), health = 1.5f, speed = 7f, damage = 2f, size = 0.5f, model = "Enemy_larva" };
@@ -123,11 +116,21 @@ public class Combat : MonoBehaviour
         reward = 40, armor = 1f, slowImmune = true,
         model = "Enemy_miniboss", // Tools/make_mechs.py
     };
+    // The other look a mini boss comes in, half the time: the winged demon (Tools/make_demon.py), hovering. The same
+    // fight in every other way.
+    static readonly EnemyType MiniDemon = new EnemyType
+    {
+        name = "MiniBoss", color = new Color(1f, 0.72f, 0.15f), health = 40f, speed = 1.8f, damage = 8f, size = 2.8f,
+        reward = 40, armor = 1f, slowImmune = true,
+        model = "Enemy_demon", flies = true,
+    };
+    static bool IsMiniBoss(EnemyType t) => t == MiniBoss || t == MiniDemon;
     [System.NonSerialized] public float miniBossEvery = 70f;
     float miniBossTimer = 75f;  // the first comes a minute and a quarter in: weak then (its health grows with the level)
     Enemy miniBoss;
     int miniBossId;
     float miniBossLeft = 1f; // share of its health a withdrawn mini boss comes back with
+    EnemyType miniBossLook = MiniBoss;
     const int Ram = 0, BackOff = 1, Chase = 2;
     int bossMode, bossWagon;
     float bossModeLeft;
@@ -173,7 +176,7 @@ public class Combat : MonoBehaviour
     {
         new EnemyType { name = "Madera", loot = 0, color = new Color(0.9f, 0.5f, 0.18f), health = 20f, size = 1.6f, reward = 0 },
         new EnemyType { name = "Roca", loot = 1, color = new Color(0.55f, 0.65f, 0.85f), health = 30f, size = 1.6f, reward = 0 },
-        new EnemyType { name = "Armas", loot = 2, color = new Color(0.4f, 0.7f, 0.25f), health = 14f, size = 1.3f, reward = 0 },
+        new EnemyType { name = "Armas", loot = 2, color = new Color(0.4f, 0.7f, 0.25f), health = 14f, size = 1.3f, reward = 0, flies = true },
     };
 
     public class Enemy
@@ -230,7 +233,7 @@ public class Combat : MonoBehaviour
     }
 
     public static Combat Instance { get; private set; }
-    public bool Paused => train.Swarming || train.AtStation; // turrets hold their fire too
+    public bool Paused => train.Swarming || train.AtStation || train.UltimatePresenting; // turrets hold their fire too
     public int EnemyCount => enemies.Count;
 
     // A pack of the plain small ones put down at a spot (the rival's boarders): from there they go for the train.
@@ -309,15 +312,18 @@ public class Combat : MonoBehaviour
         train.Shake(0.25f);
         if (!meteorLooks.TryGetValue(weapon, out Batch look))
             meteorLooks[weapon] = look = new Batch(weapon.color, false, Resources.GetBuiltinResource<Mesh>("Sphere.fbx"), glow: 3f);
-        // Five of them, one after another, each somewhere else on the ground the camera sees: the picture is cut into
-        // five strips across and each ball falls in one of them, in a shuffled order, away from the very edges.
+        // Cover all four outer corners and the centre, with jitter and shuffled landing order.
         var ground = new Plane(Vector3.up, Vector3.zero);
         int[] order = { 0, 1, 2, 3, 4 };
         for (int k = order.Length - 1; k > 0; k--) { int j = Random.Range(0, k + 1); (order[k], order[j]) = (order[j], order[k]); }
         for (int k = 0; k < MeteorCount; k++)
         {
-            float x = 0.12f + (order[k] + Random.Range(0.15f, 0.85f)) * 0.76f / MeteorCount;
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(x, Random.Range(0.2f, 0.75f), 0f));
+            int zone = order[k];
+            float x = zone == 4 ? Random.Range(0.35f, 0.65f)
+                : zone % 2 == 0 ? Random.Range(0.08f, 0.24f) : Random.Range(0.76f, 0.92f);
+            float y = zone == 4 ? Random.Range(0.35f, 0.65f)
+                : zone < 2 ? Random.Range(0.12f, 0.28f) : Random.Range(0.72f, 0.88f);
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(x, y, 0f));
             Vector3 at = ground.Raycast(ray, out float hit) ? ray.GetPoint(hit) : from;
             meteors.Add(new Meteor { at = at, landAt = Time.time + MeteorDelay + MeteorFall + k * MeteorGap, look = look, weapon = weapon });
         }
@@ -421,7 +427,6 @@ public class Combat : MonoBehaviour
     bool heroHit; // true while a hit made by the hero is being applied
     AudioSource stationLaserSound;
 
-    public int BulletCount => bullets.Count;
 
     void Awake()
     {
@@ -440,6 +445,7 @@ public class Combat : MonoBehaviour
 
     void Update()
     {
+        if (train.UltimatePresenting) return;
         if (train.Swarming) return; // seen from the gunner's seat: the rest of the fight is put away until it is over
         if (train.AtStation)
         {
@@ -515,7 +521,8 @@ public class Combat : MonoBehaviour
             along.y = 0f;
             along.Normalize();
             Vector3 across = Vector3.Cross(Vector3.up, along) * (Random.value < 0.5f ? 1f : -1f);
-            miniBoss = Add(MiniBoss, train.Focus + across * RingRadius() + along * Random.Range(-8f, 8f));
+            if (miniBossLeft >= 1f) miniBossLook = Random.value < 0.5f ? MiniDemon : MiniBoss; // one coming back keeps its look
+            miniBoss = Add(miniBossLook, train.Focus + across * RingRadius() + along * Random.Range(-8f, 8f));
             miniBossId = miniBoss.id;
             miniBoss.maxHp *= 1f + 0.15f * level; // weak while the weapons are, much tougher later
             miniBoss.hp = miniBoss.maxHp * miniBossLeft; // one that withdrew comes back as worn as it went
@@ -550,7 +557,7 @@ public class Combat : MonoBehaviour
                 if (seen.x < -0.05f || seen.x > 1.05f || seen.y < -0.05f || seen.y > 1.05f) RemoveEnemy(i);
                 continue;
             }
-            if (t == MiniBoss)
+            if (IsMiniBoss(t))
             {
                 MiniBossMove(e, dt, damageScale);
                 continue;
@@ -784,7 +791,7 @@ public class Combat : MonoBehaviour
     void LateUpdate()
     {
         if (train.Swarming) return; // nothing of the ordinary fight is drawn meanwhile
-        ResolveBlasts((1f + damagePerLevel * level) * enemyDamage * Balance.Scale); // kills made by turrets after our Update
+        if (!train.UltimatePresenting) ResolveBlasts((1f + damagePerLevel * level) * enemyDamage * Balance.Scale); // kills made by turrets after our Update
         // Robots face the train, hover and bob if they fly, and turn on the spot if that is their thing.
         float clock = Time.time;
         foreach (Enemy e in enemies)
@@ -802,7 +809,7 @@ public class Combat : MonoBehaviour
             if (t == MiniBoss && e.velocity.sqrMagnitude > 0.01f) toTrain = bossMode == BackOff ? -e.velocity : e.velocity; // it backs off facing the train
             Quaternion facing = t.Spins ? Quaternion.Euler(0f, clock * 140f + e.id * 47f, 0f)
                 : toTrain.sqrMagnitude > 0.01f ? Quaternion.LookRotation(toTrain) : Quaternion.identity;
-            if (t.Flies) at.y += 0.7f + Mathf.Sin(clock * 3f + e.id) * 0.18f;
+            if (t.flies) at.y += 0.7f + Mathf.Sin(clock * 3f + e.id) * 0.18f;
             t.Batch.Add(at, Vector3.one * (t.size * ModelScale), facing);
         }
         foreach (Bullet b in bullets) DrawBullet(b, clock);
@@ -830,6 +837,7 @@ public class Combat : MonoBehaviour
         foreach (EnemyType t in Loot) t.Batch.Flush();
         Larva.Batch.Flush();
         MiniBoss.Batch.Flush();
+        MiniDemon.Batch.Flush();
         stationShot.Flush();
         dragonDark.Flush();
         healRing.Flush();
@@ -1644,7 +1652,7 @@ public class Combat : MonoBehaviour
         for (int i = flashes.Count - 1; i >= 0; i--)
         {
             MuzzleFlash f = flashes[i];
-            f.life -= Time.unscaledDeltaTime;
+            if (!train.UltimatePresenting) f.life -= Time.unscaledDeltaTime;
             if (f.life <= 0f) { flashes.RemoveAt(i); continue; }
             flashes[i] = f;
             DrawFlash(f.batch, f.at, f.forward, f.size * (f.life / FlashLife));
@@ -1742,11 +1750,11 @@ public class Combat : MonoBehaviour
 
     // A one-shot VFX Graph effect from Resources/Vfx/<effect>, sized to the blast. Each effect has a few
     // copies that are replayed in turn; an effect with no prefab (most weapons) simply does nothing.
-    public void Burst(string effect, Vector3 at, float size)
+    public GameObject Burst(string effect, Vector3 at, float size) // the effect's copy, for whoever has to play it by hand
     {
         if (!bursts.TryGetValue(effect, out Pool pool))
             bursts[effect] = pool = new Pool { prefab = Resources.Load<GameObject>("Vfx/" + effect) };
-        if (!pool.prefab) return;
+        if (!pool.prefab) return null;
         pool.next = (pool.next + 1) % pool.copies.Length;
         GameObject copy = pool.copies[pool.next];
         if (!copy) pool.copies[pool.next] = copy = Instantiate(pool.prefab);
@@ -1766,6 +1774,7 @@ public class Combat : MonoBehaviour
             main.loop = false;
             system.Play();
         }
+        return copy;
     }
 
     // Enemy death explosions hurt wagons and other enemies; those deaths can queue more blasts.
@@ -1801,7 +1810,7 @@ public class Combat : MonoBehaviour
         if (applied > 0f) train.DamageNumber(e.position + Vector3.up * (e.type.size + 0.5f), applied, false, critical);
         if (e.hp > 0f) return;
         if (e.type.loot < 0) train.Charge(); // a kill counts and fills the ultimate (the station's guns kill elsewhere: they do not)
-        if (e.type == MiniBoss)
+        if (IsMiniBoss(e.type))
         {
             MiniBossesBeaten++;
             train.Shake(0.5f);
