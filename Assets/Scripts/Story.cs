@@ -35,7 +35,7 @@ public static class Story
     public static bool Over => JustWon && Chapter == Route(Hero).Length - 1; // the last one: the end of it all
 
     // Chapters that can be played: every one up to the first not beaten yet.
-    public static int Reached => PlayerPrefs.GetInt("story." + Hero + ".reached", 0);
+    public static int Reached => SaveGame.HasStory ? Mathf.Min(SaveGame.Reached, Bba.Length - 1) : 0;
 
     // What a chapter carries over: the upgrade kept from each one before it, as Tokens.
     public static List<string> Kept()
@@ -43,10 +43,10 @@ public static class Story
         var kept = new List<string>();
         for (int i = 0; i < Chapter; i++)
         {
-            string token = PlayerPrefs.GetString("story." + Hero + ".keep." + i, "");
+            string token = SaveGame.Keep(i);
             if (token != "") kept.Add(token);
             // and the upgrade handed down at random with its level, "<id>*<level>": that many of it
-            string[] passive = PlayerPrefs.GetString("story." + Hero + ".passive." + i, "").Split('*');
+            string[] passive = SaveGame.Passive(i).Split('*');
             if (passive.Length == 2 && int.TryParse(passive[1], out int times))
                 for (int n = 0; n < times; n++) kept.Add(passive[0]);
         }
@@ -55,18 +55,22 @@ public static class Story
 
     // The chapter is beaten; keep: the upgrade the player chose to take along (null: none); passive: one of the
     // hero's upgrades with its level, "<id>*<level>", handed down at random (null: none).
-    public static void Win(string keep, string passive)
+    // truck: the level of the truck's wagon won in it, which rides on into the next chapter only (0: none).
+    public static void Win(string keep, string passive, int truck)
     {
-        PlayerPrefs.SetString("story." + Hero + ".keep." + Chapter, keep ?? "");
-        PlayerPrefs.SetString("story." + Hero + ".passive." + Chapter, passive ?? "");
-        PlayerPrefs.SetInt("story." + Hero + ".reached", Mathf.Min(Mathf.Max(Reached, Chapter + 1), Route(Hero).Length - 1));
-        PlayerPrefs.Save();
+        SaveGame.Won(Chapter, keep, passive, truck, Route(Hero).Length - 1);
         JustWon = true;
     }
 
+    // The chapter is lost: it is the one to play again, from its start.
+    public static void Lose() => SaveGame.Lost(Chapter);
+
+    // The story saved can be continued: there is one, and its chapters are not all done.
+    public static bool CanContinue => SaveGame.HasStory && SaveGame.Chapter < Bba.Length;
+
     // The truck's wagon won in a chapter rides on into the next one only (at the level it had), never further.
-    public static void KeepTruck(int level) => PlayerPrefs.SetInt($"story.{Hero}.truck.{Chapter}", level);
-    public static int CarriedTruck => Chapter > 0 ? PlayerPrefs.GetInt($"story.{Hero}.truck.{Chapter - 1}", 0) : 0;
+    // (Kept in the save with the chapter's other results: see Win.)
+    public static int CarriedTruck => Chapter > 0 ? SaveGame.Truck(Chapter - 1) : 0;
 
     // Starting a chapter from the menu: its opening pages are told first.
     public static void Play(int chapter)

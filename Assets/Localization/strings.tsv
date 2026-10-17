@@ -493,3 +493,14 @@ chest.legendary	¡¡COFRE LEGENDARIO!!	LEGENDARY CHEST!!	BAÚ LENDÁRIO!!	伝説
 chest.level	{0}\nNv {1}	{0}\nLv {1}	{0}\nNv {1}	{0}\nLv {1}
 chest.money	Dinero +{0}	Money +{0}	Dinheiro +{0}	マネー +{0}
 chest.continue	Espacio / A / clic: continuar	Space / A / click: continue	Espaço / A / clique: continuar	Space / A / クリック：続ける
+main.continue	Continuar · Cap. {0}	Continue · Ch. {0}	Continuar · Cap. {0}	続きから · 第{0}章
+save.overwrite.title	¿Empezar una nueva historia?	Start a new story?	Começar uma nova história?	新しいストーリーを始める？
+save.overwrite	Se borrará la partida guardada (capítulo {0}) y todo lo que pasaba al siguiente bioma	The saved game (chapter {0}) and all it carried on will be deleted	O jogo salvo (capítulo {0}) e tudo o que passava adiante serão apagados	セーブ（第{0}章）と引き継ぎはすべて消えます
+save.overwrite.help	Espacio / A: sí, empezar   ·   Esc / B: no, volver	Space / A: yes, start   ·   Esc / B: no, back	Espaço / A: sim, começar   ·   Esc / B: não, voltar	Space / A：はい   ·   Esc / B：いいえ
+main.load	Cargar partida · Cap. {0}	Load Game · Ch. {0}	Carregar jogo · Cap. {0}	ロード · 第{0}章
+main.load.empty	Cargar partida (vacío)	Load Game (empty)	Carregar jogo (vazio)	ロード（なし）
+main.options	Opciones	Options	Opções	オプション
+hud.ultimate	¡{0}!	{0}!	{0}!	{0}!
+ultimate.ready	¡ULTIMATE LISTA!  Pulsa {0}	ULTIMATE READY!  Press {0}	ULTIMATE PRONTA!  Aperte {0}	必殺技準備完了！ {0} を押せ
+cargo.auto	Auto\nLlena hasta 3 vagones con lo que alcance (armas primero, nunca gasolina)	Auto\nFills up to 3 wagons with what you can pay (arms first, never fuel)	Auto\nEnche até 3 vagões com o que der (armas primeiro, nunca combustível)	オート\n買える分だけ最大3両（武器優先、燃料なし）
+hud.kills	Kills: {0}	Kills: {0}	Kills: {0}	キル: {0}

@@ -31,7 +31,7 @@ public class Wreck : MonoBehaviour
 
     void Update()
     {
-        if (train) transform.position -= Ground(train.Forward(wagon)) * train.Scroll; // stays glued to the ground it burns on
+        if (train) transform.position -= Ground(train.Forward(wagon)) * train.GroundScroll; // stays glued to the ground it burns on
 
         if (Time.time - born < burn) return;
         foreach (var graph in GetComponentsInChildren<UnityEngine.VFX.VisualEffect>()) graph.Stop();

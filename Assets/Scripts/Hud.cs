@@ -61,6 +61,11 @@ public class Hud : MonoBehaviour
     Canvas popupCanvas; // their own canvas: they move every frame, and the rest of the HUD need not be rebuilt for it
     Meter trainBar, tripBar, heroBar;
     RawImage ammoIcon;
+    Meter ultimateBar;
+    Text killsText; // top middle: enemies shot down
+    Text ultimateText;
+    Slanted ultimatePanel, ultimateEdge;
+    public bool Toasting => Time.unscaledTime < toastUntil;
     // Under the train's card, two rows of boxes: the weapons carried (the hero's first) and the hero's upgrades,
     // each with its level.
     readonly List<(RawImage icon, Text level)> weapons = new(), passives = new();
@@ -98,6 +103,7 @@ public class Hud : MonoBehaviour
         UiKit.Picture(purse.transform, "money", new Vector2(-44f, 0f), 30f);
         money = UiKit.Label(purse.transform, UiKit.Heading, 24, UiKit.Gold, TextAnchor.MiddleLeft, new Vector2(18f, 0f), new Vector2(86f, 30f), true);
         Slanted bag = UiKit.Panel(left, new Vector2(222f, -130f), new Vector2(140f, 40f), glass, glass, 0.12f);
+        bag.gameObject.SetActive(TrainSim.KitsInUse); // the medkits, put away for now
         UiKit.Picture(bag.transform, "medkit", new Vector2(-44f, 0f), 28f);
         kits = UiKit.Label(bag.transform, UiKit.Body, 18, Color.white, TextAnchor.MiddleLeft, new Vector2(18f, 0f), new Vector2(86f, 28f), true);
         // Square see-through boxes side by side, Vampire Survivors style: five drawn even when empty, one more for
@@ -129,7 +135,16 @@ public class Hud : MonoBehaviour
         ammoText = UiKit.Label(hero.transform, UiKit.Heading, 20, Color.white, TextAnchor.MiddleLeft, new Vector2(20f, 15f), new Vector2(250f, 26f), true);
         heroBar = new Meter(hero.transform, new Vector2(-13f, -14f), new Vector2(185f, 10f));
         heroText = UiKit.Label(hero.transform, UiKit.Body, 16, Color.white, TextAnchor.MiddleRight, new Vector2(122f, -14f), new Vector2(76f, 22f), true);
-        hintPanel = UiKit.Panel(right, new Vector2(-260f, -100f), new Vector2(520f, 32f), glass, glass, 0.12f);
+        // The ultimate: its own panel under the hero's, a wide bar that blazes in every colour once full.
+        ultimatePanel = UiKit.Panel(right, new Vector2(-175f, -100f), new Vector2(350f, 40f), glass, glass, 0.06f);
+        ultimateEdge = UiKit.Panel(ultimatePanel.transform, new Vector2(167f, 0f), new Vector2(5f, 40f), UiKit.Sky, UiKit.Sky, 0.06f);
+        UiKit.Label(ultimatePanel.transform, UiKit.Heading, 17, Color.white, TextAnchor.MiddleLeft, new Vector2(-125f, 0f), new Vector2(80f, 26f), true).text = "ULTI";
+        ultimateBar = new Meter(ultimatePanel.transform, new Vector2(10f, 0f), new Vector2(190f, 14f));
+        ultimateText = UiKit.Label(ultimatePanel.transform, UiKit.Heading, 17, Color.white, TextAnchor.MiddleRight, new Vector2(128f, 0f), new Vector2(70f, 26f), true);
+        hintPanel = UiKit.Panel(right, new Vector2(-260f, -144f), new Vector2(520f, 32f), glass, glass, 0.12f);
+        RectTransform top = UiKit.Group(canvas.transform, new Vector2(0.5f, 1f), new Vector2(0f, -22f));
+        Slanted killsPanel = UiKit.Panel(top, Vector2.zero, new Vector2(220f, 36f), glass, glass, 0.12f);
+        killsText = UiKit.Label(killsPanel.transform, UiKit.Heading, 22, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(200f, 30f), true);
         hint = UiKit.Label(hintPanel.transform, UiKit.Body, 15, dim, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(500f, 26f), true);
 
         world = UiKit.Group(canvas.transform, Vector2.zero, Vector2.zero);
@@ -201,7 +216,7 @@ public class Hud : MonoBehaviour
         if (bossPanel == null)
         {
             var glass = new Color(0.06f, 0.09f, 0.19f, 0.78f);
-            bossPanel = UiKit.Panel(canvas.transform, new Vector2(0f, -74f), new Vector2(780f, 84f), glass, glass, 0.1f);
+            bossPanel = UiKit.Panel(canvas.transform, new Vector2(0f, -100f), new Vector2(780f, 84f), glass, glass, 0.1f); // under the kill count
             bossPanel.rectTransform.anchorMin = bossPanel.rectTransform.anchorMax = new Vector2(0.5f, 1f);
             UiKit.Panel(bossPanel.transform, new Vector2(0f, 41f), new Vector2(780f, 6f), UiKit.Rose, UiKit.Rose, 0.1f);
             bossName = UiKit.Label(bossPanel.transform, UiKit.Heading, 30, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 22f), new Vector2(740f, 34f), true);
@@ -424,6 +439,29 @@ public class Hud : MonoBehaviour
         leg.text = train.LegLabel;
         tripBar.Set(train.LegProgress, false);
         kits.text = $"{train.Kits}  ·  {train.KitButton}";
+        killsText.text = L10n.T("hud.kills", train.Kills);
+        // The ultimate: sky blue while it fills; once full, the bar runs through every colour, the panel throbs and
+        // shows its button (dimmed while an alert holds it back).
+        ultimateBar.Set(train.UltimateFill, false);
+        bool ready = train.UltimateReady;
+        float now = Time.unscaledTime;
+        if (ready)
+        {
+            ultimateBar.colour.color = Color.HSVToRGB(Mathf.Repeat(now * 0.6f, 1f), 0.75f, 1f);
+            ultimateBar.colour.bottom = Color.HSVToRGB(Mathf.Repeat(now * 0.6f + 0.35f, 1f), 0.75f, 1f);
+            ultimateEdge.color = ultimateEdge.bottom = ultimateBar.colour.color;
+            ultimatePanel.rectTransform.localScale = Vector3.one * (1f + 0.04f * Mathf.Sin(now * 8f));
+            ultimateText.text = L10n.T("hud.ultimate", train.KitButton);
+            ultimateText.color = train.Alerting ? new Color(1f, 1f, 1f, 0.4f) : UiKit.Gold;
+        }
+        else
+        {
+            ultimateBar.colour.color = ultimateBar.colour.bottom = UiKit.Sky;
+            ultimateEdge.color = ultimateEdge.bottom = UiKit.Sky;
+            ultimatePanel.rectTransform.localScale = Vector3.one;
+            ultimateText.text = Mathf.RoundToInt(train.UltimateFill * 100f) + "%";
+            ultimateText.color = Color.white;
+        }
 
         heroBar.Set(hero.Health / hero.maxHealth);
         heroText.text = hero.Alive ? $"{hero.Health:0}/{hero.maxHealth:0}" : "0";

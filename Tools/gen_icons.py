@@ -62,6 +62,8 @@ ICONS = {
     'truck': 'armored orange truck with a rocket launcher on its back, military truck',
     'lever': 'railway switch lever, red handle, track junction lever',
     'chest': 'ornate golden treasure chest, closed, glowing gems, wooden with gold trim',
+    'chest_open': 'open golden treasure chest, gold and cream body with a green gem, lid raised up and tilted back, overflowing with gold coins, light rays bursting out of it',
+    'auto': 'robot arm loading wooden crates onto a small cargo wagon, gears, automatic loading, blue and orange',
     # hero stats
     'speed': 'winged boot, sneaker with wings, speed',
     'armor': 'shield, blue shield, metal trim',

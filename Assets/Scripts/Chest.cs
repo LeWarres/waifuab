@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-// A chest being opened (TrainSim.OpenChest), Vampire Survivors style. The game stops; the chest shakes and glows
+// A chest being opened (TrainSim.OpenChest), Vampire Survivors style. The game stops; the chest rocks from side to
+// side and glows
 // with rays in its colour (blue: one prize, gold: three, every colour: five), bursts open in a flash, and its prizes
 // come out one by one. Confirm (Space, Enter, A, a click) hurries it along, then closes it.
 public class Chest : MonoBehaviour
@@ -13,6 +14,7 @@ public class Chest : MonoBehaviour
     const float Shaking = 1.6f, Between = 0.5f;
     Canvas canvas;
     RectTransform chest, rays;
+    RawImage chestPicture; // closed while it shakes, open (Icons/chest_open) once it bursts
     readonly List<Slanted> beams = new();
     Slanted flash;
     Text title, hint;
@@ -20,6 +22,7 @@ public class Chest : MonoBehaviour
     readonly Queue<List<Prize>> queue = new();
     List<Prize> showing;
     float since, timeBefore = 1f;
+    bool opened;
 
     public bool Open => showing != null;
 
@@ -38,6 +41,8 @@ public class Chest : MonoBehaviour
         Time.timeScale = 0f;
         canvas.gameObject.SetActive(true);
         chest.gameObject.SetActive(true);
+        UiKit.SetIcon(chestPicture, "chest");
+        opened = false;
         title.text = L10n.T("chest.opening");
         hint.text = "";
         for (int i = 0; i < slots.Count; i++) slots[i].rect.gameObject.SetActive(false);
@@ -67,7 +72,8 @@ public class Chest : MonoBehaviour
             beam.rectTransform.localRotation = Quaternion.Euler(0f, 0f, i * 22.5f);
             beams.Add(beam);
         }
-        chest = UiKit.Picture(root, "chest", new Vector2(0f, 40f), 300f).rectTransform;
+        chestPicture = UiKit.Picture(root, "chest", new Vector2(0f, 40f), 300f);
+        chest = chestPicture.rectTransform;
         title = UiKit.Label(root, UiKit.Heading, 56, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 380f), new Vector2(1600f, 80f), true);
         hint = UiKit.Label(root, UiKit.Body, 24, new Color(0.85f, 0.9f, 1f, 0.85f), TextAnchor.MiddleCenter, new Vector2(0f, -430f), new Vector2(1600f, 40f), true);
         for (int i = 0; i < 5; i++)
@@ -111,21 +117,28 @@ public class Chest : MonoBehaviour
 
         if (since < Shaking)
         {
-            // Shaking harder and harder, swelling a little.
+            // Rocking from side to side, harder and harder, swelling a little.
             float k = since / Shaking;
-            chest.localRotation = Quaternion.Euler(0f, 0f, Mathf.Sin(since * 45f) * 12f * k);
+            chest.anchoredPosition = new Vector2(Mathf.Sin(since * 38f) * 22f * k, 40f);
+            chest.localRotation = Quaternion.Euler(0f, 0f, Mathf.Sin(since * 38f + 0.6f) * 9f * k);
             chest.localScale = Vector3.one * (1f + 0.25f * k + 0.04f * Mathf.Sin(since * 30f));
             flash.color = new Color(1f, 1f, 1f, 0f);
             return;
         }
-        if (chest.gameObject.activeSelf)
+        if (!opened)
         {
-            chest.gameObject.SetActive(false);
+            // The burst: it is open now, and stays up behind its prizes.
+            opened = true;
+            UiKit.SetIcon(chestPicture, "chest_open");
+            chest.localRotation = Quaternion.identity;
             Sound.Play("wagongood");
             title.text = L10n.T(showing.Count >= 5 ? "chest.legendary" : showing.Count >= 3 ? "chest.rare" : "chest.common");
         }
         title.color = tone;
         flash.color = new Color(1f, 1f, 1f, Mathf.Clamp01(1f - (since - Shaking) / 0.45f));
+        float open = Mathf.Clamp01((since - Shaking) / 0.35f);                          // it jumps open, then settles up top
+        chest.anchoredPosition = new Vector2(0f, Mathf.Lerp(40f, 165f, Mathf.SmoothStep(0f, 1f, open)));
+        chest.localScale = Vector3.one * (open < 0.4f ? Mathf.Lerp(1.25f, 1.45f, open / 0.4f) : Mathf.Lerp(1.45f, 1f, (open - 0.4f) / 0.6f));
 
         // The prizes, one by one, in a row: each pops out a little too big, then settles.
         for (int i = 0; i < showing.Count; i++)

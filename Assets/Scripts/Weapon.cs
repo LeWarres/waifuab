@@ -50,7 +50,9 @@ public class Weapon
     // A fanning weapon: one way up to level 2, two at level 3, three at 4, five at 5. The first shot is the aimed
     // one; the others leave evenly round it and fly free, hitting whatever they meet.
     // Evolved, it fans no more: it has its own special instead (the Plasma Comet, the Barrage, the Prism).
-    public int Directions(int level) => !fan || level < 3 || level >= Evolved ? 1 : level == 3 ? 2 : level == 4 ? 3 : 5;
+    public int Directions(int level) => !fan || level < 3 || level >= Evolved ? 1 : level == 3 ? 2 : 3;
+    // The way the n-th of those leaves, in degrees off the aimed one: all forward, side by side.
+    public static float Spread(int way) => way == 0 ? 0f : way == 1 ? 14f : -14f;
 
     // Level 1 output is close to 4-8 damage per second each; they differ in reach and in how they handle crowds.
     // The road is thick with enemies, so nothing stays a one-enemy weapon as it evolves: every level it shoots at

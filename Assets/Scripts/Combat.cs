@@ -93,21 +93,24 @@ public class Combat : MonoBehaviour
         public bool spawner;                    // releases a larva
 
         public Mesh customMesh;                  // override the mesh used to draw this enemy type (projectiles, etc.)
+        public string model;                     // a model of its own in its own colours (Models/<model>): drawn untinted
+        public bool flies;                       // with a model of its own: it hovers (else it walks on the ground)
 
         Batch batch;
         // Enemies are robots, loot is a balloon carrying its cargo (Tools/make_enemies.py, Tools/make_cargo.py).
-        public Batch Batch => batch ??= new Batch(color, true, customMesh ? customMesh : Resources.Load<Mesh>(loot >= 0 ? "Models/Balloon_" + loot : "Models/Enemy_" + Shape));
+        public Batch Batch => batch ??= new Batch(model != null ? Color.white : color, true,
+            customMesh ? customMesh : Resources.Load<Mesh>(model != null ? "Models/" + model : loot >= 0 ? "Models/Balloon_" + loot : "Models/Enemy_" + Shape));
 
         // Which robot it looks like, read off what it does: the look tells the player what to expect.
         public string Shape =>
             heal > 0f ? "drone" : spawner || split > 0 ? "hive" : blink > 0f ? "orb"
             : ranged > 0f && health < 20f ? "saucer" : armor > 0f || health >= 15f ? "walker" : explode > 0f ? "mine"
             : speed >= 7f ? "dart" : chargeRange > 0f || health >= 8f ? "diamond" : "saucer";
-        public bool Flies => Shape is "saucer" or "drone" or "orb" or "diamond" or "mine";
-        public bool Spins => Shape is "diamond" or "mine" or "orb";
+        public bool Flies => model != null ? flies : Shape is "saucer" or "drone" or "orb" or "diamond" or "mine";
+        public bool Spins => model == null && Shape is "diamond" or "mine" or "orb"; // a model of its own faces its way
     }
 
-    static readonly EnemyType Larva = new EnemyType { name = "Larva", color = new Color(0.7f, 0.9f, 0.3f), health = 1.5f, speed = 7f, damage = 2f, size = 0.5f };
+    static readonly EnemyType Larva = new EnemyType { name = "Larva", color = new Color(0.7f, 0.9f, 0.3f), health = 1.5f, speed = 7f, damage = 2f, size = 0.5f, model = "Enemy_larva" };
 
     // A mini boss, like Vampire Survivors' elites: a big armoured walker that comes every so often (miniBossEvery
     // seconds of riding). It does not break on the train: it rams one wagon, backs off, then goes for another (or
@@ -117,11 +120,13 @@ public class Combat : MonoBehaviour
     {
         name = "MiniBoss", color = new Color(1f, 0.72f, 0.15f), health = 40f, speed = 1.8f, damage = 8f, size = 2.8f,
         reward = 40, armor = 1f, slowImmune = true,
+        model = "Enemy_miniboss", // Tools/make_mechs.py
     };
-    [System.NonSerialized] public float miniBossEvery = 90f;
-    float miniBossTimer = 240f; // the first comes four minutes in, once there is something to fight it with
+    [System.NonSerialized] public float miniBossEvery = 70f;
+    float miniBossTimer = 75f;  // the first comes a minute and a quarter in: weak then (its health grows with the level)
     Enemy miniBoss;
     int miniBossId;
+    float miniBossLeft = 1f; // share of its health a withdrawn mini boss comes back with
     const int Ram = 0, BackOff = 1, Chase = 2;
     int bossMode, bossWagon;
     float bossModeLeft;
@@ -130,36 +135,36 @@ public class Combat : MonoBehaviour
     public static readonly EnemyType[] Types =
     {
         // Everywhere
-        new EnemyType { name = "Normal", color = new Color(0.2f, 0.6f, 0.2f), health = 3f, speed = 4f, damage = 5f, size = 1f, weight = 1f },
-        new EnemyType { name = "Rápido", color = new Color(1f, 0.8f, 0.1f), health = 2f, speed = 8f, damage = 3f, size = 0.7f, firstLevel = 2, weight = 0.5f },
-        new EnemyType { name = "Tanque", color = new Color(0.5f, 0.1f, 0.6f), health = 12f, speed = 2.5f, damage = 12f, size = 1.6f, reward = 3, firstLevel = 4, weight = 0.2f },
+        new EnemyType { name = "Normal", color = new Color(0.2f, 0.6f, 0.2f), health = 3f, speed = 4f, damage = 5f, size = 1f, weight = 1f, model = "Enemy_gunship", flies = true }, // Tools/make_gunship.py
+        new EnemyType { name = "Rápido", color = new Color(1f, 0.8f, 0.1f), health = 2f, speed = 8f, damage = 3f, size = 0.7f, firstLevel = 2, weight = 0.5f, model = "Enemy_fast", flies = true },
+        new EnemyType { name = "Tanque", color = new Color(0.5f, 0.1f, 0.6f), health = 12f, speed = 2.5f, damage = 12f, size = 1.6f, reward = 3, firstLevel = 4, weight = 0.2f, model = "Enemy_brute" }, // Tools/make_brute.py
         // Desierto
-        new EnemyType { name = "Bomba", biome = 0, color = new Color(1f, 0.3f, 0.1f), health = 4f, speed = 5f, damage = 4f, size = 0.9f, firstLevel = 1, weight = 0.3f, explode = 3.5f, explodeDamage = 8f },
-        new EnemyType { name = "Embestidor", biome = 0, color = new Color(0.45f, 0.3f, 0.15f), health = 6f, speed = 3f, damage = 8f, size = 1.1f, firstLevel = 3, weight = 0.25f, chargeRange = 14f, chargeSpeed = 4f },
+        new EnemyType { name = "Bomba", biome = 0, color = new Color(1f, 0.3f, 0.1f), health = 4f, speed = 5f, damage = 4f, size = 0.9f, firstLevel = 1, weight = 0.3f, explode = 3.5f, explodeDamage = 8f, model = "Enemy_bomb" },
+        new EnemyType { name = "Embestidor", biome = 0, color = new Color(0.45f, 0.3f, 0.15f), health = 6f, speed = 3f, damage = 8f, size = 1.1f, firstLevel = 3, weight = 0.25f, chargeRange = 14f, chargeSpeed = 4f, model = "Enemy_charger" },
         // Nieve
-        new EnemyType { name = "Yeti", biome = 1, color = new Color(0.8f, 0.9f, 1f), health = 18f, speed = 3f, damage = 10f, size = 1.5f, reward = 3, weight = 0.2f, regen = 3f },
-        new EnemyType { name = "Lobo", biome = 1, color = new Color(0.45f, 0.5f, 0.55f), health = 1.5f, speed = 9f, damage = 2f, size = 0.6f, weight = 0.2f, pack = 4 },
+        new EnemyType { name = "Yeti", biome = 1, color = new Color(0.8f, 0.9f, 1f), health = 18f, speed = 3f, damage = 10f, size = 1.5f, reward = 3, weight = 0.2f, regen = 3f, model = "Enemy_yeti" },
+        new EnemyType { name = "Lobo", biome = 1, color = new Color(0.45f, 0.5f, 0.55f), health = 1.5f, speed = 9f, damage = 2f, size = 0.6f, weight = 0.2f, pack = 4, model = "Enemy_wolf", flies = true },
         // Jungla
-        new EnemyType { name = "Nido", biome = 2, color = new Color(0.1f, 0.3f, 0.1f), health = 10f, speed = 3f, damage = 6f, size = 1.4f, reward = 2, weight = 0.25f, split = 3 },
-        new EnemyType { name = "Escupidor", biome = 2, color = new Color(0.6f, 1f, 0.2f), health = 4f, speed = 4f, damage = 3f, size = 0.9f, weight = 0.25f, ranged = 12f, interval = 1.5f },
+        new EnemyType { name = "Nido", biome = 2, color = new Color(0.1f, 0.3f, 0.1f), health = 10f, speed = 3f, damage = 6f, size = 1.4f, reward = 2, weight = 0.25f, split = 3, model = "Enemy_nest" },
+        new EnemyType { name = "Escupidor", biome = 2, color = new Color(0.6f, 1f, 0.2f), health = 4f, speed = 4f, damage = 3f, size = 0.9f, weight = 0.25f, ranged = 12f, interval = 1.5f, model = "Enemy_spitter" },
         // Volcán
-        new EnemyType { name = "Pez volador", biome = 3, color = new Color(0.2f, 0.85f, 0.95f), health = 2f, speed = 9f, damage = 2f, size = 0.6f, weight = 0.3f, pack = 3 },
-        new EnemyType { name = "Boya mina", biome = 3, color = new Color(0.95f, 0.3f, 0.2f), health = 7f, speed = 3f, damage = 5f, size = 1.1f, weight = 0.22f, explode = 3f, explodeDamage = 7f },
+        new EnemyType { name = "Pez volador", biome = 3, color = new Color(0.2f, 0.85f, 0.95f), health = 2f, speed = 9f, damage = 2f, size = 0.6f, weight = 0.3f, pack = 3, model = "Enemy_fish", flies = true },
+        new EnemyType { name = "Boya mina", biome = 3, color = new Color(0.95f, 0.3f, 0.2f), health = 7f, speed = 3f, damage = 5f, size = 1.1f, weight = 0.22f, explode = 3f, explodeDamage = 7f, model = "Enemy_buoy" },
 
-        new EnemyType { name = "Gólem", biome = 4, color = new Color(0.35f, 0.05f, 0.02f), health = 25f, speed = 2f, damage = 15f, size = 1.8f, reward = 4, weight = 0.2f, armor = 1f },
-        new EnemyType { name = "Diablillo", biome = 4, color = new Color(1f, 0.1f, 0.1f), health = 3f, speed = 9f, damage = 3f, size = 0.6f, weight = 0.35f, explode = 2.5f, explodeDamage = 5f, slowImmune = true },
+        new EnemyType { name = "Gólem", biome = 4, color = new Color(0.35f, 0.05f, 0.02f), health = 25f, speed = 2f, damage = 15f, size = 1.8f, reward = 4, weight = 0.2f, armor = 1f, model = "Enemy_golem" },
+        new EnemyType { name = "Diablillo", biome = 4, color = new Color(1f, 0.1f, 0.1f), health = 3f, speed = 9f, damage = 3f, size = 0.6f, weight = 0.35f, explode = 2.5f, explodeDamage = 5f, slowImmune = true, model = "Enemy_imp", flies = true },
         // Espacio
-        new EnemyType { name = "Pandillero", biome = 5, color = new Color(1f, 0.85f, 0.1f), health = 3f, speed = 8f, damage = 3f, size = 0.7f, weight = 0.3f, pack = 3 },
-        new EnemyType { name = "Blindado", biome = 5, color = new Color(0.2f, 0.25f, 0.35f), health = 22f, speed = 2.5f, damage = 8f, size = 1.5f, reward = 4, weight = 0.2f, ranged = 14f, interval = 2f, armor = 0.8f },
+        new EnemyType { name = "Pandillero", biome = 5, color = new Color(1f, 0.85f, 0.1f), health = 3f, speed = 8f, damage = 3f, size = 0.7f, weight = 0.3f, pack = 3, model = "Enemy_gang" },
+        new EnemyType { name = "Blindado", biome = 5, color = new Color(0.2f, 0.25f, 0.35f), health = 22f, speed = 2.5f, damage = 8f, size = 1.5f, reward = 4, weight = 0.2f, ranged = 14f, interval = 2f, armor = 0.8f, model = "Enemy_armored" },
 
-        new EnemyType { name = "Fantasma", biome = 6, color = new Color(0.7f, 1f, 1f), health = 6f, speed = 3f, damage = 8f, size = 1f, weight = 0.3f, blink = 7f, interval = 2f },
-        new EnemyType { name = "Dron sanador", biome = 6, color = new Color(1f, 0.5f, 0.8f), health = 8f, speed = 3.5f, damage = 2f, size = 0.8f, reward = 2, weight = 0.2f, heal = 4f, healRadius = 7f, interval = 0.5f },
+        new EnemyType { name = "Fantasma", biome = 6, color = new Color(0.7f, 1f, 1f), health = 6f, speed = 3f, damage = 8f, size = 1f, weight = 0.3f, blink = 7f, interval = 2f, model = "Enemy_ghost", flies = true },
+        new EnemyType { name = "Dron sanador", biome = 6, color = new Color(1f, 0.5f, 0.8f), health = 8f, speed = 3.5f, damage = 2f, size = 0.8f, reward = 2, weight = 0.2f, heal = 4f, healRadius = 7f, interval = 0.5f, model = "Enemy_healer", flies = true },
         // Planeta alienígena
-        new EnemyType { name = "Colmena", biome = 7, color = new Color(0.4f, 0.5f, 0.1f), health = 30f, speed = 1.5f, damage = 10f, size = 2f, reward = 5, weight = 0.15f, spawner = true, interval = 2.5f },
-        new EnemyType { name = "Saboteador", biome = 7, color = new Color(0f, 0.6f, 0.6f), health = 5f, speed = 7f, damage = 2f, size = 0.8f, weight = 0.3f, stun = 5f },
+        new EnemyType { name = "Colmena", biome = 7, color = new Color(0.4f, 0.5f, 0.1f), health = 30f, speed = 1.5f, damage = 10f, size = 2f, reward = 5, weight = 0.15f, spawner = true, interval = 2.5f, model = "Enemy_hive" },
+        new EnemyType { name = "Saboteador", biome = 7, color = new Color(0f, 0.6f, 0.6f), health = 5f, speed = 7f, damage = 2f, size = 0.8f, weight = 0.3f, stun = 5f, model = "Enemy_saboteur", flies = true },
         // Fortaleza alienígena
-        new EnemyType { name = "Centinela", biome = 8, color = new Color(0.5f, 0.55f, 0.6f), health = 15f, speed = 3f, damage = 5f, size = 1.2f, reward = 3, weight = 0.3f, ranged = 16f, interval = 1.2f, armor = 1f },
-        new EnemyType { name = "Coloso", biome = 8, color = new Color(0.1f, 0.1f, 0.12f), health = 60f, speed = 2f, damage = 25f, size = 2.5f, reward = 8, weight = 0.12f, explode = 6f, explodeDamage = 15f, chargeRange = 10f, chargeSpeed = 2.5f },
+        new EnemyType { name = "Centinela", biome = 8, color = new Color(0.5f, 0.55f, 0.6f), health = 15f, speed = 3f, damage = 5f, size = 1.2f, reward = 3, weight = 0.3f, ranged = 16f, interval = 1.2f, armor = 1f, model = "Enemy_sentinel" },
+        new EnemyType { name = "Coloso", biome = 8, color = new Color(0.1f, 0.1f, 0.12f), health = 60f, speed = 2f, damage = 25f, size = 2.5f, reward = 8, weight = 0.12f, explode = 6f, explodeDamage = 15f, chargeRange = 10f, chargeSpeed = 2.5f, model = "Enemy_colossus" },
     };
 
     // Floating goods, one per kind of cargo. Not enemies: they drift by, ignore the train, and only the hero can break them.
@@ -286,6 +291,74 @@ public class Combat : MonoBehaviour
         Burst(weapon.id, centre.position, 2f);
         Hurt(centre, damage);
     }
+    // The ultimate (BBA's): a shot into the sky, then five giant balls of the same colour fall one after another,
+    // each somewhere else in the picture, and crush everything around where they land.
+    struct Meteor { public Vector3 at; public float landAt; public Batch look; public Weapon weapon; }
+    readonly List<Meteor> meteors = new();
+    readonly Dictionary<Weapon, Batch> meteorLooks = new();
+    readonly Batch meteorMark = new Batch(new Color(1f, 0.25f, 0.2f), false, round: true, glow: 2f); // where it will land
+    const float MeteorFall = 1.1f, MeteorDelay = 0.7f, MeteorRadius = 9f, MeteorHeight = 45f, MeteorGap = 0.45f;
+    const int MeteorCount = 5;
+
+    public void Ultimate(Vector3 from, Weapon weapon)
+    {
+        // The shot up: a tall glowing column from the hero, a flash at her feet.
+        Spawn(from + Vector3.up * 20f, new Vector3(0.7f, 40f, 0.7f), weapon.Batch, 0.35f);
+        Burst("levelup", from, 2.5f);
+        train.Shake(0.25f);
+        if (!meteorLooks.TryGetValue(weapon, out Batch look))
+            meteorLooks[weapon] = look = new Batch(weapon.color, false, Resources.GetBuiltinResource<Mesh>("Sphere.fbx"), glow: 3f);
+        // Five of them, one after another, each somewhere else on the ground the camera sees: the picture is cut into
+        // five strips across and each ball falls in one of them, in a shuffled order, away from the very edges.
+        var ground = new Plane(Vector3.up, Vector3.zero);
+        int[] order = { 0, 1, 2, 3, 4 };
+        for (int k = order.Length - 1; k > 0; k--) { int j = Random.Range(0, k + 1); (order[k], order[j]) = (order[j], order[k]); }
+        for (int k = 0; k < MeteorCount; k++)
+        {
+            float x = 0.12f + (order[k] + Random.Range(0.15f, 0.85f)) * 0.76f / MeteorCount;
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(x, Random.Range(0.2f, 0.75f), 0f));
+            Vector3 at = ground.Raycast(ray, out float hit) ? ray.GetPoint(hit) : from;
+            meteors.Add(new Meteor { at = at, landAt = Time.time + MeteorDelay + MeteorFall + k * MeteorGap, look = look, weapon = weapon });
+        }
+    }
+
+    void Meteors()
+    {
+        for (int i = meteors.Count - 1; i >= 0; i--)
+        {
+            Meteor m = meteors[i];
+            float left = m.landAt - Time.time;
+            if (left > MeteorFall) continue; // still going up
+            if (left > 0f)
+            {
+                // Falling, the ball and a trail of smaller ones above it; a mark on the ground where it will land.
+                float h = MeteorHeight * left / MeteorFall;
+                m.look.Add(m.at + Vector3.up * (h + 3f), Vector3.one * 7f, Quaternion.Euler(Time.time * 120f, Time.time * 90f, 0f));
+                for (int k = 1; k <= 4; k++) m.look.Add(m.at + Vector3.up * (h + 3f + k * 3.2f), Vector3.one * (7f - k * 1.4f), Quaternion.identity);
+                float grow = 1f - left / MeteorFall;
+                meteorMark.Add(new Vector3(m.at.x, 0.06f, m.at.z), new Vector3(MeteorRadius, 0.02f, MeteorRadius) * (0.3f + 0.7f * grow), Quaternion.identity);
+                continue;
+            }
+            // Down: everything around is crushed.
+            heroHit = true;
+            float damage = 90f * Balance.Scale * (1f + healthPerLevel * level);
+            for (int j = enemies.Count - 1; j >= 0; j--)
+            {
+                Vector3 d = enemies[j].position - m.at;
+                if (d.x * d.x + d.z * d.z <= MeteorRadius * MeteorRadius) Hurt(enemies[j], damage, false);
+            }
+            heroHit = false;
+            Burst("grenade", m.at, 9f);
+            Burst("rocket", m.at, 7f);
+            Ring(m.at, MeteorRadius, m.look);
+            Ring(m.at, MeteorRadius * 0.6f, m.look);
+            train.Shake(0.45f);
+            meteors.RemoveAt(i);
+        }
+        foreach (Batch b in meteorLooks.Values) b.Flush();
+        meteorMark.Flush();
+    }
+
     readonly Batch healRing = new Batch(new Color(0.5f, 1f, 0.45f), false, glow: 3f);        // the Solar Heart's mending beat
     readonly Batch dragonDark = new Batch(new Color(0.05f, 0.14f, 0.55f), false);             // the Masamune dragon's deep blue hide, outlined
     readonly Batch dragonScale = new Batch(new Color(0.2f, 0.5f, 1f), false, glow: 1.4f);   // its scales, a lighter blue
@@ -374,12 +447,14 @@ public class Combat : MonoBehaviour
             // Shots still in the air (ours, and the guns' bolts) fade out; nothing else moves.
             for (int i = bullets.Count - 1; i >= 0; i--)
                 if ((bullets[i].life -= Time.unscaledDeltaTime * (bullets[i].batch == stationShot ? 1f : 6f)) <= 0f) RemoveBullet(i);
-            // A mini boss withdraws rather than face the station's guns; it is back right after.
+            // A mini boss withdraws rather than face the station's guns; the same one is back as the train leaves,
+            // as worn as it was, and so on until it is beaten.
             if (miniBoss != null && miniBoss.id == miniBossId)
             {
+                miniBossLeft = miniBoss.hp / miniBoss.maxHp;
                 RemoveEnemy(miniBoss.index);
                 miniBoss = null;
-                miniBossTimer = 8f;
+                miniBossTimer = 1.5f;
             }
             // Only what is in the picture is worth the guns' time: whoever is out of it is simply gone.
             Camera view = Camera.main;
@@ -434,15 +509,21 @@ public class Combat : MonoBehaviour
         if (miniBoss == null && !calm && !train.BossFight && (miniBossTimer -= dt) <= 0f)
         {
             miniBossTimer = miniBossEvery;
-            float angle = Random.value * Mathf.PI * 2f, far = RingRadius();
-            miniBoss = Add(MiniBoss, train.Focus + new Vector3(Mathf.Cos(angle) * far, 0f, Mathf.Sin(angle) * far));
+            // Always from one side of the train, never ahead of it or behind.
+            Vector3 along = train.Forward(train.CarCount / 2);
+            along.y = 0f;
+            along.Normalize();
+            Vector3 across = Vector3.Cross(Vector3.up, along) * (Random.value < 0.5f ? 1f : -1f);
+            miniBoss = Add(MiniBoss, train.Focus + across * RingRadius() + along * Random.Range(-8f, 8f));
             miniBossId = miniBoss.id;
-            miniBoss.hp = miniBoss.maxHp *= 1f + 0.15f * level; // weak while the weapons are, much tougher later
+            miniBoss.maxHp *= 1f + 0.15f * level; // weak while the weapons are, much tougher later
+            miniBoss.hp = miniBoss.maxHp * miniBossLeft; // one that withdrew comes back as worn as it went
+            miniBossLeft = 1f;
             bossMode = Ram;
             bossWagon = RandomWagon(-1);
             train.Toast(L10n.T("miniboss.coming", TauntKey));
         }
-        if (miniBoss != null && !train.BossFight) train.BossBar(L10n.T("miniboss.name"), miniBoss.hp / miniBoss.maxHp);
+        if (miniBoss != null && !train.BossFight && OnScreen(miniBoss.position)) train.BossBar(L10n.T("miniboss.name"), miniBoss.hp / miniBoss.maxHp); // once it is in the picture
 
         lootTimer -= dt;
         if (lootTimer <= 0f)
@@ -476,8 +557,10 @@ public class Combat : MonoBehaviour
             // Each goes for a wagon of its own; one that runs into another wagon on the way hits that one.
             int wagon = train.WagonFor(e.pick, e.position, out Vector3 toWagon);
             if (wagon < 0) break; // train destroyed
+            // Whatever wagon it reaches first is the one it hits, its own or another on the way: it never goes
+            // through the train.
             int near = train.ClosestWagon(e.position, out Vector3 toNear);
-            if (near != wagon && toNear.sqrMagnitude < (t.size * 0.5f + 0.5f) * (t.size * 0.5f + 0.5f)) { wagon = near; toWagon = toNear; }
+            if (near != wagon && toNear.sqrMagnitude < (t.size * 0.5f + 0.8f) * (t.size * 0.5f + 0.8f)) { wagon = near; toWagon = toNear; }
             e.position -= train.Forward(wagon) * drift; // along the track where its wagon is, so it holds through a curve
             float sqr = toWagon.sqrMagnitude, radius = t.size * 0.5f;
             if (calm)
@@ -545,7 +628,11 @@ public class Combat : MonoBehaviour
             float speed = t.speed;
             if (t.chargeRange > 0f && sqr <= t.chargeRange * t.chargeRange) speed *= t.chargeSpeed;
             if (now < e.slowUntil) speed *= 0.5f;
-            e.position += toWagon * (speed * dt / Mathf.Sqrt(sqr));
+            // Never further in one step than the wagon ahead, nor than any wagon on the way: a fast one (or a long
+            // frame) used to step clean over the train. It stops at the wagon's side and hits it next frame.
+            float dist = Mathf.Sqrt(sqr), stop = Mathf.Max(0f, dist - radius * 0.8f);
+            if (near != wagon) stop = Mathf.Min(stop, Mathf.Max(0f, toNear.magnitude - radius * 0.8f));
+            e.position += toWagon * (Mathf.Min(speed * dt, stop) / dist);
         }
         ResolveBlasts(calm ? 0f : damageScale);
 
@@ -718,6 +805,7 @@ public class Combat : MonoBehaviour
             t.Batch.Add(at, Vector3.one * (t.size * ModelScale), facing);
         }
         foreach (Bullet b in bullets) DrawBullet(b, clock);
+        Meteors();
         if (player && player.Alive && player.ammo.id == "smg" && player.level >= Weapon.Evolved)
             for (int k = 0; k < 2; k++)
             {
@@ -783,7 +871,7 @@ public class Combat : MonoBehaviour
     // nudged around it, so the mark reads as a lumpy stain and not a clean circle.
     void DrawStains()
     {
-        float scroll = train.Scroll, behind = -train.viewRange;
+        float scroll = train.GroundScroll, behind = -train.viewRange;
         for (int i = stains.Count - 1; i >= 0; i--)
         {
             Stain s = stains[i];
@@ -956,6 +1044,12 @@ public class Combat : MonoBehaviour
         for (int i = 0; i < train.CarCount; i++)
             if (train.CarAlive(i) && i != but && Random.Range(0, ++count) == 0) pick = i;
         return pick >= 0 ? pick : but >= 0 && but < train.CarCount && train.CarAlive(but) ? but : -1;
+    }
+
+    static bool OnScreen(Vector3 at)
+    {
+        Vector3 seen = Camera.main.WorldToViewportPoint(at);
+        return seen.z > 0f && seen.x > 0f && seen.x < 1f && seen.y > 0f && seen.y < 1f;
     }
 
     float RingRadius()
@@ -1402,7 +1496,7 @@ public class Combat : MonoBehaviour
                     else if (evolved) // the Prism: three thick beams fanned a little, red, green and blue
                         for (int k = 0; k < 3; k++) Beam(from, Quaternion.Euler(0f, (k - 1) * 9f, 0f) * flat.normalized, weapon, level, prism[k]);
                     else
-                        for (int way = 0; way < ways; way++) Beam(from, Quaternion.Euler(0f, way * 360f / ways, 0f) * flat.normalized, weapon, level);
+                        for (int way = 0; way < ways; way++) Beam(from, Quaternion.Euler(0f, Weapon.Spread(way), 0f) * flat.normalized, weapon, level);
                 }
             }
             else
@@ -1494,7 +1588,7 @@ public class Combat : MonoBehaviour
                     Bullet b = Spawn(from, Vector3.one * 0.25f, weapon.Batch, weapon.range / weapon.speed);
                     b.free = true;
                     b.weapon = weapon;
-                    b.velocity = Quaternion.Euler(0f, way * 360f / ways, 0f) * aimed * weapon.speed;
+                    b.velocity = Quaternion.Euler(0f, Weapon.Spread(way), 0f) * aimed * weapon.speed;
                     b.style = weapon.style;
                     b.phase = Random.Range(-1f, 1f);
                     b.level = level;
@@ -1691,6 +1785,7 @@ public class Combat : MonoBehaviour
         e.hp -= applied;
         if (applied > 0f) train.DamageNumber(e.position + Vector3.up * (e.type.size + 0.5f), applied, false, critical);
         if (e.hp > 0f) return;
+        if (e.type.loot < 0) train.Charge(); // a kill counts and fills the ultimate (the station's guns kill elsewhere: they do not)
         if (e.type == MiniBoss)
         {
             MiniBossesBeaten++;

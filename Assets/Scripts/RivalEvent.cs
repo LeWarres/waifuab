@@ -207,7 +207,7 @@ public class RivalEvent : MonoBehaviour
         // speed of the ground.
         phase += dt * (kind == Overheated ? 0.08f : 0.35f);
         root.position = centre + along * (Mathf.Sin(phase) * slide);
-        sleeperOffset = Mathf.Repeat(sleeperOffset - train.Scroll, SleeperSpacing);
+        sleeperOffset = Mathf.Repeat(sleeperOffset - train.GroundScroll, SleeperSpacing);
         for (int i = 0; i < sleepers.Count; i++) sleepers[i].localPosition = Vector3.right * (i * SleeperSpacing + sleeperOffset);
         body.position = EnginePosition;
 

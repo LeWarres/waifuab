@@ -2142,6 +2142,58 @@ MonoBehaviour:
     m_Localized: 'Espacio / A / clic: continuar'
     m_Metadata:
       m_Items: []
+  - m_Id: 3081064123019264
+    m_Localized: "Continuar \xB7 Cap. {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3081064164962304
+    m_Localized: "Partida cargada: seguimos desde la \xFAltima estaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3083536061247488
+    m_Localized: "\xBFEmpezar una nueva historia?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3083536098996224
+    m_Localized: "Se borrar\xE1 la partida guardada (cap\xEDtulo {0}) y todo lo que
+      pasaba al siguiente bioma"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3083536098996225
+    m_Localized: "Espacio / A: s\xED, empezar   \xB7   Esc / B: no, volver"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3124708779569152
+    m_Localized: "Cargar partida \xB7 Cap. {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3124708813123584
+    m_Localized: "Cargar partida (vac\xEDo)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3124708813123585
+    m_Localized: Opciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3132248192004096
+    m_Localized: "\xA1{0}!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3134190729375744
+    m_Localized: "\xA1ULTIMATE LISTA!  Pulsa {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3137546868830208
+    m_Localized: 'Auto
+
+      Llena hasta 3 vagones con lo que alcance (armas primero,
+      nunca gasolina)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3140534337351680
+    m_Localized: 'Kills: {0}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

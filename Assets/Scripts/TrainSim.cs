@@ -42,6 +42,7 @@ public class TrainSim : MonoBehaviour
     [Header("Shop")]
     [System.NonSerialized] public int kitCost = 80;
     public float kitHeal = 20f;                         // a kit repairs every standing wagon and the hero, on the road
+    public const bool KitsInUse = false;                // medkits are put away for now (not sold, not shown, the button is the ultimate's)
     public int maxKits = 3;
     [System.NonSerialized] public int wagonCost = 260, wagonCostStep = 140;       // first armed wagon, and how much dearer each next one is
     [System.NonSerialized] public int containerCost = 190, containerCostStep = 95; // same for the permanent cargo wagons
@@ -96,6 +97,10 @@ public class TrainSim : MonoBehaviour
     // How far the world slid backwards past the train this frame: the distance the ground, rails and
     // everything on them scroll by. Debris (Combat's stains) needs it to stay glued to the ground.
     public float Scroll { get; private set; }
+    // How fast the world looks to go by: the ground, sleepers, scenery and whatever lies on the ground slide this
+    // many times faster than the train really runs, while distances and times (legs, stations, events) stay true.
+    [System.NonSerialized] public float rush = 2.4f;
+    public float GroundScroll => Scroll * rush;
     public bool AtStation { get; private set; }
     public int Stations { get; private set; } // stations reached so far, drives the difficulty
     public Player Player { get; private set; }
@@ -156,6 +161,21 @@ public class TrainSim : MonoBehaviour
     public string LegLabel => LegName(leg);
     public float LegProgress => AtStation ? 1f : 1f - remaining / LegLength;
     public int Kits => kits;
+
+    // The ultimate: charged by enemies shot down (not by the station's guns), fired with the kit's old button.
+    [System.NonSerialized] public float ultimateKills = 450f; // a strong attack: it takes a good while to earn again
+    float ultimateCharge;
+    public float UltimateFill => Mathf.Clamp01(ultimateCharge / ultimateKills);
+    public bool UltimateReady => ultimateCharge >= ultimateKills;
+    public int Kills { get; private set; } // enemies shot down this run (the station's guns do not count)
+    public void Charge()
+    {
+        Kills++;
+        if (!UltimateReady && ++ultimateCharge >= ultimateKills) { Sound.Play("newcard"); ultimateAnnounce = true; }
+    }
+    bool ultimateAnnounce; // "ultimate ready" is still to be said, as soon as nothing else is on screen
+    // A button game, a warning, a swarm coming or a talk is on: the ultimate (and its announcement) waits.
+    public bool Alerting => InEvent || Warning || swarm.Incoming || talk.Open;
     public string KitButton => !Player.UsingGamepad ? "R" : Gamepad.current is DualShockGamepad ? "△" : "Y";
     public float CarFill(int i) => cars[i].health / cars[i].maxHealth;
     public Vector3 CarTop(int i) => cars[i].pos + Vector3.up * (1.5f + wagonSize.y);
@@ -1103,14 +1123,27 @@ public class TrainSim : MonoBehaviour
         shake = Mathf.Max(0f, shake - Time.unscaledDeltaTime);
         view.transform.position = Focus - view.transform.forward * 60f + Random.insideUnitSphere * shake * 1.5f;
 
-        // Repair kit: triangle / Y on a gamepad, R on the keyboard. Not at stations and not mid-sequence.
-        // ponytail: reads the devices directly, like the curve's button sequence.
-        if (kits > 0 && !AtStation && !InEvent && !Paused && !mainMenu && Health > 0f &&
-            ((Gamepad.current != null && Gamepad.current.buttonNorth.wasPressedThisFrame) || (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)))
+        // Triangle / Y on a gamepad, R on the keyboard: the ultimate once charged (or, were they in use, a repair kit).
+        // Not at stations and not mid-sequence. ponytail: reads the devices directly, like the curve's button sequence.
+        if (ultimateAnnounce && UltimateReady && !Alerting && !hud.Toasting && !AtStation && !Paused)
         {
-            kits--;
-            Repair(kitHeal);
-            Player.Heal(kitHeal);
+            ultimateAnnounce = false;
+            hud.Toast(L10n.T("ultimate.ready", KitButton), 2.5f);
+        }
+        bool special = (Gamepad.current != null && Gamepad.current.buttonNorth.wasPressedThisFrame) || (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame);
+        if (special && !AtStation && !InEvent && !Paused && !mainMenu && Health > 0f)
+        {
+            if (KitsInUse && kits > 0)
+            {
+                kits--;
+                Repair(kitHeal);
+                Player.Heal(kitHeal);
+            }
+            else if (UltimateReady && Player.Alive && !Alerting)
+            {
+                ultimateCharge = 0f;
+                Combat.Instance.Ultimate(Player.Position, Player.ammo);
+            }
         }
 
         if (deliveryReport) deliveryReport.SetVisible(!Paused);
@@ -1161,21 +1194,22 @@ public class TrainSim : MonoBehaviour
             if (junctionS < -viewRange * 0.9f) { Destroy(junctionLook.gameObject); junctionLook = null; } // gone before the world turns back
         }
 
-        if (!AtStation && !Zigzag && Speed > maxSpeed) Flash("wind"); // an express leg (not the zigzag: its zoom outgrows the effect)
+        if (!AtStation && !Zigzag && Speed > maxSpeed * 0.6f) Flash("wind"); // the wind of speed (not the zigzag: its zoom outgrows the effect)
+        float slideBy = step * rush;
         // The ground itself never moves: its texture slides back under the train instead.
         // It slides against the way the train's middle is going (round a curve that is not along x), in the
         // ground's own axes; the cube's top face has u and v running towards -x and -z.
         Path(0f, out float going);
-        Vector3 slide = Quaternion.Inverse(ground.localRotation) * (Quaternion.Euler(0f, going, 0f) * Vector3.right) * (step / groundTile);
+        Vector3 slide = Quaternion.Inverse(ground.localRotation) * (Quaternion.Euler(0f, going, 0f) * Vector3.right) * (slideBy / groundTile);
         groundScroll = new Vector2(Mathf.Repeat(groundScroll.x - slide.x, 1f), Mathf.Repeat(groundScroll.y - slide.z, 1f));
         groundMat.mainTextureOffset = groundScroll;
-        sleepers.offset = Mathf.Repeat(sleepers.offset + step, sleepers.spacing);
+        sleepers.offset = Mathf.Repeat(sleepers.offset + slideBy, sleepers.spacing);
         // A new stretch of landscape starts ahead, out of sight: props coming round from now on belong to it.
         stretchLeft -= step;
         if (stretchLeft <= 0f) NewStretch();
         foreach (Prop prop in props)
         {
-            prop.s -= step;
+            prop.s -= slideBy;
             if (prop.s >= -viewRange) continue;
             prop.s += viewRange * 2f + Random.Range(0f, 6f);
             Dress(prop);
@@ -1358,7 +1392,7 @@ public class TrainSim : MonoBehaviour
             size.y *= 0.6f; // flatbed: lower than an armed wagon
             mat = cargoMats[cargo];
             car.health = car.maxHealth = Cargos[cargo].health;
-            car.reward = Mathf.RoundToInt(Cargos[cargo].reward * Legs[AtStation ? nextLeg : leg].length) * (Biome + 1);
+            car.reward = Mathf.RoundToInt(Cargos[cargo].reward * Legs[AtStation ? nextLeg : leg].length * CargoShare) * (Biome + 1); // what the card said
             car.penalty = Cargos[cargo].penalty * (Biome + 1);
         }
         // Wagons are models with their origin on the rail; a cargo with no model falls back to a flatbed box.
@@ -1769,8 +1803,8 @@ public class TrainSim : MonoBehaviour
     // The upgrade to keep was picked: the story goes on with the chapter's ending and the next one's opening.
     void EndChapter(string keep)
     {
-        Story.KeepTruck(truckCar != null && truckCar.mount && !truckCarried ? truckCar.mount.Level : 0);
-        Story.Win(keep, keptPassive);
+        // Saved: what this chapter hands on (the truck's wagon only if won here), and the next one to continue with.
+        Story.Win(keep, keptPassive, truckCar != null && truckCar.mount && !truckCarried ? truckCar.mount.Level : 0);
         Time.timeScale = 1f;
         SceneManager.LoadScene("historiaDialogos");
     }
@@ -1913,6 +1947,26 @@ public class TrainSim : MonoBehaviour
         Layout();
     }
 
+    // The cargo step's Auto: as many wagons as the money buys, up to three (and the train's room), the most
+    // valuable that still leaves enough for the others: arms first, then rock, then wood; never fuel.
+    void AutoCargo()
+    {
+        int[] prefer = { 2, 1, 0 }; // arms, rock, wood
+        int cheapest = CargoPrice(0), bought = 0;
+        for (int room = Mathf.Min(3, maxCargo - CargoCount); room > 0; room--)
+        {
+            int pick = System.Array.FindIndex(prefer, c => money - CargoPrice(c) >= cheapest * (room - 1));
+            if (pick < 0) pick = System.Array.FindIndex(prefer, c => money >= CargoPrice(c)); // fewer, then
+            if (pick < 0) break;
+            pick = prefer[pick];
+            money -= CargoPrice(pick);
+            AddCar(cars.Count, pick);
+            Combat.Instance.Burst("levelup", cars[cars.Count - 1].pos, 1.6f);
+            bought++;
+        }
+        if (bought == 0) Sound.Play("menuback");
+    }
+
     void PlaceGhost()
     {
         money -= CargoPrice(pendingCargo);
@@ -2031,6 +2085,7 @@ public class TrainSim : MonoBehaviour
         }
         else if (Health <= 0f)
         {
+            if (Story.Active) Story.Lose(); // saved: this chapter again, from its start
             kind = 0;
             menuTitle = L10n.T("menu.gameover");
             Add("yes", L10n.T("menu.yes"), Restart);
@@ -2070,6 +2125,7 @@ public class TrainSim : MonoBehaviour
                     () => BeginPlacing(cargo), loaded < maxCargo && money >= CargoPrice(i));
                 Priced(CargoPrice(i), loaded >= maxCargo);
             }
+            Add("auto", L10n.T("cargo.auto"), AutoCargo, loaded < maxCargo && money >= CargoPrice(0));
             Add("yes", L10n.T("cargo.done"), Next);
             Minor();
         }
@@ -2088,8 +2144,11 @@ public class TrainSim : MonoBehaviour
                 Add("heal", L10n.T("menu.heal", healReward, healCost), () => { money -= healCost; Player.Heal(healReward); },
                     money >= healCost && Player.Health < Player.maxHealth);
                 Priced(healCost);
-                Add("medkit", L10n.T("shop.kit", kitHeal, kitCost, kits, maxKits), () => { money -= kitCost; kits++; }, money >= kitCost && kits < maxKits);
-                Priced(kitCost, kits >= maxKits);
+                if (KitsInUse)
+                {
+                    Add("medkit", L10n.T("shop.kit", kitHeal, kitCost, kits, maxKits), () => { money -= kitCost; kits++; }, money >= kitCost && kits < maxKits);
+                    Priced(kitCost, kits >= maxKits);
+                }
                 Add("wagon", WagonForSale ? L10n.T("shop.wagon", WagonPrice) : L10n.T("shop.wagon.limit"),
                     () => { money -= WagonPrice; wagonsBought++; AddCar(cars.Count, -1); }, WagonForSale && money >= WagonPrice);
                 Priced(WagonPrice, !WagonForSale);

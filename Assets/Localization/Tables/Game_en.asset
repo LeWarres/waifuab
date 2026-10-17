@@ -2196,6 +2196,57 @@ MonoBehaviour:
     m_Localized: 'Space / A / click: continue'
     m_Metadata:
       m_Items: []
+  - m_Id: 3081064123019264
+    m_Localized: "Continue \xB7 Ch. {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3081064164962304
+    m_Localized: 'Game loaded: back from the last station'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3083536061247488
+    m_Localized: Start a new story?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3083536098996224
+    m_Localized: The saved game (chapter {0}) and all it carried on will be deleted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3083536098996225
+    m_Localized: "Space / A: yes, start   \xB7   Esc / B: no, back"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3124708779569152
+    m_Localized: "Load Game \xB7 Ch. {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3124708813123584
+    m_Localized: Load Game (empty)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3124708813123585
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3132248192004096
+    m_Localized: '{0}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3134190729375744
+    m_Localized: ULTIMATE READY!  Press {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3137546868830208
+    m_Localized: 'Auto
+
+      Fills up to 3 wagons with what you can pay (arms first,
+      never fuel)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3140534337351680
+    m_Localized: 'Kills: {0}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

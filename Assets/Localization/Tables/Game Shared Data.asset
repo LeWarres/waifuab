@@ -2007,6 +2007,54 @@ MonoBehaviour:
     m_Key: chest.continue
     m_Metadata:
       m_Items: []
+  - m_Id: 3081064123019264
+    m_Key: main.continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3081064164962304
+    m_Key: save.resumed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3083536061247488
+    m_Key: save.overwrite.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3083536098996224
+    m_Key: save.overwrite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3083536098996225
+    m_Key: save.overwrite.help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3124708779569152
+    m_Key: main.load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3124708813123584
+    m_Key: main.load.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3124708813123585
+    m_Key: main.options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3132248192004096
+    m_Key: hud.ultimate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3134190729375744
+    m_Key: ultimate.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3137546868830208
+    m_Key: cargo.auto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3140534337351680
+    m_Key: hud.kills
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

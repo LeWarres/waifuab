@@ -2132,6 +2132,56 @@ MonoBehaviour:
     m_Localized: "Espa\xE7o / A / clique: continuar"
     m_Metadata:
       m_Items: []
+  - m_Id: 3081064123019264
+    m_Localized: "Continuar \xB7 Cap. {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3081064164962304
+    m_Localized: "Jogo carregado: voltando da \xFAltima esta\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3083536061247488
+    m_Localized: "Come\xE7ar uma nova hist\xF3ria?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3083536098996224
+    m_Localized: "O jogo salvo (cap\xEDtulo {0}) e tudo o que passava adiante ser\xE3o
+      apagados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3083536098996225
+    m_Localized: "Espa\xE7o / A: sim, come\xE7ar   \xB7   Esc / B: n\xE3o, voltar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3124708779569152
+    m_Localized: "Carregar jogo \xB7 Cap. {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3124708813123584
+    m_Localized: Carregar jogo (vazio)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3124708813123585
+    m_Localized: "Op\xE7\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3132248192004096
+    m_Localized: '{0}!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3134190729375744
+    m_Localized: ULTIMATE PRONTA!  Aperte {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3137546868830208
+    m_Localized: "Auto\nEnche at\xE9 3 vag\xF5es com o que der (armas primeiro, nunca
+      combust\xEDvel)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3140534337351680
+    m_Localized: 'Kills: {0}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

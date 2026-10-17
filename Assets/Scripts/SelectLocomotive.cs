@@ -79,11 +79,31 @@ public class SelectLocomotive : MonoBehaviour
         if(index<=RandomSlot) {selected=index;Refresh();return;}
         leaving=true;
         if(index==Start) {
+            // A new story wipes the one saved: ask first.
+            if(Locomotives.StoryMode && SaveGame.HasStory && !asking) {asking=true;leaving=false;ShowWarning(true);return;}
             int choice=selected;
             if(selected==RandomSlot) do choice=Random.Range(0,Locomotives.Models.Length); while(Locomotives.Locked(choice));
             Locomotives.Select(choice);
+            if(Locomotives.StoryMode) SaveGame.NewStory(choice);
             SceneManager.LoadScene(Locomotives.StoryMode ? "historiaDialogos" : gameScene);
         } else SceneManager.LoadScene("MainMenu");
+    }
+
+    // The warning that a new story replaces the saved one: confirm goes on, back stays.
+    bool asking;
+    Canvas warning;
+    void ShowWarning(bool show)
+    {
+        if(!warning) {
+            warning=UiKit.NewCanvas("NewStoryWarning",30);
+            var shade=new Color(0.02f,0.03f,0.08f,0.8f);
+            UiKit.Panel(warning.transform,Vector2.zero,new Vector2(2600f,1500f),shade,shade,0f);
+            UiKit.Panel(warning.transform,Vector2.zero,new Vector2(1100f,340f),UiKit.White,UiKit.White,0.06f);
+            UiKit.Label(warning.transform,UiKit.Heading,40,UiKit.Navy,TextAnchor.MiddleCenter,new Vector2(0f,80f),new Vector2(1000f,60f),true).text=L10n.T("save.overwrite.title");
+            UiKit.Label(warning.transform,UiKit.Body,26,UiKit.Navy,TextAnchor.MiddleCenter,new Vector2(0f,5f),new Vector2(1000f,80f),true).text=L10n.T("save.overwrite",SaveGame.Chapter+1);
+            UiKit.Label(warning.transform,UiKit.Body,24,UiKit.Sky,TextAnchor.MiddleCenter,new Vector2(0f,-95f),new Vector2(1000f,40f),true).text=L10n.T("save.overwrite.help");
+        }
+        warning.gameObject.SetActive(show);
     }
 
     public void BuildHeroPreview()
@@ -258,6 +278,12 @@ public class SelectLocomotive : MonoBehaviour
     void Update()
     {
         if(leaving) return;
+        if(asking) {
+            var keys=Keyboard.current;var padNow=Gamepad.current;
+            if((keys!=null && (keys.spaceKey.wasPressedThisFrame || keys.enterKey.wasPressedThisFrame)) || (padNow!=null && padNow.buttonSouth.wasPressedThisFrame)) {ShowWarning(false);Activate(Start);}
+            else if((keys!=null && keys.escapeKey.wasPressedThisFrame) || (padNow!=null && padNow.buttonEast.wasPressedThisFrame)) {asking=false;ShowWarning(false);Sound.Play("menuback");}
+            return;
+        }
         Vector2 stick=move.ReadValue<Vector2>();
         bool vertical=Mathf.Abs(stick.y)>.5f && Mathf.Abs(stick.y)>=Mathf.Abs(stick.x);
         bool horizontal=Mathf.Abs(stick.x)>.5f && !vertical;

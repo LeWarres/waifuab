@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-// The swarm: a cloud of one-coloured robots flies in and covers the train. Then the game is seen from behind
+// The swarm: a cloud of flying robots (the gunships, dragons, imps, ghosts and fish of Combat) flies in and covers the train. Then the game is seen from behind
 // the gunner of one armed wagon: the cloud hangs in the sky straight ahead and its robots dive at the wagon one
 // after another. Move the sight, hold fire, shoot them before they crash. It ends when the swarm is gone (every
 // robot shot down or crashed) or when the wagon is wrecked; the damage stays. TrainSim starts it as the leg's
@@ -52,7 +52,10 @@ public class SwarmEvent : MonoBehaviour
     AudioSource gunSound; // loops for as long as the trigger is held
     Canvas sight;
     Text counter;
-    Combat.Batch robots, tracer;
+    Combat.Batch[] robots; // one per kind of flier, each in its own colours
+    Combat.Batch tracer;
+    static readonly string[] Fliers = { "Enemy_gunship", "Enemy_fast", "Enemy_imp", "Enemy_ghost", "Enemy_fish", "Enemy_healer" };
+    Combat.Batch Look(Robot robot) => robots[Mathf.Abs(Mathf.RoundToInt(robot.wobble * 997f)) % robots.Length];
     readonly List<Robot> swarm = new();
     readonly List<Robot> cover = new();
     readonly List<(Vector3 from, Vector3 to, float born)> shots = new(); // bolts in flight, for show
@@ -69,7 +72,7 @@ public class SwarmEvent : MonoBehaviour
         move = InputSystem.actions.FindAction("Player/Move", true);
         fire = InputSystem.actions.FindAction("Player/Attack", true);
         fireAlt = InputSystem.actions.FindAction("Player/Jump", true);
-        robots = new Combat.Batch(swarmColour, true, Resources.Load<Mesh>("Models/Enemy_saucer"));
+        robots = System.Array.ConvertAll(Fliers, m => new Combat.Batch(Color.white, true, Resources.Load<Mesh>("Models/" + m)));
         tracer = new Combat.Batch(new Color(4f, 0.9f, 0.1f), false); // hot orange: it has to show against the sky
 
         // The gunner's camera: over the main one while the swarm lasts. The main camera stays on underneath,
@@ -271,14 +274,20 @@ public class SwarmEvent : MonoBehaviour
             foreach (Robot robot in cover)
             {
                 Vector3 over = robot.position + new Vector3(Mathf.Sin(now * 2f + robot.wobble), Mathf.Sin(now * 3f + robot.wobble) * 0.4f, Mathf.Cos(now * 2f + robot.wobble)) * 1.2f;
-                robots.Add(Vector3.Lerp(robot.from, over, arrived), Vector3.one * 1.3f, Quaternion.Euler(0f, spin + robot.wobble * 40f, 0f));
+                Look(robot).Add(Vector3.Lerp(robot.from, over, arrived), Vector3.one * 1.3f, Quaternion.Euler(0f, spin + robot.wobble * 40f, 0f));
             }
-            robots.Flush();
+            foreach (Combat.Batch b in robots) b.Flush();
             return;
         }
-        foreach (Robot robot in swarm) // one that has just been hit swells for a moment
-            robots.Add(robot.position, Vector3.one * (robotSize * (now - robot.hitAt < 0.12f ? 1.35f : 1f)), Quaternion.Euler(0f, spin + robot.wobble * 40f, 0f));
-        robots.Flush();
+        // Each one faces the gunner it dives at, rocking a little; one that has just been hit swells for a moment.
+        Vector3 eye = Camera.main.transform.position;
+        foreach (Robot robot in swarm)
+        {
+            Vector3 toward = eye - robot.position;
+            Quaternion face = toward.sqrMagnitude > 0.01f ? Quaternion.LookRotation(toward) : Quaternion.identity;
+            Look(robot).Add(robot.position, Vector3.one * (robotSize * (now - robot.hitAt < 0.12f ? 1.35f : 1f)), face * Quaternion.Euler(0f, 0f, Mathf.Sin(now * 3f + robot.wobble) * 15f));
+        }
+        foreach (Combat.Batch b in robots) b.Flush();
         // Each shot is a thick bolt that flies from the gun to where it lands.
         for (int i = shots.Count - 1; i >= 0; i--)
         {
