@@ -2194,6 +2194,30 @@ MonoBehaviour:
     m_Localized: 'Kills: {0}'
     m_Metadata:
       m_Items: []
+  - m_Id: 3145475428790272
+    m_Localized: "\xA1ABORDAJE!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344704
+    m_Localized: "Robots se metieron a un vag\xF3n: \xA1entra y s\xE1calos a golpes!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344705
+    m_Localized: 'Quedan: {0}     Vida: {1}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344706
+    m_Localized: '{0}: combo     {1}: patada     {2}: esquivar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344707
+    m_Localized: "Vag\xF3n limpio: {0} robots fuera, +{1} dinero"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344708
+    m_Localized: "Te sacaron del vag\xF3n ({0} robots fuera) y da\xF1aron el vag\xF3n"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

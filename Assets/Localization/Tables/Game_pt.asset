@@ -2182,6 +2182,30 @@ MonoBehaviour:
     m_Localized: 'Kills: {0}'
     m_Metadata:
       m_Items: []
+  - m_Id: 3145475428790272
+    m_Localized: ABORDAGEM!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344704
+    m_Localized: "Rob\xF4s entraram num vag\xE3o: entre e tire-os na porrada!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344705
+    m_Localized: 'Restam: {0}     Vida: {1}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344706
+    m_Localized: '{0}: combo     {1}: chute     {2}: esquivar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344707
+    m_Localized: "Vag\xE3o limpo: {0} rob\xF4s fora, +{1} dinheiro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344708
+    m_Localized: "Voc\xEA foi expulso ({0} rob\xF4s fora) e o vag\xE3o foi danificado"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

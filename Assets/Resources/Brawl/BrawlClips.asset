@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 652deba289b95f44e801267bda6203b4, type: 3}
+  m_Name: BrawlClips
+  m_EditorClassIdentifier: Assembly-CSharp::BrawlClips
+  idle: {fileID: 7400000, guid: edbf32107055e2941b5141723fca12d0, type: 3}
+  run: {fileID: 7400000, guid: accaf8b344b35064ab243d827b8b32ee, type: 3}
+  dodge: {fileID: 7400000, guid: 8b09ca50a7aa46f45a160180c9559302, type: 3}
+  heavy: {fileID: 7400000, guid: 47a0243954eaf8342ba1bfc2480db50e, type: 3}
+  hit: {fileID: 7400000, guid: e2648327711e5e24698e657e72a1df9f, type: 3}
+  down: {fileID: 7400000, guid: 37015d4de51cfa44a9b1326d1144a6e1, type: 3}
+  combo:
+  - {fileID: 7400000, guid: b14e991afc0b86846ac3ef41b815b3b6, type: 3}
+  - {fileID: 7400000, guid: db5058070aa6e1a4493673369fb08646, type: 3}
+  - {fileID: 7400000, guid: 5699a56fc642f6d4dbe25926c596c483, type: 3}
+  boarder: {fileID: 919132149155446097, guid: 33e20c7e778530b4da8311bfc34e08cd, type: 3}
+  boarderIdle: {fileID: 1827226128182048838, guid: 2d7787bd90ddc1c479bcea61a8ee5254, type: 3}
+  boarderWalk: {fileID: 1827226128182048838, guid: 0b74e66d96281ed4494c808da74498af, type: 3}
+  boarderLeft: {fileID: 1827226128182048838, guid: e139b2c5a4734a547be85d8b26d4aa70, type: 3}
+  boarderRight: {fileID: 1827226128182048838, guid: 8cb9f5c42dddeca42b4948375da1601b, type: 3}
+  boarderDown: {fileID: 7400000, guid: 3d1f06d3e688112409ece082edb56639, type: 3}
+  boarderAttacks:
+  - {fileID: 1827226128182048838, guid: 8c8769f112b3692469aff87319915934, type: 3}
+  - {fileID: 1827226128182048838, guid: c1df70100a1d5d2458442f686e50ba7e, type: 3}
+  - {fileID: 1827226128182048838, guid: ca044317d7d09664d8b2268929f8cc8e, type: 3}
+  boarderHits:
+  - {fileID: 1827226128182048838, guid: 41997405b2c4d2741bb211f36a850677, type: 3}
+  - {fileID: 1827226128182048838, guid: 5eaec9475e289cb47b7efea30c2bafad, type: 3}
+  - {fileID: 1827226128182048838, guid: d774c7ecd4288854e991faa040443a97, type: 3}

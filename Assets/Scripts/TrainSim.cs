@@ -175,7 +175,7 @@ public class TrainSim : MonoBehaviour
     }
     bool ultimateAnnounce; // "ultimate ready" is still to be said, as soon as nothing else is on screen
     // A button game, a warning, a swarm coming or a talk is on: the ultimate (and its announcement) waits.
-    public bool Alerting => InEvent || Warning || swarm.Incoming || talk.Open;
+    public bool Alerting => InEvent || Warning || swarm.Incoming || brawl.Incoming || talk.Open;
     public string KitButton => !Player.UsingGamepad ? "R" : Gamepad.current is DualShockGamepad ? "△" : "Y";
     public float CarFill(int i) => cars[i].health / cars[i].maxHealth;
     public Vector3 CarTop(int i) => cars[i].pos + Vector3.up * (1.5f + wagonSize.y);
@@ -194,7 +194,7 @@ public class TrainSim : MonoBehaviour
     public float MaxHealth { get { float sum = 0f; foreach (Car c in cars) if (c.cargo < 0) sum += c.maxHealth; return sum; } }
     public bool CanTakeLoot => cars.Count < maxCars;
     public bool Damaged => Health < MaxHealth || Player.Health < Player.maxHealth;
-    public bool InEvent => turn.Active || jump.Active || zig.Active || swarm.Active; // a button game is on: the hero waits
+    public bool InEvent => turn.Active || jump.Active || zig.Active || swarm.Active || brawl.Active; // a button game is on: the hero waits
     public bool BossFight => (boss != null && boss.Active) || (rival != null && rival.Active); // a boss or the rival is on the field: no other enemies join in
     public bool BossBeaten => bossBeaten == Biome;         // this biome's boss is down, the route is open
     public void BossDefeated()
@@ -405,9 +405,9 @@ public class TrainSim : MonoBehaviour
         talk.Show(names, lines, rival, () => chapterWon = true);
     }
     public void BossBar(string name, float fraction) => hud.Boss(name, fraction);
-    public bool Swarming => swarm.Aiming;                // seen from the gunner's seat right now
+    public bool Swarming => swarm.Aiming || brawl.Fighting; // seen from the gunner's seat (or from inside a boarded wagon) right now
     // The gunner's camera while the swarm is fought, so the HUD can place its damage numbers from that seat.
-    public Camera SwarmCamera => swarm != null && swarm.Aiming ? swarm.View : null;
+    public Camera SwarmCamera => swarm != null && swarm.Aiming ? swarm.View : brawl != null && brawl.Fighting ? brawl.View : null;
     public Vector3 CarPosition(int i) => cars[i].pos;
     public void Shake(float seconds) => shake = Mathf.Max(shake, seconds);
 
@@ -512,6 +512,7 @@ public class TrainSim : MonoBehaviour
     int eventKind, nextEvent;            // this trip's event: 1 curve, 2 ramp jump, 3 needle jump, 4 zigzag, 5 swarm, 6 boss
     ZigzagEvent zig;
     SwarmEvent swarm;
+    BrawlEvent brawl;
     BossEvent boss;
 
     [Header("Bosses")]
@@ -540,7 +541,7 @@ public class TrainSim : MonoBehaviour
     public Vector3 Focus => Path((NoseS - HalfExtents.x) * 0.5f, out _); // on the track, also round a curve
     public float Reach => (NoseS + HalfExtents.x) * 0.5f + flyRoom; // from Focus to the edge of that clear space
     // 1 curve, 2 ramp jump, 3 needle jump, 4 zigzag, 5 swarm. The curve twice as likely: it is what changes the view.
-    static readonly int[] EventBag = { 1, 1, 2, 3, 4, 5 };
+    static readonly int[] EventBag = { 1, 1, 2, 3, 4, 5, 7 }; // 7: robots board a wagon (BrawlEvent)
     bool sequenceStarted;
 
     // The jump: a gap in the track with a ramp, scrolled in like a curve's knee. JumpEvent runs the button game
@@ -773,6 +774,7 @@ public class TrainSim : MonoBehaviour
 
         zig = gameObject.AddComponent<ZigzagEvent>();
         swarm = gameObject.AddComponent<SwarmEvent>();
+        brawl = gameObject.AddComponent<BrawlEvent>();
         boss = gameObject.AddComponent<BossEvent>();
         talk = gameObject.AddComponent<Talk>();
         rival = gameObject.AddComponent<RivalEvent>();
@@ -1232,9 +1234,10 @@ public class TrainSim : MonoBehaviour
             eventKind = nextEvent;
             if (eventKind == 5 && !swarm.Begin()) eventKind = 1; // nobody left to man a gun: a curve instead
             if (eventKind == 6 && !boss.Begin()) eventKind = 1;  // the rig would not load: a curve instead
+            if (eventKind == 7 && !brawl.Begin()) eventKind = 1; // no armed wagon to board, or the hero is down: a curve instead
             if (eventKind == 1) StartBend();
             else if (eventKind == 4) StartZigzag();
-            else if (eventKind == 5 || eventKind == 6) { } // they run themselves from here
+            else if (eventKind >= 5) { } // they run themselves from here
             else
             {
                 Jumping = true;
@@ -2354,6 +2357,7 @@ public class TrainSim : MonoBehaviour
     {
         // Warning for the curve, jump or zigzag ahead: what is coming and which button it takes.
         if (!Paused && swarm.Incoming) hud.Warning(L10n.T("swarm.title"), L10n.T("swarm.warn", JumpEvent.ButtonName(Player.UsingGamepad)));
+        if (!Paused && brawl.Incoming) hud.Warning(L10n.T("brawl.title"), L10n.T("brawl.warn"));
         else if (!Paused && boss.Incoming) hud.Warning(L10n.T("boss.title"), L10n.T("boss.warn", boss.Name));
         else if (Paused || Approach() < 0f) hud.Warning(null, null);
         else

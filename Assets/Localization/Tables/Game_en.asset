@@ -2247,6 +2247,30 @@ MonoBehaviour:
     m_Localized: 'Kills: {0}'
     m_Metadata:
       m_Items: []
+  - m_Id: 3145475428790272
+    m_Localized: BOARDERS!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344704
+    m_Localized: 'Robots got into a wagon: go in and beat them out!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344705
+    m_Localized: 'Left: {0}     Health: {1}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344706
+    m_Localized: '{0}: combo     {1}: kick     {2}: dodge'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344707
+    m_Localized: 'Wagon cleared: {0} robots out, +{1} money'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344708
+    m_Localized: You were thrown out ({0} robots out) and the wagon took a beating
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

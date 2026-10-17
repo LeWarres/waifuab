@@ -2055,6 +2055,30 @@ MonoBehaviour:
     m_Key: hud.kills
     m_Metadata:
       m_Items: []
+  - m_Id: 3145475428790272
+    m_Key: brawl.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344704
+    m_Key: brawl.warn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344705
+    m_Key: brawl.hud
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344706
+    m_Key: brawl.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344707
+    m_Key: brawl.won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3145475462344708
+    m_Key: brawl.lost
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
