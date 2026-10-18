@@ -278,6 +278,16 @@ public class Player : MonoBehaviour
             if (insideZ <= insideX) p.z = p.z >= 0f ? half.y : -half.y;
             else p.x = p.x >= 0f ? half.x : -half.x;
         }
+        // Never out of the picture: held inside the camera's view, a margin in from its edges (and under the HUD).
+        Camera view = Camera.main;
+        Vector3 seen = view.WorldToViewportPoint(new Vector3(p.x, hover, p.z));
+        Vector3 kept = new Vector3(Mathf.Clamp(seen.x, 0.04f, 0.96f), Mathf.Clamp(seen.y, 0.07f, 0.88f), seen.z);
+        if (seen.z > 0f && kept != seen && new Plane(Vector3.up, Vector3.up * hover).Raycast(view.ViewportPointToRay(kept), out float onPlane))
+        {
+            Vector3 q = view.ViewportPointToRay(kept).GetPoint(onPlane);
+            p.x = q.x;
+            p.z = q.z;
+        }
         p.y = hover + Mathf.Sin(Time.time * 3f) * 0.15f;
         transform.position = p;
 

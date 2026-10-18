@@ -77,6 +77,7 @@ public class TrainSim : MonoBehaviour
         public bool permanent;      // bought container: stays for good, pays at every station, never fined
         public bool temporary;      // won as an upgrade (free cargo or armed escort): leaves at the next station
         public int reward, penalty; // fixed when the cargo is loaded
+        public int guise = -1;      // an eternal container on the road: the goods it is carrying this trip
         public bool Alive => health > 0f;
     }
 
@@ -99,8 +100,12 @@ public class TrainSim : MonoBehaviour
     public float Scroll { get; private set; }
     // How fast the world looks to go by: the ground, sleepers, scenery and whatever lies on the ground slide this
     // many times faster than the train really runs, while distances and times (legs, stations, events) stay true.
+    // Curves, ramps and the junction slide with the ground, so all of it keeps together; the station cannot (the
+    // train has to stop on it), so while it is in sight the rush eases off to the true speed, like a train braking.
     [System.NonSerialized] public float rush = 2.4f;
-    public float GroundScroll => Scroll * rush;
+    float rushNow = 1f;
+    public float GroundScroll => Scroll * rushNow;
+    public float RunSpeed => Speed * rushNow; // how fast the world goes by, for the button games' timings
     public bool AtStation { get; private set; }
     public int Stations { get; private set; } // stations reached so far, drives the difficulty
     public Player Player { get; private set; }
@@ -430,7 +435,10 @@ public class TrainSim : MonoBehaviour
     // How demanding the button games are, 0 (start) to 1 (hardest): they speed up with the difficulty, up to a limit.
     public int hardestAt = 30;
     public float Tempo => Mathf.Clamp01(Difficulty / (float)hardestAt);
-    float Step => wagonSize.x + wagonGap;
+    float Step => wagonSize.x + wagonGap + verticalRoom;
+    // Extra room between wagons while the train runs up and down the screen: the camera looks down at a slant and
+    // squashes that way, so the gaps closed up and the hero could not get between them.
+    float verticalRoom;
 
     // A looping row of scenery pieces (sleepers, props) that can follow the track around a curve.
     class Strip
@@ -584,7 +592,9 @@ public class TrainSim : MonoBehaviour
     // Three armed wagons for sale in each biome (in a story, in the chapter), each dearer than the last.
     const int WagonsPerBiome = 3;
     bool WagonForSale => wagonsBought < WagonsPerBiome * (Story.Active ? 1 : Biome + 1) && cars.Count < maxCars;
-    bool ContainerForSale => containersBought <= Biome && cars.Count < maxCars;
+    public const int MaxEternal = 3;
+    int Eternals { get { int n = 0; foreach (Car c in cars) if (c.permanent) n++; return n; } }
+    bool ContainerForSale => Eternals < MaxEternal && cars.Count < maxCars;
     int WagonPrice => wagonCost + wagonCostStep * wagonsBought;
     int ContainerPrice => containerCost + containerCostStep * containersBought;
     int RepairPrice => repairCost * (repairsBought + 1);
@@ -1000,10 +1010,10 @@ public class TrainSim : MonoBehaviour
     {
         float now, start;
         if (eventKind == 1 && Bending && !sequenceStarted) { now = knees[0].x; start = HalfExtents.x; }
-        else if (Zigzag && !sequenceStarted) { now = knees[0].x; start = FrontS + Speed * 0.6f; }
+        else if (Zigzag && !sequenceStarted) { now = knees[0].x; start = FrontS + RunSpeed * 0.6f; }
         else if (Jumping && jump.Pending) { now = gapS; start = jump.StartS; }
         else return -1f;
-        float window = Mathf.Max(Speed, 1f) * warnSeconds * 0.85f; // 0.85: about the average time scale on the way in
+        float window = Mathf.Max(RunSpeed, 1f) * warnSeconds * 0.85f; // 0.85: about the average time scale on the way in
         return now - start > window ? -1f : Mathf.Clamp01(1f - (now - start) / window);
     }
     public bool Warning => Approach() >= 0f;
@@ -1122,10 +1132,12 @@ public class TrainSim : MonoBehaviour
         // the track runs across the picture.
         float half = Reach, fit = 0f;
         Vector3 right = view.transform.right, up = view.transform.up;
-        for (int corner = 0; corner < 4; corner++)
+        // The wagons' tops count too (running up the screen, their height reaches further up it), and up and down the
+        // picture a fifth more: the HUD across the top, and room for the hero to fly round the ends.
+        for (int corner = 0; corner < 8; corner++)
         {
-            var point = new Vector3(corner < 2 ? half : -half, 0f, corner % 2 == 0 ? flyRoom : -flyRoom);
-            fit = Mathf.Max(fit, Mathf.Abs(Vector3.Dot(point, up)), Mathf.Abs(Vector3.Dot(point, right)) / view.aspect);
+            var point = new Vector3(corner % 4 < 2 ? half : -half, corner < 4 ? 0f : 3.5f, corner % 2 == 0 ? flyRoom : -flyRoom);
+            fit = Mathf.Max(fit, Mathf.Abs(Vector3.Dot(point, up)) * 1.2f, Mathf.Abs(Vector3.Dot(point, right)) / view.aspect);
         }
         float wanted = Mathf.Max(cameraSize, fit) * (Zigzag ? zigZoom : 1f) * cameraZoom;
         view.orthographicSize = Mathf.MoveTowards(view.orthographicSize, wanted, (Paused ? 0f : 9f) * Time.unscaledDeltaTime);
@@ -1197,16 +1209,28 @@ public class TrainSim : MonoBehaviour
             if (whistleSound.clip) whistleSound.PlayOneShot(whistleSound.clip);
         }
         Scroll = step;
+        // The camera turns on after a curve is over: keep the gaps in step with how upright the train looks now.
+        if (!Bending && Camera.main)
+        {
+            Path(0f, out float facing);
+            Vector3 dir = transform.rotation * (Quaternion.Euler(0f, facing, 0f) * Vector3.right);
+            float upright = Mathf.Abs(Vector3.Dot(dir, Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up).normalized));
+            if (Mathf.Abs(1.2f * upright * upright - verticalRoom) > 0.02f) Layout();
+        }
+        // Only on the way in: once the train has left, the station slides back with the ground (where it is no
+        // longer matters) and the rush comes straight back.
+        bool stationAhead = stationX < viewRange * 1.3f && stationX > 0.5f;
+        rushNow = Mathf.MoveTowards(rushNow, stationAhead ? 1f : rush, (stationAhead ? 1.2f : 2.5f) * Time.deltaTime);
+        float slideBy = step * rushNow;
         if (junctionLook)
         {
-            junctionS -= step;
+            junctionS -= slideBy;
             PlaceJunction();
             lever.localRotation = Quaternion.RotateTowards(lever.localRotation, Quaternion.Euler(leverTo, 0f, 0f), 240f * Time.unscaledDeltaTime);
             if (junctionS < -viewRange * 0.9f) { Destroy(junctionLook.gameObject); junctionLook = null; } // gone before the world turns back
         }
 
         if (!AtStation && !Zigzag && Speed > maxSpeed * 0.6f) Flash("wind"); // the wind of speed (not the zigzag: its zoom outgrows the effect)
-        float slideBy = step * rush;
         // The ground itself never moves: its texture slides back under the train instead.
         // It slides against the way the train's middle is going (round a curve that is not along x), in the
         // ground's own axes; the cube's top face has u and v running towards -x and -z.
@@ -1226,7 +1250,7 @@ public class TrainSim : MonoBehaviour
             Dress(prop);
         }
 
-        if (!BossFight) stationX -= step; // the station waits off ahead for as long as a boss holds the leg
+        if (!BossFight) stationX -= stationX <= 0f ? slideBy : step; // the station waits off ahead for as long as a boss holds the leg
         if (stationX < -viewRange)
         {
             // Reuse the one station for the next stop; out of sight is also the moment to change its look.
@@ -1257,20 +1281,20 @@ public class TrainSim : MonoBehaviour
         }
         if (Jumping)
         {
-            gapS -= step;
+            gapS -= slideBy;
             if (gapS < -viewRange) EndJump();
         }
         if (Bending)
         {
-            for (int i = 0; i < knees.Count; i++) knees[i] -= new Vector2(step, 0f);
+            for (int i = 0; i < knees.Count; i++) knees[i] -= new Vector2(slideBy, 0f);
             float trainLength = HalfExtents.x * 2f;
             if (!sequenceStarted && eventKind == 1 && knees[0].x <= trainLength * 0.5f)
             {
                 // The button sequence lasts exactly as long as the train takes to go through the knee.
                 sequenceStarted = true;
-                turn.Begin(trainLength / Mathf.Max(Speed, 1f));
+                turn.Begin(trainLength / Mathf.Max(RunSpeed, 1f));
             }
-            if (!sequenceStarted && eventKind == 4 && knees[0].x <= FrontS + Speed * 0.6f)
+            if (!sequenceStarted && eventKind == 4 && knees[0].x <= FrontS + RunSpeed * 0.6f)
             {
                 sequenceStarted = true;
                 zig.Begin(knees.Count);
@@ -1316,9 +1340,9 @@ public class TrainSim : MonoBehaviour
             bool stays = (car.cargo < 0 && !car.temporary) || car.permanent;
             if (car.cargo >= 0 || car.temporary)
             {
-                int value = car.permanent ? (car.Alive ? Mathf.RoundToInt(Cargos[Container].reward * Legs[leg].length * CargoShare) * (Biome + 1) : 0)
+                int value = car.permanent ? (car.Alive ? (car.guise >= 0 ? car.reward : Mathf.RoundToInt(Cargos[Container].reward * Legs[leg].length * CargoShare) * (Biome + 1)) : 0)
                     : car.Alive ? car.reward : -car.penalty;
-                string id = car.cargo >= 0 ? Cargos[car.cargo].id : "wagon";
+                string id = car.guise >= 0 ? Cargos[car.guise].id : car.cargo >= 0 ? Cargos[car.cargo].id : "wagon";
                 results.Add(new DeliveryReport.Entry { icon = "delivery_" + id, name = car.cargo >= 0 ? L10n.T("cargo." + id) : L10n.T("delivery.escort"), value = value, destroyed = !car.Alive });
                 if (value >= 0) cargoEarned += value; else cargoFined -= value;
                 Vector3 start = car.body.localPosition, scale = car.body.localScale;
@@ -1339,6 +1363,7 @@ public class TrainSim : MonoBehaviour
                 }
                 car.body.localPosition = start;
                 car.body.localScale = scale;
+                if (car.guise >= 0) Guise(car, -1); // delivered: an eternal container again until the train leaves
             }
             if (stays)
             {
@@ -1404,7 +1429,7 @@ public class TrainSim : MonoBehaviour
             size.y *= 0.6f; // flatbed: lower than an armed wagon
             mat = cargoMats[cargo];
             car.health = car.maxHealth = Cargos[cargo].health;
-            car.reward = Mathf.RoundToInt(Cargos[cargo].reward * Legs[AtStation ? nextLeg : leg].length * CargoShare) * (Biome + 1); // what the card said
+            car.reward = Mathf.RoundToInt(Cargos[cargo].reward * Legs[AtStation ? nextLeg : leg].length * CargoShare * CargoBoost(cargo)) * (Biome + 1); // what the card said
             car.penalty = Cargos[cargo].penalty * (Biome + 1);
         }
         // Wagons are models with their origin on the rail; a cargo with no model falls back to a flatbed box.
@@ -1415,6 +1440,26 @@ public class TrainSim : MonoBehaviour
         car.skins = System.Array.ConvertAll(car.body.GetComponentsInChildren<MeshRenderer>(), r => r.sharedMaterials);
         if (cargo < 0) Paint(car, wagonMat);
         cars.Insert(index, car);
+        Layout();
+    }
+
+    // An eternal container takes on goods for the trip (look, toughness and pay of that load at its level), or (-1)
+    // goes back to being a container. What share of its health it had, it keeps.
+    void Guise(Car car, int goods)
+    {
+        int look = goods >= 0 ? goods : Container;
+        float share = car.maxHealth > 0f ? car.health / car.maxHealth : 1f;
+        car.guise = goods;
+        car.maxHealth = Cargos[look].health;
+        car.health = car.maxHealth * share;
+        if (goods >= 0) car.reward = Mathf.RoundToInt(Cargos[goods].reward * Legs[leg].length * CargoShare * CargoBoost(goods)) * (Biome + 1);
+        Destroy(car.body.gameObject);
+        GameObject model = cargoModels[look];
+        car.body = model ? Instantiate(model, transform).transform : Box(transform, Vector3.zero, new Vector3(wagonSize.x, wagonSize.y * 0.6f, wagonSize.z), cargoMats[look]);
+        car.lift = model ? 0.1f : 0.2f + wagonSize.y * 0.3f;
+        if (model) Toon(car.body.GetComponentInChildren<Renderer>());
+        car.skins = System.Array.ConvertAll(car.body.GetComponentsInChildren<MeshRenderer>(), r => r.sharedMaterials);
+        if (!car.Alive) SetAlive(car, false);
         Layout();
     }
 
@@ -1429,7 +1474,11 @@ public class TrainSim : MonoBehaviour
 
     // The legs are short now and the stations many: each delivery pays this share of what a long leg did.
     const float CargoShare = 0.6f;
-    int CargoReward(int cargo) => Mathf.RoundToInt(Cargos[cargo].reward * Legs[nextLeg].length * CargoShare) * (Biome + 1);
+    int CargoReward(int cargo) => Mathf.RoundToInt(Cargos[cargo].reward * Legs[nextLeg].length * CargoShare * CargoBoost(cargo)) * (Biome + 1);
+    // Each goods type levels up every third load of it this run: it costs more and pays better (the same share).
+    readonly int[] cargoLoads = new int[Loadable];
+    public int CargoLevel(int cargo) => cargo < Loadable ? 1 + Mathf.Min(4, cargoLoads[cargo] / 3) : 1;
+    float CargoBoost(int cargo) => 1f + 0.35f * (CargoLevel(cargo) - 1);
     int CargoPrice(int cargo) => Mathf.RoundToInt(CargoReward(cargo) * cargoCost);
 
     // Lowest level among the mounted weapons: an escort comes no better than the weakest wagon.
@@ -1465,6 +1514,14 @@ public class TrainSim : MonoBehaviour
     void Layout()
     {
         ShapeTrack();
+        if (Camera.main)
+        {
+            Path(0f, out float going);
+            Vector3 along = transform.rotation * (Quaternion.Euler(0f, going, 0f) * Vector3.right);
+            Vector3 look = Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up).normalized;
+            float upScreen = Mathf.Abs(Vector3.Dot(along, look));
+            verticalRoom = 1.2f * upScreen * upScreen;
+        }
         for (int i = 0; i < cars.Count; i++)
         {
             Car car = cars[i];
@@ -1758,6 +1815,7 @@ public class TrainSim : MonoBehaviour
         // Never the same ride twice; the first three legs stay short so the first upgrades and repairs come soon.
         legScale = Stations < 3 ? 1f : Random.Range(1f, stationGapMax / stationGap);
         remaining = LegLength;
+        foreach (Car car in cars) if (car.permanent) Guise(car, Random.Range(0, Fuel)); // wood, rock or arms (never fuel)
         AtStation = false;
         whistlePending = true;
     }
@@ -1969,6 +2027,7 @@ public class TrainSim : MonoBehaviour
             money -= CargoPrice(pick);
             int at = Random.Range(1, cars.Count + 1); // anywhere behind the first wagon, as a hand-placed one can go
             AddCar(at, pick);
+            cargoLoads[pick]++;
             Combat.Instance.Burst("levelup", cars[at].pos, 1.6f);
             bought++;
         }
@@ -1978,6 +2037,7 @@ public class TrainSim : MonoBehaviour
     void PlaceGhost()
     {
         money -= CargoPrice(pendingCargo);
+        cargoLoads[pendingCargo]++;
         SetAlive(ghost, true); // its own colours back
         Combat.Instance.Burst("levelup", ghost.pos, 1.6f);
         ghost = null;
@@ -2123,7 +2183,7 @@ public class TrainSim : MonoBehaviour
             for (int i = 0; i < Loadable; i++)
             {
                 int cargo = i;
-                Add(Cargos[i].id, L10n.T("cargo.card", L10n.T("cargo." + Cargos[i].id), CargoReward(i), Cargos[i].health, Cargos[i].penalty * (Biome + 1), CargoPrice(i)),
+                Add(Cargos[i].id, L10n.T("cargo.card", L10n.T("player.slot", L10n.T("cargo." + Cargos[i].id), CargoLevel(i)), CargoReward(i), Cargos[i].health, Cargos[i].penalty * (Biome + 1), CargoPrice(i)),
                     () => BeginPlacing(cargo), loaded < maxCargo && money >= CargoPrice(i));
                 Priced(CargoPrice(i), loaded >= maxCargo);
             }
@@ -2237,7 +2297,7 @@ public class TrainSim : MonoBehaviour
                     Add("repair", L10n.T("menu.repair", Mathf.RoundToInt(mend)), () => { Repair(mend); Player.Heal(mend); Next(); });
                     Free();
                 }
-                else if (offer == Eternal)
+                else if (offer == Eternal && Eternals < MaxEternal)
                 {
                     Add("container", L10n.T("offer.eternal"), () => { AddCar(cars.Count, Container, true); Next(); });
                     Tag(L10n.T("badge.rare"), 2);

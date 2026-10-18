@@ -447,15 +447,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441027
-    m_Localized: "Contenedor fijo\npaga en cada estaci\xF3n"
+    m_Localized: 'Contenedor eterno
+
+      cada viaje lleva una carga
+
+      al azar
+      y paga como ella'
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441028
-    m_Localized: 'Contenedor fijo
-
-      uno por bioma:
-
-      cambia de bioma'
+    m_Localized: "Contenedor eterno\nm\xE1ximo 3"
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441029
@@ -1763,7 +1764,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2528843870318592
-    m_Localized: "Contenedor eterno\nGRATIS \xB7 paga en cada estaci\xF3n"
+    m_Localized: "Contenedor eterno\nGRATIS \xB7 cada viaje una carga al azar"
     m_Metadata:
       m_Items: []
   - m_Id: 2528843870318593

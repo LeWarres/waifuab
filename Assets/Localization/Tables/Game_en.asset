@@ -464,17 +464,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441027
-    m_Localized: 'Container
+    m_Localized: 'Eternal container
 
-      pays at every station'
+      carries random goods each trip
+
+      and
+      pays like them'
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441028
-    m_Localized: 'Permanent container
+    m_Localized: 'Eternal container
 
-      one per biome:
-
-      move on'
+      3 at most'
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441029
@@ -1795,7 +1796,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2528843870318592
-    m_Localized: "Eternal container\nFREE \xB7 pays at every station"
+    m_Localized: "Eternal container\nFREE \xB7 random goods each trip"
     m_Metadata:
       m_Items: []
   - m_Id: 2528843870318593

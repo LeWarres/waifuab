@@ -103,8 +103,8 @@ menu.shop	TIENDA	SHOP	LOJA	ショップ
 shop.kit	Botiquín ({2}/{3})\n+{0} a todo, se usa en ruta	Medkit ({2}/{3})\n+{0} to all, used on the road	Kit médico ({2}/{3})\n+{0} em tudo, usado na viagem	救急キット ({2}/{3})\n走行中に全体 +{0}
 shop.wagon	Vagón armado\nun vagón más para armas	Armed wagon\none more wagon for weapons	Vagão armado\nmais um vagão para armas	武装車両\n武器用の車両を追加
 shop.wagon.limit	Vagón armado\nlímite de 3 alcanzado	Armed wagon\nlimit of 3 reached	Vagão armado\nlimite de 3 atingido	武装車両\n上限3台に到達
-shop.container	Contenedor fijo\npaga en cada estación	Container\npays at every station	Contêiner fixo\npaga em cada estação	常設コンテナ\n駅ごとに報酬
-shop.container.limit	Contenedor fijo\nuno por bioma:\ncambia de bioma	Permanent container\none per biome:\nmove on	Contêiner fixo\num por bioma:\nmude de bioma	常設コンテナ\nバイオームごとに1台\n先へ進もう
+shop.container	Contenedor eterno\ncada viaje lleva una carga\nal azar y paga como ella	Eternal container\ncarries random goods each trip\nand pays like them	Contêiner eterno\ncada viagem leva uma carga\naleatória e paga como ela	永久コンテナ\n毎回ランダムな積荷を運び\nその報酬を得る
+shop.container.limit	Contenedor eterno\nmáximo 3	Eternal container\n3 at most	Contêiner eterno\nmáximo 3	永久コンテナ\n最大3台
 shop.done	Listo\nsalir de la tienda	Done\nleave the shop	Pronto\nsair da loja	完了\nショップを出る
 hud.kits	Botiquines: {0}   ({1} para curar)	Medkits: {0}   ({1} to heal)	Kits médicos: {0}   ({1} para curar)	救急キット: {0}   ({1} で回復)
 cargo.fuel	Gasolina	Gasoline	Gasolina	ガソリン
@@ -400,7 +400,7 @@ story.bba.4.after.2	Hecho. Y luego me voy a casa.	Done. And then I'm going home.
 rival.bombs	¡Bombas! Derríbalas antes de que caigan	Bombs! Shoot them down before they land	Bombas! Derrube antes que caiam	爆弾！落ちる前に撃ち落とせ
 rival.boarders	¡Abordaje! Robots saltan hacia tu tren	Boarders! Robots are jumping at your train	Abordagem! Robôs pulam para o seu trem	乗り込み！ロボットが列車に飛び移ってくる
 rival.weak	¡Motor sobrecalentado! Daño x2	Engine overheated! Double damage	Motor superaquecido! Dano x2	エンジン過熱！ダメージ2倍
-offer.eternal	Contenedor eterno\nGRATIS · paga en cada estación	Eternal container\nFREE · pays at every station	Contêiner eterno\nGRÁTIS · paga em cada estação	永久コンテナ\n無料・駅ごとに報酬
+offer.eternal	Contenedor eterno\nGRATIS · cada viaje una carga al azar	Eternal container\nFREE · random goods each trip	Contêiner eterno\nGRÁTIS · uma carga aleatória por viagem	永久コンテナ\n無料・毎回ランダムな積荷
 badge.rare	¡RARO!	RARE!	RARO!	レア！
 battle.title	¡Ataque: {0}! Pulsa en orden	Attack: {0}! Press in order	Ataque: {0}! Pressione na ordem	攻撃：{0}！順番に押せ
 battle.hit	¡{0} al rival!	{0} on the rival!	{0} no rival!	ライバルに{0}！

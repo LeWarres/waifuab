@@ -449,11 +449,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441027
-    m_Localized: "Cont\xEAiner fixo\npaga em cada esta\xE7\xE3o"
+    m_Localized: "Cont\xEAiner eterno\ncada viagem leva uma carga\naleat\xF3ria e
+      paga como ela"
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441028
-    m_Localized: "Cont\xEAiner fixo\num por bioma:\nmude de bioma"
+    m_Localized: "Cont\xEAiner eterno\nm\xE1ximo 3"
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441029
@@ -1750,7 +1751,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2528843870318592
-    m_Localized: "Cont\xEAiner eterno\nGR\xC1TIS \xB7 paga em cada esta\xE7\xE3o"
+    m_Localized: "Cont\xEAiner eterno\nGR\xC1TIS \xB7 uma carga aleat\xF3ria por
+      viagem"
     m_Metadata:
       m_Items: []
   - m_Id: 2528843870318593

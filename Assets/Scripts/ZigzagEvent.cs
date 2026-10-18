@@ -50,7 +50,7 @@ public class ZigzagEvent : MonoBehaviour
 
     float Window => Mathf.Lerp(easyWindow, hardWindow, train.Tempo);
     // Seconds until the locomotive is on turn i (negative once past it).
-    float TimeTo(int i) => (train.KneeS(i) - train.FrontS) / Mathf.Max(train.Speed, 1f);
+    float TimeTo(int i) => (train.KneeS(i) - train.FrontS) / Mathf.Max(train.RunSpeed, 1f);
 
     void Update()
     {

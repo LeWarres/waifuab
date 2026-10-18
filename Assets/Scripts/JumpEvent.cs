@@ -68,7 +68,7 @@ public class JumpEvent : MonoBehaviour
             return;
         }
 
-        float spacing = train.CarSpacing, speed = Mathf.Max(train.Speed, 1f);
+        float spacing = train.CarSpacing, speed = Mathf.Max(train.RunSpeed, 1f);
         if (!Active)
         {
             float lead = mode == 1 ? spacing : needleLead;
