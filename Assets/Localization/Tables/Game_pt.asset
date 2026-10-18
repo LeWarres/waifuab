@@ -2228,6 +2228,11 @@ MonoBehaviour:
     m_Localized: "Voc\xEA se soltou!"
     m_Metadata:
       m_Items: []
+  - m_Id: 3780973528690688
+    m_Localized: "BARRAGEM! Derrube os m\xEDsseis: o caminh\xE3o n\xE3o solta o vag\xE3o
+      at\xE9 l\xE1"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

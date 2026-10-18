@@ -60,7 +60,16 @@ public class BossEvent : MonoBehaviour
         new Boss { id = "fortress", accent = new Color(0.45f, 1.00f, 0.35f), healthMul = 2.80f },
     };
 
-    class Shell { public Combat.Enemy e; public int id, car; public Vector3 at, from, curl; public float t, smokeIn; }
+    // stage: 0 a bomb onto a wagon; a barrage missile 1 going out, 2 hanging out there, 3 diving onto a wagon.
+    class Shell { public Combat.Enemy e; public int id, car, stage; public Vector3 at, from, curl, park; public float t, smokeIn, wait; }
+
+    [Header("Barrage")]
+    public float barrageEvery = 10f;     // seconds between two barrages (the junction's truck: sooner)
+    public float barrageWait = 9f;       // how long the missiles hang out there before they dive
+    public float pinShare = 0.04f;       // of the pinned wagon's health, a second, while the truck grinds on it
+    float barrageIn;
+    int pinCar = -1;                     // the wagon the truck has rammed and holds while a barrage is up
+    bool Barraging => live.Exists(s => s.stage > 0);
 
     public bool Active { get; private set; }               // from the intro to the end
     public bool Incoming => Active && Time.unscaledTime < startsAt; // the rig is still rolling in, seen from above
@@ -142,6 +151,8 @@ public class BossEvent : MonoBehaviour
         phase = Random.value * 10f;
         side = Random.value < 0.5f ? -1f : 1f;
         fireIn = 1.2f;
+        barrageIn = 6f;
+        pinCar = -1;
         nextDust = 0f;
         startZoom = Mathf.Max(train.cameraZoom, 1f);
         train.cameraZoom = startZoom;
@@ -207,7 +218,8 @@ public class BossEvent : MonoBehaviour
         Vector3 want = center + dir * ahead + right * lateral;
         if (Incoming) want = center - dir * (approach + Mathf.Lerp(34f, 0f, 1f - (startsAt - Time.unscaledTime) / introSeconds));
         float pace = speed;
-        if (hard > 1f && !Incoming && Ram(right, ref want, dt)) pace = speed * 1.8f;
+        if (pinCar >= 0 && Pin(right, ref want, dt)) pace = speed * 1.8f;
+        else if (hard > 1f && !Incoming && Ram(right, ref want, dt)) pace = speed * 1.8f;
         want.y = 0f;
         rig.position = Vector3.MoveTowards(rig.position, want, pace * dt);
 
@@ -217,12 +229,36 @@ public class BossEvent : MonoBehaviour
             rig.rotation = Quaternion.Slerp(rig.rotation, Quaternion.LookRotation(face, Vector3.up), rampSpeed * dt);
     }
 
+    // Rammed into a wagon as the barrage went up, and grinding on it until every missile is down: true while it holds.
+    bool Pin(Vector3 right, ref Vector3 want, float dt)
+    {
+        if (!Barraging || !train.CarAlive(pinCar))
+        {
+            if (Barraging && (pinCar = RandomCar()) >= 0) return true; // that wagon is gone: the next one
+            pinCar = -1;
+            mode = 0;
+            modeTimer = Random.Range(3.5f, 7f);
+            ramIn = ramEvery;
+            Combat.Instance.Burst("dust", rig.position, 2.4f);
+            return false;
+        }
+        Vector3 car = train.CarPosition(pinCar);
+        train.Panel.Mark(car + Vector3.up * 3.5f, "!", 4);
+        want = car + right * (side * 2.6f);
+        Vector3 gap = rig.position - want;
+        gap.y = 0f;
+        if (gap.magnitude > 1.5f) return true;
+        train.Damage(pinCar, train.CarMaxHealth(pinCar) * pinShare * dt);
+        if (Random.value < dt * 6f) { Combat.Instance.Burst("spark", car + Vector3.up * 1.2f + right * side, 1f); train.Shake(0.08f); }
+        return true;
+    }
+
     // The ram, if one is on: where the truck heads for instead. True while it is charging.
     bool Ram(Vector3 right, ref Vector3 want, float dt)
     {
         if (ramCar < 0)
         {
-            if ((ramIn -= dt) > 0f) return false;
+            if (Barraging || (ramIn -= dt) > 0f) return false;
             int alive = 0;
             for (int i = 0; i < train.CarCount; i++) if (train.CarAlive(i) && Random.Range(0, ++alive) == 0) ramCar = i;
             if (ramCar < 0) return false;
@@ -276,6 +312,13 @@ public class BossEvent : MonoBehaviour
     void Fire(float dt)
     {
         if (Incoming) return;
+        if (Barraging) return; // the sky is full: no bombs on top of it
+        if (ramCar < 0 && (barrageIn -= dt) <= 0f)
+        {
+            barrageIn = barrageEvery / (hard > 1f ? 1.25f : 1f);
+            Barrage();
+            return;
+        }
         fireIn -= dt;
         if (fireIn > 0f) return;
         fireIn = bombEvery / (1f + 0.03f * train.Difficulty) / (hard > 1f ? 1.3f : 1f);
@@ -295,6 +338,33 @@ public class BossEvent : MonoBehaviour
         Combat.Instance.Burst("spark", muzzle, 0.6f);
     }
 
+    // The barrage: a spread of missiles lobbed high and far out round the train, to hang under their alerts across
+    // the picture until the hero runs each one down; any still up when the wait is over dives onto a wagon. As they go
+    // up the truck rams a wagon and stays grinding on it until the sky is clear.
+    void Barrage()
+    {
+        int count = (hard > 1f ? 7 : 4) + Mathf.Min(4, train.Difficulty / 8);
+        Camera view = Camera.main;
+        var height = new Plane(Vector3.up, Vector3.up * 3f);
+        for (int k = 0; k < count; k++)
+        {
+            int car = RandomCar();
+            if (car < 0) return;
+            // Somewhere near the edge of the picture (clear of the HUD), all round: a run to each one.
+            float a = (k + Random.value * 0.7f) / count * Mathf.PI * 2f;
+            Ray ray = view.ViewportPointToRay(new Vector3(0.5f + Mathf.Cos(a) * Random.Range(0.3f, 0.42f), 0.47f + Mathf.Sin(a) * Random.Range(0.25f, 0.35f), 0f));
+            Vector3 park = height.Raycast(ray, out float d) ? ray.GetPoint(d) : train.Focus + Random.insideUnitSphere * 20f;
+            park.y = 3f;
+            Vector3 muzzle = rig.TransformPoint(new Vector3(Random.Range(-0.66f, 0.66f), Random.value < 0.5f ? 4.78f : 5.12f, 1.6f));
+            Combat.Enemy e = Combat.Instance.AddProjectile(Rocket, muzzle, rocketHealth * (1f + 0.05f * train.Difficulty) * (hard > 1f ? 1.5f : 1f));
+            live.Add(new Shell { e = e, id = e.id, car = car, at = muzzle, from = muzzle, park = park, stage = 1, t = -k * 0.08f });
+        }
+        Combat.Instance.Burst("rocket", rig.position + Vector3.up * 5f, 2f);
+        pinCar = RandomCar();
+        side = Random.value < 0.5f ? -1f : 1f;
+        train.Toast(L10n.T("boss.barrage"));
+    }
+
     // Bombs ride their curve onto the wagon they were aimed at; a shot-down one pops where it was.
     void Aim(float dt)
     {
@@ -308,11 +378,33 @@ public class BossEvent : MonoBehaviour
                 continue;
             }
             if (!train.CarAlive(r.car)) { int other = RandomCar(); if (other >= 0) r.car = other; } // its wagon is gone: another one
-            // A curve from the tube to the wagon (which moves on under it): up, over to one side, down.
-            r.t = Mathf.Min(1f, r.t + dt / bombFlight);
-            Vector3 aim = train.CarTop(r.car), mid = (r.from + aim) * 0.5f + Vector3.up * bombArc + r.curl;
-            float t = r.t, u = 1f - t;
             Vector3 was = r.e.position;
+            if (r.stage == 1 || r.stage == 2)
+            {
+                if (r.stage == 1) // out on a high curve to its spot
+                {
+                    r.t += dt / 1.5f;
+                    float s = Mathf.Clamp01(r.t), v = 1f - s;
+                    Vector3 top = (r.from + r.park) * 0.5f + Vector3.up * 14f;
+                    r.e.position = v * v * r.from + 2f * v * s * top + s * s * r.park;
+                    if (r.t >= 1f) { r.stage = 2; r.wait = Time.time + barrageWait; }
+                }
+                else // hanging there, bobbing, until the wait is over: then down onto a wagon
+                {
+                    r.e.position = r.park + new Vector3(Mathf.Sin(Time.time * 2f + r.id), Mathf.Sin(Time.time * 3f + r.id) * 0.4f, Mathf.Cos(Time.time * 2f + r.id)) * 0.5f;
+                    if (Time.time >= r.wait) { r.stage = 3; r.from = r.e.position; r.t = 0f; r.curl = Vector3.zero; }
+                }
+                r.e.velocity = (r.e.position - was) / Mathf.Max(dt, 0.0001f);
+                r.at = r.e.position;
+                train.Panel.Mark(r.e.position + Vector3.up * 1.2f, "!", 5);
+                Combat.Instance.Burst("rocket", r.e.position - Vector3.up * 0.6f, 0.45f);
+                continue;
+            }
+            // A curve from the tube to the wagon (which moves on under it): up, over to one side, down. A barrage
+            // missile diving comes down faster, from where it hung.
+            r.t = Mathf.Min(1f, r.t + dt / (r.stage == 3 ? 1.1f : bombFlight));
+            Vector3 aim = train.CarTop(r.car), mid = (r.from + aim) * 0.5f + Vector3.up * (r.stage == 3 ? 4f : bombArc) + r.curl;
+            float t = r.t, u = 1f - t;
             r.e.position = u * u * r.from + 2f * u * t * mid + t * t * aim;
             r.e.velocity = (r.e.position - was) / Mathf.Max(dt, 0.0001f);
             r.at = r.e.position;
@@ -330,7 +422,7 @@ public class BossEvent : MonoBehaviour
 
             if (r.t >= 1f) // down on the wagon
             {
-                if (train.CarAlive(r.car)) train.Damage(r.car, rocketDamage * (1f + 0.05f * train.Difficulty) * (hard > 1f ? 1.3f : 1f));
+                if (train.CarAlive(r.car)) train.Damage(r.car, rocketDamage * (1f + 0.05f * train.Difficulty) * (hard > 1f ? 1.3f : 1f) * (r.stage == 3 ? 2f : 1f));
                 train.Shake(0.18f);
                 Combat.Instance.Burst("rocket", r.e.position, 1.3f);
                 Combat.Instance.Despawn(r.e);
@@ -365,6 +457,7 @@ public class BossEvent : MonoBehaviour
         hard = 1f;
         if (ramGame == 1 && ramCar >= 0) { GetComponent<TurnEvent>().Drop(); Time.timeScale = 1f; } // a ram's buttons cut short
         ramCar = -1;
+        pinCar = -1;
         train.cameraZoom = 1f;
         Combat combat = Combat.Instance;
         if (combat)

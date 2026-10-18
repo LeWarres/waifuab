@@ -2099,6 +2099,10 @@ MonoBehaviour:
     m_Key: brawl.free
     m_Metadata:
       m_Items: []
+  - m_Id: 3780973528690688
+    m_Key: boss.barrage
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

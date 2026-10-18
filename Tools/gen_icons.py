@@ -68,6 +68,7 @@ ICONS = {
     'speed': 'winged boot, sneaker with wings, speed',
     'armor': 'shield, blue shield, metal trim',
     'vitality': 'heart, pink heart, plus sign',
+    'greed': 'big red U shaped horseshoe magnet with silver tips, no coins, lightning sparks between the tips',
     # money (the choice symbols come from Tools/make_icons.py: the model cannot draw a clean arrow or check mark)
     'money': 'gold coin, shiny coin, star emblem',
     # cargo

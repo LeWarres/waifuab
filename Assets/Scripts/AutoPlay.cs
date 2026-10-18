@@ -42,7 +42,7 @@ public class AutoPlay : MonoBehaviour
         Player hero = train.Player;
         Vector3 p = hero.Position, want;
         p.y = 0f;
-        Combat.Enemy foe = Combat.Instance.Nearest(p, 60f, null, true);
+        Combat.Enemy foe = Combat.Instance.Threat(p, 80f) ?? Combat.Instance.Nearest(p, 60f, null, true); // the bombs only she can stop first, as a player would
         float reach = hero.ammo.range;
         if (hero.Health < hero.maxHealth * 0.3f || foe == null)
             want = train.Focus + Vector3.Cross(Vector3.up, train.Forward(0)) * 6f - p; // back beside the train

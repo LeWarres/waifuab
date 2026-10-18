@@ -2292,6 +2292,11 @@ MonoBehaviour:
     m_Localized: Broke free!
     m_Metadata:
       m_Items: []
+  - m_Id: 3780973528690688
+    m_Localized: 'BARRAGE! Shoot down the missiles: the truck holds the wagon until
+      then'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

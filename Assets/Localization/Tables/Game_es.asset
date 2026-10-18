@@ -2240,6 +2240,11 @@ MonoBehaviour:
     m_Localized: "\xA1Te soltaste!"
     m_Metadata:
       m_Items: []
+  - m_Id: 3780973528690688
+    m_Localized: "\xA1ANDANADA! Derriba los misiles: el cami\xF3n no suelta el vag\xF3n
+      hasta entonces"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

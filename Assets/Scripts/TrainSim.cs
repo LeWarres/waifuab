@@ -126,7 +126,7 @@ public class TrainSim : MonoBehaviour
     // regen: the train and the hero mend slowly; area: blasts and sweeps wider; amount: more shots; luck: more prizes
     // and golden chests; duration: slows, boomerangs and cuts last longer.
     public static readonly string[] Passives = { "speed", "armor", "vitality", "damage", "greed", "fireRate", "critChance", "critDamage", "regen", "area", "amount", "luck", "duration" };
-    public static readonly string[] PassiveIcons = { "speed", "armor", "vitality", "arms", "money", "minigun", "sniper", "rail", "regen", "area", "amount", "luck", "duration" };
+    public static readonly string[] PassiveIcons = { "speed", "armor", "vitality", "arms", "greed", "minigun", "sniper", "rail", "regen", "area", "amount", "luck", "duration" };
     public float regenPerLevel = 0.15f * Balance.Scale; // health a second, per level of regeneration, to every wagon (half to the hero)
     public const int MaxPassive = 5;
     public const int MaxOwnedPassives = 5;      // different upgrades the hero can hold at once
@@ -146,7 +146,7 @@ public class TrainSim : MonoBehaviour
     bool junction, junctionAsked;
     Car truckCar;      // the truck's wagon on this train, if any
     bool truckCarried; // it came from the chapter before: it goes no further
-    public float junctionHard = 14f;   // the junction's truck: a real fight, with this many times the health
+    public float junctionHard = 18f;   // the junction's truck: a real fight, with this many times the health
     Transform junctionLook, lever; // the branch line leaving the track, and the lever at the switch
     float junctionS;               // where along the track the switch is (as the knees: it slides back as the train runs)
     float leverTo;                 // where the lever is thrown to (degrees)
@@ -292,7 +292,7 @@ public class TrainSim : MonoBehaviour
         // The junction's truck matches the train: the more weapon levels on board, the more health it has.
         int power = 0;
         foreach (var a in Arsenal()) power += a.level;
-        boss.hard = junctionHard * Mathf.Max(1f, power / 24f);
+        boss.hard = junctionHard * Mathf.Max(1f, Mathf.Pow(power / 20f, 1.3f)); // a strong arsenal no longer walks it
         if (fight && boss.Begin())
         {
             turned = true;                                      // the truck instead of this leg's event
@@ -1122,7 +1122,10 @@ public class TrainSim : MonoBehaviour
         // ponytail: reads the devices directly, like the medkit and the button games.
         if (junction && ((Gamepad.current != null && Gamepad.current.buttonWest.wasPressedThisFrame) || (Keyboard.current != null && Keyboard.current.qKey.wasPressedThisFrame)))
             Junction(false); // the junction's second way, on its own button
-        if (!mainMenu && Health > 0f && !talk.Open && ((Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame) ||
+        // Pause only out on the road: not at a station (the delivery, the upgrades, the market, the shop), nor while a
+        // chest, the junction's choice or a won chapter's screen is up. Once paused, it can always be left.
+        bool canPause = Paused || (!AtStation && !ChestOpen && !junction && !chapterWon);
+        if (canPause && !mainMenu && Health > 0f && !talk.Open && ((Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame) ||
                             (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)))
             SetPaused(!Paused);
 
@@ -1132,12 +1135,11 @@ public class TrainSim : MonoBehaviour
         // the track runs across the picture.
         float half = Reach, fit = 0f;
         Vector3 right = view.transform.right, up = view.transform.up;
-        // The wagons' tops count too (running up the screen, their height reaches further up it), and up and down the
-        // picture a fifth more: the HUD across the top, and room for the hero to fly round the ends.
+        // The wagons' tops count too: running up the screen, their height reaches further up it.
         for (int corner = 0; corner < 8; corner++)
         {
             var point = new Vector3(corner % 4 < 2 ? half : -half, corner < 4 ? 0f : 3.5f, corner % 2 == 0 ? flyRoom : -flyRoom);
-            fit = Mathf.Max(fit, Mathf.Abs(Vector3.Dot(point, up)) * 1.2f, Mathf.Abs(Vector3.Dot(point, right)) / view.aspect);
+            fit = Mathf.Max(fit, Mathf.Abs(Vector3.Dot(point, up)), Mathf.Abs(Vector3.Dot(point, right)) / view.aspect);
         }
         float wanted = Mathf.Max(cameraSize, fit) * (Zigzag ? zigZoom : 1f) * cameraZoom;
         view.orthographicSize = Mathf.MoveTowards(view.orthographicSize, wanted, (Paused ? 0f : 9f) * Time.unscaledDeltaTime);
