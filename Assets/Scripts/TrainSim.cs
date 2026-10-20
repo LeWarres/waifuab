@@ -35,7 +35,8 @@ public class TrainSim : MonoBehaviour
     public float vitalityReward = 10f;                  // max health per hero vitality upgrade
     public int biomeDifficulty = 3;                     // a biome change is worth this many stations of difficulty
     [Range(0f, 1f)] [System.NonSerialized] public float cargoCost = 0.5f;      // share of its pay a cargo wagon costs to load
-    [Range(0f, 1f)] [System.NonSerialized] public float bonusOfferChance = 0.18f; // a wagon offer turns into a free cargo wagon or an escort
+    [Range(0f, 1f)] [System.NonSerialized] public float bonusOfferChance = 0.06f; // a wagon offer turns into a free cargo wagon or an escort
+    [System.NonSerialized] public float fillerChance = 0.08f; // a money or health card among the offers, when there are upgrades enough
     public int maxCargo = 3;                            // cargo wagons loaded at a station
     public int maxCars = 12;                            // longest the train ever gets
 
@@ -163,7 +164,7 @@ public class TrainSim : MonoBehaviour
     bool junction, junctionAsked;
     Car truckCar;      // the truck's wagon on this train, if any
     bool truckCarried; // it came from the chapter before: it goes no further
-    public float junctionHard = 22f;   // the junction's truck: a real fight, with this many times the health
+    public float junctionHard = 28f;   // the junction's truck: a real fight, with this many times the health
     Transform junctionLook, lever; // the branch line leaving the track, and the lever at the switch
     float junctionS;               // where along the track the switch is (as the knees: it slides back as the train runs)
     float leverTo;                 // where the lever is thrown to (degrees)
@@ -186,7 +187,7 @@ public class TrainSim : MonoBehaviour
 
     // The ultimate: charged by time on the road (one every ultimateKills seconds), fired with the kit's old button.
     // By kills it filled at once late in a run, when the crowds are thickest.
-    [System.NonSerialized] public float ultimateKills = 90f;
+    [System.NonSerialized] public float ultimateKills = 55f;
     float ultimateCharge;
     UltimateCutIn ultimateCutIn;
     public bool UltimatePresenting => ultimateCutIn && ultimateCutIn.Active;
@@ -591,7 +592,7 @@ public class TrainSim : MonoBehaviour
     // index into Weapon.Wagon, its Length for money, FreeCargo + cargo, or Escort + weapon
     readonly int[] offers = new int[3];
     const int FreeCargo = 100, Escort = 200, Eternal = 300; // Eternal: a permanent container, free: the rarest card
-    public float eternalOfferChance = 0.04f;
+    public float eternalOfferChance = 0.02f;
     Material escortMat;
     GameObject wagonModel;
     GameObject[] cargoModels; // Resources/Models/Cargo_<id>, by cargo
@@ -1030,7 +1031,8 @@ public class TrainSim : MonoBehaviour
         else if (Zigzag && !sequenceStarted) { now = knees[0].x; start = FrontS + RunSpeed * 0.6f; }
         else if (Jumping && jump.Pending) { now = gapS; start = jump.StartS; }
         else return -1f;
-        float window = Mathf.Max(RunSpeed, 1f) * warnSeconds * 0.85f; // 0.85: about the average time scale on the way in
+        float lead = Zigzag ? 2f : warnSeconds; // the zigzag: a little longer, to get the stick ready
+        float window = Mathf.Max(RunSpeed, 1f) * lead * 0.85f; // 0.85: about the average time scale on the way in
         return now - start > window ? -1f : Mathf.Clamp01(1f - (now - start) / window);
     }
     public bool Warning => Approach() >= 0f;
@@ -1057,13 +1059,13 @@ public class TrainSim : MonoBehaviour
     // heading, so the train comes out of it going a new way (an eighth or a quarter turn off).
     void StartZigzag()
     {
-        int count = Random.Range(4, 7);
+        int count = Random.Range(4, 7) + Mathf.RoundToInt(3f * Tempo); // up to 9 turns at the hardest
         float lean = Random.value < 0.5f ? zigAngle : -zigAngle, heading = 0f;
         for (int i = 0; i < count; i++)
         {
             float turnBy = i == count - 1 ? -heading - Mathf.Sign(heading) * (Random.value < 0.5f ? 45f : 90f) : i == 0 ? lean : -2f * heading;
             heading += turnBy;
-            knees.Add(new Vector2(zigStart + i * zigSpacing, turnBy));
+            knees.Add(new Vector2(zigStart + i * zigSpacing * Mathf.Lerp(1f, 0.7f, Tempo), turnBy)); // closer together, harder
         }
         sequenceStarted = false;
         zig.Prepare(count);
@@ -1279,7 +1281,7 @@ public class TrainSim : MonoBehaviour
         }
 
         // One event per trip, early enough that it is fully behind before the station.
-        float room = nextEvent == 4 ? zigStart + 5f * zigSpacing + viewRange + 30f : viewRange * 2f + 20f;
+        float room = nextEvent == 4 ? zigStart + 7f * zigSpacing + viewRange + 30f : viewRange * 2f + 20f;
         float eventAt = Mathf.Max(LegLength * (1f - turnAt), room);
         if (!turned && remaining <= eventAt && !rival.Active && !NoEvents) // no curve or jump under the duel
         {
@@ -1327,7 +1329,7 @@ public class TrainSim : MonoBehaviour
         float approach = Approach();
         if (approach >= 0f && Health > 0f)
         {
-            if (eventKind != 4) Time.timeScale = Mathf.Lerp(1f, approachSlow, approach); // the zigzag is taken at full speed
+            Time.timeScale = Mathf.Lerp(1f, eventKind == 4 ? 0.55f : approachSlow, approach); // the zigzag too: time to get ready
             if (!warned && warningSound) AudioSource.PlayClipAtPoint(warningSound, Camera.main.transform.position);
         }
         warned = approach >= 0f;
@@ -1470,6 +1472,7 @@ public class TrainSim : MonoBehaviour
         int look = goods >= 0 ? goods : Container;
         float share = car.maxHealth > 0f ? car.health / car.maxHealth : 1f;
         car.guise = goods;
+        if (goods >= 0) cargoLoads[goods]++; // a load like any other, towards that goods' next level
         car.maxHealth = Cargos[look].health;
         car.health = car.maxHealth * share;
         if (goods >= 0) car.reward = Mathf.RoundToInt(Cargos[goods].reward * Legs[leg].length * CargoShare * CargoBoost(goods)) * (Biome + 1);
@@ -1497,7 +1500,8 @@ public class TrainSim : MonoBehaviour
     int CargoReward(int cargo) => Mathf.RoundToInt(Cargos[cargo].reward * Legs[nextLeg].length * CargoShare * CargoBoost(cargo)) * (Biome + 1);
     // Each goods type levels up every third load of it this run: it costs more and pays better (the same share).
     readonly int[] cargoLoads = new int[Loadable];
-    public int CargoLevel(int cargo) => cargo < Loadable ? 1 + Mathf.Min(4, cargoLoads[cargo] / 3) : 1;
+    public const int MaxCargoLevel = 99;
+    public int CargoLevel(int cargo) => cargo < Loadable ? 1 + Mathf.Min(MaxCargoLevel - 1, cargoLoads[cargo] / 3) : 1;
     float CargoBoost(int cargo) => 1f + 0.35f * (CargoLevel(cargo) - 1);
     int CargoPrice(int cargo) => Mathf.RoundToInt(CargoReward(cargo) * cargoCost);
 
@@ -1730,15 +1734,19 @@ public class TrainSim : MonoBehaviour
         // Only weapons the train can take: a new one needs a wagon with no weapon, one it has needs a copy below the
         // top. Whatever is missing is made up with money and health.
         offerPool.Clear();
-        bool free = cars.Exists(c => c.cargo < 0 && !c.mount);
+        // A new weapon needs a wagon with no weapon, or, while fewer than MaxArmed weapons are on board (or waiting), it
+        // is kept for the next wagon bought: the arsenal fills out early instead of the first wagons racing to the top.
+        bool free = cars.Exists(c => c.cargo < 0 && !c.mount) || CanStash;
         for (int i = 0; i < Weapon.Wagon.Length; i++)
         {
             Turret owned = Owned(Weapon.Wagon[i]);
+            int waiting = Stashed(Weapon.Wagon[i]);
+            if (waiting >= 0) { if (stashed[waiting].level < Weapon.MaxLevel) offerPool.Add(i); continue; } // waiting for its wagon: it levels all the same
             if ((Story.Active || Weapon.Wagon[i].firstBiome <= Biome) && (free || (owned && owned.Level < Weapon.MaxLevel))) // the story offers every weapon from the start
                 offerPool.Add(i);
         }
-        offerPool.Add(Weapon.Wagon.Length);     // money
-        offerPool.Add(Weapon.Wagon.Length + 1); // health
+        // Money and health only to fill the cards when weapons run short, or now and then: weapons come first.
+        if (Random.value < fillerChance) offerPool.Add(Random.value < 0.5f ? Weapon.Wagon.Length : Weapon.Wagon.Length + 1);
         while (offerPool.Count < offers.Length) offerPool.Add(offerPool.Count % 2 == 0 ? Weapon.Wagon.Length : Weapon.Wagon.Length + 1);
         Draw(offers);
         if (cars.Count < maxCars && Random.value < bonusOfferChance + 0.04f * PassiveLevel("luck"))
@@ -1760,8 +1768,8 @@ public class TrainSim : MonoBehaviour
             if ((stat == 1 && Player.armor >= Player.MaxArmor) || (stat == 7 && criticalChance >= 1f)) continue;
             offerPool.Add(Weapon.Hero.Length + stat);
         }
-        offerPool.Add(Weapon.Hero.Length + HeroMoney);
-        offerPool.Add(Weapon.Hero.Length + HeroHealth);
+        // The same for the hero: her upgrades first, money or health only to fill in or now and then.
+        if (Random.value < fillerChance) offerPool.Add(Weapon.Hero.Length + (Random.value < 0.5f ? HeroMoney : HeroHealth));
         while (offerPool.Count < heroOffers.Length) offerPool.Add(Weapon.Hero.Length + (offerPool.Count % 2 == 0 ? HeroMoney : HeroHealth));
         Draw(heroOffers);
     }
@@ -1935,6 +1943,29 @@ public class TrainSim : MonoBehaviour
     Material GhostMat => ghostMat ? ghostMat : ghostMat = Mat(new Color(1f, 0.12f, 0.12f));
 
     // The train's copy of a weapon that has most to gain from another: the lowest level one. null: it has none.
+    public const int MaxArmed = 5; // weapons on wagons (the hero's own besides)
+    // Weapons picked with no wagon free for them: each goes on the next wagon bought at the shop, in order.
+    // They level up while they wait (a card can raise one), and go on with that level.
+    readonly List<(Weapon weapon, int level)> stashed = new();
+    public IReadOnlyList<(Weapon weapon, int level)> Waiting => stashed;
+    int Stashed(Weapon weapon) => stashed.FindIndex(s => s.weapon == weapon);
+    bool CanStash => ArmedCount + stashed.Count < MaxArmed && cars.Count + stashed.Count < maxCars;
+    void RaiseStashed(int i)
+    {
+        stashed[i] = (stashed[i].weapon, stashed[i].level + 1);
+        Toast(L10n.T("weapon.stashed.up", stashed[i].weapon.Name, stashed[i].level));
+        Sound.Play("confirm");
+        Next();
+    }
+    void Stash(Weapon weapon)
+    {
+        stashed.Add((weapon, 1));
+        Toast(L10n.T("weapon.stashed", weapon.Name));
+        Sound.Play("confirm");
+        Next();
+    }
+    int ArmedCount { get { int n = 0; foreach (Car c in cars) if (c.cargo < 0 && c.mount && c.mount.Weapon != Weapon.Truck) n++; return n; } }
+
     Turret Owned(Weapon weapon)
     {
         Turret found = null;
@@ -2231,8 +2262,20 @@ public class TrainSim : MonoBehaviour
                     Add("medkit", L10n.T("shop.kit", kitHeal, kitCost, kits, maxKits), () => { money -= kitCost; kits++; }, money >= kitCost && kits < maxKits);
                     Priced(kitCost, kits >= maxKits);
                 }
-                Add("wagon", WagonForSale ? L10n.T("shop.wagon", WagonPrice) : L10n.T("shop.wagon.limit"),
-                    () => { money -= WagonPrice; wagonsBought++; AddCar(cars.Count, -1); }, WagonForSale && money >= WagonPrice);
+                // A wagon comes with the first weapon waiting for one (picked with no wagon free), or empty.
+                Add("wagon", !WagonForSale ? L10n.T("shop.wagon.limit") : stashed.Count > 0 ? L10n.T("shop.wagon.with", stashed[0].weapon.Name) : L10n.T("shop.wagon", WagonPrice),
+                    () =>
+                    {
+                        money -= WagonPrice;
+                        wagonsBought++;
+                        AddCar(cars.Count, -1);
+                        if (stashed.Count > 0)
+                        {
+                            Mount(cars.Count - 1, stashed[0].weapon);
+                            for (int l = 1; l < stashed[0].level; l++) cars[^1].mount.LevelUp(); // with the levels it gained while waiting
+                            stashed.RemoveAt(0);
+                        }
+                    }, WagonForSale && money >= WagonPrice);
                 Priced(WagonPrice, !WagonForSale);
                 Add("container", ContainerForSale ? L10n.T("shop.container", ContainerPrice) : L10n.T("shop.container.limit"),
                     () => { money -= ContainerPrice; containersBought++; AddCar(cars.Count, Container, true); }, ContainerForSale && money >= ContainerPrice);
@@ -2305,9 +2348,19 @@ public class TrainSim : MonoBehaviour
                     Weapon weapon = Weapon.Wagon[offer];
                     Turret owned = Owned(weapon);
                     bool raise = owned && owned.Level < Weapon.MaxLevel, free = cars.Exists(c => c.cargo < 0 && !c.mount);
-                    Add(weapon.id, weapon.Name + "\n" + weapon.Info, () => BeginMounting(weapon), raise || free);
+                    int waiting = Stashed(weapon);
+                    if (waiting >= 0 && !raise) // waiting for its wagon: the card raises it there
+                    {
+                        int at = waiting;
+                        Add(weapon.id, weapon.Name + "\n" + weapon.Info, () => RaiseStashed(at), stashed[at].level < Weapon.MaxLevel);
+                        Tag(L10n.T("badge.upgrade", stashed[at].level + 1), 2);
+                        continue;
+                    }
+                    bool keep = !raise && !free && owned == null && CanStash; // new, no wagon for it yet: kept for the next one bought
+                    Add(weapon.id, weapon.Name + "\n" + weapon.Info, keep ? () => Stash(weapon) : () => BeginMounting(weapon), raise || free || keep);
                     if (raise) Tag(L10n.T("badge.upgrade", owned.Level + 1), 2);
                     else if (free) Tag(L10n.T(owned == null ? "badge.new" : "badge.copy"), 1);
+                    else if (keep) Tag(L10n.T("badge.stash"), 1);
                     else Tag(L10n.T(owned == null ? "badge.nowagon" : "badge.maxed"), 3);
                 }
                 else if (offer == Weapon.Wagon.Length) { Add("money", L10n.T("menu.money", moneyReward), () => { money += moneyReward; Next(); }); Free(); }

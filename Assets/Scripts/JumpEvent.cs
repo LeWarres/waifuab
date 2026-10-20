@@ -12,15 +12,20 @@ public class JumpEvent : MonoBehaviour
     [Header("Ramp: one press per wagon")]
     // Each pair is (at the start, at the hardest): the games tighten as the difficulty climbs, up to a limit.
     public Vector2 secondsPerWagon = new Vector2(1.2f, 0.7f); // real seconds between one wagon and the next
-    public Vector2 earliestPress = new Vector2(0.45f, 0.7f);  // how far along its approach a wagon must be for the press to count
-    public float latest = 1.25f;                        // past this the wagon has jumped without a press
+    // The bar fills as the wagon runs up to the ramp and is full the moment it gets there. Each wagon's green stretch
+    // sits somewhere else along it (so it has to be watched, not counted out), narrower the harder the game; its
+    // middle is a perfect press.
+    public Vector2 goodStretch = new Vector2(0.16f, 0.07f); // width of the green stretch, easiest to hardest (share of the bar)
+    public Vector2 greenRange = new Vector2(0.5f, 0.92f);   // where its middle may fall along the bar
+    float[] greenAt;                                          // each wagon's, drawn as the game starts
+    int perfect;
     [Range(0f, 1f)] public float missLoss = 1f;         // share of its health a wagon loses on a miss (1 = wrecked)
 
     [Header("Needle: one press for the train")]
     public float needleSeconds = 3.5f;                  // real seconds to make the press
     public float needleLead = 14f;                      // starts when the gap is this far ahead of the locomotive
-    public Vector2 needleSweep = new Vector2(2.2f, 4.2f); // how fast the needle swings
-    public Vector2 greenWidth = new Vector2(20f, 10f);    // half width of the green zone, out of the dial's 90
+    public Vector2 needleSweep = new Vector2(3f, 6.5f);   // how fast the needle swings, easiest to hardest
+    public Vector2 greenWidth = new Vector2(13f, 5f);     // half width of the green zone, out of the dial's 90
     public float yellowAngle = 50f;
     public float needleHeal = 8f * Balance.Scale, needleDamage = 10f * Balance.Scale;
 
@@ -44,7 +49,9 @@ public class JumpEvent : MonoBehaviour
     float needleStart;
 
     float SecondsPerWagon => Mathf.Lerp(secondsPerWagon.x, secondsPerWagon.y, train.Tempo);
-    float earliest => Mathf.Lerp(earliestPress.x, earliestPress.y, train.Tempo);
+    float GreenWidth => Mathf.Lerp(goodStretch.x, goodStretch.y, train.Tempo);
+    float GreenFrom(int i) => greenAt[i] - GreenWidth * 0.5f;
+    float GreenTo(int i) => greenAt[i] + GreenWidth * 0.5f;
     float needleSpeed => Mathf.Lerp(needleSweep.x, needleSweep.y, train.Tempo);
     float greenAngle => Mathf.Lerp(greenWidth.x, greenWidth.y, train.Tempo);
 
@@ -74,8 +81,10 @@ public class JumpEvent : MonoBehaviour
             float lead = mode == 1 ? spacing : needleLead;
             if (train.GapS > StartS) return;
             Active = true;
-            car = landed = lost = 0;
+            car = landed = lost = perfect = 0;
             outcome = new int[train.CarCount];
+            greenAt = new float[train.CarCount + 8];
+            for (int i = 0; i < greenAt.Length; i++) greenAt[i] = Random.Range(greenRange.x, greenRange.y);
             needleStart = Time.unscaledTime;
             // Slow motion sized so the game lasts as long as the train takes to get there.
             Time.timeScale = Mathf.Clamp(mode == 1 ? spacing / speed / SecondsPerWagon : lead / speed / needleSeconds, 0.05f, 1f);
@@ -85,15 +94,23 @@ public class JumpEvent : MonoBehaviour
         if (mode == 1)
         {
             if (outcome.Length != train.CarCount) System.Array.Resize(ref outcome, train.CarCount); // a wagon was won mid-jump
+            if (greenAt.Length < outcome.Length) System.Array.Resize(ref greenAt, outcome.Length + 4);
             while (car < outcome.Length && !train.CarAlive(car)) car++; // wrecks have nothing to lose
             if (car < outcome.Length)
             {
                 float progress = Progress(car);
-                if (pressed || progress > latest)
+                if (pressed || progress >= 1f) // the bar full: at the ramp without a press
                 {
-                    bool good = pressed && progress >= earliest;
+                    bool good = pressed && progress >= GreenFrom(car) && progress <= GreenTo(car);
                     outcome[car] = good ? 1 : 2;
-                    if (good) landed++;
+                    if (good)
+                    {
+                        landed++;
+                        // Right in the middle: a perfect jump, with a flash to show it.
+                        bool spot = Mathf.Abs(progress - greenAt[car]) <= GreenWidth * 0.2f;
+                        if (spot) perfect++;
+                        Combat.Instance.Burst(spot ? "levelup" : "spark", train.CarPosition(car) + Vector3.up * 2f, spot ? 2f : 1f);
+                    }
                     else
                     {
                         lost++;
@@ -154,7 +171,7 @@ public class JumpEvent : MonoBehaviour
                 else if (state == 0 && Active && i == car) state = 3;
                 panel.Box(i, (i + 1).ToString(), state);
             }
-            if (Active && car < count) panel.Bar(Progress(car) / latest, earliest / latest, 1f);
+            if (Active && car < count) panel.Bar(Progress(car), GreenFrom(car), GreenTo(car));
             panel.Cue(button, false);
             return;
         }

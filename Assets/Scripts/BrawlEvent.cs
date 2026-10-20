@@ -49,7 +49,7 @@ public class BrawlEvent : MonoBehaviour
     // What a body is doing. The hero: Free, Attacking, Kicking, Dodging, Hurt, Throwing, Held, Floored, Down. A boarder:
     // Free, Attacking, Grabbing, Holding (the hero in its headlock), Guarding, Hurt, Thrown, Down.
     const int Free = 0, Attacking = 1, Hurt = 2, Down = 3, Dodging = 4, Kicking = 5, Throwing = 6, Held = 7, Floored = 8,
-              Guarding = 9, Grabbing = 10, Holding = 11, Thrown = 12;
+              Guarding = 9, Grabbing = 10, Holding = 11, Thrown = 12, Rising = 13;
 
     // A humanoid body played by hand: a mixer of every clip it has used, fading to the one it plays now.
     class Rig
@@ -117,7 +117,7 @@ public class BrawlEvent : MonoBehaviour
         public Rig rig;
         public Material skin;
         public Color colour;
-        public float health, until, nextAttack, side;
+        public float health, until, nextAttack, side, riseAt; // riseAt: off the floor, getting up
         public int move;
         public bool landed;      // this attack's blow is dealt
         public bool chain;       // a second blow follows this one if it lands
@@ -682,7 +682,7 @@ public class BrawlEvent : MonoBehaviour
         bool Grab() // the nearest boarder in arm's reach: thrown, whatever it was doing (a guard does not help)
         {
             Boarder b = now >= grabReady ? Nearest(1.7f, at) : null;
-            if (b == null) return false;
+            if (b == null || b.move == Rising) return false; // not off the floor
             grabReady = float.MaxValue; // until the throw is over
             hero.root.rotation = Quaternion.LookRotation(Flat(b.Position - at));
             partner = b;
@@ -720,7 +720,8 @@ public class BrawlEvent : MonoBehaviour
                     Settle(hero, moves.idle);
                     bool alive = partner.health > 0f;
                     Settle(partner.rig, alive ? moves.getUp : moves.lying);
-                    partner.move = alive ? Hurt : Down;
+                    partner.move = alive ? Rising : Down;
+                    partner.riseAt = now + GetUpTime * 0.45f;
                     partner.until = now + GetUpTime * 0.85f;
                     partner.nextAttack = partner.until + 0.6f;
                     partner = null;
@@ -813,6 +814,13 @@ public class BrawlEvent : MonoBehaviour
     void HitBoarder(Boarder b, float damage, bool knock, Vector3 away, float now)
     {
         Vector3 chest = b.Position + Vector3.up * 1.2f;
+        if (b.move == Rising)
+        {
+            if (now < b.riseAt) return; // on the floor: the blow goes over it
+            b.move = Guarding;            // getting up: it covers up by itself
+            b.until = now + 0.7f;
+            b.rig.Play(moves.guard, true, 1f, 0.05f);
+        }
         TrainSim.Tint(b.skin, b.colour);
         if (b.move == Guarding && !knock) // on the guard: a little, and it answers at once
         {
@@ -880,7 +888,7 @@ public class BrawlEvent : MonoBehaviour
         if (b.push.sqrMagnitude > 0f) Place(b.rig.root, b.Position + b.push * dt);
         Vector3 to = Flat(hero.root.position - b.Position);
         float far = to.magnitude;
-        if (b.move == Hurt)
+        if (b.move == Hurt || b.move == Rising)
         {
             if (now >= b.until) b.move = Free;
             return;

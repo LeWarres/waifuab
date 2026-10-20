@@ -93,7 +93,7 @@ public class Weapon
     // The hero's own guns: cousins of the wagon weapons, but shorter-ranged and faster, so they reward flying close.
     public static readonly Weapon[] Hero =
     {
-        new Weapon { id = "blaster", color = new Color(0.3f, 0.6f, 1f), range = 18f, interval = 0.2f, fan = true, evolvesWith = "critChance" },
+        new Weapon { id = "blaster", color = new Color(0.3f, 0.6f, 1f), range = 18f, interval = 0.22f, damage = 0.8f, fan = true, evolvesWith = "critChance" }, // its fan made it far stronger than the others
         new Weapon { id = "grenade", color = new Color(0.4f, 0.8f, 0.2f), range = 16f, interval = 0.9f, speed = 25f, damage = 3f, splash = 2.5f, style = Lob, evolvesWith = "area" },
         new Weapon { id = "smg", color = new Color(0.9f, 0.9f, 0.6f), range = 13f, interval = 0.08f, damage = 0.5f, growSplash = 0.4f, style = Wobble, evolvesWith = "fireRate" },
         new Weapon { id = "scatter", color = new Color(1f, 0.6f, 0.3f), range = 10f, interval = 0.9f, speed = 20f, damage = 1.4f, targets = 2, extraTargets = 1, style = Boomerang, evolvesWith = "speed" },

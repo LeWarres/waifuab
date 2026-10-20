@@ -454,7 +454,7 @@ MonoBehaviour:
   - m_Id: 266376557441025
     m_Localized: 'Armed wagon
 
-      one more wagon for weapons'
+      empty, for a weapon'
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441026
@@ -2053,7 +2053,7 @@ MonoBehaviour:
   - m_Id: 2727810553950218
     m_Localized: 'Amount
 
-      One more shot every 2 levels'
+      Your weapon: +1 shot; +2 at level 4'
     m_Metadata:
       m_Items: []
   - m_Id: 2727810553950219
@@ -2335,6 +2335,24 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4249103866605568
     m_Localized: STAMPEDE! A column of enemies is heading straight for the train
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4548269746499584
+    m_Localized: 'Armed wagon
+
+      comes with {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4548269780054016
+    m_Localized: KEPT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4548269780054017
+    m_Localized: '{0} kept: it comes on the next wagon you buy'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4553404363124736
+    m_Localized: '{0} (kept) up to Lv {1}'
     m_Metadata:
       m_Items: []
   references:

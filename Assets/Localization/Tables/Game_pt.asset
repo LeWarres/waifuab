@@ -441,7 +441,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441025
-    m_Localized: "Vag\xE3o armado\nmais um vag\xE3o para armas"
+    m_Localized: "Vag\xE3o armado\nvazio, para uma arma"
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441026
@@ -2002,7 +2002,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810553950218
-    m_Localized: "Quantidade\nUm disparo a mais a cada 2 n\xEDveis"
+    m_Localized: "Quantidade\nSua arma: +1 disparo; +2 no n\xEDvel 4"
     m_Metadata:
       m_Items: []
   - m_Id: 2727810553950219
@@ -2271,6 +2271,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4249103866605568
     m_Localized: ESTOURO! Uma coluna de inimigos vem direto para o trem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4548269746499584
+    m_Localized: "Vag\xE3o armado\nvem com {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4548269780054016
+    m_Localized: GUARDADA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4548269780054017
+    m_Localized: "{0} guardada: vem no pr\xF3ximo vag\xE3o que comprar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4553404363124736
+    m_Localized: '{0} guardada sobe para Nv {1}'
     m_Metadata:
       m_Items: []
   references:

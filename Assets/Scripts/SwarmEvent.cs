@@ -24,7 +24,8 @@ public class SwarmEvent : MonoBehaviour
     // A shot is worth what the wagon's own weapon deals in that time, so upgrading it keeps the fight fair;
     // never less than a level 1 turret, or the slow support weapons could not win at all.
     public float fireEvery = 0.11f, leastDamagePerSecond = 4f * Balance.Scale;
-    public float aimAssist = 7f;          // degrees off the sight that still hit
+    public float aimAssist = 7f;          // degrees off the sight that still hit, at difficulty 0 (down to 3.5 at the hardest)
+    float assist;
     public float stickSpeed = 120f, mouseSpeed = 0.14f; // degrees a second, degrees a pixel
     public int moneyPerKill = 2;
     public float warnSeconds = 2.6f, slowMotion = 0.12f;
@@ -137,7 +138,10 @@ public class SwarmEvent : MonoBehaviour
 
         // The fight: every robot starts in the cloud, straight ahead of the gunner, and dives in its turn.
         swarm.Clear();
-        total = Random.Range(swarmSize.x, swarmSize.y + 1);
+        int hard = train.Difficulty;
+        total = Random.Range(swarmSize.x, swarmSize.y + 1) + hard / 2;
+        float dives = diveEvery / (1f + 0.04f * hard), fast = 1f + 0.025f * hard;
+        assist = Mathf.Lerp(aimAssist, 3.5f, train.Tempo);
         Combat combat = Combat.Instance;
         float health = robotHealth * (1f + combat.healthPerLevel * train.Difficulty);
         crashHurts = crashDamage * (1f + combat.damagePerLevel * train.Difficulty);
@@ -148,7 +152,7 @@ public class SwarmEvent : MonoBehaviour
             swarm.Add(new Robot
             {
                 position = wagonAt + side * new Vector3(Random.Range(-cloudWide, cloudWide), cloudHeight + Random.Range(-cloudTall, cloudTall), cloudDistance + Random.Range(-5f, 5f)),
-                speed = Random.Range(flySpeed.x, flySpeed.y), wobble = Random.value * 10f, divesAt = startsAt + 1.5f + i * diveEvery, health = health,
+                speed = Random.Range(flySpeed.x, flySpeed.y) * fast, wobble = Random.value * 10f, divesAt = startsAt + 1.5f + i * dives, health = health,
             });
         // The show before it: a bigger cloud comes in from that side and settles over the whole train.
         cover.Clear();
@@ -226,7 +230,7 @@ public class SwarmEvent : MonoBehaviour
         {
             fireIn = fireEvery / Mathf.Max(1f, train.fireRate);
             int hit = -1;
-            float best = Mathf.Cos(aimAssist * Mathf.Deg2Rad);
+            float best = Mathf.Cos(assist * Mathf.Deg2Rad);
             for (int i = 0; i < swarm.Count; i++)
             {
                 float along = Vector3.Dot((swarm[i].position - eye).normalized, forward);

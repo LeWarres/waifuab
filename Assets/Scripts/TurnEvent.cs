@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.DualShock;
 // damages every wagon.
 public class TurnEvent : MonoBehaviour
 {
-    public float easyStepTime = 1.2f, hardStepTime = 0.6f; // seconds to press each button, at the start and at the hardest
+    public float easyStepTime = 1.1f, hardStepTime = 0.45f; // seconds to press each button, at the start and at the hardest
     public int moneyPerHit = 10;
     public float healthPerHit = 2f * Balance.Scale;    // to every wagon and the hero
     public float damagePerMiss = 3f * Balance.Scale;   // to every wagon
@@ -59,7 +59,8 @@ public class TurnEvent : MonoBehaviour
     // The curve is in sight: choose the sequence and show it, so the player can get ready.
     public void Prepare(int length = 0)
     {
-        sequence = new int[length > 0 ? length : Random.Range(4, 9)];
+        int extra = Mathf.RoundToInt(4f * train.Tempo); // longer the harder the game
+        sequence = new int[length > 0 ? length : Random.Range(4, 7) + extra];
         outcome = new int[sequence.Length];
         // The lists go arrows, face buttons, shoulders: a harder game draws from more of them.
         int pool = train.Difficulty >= shoulderButtonsAt ? 12 : train.Difficulty >= faceButtonsAt ? 8 : 4;

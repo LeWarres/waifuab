@@ -507,13 +507,17 @@ public class Hud : MonoBehaviour
         heroText.text = hero.Alive ? $"{hero.Health:0}/{hero.maxHealth:0}" : "0";
         UiKit.SetIcon(ammoIcon, hero.ammo.id);
         ammoText.text = !hero.Alive ? L10n.T("player.down") : hero.level >= Weapon.Evolved ? L10n.T("player.evo", hero.ammo.EvolvedName) : L10n.T("player.slot", hero.ammo.Name, hero.level);
-        var arsenal = train.Arsenal();
+        // The weapons on board, then those waiting for a wagon (faded).
+        var arsenal = new List<(Weapon weapon, int level)>(train.Arsenal());
+        int onBoard = arsenal.Count;
+        arsenal.AddRange(train.Waiting);
         for (int i = 0; i < weapons.Count; i++)
         {
             bool shown = i < arsenal.Count;
             Show(weapons[i], shown, i < Mathf.Max(BaseBoxes, arsenal.Count));
             if (!shown) continue;
             UiKit.SetIcon(weapons[i].icon, arsenal[i].weapon.id);
+            weapons[i].icon.color = new Color(1f, 1f, 1f, i < onBoard ? 1f : 0.4f);
             int lv = arsenal[i].level;
             weapons[i].level.text = lv >= Weapon.Evolved ? "EVO" : lv >= Weapon.MaxLevel ? "MAX" : lv.ToString();
         }

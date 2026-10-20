@@ -101,7 +101,7 @@ qte.fail	Mala curva: -{0} a cada vagón	Bad curve: -{0} to every wagon	Curva rui
 qte.tie	Curva justa: sin premio ni daño	Close call: no reward, no damage	Curva no limite: sem prêmio nem dano	ギリギリ：報酬もダメージもなし
 menu.shop	TIENDA	SHOP	LOJA	ショップ
 shop.kit	Botiquín ({2}/{3})\n+{0} a todo, se usa en ruta	Medkit ({2}/{3})\n+{0} to all, used on the road	Kit médico ({2}/{3})\n+{0} em tudo, usado na viagem	救急キット ({2}/{3})\n走行中に全体 +{0}
-shop.wagon	Vagón armado\nun vagón más para armas	Armed wagon\none more wagon for weapons	Vagão armado\nmais um vagão para armas	武装車両\n武器用の車両を追加
+shop.wagon	Vagón armado\nvacío, para un arma	Armed wagon\nempty, for a weapon	Vagão armado\nvazio, para uma arma	武装車両\n空き（武器用）
 shop.wagon.limit	Vagón armado\nlímite de 3 alcanzado	Armed wagon\nlimit of 3 reached	Vagão armado\nlimite de 3 atingido	武装車両\n上限3台に到達
 shop.container	Contenedor eterno\ncada viaje lleva una carga\nal azar y paga como ella	Eternal container\ncarries random goods each trip\nand pays like them	Contêiner eterno\ncada viagem leva uma carga\naleatória e paga como ela	永久コンテナ\n毎回ランダムな積荷を運び\nその報酬を得る
 shop.container.limit	Contenedor eterno\nmáximo 3	Eternal container\n3 at most	Contêiner eterno\nmáximo 3	永久コンテナ\n最大3台
@@ -462,7 +462,7 @@ passive.luck	Suerte	Luck	Sorte	幸運
 passive.duration	Duración	Duration	Duração	持続
 hero.regen	Regeneración\nEl tren y el héroe se curan poco a poco	Regeneration\nThe train and the hero mend slowly	Regeneração\nO trem e o herói se curam aos poucos	再生\n列車とヒーローが少しずつ回復
 hero.area	Área\n+12% de tamaño de explosiones y barridos	Area\n+12% size of blasts and sweeps	Área\n+12% no tamanho de explosões e varreduras	範囲\n爆発と斬撃が+12%
-hero.amount	Cantidad\nUn disparo más cada 2 niveles	Amount\nOne more shot every 2 levels	Quantidade\nUm disparo a mais a cada 2 níveis	数\n2レベルごとに弾+1
+hero.amount	Cantidad\nTu arma: +1 disparo; +2 en nivel 4	Amount\nYour weapon: +1 shot; +2 at level 4	Quantidade\nSua arma: +1 disparo; +2 no nível 4	数\n自分の武器：弾+1、Lv4で+2
 hero.luck	Suerte\nMás premios y cofres dorados	Luck\nMore prizes and golden chests	Sorte\nMais prêmios e baús dourados	幸運\n報酬と金の宝箱が増える
 hero.duration	Duración\nRalentizar, bumeranes y cortes duran +20%	Duration\nSlows, boomerangs and cuts last +20%	Duração\nLentidão, bumerangues e cortes duram +20%	持続\n減速・ブーメラン・斬撃が+20%
 keep.regen	Conservar\nRegeneración	Keep\nRegeneration	Manter\nRegeneração	持ち越し\n再生
@@ -526,3 +526,7 @@ rival.wave	¡Oleada por el otro lado del tren! Ve por ellos	A wave on the far si
 boss.overheat	¡El camión se sobrecalentó! Recibe doble daño	The truck overheated! It takes double damage	O caminhão superaqueceu! Leva dano dobrado	トラックがオーバーヒート！ダメージ2倍
 rival.cargo	¡Un vagón de carga del rival vuela en pedazos!	One of the rival's cargo wagons is blown apart!	Um vagão de carga do rival explode!	ライバルの貨車が吹き飛んだ！
 stampede.warn	¡ESTAMPIDA! Una columna de enemigos viene directo al tren	STAMPEDE! A column of enemies is heading straight for the train	ESTOURO! Uma coluna de inimigos vem direto para o trem	大群襲来！敵の列が列車へ一直線
+shop.wagon.with	Vagón armado\ntrae {0}	Armed wagon\ncomes with {0}	Vagão armado\nvem com {0}	武装車両\n{0} 付き
+badge.stash	SE GUARDA	KEPT	GUARDADA	保管
+weapon.stashed	{0} guardada: viene en el próximo vagón que compres	{0} kept: it comes on the next wagon you buy	{0} guardada: vem no próximo vagão que comprar	{0} を保管：次に買う車両に搭載
+weapon.stashed.up	{0} guardada sube a Nv {1}	{0} (kept) up to Lv {1}	{0} guardada sobe para Nv {1}	保管中の{0}がLv {1}に

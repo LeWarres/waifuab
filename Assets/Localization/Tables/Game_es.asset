@@ -439,7 +439,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441025
-    m_Localized: "Vag\xF3n armado\nun vag\xF3n m\xE1s para armas"
+    m_Localized: "Vag\xF3n armado\nvac\xEDo, para un arma"
     m_Metadata:
       m_Items: []
   - m_Id: 266376557441026
@@ -2013,7 +2013,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2727810553950218
-    m_Localized: "Cantidad\nUn disparo m\xE1s cada 2 niveles"
+    m_Localized: 'Cantidad
+
+      Tu arma: +1 disparo; +2 en nivel 4'
     m_Metadata:
       m_Items: []
   - m_Id: 2727810553950219
@@ -2284,6 +2286,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4249103866605568
     m_Localized: "\xA1ESTAMPIDA! Una columna de enemigos viene directo al tren"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4548269746499584
+    m_Localized: "Vag\xF3n armado\ntrae {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4548269780054016
+    m_Localized: SE GUARDA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4548269780054017
+    m_Localized: "{0} guardada: viene en el pr\xF3ximo vag\xF3n que compres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4553404363124736
+    m_Localized: '{0} guardada sube a Nv {1}'
     m_Metadata:
       m_Items: []
   references:

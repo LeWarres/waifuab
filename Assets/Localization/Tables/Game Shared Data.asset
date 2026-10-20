@@ -2143,6 +2143,22 @@ MonoBehaviour:
     m_Key: stampede.warn
     m_Metadata:
       m_Items: []
+  - m_Id: 4548269746499584
+    m_Key: shop.wagon.with
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4548269780054016
+    m_Key: badge.stash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4548269780054017
+    m_Key: weapon.stashed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4553404363124736
+    m_Key: weapon.stashed.up
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

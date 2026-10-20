@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 // goes, right as the locomotive gets there. TrainSim lays the track; this is only the timing game.
 public class ZigzagEvent : MonoBehaviour
 {
-    public float easyWindow = 0.34f, hardWindow = 0.18f; // seconds either side of the turn that still count
+    public float easyWindow = 0.3f, hardWindow = 0.12f; // seconds either side of the turn that still count
     public float lead = 0.9f;                            // seconds of run-up shown on the timing bar
     public int moneyPerHit = 8;
     public float damagePerMiss = 2f * Balance.Scale;                     // to every wagon, at once: a little per missed turn
@@ -46,6 +46,7 @@ public class ZigzagEvent : MonoBehaviour
         Prepare(turns);
         held = true; // a stick already pushed when it starts is not a flick
         Active = true;
+        Time.timeScale = 1f; // the warning slowed things down; the zigzag itself is taken at full speed
     }
 
     float Window => Mathf.Lerp(easyWindow, hardWindow, train.Tempo);
