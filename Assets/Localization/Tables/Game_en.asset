@@ -625,9 +625,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 567476032450561
-    m_Localized: 'Evolve {0}
+    m_Localized: 'Upgrade {0}
 
-      Upgrade to Lv {1}'
+      To Lv {1}'
     m_Metadata:
       m_Items: []
   - m_Id: 567476032450562
@@ -2295,6 +2295,46 @@ MonoBehaviour:
   - m_Id: 3780973528690688
     m_Localized: 'BARRAGE! Shoot down the missiles: the truck holds the wagon until
       then'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4197200910692352
+    m_Localized: The rival is enraged! It fires faster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4203580644208640
+    m_Localized: DUEL ON BOARD!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4203580690345984
+    m_Localized: 'The rival driver leapt onto your train: beat them!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4203580690345985
+    m_Localized: Driver beaten! Their train takes a heavy blow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4203580690345986
+    m_Localized: The driver threw you out and smashed up the wagon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4205815390351360
+    m_Localized: The rival changes tactics! Its driver will come aboard more often
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4208745250107392
+    m_Localized: A wave on the far side of the train! Go get them
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4245085052284928
+    m_Localized: The truck overheated! It takes double damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4245085085839360
+    m_Localized: One of the rival's cargo wagons is blown apart!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4249103866605568
+    m_Localized: STAMPEDE! A column of enemies is heading straight for the train
     m_Metadata:
       m_Items: []
   references:

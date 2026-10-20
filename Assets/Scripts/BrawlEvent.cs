@@ -22,7 +22,7 @@ public class BrawlEvent : MonoBehaviour
     // A boarder takes two throws at most, at any difficulty (a throw grows with its health); the hero's damage bonus
     // multiplies these.
     public float lightDamage = 12f, heavyDamage = 28f, throwDamage = 45f, boarderHealth = 80f;
-    public float blow = 1.4f * Balance.Scale;  // a boarder's hit on the hero, grown with the difficulty like the enemies'
+    public float blow = 2.4f * Balance.Scale;  // a boarder's hit on the hero, grown with the difficulty like the enemies'
     public float slamBlows = 3.5f;             // the DDT at the end of a headlock not broken, in blows
     public float boarderSpeed = 2.8f;
     public int maxAttackers = 2;               // the others wait their turn around the hero
@@ -122,6 +122,8 @@ public class BrawlEvent : MonoBehaviour
         public bool landed;      // this attack's blow is dealt
         public bool chain;       // a second blow follows this one if it lands
         public Vector3 push;     // knocked back, sliding to a stop
+        public int taken;        // hits taken in a row (each within a moment of the last)
+        public float takenAt, armourUntil; // the last of them; until when hits no longer stagger it
         public Vector3 Position { get => rig.root.position; set => rig.root.position = value; }
     }
 
@@ -195,9 +197,70 @@ public class BrawlEvent : MonoBehaviour
     void TestBegin() => Begin();
 
     // False if there is nothing to play it with: no armed wagon left, or the clips are missing.
-    public bool Begin()
+    // The story duel's driver (RivalEvent): the rival hero leaps from its engine onto one of our wagons and fights the
+    // hero alone in there, far tougher than a boarder. done gets whether the hero won.
+    public float driverToughness = 2.5f;
+    public bool DriverFight { get; private set; }
+    System.Action<bool> driverDone;
+    Vector3 driverFrom;
+    readonly Dictionary<string, Boarder> drivers = new();
+    readonly List<Boarder> crew = new();     // the boarders, put aside while the driver fights
+    Transform leaper;                        // the driver in mid air, seen from outside
+    Vector3 leaperHips;
+
+    public bool BeginDriver(int rival, Vector3 from, System.Action<bool> done)
     {
-        if (!moves || !train.Player.Alive || !train.Gunner(out wagon)) return false;
+        if (!moves || !train.Player.Alive) return false;
+        int alive = 0;
+        wagon = -1;
+        for (int i = 0; i < train.CarCount; i++) if (train.CarAlive(i) && Random.Range(0, ++alive) == 0) wagon = i;
+        if (wagon < 0) return false;
+        if (!room) Build();
+        string id = Locomotives.HeroId(rival);
+        if (!drivers.TryGetValue(id, out Boarder driver)) drivers[id] = driver = NewDriver(id);
+        crew.Clear();
+        crew.AddRange(boarders);
+        foreach (Boarder b in boarders) b.rig.root.gameObject.SetActive(false);
+        boarders.Clear();
+        boarders.Add(driver);
+        DriverFight = true;
+        speeders.Clear(); // it leaps across: no speeders (nor any left over from a boarding)
+        driverDone = done;
+        driverFrom = from;
+        // In mid air on the way over: the same character, standing, nothing animates it.
+        if (leaper) Destroy(leaper.gameObject);
+        leaper = new GameObject("Leaper").transform;
+        string who = "Characters/" + id + "/" + id;
+        Animator rig = Body(Resources.Load<GameObject>(who), leaper);
+        Player.Skin(rig.transform, who);
+        rig.enabled = false;
+        leaperHips = leaper.InverseTransformPoint(rig.GetBoneTransform(HumanBodyBones.Hips).position);
+        return Begin(true);
+    }
+
+    // The driver: the rival hero's own model, in its own colours (a copy of its skin, so its glow is its own).
+    Boarder NewDriver(string id)
+    {
+        var root = new GameObject("Driver").transform;
+        root.SetParent(room, false);
+        string who = "Characters/" + id + "/" + id;
+        Animator body = Body(Resources.Load<GameObject>(who), root);
+        Player.Skin(body.transform, who);
+        Renderer[] parts = body.GetComponentsInChildren<Renderer>();
+        var skin = new Material(parts[0].sharedMaterial);
+        foreach (Renderer part in parts) part.sharedMaterials = System.Array.ConvertAll(part.sharedMaterials, _ => skin);
+        return new Boarder { rig = new Rig(root, body), colour = Color.white, skin = skin };
+    }
+
+    public bool Begin() => Begin(false);
+
+    bool Begin(bool driverFight)
+    {
+        if (!driverFight)
+        {
+            DriverFight = false;
+            if (!moves || !train.Player.Alive || !train.Gunner(out wagon)) return false;
+        }
         if (!room) Build();
         Active = true;
         ending = null;
@@ -217,8 +280,8 @@ public class BrawlEvent : MonoBehaviour
         hero.Play(moves.idle);
         yaw = 90f;
         pitch = 20f;
-        int count = Random.Range(boarderCount.x, boarderCount.y);
-        Mount(count);
+        int count = driverFight ? 1 : Random.Range(boarderCount.x, boarderCount.y);
+        Mount(driverFight ? 0 : count);
         while (boarders.Count < count) boarders.Add(NewBoarder(boarders.Count));
         level = 1f + Combat.Instance.healthPerLevel * train.Difficulty;
         for (int i = 0; i < boarders.Count; i++)
@@ -226,7 +289,7 @@ public class BrawlEvent : MonoBehaviour
             Boarder b = boarders[i];
             b.rig.root.gameObject.SetActive(i < count);
             if (i >= count) continue;
-            b.health = boarderHealth * level;
+            b.health = boarderHealth * level * (driverFight ? driverToughness : 1f);
             b.move = Free;
             b.push = Vector3.zero;
             b.side = Random.value < 0.5f ? -1f : 1f;
@@ -374,7 +437,11 @@ public class BrawlEvent : MonoBehaviour
     // more, and a headlock takes more presses to break.
     float Hardness => Mathf.Clamp01(train.Difficulty / 30f);
     float StrikeGap => Mathf.Lerp(0.9f, 0.4f, Hardness);      // seconds between two boarders starting an attack
-    float GuardChance => Mathf.Lerp(0.2f, 0.5f, Hardness);    // a boarder in front covering up from a light swing
+    float GuardChance => Mathf.Lerp(0.35f, 0.6f, Hardness) + (DriverFight ? 0.2f : 0f); // a boarder in front covering up from a light swing
+    // No locking one down with the combo: this many hits in a row and it bursts free (a shove that knocks the hero
+    // back) and shrugs off staggering for a moment. Mashing into a guard is punished: it answers with a quick blow.
+    int BurstAfter => DriverFight ? 3 : 4;
+    const float BurstArmour = 1.4f, RiposteRate = 1.6f;
     float ChainChance => Mathf.Lerp(0.25f, 0.6f, Hardness);   // a second blow straight after the first
     float Rest => Random.Range(1f, 2f) * Mathf.Lerp(1f, 0.6f, Hardness); // a boarder's own pause after attacking
     int MashNeed => 9 + Mathf.Min(11, train.Difficulty / 3);
@@ -392,6 +459,7 @@ public class BrawlEvent : MonoBehaviour
             view.enabled = true;
             room.gameObject.SetActive(true);
             foreach (Rider r in riders) r.body.gameObject.SetActive(false);
+            if (leaper) leaper.gameObject.SetActive(false);
             board.gameObject.SetActive(true);
             Time.timeScale = 0f; // everything outside waits: the fight runs on real time
         }
@@ -415,7 +483,7 @@ public class BrawlEvent : MonoBehaviour
             // Lost: the boarders wreck a wagon, any one still standing.
             int alive = 0, wreck = -1;
             for (int i = 0; i < train.CarCount; i++) if (train.CarAlive(i) && Random.Range(0, ++alive) == 0) wreck = i;
-            if (wreck >= 0) train.HurtCar(wreck, 1f);
+            if (wreck >= 0) train.HurtCar(wreck, DriverFight ? 0.5f : 1f); // the driver comes back more than once: half a wagon
             Finish("brawl.lost", now);
         }
 
@@ -475,7 +543,7 @@ public class BrawlEvent : MonoBehaviour
 
     // An effect in here: time stands still outside, so it is played by hand, on real time.
     readonly List<(UnityEngine.VFX.VisualEffect graph, float until)> effects = new();
-    readonly List<ParticleSystem> unscaled = new();
+    readonly HashSet<ParticleSystem> unscaled = new(); // the pool's copies set to real time (each once)
     void Effect(string name, Vector3 at, float size)
     {
         Combat combat = Combat.Instance;
@@ -705,7 +773,7 @@ public class BrawlEvent : MonoBehaviour
         combo = step;
         queued = false;
         heroLanded = false;
-        hero.Play(moves.combo[step], true, 1.35f, 0.08f);
+        hero.Play(moves.combo[step], true, step == 2 ? 1.05f : 1.35f, 0.08f); // the last blow of the three is a heavy one: a moment open after it
         // Whoever stands in front of the swing may cover up: punches on a guard do little, a kick or a grab breaks it.
         foreach (Boarder b in boarders)
         {
@@ -746,14 +814,39 @@ public class BrawlEvent : MonoBehaviour
     {
         Vector3 chest = b.Position + Vector3.up * 1.2f;
         TrainSim.Tint(b.skin, b.colour);
-        if (b.move == Guarding && !knock) // on the guard: a little, and it holds
+        if (b.move == Guarding && !knock) // on the guard: a little, and it answers at once
         {
             Wound(b, damage * train.Player.damageBonus * 0.15f, chest);
             Effect("spark", chest - away * 0.4f, 0.5f);
             b.push = away * 1.5f;
-            b.rig.Play(moves.guardHit, true, 1.3f, 0.04f);
-            b.until = Mathf.Max(b.until, now + 0.4f);
-            if (b.health <= 0f) { b.move = Down; b.rig.Play(moves.boarderDown, true, 1f, 0.08f); }
+            if (b.health <= 0f) { b.move = Down; b.rig.Play(moves.boarderDown, true, 1f, 0.08f); return; }
+            b.move = Attacking; // the riposte: quick, no wind-up glow to speak of, dodge it or eat it
+            b.landed = false;
+            b.chain = false;
+            b.rig.Play(moves.boarderAttacks[Random.Range(0, moves.boarderAttacks.Length)], true, RiposteRate, 0.04f);
+            return;
+        }
+        // Hit after hit: it bursts free once too many come in a row, and is not staggered for a moment after.
+        if (now - b.takenAt > 1.4f) b.taken = 0;
+        b.taken++;
+        b.takenAt = now;
+        if (now < b.armourUntil || (b.taken >= BurstAfter && !knock))
+        {
+            bool bursting = now >= b.armourUntil;
+            Effect("spark", chest - away * 0.3f, bursting ? 1.6f : 0.7f);
+            if (Wound(b, damage * train.Player.damageBonus * (bursting ? 1f : 0.6f), chest)) { b.move = Down; b.rig.Play(moves.boarderDown, true, 1f, 0.08f); return; }
+            if (!bursting) return;
+            b.armourUntil = now + BurstArmour;
+            b.taken = 0;
+            b.move = Free;
+            b.nextAttack = now + 0.3f;
+            TrainSim.Tint(b.skin, new Color(1f, 0.4f, 0.3f) * 1.8f);
+            if (Open(now))
+            {
+                HitHero(-away, now); // the shove: away from it, knocked out of the combo
+                Place(hero.root, hero.root.position - away * 1.4f);
+            }
+            stopUntil = now + 0.12f;
             return;
         }
         if (b.move == Attacking && b.rig.Done >= 0.15f && !knock) // a blow already thrown is not stopped by a punch: only a kick or a grab
@@ -946,7 +1039,7 @@ public class BrawlEvent : MonoBehaviour
                 {
                     heroLanded = true;
                     Vector3 head = hero.animator.GetBoneTransform(HumanBodyBones.Head).position;
-                    train.Player.Damage(blow * slamBlows * (1f + Combat.Instance.damagePerLevel * train.Difficulty));
+                    train.Player.Damage(blow * slamBlows * (1f + 0.035f * train.Difficulty));
                     Effect("spark", head, 1.4f);
                     Effect("dust", Flat(head) + Vector3.up * Inside.y, 0.7f);
                     Sound.Play("wagonbad", 0.5f);
@@ -968,7 +1061,7 @@ public class BrawlEvent : MonoBehaviour
 
     void HitHero(Vector3 to, float now)
     {
-        train.Player.Damage(blow * (1f + Combat.Instance.damagePerLevel * train.Difficulty));
+        train.Player.Damage(blow * (1f + 0.035f * train.Difficulty));
         Effect("spark", hero.root.position + Vector3.up * 1.3f, 0.9f);
         Sound.Play("wagonbad", 0.35f);
         stopUntil = now + 0.08f;
@@ -1060,6 +1153,17 @@ public class BrawlEvent : MonoBehaviour
     void Arrive()
     {
         float now = Time.unscaledTime;
+        if (DriverFight && leaper)
+        {
+            // A long leap from the rival's engine onto the wagon's roof, tumbling once on the way.
+            float k = Mathf.Clamp01(1f - (approachUntil - now) / approachSeconds);
+            Vector3 roof = train.CarPosition(wagon) + Vector3.up * 2.4f;
+            Vector3 hipsAt = Vector3.Lerp(driverFrom, roof, k) + Vector3.up * (Mathf.Sin(k * Mathf.PI) * 9f);
+            Vector3 way = Flat(roof - driverFrom);
+            Quaternion turn = (way.sqrMagnitude > 0.01f ? Quaternion.LookRotation(way) : Quaternion.identity) * Quaternion.Euler(k * 360f, 0f, 0f);
+            leaper.SetPositionAndRotation(hipsAt - turn * leaperHips, turn);
+            return;
+        }
         Vector3 wagonAt = train.CarPosition(wagon), ahead = Flat(train.Forward(wagon)).normalized, across = Vector3.Cross(Vector3.up, ahead);
         float t = Mathf.Clamp01(1f - (approachUntil - now) / approachSeconds), eased = 1f - (1f - t) * (1f - t) * (1f - t);
         float leap = Mathf.Clamp01((now - approachUntil) / (alarmSeconds * 0.6f));
@@ -1099,6 +1203,22 @@ public class BrawlEvent : MonoBehaviour
         if (room) room.gameObject.SetActive(false);
         board.gameObject.SetActive(false);
         foreach (Rider r in riders) r.body.gameObject.SetActive(false);
+        if (leaper) leaper.gameObject.SetActive(false);
+        // Lost in there: thrown out of the wagon, hurt but still in the fight (the wrecked wagon is the price).
+        if (key != null && !train.Player.Alive) train.Player.Heal(train.Player.maxHealth * 0.3f, true);
+        if (DriverFight)
+        {
+            // The boarders back as they were; the driver's verdict goes to the duel.
+            foreach (Boarder b in boarders) b.rig.root.gameObject.SetActive(false);
+            boarders.Clear();
+            boarders.AddRange(crew);
+            crew.Clear();
+            DriverFight = false;
+            System.Action<bool> done = driverDone;
+            driverDone = null;
+            if (key != null) key = key == "brawl.won" ? "brawl.driver.won" : "brawl.driver.lost";
+            done?.Invoke(key == "brawl.driver.won");
+        }
         Time.timeScale = 1f;
         effects.Clear();
         foreach (ParticleSystem system in unscaled) if (system) { var main = system.main; main.useUnscaledTime = false; } // the pool's copies, back to game time

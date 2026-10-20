@@ -140,7 +140,7 @@ zig.wait	Espera a la zona verde…  {1}	Wait for the green zone…  {1}	Espere a
 zig.now	¡AHORA!  {0}	NOW!  {0}	AGORA!  {0}	今だ！  {0}
 hero.damage	Daño\n+20% a tus disparos	Damage\n+20% to your shots	Dano\n+20% nos seus tiros	ダメージ\nショット +20%
 hero.greed	Botín\n+15% de dinero por enemigo	Loot\n+15% money per enemy	Saque\n+15% de dinheiro por inimigo	戦利品\n敵からのマネー +15%
-hero.evolve	Evolucionar {0}\nSube a Nv {1}	Evolve {0}\nUpgrade to Lv {1}	Evoluir {0}\nSobe para Nv {1}	{0} を進化\nLv {1} に強化
+hero.evolve	Mejorar {0}\nSube a Nv {1}	Upgrade {0}\nTo Lv {1}	Melhorar {0}\nSobe para Nv {1}	{0} を強化\nLv {1} に
 hero.ammo	Munición: {0}\n{1}\nConserva el nivel	Ammo: {0}\n{1}\nKeeps its level	Munição: {0}\n{1}\nMantém o nível	弾薬：{0}\n{1}\nレベルはそのまま
 hud.hero.stats	Daño {0}%   Vel {1}   Res {2}%   Botín {3}%	Dmg {0}%   Spd {1}   Res {2}%   Loot {3}%	Dano {0}%   Vel {1}   Res {2}%   Saque {3}%	攻撃 {0}%   速度 {1}   耐性 {2}%   戦利品 {3}%
 offer.cargo	¡Gratis! Vagón de {0}\n+{1} al entregar · multa {2}\nSolo este viaje	Free! {0} wagon\n+{1} on delivery · fine {2}\nThis trip only	Grátis! Vagão de {0}\n+{1} na entrega · multa {2}\nSó esta viagem	無料！{0}の貨車\n納品で +{1} · 罰金 {2}\n今回の旅のみ
@@ -516,3 +516,13 @@ boss.ram.hit	¡El camión embistió el vagón!	The truck rammed the wagon!	O cam
 brawl.mash	¡Machaca {0} para soltarte!	Mash {0} to break free!	Aperte {0} rápido para se soltar!	{0} 連打で振りほどけ！
 brawl.free	¡Te soltaste!	Broke free!	Você se soltou!	振りほどいた！
 boss.barrage	¡ANDANADA! Derriba los misiles: el camión no suelta el vagón hasta entonces	BARRAGE! Shoot down the missiles: the truck holds the wagon until then	BARRAGEM! Derrube os mísseis: o caminhão não solta o vagão até lá	一斉射撃！ミサイルを撃ち落とせ：それまでトラックは車両を離さない
+rival.rage	¡El rival se enfurece! Dispara más rápido	The rival is enraged! It fires faster	O rival se enfurece! Atira mais rápido	ライバルが激怒！攻撃が速くなる
+brawl.driver.title	¡DUELO A BORDO!	DUEL ON BOARD!	DUELO A BORDO!	車上の決闘！
+brawl.driver.warn	El conductor rival saltó a tu tren: ¡derrótalo!	The rival driver leapt onto your train: beat them!	O condutor rival pulou no seu trem: derrote-o!	ライバルの運転士が乗り込んできた：倒せ！
+brawl.driver.won	¡Conductor derrotado! Su tren pierde mucha vida	Driver beaten! Their train takes a heavy blow	Condutor derrotado! O trem dele perde muita vida	運転士を撃破！ライバル列車に大ダメージ
+brawl.driver.lost	El conductor te sacó del vagón y lo dañó	The driver threw you out and smashed up the wagon	O condutor te expulsou e danificou o vagão	運転士に叩き出され、車両が損傷した
+rival.act2	¡El rival cambia de táctica! Su conductor saltará más seguido	The rival changes tactics! Its driver will come aboard more often	O rival muda de tática! O condutor vai pular mais vezes	ライバルが戦術を変えた！運転士の乗り込みが増える
+rival.wave	¡Oleada por el otro lado del tren! Ve por ellos	A wave on the far side of the train! Go get them	Onda do outro lado do trem! Vá atrás deles	列車の反対側から敵の波！迎え撃て
+boss.overheat	¡El camión se sobrecalentó! Recibe doble daño	The truck overheated! It takes double damage	O caminhão superaqueceu! Leva dano dobrado	トラックがオーバーヒート！ダメージ2倍
+rival.cargo	¡Un vagón de carga del rival vuela en pedazos!	One of the rival's cargo wagons is blown apart!	Um vagão de carga do rival explode!	ライバルの貨車が吹き飛んだ！
+stampede.warn	¡ESTAMPIDA! Una columna de enemigos viene directo al tren	STAMPEDE! A column of enemies is heading straight for the train	ESTOURO! Uma coluna de inimigos vem direto para o trem	大群襲来！敵の列が列車へ一直線

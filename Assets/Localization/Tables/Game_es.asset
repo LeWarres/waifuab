@@ -602,7 +602,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 567476032450561
-    m_Localized: 'Evolucionar {0}
+    m_Localized: 'Mejorar {0}
 
       Sube a Nv {1}'
     m_Metadata:
@@ -2243,6 +2243,47 @@ MonoBehaviour:
   - m_Id: 3780973528690688
     m_Localized: "\xA1ANDANADA! Derriba los misiles: el cami\xF3n no suelta el vag\xF3n
       hasta entonces"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4197200910692352
+    m_Localized: "\xA1El rival se enfurece! Dispara m\xE1s r\xE1pido"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4203580644208640
+    m_Localized: "\xA1DUELO A BORDO!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4203580690345984
+    m_Localized: "El conductor rival salt\xF3 a tu tren: \xA1derr\xF3talo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4203580690345985
+    m_Localized: "\xA1Conductor derrotado! Su tren pierde mucha vida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4203580690345986
+    m_Localized: "El conductor te sac\xF3 del vag\xF3n y lo da\xF1\xF3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4205815390351360
+    m_Localized: "\xA1El rival cambia de t\xE1ctica! Su conductor saltar\xE1 m\xE1s
+      seguido"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4208745250107392
+    m_Localized: "\xA1Oleada por el otro lado del tren! Ve por ellos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4245085052284928
+    m_Localized: "\xA1El cami\xF3n se sobrecalent\xF3! Recibe doble da\xF1o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4245085085839360
+    m_Localized: "\xA1Un vag\xF3n de carga del rival vuela en pedazos!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4249103866605568
+    m_Localized: "\xA1ESTAMPIDA! Una columna de enemigos viene directo al tren"
     m_Metadata:
       m_Items: []
   references:

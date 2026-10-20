@@ -112,7 +112,7 @@ public class Combat : MonoBehaviour
     // from the wagons. Shot down, it drops a chest (TrainSim.OpenChest).
     static readonly EnemyType MiniBoss = new EnemyType
     {
-        name = "MiniBoss", color = new Color(1f, 0.72f, 0.15f), health = 40f, speed = 1.8f, damage = 8f, size = 2.8f,
+        name = "MiniBoss", color = new Color(1f, 0.72f, 0.15f), health = 40f, speed = 2.6f, damage = 11f, size = 2.8f,
         reward = 40, armor = 1f, slowImmune = true,
         model = "Enemy_miniboss", // Tools/make_mechs.py
     };
@@ -120,7 +120,7 @@ public class Combat : MonoBehaviour
     // fight in every other way.
     static readonly EnemyType MiniDemon = new EnemyType
     {
-        name = "MiniBoss", color = new Color(1f, 0.72f, 0.15f), health = 40f, speed = 1.8f, damage = 8f, size = 2.8f,
+        name = "MiniBoss", color = new Color(1f, 0.72f, 0.15f), health = 40f, speed = 2.6f, damage = 11f, size = 2.8f,
         reward = 40, armor = 1f, slowImmune = true,
         model = "Enemy_demon", flies = true,
     };
@@ -185,6 +185,7 @@ public class Combat : MonoBehaviour
         public EnemyType type;
         public float hp, maxHp, slowUntil, timer;
         public float markedUntil; // the Hawk Eye's mark: everything hurts it twice as much meanwhile
+        public float punch = 1f;  // its blow on a wagon, times its type's (a stampede's come in hard)
         public int index, pick; // pick: a number of its own, which decides the wagon it goes for
         public int id; // changes when the enemy dies; whoever targets it compares ids to notice
     }
@@ -237,6 +238,19 @@ public class Combat : MonoBehaviour
     public int EnemyCount => enemies.Count;
 
     // A pack of the plain small ones put down at a spot (the rival's boarders): from there they go for the train.
+    // The duel's waves (RivalEvent): only the hero can bring these down, the turrets never aim at them.
+    static readonly EnemyType Raider = new EnemyType
+    {
+        name = "Raider", color = new Color(1f, 0.45f, 0.2f), health = 5f, speed = 4f, damage = 0.7f, size = 1.9f,
+        reward = 3, model = "Enemy_imp", flies = true, heroOnly = true,
+    };
+
+    public void DropRaiders(Vector3 at, int count)
+    {
+        for (int i = 0; i < count; i++)
+            Add(Raider, at + new Vector3(Random.Range(-2.5f, 2.5f), 0f, Random.Range(-2.5f, 2.5f)));
+    }
+
     public void Drop(Vector3 at, int count)
     {
         for (int i = 0; i < count; i++)
@@ -390,10 +404,20 @@ public class Combat : MonoBehaviour
     [System.NonSerialized] public Vector2 hordeEvery = new Vector2(12f, 18f);
     [System.NonSerialized] public int hordeSize = 28, hordeMax = 110;
     [System.NonSerialized] public float healthPerLevel = 0.13f;   // +13% enemy health per difficulty level
-    [System.NonSerialized] public float damagePerLevel = 0.12f;   // +12% enemy damage per difficulty level
+    [System.NonSerialized] public float damagePerLevel = 0.06f;   // +6% enemy damage per difficulty level (Vampire Survivors: fixed per type)
+    // Vampire Survivors' waves: a minimum of enemies on the field that grows with time, filled at once whenever the
+    // field falls short of it, and a ceiling past which nobody new comes (bosses and events excepted).
+    [System.NonSerialized] public int minOnField = 25, minPerLevel = 5, maxOnField = 220;
+    // Stampedes (Vampire Survivors' swarm events): every so often a dense column comes in from one side, straight for
+    // the train, none of it turning aside for the hero. They grow with the difficulty.
+    [System.NonSerialized] public float stampedeEvery = 45f;
+    [System.NonSerialized] public int stampedeSize = 30, stampedePerLevel = 4, stampedeMax = 120;
+    float stampedeTimer = 40f;
+    int MinOnField => Mathf.Min(maxOnField, minOnField + minPerLevel * level);
+    int OnField { get { int n = 0; foreach (Enemy e in enemies) if (!e.type.projectile && e.type.loot < 0) n++; return n; } }
     // The three knobs to turn first when the whole game feels too easy or too hard: every enemy's health and
     // damage, and the money a kill pays, against what their types say.
-    [System.NonSerialized] public float enemyHealth = 1f, enemyDamage = 1.1f, killMoney = 0.6f;
+    [System.NonSerialized] public float enemyHealth = 1f, enemyDamage = 0.8f, killMoney = 0.6f;
     public float speedDrift = 0.15f;       // how much a faster or slower train drags enemies back or lets them catch up   // +5% enemy damage per difficulty level
 
     [Header("Floating goods")]
@@ -502,15 +526,24 @@ public class Combat : MonoBehaviour
         // A button game or a curve under the train: nobody new arrives, the rest back off and nothing they do counts.
         bool calm = train.Calm;
         if (!calm && !train.BossFight) spawnTimer -= dt; // a boss blocks the road: nobody else joins in
+        int onField = OnField;
         while (spawnTimer <= 0f)
         {
             spawnTimer += 1f / (spawnRate + spawnRatePerLevel * level);
-            SpawnWave();
+            if (onField < maxOnField) SpawnWave();
         }
+        // Short of the minimum: topped up fast (a few a frame, so it comes in as a tide and not all in one frame).
+        if (!calm && !train.BossFight && !train.AtStation)
+            for (int k = 0; k < 6 && onField < MinOnField; k++, onField++) SpawnWave();
         if (!calm && !train.BossFight && !train.AtStation && (hordeTimer -= dt) <= 0f)
         {
             hordeTimer = Random.Range(hordeEvery.x, hordeEvery.y);
             SpawnWave(Mathf.Min(hordeMax, hordeSize + level * 4));
+        }
+        if (!calm && !train.BossFight && !train.AtStation && (stampedeTimer -= dt) <= 0f)
+        {
+            stampedeTimer = stampedeEvery * Random.Range(0.85f, 1.15f);
+            Stampede(Mathf.Min(stampedeMax, stampedeSize + stampedePerLevel * level));
         }
         if (miniBoss != null && miniBoss.id != miniBossId) miniBoss = null; // shot down, or cleared off for a duel
         if (miniBoss == null && !calm && !train.BossFight && (miniBossTimer -= dt) <= 0f)
@@ -524,7 +557,7 @@ public class Combat : MonoBehaviour
             if (miniBossLeft >= 1f) miniBossLook = Random.value < 0.5f ? MiniDemon : MiniBoss; // one coming back keeps its look
             miniBoss = Add(miniBossLook, train.Focus + across * RingRadius() + along * Random.Range(-8f, 8f));
             miniBossId = miniBoss.id;
-            miniBoss.maxHp *= 1f + 0.15f * level; // weak while the weapons are, much tougher later
+            miniBoss.maxHp *= 1f + 0.25f * train.Strength; // Vampire Survivors: a boss's health is its base times the player's level
             miniBoss.hp = miniBoss.maxHp * miniBossLeft; // one that withdrew comes back as worn as it went
             miniBossLeft = 1f;
             bossMode = Ram;
@@ -578,14 +611,16 @@ public class Combat : MonoBehaviour
                 continue;
             }
 
-            // The hero on foot is a target too, whenever closer than the train.
+            // The hero is a target too: for one in two (the hunters), whenever she is closer than the train; for the
+            // rest only when she is right in their way. Circling round, she no longer drags the whole crowd off it.
             bool atPlayer = false;
             if (player.Alive)
             {
                 Vector3 toPlayer = player.Position - e.position;
                 toPlayer.y = 0f;
                 float gap = Mathf.Max(0f, toPlayer.magnitude - PlayerRadius);
-                if (gap * gap < sqr)
+                bool hunter = e.pick % 2 == 0;
+                if (gap * gap < sqr && (hunter || gap < 2.5f))
                 {
                     atPlayer = true;
                     toWagon = toPlayer.normalized * gap;
@@ -598,7 +633,7 @@ public class Combat : MonoBehaviour
                 if (atPlayer) player.Damage(t.damage * damageScale);
                 else
                 {
-                    train.Damage(wagon, t.damage * damageScale);
+                    train.Damage(wagon, t.damage * damageScale * e.punch);
                     if (t.stun > 0f) train.Stun(wagon, t.stun);
                     Burst("smoke", e.position, 0.7f + t.size * 0.4f); // dust where it slams into the wagon
                 }
@@ -838,6 +873,7 @@ public class Combat : MonoBehaviour
         Larva.Batch.Flush();
         MiniBoss.Batch.Flush();
         MiniDemon.Batch.Flush();
+        Raider.Batch.Flush();
         stationShot.Flush();
         dragonDark.Flush();
         healRing.Flush();
@@ -1002,12 +1038,14 @@ public class Combat : MonoBehaviour
             to.y = 0f;
             if (to.magnitude <= reach)
             {
-                // The ram: one heavy blow, then it backs off.
+                // The ram: one heavy blow and a shockwave through the wagons beside it, then it backs off a moment.
                 train.Damage(bossWagon, e.type.damage * damageScale);
+                train.DamageArea(train.CarPosition(bossWagon), 7f, e.type.damage * damageScale * 0.35f);
                 Burst("smoke", e.position, 2f);
-                train.Shake(0.25f);
+                Burst("grenade", train.CarPosition(bossWagon) + Vector3.up, 2.2f);
+                train.Shake(0.4f);
                 bossMode = BackOff;
-                bossModeLeft = 2.5f;
+                bossModeLeft = 1.4f;
             }
             else way = to.normalized * speed * 1.3f; // a charge
         }
@@ -1061,6 +1099,31 @@ public class Combat : MonoBehaviour
         return seen.z > 0f && seen.x > 0f && seen.x < 1f && seen.y > 0f && seen.y < 1f;
     }
 
+    // A stampede: out of the picture on one side of the train, in a deep column, every one of them a wagon-seeker
+    // (an odd pick is never a hunter).
+    void Stampede(int count)
+    {
+        Vector3 along = train.Forward(train.CarCount / 2);
+        along.y = 0f;
+        along.Normalize();
+        float side = Random.value < 0.5f ? -1f : 1f;
+        Vector3 across = Vector3.Cross(Vector3.up, along) * side, start = train.Focus + across * RingRadius();
+        int biome = train.Biome;
+        var pool = System.Array.FindAll(Types, t => t.Fodder && t.firstLevel <= level && (t.biome < 0 || t.biome == biome));
+        for (int i = 0; i < count; i++)
+        {
+            EnemyType type = pool.Length > 0 ? pool[Random.Range(0, pool.Length)] : Types[0];
+            Enemy e = Add(type, start + across * Random.Range(0f, 12f) + along * Random.Range(-14f, 14f));
+            e.pick |= 1;
+            e.punch = 5f;
+        }
+        train.Toast(L10n.T("stampede.warn"));
+        train.Shake(0.2f);
+    }
+
+    // Out of the picture, this way from where the camera looks (the duel's raiders come in from there).
+    public Vector3 OffScreen(Vector3 way) => train.Focus + way.normalized * RingRadius();
+
     float RingRadius()
     {
         Camera view = Camera.main;
@@ -1102,6 +1165,7 @@ public class Combat : MonoBehaviour
         e.velocity = Vector3.zero;
         e.slowUntil = 0f;
         e.markedUntil = 0f;
+        e.punch = 1f;
         e.pick = Random.Range(0, 1000);
         e.timer = type.interval;
         e.index = enemies.Count;

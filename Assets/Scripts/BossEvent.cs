@@ -66,8 +66,10 @@ public class BossEvent : MonoBehaviour
     [Header("Barrage")]
     public float barrageEvery = 10f;     // seconds between two barrages (the junction's truck: sooner)
     public float barrageWait = 9f;       // how long the missiles hang out there before they dive
-    public float pinShare = 0.04f;       // of the pinned wagon's health, a second, while the truck grinds on it
-    float barrageIn;
+    public float pinShare = 0.06f;       // of the pinned wagon's health, a second, while the truck grinds on it
+    float grindIn, barrageIn, grind, overheatUntil, lastHp;
+    public float overheatSeconds = 6f;   // after a barrage is cleared: slowed, and every hit on it counts twice
+    bool Overheated => Time.time < overheatUntil;
     int pinCar = -1;                     // the wagon the truck has rammed and holds while a barrage is up
     bool Barraging => live.Exists(s => s.stage > 0);
 
@@ -153,6 +155,8 @@ public class BossEvent : MonoBehaviour
         fireIn = 1.2f;
         barrageIn = 6f;
         pinCar = -1;
+        overheatUntil = 0f;
+        lastHp = boss.hp;
         nextDust = 0f;
         startZoom = Mathf.Max(train.cameraZoom, 1f);
         train.cameraZoom = startZoom;
@@ -185,6 +189,14 @@ public class BossEvent : MonoBehaviour
         Dust(now);
         Aim(dt);
         Fire(dt);
+        // Overheated: whatever it lost this frame, it loses again.
+        if (Overheated && lastHp > boss.hp) boss.hp -= lastHp - boss.hp;
+        lastHp = boss.hp;
+        if (Overheated)
+        {
+            train.Panel.Mark(rig.position + Vector3.up * 6.5f, "x2", 4);
+            if (Random.value < dt * 8f) Combat.Instance.Burst("smoke", rig.position + Vector3.up * 4.5f, 1.4f);
+        }
         // The rig is one big target: keep its body where the guns can reach it.
         boss.position = rig.position + Vector3.up * 2f;
         train.BossBar(Name, maxHp > 0f ? boss.hp / maxHp : 0f);
@@ -218,7 +230,8 @@ public class BossEvent : MonoBehaviour
         Vector3 want = center + dir * ahead + right * lateral;
         if (Incoming) want = center - dir * (approach + Mathf.Lerp(34f, 0f, 1f - (startsAt - Time.unscaledTime) / introSeconds));
         float pace = speed;
-        if (pinCar >= 0 && Pin(right, ref want, dt)) pace = speed * 1.8f;
+        if (Overheated) { pace = speed * 0.35f; want = center + right * (side * alongside); } // limping alongside
+        else if (pinCar >= 0 && Pin(right, ref want, dt)) pace = speed * 1.8f;
         else if (hard > 1f && !Incoming && Ram(right, ref want, dt)) pace = speed * 1.8f;
         want.y = 0f;
         rig.position = Vector3.MoveTowards(rig.position, want, pace * dt);
@@ -236,6 +249,11 @@ public class BossEvent : MonoBehaviour
         {
             if (Barraging && (pinCar = RandomCar()) >= 0) return true; // that wagon is gone: the next one
             pinCar = -1;
+            if (!Barraging) // the sky is clear: it pulls off steaming, slowed, its armour open
+            {
+                overheatUntil = Time.time + overheatSeconds;
+                train.Toast(L10n.T("boss.overheat"));
+            }
             mode = 0;
             modeTimer = Random.Range(3.5f, 7f);
             ramIn = ramEvery;
@@ -248,8 +266,16 @@ public class BossEvent : MonoBehaviour
         Vector3 gap = rig.position - want;
         gap.y = 0f;
         if (gap.magnitude > 1.5f) return true;
-        train.Damage(pinCar, train.CarMaxHealth(pinCar) * pinShare * dt);
-        if (Random.value < dt * 6f) { Combat.Instance.Burst("spark", car + Vector3.up * 1.2f + right * side, 1f); train.Shake(0.08f); }
+        // Grinding: a bite every half second (the number shows each), sparks and a jolt: get the missiles down.
+        grind += train.CarMaxHealth(pinCar) * pinShare * dt;
+        if ((grindIn -= dt) <= 0f)
+        {
+            grindIn = 0.5f;
+            train.Damage(pinCar, grind);
+            grind = 0f;
+            Combat.Instance.Burst("spark", car + Vector3.up * 1.2f + right * side, 1.4f);
+            train.Shake(0.12f);
+        }
         return true;
     }
 
@@ -312,7 +338,7 @@ public class BossEvent : MonoBehaviour
     void Fire(float dt)
     {
         if (Incoming) return;
-        if (Barraging) return; // the sky is full: no bombs on top of it
+        if (Barraging || Overheated) return; // the sky is full, or it is steaming: no bombs
         if (ramCar < 0 && (barrageIn -= dt) <= 0f)
         {
             barrageIn = barrageEvery / (hard > 1f ? 1.25f : 1f);

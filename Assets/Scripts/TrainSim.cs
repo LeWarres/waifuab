@@ -135,7 +135,24 @@ public class TrainSim : MonoBehaviour
     public readonly List<string> passiveOrder = new(); // in the order they were first taken, for the HUD
     public int PassiveLevel(string id) => id != null && passiveLevels.TryGetValue(id, out int n) ? n : 0;
     // The hero's weapon is at its top level and its partner upgrade is owned: a boss's chest evolves it.
+    // Seconds ridden this run (not at stations or paused).
+    public float RideClock { get; private set; }
+    // Evolutions come only out of a mini boss's chest, first in it, as soon as the weapon is at level 5 and its
+    // passive is owned.
     bool CanEvolve => Player.level == Weapon.MaxLevel && PassiveLevel(Player.ammo.evolvesWith) > 0;
+    // How hard the train hits right now, in level 1 turrets: every weapon's damage a second at its level (an evolved
+    // one counts a third more, for what its evolution does). The bosses' health is measured against it (Vampire
+    // Survivors scales a boss by the player's level): two strong guns and a few weak ones are not six strong ones.
+    public float Strength
+    {
+        get
+        {
+            Weapon basic = System.Array.Find(Weapon.Wagon, w => w.id == "turret") ?? Weapon.Wagon[0];
+            float unit = basic.Damage(1) / basic.Interval(1), sum = 0f;
+            foreach (var a in Arsenal()) sum += a.weapon.Damage(a.level) / a.weapon.Interval(a.level) * (a.level >= Weapon.Evolved ? 1.3f : 1f);
+            return sum / unit;
+        }
+    }
     // The first wagon whose weapon is at its top level with its partner upgrade owned, or null.
     Turret Evolvable => cars.Find(c => c.mount && c.mount.Level == Weapon.MaxLevel && PassiveLevel(c.mount.Weapon.evolvesWith) > 0)?.mount;
     bool evolutionsMenu; // the pause menu's list of every evolution
@@ -146,7 +163,7 @@ public class TrainSim : MonoBehaviour
     bool junction, junctionAsked;
     Car truckCar;      // the truck's wagon on this train, if any
     bool truckCarried; // it came from the chapter before: it goes no further
-    public float junctionHard = 18f;   // the junction's truck: a real fight, with this many times the health
+    public float junctionHard = 22f;   // the junction's truck: a real fight, with this many times the health
     Transform junctionLook, lever; // the branch line leaving the track, and the lever at the switch
     float junctionS;               // where along the track the switch is (as the knees: it slides back as the train runs)
     float leverTo;                 // where the lever is thrown to (degrees)
@@ -167,18 +184,20 @@ public class TrainSim : MonoBehaviour
     public float LegProgress => AtStation ? 1f : 1f - remaining / LegLength;
     public int Kits => kits;
 
-    // The ultimate: charged by enemies shot down (not by the station's guns), fired with the kit's old button.
-    [System.NonSerialized] public float ultimateKills = 450f; // a strong attack: it takes a good while to earn again
+    // The ultimate: charged by time on the road (one every ultimateKills seconds), fired with the kit's old button.
+    // By kills it filled at once late in a run, when the crowds are thickest.
+    [System.NonSerialized] public float ultimateKills = 90f;
     float ultimateCharge;
     UltimateCutIn ultimateCutIn;
     public bool UltimatePresenting => ultimateCutIn && ultimateCutIn.Active;
     public float UltimateFill => Mathf.Clamp01(ultimateCharge / ultimateKills);
     public bool UltimateReady => ultimateCharge >= ultimateKills;
     public int Kills { get; private set; } // enemies shot down this run (the station's guns do not count)
-    public void Charge()
+    public void Charge() => Kills++;
+    void ChargeUltimate(float dt)
     {
-        Kills++;
-        if (!UltimateReady && ++ultimateCharge >= ultimateKills) { Sound.Play("newcard"); ultimateAnnounce = true; }
+        if (UltimateReady || AtStation || Paused) return; // game time: frozen fights in a wagon do not count
+        if ((ultimateCharge += dt) >= ultimateKills) { Sound.Play("newcard"); ultimateAnnounce = true; }
     }
     bool ultimateAnnounce; // "ultimate ready" is still to be said, as soon as nothing else is on screen
     // A button game, a warning, a swarm coming or a talk is on: the ultimate (and its announcement) waits.
@@ -289,10 +308,8 @@ public class TrainSim : MonoBehaviour
         junction = false;
         Time.timeScale = 1f;
         leverTo = (fight ? 1f : -1f) * leverSide * 35f; // thrown one way for the branch, the other for the line
-        // The junction's truck matches the train: the more weapon levels on board, the more health it has.
-        int power = 0;
-        foreach (var a in Arsenal()) power += a.level;
-        boss.hard = junctionHard * Mathf.Max(1f, Mathf.Pow(power / 20f, 1.3f)); // a strong arsenal no longer walks it
+        // The junction's truck matches the train: the harder it hits, the more health the truck has.
+        boss.hard = junctionHard * Mathf.Max(1f, Strength / 18f);
         if (fight && boss.Begin())
         {
             turned = true;                                      // the truck instead of this leg's event
@@ -1090,6 +1107,7 @@ public class TrainSim : MonoBehaviour
             Repair(regen, true);
             if (Player && Player.Alive) Player.Heal(regen * 0.5f, true);
         }
+        if (!AtStation && !Paused && Health > 0f) { RideClock += Time.deltaTime; ChargeUltimate(Time.deltaTime); }
         if (Story.Active && !AtStation && !Paused && !chapterWon && Health > 0f)
         {
             // The chapter's clock; when it runs out, the rival comes alongside as soon as nothing else is on.
@@ -2418,7 +2436,7 @@ public class TrainSim : MonoBehaviour
     {
         // Warning for the curve, jump or zigzag ahead: what is coming and which button it takes.
         if (!Paused && swarm.Incoming) hud.Warning(L10n.T("swarm.title"), L10n.T("swarm.warn", JumpEvent.ButtonName(Player.UsingGamepad)));
-        if (!Paused && brawl.Alarm) hud.Warning(L10n.T("brawl.title"), L10n.T("brawl.warn"));
+        if (!Paused && brawl.Alarm) hud.Warning(L10n.T(brawl.DriverFight ? "brawl.driver.title" : "brawl.title"), L10n.T(brawl.DriverFight ? "brawl.driver.warn" : "brawl.warn"));
         else if (!Paused && boss.Incoming) hud.Warning(L10n.T("boss.title"), L10n.T("boss.warn", boss.Name));
         else if (Paused || Approach() < 0f) hud.Warning(null, null);
         else

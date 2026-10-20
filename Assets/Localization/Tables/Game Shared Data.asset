@@ -2103,6 +2103,46 @@ MonoBehaviour:
     m_Key: boss.barrage
     m_Metadata:
       m_Items: []
+  - m_Id: 4197200910692352
+    m_Key: rival.rage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4203580644208640
+    m_Key: brawl.driver.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4203580690345984
+    m_Key: brawl.driver.warn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4203580690345985
+    m_Key: brawl.driver.won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4203580690345986
+    m_Key: brawl.driver.lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4205815390351360
+    m_Key: rival.act2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4208745250107392
+    m_Key: rival.wave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4245085052284928
+    m_Key: boss.overheat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4245085085839360
+    m_Key: rival.cargo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4249103866605568
+    m_Key: stampede.warn
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

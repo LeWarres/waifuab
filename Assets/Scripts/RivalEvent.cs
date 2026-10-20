@@ -17,10 +17,22 @@ public class RivalEvent : MonoBehaviour
     public float slide = 8f;          // how far it drifts ahead of and behind the middle of our train
     public float trackLength = 320f;  // of the rails laid for it, centred on the train
     public float fireEvery = 1.3f;    // seconds between two shots of one of its guns, at difficulty 0
-    public float shotDamage = 4f * Balance.Scale;
-    public float health = 1300f * Balance.Scale;
-    public float perDifficulty = 0.03f; // more health and harder shots for every level of difficulty
-    public float bombDamage = 6f * Balance.Scale, bombHealth = 2.5f * Balance.Scale, bombFlight = 2.6f;
+    public float shotDamage = 0.6f * Balance.Scale;
+    public float health = 800f * Balance.Scale;
+    public float perDifficulty = 0.03f; // more health for every level of difficulty
+    public float hitPerDifficulty = 0.012f; // harder and quicker shots and bombs: gentler, the fight now lasts
+    // So that evolved weapons and the ultimate cannot just melt it: its health also grows with the arsenal, it
+    // takes only part of each hit unless overheated or hexed weak, and it never loses more than a share of its
+    // health a second (the ultimate's meteors included). Under half health it fights harder.
+    public float armour = 0.5f;          // share of a hit it takes outside the weak windows
+    public float maxLossPerSecond = 0.006f, weakLossPerSecond = 0.01f; // shares of its health: two to three minutes
+    // Three acts, by its health: as it was; then under two thirds its driver comes aboard twice a round (in place of
+    // the hex) and its guns lob bombs too; under a third it rages (faster, more boarders).
+    public float secondAct = 0.66f, rageAt = 0.33f, rage = 1.6f;
+    public float phraseShare = 0.05f;    // a phrase played without a miss also takes this share of its health
+    int Act => hp < maxHp * rageAt ? 3 : hp < maxHp * secondAct ? 2 : 1;
+    bool announcedSecond;
+    public float bombDamage = 1.5f * Balance.Scale, bombHealth = 1.5f * Balance.Scale, bombFlight = 2.6f;
     public float introSeconds = 2.4f;
     public float zoom = 1.4f;          // the picture pulls back this far so both trains fit
     public float phraseEvery = 11f;    // seconds between two button phrases
@@ -39,9 +51,16 @@ public class RivalEvent : MonoBehaviour
     };
     const float SleeperSpacing = 1.5f, WagonStep = 5.5f;
 
-    // Its turns, round and round: guns, bombs, overheated, guns, a hex on us, boarders, overheated. (kind, seconds)
-    static readonly (int kind, float seconds)[] Turns = { (0, 8f), (1, 5f), (3, 4f), (0, 6f), (4, 2f), (2, 4f), (3, 4f) };
-    const int Guns = 0, Bombs = 1, Boarders = 2, Overheated = 3, Hex = 4;
+    // Its turns, round and round: guns, bombs, overheated, the driver comes aboard, guns, a hex on us, boarders,
+    // overheated. (kind, seconds)
+    static readonly (int kind, float seconds)[] Turns = { (0, 8f), (1, 5f), (3, 4f), (5, 1f), (0, 6f), (4, 2f), (2, 4f), (3, 4f) };
+    const int Guns = 0, Bombs = 1, Boarders = 2, Overheated = 3, Hex = 4, Driver = 5;
+    // The driver leaping aboard (BrawlEvent.BeginDriver): beaten in our wagon, its train loses this share of health.
+    public float driverShare = 0.06f;
+    // Waves from the other side of our train, away from the rival: the hero has to fly over and deal with them.
+    public float waveEvery = 20f;
+    float waveIn, rivalSide;
+    int rivalIndex;
 
     public const int Jam = 0, Weak = 1, Mirror = 2, Statuses = 3;
     readonly float[] ours = new float[Statuses], theirs = new float[Statuses]; // game time each one wears off
@@ -51,6 +70,7 @@ public class RivalEvent : MonoBehaviour
     bool OnThem(int status) => Time.time < theirs[status];
     static string StatusName(int status) => L10n.T("status." + status);
     int turn;
+    bool wasRaging;
     float turnLeft, lastHp, bombIn;
     class Shell { public Combat.Enemy e; public int id, car; public Vector3 from; public float at; public bool miss; }
     readonly List<Shell> bombs = new();
@@ -64,7 +84,8 @@ public class RivalEvent : MonoBehaviour
     readonly List<Transform> guns = new();
     Combat.Enemy body;
     int bodyId;
-    float maxHp, phase, sleeperOffset, startsAt;
+    float maxHp, hp, phase, sleeperOffset, startsAt;
+    bool Raging => hp < maxHp * rageAt;
     float[] fireIn;
     string label;
     Vector3 along, centre;
@@ -77,10 +98,13 @@ public class RivalEvent : MonoBehaviour
     public void Begin(int rival)
     {
         End();
+        rivalIndex = rival;
         along = train.Forward(train.CarCount / 2);
         along.y = 0f;
         along.Normalize();
         float side = Random.value < 0.5f ? 1f : -1f;
+        rivalSide = side;
+        waveIn = waveEvery * 0.6f;
         centre = train.CarPosition(train.CarCount / 2) + Vector3.Cross(Vector3.up, along) * (apart * side);
         Quaternion facing = Quaternion.FromToRotation(Vector3.right, along);
 
@@ -117,17 +141,33 @@ public class RivalEvent : MonoBehaviour
         }
         fireIn = new float[guns.Count];
         for (int i = 0; i < fireIn.Length; i++) fireIn[i] = 1.5f + i * 0.6f;
+        // Its goods behind: three cargo wagons, the last one lost at three quarters of its health, the next at half,
+        // the last at a quarter.
+        cargo.Clear();
+        string[] goods = { "Cargo_arms", "Cargo_rock", "Cargo_wood" };
+        for (int i = 0; i < goods.Length; i++)
+        {
+            GameObject model = Resources.Load<GameObject>("Models/" + goods[i]);
+            if (!model) continue;
+            Transform car = Instantiate(model, root).transform;
+            car.localPosition = Vector3.right * (-WagonStep * (2 + i));
+            foreach (Renderer part in car.GetComponentsInChildren<Renderer>()) TrainSim.Toon(part);
+            cargo.Add(car);
+        }
 
         Combat.Instance.ClearField(); // nobody else on the field while the two trains fight it out
-        maxHp = health * (1f + perDifficulty * train.Difficulty);
-        body = Combat.Instance.AddProjectile(Engine, EnginePosition, maxHp);
+        maxHp = health * (1f + perDifficulty * train.Difficulty) * Mathf.Max(1f, train.Strength / 14f); // with how hard the train hits, as the truck
+        hp = maxHp;
+        // The engine itself is never shot down: its hits are read off it every frame and counted here, under the cap.
+        body = Combat.Instance.AddProjectile(Engine, EnginePosition, maxHp * 100f);
         bodyId = body.id;
         label = L10n.T(Locomotives.HeroNameKey(rival)) + " · " + L10n.T(Locomotives.NameKeys[rival]);
         tracers = new Combat.Batch(new Color(1f, 0.35f, 0.25f), false);
         phase = 0f;
+        wasRaging = announcedSecond = false;
         turn = 0;
         turnLeft = Turns[0].seconds;
-        lastHp = maxHp;
+        lastHp = body.hp;
         bombLook = new Combat.Batch(Bomb.color, false, Resources.Load<Mesh>("Models/Enemy_mine"));
         startsAt = Time.unscaledTime + introSeconds;
         System.Array.Clear(ours, 0, Statuses);
@@ -135,6 +175,24 @@ public class RivalEvent : MonoBehaviour
         phraseIn = phraseEvery * 0.5f;
         phrase = GetComponent<TurnEvent>();
         Active = true;
+    }
+
+    readonly List<Transform> cargo = new();
+
+    // A cargo wagon blown off for every quarter of health it has lost: from the back, burning.
+    void ShedCargo()
+    {
+        int keep = Mathf.Clamp(Mathf.CeilToInt(hp / maxHp * 4f) - 1, 0, 3);
+        for (int i = cargo.Count - 1; i >= keep; i--)
+        {
+            if (!cargo[i] || !cargo[i].gameObject.activeSelf) continue;
+            Vector3 at = cargo[i].position + Vector3.up;
+            Combat.Instance.Burst("grenade", at, 3f);
+            Combat.Instance.Burst("rocket", at, 2.4f);
+            train.Shake(0.4f);
+            cargo[i].gameObject.SetActive(false);
+            train.Toast(L10n.T("rival.cargo"));
+        }
     }
 
     Vector3 EnginePosition => root.TransformPoint(Vector3.right * WagonStep) + Vector3.up * 2f;
@@ -161,9 +219,14 @@ public class RivalEvent : MonoBehaviour
             else if (kind == Boarders)
             {
                 train.Toast(L10n.T("rival.boarders"));
-                Combat.Instance.Drop(EnginePosition - Vector3.up * 2f, 8 + train.Difficulty);
+                Combat.Instance.Drop(EnginePosition - Vector3.up * 2f, (3 + train.Difficulty / 6) * (Act == 3 ? 3 : 2) / 2);
             }
             else if (kind == Overheated) train.Toast(L10n.T("rival.weak"));
+            else if (kind == Driver || (kind == Hex && Act >= 2))
+                GetComponent<BrawlEvent>().BeginDriver(rivalIndex, EnginePosition, won =>
+                {
+                    if (won && Active) hp = Mathf.Max(1f, hp - maxHp * driverShare); // the engine finishes off the rest
+                });
             else if (kind == Hex)
             {
                 int status = Random.Range(0, Statuses);
@@ -180,25 +243,37 @@ public class RivalEvent : MonoBehaviour
             {
                 if (!Active) return;
                 bool all = hits == length, most = length - hits > hits;
-                if (all) Hit(false, status);
+                if (all) { Hit(false, status); hp = Mathf.Max(1f, hp - maxHp * phraseShare); }
                 else if (most) Hit(true, status);
                 train.Toast(L10n.T(all ? "battle.hit" : most ? "battle.back" : "battle.even", StatusName(status)));
             });
         }
         bool weak = kind == Overheated || OnThem(Weak);
-        float lost = lastHp - body.hp;
-        if (weak && lost > 0f) body.hp -= lost;
-        if (body.hp <= 0f)
+        float lost = Mathf.Max(0f, lastHp - body.hp) * (weak ? 2f : armour);
+        hp -= Mathf.Min(lost, maxHp * (weak ? weakLossPerSecond : maxLossPerSecond) * dt);
+        body.hp = maxHp * 100f;
+        lastHp = body.hp;
+        if (hp <= 0f)
         {
             Combat.Instance.Despawn(body);
             Win();
             return;
         }
-        lastHp = body.hp;
-        if (weak) train.Panel.Mark(EnginePosition + Vector3.up * 2.5f, "x2", 4);
-        if (kind == Bombs && !OnThem(Jam) && (bombIn -= dt) <= 0f)
+        ShedCargo();
+        if (Raging && !wasRaging) { wasRaging = true; train.Toast(L10n.T("rival.rage")); }
+        if (Time.unscaledTime >= startsAt && (waveIn -= dt) <= 0f)
         {
-            bombIn = 0.9f / (1f + 0.03f * train.Difficulty);
+            waveIn = waveEvery;
+            Vector3 far = Combat.Instance.OffScreen(-Vector3.Cross(Vector3.up, along) * rivalSide); // out of the picture, on our far side
+            for (int k = 0; k < 3; k++) // in a few knots spread along that side
+                Combat.Instance.DropRaiders(far + along * Random.Range(-14f, 14f), (1 + train.Difficulty / 10) * (Act == 3 ? 3 : 2) / 2);
+            train.Toast(L10n.T("rival.wave"));
+        }
+        if (Act >= 2 && !announcedSecond) { announcedSecond = true; train.Toast(L10n.T("rival.act2")); }
+        if (weak && !train.Swarming) train.Panel.Mark(EnginePosition + Vector3.up * 2.5f, "x2", 4); // not over the fight in a wagon
+        if ((kind == Bombs || (kind == Guns && Act >= 2)) && !OnThem(Jam) && (bombIn -= dt) <= 0f)
+        {
+            bombIn = 0.9f / (1f + hitPerDifficulty * train.Difficulty) / (Raging ? rage : 1f) * (kind == Guns ? 2.5f : 1f); // fewer, mixed with the guns
             Lob();
         }
         Fly(now);
@@ -216,7 +291,7 @@ public class RivalEvent : MonoBehaviour
             for (int i = 0; i < guns.Count; i++)
             {
                 if ((fireIn[i] -= dt) > 0f) continue;
-                fireIn[i] = fireEvery / (1f + 0.03f * train.Difficulty) * Random.Range(0.8f, 1.2f);
+                fireIn[i] = fireEvery / (1f + hitPerDifficulty * train.Difficulty) / (Raging ? rage : 1f) * Random.Range(0.8f, 1.2f);
                 int target = RandomCar();
                 if (target < 0) continue;
                 bool miss = OnThem(Mirror); // confused: the shot goes wide
@@ -224,12 +299,12 @@ public class RivalEvent : MonoBehaviour
                 Vector3 flat = at - guns[i].position;
                 flat.y = 0f;
                 if (flat.sqrMagnitude > 0.01f) guns[i].rotation = Quaternion.LookRotation(flat);
-                if (!miss) train.Damage(target, shotDamage * (1f + perDifficulty * train.Difficulty));
+                if (!miss) train.Damage(target, shotDamage * (1f + hitPerDifficulty * train.Difficulty));
                 Combat.Instance.Burst("spark", muzzle, 1.2f);
                 Combat.Instance.Burst("smoke", at, 1f);
                 shots.Add((muzzle, at, now + 0.08f));
             }
-        train.BossBar(label, maxHp > 0f ? body.hp / maxHp : 0f);
+        if (!train.Swarming) train.BossBar(label, maxHp > 0f ? hp / maxHp : 0f);
     }
 
     // A status on us (us) or on the rival. Jammed turrets of ours are stunned turrets.
@@ -274,7 +349,7 @@ public class RivalEvent : MonoBehaviour
             Vector3 to = train.CarPosition(b.car) + Vector3.up * 1.2f + (b.miss ? along * 7f : Vector3.zero);
             b.e.position = Vector3.Lerp(b.from, to, k) + Vector3.up * (7f * Mathf.Sin(Mathf.PI * Mathf.Clamp01(k)));
             if (k < 1f) continue;
-            if (!b.miss && train.CarAlive(b.car)) train.Damage(b.car, bombDamage * (1f + perDifficulty * train.Difficulty));
+            if (!b.miss && train.CarAlive(b.car)) train.Damage(b.car, bombDamage * (1f + hitPerDifficulty * train.Difficulty));
             Combat.Instance.Burst("grenade", to, 1.6f);
             Combat.Instance.Despawn(b.e);
             bombs.RemoveAt(i);
