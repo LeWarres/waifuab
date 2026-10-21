@@ -52,7 +52,7 @@ public class BrawlEvent : MonoBehaviour
               Guarding = 9, Grabbing = 10, Holding = 11, Thrown = 12, Rising = 13;
 
     // A humanoid body played by hand: a mixer of every clip it has used, fading to the one it plays now.
-    class Rig
+    public class Rig
     {
         public readonly Transform root;
         public readonly Animator animator;
@@ -316,8 +316,8 @@ public class BrawlEvent : MonoBehaviour
 
     // A humanoid model under root, its feet on root and about this tall. (scale: how much it was grown.)
     // The heroes come long-legged: 1.6 puts them about level with the androids at 1.8.
-    static Animator Body(GameObject model, Transform root, float height = 1.8f) => Body(model, root, out _, height);
-    static Animator Body(GameObject model, Transform root, out float scale, float height = 1.8f)
+    public static Animator Body(GameObject model, Transform root, float height = 1.8f) => Body(model, root, out _, height);
+    public static Animator Body(GameObject model, Transform root, out float scale, float height = 1.8f)
     {
         Transform body = Instantiate(model, root).transform;
         body.localPosition = Vector3.zero;

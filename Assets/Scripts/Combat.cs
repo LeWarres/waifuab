@@ -224,6 +224,10 @@ public class Combat : MonoBehaviour
         new EnemyType { name = "Acorazado", biome = 5, color = new Color(0.72f, 0.75f, 0.82f), health = 18f, speed = 2.5f, damage = 3.5f, size = 1.5f, reward = 4, firstLevel = 8, weight = 0.1f, ranged = 14f, interval = 3.5f, armor = 0.6f, model = "Enemy_armored" },
         // Espacio
 
+        // Espacio: its own too, all bright against the black (Tools/make_mechs.py)
+        new EnemyType { name = "Sonda", biome = 6, color = new Color(1f, 0.55f, 0.12f), health = 3f, speed = 4f, damage = 5f, size = 1f, weight = 1f, model = "Enemy_probe", flies = true },
+        new EnemyType { name = "Cometa", biome = 6, color = new Color(0.3f, 0.95f, 1f), health = 2f, speed = 8.5f, damage = 3f, size = 0.7f, firstLevel = 2, weight = 0.5f, model = "Enemy_comet", flies = true },
+        new EnemyType { name = "Titán", biome = 6, color = new Color(1f, 0.3f, 0.75f), health = 12f, speed = 2.5f, damage = 12f, size = 1.6f, reward = 3, firstLevel = 4, weight = 0.2f, model = "Enemy_titan" },
         new EnemyType { name = "Fantasma", biome = 6, color = new Color(0.7f, 1f, 1f), health = 6f, speed = 3f, damage = 8f, size = 1f, firstLevel = 3, weight = 0.3f, blink = 7f, interval = 2f, model = "Enemy_ghost", flies = true },
         new EnemyType { name = "Dron sanador", biome = 6, color = new Color(1f, 0.5f, 0.8f), health = 8f, speed = 3.5f, damage = 2f, size = 0.8f, reward = 2, firstLevel = 5, weight = 0.2f, heal = 4f, healRadius = 7f, interval = 0.5f, model = "Enemy_healer", flies = true },
         // Planeta alienígena
@@ -235,7 +239,7 @@ public class Combat : MonoBehaviour
     };
 
     // A biome with a bestiary of its own gets none of the enemies from everywhere: the city looks nothing like the desert.
-    static bool OwnBestiary(int biome) => biome == 5;
+    static bool OwnBestiary(int biome) => biome == 5 || biome == 6;
     static bool Here(EnemyType t, int biome) => t.biome == biome || (t.biome < 0 && !OwnBestiary(biome));
     // The biome's commonest enemy: what a wave always brings, and what comes when nothing else can.
     EnemyType RankAndFile => System.Array.Find(Types, t => t.weight >= 1f && Here(t, train.Biome)) ?? Types[0];

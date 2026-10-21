@@ -2715,6 +2715,122 @@ MonoBehaviour:
     m_Key: race.lost.title
     m_Metadata:
       m_Items: []
+  - m_Id: 4839252010807296
+    m_Key: race.turbo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4839252044361728
+    m_Key: race.controls.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4839252044361729
+    m_Key: race.controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4839252044361730
+    m_Key: race.controls.start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4850074795716608
+    m_Key: race.turbo.cooling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801231917056
+    m_Key: eyeboss.talk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248704
+    m_Key: eyeboss.intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248705
+    m_Key: eyeboss.beams
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248706
+    m_Key: eyeboss.sweep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248707
+    m_Key: eyeboss.turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248708
+    m_Key: eyeboss.blasted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248709
+    m_Key: eyeboss.charge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248710
+    m_Key: eyeboss.won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248711
+    m_Key: eyeboss.lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248712
+    m_Key: eyeboss.lost.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248713
+    m_Key: eyeboss.lost.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248714
+    m_Key: eyeboss.hint.ring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248715
+    m_Key: eyeboss.hint.turret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248716
+    m_Key: eyeboss.hint.gunner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4905457191038976
+    m_Key: eyeboss.wreck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4911368018145280
+    m_Key: finale.retry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4911368051699712
+    m_Key: finale.retry.sub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4911368051699713
+    m_Key: finale.lost.test
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099628376064
+    m_Key: eyeboss.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124800
+    m_Key: eyeboss.pre.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124801
+    m_Key: eyeboss.pre.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124802
+    m_Key: eyeboss.pre.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124803
+    m_Key: eyeboss.pre.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124804
+    m_Key: eyeboss.post
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

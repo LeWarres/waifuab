@@ -1589,13 +1589,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655776
-    m_Localized: El planeta alien. Todo brilla, todo late y todo intenta comerse
-      mi tren. Hasta las plantas tienen dientes.
+    m_Localized: "Pensaba que esa entrega en Ecatepec, M\xE9xico, s\xED que era de
+      miedo, pero este lugar es aterrador. Las criaturas van desde cosas esponjosas
+      que quieres abrazar hasta formas que a\xFAn me cuesta describir\u2026 hex\xE1gonos
+      o algo as\xED se llaman."
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655777
-    m_Localized: "Faceless conduce a T.exe, la ara\xF1a. Camina sobre los rieles
-      como si fueran suyos. No tiene cara, pero jurar\xEDa que se est\xE1 riendo."
+    m_Localized: "En realidad, lo m\xE1s dif\xEDcil en este punto es aterrizar sin
+      hacer pedazos el tren\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655778
@@ -2952,7 +2954,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4698315280429060
-    m_Localized: "\xA1Motor sobrecalentado!"
+    m_Localized: "\xA1Motor al l\xEDmite! Suelta el turbo"
     m_Metadata:
       m_Items: []
   - m_Id: 4698315280429061
@@ -2974,6 +2976,129 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4698315280429065
     m_Localized: "Perdiste la carrera al lanzador. \xBFReintentar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4839252010807296
+    m_Localized: TURBO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4839252044361728
+    m_Localized: Controles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4839252044361729
+    m_Localized: "R2 / W: acelerar\n\u2715 / Shift: turbo (al soltarlo se enfr\xEDa
+      hasta vaciarse; al tope, el motor explota)\n\u25A1 / S: frenar; frenando con
+      giro, derrapar\nStick / A-D: girar\nL1 R1 / Q E: empujar a los lados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4839252044361730
+    m_Localized: "\u2715 / Espacio: \xA1a la parrilla!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4850074795716608
+    m_Localized: "TURBO \xB7 enfriando"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801231917056
+    m_Localized: "\xBFQu\xE9 es eso\u2026? Una bola enorme llena de ojos. Y todos
+      me est\xE1n mirando a m\xED."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248704
+    m_Localized: "\xA1El Ojo del Vac\xEDo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248705
+    m_Localized: "\xA1Rayos de sus ojos! No te quedes quieta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248706
+    m_Localized: "\xA1Un barrido! Salta cuando pase"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248707
+    m_Localized: "\xA1Una torreta! Corre hacia ella"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248708
+    m_Localized: "\xA1Destruy\xF3 la torreta!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248709
+    m_Localized: "\xA1Est\xE1 cargando un disparo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248710
+    m_Localized: "\xA1Todos sus ojos cerrados!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248711
+    m_Localized: "Sin corazones\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248712
+    m_Localized: Derrota ante el Ojo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248713
+    m_Localized: "El Ojo del Vac\xEDo te venci\xF3. \xBFReintentar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248714
+    m_Localized: "Stick / A-D: correr por el anillo \xB7 \u2715 / Espacio: saltar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248715
+    m_Localized: "Llega a la torreta y presiona \u25CB / E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248716
+    m_Localized: "Stick / rat\xF3n: apuntar \xB7 R2 / clic / J: disparar a sus ojos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4905457191038976
+    m_Localized: "\xA1Lanza rocas ardientes contra los vagones! Sal de los marcados
+      en rojo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4911368018145280
+    m_Localized: "\xBFDeseas repetir la batalla final?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4911368051699712
+    m_Localized: "Te queda un intento. Si no, el cap\xEDtulo empieza de nuevo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4911368051699713
+    m_Localized: Batalla final perdida (prueba)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099628376064
+    m_Localized: Moho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124800
+    m_Localized: "\xA1T\xFA! \xBFTe atreves a desafiar mi autoridad y mi reino?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124801
+    m_Localized: "\xA1Vamos! Ya varias locomotoras te pasaron, \xBFpor qu\xE9 solo
+      a m\xED?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124802
+    m_Localized: "Bueno, la verdad es que el sol estaba pegando muy sabroso y\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124803
+    m_Localized: "\xA1\xA1\xA1SILENCIO!!! \xA1Ahora sufrir\xE1s la ira de Moho!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124804
+    m_Localized: "Vaya, no recordaba que esas cosas fueran tan grandes. Supongo que
+      las cosas crecen con el tiempo\u2026 aunque ahora lo importante es llegar a
+      la base."
     m_Metadata:
       m_Items: []
   references:

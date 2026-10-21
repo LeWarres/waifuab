@@ -14,14 +14,14 @@ public static class Story
     // and after the chapter (strings story.<hero>.<chapter>.intro.<n> / .outro.<n>); the first chapter's intro
     // is the prologue the story scene always had. before / after: who speaks each line of the talk on the track
     // as the duel starts and once it is won, h the hero and r the rival (strings ...before.<n> / ...after.<n>).
-    public struct Part { public int biome, rival, intro, outro; public string before, after; public bool inspection; public QuestionnaireMode questionnaire; public bool race; } // race: the finale is a race to the launcher (RaceEvent), not a duel
+    public struct Part { public int biome, rival, intro, outro; public string before, after; public bool inspection; public QuestionnaireMode questionnaire; public bool race, eyeBoss; } // the finale instead of a duel: race, a race to the launcher (RaceEvent); eyeBoss, the ball of eyes on a ring of wagons (EyeBossEvent)
 
     static readonly Part[] Bba =
     {
         new Part { biome = 0, rival = 2,  intro = 16, outro = 2, before = "hrh", after = "rh" }, // desert: Onini and the C-279
         new Part { biome = 5, rival = 7,  intro = 2,  outro = 1, before = "rhr", after = "rh", inspection = true, questionnaire = QuestionnaireMode.Human, race = true }, // city: Cerebron and the R-2D-2
-        new Part { biome = 6, rival = 4,  intro = 2,  outro = 2, before = "rhr", after = "rh" }, // space: Sentinel and the Golem
-        new Part { biome = 7, rival = 10, intro = 2,  outro = 2, before = "rhr", after = "rh", inspection = true, questionnaire = QuestionnaireMode.Alien }, // alien planet: Faceless and T.exe
+        new Part { biome = 6, rival = 4,  intro = 2,  outro = 2, before = "rhr", after = "rh", eyeBoss = true }, // space: Sentinel and the Golem
+        new Part { biome = 7, rival = 10, intro = 2,  outro = 2, before = "rhr", after = "rh", questionnaire = QuestionnaireMode.Alien }, // alien planet: Faceless and T.exe (its pages lead straight into the biome)
         new Part { biome = 8, rival = 3,  intro = 2,  outro = 3, before = "rhr", after = "rh" }, // the alien base: Tzmil and the Night Skull
     };
 
@@ -89,7 +89,7 @@ public static class Story
     public static int CarriedTruck => Chapter > 0 ? SaveGame.Truck(Chapter - 1) : 0;
 
     // Starting a chapter from the menu: its opening pages are told first.
-    public static int TestChapter = -1; // -1 follows the selected chapter; a new story starts in the desert
+    public static int TestChapter = 2; // ponytail: testing space, a story starts there (no ascent first); -1 follows the selected chapter
     public static void Play(int chapter)
     {
         Chapter = TestChapter >= 0 ? TestChapter : chapter;
@@ -119,7 +119,7 @@ public static class Story
             }
         }
         // The city ending leads into the flight, before any narration already set in space.
-        if (Hero == "bba" && Chapter == 2)
+        if (Hero == "bba" && Chapter == 2 && TestChapter != 2) // (testing space: straight in)
         {
             InspectionPending = false;
             AscentPending = true;

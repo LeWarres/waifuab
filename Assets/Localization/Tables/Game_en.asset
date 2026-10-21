@@ -1631,13 +1631,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655776
-    m_Localized: The alien planet. Everything glows, everything throbs, and everything
-      tries to eat my train. Even the plants have teeth.
+    m_Localized: "I thought that delivery in Ecatepec, Mexico, was scary, but this
+      place is terrifying. The creatures go from fluffy things you want to hug to
+      shapes I still struggle to describe\u2026 hexagons or something, they call
+      them."
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655777
-    m_Localized: Faceless drives T.exe, the spider. It walks the rails as if they
-      were its own. It has no face, but I'd swear it's laughing.
+    m_Localized: "Truth is, the hardest part right now is landing without smashing
+      the train to pieces\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655778
@@ -3800,7 +3802,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4698315280429060
-    m_Localized: Engine overheated!
+    m_Localized: Engine at its limit! Let go of the turbo
     m_Metadata:
       m_Items: []
   - m_Id: 4698315280429061
@@ -3822,6 +3824,126 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4698315280429065
     m_Localized: You lost the race to the launcher. Try again?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4839252010807296
+    m_Localized: TURBO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4839252044361728
+    m_Localized: Controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4839252044361729
+    m_Localized: "R2 / W: throttle\n\u2715 / Shift: turbo (let go and it must cool
+      right down; to the top, the engine blows)\n\u25A1 / S: brake; braking while
+      steering, drift\nStick / A-D: steer\nL1 R1 / Q E: shove to the side"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4839252044361730
+    m_Localized: "\u2715 / Space: to the grid!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4850074795716608
+    m_Localized: "TURBO \xB7 cooling"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801231917056
+    m_Localized: "What is that\u2026? A huge ball full of eyes. And every one of
+      them is looking at me."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248704
+    m_Localized: The Eye of the Void!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248705
+    m_Localized: Beams from its eyes! Keep moving
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248706
+    m_Localized: A sweep! Jump as it passes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248707
+    m_Localized: A turret! Run for it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248708
+    m_Localized: It blew up the turret!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248709
+    m_Localized: It is charging a shot!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248710
+    m_Localized: Every eye shut!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248711
+    m_Localized: "Out of hearts\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248712
+    m_Localized: Beaten by the Eye
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248713
+    m_Localized: The Eye of the Void beat you. Try again?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248714
+    m_Localized: "Stick / A-D: run round the ring \xB7 \u2715 / Space: jump"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248715
+    m_Localized: "Reach the turret and press \u25CB / E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4902801282248716
+    m_Localized: "Stick / mouse: aim \xB7 R2 / click / J: shoot its eyes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4905457191038976
+    m_Localized: It hurls burning rocks at the wagons! Get off the ones marked red
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4911368018145280
+    m_Localized: Do you want to try the final battle again?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4911368051699712
+    m_Localized: One try left. If not, the chapter starts over.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4911368051699713
+    m_Localized: Final battle lost (test)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099628376064
+    m_Localized: Moho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124800
+    m_Localized: You! You dare defy my authority and my kingdom?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124801
+    m_Localized: Come on! Plenty of locomotives got past you already, why just me?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124802
+    m_Localized: "Well, the truth is the sun was feeling really nice and\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124803
+    m_Localized: SILENCE!!! Now you will suffer the wrath of Moho!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4925099666124804
+    m_Localized: "Wow, I did not remember those things being so big. I guess things
+      grow with time\u2026 but what matters now is reaching the base."
     m_Metadata:
       m_Items: []
   references:

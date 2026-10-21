@@ -8,9 +8,11 @@ public class Ascenso : MonoBehaviour
 {
     enum Phase { Intro, Flying, Lost, Arrived }
     public float duration = 55f;
-    class Debris { public Transform body; public Vector2 half; public float speed, spin; }
+    class Debris { public Transform body; public Renderer renderer; public float speed, spin, drift; }
     readonly List<Debris> debris = new();
     readonly List<Material> materials = new();
+    readonly List<Mesh> meshes = new();
+    readonly GameObject[] obstacleModels = new GameObject[4];
     Phase phase;
     Camera view;
     Transform train, exhaust;
@@ -20,12 +22,15 @@ public class Ascenso : MonoBehaviour
     UnityEngine.UI.Text status, altitude, dialogue, speaker, actionText;
     Slanted dialogPanel, progressFill, flash;
     Canvas hud;
+    readonly Slanted[] collisionPips = new Slanted[3];
     InputAction move;
-    float elapsed, spawnIn = 1.2f, immunity, flashTime, dialogueAge;
+    float elapsed, spawnIn = .8f, immunity, flashTime, dialogueAge;
     int hits, lastConfirm = -1;
+    int lastPattern = -1;
+    float nextBarrier = 5f;
     bool paused, leaving;
-    Material metal, dark, blue, gold, rust, flame;
     UnityEngine.Rendering.Volume look;
+    AscentAudio flightAudio;
 
     void Awake()
     {
@@ -36,38 +41,55 @@ public class Ascenso : MonoBehaviour
         move = InputSystem.actions.FindAction("Player/Move", true);
         BuildWorld();
         BuildUI();
+        flightAudio = GetComponent<AscentAudio>() ?? gameObject.AddComponent<AscentAudio>();
         ShowDialog("ascent.intro", "ascent.begin");
         RefreshStatus();
     }
 
     void BuildWorld()
     {
-        metal = Material(new Color(.65f, .73f, .82f));
-        dark = Material(new Color(.14f, .19f, .29f));
-        blue = Material(new Color(.17f, .4f, .7f));
-        gold = Material(new Color(.95f, .71f, .2f));
-        rust = Material(new Color(.62f, .34f, .25f));
-        flame = Material(new Color(.35f, .85f, 1f));
+        string[] models = { "HullWreckage", "PressureCanister", "OrbitalSatellite", "DamagedBooster" };
+        for (int i = 0; i < models.Length; i++) obstacleModels[i] = Resources.Load<GameObject>("Ascent/Prefabs/" + models[i]);
         look = new GameObject("FlightExposure").AddComponent<UnityEngine.Rendering.Volume>();
         look.isGlobal = true;
         look.priority = 10f;
         var exposure = look.profile.Add<UnityEngine.Rendering.HighDefinition.Exposure>(true);
         exposure.mode.value = UnityEngine.Rendering.HighDefinition.ExposureMode.Fixed;
         exposure.fixedExposure.value = 13.7f;
+        look.profile.Add<UnityEngine.Rendering.HighDefinition.Tonemapping>(true).mode.value = UnityEngine.Rendering.HighDefinition.TonemappingMode.Neutral;
+        var bloom = look.profile.Add<UnityEngine.Rendering.HighDefinition.Bloom>(true);
+        bloom.intensity.value = .35f;
+        bloom.scatter.value = .7f;
+        bloom.threshold.value = 1f;
+        var grade = look.profile.Add<UnityEngine.Rendering.HighDefinition.ColorAdjustments>(true);
+        grade.saturation.value = 8f;
+        grade.contrast.value = 6f;
 
         train = new GameObject("FlyingLocomotive").transform;
         var model = Locomotives.Create(train, Locomotives.Selected);
         // Models point along -X. Tilt the roof toward the camera, then point the nose upward.
-        model.localRotation = Quaternion.Euler(0f, 0f, -90f) * Quaternion.Euler(-24f, 0f, 0f);
+        model.localRotation = Quaternion.Euler(0f, 0f, -90f) * Quaternion.Euler(-56f, -12f, 0f);
         Bounds bounds = BoundsOf(model);
-        model.localScale *= 3.5f / bounds.size.y;
+        model.localScale *= 4.2f / bounds.size.y;
         bounds = BoundsOf(model);
         model.position -= bounds.center;
-        trainHalf = new Vector2(bounds.size.x * .36f, 1.38f);
-        train.position = new Vector3(0f, -4.5f, 0f);
-        trainRenderers = model.GetComponentsInChildren<Renderer>();
-        exhaust = Part(train, new Vector3(0f, -2.2f, .2f), new Vector3(.35f, 1.25f, .3f), flame);
-        Part(train, new Vector3(0f, -1.9f, .15f), new Vector3(.18f, .6f, .32f), metal);
+        trainHalf = new Vector2(bounds.size.x * .36f, 1.65f);
+        train.position = new Vector3(0f, -3.7f, 0f);
+        var drive = Instantiate(Resources.Load<GameObject>("Ascent/Prefabs/FlightDrive"), train).transform;
+        drive.localPosition = new Vector3(0f, -1.9f, 0f);
+        drive.localRotation = Quaternion.Euler(-16f, 0f, 0f);
+        foreach (var renderer in drive.GetComponentsInChildren<Renderer>()) TrainSim.Toon(renderer);
+        exhaust = new GameObject("IonExhaust").transform;
+        exhaust.SetParent(train, false);
+        exhaust.localPosition = new Vector3(0f, -2.25f, 0f);
+        var outer = Material(new Color(.18f, .65f, 1f) * 1.6f);
+        var core = Material(new Color(.85f, .96f, 1f) * 1.5f);
+        for (int side = -1; side <= 1; side += 2)
+        {
+            Flame(exhaust, new Vector3(side * .45f, 0f, 0f), .22f, 1.6f, outer);
+            Flame(exhaust, new Vector3(side * .45f, -.02f, -.035f), .11f, 1.05f, core);
+        }
+        trainRenderers = train.GetComponentsInChildren<Renderer>();
 
         var canvas = new GameObject("AscentSky", typeof(Canvas), typeof(UnityEngine.UI.CanvasScaler)).GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
@@ -83,11 +105,12 @@ public class Ascenso : MonoBehaviour
         backdrop.rectTransform.anchorMax = Vector2.one;
         backdrop.rectTransform.offsetMin = backdrop.rectTransform.offsetMax = Vector2.zero;
         backdrop.raycastTarget = false;
+        backdrop.Refresh(0f, 0f);
     }
 
     Material Material(Color color)
     {
-        var mat = TrainSim.Mat(color);
+        var mat = TrainSim.Mat(color, false);
         materials.Add(mat);
         return mat;
     }
@@ -100,33 +123,69 @@ public class Ascenso : MonoBehaviour
         return result;
     }
 
-    static Transform Part(Transform parent, Vector3 at, Vector3 size, Material material)
-        => TrainSim.Box(parent, at, size, material);
+    void Flame(Transform parent, Vector3 at, float radius, float length, Material material)
+    {
+        const int sides = 12, rings = 4;
+        var vertices = new Vector3[sides * rings];
+        var triangles = new int[(rings - 1) * sides * 6];
+        for (int ring = 0; ring < rings; ring++)
+        for (int i = 0; i < sides; i++)
+        {
+            float t = ring / (float)(rings - 1), angle = i * Mathf.PI * 2f / sides;
+            float r = radius * (ring == 1 ? 1.1f : 1f - t);
+            vertices[ring * sides + i] = new Vector3(Mathf.Cos(angle) * r, -t * length, Mathf.Sin(angle) * r);
+            if (ring == rings - 1) continue;
+            int a = ring * sides + i, b = ring * sides + (i + 1) % sides, k = (ring * sides + i) * 6;
+            triangles[k] = a; triangles[k + 1] = b; triangles[k + 2] = a + sides;
+            triangles[k + 3] = b; triangles[k + 4] = b + sides; triangles[k + 5] = a + sides;
+        }
+        var mesh = new Mesh { name = "TaperedIonPlume", vertices = vertices, triangles = triangles };
+        mesh.RecalculateNormals();
+        meshes.Add(mesh);
+        var plume = new GameObject("IonPlume", typeof(MeshFilter), typeof(MeshRenderer));
+        plume.transform.SetParent(parent, false);
+        plume.transform.localPosition = at;
+        plume.GetComponent<MeshFilter>().sharedMesh = mesh;
+        plume.GetComponent<MeshRenderer>().sharedMaterial = material;
+    }
 
     void BuildUI()
     {
         hud = UiKit.NewCanvas("AscentHUD", 20);
-        var top = UiKit.Group(hud.transform, new Vector2(.5f, 1f), new Vector2(0f, -78f));
-        UiKit.Panel(top, Vector2.zero, new Vector2(1140f, 110f), UiKit.Navy, UiKit.Navy);
-        status = Label(top, 28, new Vector2(-250f, 20f), new Vector2(560f, 48f));
-        altitude = Label(top, 26, new Vector2(310f, 20f), new Vector2(450f, 48f));
-        UiKit.Panel(top, new Vector2(0f, -26f), new Vector2(1050f, 12f), UiKit.Slate, UiKit.Slate, 0f);
-        progressFill = UiKit.Panel(top, new Vector2(-525f, -26f), new Vector2(0f, 12f), UiKit.Sky, UiKit.Sky, 0f);
+        var glass = new Color(.06f, .09f, .19f, .72f);
+        var left = UiKit.Group(hud.transform, new Vector2(0f, 1f), new Vector2(30f, -25f));
+        var hitCard = UiKit.Panel(left, new Vector2(235f, -58f), new Vector2(470f, 116f), glass, glass, .06f);
+        UiKit.Panel(hitCard.transform, new Vector2(-227f, 0f), new Vector2(5f, 108f), UiKit.Sky, UiKit.Sky, 0f);
+        UiKit.Picture(hitCard.transform, "wagon", new Vector2(-190f, 18f), 32f);
+        status = Label(hitCard.transform, 25, new Vector2(24f, 22f), new Vector2(360f, 40f));
+        status.alignment = TextAnchor.MiddleLeft;
+        for (int i = 0; i < collisionPips.Length; i++)
+            collisionPips[i] = UiKit.Panel(hitCard.transform, new Vector2(-140f + i * 110f, -25f), new Vector2(95f, 9f), UiKit.Mint, UiKit.Mint, 0f);
+        var right = UiKit.Group(hud.transform, new Vector2(1f, 1f), new Vector2(-30f, -25f));
+        var travelCard = UiKit.Panel(right, new Vector2(-185f, -58f), new Vector2(370f, 116f), glass, glass, .06f);
+        altitude = Label(travelCard.transform, 25, new Vector2(0f, 20f), new Vector2(330f, 40f));
+        UiKit.Panel(travelCard.transform, new Vector2(0f, -23f), new Vector2(300f, 7f), UiKit.Slate, UiKit.Slate, 0f);
+        progressFill = UiKit.Panel(travelCard.transform, new Vector2(-150f, -23f), new Vector2(0f, 7f), UiKit.Sky, UiKit.Sky, 0f);
         progressFill.rectTransform.pivot = new Vector2(0f, .5f);
-        var bottom = UiKit.Group(hud.transform, new Vector2(.5f, 0f), new Vector2(0f, 32f));
-        Label(bottom, 22, Vector2.zero, new Vector2(1700f, 42f)).text = L10n.T("ascent.controls");
+        var bottom = UiKit.Group(hud.transform, new Vector2(.5f, 0f), new Vector2(0f, 31f));
+        UiKit.Panel(bottom, Vector2.zero, new Vector2(1070f, 44f), glass, glass, .04f);
+        Label(bottom, 20, Vector2.zero, new Vector2(1020f, 38f)).text = L10n.T("ascent.controls");
         flash = UiKit.Panel(hud.transform, Vector2.zero, Vector2.zero, Color.clear, Color.clear, 0f);
         flash.rectTransform.anchorMin = Vector2.zero;
         flash.rectTransform.anchorMax = Vector2.one;
         flash.rectTransform.offsetMin = flash.rectTransform.offsetMax = Vector2.zero;
-        dialogPanel = UiKit.Panel(hud.transform, new Vector2(0f, -280f), new Vector2(1420f, 330f), UiKit.Navy, UiKit.Navy, .035f);
-        speaker = Label(dialogPanel.transform, 28, new Vector2(0f, 118f), new Vector2(1280f, 42f));
+        var dialogueGlass = new Color(.06f, .09f, .19f, .94f);
+        dialogPanel = UiKit.Panel(hud.transform, new Vector2(0f, -330f), new Vector2(1420f, 270f), dialogueGlass, dialogueGlass, .035f);
+        UiKit.Panel(dialogPanel.transform, new Vector2(0f, 130f), new Vector2(1320f, 3f), UiKit.Sky, UiKit.Sky, 0f);
+        speaker = Label(dialogPanel.transform, 26, new Vector2(0f, 93f), new Vector2(1280f, 38f));
         speaker.color = UiKit.Sky;
-        dialogue = Label(dialogPanel.transform, 30, new Vector2(0f, 25f), new Vector2(1290f, 130f));
-        var action = UiKit.Panel(dialogPanel.transform, new Vector2(0f, -110f), new Vector2(420f, 58f), UiKit.Sky, UiKit.Sky);
+        dialogue = Label(dialogPanel.transform, 28, new Vector2(0f, 16f), new Vector2(1290f, 100f));
+        var action = UiKit.Panel(dialogPanel.transform, new Vector2(0f, -86f), new Vector2(360f, 52f), UiKit.Sky, UiKit.Sky);
         action.raycastTarget = true;
-        action.gameObject.AddComponent<Clicks>().click = _ => Confirm();
-        actionText = Label(action.transform, 25, Vector2.zero, new Vector2(390f, 48f));
+        var clicks = action.gameObject.AddComponent<Clicks>();
+        clicks.click = _ => Confirm();
+        clicks.hover = _ => Sound.Play("click");
+        actionText = Label(action.transform, 24, Vector2.zero, new Vector2(330f, 44f));
     }
 
     static UnityEngine.UI.Text Label(Transform parent, int size, Vector2 at, Vector2 box)
@@ -179,6 +238,7 @@ public class Ascenso : MonoBehaviour
     void SetPaused(bool value)
     {
         paused = value;
+        flightAudio.Pause(value);
         Sound.Play("Pause");
         if (paused) ShowDialog("ascent.pause.text", "ascent.resume");
         else dialogPanel.gameObject.SetActive(false);
@@ -186,6 +246,7 @@ public class Ascenso : MonoBehaviour
 
     void Update()
     {
+        flightAudio.Flight(phase == Phase.Flying && !paused && !leaving, elapsed / Mathf.Max(1f, duration));
         if (leaving) return;
         float dt = Time.unscaledDeltaTime;
         dialogueAge += dt;
@@ -203,34 +264,33 @@ public class Ascenso : MonoBehaviour
         flash.color = flash.bottom = new Color(1f, .15f, .2f, flashTime * .8f);
         foreach (var renderer in trainRenderers) renderer.enabled = immunity <= 0f || Mathf.FloorToInt(immunity * 12f) % 2 == 0;
         Vector2 input = Vector2.ClampMagnitude(move.ReadValue<Vector2>(), 1f);
-        Vector3 position = train.position + (Vector3)(input * (10f * dt));
+        flightAudio.Flight(true, elapsed / Mathf.Max(1f, duration), input.x);
+        Vector3 position = train.position + (Vector3)(input * (12.5f * dt));
         float edge = Mathf.Min(14f, view.orthographicSize * view.aspect - trainHalf.x - .6f);
         position.x = Mathf.Clamp(position.x, -edge, edge);
         position.y = Mathf.Clamp(position.y, -6f, 1f);
         train.position = position;
         // Small bank gives steering feedback while the nose continues pointing upward.
         train.rotation = Quaternion.Euler(0f, input.x * -9f, input.x * -6f);
-        exhaust.localScale = new Vector3(.35f, 1.1f + .25f * Mathf.Sin(elapsed * 40f), .3f);
-        backdrop.flight = elapsed / Mathf.Max(1f, duration);
-        backdrop.travel += dt;
-        backdrop.SetVerticesDirty();
-        progressFill.rectTransform.sizeDelta = new Vector2(1050f * Mathf.Clamp01(elapsed / duration), 12f);
+        exhaust.localScale = new Vector3(1f, 1f + .12f * Mathf.Sin(elapsed * 32f), 1f);
+        backdrop.Refresh(elapsed / Mathf.Max(1f, duration), dt * 1.4f);
+        progressFill.rectTransform.sizeDelta = new Vector2(300f * Mathf.Clamp01(elapsed / duration), 7f);
         spawnIn -= dt;
         if (spawnIn <= 0f && elapsed < duration - 5f)
         {
-            Spawn(edge);
-            spawnIn = Mathf.Lerp(.85f, .48f, elapsed / duration);
+            spawnIn = SpawnWave(edge);
         }
         for (int i = debris.Count - 1; i >= 0; i--)
         {
             var piece = debris[i];
             Vector3 before = piece.body.position;
-            piece.body.position += Vector3.down * (piece.speed * dt);
+            piece.body.position += new Vector3(piece.drift, -piece.speed, 0f) * dt;
             piece.body.Rotate(0f, 0f, piece.spin * dt);
             Vector3 after = piece.body.position;
+            Vector3 half = piece.renderer.bounds.extents * .78f;
             // Swept vertical interval avoids missed impacts on slow frames; z is decorative.
-            bool collision = Mathf.Abs(after.x - train.position.x) < piece.half.x + trainHalf.x &&
-                after.y - piece.half.y <= train.position.y + trainHalf.y && before.y + piece.half.y >= train.position.y - trainHalf.y;
+            bool collision = Mathf.Abs(after.x - train.position.x) < half.x + trainHalf.x &&
+                after.y - half.y <= train.position.y + trainHalf.y && before.y + half.y >= train.position.y - trainHalf.y;
             if (collision && immunity <= 0f)
             {
                 Destroy(piece.body.gameObject);
@@ -238,7 +298,13 @@ public class Ascenso : MonoBehaviour
                 Hit();
                 if (phase != Phase.Flying) break;
             }
-            else if (after.y < -13f) { Destroy(piece.body.gameObject); debris.RemoveAt(i); }
+            else
+            {
+                float distance = after.x - train.position.x;
+                if (before.y > train.position.y && after.y <= train.position.y && Mathf.Abs(distance) < 5.5f)
+                    flightAudio.NearMiss(distance);
+                if (after.y < -13f) { Destroy(piece.body.gameObject); debris.RemoveAt(i); }
+            }
         }
         RefreshStatus();
         if (phase == Phase.Flying && elapsed >= duration)
@@ -253,9 +319,9 @@ public class Ascenso : MonoBehaviour
     void Hit()
     {
         hits++;
-        immunity = 1.5f;
+        immunity = 1.1f;
         flashTime = .35f;
-        Sound.Play("vagonroto");
+        flightAudio.Hit();
         if (hits < 3) return;
         phase = Phase.Lost;
         ShowDialog("ascent.lost", "quiz.ok");
@@ -265,46 +331,78 @@ public class Ascenso : MonoBehaviour
     {
         status.text = L10n.T("ascent.hits", hits);
         status.color = hits >= 2 ? UiKit.Rose : UiKit.Ice;
+        for (int i = 0; i < collisionPips.Length; i++) collisionPips[i].color = collisionPips[i].bottom = i < hits ? UiKit.Rose : UiKit.Mint;
         altitude.text = L10n.T("ascent.altitude", Mathf.RoundToInt(Mathf.Clamp01(elapsed / duration) * 100f));
     }
 
-    void Spawn(float edge)
+    float SpawnWave(float edge)
     {
-        var root = new GameObject("FallingDebris").transform;
-        int kind = Random.Range(0, 3);
-        if (kind == 0) // Torn panels and tangled metal.
+        float difficulty = Mathf.Clamp01(elapsed / duration);
+        float speed = Mathf.Lerp(14f, 22f, difficulty);
+        const int lanes = 7;
+        float laneWidth = edge * 2f / lanes;
+        int pattern;
+        do pattern = Random.Range(0, elapsed >= nextBarrier ? 4 : 3);
+        while (pattern == lastPattern);
+        lastPattern = pattern;
+        if (pattern == 3)
         {
-            Part(root, Vector3.zero, new Vector3(1.1f, .7f, .45f), rust).localRotation = Quaternion.Euler(15f, 12f, 24f);
-            Part(root, new Vector3(.2f, .15f, -.3f), new Vector3(1.6f, .16f, .18f), metal).localRotation = Quaternion.Euler(0f, 0f, -32f);
-            Part(root, new Vector3(-.3f, -.3f, -.15f), new Vector3(.22f, .9f, .2f), dark);
-        }
-        else if (kind == 1) // Discarded canister.
-        {
-            Part(root, Vector3.zero, new Vector3(.85f, 1.2f, .65f), metal);
-            Part(root, new Vector3(0f, .4f, -.35f), new Vector3(.9f, .16f, .1f), gold);
-            Part(root, new Vector3(0f, -.4f, -.35f), new Vector3(.9f, .16f, .1f), gold);
-            Part(root, new Vector3(0f, .7f, 0f), new Vector3(.4f, .2f, .4f), dark);
-        }
-        else // Satellite with recognizable solar arrays and antenna.
-        {
-            Part(root, Vector3.zero, new Vector3(.8f, 1f, .65f), gold);
-            Part(root, Vector3.zero, new Vector3(3.3f, .13f, .15f), metal);
-            for (int side = -1; side <= 1; side += 2)
+            // A partial formation leaves TWO two-lane passages, instead of one compulsory hole.
+            bool mirror = Random.value < .5f;
+            foreach (int original in new[] { 0, 1, 4 })
             {
-                Part(root, new Vector3(side * 1.2f, 0f, 0f), new Vector3(1.05f, 1.35f, .1f), dark);
-                for (int row = 0; row < 3; row++)
-                    Part(root, new Vector3(side * 1.2f, -.43f + row * .43f, -.08f), new Vector3(.92f, .34f, .05f), blue);
+                int lane = mirror ? lanes - 1 - original : original;
+                Spawn(-edge + (lane + .5f) * laneWidth, speed, 0f, laneWidth * .78f, true);
             }
-            Part(root, new Vector3(0f, .8f, 0f), new Vector3(.12f, .7f, .12f), metal);
+            nextBarrier = elapsed + Random.Range(6f, 9f);
+            // Let this formation pass before launching the next threat.
+            return 1.4f;
         }
-        root.position = new Vector3(Random.Range(-edge + 1f, edge - 1f), 12f, 0f);
-        // Satellites stay nearly upright so their collision width matches the visible wings.
-        debris.Add(new Debris { body = root, half = kind == 2 ? new Vector2(1.65f, 1.1f) : new Vector2(.72f, .75f), speed = Mathf.Lerp(7f, 12f, elapsed / duration), spin = kind == 2 ? 0f : Random.Range(-55f, 55f) });
+        if (pattern == 2)
+        {
+            // An occasional aimed piece asks for a dodge without filling the rest of the screen.
+            float target = Mathf.Clamp(train.position.x + Random.Range(-.5f, .5f), -edge, edge);
+            float start = Mathf.Clamp(target + Random.Range(-3.5f, 3.5f), -edge, edge);
+            float fallTime = (12f - train.position.y) / speed;
+            Spawn(start, speed, (target - start) / fallTime);
+            return Mathf.Lerp(1f, .8f, difficulty);
+        }
+        int first = Random.Range(0, lanes);
+        float drift = pattern == 1 ? (Random.value < .5f ? -2f : 2f) : 0f;
+        for (int i = 0; i < 3; i++)
+        {
+            int lane = (first + i * 2) % lanes;
+            Spawn(-edge + (lane + .5f) * laneWidth, speed * Random.Range(.9f, 1.05f), drift);
+        }
+        return Mathf.Lerp(.85f, .6f, difficulty) * Random.Range(.9f, 1.15f);
     }
+
+    void Spawn(float x, float speed, float drift, float wallWidth = 0f, bool wall = false)
+    {
+        int kind = wall ? Random.Range(2, 4) : Random.Range(0, obstacleModels.Length);
+        var root = new GameObject("Falling_" + obstacleModels[kind].name).transform;
+        var model = Instantiate(obstacleModels[kind], root).transform;
+        model.localRotation = Quaternion.Euler(-16f, -18f, kind == 2 ? -7f : Random.Range(-15f, 15f));
+        foreach (var renderer in model.GetComponentsInChildren<Renderer>()) TrainSim.Toon(renderer);
+        Bounds bounds = BoundsOf(model);
+        float width = wall ? wallWidth : kind == 2 ? 4f : kind == 3 ? 3.2f : 2.1f;
+        model.localScale *= width / Mathf.Max(.01f, bounds.size.x);
+        bounds = BoundsOf(model);
+        model.position -= bounds.center;
+        root.position = new Vector3(x, 12f, 0f);
+        debris.Add(new Debris {
+            body = root, renderer = model.GetComponentInChildren<Renderer>(),
+            speed = speed, drift = drift,
+            spin = wall ? 0f : kind == 2 ? Random.Range(-8f, 8f) : Random.Range(-35f, 35f)
+        });
+    }
+
+    void OnDisable() { if (flightAudio) flightAudio.Flight(false, 0f); }
 
     void OnDestroy()
     {
         foreach (var mat in materials) if (mat) Destroy(mat);
+        foreach (var mesh in meshes) if (mesh) Destroy(mesh);
         if (look && look.profile) Destroy(look.profile);
     }
 }

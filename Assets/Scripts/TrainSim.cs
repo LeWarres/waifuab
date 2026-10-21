@@ -51,7 +51,7 @@ public class TrainSim : MonoBehaviour
     [Header("Track")]
     [System.NonSerialized] public float exposure = 13.7f;                      // fixed camera exposure (EV100), the same in every biome
     public float groundTile = 18f;                      // size on the ground of one repeat of the ground texture
-    float GroundTile => Biomes[Biome].id == "city" ? groundTile * 3f : groundTile; // the city's is a whole block of streets
+    float GroundTile => Biomes[Biome].id == "city" ? groundTile * 3f : Biomes[Biome].id == "space" ? groundTile * 4f : groundTile; // the city's is a whole block of streets; space's stars must not repeat in sight
     public float viewRange = 80f;
     public float sleeperSpacing = 1.5f;
     [System.NonSerialized] public float stationGap = 600f;     // the shortest a normal leg can be: about half a minute of riding
@@ -122,7 +122,13 @@ public class TrainSim : MonoBehaviour
     Talk talk;                  // the words with the rival, before the duel and after it
     RivalEvent rival;           // the rival's locomotive, on a track of its own
     RaceEvent race;             // or, in a chapter that ends in one, the race to the launcher
-    bool raceLost;
+    EyeBossEvent eyeBoss;       // or the ball of eyes on a ring of wagons
+    // A finale (the race, the ball of eyes) can be tried twice: lost once, the player is asked whether to try it
+    // again; lost twice, or declined, the chapter starts over from its opening pages.
+    int finaleLosses;
+    bool finaleRetry;
+    Canvas triesBoard;
+    UnityEngine.UI.Text[] triesHearts;
     readonly List<string> taken = new(); // every upgrade taken in this chapter, as Story tokens
 
     // The hero's upgrades (Story tokens), each up to MaxPassive levels, like Vampire Survivors' passive items. One
@@ -434,14 +440,100 @@ public class TrainSim : MonoBehaviour
         Story.Duel(false, out string[] names, out string[] lines, out bool[] rival);
         talk.Show(names, lines, rival, () => chapterWon = true);
     }
-    // Another locomotive got to the launcher first: the chapter is lost, as if the train were.
-    void LoseRace()
+    // The race to the launcher is over. Won: the chapter is, and straight on to the story scene (and from there the
+    // ascent), keeping one of the chapter's upgrades at random as the won chapter's menu would have offered it.
+    public void RaceFinished(bool won)
     {
-        raceLost = true;
-        for (int i = 0; i < cars.Count; i++) if (cars[i].Alive) Damage(i, cars[i].health);
+        if (!won) { FinaleLost(); return; }
+        if (!Story.Active) return;
+        if (keptPassive == null && passiveOrder.Count > 0)
+        {
+            string id = passiveOrder[Random.Range(0, passiveOrder.Count)];
+            keptPassive = id + "*" + PassiveLevel(id);
+        }
+        var pool = new List<string>(new HashSet<string>(taken));
+        EndChapter(pool.Count > 0 ? pool[Random.Range(0, pool.Count)] : null);
+    }
+
+    void FinaleLost()
+    {
+        Time.timeScale = 0f;
+        if (!Story.Active) { Time.timeScale = 1f; Toast(L10n.T("finale.lost.test")); return; } // a test run outside the story
+        finaleLosses++;
+        if (finaleLosses >= 2) { FinaleToStory(); return; }
+        finaleRetry = true;
+        ShowTries(true);
+    }
+
+    // The finale this chapter ends in.
+    void StartFinale()
+    {
+        if (Story.Current.race) race.Begin(RaceFinished);
+        else if (Story.Current.eyeBoss) eyeBoss.Begin(EyeBossFinished);
+    }
+
+    // The ball of eyes beaten: her last words over what is left of it, then the chapter is won.
+    public void EyeBossFinished(bool won)
+    {
+        if (!won) { RaceFinished(false); return; }
+        Time.timeScale = 0f;
+        talk.Show(new[] { L10n.T(Locomotives.HeroNameKey(Locomotives.Selected)) }, new[] { L10n.T("eyeboss.post") }, new[] { false }, () => RaceFinished(true));
+    }
+
+    // Again: the lit heart goes out, and the finale starts over.
+    void RetryFinale()
+    {
+        finaleRetry = false;
+        StartCoroutine(HeartGoes());
+    }
+
+    IEnumerator HeartGoes()
+    {
+        Sound.Play("menuback");
+        RectTransform heart = triesHearts[1].rectTransform;
+        for (float t = 0f; t < 1f; t += Time.unscaledDeltaTime)
+        {
+            heart.localScale = Vector3.one * (1f + Mathf.Sin(t * Mathf.PI) * 0.4f) * (1f - t);
+            heart.localRotation = Quaternion.Euler(0f, 0f, t * 90f);
+            yield return null;
+        }
+        ShowTries(false);
+        StartFinale();
+    }
+
+    // Out of tries, or declined: the chapter from its opening pages, the biome from its start.
+    void FinaleToStory()
+    {
+        finaleRetry = false;
+        ShowTries(false);
+        Story.Lose();
+        Story.Play(Story.Chapter);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("historiaDialogos");
+    }
+
+    // The two tries as two big hearts over the question: the one used black, the one left lit.
+    void ShowTries(bool on)
+    {
+        if (!triesBoard)
+        {
+            triesBoard = UiKit.NewCanvas("FinaleTries", 40);
+            triesHearts = new UnityEngine.UI.Text[2];
+            // on a light card of their own above the question: the used one black, the one left red, both outlined
+            var card = UiKit.Panel(triesBoard.transform, new Vector2(0f, 385f), new Vector2(300f, 120f), UiKit.White, UiKit.Ice, 0.08f);
+            for (int i = 0; i < 2; i++)
+            {
+                triesHearts[i] = UiKit.Label(card.transform, UiKit.Heading, 88, i == 0 ? new Color(0.1f, 0.09f, 0.12f) : new Color(1f, 0.25f, 0.35f), TextAnchor.MiddleCenter, new Vector2(i == 0 ? -65f : 65f, 4f), new Vector2(120f, 110f), true);
+                var edge = triesHearts[i].gameObject.AddComponent<UnityEngine.UI.Outline>();
+                edge.effectColor = UiKit.Navy;
+                edge.effectDistance = new Vector2(3f, -3f);
+            }
+        }
+        foreach (var h in triesHearts) { h.text = "♥"; h.rectTransform.localScale = Vector3.one; h.rectTransform.localRotation = Quaternion.identity; }
+        triesBoard.gameObject.SetActive(on);
     }
     public void BossBar(string name, float fraction) => hud.Boss(name, fraction);
-    public bool Racing => race && race.Active;
+    public bool Racing => (race && (race.Active || race.Showing)) || (eyeBoss && (eyeBoss.Active || eyeBoss.Showing)); // a finale of its own on screen (or held there, lost, while the player is asked whether to try again)
     public bool Swarming => swarm.Aiming || brawl.Fighting || Racing; // seen from the gunner's seat (or from inside a boarded wagon, or in the race) right now
     // The gunner's camera while the swarm is fought, so the HUD can place its damage numbers from that seat.
     public Camera SwarmCamera => swarm != null && swarm.Aiming ? swarm.View : brawl != null && brawl.Fighting ? brawl.View : null;
@@ -494,7 +586,7 @@ public class TrainSim : MonoBehaviour
         (0, new Color(0.5f, 0.34f, 0.2f), new Color(0.42f, 0.29f, 0.17f), new Color(0.5f, 0.52f, 0.56f), 1f),    // ocean: a wooden causeway over the water
         (1, new Color(0.12f, 0.1f, 0.1f), new Color(0.3f, 0.1f, 0.07f), new Color(1f, 0.45f, 0.1f), 2.2f),       // volcano: basalt, red-hot rails
         (1, new Color(0.72f, 0.72f, 0.7f), new Color(0.38f, 0.38f, 0.42f), new Color(0.5f, 0.52f, 0.56f), 1f),   // city: concrete on gravel
-        (2, new Color(0.3f, 0.33f, 0.42f), new Color(0.08f, 0.09f, 0.14f), new Color(0.3f, 0.8f, 1f), 2.5f),     // space: metal, blue light
+        (2, new Color(0.95f, 0.72f, 0.08f), new Color(0.03f, 0.03f, 0.05f), new Color(1f, 0.85f, 0.2f), 2.2f),    // space: a yellow track on the black
         (2, new Color(0.45f, 0.2f, 0.55f), new Color(0.2f, 0.08f, 0.28f), new Color(0.2f, 1f, 0.8f), 2.5f),      // alien: violet, teal light
         (2, new Color(0.1f, 0.12f, 0.12f), new Color(0.05f, 0.07f, 0.07f), new Color(0.35f, 1f, 0.25f), 2.5f),   // fortress: black, green light
     };
@@ -736,7 +828,7 @@ public class TrainSim : MonoBehaviour
     const bool mainMenu = false, settingsMenu = false; // the title screen is its own scene now (MainMenu.cs)
     InputAction navigate, confirm, stepRight, stepLeft;
     bool ListMenu => Paused || settingsMenu;  // both draw their options as a vertical list
-    bool MenuOpen => mainMenu || chapterWon || junction || (AtStation && !Clearing && !deliveryPending) || Health <= 0f || Paused;
+    bool MenuOpen => mainMenu || chapterWon || finaleRetry || junction || (AtStation && !Clearing && !deliveryPending) || Health <= 0f || Paused;
 
     // Pause: Start on a gamepad, Esc on the keyboard. Freezes time and opens its own menu.
     public bool Paused { get; private set; }
@@ -819,6 +911,7 @@ public class TrainSim : MonoBehaviour
         talk = gameObject.AddComponent<Talk>();
         rival = gameObject.AddComponent<RivalEvent>();
         race = gameObject.AddComponent<RaceEvent>();
+        eyeBoss = gameObject.AddComponent<EyeBossEvent>();
         menuView = gameObject.AddComponent<StationMenu>();
         hud = gameObject.AddComponent<Hud>();
         Panel = gameObject.AddComponent<EventPanel>();
@@ -871,8 +964,10 @@ public class TrainSim : MonoBehaviour
         }
         for (int size = 0; size < sceneryCount.Length; size++)
         {
-            // A city stands thick with buildings: more of the middle and big slots there.
-            int count = Mathf.RoundToInt(sceneryCount[size] * (Biomes[Biome].id == "city" ? new[] { 1f, 1.5f, 2.2f }[size] : 1f));
+            // A city stands thick with buildings: more of the middle and big slots there. Space is kept clean: no small
+            // things at all, and only now and then a planet or an asteroid, far off.
+            string id = Biomes[Biome].id;
+            int count = Mathf.RoundToInt(sceneryCount[size] * (id == "city" ? new[] { 1f, 1.5f, 2.2f }[size] : id == "space" ? new[] { 0f, 0.3f, 0.45f }[size] : 1f));
             for (int i = 0; i < count; i++)
             {
                 var prop = new Prop { size = size, s = -viewRange + (i + Random.value) * (viewRange * 2f / count) };
@@ -919,7 +1014,7 @@ public class TrainSim : MonoBehaviour
         {
             stationLooks[b] = Instantiate(Resources.Load<GameObject>("Models/Station_" + Biomes[b].id), station);
             Toon(stationLooks[b].GetComponentInChildren<Renderer>());
-            stationLooks[b].SetActive(b == 0);
+            stationLooks[b].SetActive(b == Biome); // the first station already in the biome's own look (a story chapter starts in any)
         }
         gap = new GameObject("Gap").transform;
         gap.SetParent(transform, false);
@@ -1157,7 +1252,14 @@ public class TrainSim : MonoBehaviour
                 {
                     // The radio: power left for one more launch, so it is a race to the launcher.
                     talk.Show(new[] { L10n.T("race.radio.name") }, new[] { L10n.T("race.radio") }, new[] { false },
-                        () => race.Begin(won => { if (won) { Time.timeScale = 0f; chapterWon = true; } else LoseRace(); })); // won: straight to the upgrade to keep, then the story scene
+                        StartFinale);
+                }
+                else if (Story.Current.eyeBoss)
+                {
+                    // Moho, the ball of eyes, will not let her by.
+                    string her = L10n.T(Locomotives.HeroNameKey(Locomotives.Selected)), moho = L10n.T("eyeboss.name");
+                    talk.Show(new[] { moho, her, moho, moho }, new[] { L10n.T("eyeboss.pre.1"), L10n.T("eyeboss.pre.2"), L10n.T("eyeboss.pre.3"), L10n.T("eyeboss.pre.4") },
+                        new[] { true, false, true, true }, StartFinale);
                 }
                 else
                 {
@@ -2234,11 +2336,19 @@ public class TrainSim : MonoBehaviour
             }
             if (keepOffer.Count == 0) Add("yes", L10n.T("story.next"), () => EndChapter(null));
         }
+        else if (finaleRetry)
+        {
+            kind = 0;
+            menuTitle = L10n.T("finale.retry");
+            menuSub = L10n.T("finale.retry.sub");
+            Add("yes", L10n.T("menu.yes"), RetryFinale);
+            Add("no", L10n.T("menu.no"), FinaleToStory);
+        }
         else if (Health <= 0f)
         {
             if (Story.Active) Story.Lose(); // saved: this chapter again, from its start
             kind = 0;
-            menuTitle = L10n.T(raceLost ? "race.lost.title" : "menu.gameover");
+            menuTitle = L10n.T("menu.gameover");
             Add("yes", L10n.T("menu.yes"), Restart);
             Add("no", L10n.T("menu.no"), GoToMainMenu);
         }
@@ -2626,6 +2736,7 @@ public class TrainSim : MonoBehaviour
         prop.body.localScale = Vector3.one * Random.Range(0.8f, 1.25f);
         prop.yaw = city ? Random.Range(0, 4) * 90f : Random.Range(0f, 360f); // a city is square to its streets (the ground's, along the track)
         float away = prop.size == 0 ? Random.Range(4.5f, 14f) : prop.size == 1 ? Random.Range(9f, 20f) : Random.Range(19f, 30f);
+        if (Biomes[Biome].id == "space") away = prop.size == 1 ? Random.Range(16f, 32f) : Random.Range(34f, 60f); // far off
         prop.side = Random.value < 0.5f ? away : -away;
         if (tallKinds.Contains(prop.kind) && Camera.main)
         {
