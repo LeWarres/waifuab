@@ -14,14 +14,14 @@ public static class Story
     // and after the chapter (strings story.<hero>.<chapter>.intro.<n> / .outro.<n>); the first chapter's intro
     // is the prologue the story scene always had. before / after: who speaks each line of the talk on the track
     // as the duel starts and once it is won, h the hero and r the rival (strings ...before.<n> / ...after.<n>).
-    public struct Part { public int biome, rival, intro, outro; public string before, after; }
+    public struct Part { public int biome, rival, intro, outro; public string before, after; public bool inspection; public QuestionnaireMode questionnaire; public bool race; } // race: the finale is a race to the launcher (RaceEvent), not a duel
 
     static readonly Part[] Bba =
     {
         new Part { biome = 0, rival = 2,  intro = 16, outro = 2, before = "hrh", after = "rh" }, // desert: Onini and the C-279
-        new Part { biome = 5, rival = 7,  intro = 2,  outro = 2, before = "rhr", after = "rh" }, // city: Cerebron and the R-2D-2
+        new Part { biome = 5, rival = 7,  intro = 2,  outro = 1, before = "rhr", after = "rh", inspection = true, questionnaire = QuestionnaireMode.Human, race = true }, // city: Cerebron and the R-2D-2
         new Part { biome = 6, rival = 4,  intro = 2,  outro = 2, before = "rhr", after = "rh" }, // space: Sentinel and the Golem
-        new Part { biome = 7, rival = 10, intro = 2,  outro = 2, before = "rhr", after = "rh" }, // alien planet: Faceless and T.exe
+        new Part { biome = 7, rival = 10, intro = 2,  outro = 2, before = "rhr", after = "rh", inspection = true, questionnaire = QuestionnaireMode.Alien }, // alien planet: Faceless and T.exe
         new Part { biome = 8, rival = 3,  intro = 2,  outro = 3, before = "rhr", after = "rh" }, // the alien base: Tzmil and the Night Skull
     };
 
@@ -32,6 +32,14 @@ public static class Story
     public static int Chapter { get; set; }          // the one being played
     public static Part Current => Route(Hero)[Chapter];
     public static bool JustWon { get; private set; } // the story scene opens with that chapter's ending
+    public static bool InspectionPending { get; private set; }
+    public static bool AscentPending { get; private set; }
+    public static void RetryAscent() => replayArrival = true;
+    public static void PassAscent() => AscentPending = false;
+    public static QuestionnaireMode InspectionMode => Current.questionnaire;
+    static bool replayArrival;
+    public static void RetryInspection() => replayArrival = true;
+    public static void PassInspection() => InspectionPending = false;
     public static bool Over => JustWon && Chapter == Route(Hero).Length - 1; // the last one: the end of it all
 
     // Chapters that can be played: every one up to the first not beaten yet.
@@ -49,6 +57,14 @@ public static class Story
             string[] passive = SaveGame.Passive(i).Split('*');
             if (passive.Length == 2 && int.TryParse(passive[1], out int times))
                 for (int n = 0; n < times; n++) kept.Add(passive[0]);
+        }
+        if (TestChapter > 0) // ponytail: testing a later chapter, what the ones before would hand down: a random upgrade at level 2 and a random weapon
+        {
+            string up = TrainSim.Passives[Random.Range(0, TrainSim.Passives.Length)];
+            kept.Add(up);
+            kept.Add(up);
+            kept.Add("wagon:" + Weapon.Wagon[Random.Range(1, Weapon.Wagon.Length)].id);
+            Debug.Log("Story test kept: " + string.Join(", ", kept));
         }
         return kept;
     }
@@ -73,10 +89,13 @@ public static class Story
     public static int CarriedTruck => Chapter > 0 ? SaveGame.Truck(Chapter - 1) : 0;
 
     // Starting a chapter from the menu: its opening pages are told first.
+    public static int TestChapter = -1; // -1 follows the selected chapter; a new story starts in the desert
     public static void Play(int chapter)
     {
-        Chapter = chapter;
+        Chapter = TestChapter >= 0 ? TestChapter : chapter;
         JustWon = false;
+        InspectionPending = replayArrival = false;
+        AscentPending = false;
     }
 
     // The pages the story scene shows now: the ending of the chapter just won and the opening of the next, or
@@ -85,20 +104,39 @@ public static class Story
     {
         var pages = new List<StoryIntro.Page>();
         Part[] route = Route(Hero);
-        if (JustWon)
+        if (JustWon || replayArrival)
         {
-            for (int n = 1; n <= route[Chapter].outro; n++)
-                pages.Add(new StoryIntro.Page { image = 3, textKey = $"story.{Hero}.{Chapter}.outro.{n}", titleKey = $"story.{Hero}.{Chapter}.title", number = Chapter + 1 });
-            if (Chapter == route.Length - 1) return pages.ToArray(); // the end: no next chapter
-            Chapter++;
-            JustWon = false;
+            int ending = replayArrival ? Mathf.Max(0, Chapter - 1) : Chapter;
+            for (int n = 1; n <= route[ending].outro; n++)
+                pages.Add(new StoryIntro.Page { image = 3, textKey = $"story.{Hero}.{ending}.outro.{n}", titleKey = $"story.{Hero}.{ending}.title", number = ending + 1,
+                    artwork = Hero == "bba" && ending == 0 ? "Story/bba_desert_victory" : null });
+            replayArrival = false;
+            if (JustWon)
+            {
+                if (Chapter == route.Length - 1) return pages.ToArray(); // the end: no next chapter
+                Chapter++;
+                JustWon = false;
+            }
         }
+        // The city ending leads into the flight, before any narration already set in space.
+        if (Hero == "bba" && Chapter == 2)
+        {
+            InspectionPending = false;
+            AscentPending = true;
+            if (pages.Count == 0)
+                for (int n = 1; n <= route[1].outro; n++)
+                    pages.Add(new StoryIntro.Page { image = 3, textKey = $"story.bba.1.outro.{n}", titleKey = "story.bba.1.title", number = 2 });
+            return pages.ToArray();
+        }
+        AscentPending = false;
         if (Chapter == 0)
             for (int n = 1; n <= route[0].intro; n++)
                 pages.Add(new StoryIntro.Page { image = PrologueImages[n - 1], textKey = $"story.page.{n:00}" });
         else
             for (int n = 1; n <= route[Chapter].intro; n++)
-                pages.Add(new StoryIntro.Page { image = 5, textKey = $"story.{Hero}.{Chapter}.intro.{n}", titleKey = $"story.{Hero}.{Chapter}.title", number = Chapter + 1 });
+                pages.Add(new StoryIntro.Page { image = 5, textKey = $"story.{Hero}.{Chapter}.intro.{n}", titleKey = $"story.{Hero}.{Chapter}.title", number = Chapter + 1,
+                    artwork = Hero == "bba" && Chapter == 1 ? "Story/bba_city_journey" : null });
+        InspectionPending = route[Chapter].inspection;
         return pages.ToArray();
     }
 

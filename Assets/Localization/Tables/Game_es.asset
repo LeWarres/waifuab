@@ -1532,28 +1532,33 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655766
-    m_Localized: "Onini y su C-279 se quedaron atr\xE1s, echando humo en la arena.
-      Primera ronda del Train Ranking: superada."
+    m_Localized: "\xA1Bleeeh! Eso por intentar dejarme atr\xE1s, Onini. Aunque...
+      no pens\xE9 que luchar contra otros maquinistas fuera a ser tan duro. Casi
+      echo de menos mis combates de lucha libre."
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655767
-    m_Localized: "El hombre de negro llam\xF3 para felicitarme. Ten\xEDa la voz de
-      alguien que no esperaba verme ganar. Siguiente parada: la ciudad."
+    m_Localized: "Me gan\xE9 el derecho a burlarme un poquito desde mi cabina. Pero
+      nada de descansar: la radio acaba de anunciar un cambio de planes y tengo que
+      poner rumbo a la ciudad. \xA1Ahora mismo!"
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655768
-    m_Localized: "La ciudad. Rascacielos, anuncios y v\xEDas elevadas por todas partes.
-      Aqu\xED los robots no vienen del desierto: salen de los callejones."
+    m_Localized: "Dicen por radio que esto ya es una carrera por el \xFAltimo viaje:
+      el \xFAnico tren que todav\xEDa podr\xE1n lanzar directamente al espacio saldr\xE1
+      desde la ciudad. Si quiero subirme, tendr\xE9 que llegar antes que los dem\xE1s."
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655769
-    m_Localized: "Me espera Cerebron en su R-2D-2, un tren blindado con m\xE1s ca\xF1ones
-      que ventanas. Dicen que piensa demasiado. Yo prefiero acelerar."
+    m_Localized: "Es nuestra \xFAltima oportunidad de salir de este planeta y cumplir
+      la misi\xF3n. Y la m\xEDa de recuperar mi nave y volver a casa. La ciudad ya
+      se ve a lo lejos... \xA1Vamos, RicMar, no me falles ahora!"
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655770
-    m_Localized: "El R-2D-2 se detuvo a mitad del puente con el blindaje abollado.
-      Cerebron murmur\xF3 algo sobre probabilidades. Le falt\xF3 calcular mi terquedad."
+    m_Localized: "Como se esperaba, fui la ganadora de la carrera y todos quedaron
+      atr\xE1s. No es mi primera vez en el espacio, pero s\xED la primera desde hace
+      muchos a\xF1os."
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655771
@@ -2302,6 +2307,673 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4553404363124736
     m_Localized: '{0} guardada sube a Nv {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684437913600
+    m_Localized: OFICIAL DE CONTROL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662336
+    m_Localized: "Lamento molestar, pero por los ataques alien\xEDgenas tenemos que
+      hacer un cuestionario. Son solo cinco preguntas; todo humano deber\xEDa ser
+      capaz de responderlas correctamente. Tres errores y tendr\xE9 que arrestarte."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662337
+    m_Localized: "Pregunta {0}/5  \xB7  Errores {1}/3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662338
+    m_Localized: Responder cuestionario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662339
+    m_Localized: Intentarlo otra vez
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662340
+    m_Localized: "\xA1EST\xC1S BAJO ARRESTO!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662341
+    m_Localized: "\xA1Que la ciudad sea de su agrado!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662342
+    m_Localized: "Control superado. Su entrada a la ciudad est\xE1 autorizada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662343
+    m_Localized: "Tres errores. Acomp\xE1\xF1eme sin usar sus tent\xE1culos, por
+      favor."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662344
+    m_Localized: "Respuesta aceptada. Humanidad ligeramente m\xE1s cre\xEDble."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662345
+    m_Localized: Respuesta sospechosa. Queda anotada en su expediente.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662346
+    m_Localized: 'Flechas / stick: elegir   Enter / X: aceptar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662347
+    m_Localized: "\xBFA qu\xE9 huele la tierra mojada?\nA hidr\xF3geno y helio\nA
+      las cuevas de Farflax\nA tierra mojada\nA los pozos de Flakr"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662348
+    m_Localized: "\xBFCu\xE1nto es a + b = 120?\n\xBFC\xF3mo que hay letras en matem\xE1ticas?\na
+      = 100, b = 20\nEst\xE1 mal planteada\n\xA124!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662349
+    m_Localized: "\xBFQui\xE9n es Nikola Tesla?\nUn friobonita\nEl conquistador de
+      la Tierra\nEl esposo de alguna KarsdaXhian\nEl inventor del s\xE1ndwich"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662350
+    m_Localized: "En un d\xEDa despejado, \xBFde qu\xE9 color suele ser el cielo?\nSabor
+      fresa\nAzul\nTransparente con tent\xE1culos\nDel color de mis deudas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662351
+    m_Localized: "\xBFCu\xE1ntos dedos suele tener una mano humana?\nCinco\nDepende
+      de la luna\nDoce y una antena\nLos alquil\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662352
+    m_Localized: "\xBFQu\xE9 sonido hace un gato?\nDeclaraciones de impuestos\nGlorp\nEl
+      himno de Farflax\nMiau"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662353
+    m_Localized: "\xBFCu\xE1ntos d\xEDas tiene una semana?\nUna eternidad laboral\nCuarenta\nSiete\nSolo
+      el viernes cuenta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662354
+    m_Localized: "Un sem\xE1foro est\xE1 en rojo. \xBFQu\xE9 haces?\nMe detengo\nLo
+      desaf\xEDo a luchar\nAcelero por orgullo\nLe doy una zanahoria"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662355
+    m_Localized: "\xBFC\xF3mo se llama el sat\xE9lite natural de la Tierra?\nSe\xF1or
+      Redondo\nLa Luna\nEstaci\xF3n Tres\nMi ex"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662356
+    m_Localized: "Tienes sed. \xBFQu\xE9 conviene beber?\nAceite de motor\nArena
+      l\xEDquida\nUn contrato\nAgua"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662357
+    m_Localized: "\xBFQu\xE9 abre una cerradura normal?\nUn discurso\nUn pepino\nLa
+      llave correcta\nLa voluntad del emperador"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662358
+    m_Localized: "\xBFCu\xE1nto es 2 + 2?\nUn enjambre\n4\n22 tent\xE1culos\nUn misterio
+      militar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662359
+    m_Localized: "\xBFCu\xE1l es lo contrario de fr\xEDo?\nCaliente\nMartes\nCon
+      antenas\nFr\xEDo con bigote"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662360
+    m_Localized: "\xBFD\xF3nde ves el Sol normalmente?\nEn la sopa\nEn mi bolsillo\nEn
+      la oficina de multas\nEn el cielo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662361
+    m_Localized: "\xBFCon qu\xE9 se hace normalmente el pan?\nPolvo de meteorito\nHarina\nTornillos
+      blandos\nEsperanzas molidas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662362
+    m_Localized: "\xBFPara qu\xE9 sirve la nariz?\nPara cambiar de canal\nPara guardar
+      boletos\nPara oler\nPara apuntar al norte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662363
+    m_Localized: "\xBFCu\xE1ntas piernas suele tener un humano?\nDos\nUna por contrato\nOcho
+      en temporada alta\nEso es confidencial"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662364
+    m_Localized: "\xBFSobre qu\xE9 circula normalmente un tren?\nSobre rumores\nSobre
+      gelatina\nSobre su autoestima\nSobre rieles"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662365
+    m_Localized: "\xBFPara qu\xE9 usas un paraguas?\nPara fre\xEDr huevos\nPara protegerme
+      de la lluvia\nPara hablar con Saturno\nPara orde\xF1ar robots"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662366
+    m_Localized: "\xBFQu\xE9 le pasa al hielo cuando se calienta?\nPide vacaciones\nSe
+      convierte en alcalde\nSe derrite\nAprende karate"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662367
+    m_Localized: "\xBFQu\xE9 fruta es amarilla y alargada?\nUn tornillo triste\nUna
+      nube\nUna multa madura\nUn pl\xE1tano"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662368
+    m_Localized: "\xBFQu\xE9 objeto suele despertarte a la hora elegida?\nUn despertador\nUna
+      piedra educada\nUn agujero negro\nMi nave confiscada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662369
+    m_Localized: "\xBFQu\xE9 sonido hace un perro?\nRecita leyes\nGuau\nPiii de microondas\nLa
+      clave del wifi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662370
+    m_Localized: "\xBFCon qu\xE9 comes sopa normalmente?\nCon una grapadora\nCon
+      un boleto\nCon una cuchara\nCon pura telepat\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662371
+    m_Localized: "\xBFPara qu\xE9 sirven los o\xEDdos?\nPara sujetar antenas\nPara
+      medir impuestos\nPara inflar globos\nPara escuchar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662372
+    m_Localized: "\xBFQu\xE9 respira normalmente un humano?\nAire\nMayonesa\nVirutas
+      de metal\nMiedo de inspector"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662373
+    m_Localized: "\xBFA cu\xE1nto equivalen 60 minutos?\nA tres tent\xE1culos\nA
+      una hora\nA dos s\xE1ndwiches\nA una deuda eterna"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662374
+    m_Localized: "\xBFCon qu\xE9 te lavas las manos?\nCon pintura\nCon rayos gamma\nCon
+      agua y jab\xF3n\nCon formularios"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662375
+    m_Localized: "\xBFA qu\xE9 sabe normalmente el agua del mar?\nA enchufe\nA lunes\nA
+      bater\xEDa nueva\nSalada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662376
+    m_Localized: "\xBFQu\xE9 ayuda a crecer a una planta normal?\nAgua y luz solar\nInsultos
+      en Farflax\nUna licencia de piloto\nTornillos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662377
+    m_Localized: "\xBFCu\xE1nto es 10 menos 3?\nTreinta antenas\nUna licencia vencida\n7\nDos
+      planetas y medio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662378
+    m_Localized: "\xBFEn qu\xE9 parte del cuerpo va un zapato?\nEn la antena\nEn
+      el pie\nEn la opini\xF3n p\xFAblica\nEn el bolsillo secreto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662379
+    m_Localized: "\xBFQu\xE9 usas normalmente para leer un libro impreso?\nEl escape
+      del tren\nUna patata\nEl ombligo\nLos ojos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662380
+    m_Localized: "\xBFQu\xE9 d\xEDa viene despu\xE9s del lunes?\nMartes\nLunes dos:
+      la venganza\nD\xEDa de invasi\xF3n\nFebrero"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662381
+    m_Localized: "\xBFPor qu\xE9 una rueda suele ser redonda?\nPara esconder impuestos\nPorque
+      odia las esquinas\nPara rodar\nPorque la cuadrada cobra m\xE1s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662382
+    m_Localized: "\xBFC\xF3mo se llama el conjunto de letras de un idioma?\nEl men\xFA
+      del d\xEDa\nEl alfabeto\nEl sindicato de garabatos\nLa contrase\xF1a imperial"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662383
+    m_Localized: "\xBFQu\xE9 producen las abejas?\nPetr\xF3leo espacial\nMultas\nInternet\nMiel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662384
+    m_Localized: "\xBFD\xF3nde vive normalmente un pez?\nEn el agua\nEn una impresora\nEn
+      el minibar del Sol\nEn recursos humanos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662385
+    m_Localized: "\xBFQu\xE9 enciendes para ver en la oscuridad?\nUna deuda\nUn s\xE1ndwich\nUna
+      linterna\nUn formulario triste"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662386
+    m_Localized: "\xBFD\xF3nde duerme normalmente una persona en casa?\nEn la tostadora\nEn
+      una cama\nEn el tanque de combustible\nEn una \xF3rbita estable"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662387
+    m_Localized: "Si tienes hambre, \xBFqu\xE9 necesitas?\nUna matr\xEDcula\nUn cometa\nUna
+      actualizaci\xF3n de antenas\nComida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662388
+    m_Localized: "No tienes boleto de tren. \xBFQu\xE9 debes hacer?\nComprar uno\nComer
+      al revisor\nDeclararme equipaje\nViajar por telepat\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662389
+    m_Localized: "Tu tren debe parar en la estaci\xF3n. \xBFQu\xE9 usas?\nMermelada\nEl
+      claxon mental\nLos frenos\nLa gravedad de tu ego"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662390
+    m_Localized: "\xBFCu\xE1l es lo contrario de mojado?\nCon recibo\nSeco\nDe color
+      jueves\nDoble tent\xE1culo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662391
+    m_Localized: "\xBFDe qu\xE9 color suele ser la nieve limpia?\nInvisible con rayas\nColor
+      permiso\nMorado fiscal\nBlanca"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662392
+    m_Localized: "\xBFCu\xE1ntos meses tiene un a\xF1o terrestre?\nDoce\nLos que
+      compre\nCuarenta y un pepino\nSolo temporada de invasi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662393
+    m_Localized: "Te dan un regalo. \xBFQu\xE9 dices por educaci\xF3n?\nExijo una
+      invasi\xF3n\nActualiza mi firmware\nGracias\nDevu\xE9lveme mis antenas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662394
+    m_Localized: "\xBFCu\xE1ntos lados tiene un tri\xE1ngulo?\nDos si nadie mira\nTres\nOcho
+      en Farflax\nLos que autorice el gobierno"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662395
+    m_Localized: "La oficial pide tus documentos. \xBFQu\xE9 le entregas?\nUn meteorito\nLa
+      abuela de Flakr\nUn erizo con corbata\nMis documentos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662396
+    m_Localized: "\xBFQu\xE9 pasa si fallas tres preguntas de este cuestionario?\nMe
+      regalan un planeta\nMe ascienden a humano premium\nEstoy bajo arresto\nLa oficial
+      me debe un helado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4684541748129792
+    m_Localized: OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479809953792
+    m_Localized: "CONTROL MIGRATORIO \xB7 FARFLAX"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702528
+    m_Localized: "Disculpa la molestia. Con tantos humanos infiltrados debemos hacer
+      cinco preguntas. Cualquier alien\xEDgena sabr\xE1 responderlas. Tres errores
+      y quedar\xE1s bajo arresto. Relaja las antenas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702529
+    m_Localized: "\xA1Que nuestro planeta sea de tu agrado! Y no alimentes a las
+      farolas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702530
+    m_Localized: Entrada autorizada. Tus antenas parecen legales.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702531
+    m_Localized: "\xBFA qu\xE9 huele la tierra mojada de Farflax?\nA sopa de antena
+      de la abuela\nA tierra mojada\nA lluvia\nA jard\xEDn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702532
+    m_Localized: "\xBFCu\xE1ntos corazones llevas al trabajo?\nUno\nTres y uno de
+      repuesto\nEl m\xEDo y ya\nNo los cuento"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702533
+    m_Localized: "\xBFC\xF3mo saludas a tu vecina?\nDigo buenos d\xEDas\nLe doy la
+      mano\nChocando las antenas fiscales\nLevanto la mano"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702534
+    m_Localized: "\xBFQu\xE9 desayuna una larva responsable?\nCereal\nPan tostado\nHuevos\nTornillos
+      con leche de meteorito"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702535
+    m_Localized: "\xBFPor d\xF3nde respiras en una reuni\xF3n?\nPor las rodillas
+      de emergencia\nPor la nariz\nPor la boca\nPor ambos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702536
+    m_Localized: "\xBFQu\xE9 haces si te duele la cabeza?\nDescanso\nDesenrosco la
+      de repuesto\nTomo agua\nVoy al m\xE9dico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702537
+    m_Localized: "\xBFCu\xE1nto es dos m\xE1s dos?\nCuatro\n4\nCuatro tent\xE1culos
+      y el impuesto\nEl doble de dos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702538
+    m_Localized: "\xBFD\xF3nde guardas tus recuerdos?\nEn mi memoria\nEn fotos\nEn
+      un diario\nEn un frasco de baba municipal"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702539
+    m_Localized: "\xBFQu\xE9 significa un sem\xE1foro rojo?\nHora de mudar la piel\nDetenerse\nEsperar\nNo
+      pasar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702540
+    m_Localized: "\xBFC\xF3mo pagas el boleto?\nCon monedas\nCon siete eructos certificados\nCon
+      tarjeta\nCon efectivo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702541
+    m_Localized: "\xBFQu\xE9 cae cuando llueve aqu\xED?\nAgua\nGotas\nMermelada de
+      nebulosa\nLluvia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702542
+    m_Localized: "\xBFPor qu\xE9 tenemos dos lunas?\nSon sat\xE9lites naturales\nPor
+      la gravedad\nPor sus \xF3rbitas\nUna es el huevo del alcalde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702543
+    m_Localized: "\xBFQu\xE9 haces con tu sombra?\nLa llevo con correa los jueves\nNada\nCamino
+      con ella\nMe cubro del sol"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702544
+    m_Localized: "\xBFC\xF3mo se lava un tent\xE1culo?\nCon jab\xF3n\nSe lame con
+      el tercer ombligo\nCon agua\nCon una esponja"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702545
+    m_Localized: "\xBFQu\xE9 comes cuando tienes hambre?\nComida\nUn s\xE1ndwich\nUn
+      bostezo relleno de plasma\nUna fruta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702546
+    m_Localized: "\xBFCu\xE1ndo renuevas tus antenas?\nNunca, no tengo\nCuando se
+      rompen\nEn el m\xE9dico\nCada eclipse de queso"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702547
+    m_Localized: "\xBFQui\xE9n conduce el tren por la noche?\nMi cerebro de turno
+      nocturno\nEl maquinista\nUna conductora\nUn conductor"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702548
+    m_Localized: "\xBFD\xF3nde duermen los beb\xE9s?\nEn una cuna\nEn la incubadora
+      de calcetines vivos\nEn una cama\nCon sus padres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702549
+    m_Localized: "\xBFQu\xE9 haces si pierdes una mano?\nPido ayuda\nVoy al hospital\nEspero
+      a que vuelva del recreo\nLlamo una ambulancia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702550
+    m_Localized: "\xBFDe qu\xE9 color es el cielo normal?\nAzul\nCeleste\nGris\nColor
+      martes fermentado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702551
+    m_Localized: "\xBFQu\xE9 se dice despu\xE9s de estornudar?\n\xA1Que florezca
+      tu par\xE1sito!\nSalud\nPerd\xF3n\nDisculpa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702552
+    m_Localized: "\xBFC\xF3mo preparas el t\xE9?\nHiervo agua\nAsusto al agua hasta
+      que canta\nUso una tetera\nPongo una bolsita"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702553
+    m_Localized: "\xBFQu\xE9 haces en tu cumplea\xF1os?\nSoplo velas\nComo pastel\nCuento
+      mis anillos de mucosa\nRecibo regalos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702554
+    m_Localized: "\xBFD\xF3nde est\xE1 tu documento de identidad?\nEn mi cartera\nEn
+      el bolsillo\nEn mi bolso\nTatuado en mi s\xE9ptimo p\xE1rpado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702555
+    m_Localized: "\xBFQu\xE9 es un humano?\nUn pepino que paga impuestos\nUna persona\nUn
+      ser humano\nUn mam\xEDfero"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702556
+    m_Localized: "\xBFC\xF3mo detectas una mentira?\nEscucho con atenci\xF3n\nSe
+      me infla la antena izquierda\nBusco pruebas\nHago preguntas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702557
+    m_Localized: "\xBFQu\xE9 haces al bostezar?\nMe tapo la boca\nRespiro hondo\nCierro
+      el portal del paladar\nEstiro la mand\xEDbula"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702558
+    m_Localized: "\xBFQu\xE9 lleva una pizza cl\xE1sica?\nQueso\nTomate\nMasa\nOjos
+      de aceituna que te juzgan"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702559
+    m_Localized: "\xBFC\xF3mo llamas a tu madre?\nCon telepat\xEDa de ombligo\nPor
+      tel\xE9fono\nLe mando un mensaje\nPor su nombre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702560
+    m_Localized: "\xBFPara qu\xE9 sirve una silla?\nPara sentarse\nPara que descansen
+      mis nueve rodillas\nPara descansar\nPara tomar asiento"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702561
+    m_Localized: "\xBFQu\xE9 haces si hace fr\xEDo?\nMe abrigo\nUso una manta\nEnciendo
+      mi reactor de axila\nMe pongo un su\xE9ter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702562
+    m_Localized: "\xBFC\xF3mo se llama el jefe de estaci\xF3n?\nEl supervisor\nLa
+      jefa\nEl encargado\nSu Pegajosidad Tentacular"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702563
+    m_Localized: "\xBFQu\xE9 llevas en la maleta?\nMi muda de esqueleto\nRopa\nZapatos\nArt\xEDculos
+      de aseo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702564
+    m_Localized: "\xBFC\xF3mo cruzas un r\xEDo?\nPor un puente\nPido permiso al pez
+      notario\nEn un bote\nNadando"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702565
+    m_Localized: "\xBFQu\xE9 se usa para escribir?\nUn l\xE1piz\nUn bol\xEDgrafo\nUn
+      gusano de tinta sindicalizado\nUna pluma"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702566
+    m_Localized: "\xBFCu\xE1l es el deporte nacional?\nF\xFAtbol\nBaloncesto\nAtletismo\nLanzamiento
+      de abuelas en gravedad cero"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702567
+    m_Localized: "\xBFC\xF3mo se llama tu mascota?\nGlorioso Devorador de Facturas\nFirulais\nLuna\nMax"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702568
+    m_Localized: "\xBFQu\xE9 haces al llegar tarde?\nPido disculpas\nCulpo a mi clon
+      puntual\nAviso\nMe apuro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702569
+    m_Localized: "\xBFQu\xE9 forma tiene una rueda?\nRedonda\nCircular\nLa que ordene
+      el ministerio del c\xEDrculo\nUn c\xEDrculo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702570
+    m_Localized: "\xBFQu\xE9 hay dentro de un huevo?\nUna yema\nUna clara\nUn pollito\nUn
+      inspector de huevos en pr\xE1cticas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702571
+    m_Localized: "\xBFC\xF3mo se curan las heridas?\nCon besitos de babosa licenciada\nCon
+      cuidados m\xE9dicos\nCon un vendaje\nCon desinfectante"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702572
+    m_Localized: "\xBFQu\xE9 haces si se va la luz?\nEnciendo una linterna\nLe doy
+      cuerda al sol de bolsillo\nBusco una vela\nReviso los fusibles"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702573
+    m_Localized: "\xBFCu\xE1ntos d\xEDas tiene la semana?\nSiete\n7\nSeis y un ap\xE9ndice
+      administrativo\nDe lunes a domingo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702574
+    m_Localized: "\xBFQui\xE9n invent\xF3 el s\xE1ndwich?\nEl conde de Sandwich\nUn
+      cocinero\nUna persona con hambre\nEl Duque de las Dos Rebanadas Vivas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702575
+    m_Localized: "\xBFC\xF3mo escuchas la radio?\nCon las antenas en modo chisme\nCon
+      los o\xEDdos\nPor un altavoz\nCon auriculares"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702576
+    m_Localized: "\xBFQu\xE9 haces con la basura?\nLa tiro al contenedor\nLa env\xEDo
+      a estudiar a la Tierra\nLa reciclo\nLa separo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702577
+    m_Localized: "\xBFQu\xE9 significa estar enamorado?\nSentir amor\nQuerer a alguien\nQue
+      tus par\xE1sitos se dan la mano\nTener sentimientos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702578
+    m_Localized: "\xBFC\xF3mo pides vacaciones?\nLleno una solicitud\nHablo con mi
+      jefe\nPido d\xEDas libres\nMudo de piel y dejo al clon"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702579
+    m_Localized: "\xBFPara qu\xE9 sirve el cintur\xF3n de seguridad?\nPara que no
+      escape el segundo torso\nPara protegerme\nPara evitar lesiones\nPara sujetarme"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702580
+    m_Localized: "\xBFQu\xE9 dices al salir del control?\nGracias\n\xA1Gloria al
+      gran flan intergal\xE1ctico!\nHasta luego\nBuen d\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078417928192
+    m_Localized: "Pens\xE9 que ser\xEDa sencillo, pero olvidaba que todo el tiempo
+      est\xE1 cayendo basura del espacio. Ser\xE1 mejor esquivarla."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482624
+    m_Localized: "Bueno, ahora a buscar esa v\xEDa espacial."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482625
+    m_Localized: "Tres choques... As\xED no vamos a llegar al espacio. Tendr\xE9
+      que intentarlo otra vez."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482626
+    m_Localized: Iniciar ascenso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482627
+    m_Localized: ASCENSO FALLIDO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482628
+    m_Localized: CHOQUES  {0} / 3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482629
+    m_Localized: ASCENSO  {0}%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482630
+    m_Localized: "WASD / Flechas / Stick: esquivar     \xB7     Esc / Start: pausa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482631
+    m_Localized: PAUSA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482632
+    m_Localized: "Esquiva la basura, la chatarra y los sat\xE9lites. Tres choques
+      y tendr\xE1s que volver a intentarlo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482633
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315238486016
+    m_Localized: Radio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429056
+    m_Localized: "Se anunci\xF3 por la radio: al lanzador solo le queda potencia
+      para mandar una locomotora m\xE1s al espacio. \xA1Ahora es una carrera para
+      llegar primero!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429057
+    m_Localized: "\xA1YA!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429058
+    m_Localized: "{0}\xBA / {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429059
+    m_Localized: '{0} km/h'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429060
+    m_Localized: "\xA1Motor sobrecalentado!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429061
+    m_Localized: "R2/W acelerar \xB7 \u2715/Shift turbo \xB7 \u25A1/S frenar (con
+      giro: derrapar) \xB7 stick/A-D girar \xB7 L1/R1/Q/E empujar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429062
+    m_Localized: "\xA1Primero! Tu locomotora sube al lanzador"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429063
+    m_Localized: "{0} lleg\xF3 primero y fue lanzada al espacio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429064
+    m_Localized: Carrera perdida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429065
+    m_Localized: "Perdiste la carrera al lanzador. \xBFReintentar?"
     m_Metadata:
       m_Items: []
   references:

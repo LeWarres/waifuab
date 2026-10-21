@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class StoryIntro : MonoBehaviour
 {
-    [System.Serializable] public class Page { public int image, number; public string textKey, titleKey; } // number, titleKey: a story chapter's, over the picture
+    [System.Serializable] public class Page { public int image, number; public string textKey, titleKey, artwork; } // artwork: an optional full-frame texture in Resources
     public string gameScene="sandScenario";
     public Texture2D backgrounds;
     public Page[] pages;
@@ -89,7 +89,10 @@ public class StoryIntro : MonoBehaviour
     void Finish()
     {
         if(leaving) return;
-        leaving=true;SceneManager.LoadScene(Story.Active && Story.Over ? "MainMenu" : gameScene); // the story told to its end: back to the title
+        leaving=true;
+        SceneManager.LoadScene(Story.Active && Story.Over ? "MainMenu" :
+            Story.Active && Story.AscentPending ? "ascenso" :
+            Story.Active && Story.InspectionPending ? "cuestionario" : gameScene);
     }
 
     public void ShowPage(int index,bool complete)
@@ -99,8 +102,11 @@ public class StoryIntro : MonoBehaviour
         visible=complete ? currentText.Length:0;
         narration.text=complete ? currentText:"";
         int image=Mathf.Clamp(pages[page].image,0,5);
-        art.texture=backgrounds;
-        art.uvRect=new Rect((image%3)/3f, image<3 ? .5f:0, 1f/3,.5f);
+        string artwork=pages[page].artwork;
+        if(image==5 && string.IsNullOrEmpty(artwork)) artwork="Story/bba_alien_escape";
+        var illustration=string.IsNullOrEmpty(artwork) ? null : Resources.Load<Texture2D>(artwork);
+        art.texture=illustration ? illustration : backgrounds;
+        art.uvRect=illustration ? new Rect(0f,0f,1f,1f) : new Rect((image%3)/3f, image<3 ? .5f:0, 1f/3,.5f);
         art.color=Color.white;
         chapter.text=string.IsNullOrEmpty(pages[page].titleKey) ? (image+1).ToString("00")+"  /  "+Localized("story.chapter."+image)
             : Localized("story.chapter.number").Replace("{0}",pages[page].number.ToString())+"  /  "+Localized(pages[page].titleKey);

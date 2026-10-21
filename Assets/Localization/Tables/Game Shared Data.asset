@@ -2159,6 +2159,562 @@ MonoBehaviour:
     m_Key: weapon.stashed.up
     m_Metadata:
       m_Items: []
+  - m_Id: 4679684437913600
+    m_Key: quiz.officer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662336
+    m_Key: quiz.intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662337
+    m_Key: quiz.progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662338
+    m_Key: quiz.begin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662339
+    m_Key: quiz.again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662340
+    m_Key: quiz.arrested
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662341
+    m_Key: quiz.passed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662342
+    m_Key: quiz.cleared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662343
+    m_Key: quiz.arrest.detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662344
+    m_Key: quiz.correct
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662345
+    m_Key: quiz.wrong
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662346
+    m_Key: quiz.help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662347
+    m_Key: quiz.q.01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662348
+    m_Key: quiz.q.02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662349
+    m_Key: quiz.q.03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662350
+    m_Key: quiz.q.04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662351
+    m_Key: quiz.q.05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662352
+    m_Key: quiz.q.06
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662353
+    m_Key: quiz.q.07
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662354
+    m_Key: quiz.q.08
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662355
+    m_Key: quiz.q.09
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662356
+    m_Key: quiz.q.10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662357
+    m_Key: quiz.q.11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662358
+    m_Key: quiz.q.12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662359
+    m_Key: quiz.q.13
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662360
+    m_Key: quiz.q.14
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662361
+    m_Key: quiz.q.15
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662362
+    m_Key: quiz.q.16
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662363
+    m_Key: quiz.q.17
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662364
+    m_Key: quiz.q.18
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662365
+    m_Key: quiz.q.19
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662366
+    m_Key: quiz.q.20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662367
+    m_Key: quiz.q.21
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662368
+    m_Key: quiz.q.22
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662369
+    m_Key: quiz.q.23
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662370
+    m_Key: quiz.q.24
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662371
+    m_Key: quiz.q.25
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662372
+    m_Key: quiz.q.26
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662373
+    m_Key: quiz.q.27
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662374
+    m_Key: quiz.q.28
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662375
+    m_Key: quiz.q.29
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662376
+    m_Key: quiz.q.30
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662377
+    m_Key: quiz.q.31
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662378
+    m_Key: quiz.q.32
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662379
+    m_Key: quiz.q.33
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662380
+    m_Key: quiz.q.34
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662381
+    m_Key: quiz.q.35
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662382
+    m_Key: quiz.q.36
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662383
+    m_Key: quiz.q.37
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662384
+    m_Key: quiz.q.38
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662385
+    m_Key: quiz.q.39
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662386
+    m_Key: quiz.q.40
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662387
+    m_Key: quiz.q.41
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662388
+    m_Key: quiz.q.42
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662389
+    m_Key: quiz.q.43
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662390
+    m_Key: quiz.q.44
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662391
+    m_Key: quiz.q.45
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662392
+    m_Key: quiz.q.46
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662393
+    m_Key: quiz.q.47
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662394
+    m_Key: quiz.q.48
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662395
+    m_Key: quiz.q.49
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662396
+    m_Key: quiz.q.50
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4684541748129792
+    m_Key: quiz.ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479809953792
+    m_Key: quiz.alien.officer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702528
+    m_Key: quiz.alien.intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702529
+    m_Key: quiz.alien.passed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702530
+    m_Key: quiz.alien.cleared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702531
+    m_Key: quiz.alien.q.01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702532
+    m_Key: quiz.alien.q.02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702533
+    m_Key: quiz.alien.q.03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702534
+    m_Key: quiz.alien.q.04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702535
+    m_Key: quiz.alien.q.05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702536
+    m_Key: quiz.alien.q.06
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702537
+    m_Key: quiz.alien.q.07
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702538
+    m_Key: quiz.alien.q.08
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702539
+    m_Key: quiz.alien.q.09
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702540
+    m_Key: quiz.alien.q.10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702541
+    m_Key: quiz.alien.q.11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702542
+    m_Key: quiz.alien.q.12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702543
+    m_Key: quiz.alien.q.13
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702544
+    m_Key: quiz.alien.q.14
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702545
+    m_Key: quiz.alien.q.15
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702546
+    m_Key: quiz.alien.q.16
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702547
+    m_Key: quiz.alien.q.17
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702548
+    m_Key: quiz.alien.q.18
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702549
+    m_Key: quiz.alien.q.19
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702550
+    m_Key: quiz.alien.q.20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702551
+    m_Key: quiz.alien.q.21
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702552
+    m_Key: quiz.alien.q.22
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702553
+    m_Key: quiz.alien.q.23
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702554
+    m_Key: quiz.alien.q.24
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702555
+    m_Key: quiz.alien.q.25
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702556
+    m_Key: quiz.alien.q.26
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702557
+    m_Key: quiz.alien.q.27
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702558
+    m_Key: quiz.alien.q.28
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702559
+    m_Key: quiz.alien.q.29
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702560
+    m_Key: quiz.alien.q.30
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702561
+    m_Key: quiz.alien.q.31
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702562
+    m_Key: quiz.alien.q.32
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702563
+    m_Key: quiz.alien.q.33
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702564
+    m_Key: quiz.alien.q.34
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702565
+    m_Key: quiz.alien.q.35
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702566
+    m_Key: quiz.alien.q.36
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702567
+    m_Key: quiz.alien.q.37
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702568
+    m_Key: quiz.alien.q.38
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702569
+    m_Key: quiz.alien.q.39
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702570
+    m_Key: quiz.alien.q.40
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702571
+    m_Key: quiz.alien.q.41
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702572
+    m_Key: quiz.alien.q.42
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702573
+    m_Key: quiz.alien.q.43
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702574
+    m_Key: quiz.alien.q.44
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702575
+    m_Key: quiz.alien.q.45
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702576
+    m_Key: quiz.alien.q.46
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702577
+    m_Key: quiz.alien.q.47
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702578
+    m_Key: quiz.alien.q.48
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702579
+    m_Key: quiz.alien.q.49
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702580
+    m_Key: quiz.alien.q.50
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078417928192
+    m_Key: ascent.intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482624
+    m_Key: ascent.arrived
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482625
+    m_Key: ascent.lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482626
+    m_Key: ascent.begin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482627
+    m_Key: ascent.failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482628
+    m_Key: ascent.hits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482629
+    m_Key: ascent.altitude
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482630
+    m_Key: ascent.controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482631
+    m_Key: ascent.pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482632
+    m_Key: ascent.pause.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482633
+    m_Key: ascent.resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315238486016
+    m_Key: race.radio.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429056
+    m_Key: race.radio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429057
+    m_Key: race.go
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429058
+    m_Key: race.position
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429059
+    m_Key: race.speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429060
+    m_Key: race.overheat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429061
+    m_Key: race.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429062
+    m_Key: race.won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429063
+    m_Key: race.lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429064
+    m_Key: race.lost.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429065
+    m_Key: race.lost.title
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

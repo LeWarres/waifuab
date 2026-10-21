@@ -51,6 +51,7 @@ public class TrainSim : MonoBehaviour
     [Header("Track")]
     [System.NonSerialized] public float exposure = 13.7f;                      // fixed camera exposure (EV100), the same in every biome
     public float groundTile = 18f;                      // size on the ground of one repeat of the ground texture
+    float GroundTile => Biomes[Biome].id == "city" ? groundTile * 3f : groundTile; // the city's is a whole block of streets
     public float viewRange = 80f;
     public float sleeperSpacing = 1.5f;
     [System.NonSerialized] public float stationGap = 600f;     // the shortest a normal leg can be: about half a minute of riding
@@ -115,11 +116,13 @@ public class TrainSim : MonoBehaviour
     // with stations and biome changes.
     // In a story it climbs gently for the first minutes, while the weapons are few, and ever faster after: 2 at 4
     // minutes, 10 at 10, 29 at the end of the chapter.
-    public int Difficulty => Story.Active ? Story.Chapter * 3 + (int)(storyClock / 90f + 4f * Mathf.Pow(storyClock / 600f, 2f)) : Stations + Biome * biomeDifficulty;
+    public int Difficulty => Story.Active ? Story.Chapter + (int)(storyClock / 90f + 4f * Mathf.Pow(storyClock / 600f, 2f)) : Stations + Biome * biomeDifficulty;
     float storyClock;           // seconds ridden in this story chapter (not counting stations or pauses)
     bool duel, duelCalled, chapterWon; // the rival is out / was called for / is beaten and the upgrade to keep is being chosen
     Talk talk;                  // the words with the rival, before the duel and after it
     RivalEvent rival;           // the rival's locomotive, on a track of its own
+    RaceEvent race;             // or, in a chapter that ends in one, the race to the launcher
+    bool raceLost;
     readonly List<string> taken = new(); // every upgrade taken in this chapter, as Story tokens
 
     // The hero's upgrades (Story tokens), each up to MaxPassive levels, like Vampire Survivors' passive items. One
@@ -180,6 +183,9 @@ public class TrainSim : MonoBehaviour
     public float Health { get { float sum = 0f; foreach (Car c in cars) if (c.cargo < 0) sum += c.health; return sum; } }
     // For the HUD.
     public string BiomeLabel => BiomeName(Biome);
+    // How far along the run is, for what grows with it (cargo pay, the truck's toughness): the chapter in a story,
+    // where any biome can be any chapter, the biome in endless, where they come in order.
+    public int Tier => Story.Active ? Story.Chapter : Biome;
     public string BiomeId => Biomes[Biome].id;
     public string LegLabel => LegName(leg);
     public float LegProgress => AtStation ? 1f : 1f - remaining / LegLength;
@@ -428,8 +434,15 @@ public class TrainSim : MonoBehaviour
         Story.Duel(false, out string[] names, out string[] lines, out bool[] rival);
         talk.Show(names, lines, rival, () => chapterWon = true);
     }
+    // Another locomotive got to the launcher first: the chapter is lost, as if the train were.
+    void LoseRace()
+    {
+        raceLost = true;
+        for (int i = 0; i < cars.Count; i++) if (cars[i].Alive) Damage(i, cars[i].health);
+    }
     public void BossBar(string name, float fraction) => hud.Boss(name, fraction);
-    public bool Swarming => swarm.Aiming || brawl.Fighting; // seen from the gunner's seat (or from inside a boarded wagon) right now
+    public bool Racing => race && race.Active;
+    public bool Swarming => swarm.Aiming || brawl.Fighting || Racing; // seen from the gunner's seat (or from inside a boarded wagon, or in the race) right now
     // The gunner's camera while the swarm is fought, so the HUD can place its damage numbers from that seat.
     public Camera SwarmCamera => swarm != null && swarm.Aiming ? swarm.View : brawl != null && brawl.Fighting ? brawl.View : null;
     public Vector3 CarPosition(int i) => cars[i].pos;
@@ -513,6 +526,7 @@ public class TrainSim : MonoBehaviour
     GameObject[][][] sceneryKinds;              // [biome][size]: what Resources/Scenery/<biome> offers
     readonly List<Prop> props = new();
     readonly Dictionary<GameObject, Stack<Transform>> spareProps = new();
+    readonly HashSet<GameObject> tallKinds = new(); // props tall enough to hide the train: never between it and the camera
     Transform sceneryRoot;
     Transform station;
     GameObject[] stationLooks; // by biome
@@ -773,7 +787,6 @@ public class TrainSim : MonoBehaviour
         if (Story.Active) Biome = Story.Current.biome; // a story chapter is ridden in one biome, start to end
         Material steel = Mat(Color.gray);
         groundMat = Mat(Biomes[0].ground, false);
-        groundMat.mainTextureScale = Vector2.one * (viewRange * 8f / groundTile);
         PaintGround();
         sceneryMat = Mat(Biomes[Biome].scenery);
         wagonMat = Mat(new Color(0.62f, 0.66f, 0.72f)); // an armed wagon with no weapon yet
@@ -805,6 +818,7 @@ public class TrainSim : MonoBehaviour
         boss = gameObject.AddComponent<BossEvent>();
         talk = gameObject.AddComponent<Talk>();
         rival = gameObject.AddComponent<RivalEvent>();
+        race = gameObject.AddComponent<RaceEvent>();
         menuView = gameObject.AddComponent<StationMenu>();
         hud = gameObject.AddComponent<Hud>();
         Panel = gameObject.AddComponent<EventPanel>();
@@ -850,17 +864,22 @@ public class TrainSim : MonoBehaviour
                     any = true;
                 }
                 float tall = box.size.y, wide = Mathf.Max(box.size.x, box.size.z);
+                if (tall > 7f) tallKinds.Add(kind);
                 bySize[tall < 1.3f && wide < 3f ? 0 : tall > 4.2f || wide > 6f ? 2 : 1].Add(kind);
             }
             sceneryKinds[b] = System.Array.ConvertAll(bySize, list => list.ToArray());
         }
         for (int size = 0; size < sceneryCount.Length; size++)
-            for (int i = 0; i < sceneryCount[size]; i++)
+        {
+            // A city stands thick with buildings: more of the middle and big slots there.
+            int count = Mathf.RoundToInt(sceneryCount[size] * (Biomes[Biome].id == "city" ? new[] { 1f, 1.5f, 2.2f }[size] : 1f));
+            for (int i = 0; i < count; i++)
             {
-                var prop = new Prop { size = size, s = -viewRange + (i + Random.value) * (viewRange * 2f / sceneryCount[size]) };
+                var prop = new Prop { size = size, s = -viewRange + (i + Random.value) * (viewRange * 2f / count) };
                 props.Add(prop);
                 Dress(prop);
             }
+        }
 
         // HDRP adapts exposure to the picture by default, which washes the train out over dark ground.
         var look = new GameObject("Look").AddComponent<UnityEngine.Rendering.Volume>();
@@ -1134,11 +1153,29 @@ public class TrainSim : MonoBehaviour
                 // Time is up: the rival pulls alongside, a few words are traded over the stopped game, then the duel.
                 duelCalled = true;
                 Time.timeScale = 0f;
-                Story.Duel(true, out string[] names, out string[] lines, out bool[] rival);
-                talk.Show(names, lines, rival, () => { Time.timeScale = 1f; this.rival.Begin(Story.Current.rival); duel = true; });
+                if (Story.Current.race)
+                {
+                    // The radio: power left for one more launch, so it is a race to the launcher.
+                    talk.Show(new[] { L10n.T("race.radio.name") }, new[] { L10n.T("race.radio") }, new[] { false },
+                        () => race.Begin(won => { if (won) { Time.timeScale = 0f; chapterWon = true; } else LoseRace(); })); // won: straight to the upgrade to keep, then the story scene
+                }
+                else
+                {
+                    Story.Duel(true, out string[] names, out string[] lines, out bool[] rival);
+                    talk.Show(names, lines, rival, () => { Time.timeScale = 1f; this.rival.Begin(Story.Current.rival); duel = true; });
+                }
             }
         }
         if (Keyboard.current != null && Keyboard.current.lKey.wasPressedThisFrame) L10n.NextLocale();
+        // Testing aid: B in a story chapter counts it as won and goes on to the story scene, keeping a random wagon
+        // weapon and a random upgrade with a random level, as a won chapter would.
+        if (Story.Active && !chapterWon && !Racing && Keyboard.current != null && Keyboard.current.bKey.wasPressedThisFrame)
+        {
+            keptPassive = Passives[Random.Range(0, Passives.Length)] + "*" + Random.Range(1, 4);
+            string weapon = "wagon:" + Weapon.Wagon[Random.Range(1, Weapon.Wagon.Length)].id;
+            Debug.Log("Story test: chapter won, kept " + weapon + " and " + keptPassive);
+            EndChapter(weapon);
+        }
         // ponytail: reads the devices directly, like the medkit and the button games.
         if (junction && ((Gamepad.current != null && Gamepad.current.buttonWest.wasPressedThisFrame) || (Keyboard.current != null && Keyboard.current.qKey.wasPressedThisFrame)))
             Junction(false); // the junction's second way, on its own button
@@ -1257,7 +1294,7 @@ public class TrainSim : MonoBehaviour
         // It slides against the way the train's middle is going (round a curve that is not along x), in the
         // ground's own axes; the cube's top face has u and v running towards -x and -z.
         Path(0f, out float going);
-        Vector3 slide = Quaternion.Inverse(ground.localRotation) * (Quaternion.Euler(0f, going, 0f) * Vector3.right) * (slideBy / groundTile);
+        Vector3 slide = Quaternion.Inverse(ground.localRotation) * (Quaternion.Euler(0f, going, 0f) * Vector3.right) * (slideBy / GroundTile);
         groundScroll = new Vector2(Mathf.Repeat(groundScroll.x - slide.x, 1f), Mathf.Repeat(groundScroll.y - slide.z, 1f));
         groundMat.mainTextureOffset = groundScroll;
         sleepers.offset = Mathf.Repeat(sleepers.offset + slideBy, sleepers.spacing);
@@ -1362,7 +1399,7 @@ public class TrainSim : MonoBehaviour
             bool stays = (car.cargo < 0 && !car.temporary) || car.permanent;
             if (car.cargo >= 0 || car.temporary)
             {
-                int value = car.permanent ? (car.Alive ? (car.guise >= 0 ? car.reward : Mathf.RoundToInt(Cargos[Container].reward * Legs[leg].length * CargoShare) * (Biome + 1)) : 0)
+                int value = car.permanent ? (car.Alive ? (car.guise >= 0 ? car.reward : Mathf.RoundToInt(Cargos[Container].reward * Legs[leg].length * CargoShare) * (Tier + 1)) : 0)
                     : car.Alive ? car.reward : -car.penalty;
                 string id = car.guise >= 0 ? Cargos[car.guise].id : car.cargo >= 0 ? Cargos[car.cargo].id : "wagon";
                 results.Add(new DeliveryReport.Entry { icon = "delivery_" + id, name = car.cargo >= 0 ? L10n.T("cargo." + id) : L10n.T("delivery.escort"), value = value, destroyed = !car.Alive });
@@ -1451,8 +1488,8 @@ public class TrainSim : MonoBehaviour
             size.y *= 0.6f; // flatbed: lower than an armed wagon
             mat = cargoMats[cargo];
             car.health = car.maxHealth = Cargos[cargo].health;
-            car.reward = Mathf.RoundToInt(Cargos[cargo].reward * Legs[AtStation ? nextLeg : leg].length * CargoShare * CargoBoost(cargo)) * (Biome + 1); // what the card said
-            car.penalty = Cargos[cargo].penalty * (Biome + 1);
+            car.reward = Mathf.RoundToInt(Cargos[cargo].reward * Legs[AtStation ? nextLeg : leg].length * CargoShare * CargoBoost(cargo)) * (Tier + 1); // what the card said
+            car.penalty = Cargos[cargo].penalty * (Tier + 1);
         }
         // Wagons are models with their origin on the rail; a cargo with no model falls back to a flatbed box.
         GameObject model = cargo < 0 ? wagonModel : cargoModels[cargo];
@@ -1475,7 +1512,7 @@ public class TrainSim : MonoBehaviour
         if (goods >= 0) cargoLoads[goods]++; // a load like any other, towards that goods' next level
         car.maxHealth = Cargos[look].health;
         car.health = car.maxHealth * share;
-        if (goods >= 0) car.reward = Mathf.RoundToInt(Cargos[goods].reward * Legs[leg].length * CargoShare * CargoBoost(goods)) * (Biome + 1);
+        if (goods >= 0) car.reward = Mathf.RoundToInt(Cargos[goods].reward * Legs[leg].length * CargoShare * CargoBoost(goods)) * (Tier + 1);
         Destroy(car.body.gameObject);
         GameObject model = cargoModels[look];
         car.body = model ? Instantiate(model, transform).transform : Box(transform, Vector3.zero, new Vector3(wagonSize.x, wagonSize.y * 0.6f, wagonSize.z), cargoMats[look]);
@@ -1497,7 +1534,7 @@ public class TrainSim : MonoBehaviour
 
     // The legs are short now and the stations many: each delivery pays this share of what a long leg did.
     const float CargoShare = 0.6f;
-    int CargoReward(int cargo) => Mathf.RoundToInt(Cargos[cargo].reward * Legs[nextLeg].length * CargoShare * CargoBoost(cargo)) * (Biome + 1);
+    int CargoReward(int cargo) => Mathf.RoundToInt(Cargos[cargo].reward * Legs[nextLeg].length * CargoShare * CargoBoost(cargo)) * (Tier + 1);
     // Each goods type levels up every third load of it this run: it costs more and pays better (the same share).
     readonly int[] cargoLoads = new int[Loadable];
     public const int MaxCargoLevel = 99;
@@ -1888,6 +1925,7 @@ public class TrainSim : MonoBehaviour
                 // On a wagon with no weapon if there is one, else on the one carrying the same (a level up).
                 int at = cars.FindIndex(c => c.cargo < 0 && !c.mount);
                 if (at < 0) at = cars.FindIndex(c => c.cargo < 0 && c.mount && c.mount.Weapon == weapon);
+                if (at < 0 && cars.Count < maxCars) { AddCar(cars.Count, -1); at = cars.Count - 1; } // else it comes with a wagon of its own
                 if (at >= 0) Mount(at, weapon);
                 break;
         }
@@ -2200,7 +2238,7 @@ public class TrainSim : MonoBehaviour
         {
             if (Story.Active) Story.Lose(); // saved: this chapter again, from its start
             kind = 0;
-            menuTitle = L10n.T("menu.gameover");
+            menuTitle = L10n.T(raceLost ? "race.lost.title" : "menu.gameover");
             Add("yes", L10n.T("menu.yes"), Restart);
             Add("no", L10n.T("menu.no"), GoToMainMenu);
         }
@@ -2216,9 +2254,9 @@ public class TrainSim : MonoBehaviour
                 // The desert's boss stands in the way: no leaving until it is down (and then it is gone for good).
                 // The other biomes have no boss yet, so their route out is always open.
                 bool locked = Biome == 0 && bossBeaten != Biome;
-                Add("biome", L10n.T(locked ? "menu.change.locked" : "menu.change", BiomeName(Biome + 1), biomeDifficulty, Biome + 2),
+                Add("biome", L10n.T(locked ? "menu.change.locked" : "menu.change", BiomeName(Tier + 1), biomeDifficulty, Biome + 2),
                     () => Depart(true), !locked);
-                if (locked) menuSub = L10n.T("sub.route.locked", BiomeName(Biome + 1));
+                if (locked) menuSub = L10n.T("sub.route.locked", BiomeName(Tier + 1));
             }
         }
         else if (stage == 2 && pendingCargo < 0)
@@ -2234,7 +2272,7 @@ public class TrainSim : MonoBehaviour
             for (int i = 0; i < Loadable; i++)
             {
                 int cargo = i;
-                Add(Cargos[i].id, L10n.T("cargo.card", L10n.T("player.slot", L10n.T("cargo." + Cargos[i].id), CargoLevel(i)), CargoReward(i), Cargos[i].health, Cargos[i].penalty * (Biome + 1), CargoPrice(i)),
+                Add(Cargos[i].id, L10n.T("cargo.card", L10n.T("player.slot", L10n.T("cargo." + Cargos[i].id), CargoLevel(i)), CargoReward(i), Cargos[i].health, Cargos[i].penalty * (Tier + 1), CargoPrice(i)),
                     () => BeginPlacing(cargo), loaded < maxCargo && money >= CargoPrice(i));
                 Priced(CargoPrice(i), loaded >= maxCargo);
             }
@@ -2378,7 +2416,7 @@ public class TrainSim : MonoBehaviour
                 else if (offer < Escort)
                 {
                     int cargo = offer - FreeCargo;
-                    Add(Cargos[cargo].id, L10n.T("offer.cargo", L10n.T("cargo." + Cargos[cargo].id), CargoReward(cargo), Cargos[cargo].penalty * (Biome + 1)),
+                    Add(Cargos[cargo].id, L10n.T("offer.cargo", L10n.T("cargo." + Cargos[cargo].id), CargoReward(cargo), Cargos[cargo].penalty * (Tier + 1)),
                         () => { AddTemporary(cargo, null, 0); Next(); });
                     Tag(L10n.T("badge.bonus"), 2);
                 }
@@ -2578,16 +2616,23 @@ public class TrainSim : MonoBehaviour
             prop.body = null;
         }
         GameObject[] kinds = stretchKinds[prop.size] ?? sceneryKinds[Biome][prop.size];
-        float share = stretch[prop.size] * (Biomes[Biome].id == "ocean" ? 0.4f : 1f); // open water: most of it stays empty
+        bool city = Biomes[Biome].id == "city";
+        float share = stretch[prop.size] * (Biomes[Biome].id == "ocean" ? 0.4f : city && prop.size == 0 ? 0.45f : 1f); // open water: most of it stays empty; the city's streets are kept clear
         if (kinds.Length == 0 || Random.value > share) return; // this stretch leaves the slot empty
         prop.kind = kinds[Random.Range(0, kinds.Length)];
         if (!spareProps.TryGetValue(prop.kind, out Stack<Transform> spare)) spareProps[prop.kind] = spare = new Stack<Transform>();
         prop.body = spare.Count > 0 ? spare.Pop() : Instantiate(prop.kind, sceneryRoot).transform;
         prop.body.gameObject.SetActive(true);
         prop.body.localScale = Vector3.one * Random.Range(0.8f, 1.25f);
-        prop.yaw = Random.Range(0f, 360f);
+        prop.yaw = city ? Random.Range(0, 4) * 90f : Random.Range(0f, 360f); // a city is square to its streets (the ground's, along the track)
         float away = prop.size == 0 ? Random.Range(4.5f, 14f) : prop.size == 1 ? Random.Range(9f, 20f) : Random.Range(19f, 30f);
         prop.side = Random.value < 0.5f ? away : -away;
+        if (tallKinds.Contains(prop.kind) && Camera.main)
+        {
+            Path(prop.s, out float heading);
+            Vector3 across = transform.TransformDirection(Quaternion.Euler(0f, heading, 0f) * Vector3.forward);
+            prop.side = away * (Vector3.Dot(across, Camera.main.transform.forward) > 0f ? 1f : -1f); // on the far side of the track
+        }
     }
 
     // Every material in the game is a copy of Resources/Toon.mat (RealToon): tune the look there.
@@ -2613,6 +2658,7 @@ public class TrainSim : MonoBehaviour
     {
         Texture2D painting = Resources.Load<Texture2D>("Ground/" + Biomes[Biome].id);
         groundMat.mainTexture = painting;
+        groundMat.mainTextureScale = Vector2.one * (viewRange * 8f / GroundTile);
         Tint(groundMat, painting ? Color.white : Biomes[Biome].ground);
     }
 

@@ -2,6 +2,7 @@
 # each built in the colours of the enemies that wear it (Combat.Types: model = "Enemy_<name>").
 #   blender -b --python Tools/make_mechs.py           -> Assets/Resources/Models/Enemy_<name>.fbx, one per entry in MECHS
 #   blender -b --python Tools/make_mechs.py -- shot   -> also a contact sheet of them all, Tools/mechs_preview.png
+#   blender -b --python Tools/make_mechs.py -- only invader,skimmer -> just those
 # Unit sized like the other enemies, centred on the origin, facing -Y (Unity's forward), +Z up; walkers stand
 # with their feet at -0.5. Vertex colours, drawn untinted (EnemyType.model).
 #   tripod  a round body on three legs, missile pods on its shoulders, a porthole ("Fully Loaded")
@@ -26,7 +27,7 @@ MECHS = [  # name, design, colours
     ("sentinel",  "tripod",  palette((0.35, 0.38, 0.42), (0.18, 0.2, 0.24), (0.3, 1.0, 0.4), (0.15, 0.15, 0.2), STEEL, GUN, (0.4, 1.0, 0.5), (0.3, 1.0, 0.4))),
     ("nest",      "crab",    palette((0.25, 0.55, 0.2), (0.12, 0.3, 0.1), (0.95, 0.55, 0.15), (0.55, 0.25, 0.6), STEEL, GUN, (0.6, 1.0, 0.4), (0.3, 0.85, 0.9))),
     ("hive",      "crab",    palette((0.4, 0.2, 0.6), (0.22, 0.1, 0.36), (1.0, 0.6, 0.12), (0.7, 0.25, 0.55), STEEL, GUN, (0.3, 0.9, 0.95), (0.35, 0.85, 0.95))),
-    ("gang",      "crab",    palette((1.0, 0.82, 0.15), (0.2, 0.2, 0.22), (0.9, 0.2, 0.2), (0.2, 0.2, 0.25), STEEL, GUN, (1.0, 0.35, 0.3), (0.4, 0.8, 1.0))),
+    ("gang",      "crab",    palette((0.45, 0.85, 0.3), (0.2, 0.12, 0.3), (0.65, 0.3, 0.9), (0.25, 0.2, 0.32), STEEL, GUN, (0.6, 1.0, 0.4), (1.0, 0.35, 0.8))),  # the city's invaders
     ("larva",     "crab",    palette((0.7, 0.9, 0.3), (0.4, 0.6, 0.15), (0.9, 0.5, 0.7), (0.4, 0.6, 0.15), STEEL, GUN, (1.0, 1.0, 0.6), (0.5, 0.9, 0.9))),
     ("ghost",     "alien",   palette((0.9, 0.95, 1.0), (0.55, 0.65, 0.8), (0.3, 0.9, 1.0), (0.3, 0.35, 0.5), STEEL, GUN, (0.4, 1.0, 1.0), (0.6, 0.9, 1.0))),
     ("healer",    "alien",   palette((1.0, 0.55, 0.75), (0.75, 0.3, 0.5), (0.95, 0.95, 0.95), (0.35, 0.3, 0.45), STEEL, GUN, (0.5, 1.0, 0.6), (1.0, 1.0, 1.0))),
@@ -36,10 +37,14 @@ MECHS = [  # name, design, colours
     ("fish",      "dragon",  palette((0.2, 0.75, 0.9), (0.08, 0.4, 0.55), (1.0, 0.55, 0.15), (0.95, 0.95, 0.9), STEEL, GUN, (1.0, 0.95, 0.4), (1.0, 0.55, 0.15))),
     ("imp",       "dragon",  palette((0.85, 0.12, 0.1), (0.25, 0.05, 0.05), (0.15, 0.12, 0.12), (0.4, 0.1, 0.08), STEEL, GUN, (1.0, 0.7, 0.1), (1.0, 0.5, 0.05))),
     ("charger",   "gorilla", palette((1.0, 0.5, 0.12), (0.75, 0.28, 0.08), (0.5, 0.22, 0.65), (0.3, 0.12, 0.42), STEEL, GUN, (1.0, 0.3, 0.6), (0.5, 0.22, 0.65))),
-    ("armored",   "gorilla", palette((0.3, 0.42, 0.62), (0.16, 0.22, 0.36), (1.0, 0.8, 0.15), (0.55, 0.58, 0.65), STEEL, GUN, (1.0, 0.85, 0.2), (0.85, 0.85, 0.9))),
+    ("armored",   "gorilla", palette((0.72, 0.75, 0.82), (0.3, 0.2, 0.42), (0.45, 1.0, 0.35), (0.5, 0.3, 0.7), STEEL, GUN, (0.5, 1.0, 0.4), (0.9, 0.4, 1.0))),  # the city's invaders
     ("colossus",  "gorilla", palette((0.18, 0.16, 0.17), (0.08, 0.07, 0.08), (1.0, 0.35, 0.05), (0.5, 0.12, 0.08), STEEL, GUN, (1.0, 0.55, 0.1), (1.0, 0.35, 0.05))),
     ("yeti",      "horned",  palette((0.92, 0.95, 1.0), (0.62, 0.72, 0.85), (0.35, 0.65, 1.0), (0.5, 0.55, 0.7), STEEL, GUN, (0.5, 0.9, 1.0), (0.75, 0.9, 1.0))),
     ("golem",     "horned",  palette((0.3, 0.12, 0.08), (0.16, 0.06, 0.05), (1.0, 0.45, 0.05), (0.2, 0.18, 0.18), STEEL, GUN, (1.0, 0.65, 0.1), (0.95, 0.85, 0.75))),
+    # the city's invaders: acid green, violet and chrome (with gang and armored above)
+    ("invader",   "alien",   palette((0.45, 0.85, 0.3), (0.25, 0.12, 0.38), (1.0, 0.35, 0.8), (0.3, 0.25, 0.4), STEEL, GUN, (0.7, 1.0, 0.3), (0.9, 0.4, 1.0))),
+    ("skimmer",   "dragon",  palette((0.55, 0.25, 0.85), (0.2, 0.1, 0.3), (0.45, 1.0, 0.35), (0.72, 0.75, 0.82), STEEL, GUN, (0.6, 1.0, 0.4), (1.0, 0.4, 0.8))),
+    ("crusher",   "horned",  palette((0.7, 0.73, 0.8), (0.28, 0.18, 0.4), (0.45, 1.0, 0.35), (0.55, 0.25, 0.85), STEEL, GUN, (0.5, 1.0, 0.4), (1.0, 0.35, 0.8))),
     ("miniboss",  "horned",  palette((1.0, 0.75, 0.15), (0.6, 0.4, 0.05), (0.15, 0.14, 0.16), (0.7, 0.1, 0.1), STEEL, GUN, (1.0, 0.25, 0.2), (0.95, 0.95, 0.95))),
 ]
 
@@ -225,7 +230,9 @@ def horned(c):
         box(x - 0.075, x + 0.075, -0.11, 0.08, -0.5, -0.42, c["gun"])                  # feet
 
 DESIGNS = dict(tripod=tripod, crab=crab, alien=alien, dragon=dragon, gorilla=gorilla, horned=horned)
+only = sys.argv[sys.argv.index("only") + 1].split(",") if "only" in sys.argv else None
 for name, design, p in MECHS:
+    if only and name not in only: continue
     reset()
     DESIGNS[design](colours(p))
     finish("Enemy_" + name, paint=True)

@@ -132,7 +132,7 @@ public class BossEvent : MonoBehaviour
         Skin();
 
         Combat combat = Combat.Instance;
-        maxHp = bossHealth * type.healthMul * (1f + healthPerDifficulty * train.Difficulty) * hard;
+        maxHp = bossHealth * Bosses[Mathf.Clamp(train.Tier, 0, Bosses.Length - 1)].healthMul * (1f + healthPerDifficulty * train.Difficulty) * hard; // its look from the biome, its toughness from how far along
         boss = combat.AddProjectile(Rig, new Vector3(0f, 2f, 0f), maxHp);
         bossId = boss.id;
 

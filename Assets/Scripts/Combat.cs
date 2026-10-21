@@ -153,12 +153,12 @@ public class Combat : MonoBehaviour
     {
         roster.Clear();
         int biome = train.Biome;
-        var open = new List<EnemyType>(System.Array.FindAll(Types, t => t.weight > 0f && t.firstLevel <= level && (t.biome < 0 || t.biome == biome)));
+        var open = new List<EnemyType>(System.Array.FindAll(Types, t => t.weight > 0f && t.firstLevel <= level && Here(t, biome)));
         if (open.Count == 0) return;
         open.Sort((a, b) => b.firstLevel.CompareTo(a.firstLevel)); // the newest first, then at random
         if (open[0].firstLevel > 0 && open[0].firstLevel >= level - 3) { roster.Add(open[0]); open.RemoveAt(0); }
         while (roster.Count < 3 && open.Count > 0) { int k = Random.Range(0, open.Count); roster.Add(open[k]); open.RemoveAt(k); }
-        roster.Add(Types[0]); // the rank and file always come too: waves without them hit far harder early on
+        roster.Add(RankAndFile); // the rank and file always come too: waves without them hit far harder early on
     }
 
     static readonly EnemyType Larva = new EnemyType { name = "Larva", color = new Color(0.7f, 0.9f, 0.3f), health = 1.5f, speed = 7f, damage = 2f, size = 0.5f, model = "Enemy_larva" };
@@ -193,6 +193,8 @@ public class Combat : MonoBehaviour
     float bossModeLeft;
     public int MiniBossesBeaten { get; private set; }
 
+    // firstLevel goes by how dangerous a type is, never by its biome: a story may open in any biome, so each one's
+    // bestiary has to start gentle (the rank and file) and grow, like the desert's.
     public static readonly EnemyType[] Types =
     {
         // Everywhere
@@ -203,30 +205,40 @@ public class Combat : MonoBehaviour
         new EnemyType { name = "Bomba", biome = 0, color = new Color(1f, 0.3f, 0.1f), health = 4f, speed = 5f, damage = 4f, size = 0.9f, firstLevel = 1, weight = 0.3f, explode = 3.5f, explodeDamage = 4.5f, model = "Enemy_bomb" },
         new EnemyType { name = "Embestidor", biome = 0, color = new Color(0.45f, 0.3f, 0.15f), health = 6f, speed = 3f, damage = 8f, size = 1.1f, firstLevel = 3, weight = 0.25f, chargeRange = 14f, chargeSpeed = 4f, model = "Enemy_charger" },
         // Nieve
-        new EnemyType { name = "Yeti", biome = 1, color = new Color(0.8f, 0.9f, 1f), health = 18f, speed = 3f, damage = 10f, size = 1.5f, reward = 3, weight = 0.2f, regen = 3f, model = "Enemy_yeti" },
-        new EnemyType { name = "Lobo", biome = 1, color = new Color(0.45f, 0.5f, 0.55f), health = 1.5f, speed = 9f, damage = 2f, size = 0.6f, weight = 0.2f, pack = 4, model = "Enemy_wolf", flies = true },
+        new EnemyType { name = "Yeti", biome = 1, color = new Color(0.8f, 0.9f, 1f), health = 18f, speed = 3f, damage = 10f, size = 1.5f, reward = 3, firstLevel = 5, weight = 0.2f, regen = 3f, model = "Enemy_yeti" },
+        new EnemyType { name = "Lobo", biome = 1, color = new Color(0.45f, 0.5f, 0.55f), health = 1.5f, speed = 9f, damage = 2f, size = 0.6f, firstLevel = 2, weight = 0.2f, pack = 4, model = "Enemy_wolf", flies = true },
         // Jungla
-        new EnemyType { name = "Nido", biome = 2, color = new Color(0.1f, 0.3f, 0.1f), health = 10f, speed = 3f, damage = 6f, size = 1.4f, reward = 2, weight = 0.25f, split = 3, model = "Enemy_nest" },
-        new EnemyType { name = "Escupidor", biome = 2, color = new Color(0.6f, 1f, 0.2f), health = 4f, speed = 4f, damage = 3f, size = 0.9f, weight = 0.25f, ranged = 12f, interval = 1.5f, model = "Enemy_spitter" },
+        new EnemyType { name = "Nido", biome = 2, color = new Color(0.1f, 0.3f, 0.1f), health = 10f, speed = 3f, damage = 6f, size = 1.4f, reward = 2, firstLevel = 4, weight = 0.25f, split = 3, model = "Enemy_nest" },
+        new EnemyType { name = "Escupidor", biome = 2, color = new Color(0.6f, 1f, 0.2f), health = 4f, speed = 4f, damage = 3f, size = 0.9f, firstLevel = 6, weight = 0.25f, ranged = 12f, interval = 1.5f, model = "Enemy_spitter" },
         // Volcán
-        new EnemyType { name = "Pez volador", biome = 3, color = new Color(0.2f, 0.85f, 0.95f), health = 2f, speed = 9f, damage = 2f, size = 0.6f, weight = 0.3f, pack = 3, model = "Enemy_fish", flies = true },
-        new EnemyType { name = "Boya mina", biome = 3, color = new Color(0.95f, 0.3f, 0.2f), health = 7f, speed = 3f, damage = 5f, size = 1.1f, weight = 0.22f, explode = 3f, explodeDamage = 7f, model = "Enemy_buoy" },
+        new EnemyType { name = "Pez volador", biome = 3, color = new Color(0.2f, 0.85f, 0.95f), health = 2f, speed = 9f, damage = 2f, size = 0.6f, firstLevel = 2, weight = 0.3f, pack = 3, model = "Enemy_fish", flies = true },
+        new EnemyType { name = "Boya mina", biome = 3, color = new Color(0.95f, 0.3f, 0.2f), health = 7f, speed = 3f, damage = 5f, size = 1.1f, firstLevel = 3, weight = 0.22f, explode = 3f, explodeDamage = 7f, model = "Enemy_buoy" },
 
-        new EnemyType { name = "Gólem", biome = 4, color = new Color(0.35f, 0.05f, 0.02f), health = 25f, speed = 2f, damage = 15f, size = 1.8f, reward = 4, weight = 0.2f, armor = 1f, model = "Enemy_golem" },
-        new EnemyType { name = "Diablillo", biome = 4, color = new Color(1f, 0.1f, 0.1f), health = 3f, speed = 9f, damage = 3f, size = 0.6f, weight = 0.35f, explode = 2.5f, explodeDamage = 5f, slowImmune = true, model = "Enemy_imp", flies = true },
+        new EnemyType { name = "Gólem", biome = 4, color = new Color(0.35f, 0.05f, 0.02f), health = 25f, speed = 2f, damage = 15f, size = 1.8f, reward = 4, firstLevel = 6, weight = 0.2f, armor = 1f, model = "Enemy_golem" },
+        new EnemyType { name = "Diablillo", biome = 4, color = new Color(1f, 0.1f, 0.1f), health = 3f, speed = 9f, damage = 3f, size = 0.6f, firstLevel = 2, weight = 0.35f, explode = 2.5f, explodeDamage = 5f, slowImmune = true, model = "Enemy_imp", flies = true },
+        // Ciudad, taken by invaders: a bestiary of its own (OwnBestiary), none of the ones from everywhere (Tools/make_mechs.py, in the invaders' colours)
+        new EnemyType { name = "Invasor", biome = 5, color = new Color(0.45f, 0.85f, 0.3f), health = 3f, speed = 4f, damage = 5f, size = 1f, weight = 1f, model = "Enemy_invader", flies = true },
+        new EnemyType { name = "Rasante", biome = 5, color = new Color(0.55f, 0.25f, 0.85f), health = 2f, speed = 8.5f, damage = 3f, size = 0.7f, firstLevel = 3, weight = 0.5f, model = "Enemy_skimmer", flies = true },
+        new EnemyType { name = "Enjambre", biome = 5, color = new Color(0.45f, 0.85f, 0.3f), health = 3f, speed = 8f, damage = 3f, size = 0.7f, firstLevel = 4, weight = 0.3f, pack = 3, model = "Enemy_gang" },
+        new EnemyType { name = "Aplastador", biome = 5, color = new Color(0.7f, 0.73f, 0.8f), health = 12f, speed = 2.5f, damage = 12f, size = 1.6f, reward = 3, firstLevel = 5, weight = 0.2f, model = "Enemy_crusher" },
+        new EnemyType { name = "Acorazado", biome = 5, color = new Color(0.72f, 0.75f, 0.82f), health = 18f, speed = 2.5f, damage = 3.5f, size = 1.5f, reward = 4, firstLevel = 8, weight = 0.1f, ranged = 14f, interval = 3.5f, armor = 0.6f, model = "Enemy_armored" },
         // Espacio
-        new EnemyType { name = "Pandillero", biome = 5, color = new Color(1f, 0.85f, 0.1f), health = 3f, speed = 8f, damage = 3f, size = 0.7f, weight = 0.3f, pack = 3, model = "Enemy_gang" },
-        new EnemyType { name = "Blindado", biome = 5, color = new Color(0.2f, 0.25f, 0.35f), health = 22f, speed = 2.5f, damage = 8f, size = 1.5f, reward = 4, weight = 0.2f, ranged = 14f, interval = 2f, armor = 0.8f, model = "Enemy_armored" },
 
-        new EnemyType { name = "Fantasma", biome = 6, color = new Color(0.7f, 1f, 1f), health = 6f, speed = 3f, damage = 8f, size = 1f, weight = 0.3f, blink = 7f, interval = 2f, model = "Enemy_ghost", flies = true },
-        new EnemyType { name = "Dron sanador", biome = 6, color = new Color(1f, 0.5f, 0.8f), health = 8f, speed = 3.5f, damage = 2f, size = 0.8f, reward = 2, weight = 0.2f, heal = 4f, healRadius = 7f, interval = 0.5f, model = "Enemy_healer", flies = true },
+        new EnemyType { name = "Fantasma", biome = 6, color = new Color(0.7f, 1f, 1f), health = 6f, speed = 3f, damage = 8f, size = 1f, firstLevel = 3, weight = 0.3f, blink = 7f, interval = 2f, model = "Enemy_ghost", flies = true },
+        new EnemyType { name = "Dron sanador", biome = 6, color = new Color(1f, 0.5f, 0.8f), health = 8f, speed = 3.5f, damage = 2f, size = 0.8f, reward = 2, firstLevel = 5, weight = 0.2f, heal = 4f, healRadius = 7f, interval = 0.5f, model = "Enemy_healer", flies = true },
         // Planeta alienígena
-        new EnemyType { name = "Colmena", biome = 7, color = new Color(0.4f, 0.5f, 0.1f), health = 30f, speed = 1.5f, damage = 10f, size = 2f, reward = 5, weight = 0.15f, spawner = true, interval = 2.5f, model = "Enemy_hive" },
-        new EnemyType { name = "Saboteador", biome = 7, color = new Color(0f, 0.6f, 0.6f), health = 5f, speed = 7f, damage = 2f, size = 0.8f, weight = 0.3f, stun = 5f, model = "Enemy_saboteur", flies = true },
+        new EnemyType { name = "Colmena", biome = 7, color = new Color(0.4f, 0.5f, 0.1f), health = 30f, speed = 1.5f, damage = 10f, size = 2f, reward = 5, firstLevel = 7, weight = 0.15f, spawner = true, interval = 2.5f, model = "Enemy_hive" },
+        new EnemyType { name = "Saboteador", biome = 7, color = new Color(0f, 0.6f, 0.6f), health = 5f, speed = 7f, damage = 2f, size = 0.8f, firstLevel = 3, weight = 0.3f, stun = 5f, model = "Enemy_saboteur", flies = true },
         // Fortaleza alienígena
-        new EnemyType { name = "Centinela", biome = 8, color = new Color(0.5f, 0.55f, 0.6f), health = 15f, speed = 3f, damage = 5f, size = 1.2f, reward = 3, weight = 0.3f, ranged = 16f, interval = 1.2f, armor = 1f, model = "Enemy_sentinel" },
-        new EnemyType { name = "Coloso", biome = 8, color = new Color(0.1f, 0.1f, 0.12f), health = 60f, speed = 2f, damage = 25f, size = 2.5f, reward = 8, weight = 0.12f, explode = 6f, explodeDamage = 15f, chargeRange = 10f, chargeSpeed = 2.5f, model = "Enemy_colossus" },
+        new EnemyType { name = "Centinela", biome = 8, color = new Color(0.5f, 0.55f, 0.6f), health = 15f, speed = 3f, damage = 5f, size = 1.2f, reward = 3, firstLevel = 8, weight = 0.3f, ranged = 16f, interval = 1.2f, armor = 1f, model = "Enemy_sentinel" },
+        new EnemyType { name = "Coloso", biome = 8, color = new Color(0.1f, 0.1f, 0.12f), health = 60f, speed = 2f, damage = 25f, size = 2.5f, reward = 8, firstLevel = 10, weight = 0.12f, explode = 6f, explodeDamage = 15f, chargeRange = 10f, chargeSpeed = 2.5f, model = "Enemy_colossus" },
     };
+
+    // A biome with a bestiary of its own gets none of the enemies from everywhere: the city looks nothing like the desert.
+    static bool OwnBestiary(int biome) => biome == 5;
+    static bool Here(EnemyType t, int biome) => t.biome == biome || (t.biome < 0 && !OwnBestiary(biome));
+    // The biome's commonest enemy: what a wave always brings, and what comes when nothing else can.
+    EnemyType RankAndFile => System.Array.Find(Types, t => t.weight >= 1f && Here(t, train.Biome)) ?? Types[0];
 
     // Floating goods, one per kind of cargo. Not enemies: they drift by, ignore the train, and only the hero can break them.
     public static readonly EnemyType[] Loot =
@@ -311,7 +323,7 @@ public class Combat : MonoBehaviour
     public void Drop(Vector3 at, int count)
     {
         for (int i = 0; i < count; i++)
-            Add(Types[0], at + new Vector3(Random.Range(-2.5f, 2.5f), 0f, Random.Range(-2.5f, 2.5f)));
+            Add(RankAndFile, at + new Vector3(Random.Range(-2.5f, 2.5f), 0f, Random.Range(-2.5f, 2.5f)));
     }
 
     // Everyone off the field at once (not a boss's or the rival's own pieces): the duel is fought alone.
@@ -1034,12 +1046,12 @@ public class Combat : MonoBehaviour
     {
         int biome = train.Biome;
         // The big ones are as many as ever, so they take a smaller share of the many more spawns; a horde has none.
-        float Share(EnemyType t) => t.firstLevel > level || (t.biome >= 0 && t.biome != biome) || (roster.Count > 0 && !roster.Contains(t)) ? 0f
+        float Share(EnemyType t) => t.firstLevel > level || !Here(t, biome) || (roster.Count > 0 && !roster.Contains(t)) ? 0f
             : t.Fodder ? t.weight : horde > 0 ? 0f : t.weight / Crowd;
         float total = 0f;
         foreach (EnemyType t in Types) total += Share(t);
         float roll = Random.value * total;
-        EnemyType type = Types[0];
+        EnemyType type = RankAndFile;
         foreach (EnemyType t in Types)
         {
             if (Share(t) <= 0f) continue;
@@ -1173,10 +1185,10 @@ public class Combat : MonoBehaviour
         float side = Random.value < 0.5f ? -1f : 1f;
         Vector3 across = Vector3.Cross(Vector3.up, along) * side, start = train.Focus + across * RingRadius();
         int biome = train.Biome;
-        var pool = System.Array.FindAll(Types, t => t.Fodder && t.firstLevel <= level && (t.biome < 0 || t.biome == biome));
+        var pool = System.Array.FindAll(Types, t => t.Fodder && t.firstLevel <= level && Here(t, biome));
         for (int i = 0; i < count; i++)
         {
-            EnemyType type = Variant(pool.Length > 0 ? pool[Random.Range(0, pool.Length)] : Types[0], RollTier());
+            EnemyType type = Variant(pool.Length > 0 ? pool[Random.Range(0, pool.Length)] : RankAndFile, RollTier());
             Enemy e = Add(type, start + across * Random.Range(0f, 12f) + along * Random.Range(-14f, 14f));
             e.pick |= 1;
             e.punch = Mathf.Min(3f, 1.2f + 0.12f * level); // harder with the difficulty (soft early: the first one comes with two wagons)

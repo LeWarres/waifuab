@@ -385,6 +385,7 @@ public class Hud : MonoBehaviour
 
     void LateUpdate()
     {
+        canvas.enabled = !train.Racing; // the race has a board of its own
         if (train.UltimatePresenting) return;
         Evolutions();
         float zoom = Camera.main.orthographicSize;

@@ -1577,28 +1577,32 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655766
-    m_Localized: 'Onini and her C-279 fell behind, smoking in the sand. First round
-      of the Train Ranking: done.'
+    m_Localized: Bleeeh! That is what you get for trying to leave me behind, Onini.
+      Still... I never thought fighting other train drivers would be this tough.
+      I almost miss my wrestling matches.
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655767
-    m_Localized: 'The man in black called to congratulate me. He sounded like someone
-      who never expected me to win. Next stop: the city.'
+    m_Localized: 'I earned the right to pull a face from my cab. But there is no
+      time to rest: the radio just announced a change of plans, and I have to head
+      for the city. Right now!'
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655768
-    m_Localized: 'The city. Skyscrapers, billboards and elevated tracks everywhere.
-      Here the robots don''t come from the desert: they crawl out of the alleys.'
+    m_Localized: 'The radio says this is now a race for the final departure: the
+      only train they can still launch straight into space will leave from the city.
+      If I want aboard, I have to get there before the others.'
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655769
-    m_Localized: Cerebron is waiting in his R-2D-2, an armoured train with more guns
-      than windows. They say he thinks too much. I'd rather speed up.
+    m_Localized: This is our last chance to leave this planet and complete the mission.
+      And my chance to get my ship back and go home. I can already see the city in
+      the distance... Come on, RicMar, do not let me down now!
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655770
-    m_Localized: The R-2D-2 stopped halfway across the bridge, its armour dented.
-      Cerebron muttered something about odds. He forgot to factor in my stubbornness.
+    m_Localized: As expected, I won the race and left everyone behind. It is not
+      my first time in space, but it is the first in many years.
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655771
@@ -2353,6 +2357,1471 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4553404363124736
     m_Localized: '{0} (kept) up to Lv {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684437913600
+    m_Localized: INTAKE OFFICER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662336
+    m_Localized: Sorry to bother you, but the alien attacks mean we must run a questionnaire.
+      Just five questions; any human should be able to answer correctly. Three mistakes
+      and I will have to arrest you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662337
+    m_Localized: "Question {0}/5  \xB7  Mistakes {1}/3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662338
+    m_Localized: Start questionnaire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662339
+    m_Localized: Try again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662340
+    m_Localized: YOU ARE UNDER ARREST!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662341
+    m_Localized: Enjoy your stay in the city!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662342
+    m_Localized: Inspection passed. You are cleared to enter the city.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662343
+    m_Localized: Three mistakes. Come with me, and keep your tentacles to yourself.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662344
+    m_Localized: Answer accepted. Your humanity seems slightly more plausible.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662345
+    m_Localized: Suspicious answer. That goes on your record.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662346
+    m_Localized: 'Arrows / stick: choose   Enter / X: accept'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662347
+    m_Localized: 'What does wet soil smell like?
+
+      Hydrogen and helium
+
+      The
+      caves of Farflax
+
+      Wet soil
+
+      The wells of Flakr'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662348
+    m_Localized: 'How much is a + b = 120?
+
+      Why are there letters in math?
+
+      a
+      = 100, b = 20
+
+      The question is incomplete
+
+      24!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662349
+    m_Localized: 'Who is Nikola Tesla?
+
+      A Friobonite
+
+      The conqueror of
+      Earth
+
+      Some KarsdaXhian''s husband
+
+      The inventor of the sandwich'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662350
+    m_Localized: 'On a clear day, what color is the sky usually?
+
+      Strawberry
+      flavor
+
+      Blue
+
+      Transparent with tentacles
+
+      The color of my
+      debts'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662351
+    m_Localized: 'How many fingers does a human hand usually have?
+
+      Five
+
+      Depends
+      on the moon
+
+      Twelve and an antenna
+
+      I rented mine out'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662352
+    m_Localized: 'What sound does a cat make?
+
+      Tax declarations
+
+      Glorp
+
+      The
+      anthem of Farflax
+
+      Meow'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662353
+    m_Localized: 'How many days are in a week?
+
+      One work eternity
+
+      Forty
+
+      Seven
+
+      Only
+      Friday counts'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662354
+    m_Localized: 'A traffic light is red. What do you do?
+
+      Stop
+
+      Challenge
+      it to wrestle
+
+      Speed up out of pride
+
+      Give it a carrot'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662355
+    m_Localized: 'What is Earth''s natural satellite called?
+
+      Mr. Round
+
+      The
+      Moon
+
+      Station Three
+
+      My ex'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662356
+    m_Localized: 'You are thirsty. What should you drink?
+
+      Engine oil
+
+      Liquid
+      sand
+
+      A contract
+
+      Water'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662357
+    m_Localized: 'What opens an ordinary lock?
+
+      A speech
+
+      A cucumber
+
+      The
+      right key
+
+      The emperor''s will'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662358
+    m_Localized: 'What is 2 + 2?
+
+      A swarm
+
+      4
+
+      22 tentacles
+
+      A
+      military secret'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662359
+    m_Localized: 'What is the opposite of cold?
+
+      Hot
+
+      Tuesday
+
+      Having
+      antennae
+
+      Cold with a mustache'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662360
+    m_Localized: 'Where do you normally see the Sun?
+
+      In soup
+
+      In my
+      pocket
+
+      At the fines office
+
+      In the sky'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662361
+    m_Localized: 'What is bread usually made with?
+
+      Meteor dust
+
+      Flour
+
+      Soft
+      screws
+
+      Ground-up hopes'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662362
+    m_Localized: 'What is your nose for?
+
+      Changing channels
+
+      Storing
+      tickets
+
+      Smelling
+
+      Pointing north'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662363
+    m_Localized: 'How many legs does a human usually have?
+
+      Two
+
+      One
+      per contract
+
+      Eight in high season
+
+      That is confidential'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662364
+    m_Localized: 'What does a train usually run on?
+
+      Rumors
+
+      Jelly
+
+      Its
+      self-esteem
+
+      Rails'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662365
+    m_Localized: 'What do you use an umbrella for?
+
+      Frying eggs
+
+      Keeping
+      rain off
+
+      Calling Saturn
+
+      Milking robots'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662366
+    m_Localized: 'What happens when ice gets warm?
+
+      It requests vacation
+
+      It
+      becomes mayor
+
+      It melts
+
+      It learns karate'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662367
+    m_Localized: 'Which fruit is yellow and long?
+
+      A sad screw
+
+      A cloud
+
+      A
+      ripe fine
+
+      A banana'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662368
+    m_Localized: 'What usually wakes you at a chosen time?
+
+      An alarm clock
+
+      A
+      polite rock
+
+      A black hole
+
+      My confiscated ship'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662369
+    m_Localized: 'What sound does a dog make?
+
+      It recites laws
+
+      Woof
+
+      A
+      microwave beep
+
+      The Wi-Fi password'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662370
+    m_Localized: 'What do you usually eat soup with?
+
+      A stapler
+
+      A ticket
+
+      A
+      spoon
+
+      Pure telepathy'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662371
+    m_Localized: 'What are ears for?
+
+      Holding antennae
+
+      Measuring taxes
+
+      Inflating
+      balloons
+
+      Hearing'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662372
+    m_Localized: 'What does a human normally breathe?
+
+      Air
+
+      Mayonnaise
+
+      Metal
+      shavings
+
+      An inspector''s fear'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662373
+    m_Localized: 'What are 60 minutes equal to?
+
+      Three tentacles
+
+      One
+      hour
+
+      Two sandwiches
+
+      An eternal debt'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662374
+    m_Localized: 'What do you wash your hands with?
+
+      Paint
+
+      Gamma rays
+
+      Water
+      and soap
+
+      Forms'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662375
+    m_Localized: 'What does seawater usually taste like?
+
+      A socket
+
+      Monday
+
+      A
+      new battery
+
+      Salty'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662376
+    m_Localized: 'What helps an ordinary plant grow?
+
+      Water and sunlight
+
+      Insults
+      in Farflaxian
+
+      A pilot''s license
+
+      Screws'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662377
+    m_Localized: 'What is 10 minus 3?
+
+      Thirty antennae
+
+      An expired license
+
+      7
+
+      Two
+      and a half planets'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662378
+    m_Localized: 'Where does a shoe go?
+
+      On an antenna
+
+      On a foot
+
+      On
+      public opinion
+
+      In the secret pocket'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662379
+    m_Localized: 'What do you normally use to read a printed book?
+
+      The train''s
+      exhaust
+
+      A potato
+
+      Your belly button
+
+      Your eyes'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662380
+    m_Localized: 'What day comes after Monday?
+
+      Tuesday
+
+      Monday Two:
+      Revenge
+
+      Invasion day
+
+      February'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662381
+    m_Localized: 'Why is a wheel usually round?
+
+      To hide taxes
+
+      It hates
+      corners
+
+      So it can roll
+
+      Square ones charge more'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662382
+    m_Localized: 'What is a language''s set of letters called?
+
+      Today''s menu
+
+      The
+      alphabet
+
+      The scribble union
+
+      The imperial password'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662383
+    m_Localized: 'What do bees produce?
+
+      Space oil
+
+      Fines
+
+      Internet
+
+      Honey'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662384
+    m_Localized: 'Where does a fish normally live?
+
+      In water
+
+      In a printer
+
+      In
+      the Sun''s minibar
+
+      In human resources'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662385
+    m_Localized: 'What do you switch on to see in the dark?
+
+      A debt
+
+      A
+      sandwich
+
+      A flashlight
+
+      A sad form'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662386
+    m_Localized: 'Where does a person usually sleep at home?
+
+      In the toaster
+
+      In
+      a bed
+
+      In the fuel tank
+
+      In a stable orbit'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662387
+    m_Localized: 'If you are hungry, what do you need?
+
+      A license plate
+
+      A
+      comet
+
+      An antenna upgrade
+
+      Food'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662388
+    m_Localized: 'You have no train ticket. What should you do?
+
+      Buy one
+
+      Eat
+      the conductor
+
+      Declare yourself luggage
+
+      Travel by telepathy'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662389
+    m_Localized: 'Your train must stop at the station. What do you use?
+
+      Jam
+
+      Your
+      mental horn
+
+      The brakes
+
+      The gravity of your ego'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662390
+    m_Localized: 'What is the opposite of wet?
+
+      With a receipt
+
+      Dry
+
+      Thursday-colored
+
+      Double
+      tentacle'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662391
+    m_Localized: 'What color is clean snow usually?
+
+      Invisible with stripes
+
+      Permit-colored
+
+      Tax
+      purple
+
+      White'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662392
+    m_Localized: 'How many months are in an Earth year?
+
+      Twelve
+
+      As many
+      as I buy
+
+      Forty and a cucumber
+
+      Only invasion season'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662393
+    m_Localized: 'Someone gives you a gift. What is polite to say?
+
+      I demand
+      an invasion
+
+      Update my firmware
+
+      Thank you
+
+      Give back my
+      antennae'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662394
+    m_Localized: 'How many sides does a triangle have?
+
+      Two when nobody looks
+
+      Three
+
+      Eight
+      on Farflax
+
+      As many as the government allows'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662395
+    m_Localized: 'The officer asks for your papers. What do you hand over?
+
+      A
+      meteor
+
+      Flakr''s grandmother
+
+      A hedgehog in a tie
+
+      My documents'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4679684475662396
+    m_Localized: 'What happens if you miss three questions here?
+
+      I get a free
+      planet
+
+      I become a premium human
+
+      I am under arrest
+
+      The
+      officer owes me ice cream'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4684541748129792
+    m_Localized: OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479809953792
+    m_Localized: "IMMIGRATION CONTROL \xB7 FARFLAX"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702528
+    m_Localized: Sorry to bother you. With so many human infiltrators, we must ask
+      five questions. Any alien will know the answers. Three mistakes mean arrest.
+      Relax your antennas.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702529
+    m_Localized: Enjoy our planet! And don't feed the streetlights.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702530
+    m_Localized: Entry authorized. Your antennas seem legal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702531
+    m_Localized: 'What does Farflax''s wet soil smell like?
+
+      Grandma''s antenna
+      soup
+
+      Wet soil
+
+      Rain
+
+      A garden'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702532
+    m_Localized: 'How many hearts do you take to work?
+
+      One
+
+      Three and
+      a spare
+
+      Just mine
+
+      I don''t count them'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702533
+    m_Localized: 'How do you greet your neighbor?
+
+      Say good morning
+
+      Shake
+      hands
+
+      Bumping tax antennas
+
+      Wave'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702534
+    m_Localized: 'What does a responsible larva eat for breakfast?
+
+      Cereal
+
+      Toast
+
+      Eggs
+
+      Bolts
+      with meteor milk'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702535
+    m_Localized: 'How do you breathe during a meeting?
+
+      Through emergency knees
+
+      Through
+      my nose
+
+      Through my mouth
+
+      Through both'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702536
+    m_Localized: 'What do you do with a headache?
+
+      Rest
+
+      Unscrew my spare
+      head
+
+      Drink water
+
+      See a doctor'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702537
+    m_Localized: 'What is two plus two?
+
+      Four
+
+      4
+
+      Four tentacles
+      plus tax
+
+      Twice two'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702538
+    m_Localized: 'Where do you keep your memories?
+
+      In my memory
+
+      In
+      photos
+
+      In a diary
+
+      In a jar of municipal slime'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702539
+    m_Localized: 'What does a red traffic light mean?
+
+      Time to shed your skin
+
+      Stop
+
+      Wait
+
+      Do
+      not cross'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702540
+    m_Localized: 'How do you pay for a ticket?
+
+      With coins
+
+      Seven certified
+      burps
+
+      With a card
+
+      With cash'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702541
+    m_Localized: 'What falls when it rains here?
+
+      Water
+
+      Drops
+
+      Nebula
+      jam
+
+      Rain'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702542
+    m_Localized: 'Why do we have two moons?
+
+      They are natural satellites
+
+      Because
+      of gravity
+
+      Because of their orbits
+
+      One is the mayor''s egg'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702543
+    m_Localized: 'What do you do with your shadow?
+
+      Walk it on a leash on Thursdays
+
+      Nothing
+
+      Walk
+      with it
+
+      Stay out of the sun'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702544
+    m_Localized: 'How do you wash a tentacle?
+
+      With soap
+
+      Lick it with
+      your third belly button
+
+      With water
+
+      With a sponge'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702545
+    m_Localized: 'What do you eat when hungry?
+
+      Food
+
+      A sandwich
+
+      A
+      plasma-stuffed yawn
+
+      Fruit'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702546
+    m_Localized: 'When do you renew your antennas?
+
+      Never, I have none
+
+      When
+      they break
+
+      At the doctor''s
+
+      Every cheese eclipse'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702547
+    m_Localized: 'Who drives the train at night?
+
+      My night-shift brain
+
+      The
+      train driver
+
+      A woman driver
+
+      A man driver'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702548
+    m_Localized: 'Where do babies sleep?
+
+      In a crib
+
+      In the living-sock
+      incubator
+
+      In a bed
+
+      With their parents'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702549
+    m_Localized: 'What if you lose a hand?
+
+      Ask for help
+
+      Go to the hospital
+
+      Wait
+      until it returns from recess
+
+      Call an ambulance'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702550
+    m_Localized: 'What color is the normal sky?
+
+      Blue
+
+      Light blue
+
+      Gray
+
+      Fermented
+      Tuesday'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702551
+    m_Localized: 'What do you say after a sneeze?
+
+      May your parasite bloom!
+
+      Bless
+      you
+
+      Sorry
+
+      Excuse me'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702552
+    m_Localized: 'How do you make tea?
+
+      Boil water
+
+      Scare water until
+      it sings
+
+      Use a teapot
+
+      Add a tea bag'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702553
+    m_Localized: 'What do you do on your birthday?
+
+      Blow out candles
+
+      Eat
+      cake
+
+      Count my mucus rings
+
+      Receive gifts'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702554
+    m_Localized: 'Where is your identity document?
+
+      In my wallet
+
+      In
+      my pocket
+
+      In my bag
+
+      Tattooed on my seventh eyelid'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702555
+    m_Localized: 'What is a human?
+
+      A tax-paying cucumber
+
+      A person
+
+      A
+      human being
+
+      A mammal'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702556
+    m_Localized: 'How do you detect a lie?
+
+      Listen carefully
+
+      My left
+      antenna inflates
+
+      Look for proof
+
+      Ask questions'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702557
+    m_Localized: 'What do you do when yawning?
+
+      Cover my mouth
+
+      Breathe
+      deeply
+
+      Close my palate portal
+
+      Stretch my jaw'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702558
+    m_Localized: 'What goes on a classic pizza?
+
+      Cheese
+
+      Tomato
+
+      Dough
+
+      Judgmental
+      olive eyes'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702559
+    m_Localized: 'How do you call your mother?
+
+      Belly-button telepathy
+
+      By
+      phone
+
+      Send her a message
+
+      By her name'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702560
+    m_Localized: 'What is a chair for?
+
+      Sitting
+
+      Resting my nine knees
+
+      Resting
+
+      Taking
+      a seat'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702561
+    m_Localized: 'What do you do when cold?
+
+      Dress warmly
+
+      Use a blanket
+
+      Turn
+      on my armpit reactor
+
+      Put on a sweater'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702562
+    m_Localized: 'What do you call the station chief?
+
+      The supervisor
+
+      The
+      boss
+
+      The manager
+
+      Their Tentacular Stickiness'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702563
+    m_Localized: 'What is in your suitcase?
+
+      My spare skeleton
+
+      Clothes
+
+      Shoes
+
+      Toiletries'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702564
+    m_Localized: 'How do you cross a river?
+
+      Over a bridge
+
+      Ask the notary
+      fish for permission
+
+      In a boat
+
+      By swimming'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702565
+    m_Localized: 'What do you write with?
+
+      A pencil
+
+      A ballpoint pen
+
+      A
+      unionized ink worm
+
+      A fountain pen'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702566
+    m_Localized: 'What is the national sport?
+
+      Soccer
+
+      Basketball
+
+      Athletics
+
+      Zero-gravity
+      grandma throwing'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702567
+    m_Localized: 'What is your pet''s name?
+
+      Glorious Devourer of Bills
+
+      Buddy
+
+      Luna
+
+      Max'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702568
+    m_Localized: 'What do you do when late?
+
+      Apologize
+
+      Blame my punctual
+      clone
+
+      Let someone know
+
+      Hurry'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702569
+    m_Localized: 'What shape is a wheel?
+
+      Round
+
+      Circular
+
+      Whatever
+      the Circle Ministry orders
+
+      A circle'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702570
+    m_Localized: 'What is inside an egg?
+
+      A yolk
+
+      Egg white
+
+      A
+      chick
+
+      A trainee egg inspector'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702571
+    m_Localized: 'How do wounds heal?
+
+      Kisses from a licensed slug
+
+      Medical
+      care
+
+      With a bandage
+
+      With disinfectant'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702572
+    m_Localized: 'What if the power goes out?
+
+      Turn on a flashlight
+
+      Wind
+      up my pocket sun
+
+      Find a candle
+
+      Check the fuses'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702573
+    m_Localized: 'How many days are in a week?
+
+      Seven
+
+      7
+
+      Six and
+      an administrative appendix
+
+      Monday through Sunday'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702574
+    m_Localized: 'Who invented the sandwich?
+
+      The Earl of Sandwich
+
+      A
+      cook
+
+      A hungry person
+
+      The Duke of Two Living Slices'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702575
+    m_Localized: 'How do you listen to the radio?
+
+      Set antennas to gossip mode
+
+      With
+      ears
+
+      Through a speaker
+
+      With headphones'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702576
+    m_Localized: 'What do you do with garbage?
+
+      Put it in a bin
+
+      Send
+      it to study on Earth
+
+      Recycle it
+
+      Sort it'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702577
+    m_Localized: 'What does being in love mean?
+
+      Feeling love
+
+      Loving
+      someone
+
+      Your parasites hold hands
+
+      Having feelings'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702578
+    m_Localized: 'How do you request a vacation?
+
+      Fill out a form
+
+      Talk
+      to my boss
+
+      Ask for days off
+
+      Shed skin and leave my clone'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702579
+    m_Localized: 'What is a seat belt for?
+
+      Keeping my second torso from escaping
+
+      Protecting
+      me
+
+      Preventing injuries
+
+      Holding me in place'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4693479847702580
+    m_Localized: 'What do you say after the checkpoint?
+
+      Thank you
+
+      Glory
+      to the great intergalactic flan!
+
+      See you later
+
+      Have a nice day'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078417928192
+    m_Localized: I thought this would be easy, but I forgot that junk is always falling
+      from space. I'd better dodge it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482624
+    m_Localized: All right, now to find that space railway.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482625
+    m_Localized: Three collisions... We're not reaching space like this. I'll have
+      to try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482626
+    m_Localized: Begin ascent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482627
+    m_Localized: ASCENT FAILED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482628
+    m_Localized: COLLISIONS  {0} / 3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482629
+    m_Localized: ASCENT  {0}%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482630
+    m_Localized: "WASD / Arrows / Stick: dodge     \xB7     Esc / Start: pause"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482631
+    m_Localized: PAUSED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482632
+    m_Localized: Dodge garbage, scrap and satellites. Three collisions mean another
+      attempt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4697078451482633
+    m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315238486016
+    m_Localized: Radio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429056
+    m_Localized: 'The radio just announced it: the launcher only has power left to
+      send one more locomotive into space. Now it is a race to get there first!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429057
+    m_Localized: GO!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429058
+    m_Localized: '{0} / {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429059
+    m_Localized: '{0} km/h'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429060
+    m_Localized: Engine overheated!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429061
+    m_Localized: "R2/W throttle \xB7 \u2715/Shift turbo \xB7 \u25A1/S brake (steering:
+      drift) \xB7 stick/A-D steer \xB7 L1/R1/Q/E shove"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429062
+    m_Localized: First! Your locomotive rides up the launcher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429063
+    m_Localized: '{0} got there first and was launched into space'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429064
+    m_Localized: Race lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4698315280429065
+    m_Localized: You lost the race to the launcher. Try again?
     m_Metadata:
       m_Items: []
   references:
