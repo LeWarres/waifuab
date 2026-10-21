@@ -113,9 +113,9 @@ public class Combat : MonoBehaviour
     static readonly (float size, float health, float damage, int reward, Color tint)[] Tiers =
     {
         (1f, 1f, 1f, 1, Color.white),
-        (1.3f, 2.5f, 1.4f, 2, new Color(0.45f, 0.8f, 1.9f)),
-        (1.7f, 6f, 2f, 4, new Color(1.9f, 0.3f, 0.35f)),
-        (2.1f, 14f, 3f, 8, new Color(2.2f, 1.6f, 0.25f)),
+        (1.3f, 2.5f, 1.2f, 2, new Color(0.45f, 0.8f, 1.9f)),
+        (1.7f, 6f, 1.5f, 4, new Color(1.9f, 0.3f, 0.35f)),
+        (2.1f, 14f, 2.2f, 8, new Color(2.2f, 1.6f, 0.25f)),
     };
     readonly Dictionary<(EnemyType, int), EnemyType> variants = new();
     EnemyType Variant(EnemyType type, int tier)
@@ -158,7 +158,7 @@ public class Combat : MonoBehaviour
         open.Sort((a, b) => b.firstLevel.CompareTo(a.firstLevel)); // the newest first, then at random
         if (open[0].firstLevel > 0 && open[0].firstLevel >= level - 3) { roster.Add(open[0]); open.RemoveAt(0); }
         while (roster.Count < 3 && open.Count > 0) { int k = Random.Range(0, open.Count); roster.Add(open[k]); open.RemoveAt(k); }
-        if (roster.Count < 2) roster.Add(Types[0]); // the rank and file only when little else is open: each wave its own faces
+        roster.Add(Types[0]); // the rank and file always come too: waves without them hit far harder early on
     }
 
     static readonly EnemyType Larva = new EnemyType { name = "Larva", color = new Color(0.7f, 0.9f, 0.3f), health = 1.5f, speed = 7f, damage = 2f, size = 0.5f, model = "Enemy_larva" };
@@ -169,7 +169,7 @@ public class Combat : MonoBehaviour
     // from the wagons. Shot down, it drops a chest (TrainSim.OpenChest).
     static readonly EnemyType MiniBoss = new EnemyType
     {
-        name = "MiniBoss", color = new Color(1f, 0.72f, 0.15f), health = 40f, speed = 2.6f, damage = 11f, size = 2.8f,
+        name = "MiniBoss", color = new Color(1f, 0.72f, 0.15f), health = 40f, speed = 2.6f, damage = 8f, size = 2.8f,
         reward = 40, armor = 1f, slowImmune = true,
         model = "Enemy_miniboss", // Tools/make_mechs.py
     };
@@ -177,13 +177,13 @@ public class Combat : MonoBehaviour
     // fight in every other way.
     static readonly EnemyType MiniDemon = new EnemyType
     {
-        name = "MiniBoss", color = new Color(1f, 0.72f, 0.15f), health = 40f, speed = 2.6f, damage = 11f, size = 2.8f,
+        name = "MiniBoss", color = new Color(1f, 0.72f, 0.15f), health = 40f, speed = 2.6f, damage = 8f, size = 2.8f,
         reward = 40, armor = 1f, slowImmune = true,
         model = "Enemy_demon", flies = true,
     };
     static bool IsMiniBoss(EnemyType t) => t == MiniBoss || t == MiniDemon;
     [System.NonSerialized] public float miniBossEvery = 70f;
-    float miniBossTimer = 120f; // the first comes two minutes in, once the train has a few upgrades to meet it with
+    float miniBossTimer = 170f; // the first comes near three minutes in, once the train has a few upgrades to meet it with
     Enemy miniBoss;
     int miniBossId;
     float miniBossLeft = 1f; // share of its health a withdrawn mini boss comes back with
@@ -200,7 +200,7 @@ public class Combat : MonoBehaviour
         new EnemyType { name = "Rápido", color = new Color(1f, 0.8f, 0.1f), health = 2f, speed = 8f, damage = 3f, size = 0.7f, firstLevel = 2, weight = 0.5f, model = "Enemy_fast", flies = true },
         new EnemyType { name = "Tanque", color = new Color(0.5f, 0.1f, 0.6f), health = 12f, speed = 2.5f, damage = 12f, size = 1.6f, reward = 3, firstLevel = 4, weight = 0.2f, model = "Enemy_brute" }, // Tools/make_brute.py
         // Desierto
-        new EnemyType { name = "Bomba", biome = 0, color = new Color(1f, 0.3f, 0.1f), health = 4f, speed = 5f, damage = 4f, size = 0.9f, firstLevel = 1, weight = 0.3f, explode = 3.5f, explodeDamage = 8f, model = "Enemy_bomb" },
+        new EnemyType { name = "Bomba", biome = 0, color = new Color(1f, 0.3f, 0.1f), health = 4f, speed = 5f, damage = 4f, size = 0.9f, firstLevel = 1, weight = 0.3f, explode = 3.5f, explodeDamage = 4.5f, model = "Enemy_bomb" },
         new EnemyType { name = "Embestidor", biome = 0, color = new Color(0.45f, 0.3f, 0.15f), health = 6f, speed = 3f, damage = 8f, size = 1.1f, firstLevel = 3, weight = 0.25f, chargeRange = 14f, chargeSpeed = 4f, model = "Enemy_charger" },
         // Nieve
         new EnemyType { name = "Yeti", biome = 1, color = new Color(0.8f, 0.9f, 1f), health = 18f, speed = 3f, damage = 10f, size = 1.5f, reward = 3, weight = 0.2f, regen = 3f, model = "Enemy_yeti" },
@@ -468,7 +468,7 @@ public class Combat : MonoBehaviour
     // Stampedes (Vampire Survivors' swarm events): every so often a dense column comes in from one side, straight for
     // the train, none of it turning aside for the hero. They grow with the difficulty.
     [System.NonSerialized] public float stampedeEvery = 45f;
-    [System.NonSerialized] public int stampedeSize = 15, stampedePerLevel = 4, stampedeMax = 90;
+    [System.NonSerialized] public int stampedeSize = 10, stampedePerLevel = 4, stampedeMax = 90;
     float stampedeTimer = 90f; // not before the first upgrades: early on the train has little to stop them with
     int MinOnField => Mathf.Min(maxOnField, minOnField + minPerLevel * level);
     int OnField { get { int n = 0; foreach (Enemy e in enemies) if (!e.type.projectile && e.type.loot < 0) n++; return n; } }
@@ -617,7 +617,7 @@ public class Combat : MonoBehaviour
             if (miniBossLeft >= 1f) miniBossLook = Random.value < 0.5f ? MiniDemon : MiniBoss; // one coming back keeps its look
             miniBoss = Add(miniBossLook, train.Focus + across * RingRadius() + along * Random.Range(-8f, 8f));
             miniBossId = miniBoss.id;
-            miniBoss.maxHp *= 1f + 0.25f * train.Strength; // Vampire Survivors: a boss's health is its base times the player's level
+            miniBoss.maxHp *= 1f + 0.18f * train.Strength; // Vampire Survivors: a boss's health is its base times the player's level
             miniBoss.hp = miniBoss.maxHp * miniBossLeft; // one that withdrew comes back as worn as it went
             miniBossLeft = 1f;
             bossMode = Ram;
@@ -1102,13 +1102,14 @@ public class Combat : MonoBehaviour
             if (to.magnitude <= reach)
             {
                 // The ram: one heavy blow and a shockwave through the wagons beside it, then it backs off a moment.
-                train.Damage(bossWagon, e.type.damage * damageScale);
-                train.DamageArea(train.CarPosition(bossWagon), 7f, e.type.damage * damageScale * 0.35f);
+                float early = Mathf.Min(1f, 0.25f + 0.08f * level); // the first ones come while the train has two wagons
+                train.Damage(bossWagon, e.type.damage * damageScale * early);
+                train.DamageArea(train.CarPosition(bossWagon), 7f, e.type.damage * damageScale * early * 0.35f);
                 Burst("smoke", e.position, 2f);
                 Burst("grenade", train.CarPosition(bossWagon) + Vector3.up, 2.2f);
                 train.Shake(0.4f);
                 bossMode = BackOff;
-                bossModeLeft = 2.2f;
+                bossModeLeft = 3.2f;
             }
             else way = to.normalized * speed * 1.3f; // a charge
         }
@@ -1178,7 +1179,7 @@ public class Combat : MonoBehaviour
             EnemyType type = Variant(pool.Length > 0 ? pool[Random.Range(0, pool.Length)] : Types[0], RollTier());
             Enemy e = Add(type, start + across * Random.Range(0f, 12f) + along * Random.Range(-14f, 14f));
             e.pick |= 1;
-            e.punch = Mathf.Min(3.5f, 2f + 0.1f * level); // harder with the difficulty
+            e.punch = Mathf.Min(3f, 1.2f + 0.12f * level); // harder with the difficulty (soft early: the first one comes with two wagons)
         }
         train.Toast(L10n.T("stampede.warn"));
         train.Shake(0.2f);

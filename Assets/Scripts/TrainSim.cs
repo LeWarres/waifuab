@@ -45,7 +45,7 @@ public class TrainSim : MonoBehaviour
     public float kitHeal = 20f;                         // a kit repairs every standing wagon and the hero, on the road
     public const bool KitsInUse = false;                // medkits are put away for now (not sold, not shown, the button is the ultimate's)
     public int maxKits = 3;
-    [System.NonSerialized] public int wagonCost = 260, wagonCostStep = 140;       // first armed wagon, and how much dearer each next one is
+    [System.NonSerialized] public int wagonCost = 120, wagonCostStep = 100;       // first armed wagon, and how much dearer each next one is
     [System.NonSerialized] public int containerCost = 190, containerCostStep = 95; // same for the permanent cargo wagons
 
     [Header("Track")]
@@ -164,7 +164,7 @@ public class TrainSim : MonoBehaviour
     bool junction, junctionAsked;
     Car truckCar;      // the truck's wagon on this train, if any
     bool truckCarried; // it came from the chapter before: it goes no further
-    public float junctionHard = 28f;   // the junction's truck: a real fight, with this many times the health
+    public float junctionHard = 22f;   // the junction's truck: a real fight, with this many times the health
     Transform junctionLook, lever; // the branch line leaving the track, and the lever at the switch
     float junctionS;               // where along the track the switch is (as the knees: it slides back as the train runs)
     float leverTo;                 // where the lever is thrown to (degrees)
@@ -310,7 +310,7 @@ public class TrainSim : MonoBehaviour
         Time.timeScale = 1f;
         leverTo = (fight ? 1f : -1f) * leverSide * 35f; // thrown one way for the branch, the other for the line
         // The junction's truck matches the train: the harder it hits, the more health the truck has.
-        boss.hard = junctionHard * Mathf.Max(1f, Strength / 18f);
+        boss.hard = junctionHard * Mathf.Max(1f, Strength / 24f); // its health already grows with the difficulty too
         if (fight && boss.Begin())
         {
             turned = true;                                      // the truck instead of this leg's event
