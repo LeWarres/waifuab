@@ -162,7 +162,7 @@ public class JumpEvent : MonoBehaviour
         {
             // One box per wagon; the current one's bar runs into the green stretch as it reaches the ramp.
             int count = train.CarCount;
-            panel.Show(L10n.T("jump.ramp.title", button), count);
+            panel.Show(L10n.T("jump.ramp.title", "[" + button + "]"), count);
             for (int i = 0; i < count; i++)
             {
                 int state = Active && i < outcome.Length ? outcome[i] : 0;
@@ -172,11 +172,11 @@ public class JumpEvent : MonoBehaviour
                 panel.Box(i, (i + 1).ToString(), state);
             }
             if (Active && car < count) panel.Bar(Progress(car), GreenFrom(car), GreenTo(car));
-            panel.Cue(button, false);
+            panel.Cue("[" + button + "]", false);
             return;
         }
         if (!Active) return;   // the needle: no preview, the warning strip alone announces it
-        panel.Show(button, 0); // nothing to read: the button, right over the needle
+        panel.Show("[" + button + "]", 0); // nothing to read: the button, right over the needle
         panel.Dial(NeedleAngle(), greenAngle, yellowAngle);
     }
 }

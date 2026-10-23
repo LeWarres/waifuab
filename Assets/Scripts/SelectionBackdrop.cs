@@ -8,30 +8,36 @@ public class SelectionBackdrop : UnityEngine.UI.MaskableGraphic
     {
         mesh.Clear();
         if(rectTransform.rect.width<=0 || rectTransform.rect.height<=0) return;
-        Quad(mesh,0,0,1,1,new Color(.20f,.58f,.87f),new Color(.87f,.97f,1f));
-        Glow(mesh,new Vector2(.26f,.52f),new Vector2(.36f,.64f),new Color(1,1,1,.70f));
-        Polygon(mesh,new[]{new Vector2(-.1f,.15f),new Vector2(.16f,-.1f),new Vector2(.70f,1.1f),new Vector2(.39f,1.1f)},new Color(1,1,1,.28f));
-        Polygon(mesh,new[]{new Vector2(.58f,0),new Vector2(.94f,0),new Vector2(1.12f,1),new Vector2(.76f,1)},new Color(.83f,.96f,1,.68f));
-        Polygon(mesh,new[]{new Vector2(.51f,0),new Vector2(.535f,0),new Vector2(.715f,1),new Vector2(.69f,1)},new Color(0,.63f,.95f,.17f));
+        Color deep=UiKit.Now.deep;
+        Quad(mesh,0,0,1,1,deep,Color.Lerp(deep,UiKit.Now.main,.12f));
+        Glow(mesh,new Vector2(.26f,.52f),new Vector2(.36f,.64f),Accent(.35f));
+        Polygon(mesh,new[]{new Vector2(-.1f,.15f),new Vector2(.16f,-.1f),new Vector2(.70f,1.1f),new Vector2(.39f,1.1f)},Accent(.85f));
+        Polygon(mesh,new[]{new Vector2(.58f,0),new Vector2(.94f,0),new Vector2(1.12f,1),new Vector2(.76f,1)},new Color(1,1,1,.12f));
+        Polygon(mesh,new[]{new Vector2(.51f,0),new Vector2(.535f,0),new Vector2(.715f,1),new Vector2(.69f,1)},new Color(1,1,1,.85f));
         for(int x=0;x<29;x++) for(int y=0;y<19;y++) {
             float px=.02f+x*.035f,py=.12f+y*.048f;
-            Quad(mesh,px,py,px+.0012f,py+.0021f,new Color(.10f,.42f,.68f,.14f),new Color(.10f,.42f,.68f,.14f));
+            Quad(mesh,px,py,px+.0012f,py+.0021f,new Color(1,1,1,.10f),new Color(1,1,1,.10f));
         }
-        Ring(mesh,new Vector2(.29f,.52f),new Vector2(.275f,.489f),new Color(1,1,1,.46f),false);
-        Ring(mesh,new Vector2(.29f,.52f),new Vector2(.254f,.452f),new Color(0,.48f,.77f,.16f),true);
+        Ring(mesh,new Vector2(.29f,.52f),new Vector2(.275f,.489f),new Color(1,1,1,.22f),false);
+        Ring(mesh,new Vector2(.29f,.52f),new Vector2(.254f,.452f),Accent(.4f),true);
         for(int i=0;i<7;i++) {
             float y=.17f+i*.065f;
             Line(mesh,new Vector2(.005f,y),new Vector2(.13f,y+.12f),new Color(1,1,1,.32f),1.4f);
-            Line(mesh,new Vector2(.91f,y+.25f),new Vector2(1.05f,y+.40f),new Color(0,.56f,.83f,.18f),1.5f);
+            Line(mesh,new Vector2(.91f,y+.25f),new Vector2(1.05f,y+.40f),Accent(.35f),1.5f);
         }
         for(int i=0;i<15;i++) {
             float x=.43f+i*.042f, height=.06f+(i*7%5)*.021f;
-            Quad(mesh,x,.11f,x+.024f,.11f+height,new Color(.16f,.51f,.73f,.10f),new Color(.16f,.51f,.73f,.03f));
+            Quad(mesh,x,.11f,x+.024f,.11f+height,new Color(1,1,1,.05f),new Color(1,1,1,.01f));
         }
-        Glow(mesh,new Vector2(.05f,.93f),new Vector2(.20f,.16f),new Color(1,1,1,.8f));
+        Glow(mesh,new Vector2(.05f,.93f),new Vector2(.20f,.16f),Accent(.3f));
         Star(mesh,.57f,.70f,15);Star(mesh,.08f,.32f,12);Star(mesh,.94f,.90f,19);
-        Quad(mesh,0,0,1,.16f,new Color(.035f,.09f,.19f,.96f),new Color(.035f,.09f,.19f,0));
+        Quad(mesh,0,0,1,.16f,new Color(deep.r,deep.g,deep.b,.96f),new Color(deep.r,deep.g,deep.b,0));
     }
+
+    static Color Accent(float alpha) { Color c=UiKit.Now.main; c.a=alpha; return c; }
+
+    int seen=-1;
+    void Update() { if(seen!=UiKit.ToneVersion) { seen=UiKit.ToneVersion; SetVerticesDirty(); } } // redrawn in the new colours
 
     void Vertex(UnityEngine.UI.VertexHelper mesh,Vector2 point,Color shade)
     {

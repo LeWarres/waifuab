@@ -21,6 +21,7 @@ public class StoryIntro : MonoBehaviour
     void Awake()
     {
         Time.timeScale=1;Display.Apply();
+        UiKit.SetBiome("menu"); // the menus' colours
         placeholder = Locomotives.HeroId(Locomotives.Selected) != "bba";
         if (placeholder) { BuildPlaceholder(); return; }
         if(!canvas) BuildUI();
@@ -36,6 +37,12 @@ public class StoryIntro : MonoBehaviour
     void Update()
     {
         if(leaving) return;
+        if (Story.TakeTestAdvance())
+        {
+            if (pages != null && page + 1 < pages.Length) ShowPage(page + 1, true);
+            else Finish();
+            return;
+        }
         if(Gamepad.current!=null && Gamepad.current.buttonEast.wasPressedThisFrame) {
             Sound.Play("menuback");leaving=true;SceneManager.LoadScene(Story.Active ? "MainMenu" : "selectHero");return;
         }
@@ -90,9 +97,41 @@ public class StoryIntro : MonoBehaviour
     {
         if(leaving) return;
         leaving=true;
+        if(Story.Active && Story.Over) { StartCoroutine(Thanks()); return; } // the end of it all: a word of thanks first
         SceneManager.LoadScene(Story.Active && Story.Over ? "MainMenu" :
             Story.Active && Story.AscentPending ? "ascenso" :
             Story.Active && Story.InspectionPending ? "cuestionario" : gameScene);
+    }
+
+    // After the last page: black, "thanks for playing", and a reminder that this is only part of the story; a press
+    // (or a while) and back to the main menu.
+    System.Collections.IEnumerator Thanks()
+    {
+        Canvas card = UiKit.NewCanvas("Thanks", 50);
+        var black = new GameObject("Black", typeof(RectTransform), typeof(UnityEngine.UI.Image)).GetComponent<UnityEngine.UI.Image>();
+        black.transform.SetParent(card.transform, false);
+        black.rectTransform.anchorMin = Vector2.zero;
+        black.rectTransform.anchorMax = Vector2.one;
+        black.rectTransform.sizeDelta = Vector2.zero;
+        UnityEngine.UI.Text title = UiKit.Label(card.transform, UiKit.Display, 110, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 50f), new Vector2(1600f, 140f), true);
+        title.text = Localized("thanks.title");
+        UnityEngine.UI.Text note = UiKit.Label(card.transform, UiKit.Body, 32, new Color(1f, 1f, 1f, 0.75f), TextAnchor.MiddleCenter, new Vector2(0f, -60f), new Vector2(1600f, 60f), true);
+        note.text = Localized("thanks.note");
+        for (float t = 0f; t < 1f; t += Time.unscaledDeltaTime)
+        {
+            black.color = new Color(0f, 0f, 0f, t);
+            title.color = new Color(1f, 1f, 1f, t);
+            note.color = new Color(1f, 1f, 1f, 0.75f * t);
+            yield return null;
+        }
+        for (float t = 0f; t < 12f; t += Time.unscaledDeltaTime)
+        {
+            bool press = (Keyboard.current != null && (Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame))
+                || (Gamepad.current != null && (Gamepad.current.buttonSouth.wasPressedThisFrame || Gamepad.current.startButton.wasPressedThisFrame));
+            if (press && t > 1.5f) break;
+            yield return null;
+        }
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void ShowPage(int index,bool complete)
@@ -147,13 +186,17 @@ public class StoryIntro : MonoBehaviour
         var fit=art.GetComponent<UnityEngine.UI.AspectRatioFitter>();
         fit.aspectMode=UnityEngine.UI.AspectRatioFitter.AspectMode.EnvelopeParent;fit.aspectRatio=16f/9;
         var header=UiKit.Group(canvas.transform,new Vector2(.5f,1),new Vector2(0,-50));
-        UiKit.Panel(header,Vector2.zero,new Vector2(1780,62),new Color(.05f,.12f,.24f,.85f),new Color(.05f,.12f,.24f,.85f),0);
-        chapter=Label(header,25,new Vector2(-340,0),new Vector2(980,45),UiKit.Ice);
-        progress=Label(header,23,new Vector2(715,0),new Vector2(190,45),Color.white);progress.alignment=TextAnchor.MiddleRight;
+        header.localRotation=Quaternion.Euler(0,0,-.8f);
+        UiKit.Persona(UiKit.Panel(header,Vector2.zero,new Vector2(1780,66),new Color(.05f,.12f,.24f,.85f),new Color(.05f,.12f,.24f,.85f),.1f),4f,9f);
+        chapter=Label(header,32,new Vector2(-340,1),new Vector2(980,50),Color.white);chapter.font=UiKit.Display;
+        progress=Label(header,30,new Vector2(715,1),new Vector2(190,50),Color.white);progress.alignment=TextAnchor.MiddleRight;progress.font=UiKit.Display;
         var dialog=UiKit.Group(canvas.transform,new Vector2(.5f,0),new Vector2(0,195));
-        UiKit.Panel(dialog,new Vector2(0,0),new Vector2(1780,318),new Color(.035f,.09f,.19f,.96f),new Color(.035f,.09f,.19f,.96f),.035f);
-        UiKit.Panel(dialog,new Vector2(0,157),new Vector2(1670,3),UiKit.Sky,UiKit.Sky,0);
-        storyName=Label(dialog,21,new Vector2(-675,112),new Vector2(290,38),UiKit.Sky);
+        UiKit.Persona(UiKit.Panel(dialog,new Vector2(0,0),new Vector2(1780,318),new Color(.035f,.09f,.19f,.96f),new Color(.035f,.09f,.19f,.96f),.035f),6f,14f);
+        UiKit.Paint(UiKit.Panel(dialog,new Vector2(0,-150),new Vector2(1740,6),Color.white,Color.white,0),UiKit.Ink.Main);
+        // the speaker on a red tag breaking out of the box's top left
+        var nameTag=UiKit.Paint(UiKit.Panel(dialog,new Vector2(-640,160),new Vector2(420,64),Color.white,Color.white,.25f),UiKit.Ink.Main);
+        nameTag.rectTransform.localRotation=Quaternion.Euler(0,0,3);
+        storyName=Label(nameTag.transform,38,new Vector2(0,2),new Vector2(400,60),Color.white);storyName.font=UiKit.Display;storyName.alignment=TextAnchor.MiddleCenter;
         narration=Label(dialog,31,new Vector2(0,16),new Vector2(1640,146),Color.white);
         narration.alignment=TextAnchor.UpperLeft;narration.resizeTextForBestFit=false;
         automatic=Button(dialog,new Vector2(-665,-111),new Vector2(290,52),"",out automaticLabel);
@@ -172,11 +215,12 @@ public class StoryIntro : MonoBehaviour
     }
     static UnityEngine.UI.Button Button(Transform parent,Vector2 position,Vector2 size,string text,out UnityEngine.UI.Text label)
     {
-        var panel=UiKit.Panel(parent,position,size,Color.white,Color.white,0);panel.raycastTarget=true;
+        var panel=UiKit.Panel(parent,position,size,Color.white,Color.white,.25f);panel.raycastTarget=true;panel.sprite=null;
         var button=panel.gameObject.AddComponent<UnityEngine.UI.Button>();button.targetGraphic=panel;
-        var colors=button.colors;colors.normalColor=UiKit.Navy;colors.highlightedColor=UiKit.Sky;colors.pressedColor=UiKit.Slate;colors.selectedColor=UiKit.Navy;button.colors=colors;
+        var tone=UiKit.Biome("menu"); // dark, red under the pointer, gold pressed
+        var colors=button.colors;colors.normalColor=new Color(.16f,.08f,.12f);colors.highlightedColor=tone.main;colors.pressedColor=tone.hot;colors.selectedColor=new Color(.16f,.08f,.12f);button.colors=colors;
         button.navigation=new UnityEngine.UI.Navigation{mode=UnityEngine.UI.Navigation.Mode.None};
-        label=Label(panel.transform,21,Vector2.zero,size-Vector2.one*12,Color.white);label.alignment=TextAnchor.MiddleCenter;label.text=text;
+        label=Label(panel.transform,26,Vector2.zero,size-Vector2.one*12,Color.white);label.alignment=TextAnchor.MiddleCenter;label.text=text;label.font=UiKit.Display;
         return button;
     }
 }

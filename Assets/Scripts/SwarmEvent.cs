@@ -110,8 +110,9 @@ public class SwarmEvent : MonoBehaviour
         UiKit.Picture(sight.transform, "sight", Vector2.zero, 170f); // red scope reticle, Resources/Icons/sight.png
         var glass = new Color(0.06f, 0.09f, 0.19f, 0.62f);
         Slanted bar = UiKit.Panel(sight.transform, new Vector2(0f, -70f), new Vector2(620f, 52f), glass, glass, 0.12f);
+        UiKit.Persona(bar);
         bar.rectTransform.anchorMin = bar.rectTransform.anchorMax = new Vector2(0.5f, 1f);
-        counter = UiKit.Label(bar.transform, UiKit.Heading, 26, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(600f, 44f), true);
+        counter = UiKit.Label(bar.transform, UiKit.Display, 26, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(600f, 44f), true);
         sight.gameObject.SetActive(false);
     }
 

@@ -171,19 +171,25 @@ public class BrawlEvent : MonoBehaviour
         view.enabled = false;
 
         board = UiKit.NewCanvas("Brawl", 6);
-        var glass = new Color(0.06f, 0.09f, 0.19f, 0.62f);
-        Slanted bar = UiKit.Panel(board.transform, new Vector2(0f, -70f), new Vector2(560f, 52f), glass, glass, 0.12f);
-        bar.rectTransform.anchorMin = bar.rectTransform.anchorMax = new Vector2(0.5f, 1f);
-        counter = UiKit.Label(bar.transform, UiKit.Heading, 26, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(540f, 44f), true);
-        Slanted help = UiKit.Panel(board.transform, new Vector2(0f, 60f), new Vector2(760f, 40f), glass, glass, 0.12f);
-        help.rectTransform.anchorMin = help.rectTransform.anchorMax = new Vector2(0.5f, 0f);
+        // Persona plates: the count up top, the moves (their buttons drawn) at the foot, the headlock's panel.
+        Slanted bar = UiKit.Plate(board.transform, new Vector2(0f, -70f), new Vector2(560f, 56f), 0.12f, 4f, 8f);
+        UiKit.Root(bar).anchorMin = UiKit.Root(bar).anchorMax = new Vector2(0.5f, 1f);
+        counter = UiKit.Label(bar.transform, UiKit.Display, 32, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 2f), new Vector2(540f, 48f), true);
+        Slanted help = UiKit.Plate(board.transform, new Vector2(0f, 64f), new Vector2(900f, 52f), 0.12f, 4f, 8f);
+        UiKit.Root(help).anchorMin = UiKit.Root(help).anchorMax = new Vector2(0.5f, 0f);
         hint = UiKit.Label(help.transform, UiKit.Body, 20, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(740f, 34f), true);
+        hint.enabled = false;
+        hintLine = Prompt.Make(help.transform, Vector2.zero, 21, Color.white);
         // Breaking a headlock: the button to press, how far along, how long is left.
-        mashPanel = UiKit.Panel(board.transform, new Vector2(0f, 230f), new Vector2(540f, 110f), glass, glass, 0.12f);
-        mashText = UiKit.Label(mashPanel.transform, UiKit.Heading, 34, UiKit.Gold, TextAnchor.MiddleCenter, new Vector2(0f, 22f), new Vector2(520f, 50f), true);
-        UiKit.Panel(mashPanel.transform, new Vector2(0f, -20f), new Vector2(484f, 20f), new Color(0f, 0f, 0f, 0.5f), new Color(0f, 0f, 0f, 0.5f), 0f);
-        mashFill = UiKit.Panel(mashPanel.transform, new Vector2(-240f, -20f), new Vector2(0f, 16f), UiKit.Mint, UiKit.Mint, 0f);
-        mashTime = UiKit.Panel(mashPanel.transform, new Vector2(-240f, -40f), new Vector2(480f, 6f), UiKit.Rose, UiKit.Rose, 0f);
+        Slanted mash = UiKit.Plate(board.transform, new Vector2(0f, 230f), new Vector2(620f, 120f), 0.12f, 5f, 12f);
+        mashPanel = UiKit.Root(mash).GetComponent<Slanted>();
+        mashText = UiKit.Label(mash.transform, UiKit.Display, 38, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 24f), new Vector2(600f, 56f), true);
+        mashText.enabled = false;
+        mashLine = Prompt.Make(mash.transform, new Vector2(0f, 24f), 36, Color.white, UiKit.Display);
+        UiKit.Panel(mash.transform, new Vector2(0f, -20f), new Vector2(484f, 22f), new Color(0f, 0f, 0f, 0.6f), new Color(0f, 0f, 0f, 0.6f), 0f).sprite = null;
+        mashFill = UiKit.Paint(UiKit.Panel(mash.transform, new Vector2(-240f, -20f), new Vector2(0f, 18f), Color.white, Color.white, 0f), UiKit.Ink.Main);
+        mashTime = UiKit.Panel(mash.transform, new Vector2(-240f, -42f), new Vector2(480f, 6f), UiKit.Rose, UiKit.Rose, 0f);
+        mashFill.sprite = mashTime.sprite = null;
         mashFill.rectTransform.pivot = mashTime.rectTransform.pivot = new Vector2(0f, 0.5f);
         mashPanel.gameObject.SetActive(false);
         board.gameObject.SetActive(false);
@@ -520,13 +526,13 @@ public class BrawlEvent : MonoBehaviour
         counter.text = L10n.T("brawl.hud", order.Count, Mathf.RoundToInt(train.Player.Health / train.Player.maxHealth * 100f));
         // The grab's key shows its wait while it cannot be used.
         float wait = grabReady - now;
-        string grabKey = heroMove == Throwing ? "<color=#ffffff60>" + Key(3) + "</color>" : wait > 0f ? "<color=#ffffff60>" + Key(3) + " " + Mathf.CeilToInt(wait) + "s</color>" : Key(3);
-        hint.text = L10n.T("brawl.hint", Key(0), Key(1), Key(2), grabKey);
+        string grabKey = heroMove != Throwing && wait > 0f ? Key(3) + " " + Mathf.CeilToInt(wait) + "s" : Key(3);
+        hintLine.Set(L10n.T("brawl.hint", Key(0), Key(1), Key(2), grabKey));
         bool mashing = heroMove == Held && holdPhase == 1;
         if (mashPanel.gameObject.activeSelf != mashing) mashPanel.gameObject.SetActive(mashing);
         if (mashing)
         {
-            mashText.text = L10n.T("brawl.mash", Key(2));
+            mashLine.Set(Prompt.Upper(L10n.T("brawl.mash", Key(2))));
             mashFill.rectTransform.sizeDelta = new Vector2(480f * Mathf.Clamp01(mash / MashNeed), 16f);
             mashTime.rectTransform.sizeDelta = new Vector2(480f * Mathf.Clamp01((mashUntil - now) / MashSeconds), 6f);
             mashPanel.rectTransform.localScale = Vector3.one * (1f + 0.05f * Mathf.Sin(now * 30f)); // shaking with the struggle
@@ -534,11 +540,14 @@ public class BrawlEvent : MonoBehaviour
     }
 
     // The button for a move, as the device in use names it: 0 combo, 1 kick, 2 dodge (and breaking a hold), 3 grab.
+    // A move's button, as a glyph to draw (Prompt): "[J]", "[□]", "[xA]"...
+    Prompt hintLine, mashLine; // the moves and the headlock's line, their buttons drawn
+
     string Key(int which)
     {
         bool pad = train.Player.UsingGamepad, ps = Gamepad.current is UnityEngine.InputSystem.DualShock.DualShockGamepad;
-        if (!pad) return which == 0 ? "J" : which == 1 ? "K" : which == 2 ? L10n.T("key.space") : "L";
-        return which == 0 ? (ps ? "□" : "X") : which == 1 ? (ps ? "△" : "Y") : which == 2 ? (ps ? "✕" : "A") : (ps ? "○" : "B");
+        if (!pad) return "[" + (which == 0 ? "J" : which == 1 ? "K" : which == 2 ? L10n.T("key.space") : "L") + "]";
+        return "[" + (which == 0 ? (ps ? "□" : "xX") : which == 1 ? (ps ? "△" : "xY") : which == 2 ? (ps ? "✕" : "xA") : (ps ? "○" : "xB")) + "]";
     }
 
     // An effect in here: time stands still outside, so it is played by hand, on real time.
@@ -638,7 +647,7 @@ public class BrawlEvent : MonoBehaviour
         bool light = (pad != null && pad.buttonWest.wasPressedThisFrame) || (keys != null && keys.jKey.wasPressedThisFrame) || (mouse != null && mouse.leftButton.wasPressedThisFrame);
         bool heavy = (pad != null && pad.buttonNorth.wasPressedThisFrame) || (keys != null && keys.kKey.wasPressedThisFrame) || (mouse != null && mouse.rightButton.wasPressedThisFrame);
         bool dodge = (pad != null && pad.buttonSouth.wasPressedThisFrame) || (keys != null && keys.spaceKey.wasPressedThisFrame);
-        bool grab = (pad != null && pad.buttonEast.wasPressedThisFrame) || (keys != null && keys.lKey.wasPressedThisFrame);
+        bool grab = (pad != null && pad.buttonEast.wasPressedThisFrame) || (!Story.Active && keys != null && keys.lKey.wasPressedThisFrame);
         Vector2 input = Vector2.ClampMagnitude(move.ReadValue<Vector2>(), 1f);
         if (input.magnitude < 0.2f) input = Vector2.zero;
         Vector3 way = Quaternion.Euler(0f, yaw, 0f) * new Vector3(input.x, 0f, input.y);
@@ -1203,6 +1212,8 @@ public class BrawlEvent : MonoBehaviour
         foreach (var s in speeders) speederLook.Add(s.at, Vector3.one * SpeederSize, s.turn);
         speederLook.Flush();
     }
+
+    public void TestWin() { if (Active) End("brawl.won"); }
 
     void End(string key)
     {

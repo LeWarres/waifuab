@@ -43,8 +43,8 @@ public class Chest : MonoBehaviour
         chest.gameObject.SetActive(true);
         UiKit.SetIcon(chestPicture, "chest");
         opened = false;
-        title.text = L10n.T("chest.opening");
-        hint.text = "";
+        title.text = L10n.T("chest.opening").ToUpperInvariant();
+        if (hintLine) hintLine.Set("");
         for (int i = 0; i < slots.Count; i++) slots[i].rect.gameObject.SetActive(false);
         Sound.Play("Pause");
     }
@@ -58,12 +58,13 @@ public class Chest : MonoBehaviour
         Time.timeScale = timeBefore;
     }
 
+    Prompt hintLine; // the continue line, its button drawn
+
     void Build()
     {
         canvas = UiKit.NewCanvas("Chest", 25);
         Transform root = canvas.transform;
-        var shade = new Color(0.02f, 0.03f, 0.08f, 0.82f);
-        UiKit.Panel(root, Vector2.zero, new Vector2(2600f, 1500f), shade, shade, 0f);
+        UiKit.Paint(UiKit.Panel(root, Vector2.zero, new Vector2(2600f, 1500f), Color.white, Color.white, 0f), UiKit.Ink.Deep, 0.86f).sprite = null;
         rays = UiKit.Group(root, new Vector2(0.5f, 0.5f), new Vector2(0f, 40f));
         for (int i = 0; i < 16; i++)
         {
@@ -74,14 +75,22 @@ public class Chest : MonoBehaviour
         }
         chestPicture = UiKit.Picture(root, "chest", new Vector2(0f, 40f), 300f);
         chest = chestPicture.rectTransform;
-        title = UiKit.Label(root, UiKit.Heading, 56, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 380f), new Vector2(1600f, 80f), true);
+        // The title on a tag of the biome's colour, tilted; it shows what was found, huge.
+        RectTransform head = UiKit.Group(root, new Vector2(0.5f, 0.5f), new Vector2(0f, 390f));
+        head.localRotation = Quaternion.Euler(0f, 0f, 3f);
+        UiKit.Paint(UiKit.Panel(head, new Vector2(14f, -14f), new Vector2(1100f, 120f), Color.white, Color.white, 0.25f), UiKit.Ink.Deep).sprite = null;
+        UiKit.Paint(UiKit.Panel(head, Vector2.zero, new Vector2(1100f, 120f), Color.white, Color.white, 0.25f), UiKit.Ink.Main).sprite = null;
+        title = UiKit.Label(head, UiKit.Display, 84, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 3f), new Vector2(1060f, 112f), true);
         hint = UiKit.Label(root, UiKit.Body, 24, new Color(0.85f, 0.9f, 1f, 0.85f), TextAnchor.MiddleCenter, new Vector2(0f, -430f), new Vector2(1600f, 40f), true);
+        hint.enabled = false;
+        hintLine = Prompt.Make(hint.transform, Vector2.zero, 24, Color.white);
         for (int i = 0; i < 5; i++)
         {
             RectTransform slot = UiKit.Group(root, new Vector2(0.5f, 0.5f), Vector2.zero);
             Slanted glow = UiKit.Panel(slot, Vector2.zero, new Vector2(190f, 190f), new Color(1f, 1f, 1f, 0.25f), new Color(1f, 1f, 1f, 0.05f), 0.08f);
+            UiKit.Plate(slot, Vector2.zero, new Vector2(170f, 170f), 0.08f, 5f, 10f);
             RawImage icon = UiKit.Picture(slot, null, Vector2.zero, 150f);
-            Text label = UiKit.Label(slot, UiKit.Heading, 24, Color.white, TextAnchor.UpperCenter, new Vector2(0f, -150f), new Vector2(260f, 80f), true);
+            Text label = UiKit.Label(slot, UiKit.Display, 30, Color.white, TextAnchor.UpperCenter, new Vector2(0f, -122f), new Vector2(260f, 80f), true);
             slots.Add((slot, icon, label, glow));
             slot.gameObject.SetActive(false);
         }
@@ -92,7 +101,7 @@ public class Chest : MonoBehaviour
 
     // The chest's colour: what it holds, told before it opens.
     Color Tone(float t) => showing.Count >= 5 ? Color.HSVToRGB(Mathf.Repeat(t * 0.6f, 1f), 0.75f, 1f)
-                         : showing.Count >= 3 ? UiKit.Gold : UiKit.Sky;
+                         : showing.Count >= 3 ? UiKit.Gold : UiKit.Now.main;
 
     void Update()
     {
@@ -132,9 +141,8 @@ public class Chest : MonoBehaviour
             UiKit.SetIcon(chestPicture, "chest_open");
             chest.localRotation = Quaternion.identity;
             Sound.Play("wagongood");
-            title.text = L10n.T(showing.Count >= 5 ? "chest.legendary" : showing.Count >= 3 ? "chest.rare" : "chest.common");
+            title.text = L10n.T(showing.Count >= 5 ? "chest.legendary" : showing.Count >= 3 ? "chest.rare" : "chest.common").ToUpperInvariant();
         }
-        title.color = tone;
         flash.color = new Color(1f, 1f, 1f, Mathf.Clamp01(1f - (since - Shaking) / 0.45f));
         float open = Mathf.Clamp01((since - Shaking) / 0.35f);                          // it jumps open, then settles up top
         chest.anchoredPosition = new Vector2(0f, Mathf.Lerp(40f, 165f, Mathf.SmoothStep(0f, 1f, open)));
@@ -162,6 +170,6 @@ public class Chest : MonoBehaviour
             slot.glow.color = new Color(glow.r, glow.g, glow.b, 0.35f + 0.15f * Mathf.Sin(since * 5f + i));
             slot.glow.rectTransform.localRotation = Quaternion.Euler(0f, 0f, since * 40f + i * 20f);
         }
-        if (since >= done) hint.text = L10n.T("chest.continue");
+        hintLine.Set(since >= done ? L10n.T("chest.continue", UiKit.ConfirmGlyph(Gamepad.current != null)) : "");
     }
 }

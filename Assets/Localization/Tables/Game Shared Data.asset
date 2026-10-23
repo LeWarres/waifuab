@@ -2831,6 +2831,142 @@ MonoBehaviour:
     m_Key: eyeboss.post
     m_Metadata:
       m_Items: []
+  - m_Id: 4974208640954368
+    m_Key: cave.enter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897408
+    m_Key: cave.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897409
+    m_Key: cave.round
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897410
+    m_Key: cave.found
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897411
+    m_Key: cave.wrong
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897412
+    m_Key: cave.slow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897413
+    m_Key: cave.won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897414
+    m_Key: cave.lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490753347584
+    m_Key: gates.before
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096320
+    m_Key: gates.after
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096321
+    m_Key: gates.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096322
+    m_Key: gates.gate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096323
+    m_Key: gates.open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096324
+    m_Key: gates.life
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096325
+    m_Key: gates.crash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096326
+    m_Key: gates.down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323773022208
+    m_Key: trench.radio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576640
+    m_Key: trench.joke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576641
+    m_Key: trench.controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576642
+    m_Key: trench.aim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576643
+    m_Key: trench.miss
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576644
+    m_Key: trench.missed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576645
+    m_Key: trench.down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576646
+    m_Key: trench.won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576647
+    m_Key: story.bba.4.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576648
+    m_Key: story.bba.4.outro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5031216551374848
+    m_Key: thanks.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5031216584929280
+    m_Key: thanks.note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5393297150652416
+    m_Key: delivery.stamp.ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5393297196789760
+    m_Key: delivery.stamp.fine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5393297196789761
+    m_Key: delivery.stamp.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5393297196789762
+    m_Key: delivery.go
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5393297196789763
+    m_Key: delivery.total.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5415102645088256
+    m_Key: test.skipped
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

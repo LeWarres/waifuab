@@ -222,6 +222,13 @@ public class RivalEvent : MonoBehaviour
                 Combat.Instance.Drop(EnginePosition - Vector3.up * 2f, (3 + train.Difficulty / 6) * (Act == 3 ? 3 : 2) / 2);
             }
             else if (kind == Overheated) train.Toast(L10n.T("rival.weak"));
+            else if ((kind == Driver || (kind == Hex && Act >= 2)) && Story.Active && Story.Current.cave)
+                GetComponent<CaveEvent>().Begin(rivalIndex, won =>
+                {
+                    if (!Active) return;
+                    if (won) hp = Mathf.Max(1f, hp - maxHp * driverShare * 1.5f); // found it twice: it and its train take it
+                    else for (int n = 0; n < 2; n++) { int car = Random.Range(0, train.CarCount); if (train.CarAlive(car)) train.HurtCar(car, 0.5f); }
+                });
             else if (kind == Driver || (kind == Hex && Act >= 2))
                 GetComponent<BrawlEvent>().BeginDriver(rivalIndex, EnginePosition, won =>
                 {
@@ -381,6 +388,13 @@ public class RivalEvent : MonoBehaviour
         for (int i = 0; i < train.CarCount; i++)
             if (train.CarAlive(i) && pick-- == 0) return i;
         return -1;
+    }
+
+    public void TestWin()
+    {
+        if (!Active) return;
+        if (body != null && body.id == bodyId && Combat.Instance) Combat.Instance.Despawn(body);
+        Win();
     }
 
     void Win()

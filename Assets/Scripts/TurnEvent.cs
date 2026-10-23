@@ -21,7 +21,7 @@ public class TurnEvent : MonoBehaviour
     // shoulders and triggers or Q E Z C. A sequence is a list of positions, so it reads on either device.
     // ponytail: reads the devices directly; give these their own input actions when rebinding matters.
     static readonly string[] PlayStation = { "↓", "→", "←", "↑", "✕", "○", "□", "△", "L1", "R1", "L2", "R2" },
-                             Xbox = { "↓", "→", "←", "↑", "A", "B", "X", "Y", "LB", "RB", "LT", "RT" },
+                             Xbox = { "↓", "→", "←", "↑", "xA", "xB", "xX", "xY", "LB", "RB", "LT", "RT" }, // xA: Xbox's A, drawn (EventPanel), not the key A
                              Keys = { "↓", "→", "←", "↑", "S", "D", "A", "W", "Q", "E", "Z", "C" };
 
     static ButtonControl[] PadButtons(Gamepad p) => new ButtonControl[]

@@ -25,6 +25,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Text pageTitle;
     [SerializeField] Text operationsLabel;
     [SerializeField] Text hint;
+    Prompt hintLine;
     InputAction move, confirm;
     bool settings, held, pad;
     int focus;
@@ -33,10 +34,10 @@ public class MainMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         Display.Apply();
+        UiKit.SetBiome("menu"); // the menus' colours
         if(!canvas) BuildUI();
         var highlight=bar.GetComponent<Slanted>();
-        highlight.sprite=UiKit.Rounded();
-        highlight.type=UnityEngine.UI.Image.Type.Sliced;
+        highlight.sprite=null; // a sharp bar, Persona style
         for(int i=0;i<MaxRows;i++) {
             var clicks=lines[i].GetComponent<Clicks>() ?? lines[i].gameObject.AddComponent<Clicks>();
             clicks.index=i;
@@ -133,9 +134,9 @@ public class MainMenu : MonoBehaviour
             bool used=i<rows.Count;
             lines[i].gameObject.SetActive(used);
             if(used) {
-                lines[i].text=rows[i].label.Replace("\n"," ");
-                lines[i].rectTransform.anchoredPosition=new Vector2(335, (settings ? 210:30)-i*62);
-                lines[i].color=i==focus ? Color.white:UiKit.Navy;
+                lines[i].text=rows[i].label.Replace("\n"," ").ToUpperInvariant();
+                lines[i].rectTransform.anchoredPosition=new Vector2(i==focus ? 355:335, (settings ? 210:30)-i*62); // the one in focus pushed out
+                lines[i].color=i==focus ? Color.white:new Color(1,1,1,.55f);
             }
         }
         wordmark.gameObject.SetActive(!settings);
@@ -144,10 +145,13 @@ public class MainMenu : MonoBehaviour
         if(operationsLabel) operationsLabel.text="01  /  "+Localized("main.operations");
         bar.anchoredPosition=new Vector2(330,(settings ? 210:30)-focus*62);
         var highlight=bar.GetComponent<Slanted>();
-        highlight.color=highlight.bottom=new Color(.08f,.48f,.88f,1f);
+        highlight.color=highlight.bottom=UiKit.Now.main;
         highlight.fade=false;
         highlight.SetVerticesDirty();
-        hint.text=Localized(settings ? (pad ? "sound.help.gamepad":"sound.help.keyboard") : (pad ? "pause.help.gamepad":"pause.help.keyboard"));
+        hint.text="";
+        if(!hintLine) hintLine=hint.GetComponentInChildren<Prompt>(); // one saved with the scene
+        if(!hintLine) hintLine=Prompt.Make(hint.transform,Vector2.zero,20,Color.white); // the buttons drawn
+        hintLine.Set(Localized(settings ? (pad ? "sound.help.gamepad":"sound.help.keyboard") : (pad ? "pause.help.gamepad":"pause.help.keyboard"),UiKit.ConfirmGlyph(pad)));
     }
 
     public void BuildUI()
@@ -162,27 +166,33 @@ public class MainMenu : MonoBehaviour
         graphics.rectTransform.anchorMin=Vector2.zero;graphics.rectTransform.anchorMax=Vector2.one;
         graphics.rectTransform.offsetMin=graphics.rectTransform.offsetMax=Vector2.zero;
         var left=UiKit.Group(canvas.transform,new Vector2(0,.5f),Vector2.zero);
-        UiKit.Panel(left,new Vector2(385,0),new Vector2(830,1250),new Color(.20f,.67f,1,.60f),new Color(.20f,.67f,1,.60f),.14f);
-        UiKit.Panel(left,new Vector2(357,0),new Vector2(830,1250),new Color(.95f,.99f,1,.96f),new Color(.95f,.99f,1,.96f),.14f);
+        // Persona style: a slanted near-black column on a red one, the name huge and tilted on a red shadow, the
+        // options in the display font, the one in focus on a sharp red bar.
+        UiKit.Paint(UiKit.Panel(left,new Vector2(395,0),new Vector2(830,1250),Color.white,Color.white,.14f),UiKit.Ink.Main);
+        UiKit.Panel(left,new Vector2(371,0),new Vector2(830,1250),Color.white,Color.white,.14f);
+        UiKit.Paint(UiKit.Panel(left,new Vector2(357,0),new Vector2(830,1250),Color.white,Color.white,.14f),UiKit.Ink.Plate,.97f);
         wordmark=UiKit.Group(left,new Vector2(.5f,.5f),Vector2.zero);
-        Label(wordmark,"W A I F U",80,UiKit.Navy,new Vector2(358,326),new Vector2(550,110),UiKit.Heading);
-        Label(wordmark,"ON RAILS",88,UiKit.Navy,new Vector2(358,233),new Vector2(550,110),UiKit.Heading);
-        UiKit.Panel(wordmark,new Vector2(305,154),new Vector2(445,5),UiKit.Sky,UiKit.Sky,0);
-        operationsLabel=Label(wordmark,"01  /  "+Localized("main.operations"),18,UiKit.Slate,new Vector2(358,112),new Vector2(550,35),UiKit.Body);
-        pageTitle=Label(left,"",46,UiKit.Navy,new Vector2(375,327),new Vector2(590,80),UiKit.Heading);
-        var blue=UiKit.Panel(left,new Vector2(330,30),new Vector2(550,54),UiKit.Sky,UiKit.Sky,.14f);bar=blue.rectTransform;
+        wordmark.localRotation=Quaternion.Euler(0,0,4);
+        UiKit.Paint(Label(wordmark,"WAIFU",130,Color.white,new Vector2(368,320),new Vector2(600,150),UiKit.Display),UiKit.Ink.Main);
+        Label(wordmark,"WAIFU",130,Color.white,new Vector2(358,330),new Vector2(600,150),UiKit.Display);
+        UiKit.Paint(Label(wordmark,"ON RAILS",104,Color.white,new Vector2(368,212),new Vector2(600,130),UiKit.Display),UiKit.Ink.Main);
+        Label(wordmark,"ON RAILS",104,Color.white,new Vector2(358,222),new Vector2(600,130),UiKit.Display);
+        UiKit.Paint(UiKit.Panel(wordmark,new Vector2(305,144),new Vector2(445,8),Color.white,Color.white,0),UiKit.Ink.Hot);
+        operationsLabel=Label(wordmark,"01  /  "+Localized("main.operations"),20,new Color(1,1,1,.6f),new Vector2(358,104),new Vector2(550,35),UiKit.Display);
+        pageTitle=Label(left,"",64,Color.white,new Vector2(375,327),new Vector2(590,90),UiKit.Display);
+        var blue=UiKit.Panel(left,new Vector2(340,30),new Vector2(560,60),Color.white,Color.white,.25f);bar=blue.rectTransform;
         for(int i=0;i<MaxRows;i++) {
-            lines[i]=Label(left,"",28,UiKit.Navy,new Vector2(335,30-i*62),new Vector2(490,52),UiKit.Body);
+            lines[i]=Label(left,"",38,Color.white,new Vector2(335,30-i*62),new Vector2(490,56),UiKit.Display);
             lines[i].raycastTarget=true;
         }
-        Label(left,"WAIFU ON RAILS  /  "+Application.version,16,UiKit.Slate,new Vector2(360,-449),new Vector2(550,34),UiKit.Body);
+        Label(left,"WAIFU ON RAILS  /  "+Application.version,16,new Color(1,1,1,.45f),new Vector2(360,-449),new Vector2(550,34),UiKit.Body);
         var footer=UiKit.Group(canvas.transform,new Vector2(.5f,0),Vector2.zero);footer.name="Footer";
-        UiKit.Panel(footer,new Vector2(0,33),new Vector2(2400,66),UiKit.Navy,UiKit.Navy,0);
+        UiKit.Paint(UiKit.Panel(footer,new Vector2(0,33),new Vector2(2400,66),Color.white,Color.white,0),UiKit.Ink.Deep,.92f);
         hint=Label(canvas.transform,"",20,Color.white,new Vector2(0,33),new Vector2(1600,42),UiKit.Body);
         hint.rectTransform.anchorMin=hint.rectTransform.anchorMax=new Vector2(.5f,0);hint.alignment=TextAnchor.MiddleCenter;
         var right=UiKit.Group(canvas.transform,new Vector2(1,.5f),new Vector2(-400,0));
-        Label(right,"WAIFU ON RAILS",20,Color.white,new Vector2(0,414),new Vector2(590,40),UiKit.Heading).alignment=TextAnchor.MiddleRight;
-        UiKit.Panel(right,new Vector2(235,380),new Vector2(120,3),UiKit.Ice,UiKit.Ice,0);
+        Label(right,"WAIFU ON RAILS",24,Color.white,new Vector2(0,414),new Vector2(590,40),UiKit.Display).alignment=TextAnchor.MiddleRight;
+        UiKit.Paint(UiKit.Panel(right,new Vector2(235,380),new Vector2(120,5),Color.white,Color.white,0),UiKit.Ink.Main);
         RefreshUI();
     }
 

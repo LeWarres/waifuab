@@ -106,6 +106,12 @@ public class Cuestionario : MonoBehaviour
 
     void Update()
     {
+        if (Story.TakeTestAdvance())
+        {
+            if (stage == Stage.Passed) Activate(0);
+            else { stage = Stage.Passed; focus = 0; Refresh(); }
+            return;
+        }
         var keyboard = Keyboard.current;
         var pad = Gamepad.current;
         if (stage == Stage.Feedback)
@@ -139,7 +145,7 @@ public class Cuestionario : MonoBehaviour
         canvas.GetComponent<UnityEngine.UI.CanvasScaler>().matchWidthOrHeight = 0.5f;
         var root = UiKit.Group(canvas.transform, new Vector2(0.5f, 0f), new Vector2(0f, 230f));
         Color dark = new Color(0.10f, 0.12f, 0.22f, 0.96f);
-        var panel = UiKit.Panel(root, Vector2.zero, new Vector2(1760f, 420f), dark, dark, 0.025f);
+        var panel = UiKit.Persona(UiKit.Panel(root, Vector2.zero, new Vector2(1760f, 420f), dark, dark, 0.025f), 6f, 14f);
         UiKit.Panel(panel.transform, new Vector2(0f, 203f), new Vector2(1680f, 4f), UiKit.Sky, UiKit.Sky, 0f);
         heading = Label(panel.transform, 24, UiKit.Sky, TextAnchor.MiddleLeft, new Vector2(-490f, 170f), new Vector2(650f, 38f));
         progress = Label(panel.transform, 23, UiKit.Ice, TextAnchor.MiddleRight, new Vector2(420f, 170f), new Vector2(790f, 38f));

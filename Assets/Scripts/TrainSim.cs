@@ -51,7 +51,7 @@ public class TrainSim : MonoBehaviour
     [Header("Track")]
     [System.NonSerialized] public float exposure = 13.7f;                      // fixed camera exposure (EV100), the same in every biome
     public float groundTile = 18f;                      // size on the ground of one repeat of the ground texture
-    float GroundTile => Biomes[Biome].id == "city" ? groundTile * 3f : Biomes[Biome].id == "space" ? groundTile * 4f : groundTile; // the city's is a whole block of streets; space's stars must not repeat in sight
+    float GroundTile => Biomes[Biome].id == "city" ? groundTile * 3f : Biomes[Biome].id == "space" ? groundTile * 4f : Biomes[Biome].id == "alien" || Biomes[Biome].id == "fortress" ? groundTile * 2f : groundTile; // the city's is a whole block of streets; space's stars must not repeat in sight
     public float viewRange = 80f;
     public float sleeperSpacing = 1.5f;
     [System.NonSerialized] public float stationGap = 600f;     // the shortest a normal leg can be: about half a minute of riding
@@ -119,10 +119,13 @@ public class TrainSim : MonoBehaviour
     public int Difficulty => Story.Active ? Story.Chapter + (int)(storyClock / 90f + 4f * Mathf.Pow(storyClock / 600f, 2f)) : Stations + Biome * biomeDifficulty;
     float storyClock;           // seconds ridden in this story chapter (not counting stations or pauses)
     bool duel, duelCalled, chapterWon; // the rival is out / was called for / is beaten and the upgrade to keep is being chosen
+    bool testFinalePending;
     Talk talk;                  // the words with the rival, before the duel and after it
     RivalEvent rival;           // the rival's locomotive, on a track of its own
     RaceEvent race;             // or, in a chapter that ends in one, the race to the launcher
     EyeBossEvent eyeBoss;       // or the ball of eyes on a ring of wagons
+    CaveEvent cave;             // the alien duel's flashlight hunt
+    GatesEvent gates;           // the base's gates, before its biome
     // A finale (the race, the ball of eyes) can be tried twice: lost once, the player is asked whether to try it
     // again; lost twice, or declined, the chapter starts over from its opening pages.
     int finaleLosses;
@@ -468,8 +471,28 @@ public class TrainSim : MonoBehaviour
     // The finale this chapter ends in.
     void StartFinale()
     {
-        if (Story.Current.race) race.Begin(RaceFinished);
+        if (Story.Current.trench) race.BeginTrench(RaceFinished);
+        else if (Story.Current.race) race.Begin(RaceFinished);
         else if (Story.Current.eyeBoss) eyeBoss.Begin(EyeBossFinished);
+        else
+        {
+            // the duel again, the rival back at full strength
+            RestoreTrain();
+            Time.timeScale = 1f;
+            rival.Begin(Story.Current.rival);
+            duel = true;
+        }
+    }
+
+    // The train as it was before the duel: every wagon whole, the hero up.
+    void RestoreTrain()
+    {
+        foreach (Car car in cars)
+        {
+            car.health = car.maxHealth;
+            SetAlive(car, true);
+        }
+        Player.Heal(Player.maxHealth, true);
     }
 
     // The ball of eyes beaten: her last words over what is left of it, then the chapter is won.
@@ -484,6 +507,7 @@ public class TrainSim : MonoBehaviour
     void RetryFinale()
     {
         finaleRetry = false;
+        if (!Story.Current.race && !Story.Current.eyeBoss && !Story.Current.trench) RestoreTrain(); // whole again at once, or it would count as lost again
         StartCoroutine(HeartGoes());
     }
 
@@ -501,8 +525,11 @@ public class TrainSim : MonoBehaviour
         StartFinale();
     }
 
+    // Lines said over the stopped game (the story's set pieces use it), done afterwards.
+    public void Say(string[] names, string[] lines, bool[] rival, System.Action done) => talk.Show(names, lines, rival, done);
+
     // Out of tries, or declined: the chapter from its opening pages, the biome from its start.
-    void FinaleToStory()
+    public void FinaleToStory()
     {
         finaleRetry = false;
         ShowTries(false);
@@ -520,7 +547,7 @@ public class TrainSim : MonoBehaviour
             triesBoard = UiKit.NewCanvas("FinaleTries", 40);
             triesHearts = new UnityEngine.UI.Text[2];
             // on a light card of their own above the question: the used one black, the one left red, both outlined
-            var card = UiKit.Panel(triesBoard.transform, new Vector2(0f, 385f), new Vector2(300f, 120f), UiKit.White, UiKit.Ice, 0.08f);
+            var card = UiKit.Panel(triesBoard.transform, new Vector2(0f, 385f), new Vector2(300f, 120f), UiKit.White, UiKit.Ice, 0.08f); // light, so the black heart shows
             for (int i = 0; i < 2; i++)
             {
                 triesHearts[i] = UiKit.Label(card.transform, UiKit.Heading, 88, i == 0 ? new Color(0.1f, 0.09f, 0.12f) : new Color(1f, 0.25f, 0.35f), TextAnchor.MiddleCenter, new Vector2(i == 0 ? -65f : 65f, 4f), new Vector2(120f, 110f), true);
@@ -533,7 +560,7 @@ public class TrainSim : MonoBehaviour
         triesBoard.gameObject.SetActive(on);
     }
     public void BossBar(string name, float fraction) => hud.Boss(name, fraction);
-    public bool Racing => (race && (race.Active || race.Showing)) || (eyeBoss && (eyeBoss.Active || eyeBoss.Showing)); // a finale of its own on screen (or held there, lost, while the player is asked whether to try again)
+    public bool Racing => (cave && cave.Active) || (gates && gates.Active) || (race && (race.Active || race.Showing)) || (eyeBoss && (eyeBoss.Active || eyeBoss.Showing)); // a finale of its own on screen (or held there, lost, while the player is asked whether to try again)
     public bool Swarming => swarm.Aiming || brawl.Fighting || Racing; // seen from the gunner's seat (or from inside a boarded wagon, or in the race) right now
     // The gunner's camera while the swarm is fought, so the HUD can place its damage numbers from that seat.
     public Camera SwarmCamera => swarm != null && swarm.Aiming ? swarm.View : brawl != null && brawl.Fighting ? brawl.View : null;
@@ -912,6 +939,8 @@ public class TrainSim : MonoBehaviour
         rival = gameObject.AddComponent<RivalEvent>();
         race = gameObject.AddComponent<RaceEvent>();
         eyeBoss = gameObject.AddComponent<EyeBossEvent>();
+        cave = gameObject.AddComponent<CaveEvent>();
+        gates = gameObject.AddComponent<GatesEvent>();
         menuView = gameObject.AddComponent<StationMenu>();
         hud = gameObject.AddComponent<Hud>();
         Panel = gameObject.AddComponent<EventPanel>();
@@ -967,7 +996,7 @@ public class TrainSim : MonoBehaviour
             // A city stands thick with buildings: more of the middle and big slots there. Space is kept clean: no small
             // things at all, and only now and then a planet or an asteroid, far off.
             string id = Biomes[Biome].id;
-            int count = Mathf.RoundToInt(sceneryCount[size] * (id == "city" ? new[] { 1f, 1.5f, 2.2f }[size] : id == "space" ? new[] { 0f, 0.3f, 0.45f }[size] : 1f));
+            int count = Mathf.RoundToInt(sceneryCount[size] * (id == "city" ? new[] { 1f, 1.5f, 2.2f }[size] : id == "space" ? new[] { 0f, 0.3f, 0.45f }[size] : id == "alien" || id == "fortress" ? new[] { 0.35f, 0.8f, 0.8f }[size] : 1f)); // the planet and the base a little cleared too
             for (int i = 0; i < count; i++)
             {
                 var prop = new Prop { size = size, s = -viewRange + (i + Random.value) * (viewRange * 2f / count) };
@@ -986,12 +1015,18 @@ public class TrainSim : MonoBehaviour
         // Bright, clean anime picture: no filmic curve crushing the colours, a little glow, a little more colour.
         look.profile.Add<UnityEngine.Rendering.HighDefinition.Tonemapping>(true).mode.value = UnityEngine.Rendering.HighDefinition.TonemappingMode.Neutral;
         var bloom = look.profile.Add<UnityEngine.Rendering.HighDefinition.Bloom>(true);
-        bloom.intensity.value = 0.6f;
+        bloom.intensity.value = 0.8f;
         bloom.scatter.value = 0.7f; // shots and flashes are pushed past white: they glow, the rest stays clean
         bloom.threshold.value = 1f;
-        var grade = look.profile.Add<UnityEngine.Rendering.HighDefinition.ColorAdjustments>(true);
-        grade.saturation.value = 8f;
+        grade = look.profile.Add<UnityEngine.Rendering.HighDefinition.ColorAdjustments>(true);
+        // Bright and vivid (Zenless Zone Zero style), so the dark UI plates read over it: a touch more light and
+        // colour, a little contrast, cool blue shadows, a hint of the biome's colour in the lights (Grade, whenever
+        // the biome changes).
+        grade.saturation.value = 14f;
         grade.contrast.value = 6f;
+        grade.postExposure.value = 0.25f;
+        toning = look.profile.Add<UnityEngine.Rendering.HighDefinition.SplitToning>(true);
+        lookBiome = null;
 
         station = new GameObject("Station").transform;
         station.SetParent(transform, false);
@@ -1205,10 +1240,70 @@ public class TrainSim : MonoBehaviour
         Layout();
     }
 
+    // The ride skipped (K): what it would have given, at random: levels on the hero's weapon, wagon weapons,
+    // upgrades.
+    void SkippedRide()
+    {
+        Player.level = Mathf.Min(Weapon.MaxLevel, Player.level + 3);
+        for (int i = 0; i < 4; i++) Apply("wagon:" + Weapon.Wagon[Random.Range(0, Weapon.Wagon.Length)].id);
+        for (int i = 0; i < 6; i++)
+        {
+            var open = System.Array.FindAll(Passives, p => PassiveLevel(p) < MaxPassive);
+            if (open.Length > 0) Apply(open[Random.Range(0, open.Length)]);
+        }
+        Toast(L10n.T("test.skipped"));
+    }
+
+    UnityEngine.Rendering.HighDefinition.ColorAdjustments grade;
+    UnityEngine.Rendering.HighDefinition.SplitToning toning;
+    string lookBiome;
+
+    // The picture graded: cool shadows everywhere, the hue of the biome's main colour (UiKit.Biome) in the lights.
+    void Grade()
+    {
+        if (!toning) return;
+        lookBiome = BiomeId;
+        UiKit.Tones tone = UiKit.Biome(BiomeId);
+        Color.RGBToHSV(tone.main, out float mainHue, out _, out _);
+        toning.shadows.value = Color.HSVToRGB(0.58f, 0.45f, 0.5f);
+        toning.highlights.value = Color.HSVToRGB(mainHue, 0.12f, 0.5f);
+        toning.balance.value = 10f; // less of the picture counts as shadow
+    }
+
     void Update()
     {
+        UiKit.SetBiome(BiomeId); // the UI's colours: this biome's
+        if (lookBiome != BiomeId) Grade();
         Scroll = 0f; // the ground only slides while the train is running (below)
         if (UltimatePresenting) return;
+        if (!Paused && !brawl.Active && Story.TakeTestAdvance()) // not in a wagon fight: K is its kick
+        {
+            testFinalePending = false;
+            if (talk.Open || talk.Finishing) talk.Advance();
+            else if (gates.Active) gates.TestWin();
+            else if (cave.Active) cave.TestWin();
+            else if (brawl.Active) brawl.TestWin();
+            else if (race.Active) race.TestWin();
+            else if (eyeBoss.Active) eyeBoss.TestWin();
+            else if (rival.Active) rival.TestWin();
+            else if (chapterWon || finaleRetry || duel) RaceFinished(true);
+            else testFinalePending = true;
+            return;
+        }
+        if (testFinalePending && Story.Active && (!Story.Current.gates || Story.GatesPassed) && !Paused && !InEvent && !BossFight && !Warning && !Bending && !talk.Open && !talk.Finishing && !Clearing)
+        {
+            if (DeliveryOpen) CloseDelivery();
+            if (AtStation) Depart();
+            testFinalePending = false;
+            duelCalled = true;
+            junction = false;
+            junctionAsked = true;
+            storyClock = Story.Seconds;
+            RestoreTrain();
+            SkippedRide();
+            StartFinale();
+            return;
+        }
         // Temporary shortcut for trying the ultimate without waiting for kills.
         if (Keyboard.current != null && Keyboard.current.nKey.wasPressedThisFrame && !Paused && Health > 0f && !UltimateReady)
         {
@@ -1254,6 +1349,12 @@ public class TrainSim : MonoBehaviour
                     talk.Show(new[] { L10n.T("race.radio.name") }, new[] { L10n.T("race.radio") }, new[] { false },
                         StartFinale);
                 }
+                else if (Story.Current.trench)
+                {
+                    // The radio: uncouple the engine, down the trench, the rock into a vent. Sounds familiar.
+                    string her = L10n.T(Locomotives.HeroNameKey(Locomotives.Selected)), radio = L10n.T("race.radio.name");
+                    talk.Show(new[] { radio, her }, new[] { L10n.T("trench.radio"), L10n.T("trench.joke") }, new[] { true, false }, StartFinale);
+                }
                 else if (Story.Current.eyeBoss)
                 {
                     // Moho, the ball of eyes, will not let her by.
@@ -1268,7 +1369,7 @@ public class TrainSim : MonoBehaviour
                 }
             }
         }
-        if (Keyboard.current != null && Keyboard.current.lKey.wasPressedThisFrame) L10n.NextLocale();
+        if (!Story.Active && Keyboard.current != null && Keyboard.current.lKey.wasPressedThisFrame) L10n.NextLocale();
         // Testing aid: B in a story chapter counts it as won and goes on to the story scene, keeping a random wagon
         // weapon and a random upgrade with a random level, as a won chapter would.
         if (Story.Active && !chapterWon && !Racing && Keyboard.current != null && Keyboard.current.bKey.wasPressedThisFrame)
@@ -1344,7 +1445,7 @@ public class TrainSim : MonoBehaviour
                              : (Player.UsingGamepad ? "menu.help.gamepad" : "menu.help.keyboard");
         if (MenuOpen && trainSlots.Count > 0) menuView.Train(trainSlots, sideView);
         if (sideCam) sideCam.enabled = MenuOpen && trainSlots.Count > 0; // it films only while its picture is on show
-        menuView.Render(MenuOpen ? options : null, menuTitle, focus, L10n.T(help), ActivateOption, i => { if (focus != i) Sound.Play("click"); focus = i; }, ListMenu,
+        menuView.Render(MenuOpen ? options : null, menuTitle, focus, L10n.T(help, UiKit.ConfirmGlyph(Player.UsingGamepad)), ActivateOption, i => { if (focus != i) Sound.Play("click"); focus = i; }, ListMenu,
             menuStep, menuSub, menuMoney ? money : -1, menuLines, Guiding && !Paused && Health > 0f, menuTab, tab => { Sound.Play("confirm"); marketTab = tab; focus = 0; }, menuCompact);
 
         if (AtStation || Paused || mainMenu) return;
@@ -2343,6 +2444,14 @@ public class TrainSim : MonoBehaviour
             menuSub = L10n.T("finale.retry.sub");
             Add("yes", L10n.T("menu.yes"), RetryFinale);
             Add("no", L10n.T("menu.no"), FinaleToStory);
+        }
+        else if (Health <= 0f && duel && Story.Active)
+        {
+            // the duel is a finale too: two tries
+            FinaleLost();
+            if (!finaleRetry) return;
+            BuildMenu();
+            return;
         }
         else if (Health <= 0f)
         {

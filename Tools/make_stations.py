@@ -160,40 +160,9 @@ for x in (-10.5, 10.5):
 ucyl(5.5, 13.5, 3.6, 8.2, 0.1, HULL2, sides=6); cyl((-5.5, -13.5, 8.0), 1.1, 0.5, "Z", HULL, sides=12, top=0.15).rotation_euler = (math.radians(150), 0, 0)
 finish("Station_space")
 
-# ---------------- alien: three living pods ----------------
-POD = mat("PodViolet", (0.5, 0.24, 0.66)); POD2 = mat("PodDeep", (0.3, 0.12, 0.42)); TEAL = mat("GlowPod", (0.2, 1.0, 0.8), emit=3.0)
-MEMBRANE = mat("Membrane", (0.62, 0.36, 0.72))
-platform(MEMBRANE, POD2)
-ubox(-17, 17, 3.5, 3.7, 0.6, 0.64, TEAL)
-for x, z, r in ((0, 12.5, 4.4), (-7.5, 11.8, 3.0), (7.8, 12.0, 3.3)):
-    uball(x, z, 0.6 + r * 0.55, r, POD, scale=(1, 0.95, 0.85))
-    uball(x, z, 0.4, r * 1.05, POD2, scale=(1, 0.3, 0.9))
-    for a in range(6):
-        ang = a * 1.05 + x
-        uball(x + math.cos(ang) * r * 0.78, z - abs(math.sin(ang)) * r * 0.6, 0.9 + r * (0.5 + 0.35 * math.sin(a * 1.7)), r * 0.13, TEAL)
-uball(0, 9.4, 2.0, 1.3, POD2, scale=(1, 1.3, 0.4)); uball(0, 9.1, 2.0, 0.9, TEAL, scale=(1, 1.3, 0.3))
-for x in (-13, 13):
-    for i in range(7):
-        t = i / 6.0
-        uball(x + math.sin(t * 1.3) * (1.2 if x < 0 else -1.2), 11, 0.6 + t * 4.0, 0.4 - t * 0.22, POD)
-    uball(x + math.sin(1.3) * (1.2 if x < 0 else -1.2), 11, 4.9, 0.32, TEAL)
-finish("Station_alien")
+# ---------------- alien: in Tools/make_alien_station.py (a honeycomb of hexagons) ----------------
 
-# ---------------- fortress: black blockhouse, green lights, two pylons ----------------
-ARMOR = mat("FortArmor", (0.13, 0.16, 0.16), 0.4, 0.5); ARMOR2 = mat("FortTrim", (0.24, 0.29, 0.29), 0.4, 0.5); LIME = mat("GlowFort", (0.4, 1.0, 0.25), emit=3.0)
-GRATE = mat("FortDeck", (0.3, 0.35, 0.35))
-platform(GRATE, ARMOR2)
-ubox(-17, 17, 3.5, 3.7, 0.6, 0.64, LIME)
-ubox(-9, 9, 9.6, 14.8, 0.6, 5.6, ARMOR); ubox(-9.4, 9.4, 9.2, 15.2, 5.6, 6.0, ARMOR2)
-for x in range(-9, 10, 3):
-    ubox(x - 0.6, x + 0.6, 9.2, 9.9, 6.0, 6.9, ARMOR2)
-for y in (2.0, 4.4):
-    ubox(-8.6, 8.6, 9.54, 9.6, y, y + 0.16, LIME)
-ubox(-1.6, 1.6, 9.4, 9.6, 0.6, 3.6, ARMOR2); ubox(-1.2, 1.2, 9.36, 9.4, 0.6, 3.2, DARK)
-for x in (-12.5, 12.5):
-    ubox(x - 0.9, x + 0.9, 10.6, 12.4, 0.6, 1.4, ARMOR2); ubox(x - 0.6, x + 0.6, 10.9, 12.1, 1.4, 8.6, ARMOR)
-    ubox(x - 0.62, x + 0.62, 10.86, 10.9, 2.0, 8.0, LIME); ubox(x - 0.9, x + 0.9, 10.6, 12.4, 8.6, 9.0, ARMOR2); uball(x, 11.5, 9.4, 0.4, LIME)
-finish("Station_fortress")
+# ---------------- fortress: in Tools/make_fortress_station.py (an armoured bunker) ----------------
 
 # ---------------- the station's guns: StationGun, a heavy twin cannon every station has two of ----------------
 # Its own object (origin at its foot, barrels along -z here = towards the track) so the game can turn it.

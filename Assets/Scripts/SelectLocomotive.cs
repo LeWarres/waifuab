@@ -43,6 +43,7 @@ public class SelectLocomotive : MonoBehaviour
     void Awake()
     {
         Time.timeScale=1;Display.Apply();
+        UiKit.SetBiome("menu"); // the menus' colours
         if(!canvas || cards.Length!=Slots+1) BuildUI();
         if(!backgroundCanvas) BuildBackdrop();
         BuildHeroPreview();
@@ -96,12 +97,11 @@ public class SelectLocomotive : MonoBehaviour
     {
         if(!warning) {
             warning=UiKit.NewCanvas("NewStoryWarning",30);
-            var shade=new Color(0.02f,0.03f,0.08f,0.8f);
-            UiKit.Panel(warning.transform,Vector2.zero,new Vector2(2600f,1500f),shade,shade,0f);
-            UiKit.Panel(warning.transform,Vector2.zero,new Vector2(1100f,340f),UiKit.White,UiKit.White,0.06f);
-            UiKit.Label(warning.transform,UiKit.Heading,40,UiKit.Navy,TextAnchor.MiddleCenter,new Vector2(0f,80f),new Vector2(1000f,60f),true).text=L10n.T("save.overwrite.title");
-            UiKit.Label(warning.transform,UiKit.Body,26,UiKit.Navy,TextAnchor.MiddleCenter,new Vector2(0f,5f),new Vector2(1000f,80f),true).text=L10n.T("save.overwrite",SaveGame.Chapter+1);
-            UiKit.Label(warning.transform,UiKit.Body,24,UiKit.Sky,TextAnchor.MiddleCenter,new Vector2(0f,-95f),new Vector2(1000f,40f),true).text=L10n.T("save.overwrite.help");
+            UiKit.Paint(UiKit.Panel(warning.transform,Vector2.zero,new Vector2(2600f,1500f),Color.white,Color.white,0f),UiKit.Ink.Deep,0.85f);
+            UiKit.Plate(warning.transform,Vector2.zero,new Vector2(1100f,340f),0.06f,6f,14f);
+            UiKit.Label(warning.transform,UiKit.Display,52,Color.white,TextAnchor.MiddleCenter,new Vector2(0f,80f),new Vector2(1000f,70f),true).text=L10n.T("save.overwrite.title").ToUpperInvariant();
+            UiKit.Label(warning.transform,UiKit.Body,26,Color.white,TextAnchor.MiddleCenter,new Vector2(0f,5f),new Vector2(1000f,80f),true).text=L10n.T("save.overwrite",SaveGame.Chapter+1);
+            UiKit.Paint(UiKit.Label(warning.transform,UiKit.Body,24,Color.white,TextAnchor.MiddleCenter,new Vector2(0f,-95f),new Vector2(1000f,40f),true),UiKit.Ink.Hot).text=L10n.T("save.overwrite.help");
         }
         warning.gameObject.SetActive(show);
     }
@@ -117,8 +117,11 @@ public class SelectLocomotive : MonoBehaviour
             previewArea.name = "HeroPreviewLabels";
             heroAnchor = UiKit.Group(previewArea, new Vector2(0.5f, 0.5f), new Vector2(880f, -187f));
             heroAnchor.name = "HeroFeetAnchor";
-            var nameBand = UiKit.Panel(previewArea, new Vector2(895f, 375f), new Vector2(310f, 60f), UiKit.Sky, UiKit.Sky, 0.12f);
-            heroName = Label(nameBand.transform, 27, Vector2.zero, new Vector2(285f, 48f));
+            var nameBand = UiKit.Persona(UiKit.Panel(previewArea, new Vector2(895f, 375f), new Vector2(310f, 64f), UiKit.Sky, UiKit.Sky, 0.12f), 4f, 8f);
+            UiKit.Paint(nameBand, UiKit.Ink.Main);
+            nameBand.rectTransform.localRotation = Quaternion.Euler(0f, 0f, 3f);
+            heroName = Label(nameBand.transform, 34, new Vector2(0f, 2f), new Vector2(285f, 54f));
+            heroName.font = UiKit.Display;
             heroName.alignment = TextAnchor.MiddleCenter;
             heroName.color = Color.white;
             heroPlaceholderPanel = UiKit.Panel(previewArea, new Vector2(880f, 20f), new Vector2(260f, 380f), UiKit.Navy, UiKit.Navy, 0.06f);
@@ -324,19 +327,19 @@ public class SelectLocomotive : MonoBehaviour
         canvas.GetComponent<UnityEngine.UI.CanvasScaler>().matchWidthOrHeight=.5f;
         RectTransform left=UiKit.Group(canvas.transform,new Vector2(0,.5f),new Vector2(80,0));
         eyebrow=Label(left,26,new Vector2(450,450),new Vector2(900,40));
-        title=Label(left,64,new Vector2(300,380),new Vector2(600,100));title.font=UiKit.Heading;
-        UiKit.Panel(left,new Vector2(495,320),new Vector2(990,4),UiKit.Sky,UiKit.Sky,0);
+        title=Label(left,96,new Vector2(300,384),new Vector2(600,120));title.font=UiKit.Display;title.fontStyle=FontStyle.Italic;
+        UiKit.Paint(UiKit.Panel(left,new Vector2(495,316),new Vector2(990,8),Color.white,Color.white,0),UiKit.Ink.Main);
         question=Label(left,210,new Vector2(495,20),new Vector2(650,280));question.alignment=TextAnchor.MiddleCenter;
-        var data=UiKit.Panel(left,new Vector2(495,-345),new Vector2(990,192),new Color(.035f,.07f,.14f,.93f),new Color(.035f,.07f,.14f,.93f),.08f);
+        var data=UiKit.Persona(UiKit.Panel(left,new Vector2(495,-345),new Vector2(990,192),new Color(.035f,.07f,.14f,.93f),new Color(.035f,.07f,.14f,.93f),.08f),6f,14f);
         dataTitle=Label(data.transform,19,new Vector2(0,61),new Vector2(900,30));
         description=Label(data.transform,23,new Vector2(-145,19),new Vector2(600,36));
         speed=Label(data.transform,20,new Vector2(-345,-40),new Vector2(200,70));
         health=Label(data.transform,20,new Vector2(-120,-40),new Vector2(200,70));
         status=Label(data.transform,20,new Vector2(105,-40),new Vector2(200,70));
-        UiKit.Panel(data.transform,new Vector2(245,0),new Vector2(2,140),UiKit.Sky,UiKit.Sky,0);
+        UiKit.Paint(UiKit.Panel(data.transform,new Vector2(245,0),new Vector2(4,140),Color.white,Color.white,0),UiKit.Ink.Main);
         pilotData=Label(data.transform,22,new Vector2(365,-8),new Vector2(215,116));
         RectTransform right=UiKit.Group(canvas.transform,new Vector2(1,.5f),new Vector2(-445,0));
-        rosterTitle=Label(right,26,new Vector2(0,385),new Vector2(650,50));rosterTitle.alignment=TextAnchor.MiddleCenter;
+        rosterTitle=Label(right,40,new Vector2(0,385),new Vector2(650,56));rosterTitle.alignment=TextAnchor.MiddleCenter;rosterTitle.font=UiKit.Display;
         counter=Label(right,20,new Vector2(0,337),new Vector2(650,32));counter.alignment=TextAnchor.MiddleCenter;
         cards=new Slanted[Slots+1];portraits=new UnityEngine.UI.RawImage[cards.Length];
         slotNames=new UnityEngine.UI.Text[cards.Length];badges=new UnityEngine.UI.Text[cards.Length];
@@ -344,23 +347,25 @@ public class SelectLocomotive : MonoBehaviour
             int col=i%Columns,row=i/Columns;
             var position=new Vector2((col-(Columns-1)*.5f)*162+(row%2)*16-8,238-row*130);
             if(i==RandomSlot) position.x=0; // alone on its row: in the middle of it
-            cards[i]=UiKit.Panel(right,position,new Vector2(154,112),UiKit.Navy,UiKit.Navy,.14f);
+            cards[i]=UiKit.Persona(UiKit.Panel(right,position,new Vector2(154,112),UiKit.Navy,UiKit.Navy,.14f),3f,6f);
             cards[i].gameObject.name=i==RandomSlot ? "RandomLocomotive" : "LocomotiveSlot"+(i+1);
             var image=new GameObject("Portrait",typeof(RectTransform),typeof(UnityEngine.UI.RawImage)).GetComponent<UnityEngine.UI.RawImage>();
             image.transform.SetParent(cards[i].transform,false);image.raycastTarget=false;
             image.rectTransform.sizeDelta=new Vector2(142,89);image.rectTransform.anchoredPosition=new Vector2(0,9);
             image.texture=Resources.Load<Texture2D>(Locomotives.Portraits[i<Locomotives.Portraits.Length ? i : 0]);
             portraits[i]=image;
-            slotNames[i]=Label(cards[i].transform,13,new Vector2(0,-43),new Vector2(146,22));slotNames[i].alignment=TextAnchor.MiddleCenter;
+            slotNames[i]=Label(cards[i].transform,15,new Vector2(0,-43),new Vector2(146,22));slotNames[i].alignment=TextAnchor.MiddleCenter;slotNames[i].font=UiKit.Display;
             badges[i]=Label(cards[i].transform,i==RandomSlot ? 56:14,new Vector2(0,9),new Vector2(142,80));
             badges[i].alignment=TextAnchor.MiddleCenter;
         }
         startPanel=UiKit.Panel(right,new Vector2(0,-335),new Vector2(560,65),UiKit.Sky,UiKit.Sky,.12f);
         startPanel.gameObject.name="StartJourney";
-        startText=Label(startPanel.transform,28,Vector2.zero,new Vector2(520,55));startText.alignment=TextAnchor.MiddleCenter;
+        UiKit.Persona(startPanel,5f,10f);
+        startText=Label(startPanel.transform,38,Vector2.zero,new Vector2(520,60));startText.alignment=TextAnchor.MiddleCenter;startText.font=UiKit.Display;
         backPanel=UiKit.Panel(right,new Vector2(0,-416),new Vector2(320,48),UiKit.Navy,UiKit.Navy,.12f);
         backPanel.gameObject.name="BackToMainMenu";
-        backText=Label(backPanel.transform,22,Vector2.zero,new Vector2(280,45));backText.alignment=TextAnchor.MiddleCenter;
+        UiKit.Persona(backPanel,4f,7f);
+        backText=Label(backPanel.transform,28,Vector2.zero,new Vector2(280,48));backText.alignment=TextAnchor.MiddleCenter;backText.font=UiKit.Display;
         RectTransform footer=UiKit.Group(canvas.transform,new Vector2(.5f,0),new Vector2(0,35));
         hint=Label(footer,19,Vector2.zero,new Vector2(1780,38));hint.alignment=TextAnchor.MiddleCenter;
         selected=focus=Locomotives.Selected;Refresh();BuildBackdrop();
@@ -385,8 +390,10 @@ public class SelectLocomotive : MonoBehaviour
         var backdrop=backgroundCanvas.GetComponentInChildren<SelectionBackdrop>();
         if(!backdrop.GetComponent<CanvasRenderer>()) backdrop.gameObject.AddComponent<CanvasRenderer>();
         backdrop.SetAllDirty();
-        title.color=eyebrow.color=rosterTitle.color=counter.color=UiKit.Navy;
+        title.color=eyebrow.color=rosterTitle.color=counter.color=Color.white; // on the dark backdrop
     }
+
+    Prompt hintLine;
 
     UnityEngine.UI.Text Label(Transform parent,int size,Vector2 position,Vector2 box)
     {
@@ -396,6 +403,8 @@ public class SelectLocomotive : MonoBehaviour
 
     void Refresh()
     {
+        bool rolling=selected==RandomSlot;
+        if(rolling || selected>=Locomotives.Models.Length) UiKit.SetBiome("menu"); else UiKit.SetHeroTones(Locomotives.HeroId(selected)); // the hero's colours
         if(!canvas) return;
         bool random=selected==RandomSlot;
         bool locked=!Available;
@@ -406,7 +415,7 @@ public class SelectLocomotive : MonoBehaviour
             Texture2D picture = pictures && id != null && Application.isPlaying ? Resources.Load<Texture2D>("Menu/hero_" + id) : null;
             if (picture && !heroFrame)
             {
-                heroFrame = UiKit.Panel(heroPlaceholderPanel.transform.parent, new Vector2(880f, 62f), new Vector2(304f, 437f), UiKit.Sky, UiKit.Sky, 0f);
+                heroFrame = UiKit.Panel(heroPlaceholderPanel.transform.parent, new Vector2(880f, 62f), new Vector2(304f, 437f), UiKit.Now.main, UiKit.Now.main, 0f);
                 heroFrame.gameObject.name = "HeroFrame";
                 heroPicture = new GameObject("HeroPicture", typeof(RectTransform), typeof(UnityEngine.UI.RawImage)).GetComponent<UnityEngine.UI.RawImage>();
                 heroPicture.transform.SetParent(heroFrame.transform, false);
@@ -451,7 +460,7 @@ public class SelectLocomotive : MonoBehaviour
         rosterTitle.text=Localized("loco.select");counter.text=Localized("loco.unlocked",open,Slots);
         for(int i=0;i<cards.Length;i++) {
             bool exists=i<Locomotives.Models.Length, available=exists && !Locomotives.Locked(i), active=i==selected, roll=i==RandomSlot;
-            cards[i].color=cards[i].bottom=active ? UiKit.Sky : available ? new Color(.22f,.30f,.46f) : new Color(.12f,.15f,.20f);
+            cards[i].color=cards[i].bottom=active ? UiKit.Now.main : available ? new Color(.2f,.12f,.16f) : new Color(.1f,.08f,.1f);
             // A locked one keeps its picture, dimmed, under the word.
             portraits[i].enabled=!roll;portraits[i].color=available ? Color.white : exists ? new Color(.42f,.45f,.52f) : Color.black;
             slotNames[i].text=roll ? Localized("loco.random") : exists ? Localized(Locomotives.NameKeys[i]) : Localized("loco.slot",i+1);
@@ -470,9 +479,13 @@ public class SelectLocomotive : MonoBehaviour
         health.text=Localized("loco.health",!Exists && !random ? "—":initialHealth.ToString("0"));
         status.text=Localized("loco.status",Localized(random ? "loco.random":locked ? "loco.locked":"loco.available"));
         startText.text=Localized(locked ? "loco.locked":"loco.start");backText.text=Localized("menu.back");
-        startPanel.color=startPanel.bottom=locked ? new Color(.12f,.15f,.20f) : focus==Start ? UiKit.Mint : UiKit.Sky;
-        backPanel.color=backPanel.bottom=focus==Back ? UiKit.Sky : UiKit.Navy;
-        hint.text=Localized(pad ? "loco.help.gamepad":"loco.help.keyboard");
+        startPanel.color=startPanel.bottom=locked ? new Color(.12f,.15f,.20f) : focus==Start ? UiKit.Now.hot : UiKit.Now.main;
+        startText.color=focus==Start && !locked ? UiKit.Now.deep : Color.white;
+        backPanel.color=backPanel.bottom=focus==Back ? UiKit.Now.main : new Color(.16f,.08f,.12f);
+        hint.text="";
+        if(!hintLine) hintLine=hint.GetComponentInChildren<Prompt>(); // one saved with the scene
+        if(!hintLine) hintLine=Prompt.Make(hint.transform,Vector2.zero,19,Color.white); // the buttons drawn
+        hintLine.Set(Localized(pad ? "loco.help.gamepad":"loco.help.keyboard",UiKit.ConfirmGlyph(pad),UnityEngine.InputSystem.Gamepad.current is UnityEngine.InputSystem.DualShock.DualShockGamepad ? "○" : "xB"));
     }
 
     static string Localized(string key,params object[] args)

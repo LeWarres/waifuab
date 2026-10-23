@@ -231,15 +231,23 @@ public class Combat : MonoBehaviour
         new EnemyType { name = "Fantasma", biome = 6, color = new Color(0.7f, 1f, 1f), health = 6f, speed = 3f, damage = 8f, size = 1f, firstLevel = 3, weight = 0.3f, blink = 7f, interval = 2f, model = "Enemy_ghost", flies = true },
         new EnemyType { name = "Dron sanador", biome = 6, color = new Color(1f, 0.5f, 0.8f), health = 8f, speed = 3.5f, damage = 2f, size = 0.8f, reward = 2, firstLevel = 5, weight = 0.2f, heal = 4f, healRadius = 7f, interval = 0.5f, model = "Enemy_healer", flies = true },
         // Planeta alienígena
+        // Planeta alienígena: "from fluffy things you want to hug to hexagons" (Tools/make_alien_enemies.py)
+        new EnemyType { name = "Pelusa", biome = 7, color = new Color(1f, 0.55f, 0.8f), health = 3f, speed = 4f, damage = 5f, size = 1f, weight = 1f, model = "Enemy_fluff" },
+        new EnemyType { name = "Hexa", biome = 7, color = new Color(0.35f, 1f, 0.85f), health = 2f, speed = 8.5f, damage = 3f, size = 0.7f, firstLevel = 2, weight = 0.5f, model = "Enemy_hexa", flies = true },
+        new EnemyType { name = "Hexágono mayor", biome = 7, color = new Color(1f, 0.82f, 0.25f), health = 12f, speed = 2.5f, damage = 12f, size = 1.6f, reward = 3, firstLevel = 4, weight = 0.2f, model = "Enemy_hexgiant" },
         new EnemyType { name = "Colmena", biome = 7, color = new Color(0.4f, 0.5f, 0.1f), health = 30f, speed = 1.5f, damage = 10f, size = 2f, reward = 5, firstLevel = 7, weight = 0.15f, spawner = true, interval = 2.5f, model = "Enemy_hive" },
         new EnemyType { name = "Saboteador", biome = 7, color = new Color(0f, 0.6f, 0.6f), health = 5f, speed = 7f, damage = 2f, size = 0.8f, firstLevel = 3, weight = 0.3f, stun = 5f, model = "Enemy_saboteur", flies = true },
         // Fortaleza alienígena
+        // Base alienígena: its guards (Tools/make_mechs.py)
+        new EnemyType { name = "Vigía", biome = 8, color = new Color(0.92f, 0.94f, 0.96f), health = 3f, speed = 4f, damage = 5f, size = 1f, weight = 1f, model = "Enemy_warden", flies = true },
+        new EnemyType { name = "Cazador", biome = 8, color = new Color(0.5f, 1f, 0.3f), health = 2f, speed = 8.5f, damage = 3f, size = 0.7f, firstLevel = 2, weight = 0.5f, model = "Enemy_hunter", flies = true },
+        new EnemyType { name = "Guardián", biome = 8, color = new Color(0.92f, 0.94f, 0.96f), health = 12f, speed = 2.5f, damage = 12f, size = 1.6f, reward = 3, firstLevel = 4, weight = 0.2f, model = "Enemy_guardian" },
         new EnemyType { name = "Centinela", biome = 8, color = new Color(0.5f, 0.55f, 0.6f), health = 15f, speed = 3f, damage = 5f, size = 1.2f, reward = 3, firstLevel = 8, weight = 0.3f, ranged = 16f, interval = 1.2f, armor = 1f, model = "Enemy_sentinel" },
         new EnemyType { name = "Coloso", biome = 8, color = new Color(0.1f, 0.1f, 0.12f), health = 60f, speed = 2f, damage = 25f, size = 2.5f, reward = 8, firstLevel = 10, weight = 0.12f, explode = 6f, explodeDamage = 15f, chargeRange = 10f, chargeSpeed = 2.5f, model = "Enemy_colossus" },
     };
 
     // A biome with a bestiary of its own gets none of the enemies from everywhere: the city looks nothing like the desert.
-    static bool OwnBestiary(int biome) => biome == 5 || biome == 6;
+    static bool OwnBestiary(int biome) => biome >= 5;
     static bool Here(EnemyType t, int biome) => t.biome == biome || (t.biome < 0 && !OwnBestiary(biome));
     // The biome's commonest enemy: what a wave always brings, and what comes when nothing else can.
     EnemyType RankAndFile => System.Array.Find(Types, t => t.weight >= 1f && Here(t, train.Biome)) ?? Types[0];

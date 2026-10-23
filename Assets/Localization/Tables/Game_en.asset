@@ -123,12 +123,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996245
-    m_Localized: 'Stick or D-pad  left / right: move selection        X: confirm'
+    m_Localized: '[LS] move selection    [{0}] confirm'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996246
-    m_Localized: 'A / D or arrows: move selection        Space: confirm        or
-      click'
+    m_Localized: '[A][D] move selection    [Space] confirm    [Mouse] click'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996247
@@ -152,11 +151,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1762996252
-    m_Localized: 'Left stick: move   L2: sprint   R1 / L1 or right stick: target'
+    m_Localized: '[LS] move    [L2] sprint    [R1][L1] or [RS] target'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996253
-    m_Localized: 'WASD: move   Shift: sprint   Mouse: target'
+    m_Localized: '[W][A][S][D] move    [Shift] sprint    [Mouse] target'
     m_Metadata:
       m_Items: []
   - m_Id: 1762996254
@@ -573,11 +572,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 304330390712320
-    m_Localized: 'Stick or D-pad: choose     X: confirm'
+    m_Localized: '[LS] choose    [{0}] confirm'
     m_Metadata:
       m_Items: []
   - m_Id: 304330424266752
-    m_Localized: 'W / S or arrows: choose     Space: confirm'
+    m_Localized: '[W][S] choose    [Space] confirm'
     m_Metadata:
       m_Items: []
   - m_Id: 308102659649536
@@ -707,11 +706,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 735480049381380
-    m_Localized: 'Up / down: choose     Left / right: adjust     X: change'
+    m_Localized: "[\u2191][\u2193] choose    [\u2190][\u2192] adjust    [{0}] change"
     m_Metadata:
       m_Items: []
   - m_Id: 735480049381381
-    m_Localized: 'W / S: choose     A / D: adjust     Space: change'
+    m_Localized: '[W][S] choose    [A][D] adjust    [Space] change'
     m_Metadata:
       m_Items: []
   - m_Id: 746880280899584
@@ -773,11 +772,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 829104103239692
-    m_Localized: 'Up / down: choose     Left / right: adjust     X: change'
+    m_Localized: "[\u2191][\u2193] choose    [\u2190][\u2192] adjust    [{0}] change"
     m_Metadata:
       m_Items: []
   - m_Id: 829104103239693
-    m_Localized: 'W / S: choose     A / D: adjust     Space: change'
+    m_Localized: '[W][S] choose    [A][D] adjust    [Space] change'
     m_Metadata:
       m_Items: []
   - m_Id: 896838069989376
@@ -956,11 +955,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1055763532689414
-    m_Localized: 'W / S or arrows: choose     Space / Enter: confirm     Esc: back'
+    m_Localized: '[W][S] choose    [Space] confirm    [Esc] back'
     m_Metadata:
       m_Items: []
   - m_Id: 1055763532689415
-    m_Localized: 'Stick or D-pad: choose     X: confirm     O: back'
+    m_Localized: '[LS] choose    [{0}] confirm    [{1}] back'
     m_Metadata:
       m_Items: []
   - m_Id: 1058807104221184
@@ -1616,18 +1615,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655773
-    m_Localized: 'Somewhere up there is my home. But first, the orange Golem blocks
-      the line. Sentinel doesn''t talk: he only shoots.'
+    m_Localized: "Somewhere up there is the base where I have to deliver the rock.
+      They say something lives on this route that lets no one through\u2026 something
+      with a lot of eyes."
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655774
-    m_Localized: The Golem died in a shower of sparks and drifted, slowly spinning,
-      into the void. Sentinel waved before he was gone. Odd, but polite.
+    m_Localized: Moho blew to pieces and its eyes went out one by one. I could swear
+      it let out one last yawn before it exploded.
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655775
-    m_Localized: The government's coordinates point to an ugly green planet. That's
-      where the stupid aliens live. And that's where I deliver the rock.
+    m_Localized: "The coordinates point to an ugly purple planet. The base is there,
+      and that is where the rock goes. All that is left is getting there\u2026 in
+      one piece."
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655776
@@ -1643,13 +1644,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655778
-    m_Localized: T.exe ended up with its legs in the air. Faceless faded away as
-      if it had never been there. I'd rather not think about it.
+    m_Localized: "I finally beat Faceless! Though I was hoping to say something cool
+      before leaving it behind\u2026 something like \"See you later, alligator\".
+      Oh well, next time."
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655779
-    m_Localized: 'In the distance stands the alien base: a green fortress on a mountain.
-      Only one driver left between the rock and where it belongs.'
+    m_Localized: Now all that is left is reaching the heart of the base, setting
+      the rock in place and getting out of there.
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655780
@@ -1663,20 +1665,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655782
-    m_Localized: The Night Skull went dark and the rock flew straight into the base.
-      The crash was heard across the whole planet. The stupid aliens surrendered
-      that same night.
+    m_Localized: 'I heard an explosion behind me and headed straight for Earth. The
+      trouble: when I reached the government''s base, nothing was left. There were
+      train drivers everywhere.'
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655783
-    m_Localized: 'I won the Train Ranking. The World Government had to keep its word:
-      my ship, my map, all of it back. I set course for home, to the other mecha
-      witches.'
+    m_Localized: "And it seems\u2026 the bad guys were never off this planet. The
+      bad guys were never the non-humans\u2026 and the humans lacked humanity."
     m_Metadata:
       m_Items: []
   - m_Id: 2507960170655784
-    m_Localized: "Although, to be honest\u2026 I'm going to miss the sound of the
-      rails.   THE END"
+    m_Localized: 'They told me the truth: all they wanted was to conquer the planet
+      and keep its silicon, to go on making machines on Earth.'
     m_Metadata:
       m_Items: []
   - m_Id: 2510276164661248
@@ -1684,7 +1685,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2510276198215680
-    m_Localized: 'Space / Enter / A: continue'
+    m_Localized: '[{0}] continue'
     m_Metadata:
       m_Items: []
   - m_Id: 2510276198215681
@@ -2200,7 +2201,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2900571700146181
-    m_Localized: 'Space / A / click: continue'
+    m_Localized: '[{0}] continue'
     m_Metadata:
       m_Items: []
   - m_Id: 3081064123019264
@@ -3944,6 +3945,156 @@ MonoBehaviour:
   - m_Id: 4925099666124804
     m_Localized: "Wow, I did not remember those things being so big. I guess things
       grow with time\u2026 but what matters now is reaching the base."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208640954368
+    m_Localized: "Faceless ran into a cave\u2026 go in after it"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897408
+    m_Localized: "Hint: look for the glint of its eyes, a bit of it peeking out,
+      or a hiding place that shudders\nMouse / stick: flashlight \xB7 click / R2
+      / Space: shoot (one shot a round)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897409
+    m_Localized: 'Round {0} / {1}: where is it hiding?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897410
+    m_Localized: Found you!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897411
+    m_Localized: It was not there!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897412
+    m_Localized: Too slow!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897413
+    m_Localized: Faceless took the hit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4974208682897414
+    m_Localized: Faceless wrecked the wagons
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490753347584
+    m_Localized: "The way into the base is shut by giant gates. I will have to force
+      my way through, bringing them down\u2026 with bullets."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096320
+    m_Localized: That was no problem at all, easy peasy, just as I expected.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096321
+    m_Localized: "Mouse / stick: aim \xB7 click / R2 / Space: shoot the padlocks
+      and the guards"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096322
+    m_Localized: 'Gate {0} / {1}: break the padlocks'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096323
+    m_Localized: The gate is open!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096324
+    m_Localized: Health {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096325
+    m_Localized: The train hit the closed gate. Try again?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5014490791096326
+    m_Localized: You were brought down. Try again?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323773022208
+    m_Localized: 'Control here: you will have to uncouple the locomotive and go alone
+      down the base''s narrow trench. At the end there is a ventilation hatch: throw
+      the rock in there.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576640
+    m_Localized: "That sounds very familiar\u2026 like one of those movies where
+      someone finds out their mother owes years of child support because the pirate
+      flag was calling her."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576641
+    m_Localized: "R2 / W: throttle \xB7 \u2715 / Shift: turbo \xB7 \u25A1 / S: brake
+      and drift\nStick / A-D: steer \xB7 \u25B3 / F / right click: shoot the drones\nAt
+      the end: aim at the hatch and throw the rock (\u25B3 / \u2715 / Space). Two
+      tries."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576642
+    m_Localized: "The hatch! Aim well\u2026 the sight fights you"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576643
+    m_Localized: Missed! One try left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576644
+    m_Localized: "The rock did not go in\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576645
+    m_Localized: "The locomotive could take no more\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576646
+    m_Localized: Yeeeeeeeeehaaaaaaw!!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576647
+    m_Localized: "And worse: when they blew the place up, nobody saw anything like
+      a spaceship\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5023323806576648
+    m_Localized: "I guess I will have to stay on this planet a little longer\u2026
+      and think about whether the adventure was worth it. Not just because I am not
+      going home, but because of everything I caused\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5031216551374848
+    m_Localized: THANKS FOR PLAYING!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5031216584929280
+    m_Localized: '(remember: so far you only know part of the whole story)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5393297150652416
+    m_Localized: DELIVERED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5393297196789760
+    m_Localized: FINED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5393297196789761
+    m_Localized: NO CARGO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5393297196789762
+    m_Localized: CONTINUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5393297196789763
+    m_Localized: TOTAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5415102645088256
+    m_Localized: 'Ride skipped: random weapons and upgrades'
     m_Metadata:
       m_Items: []
   references:

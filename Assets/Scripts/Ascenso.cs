@@ -155,6 +155,7 @@ public class Ascenso : MonoBehaviour
         var glass = new Color(.06f, .09f, .19f, .72f);
         var left = UiKit.Group(hud.transform, new Vector2(0f, 1f), new Vector2(30f, -25f));
         var hitCard = UiKit.Panel(left, new Vector2(235f, -58f), new Vector2(470f, 116f), glass, glass, .06f);
+        UiKit.Persona(hitCard);
         UiKit.Panel(hitCard.transform, new Vector2(-227f, 0f), new Vector2(5f, 108f), UiKit.Sky, UiKit.Sky, 0f);
         UiKit.Picture(hitCard.transform, "wagon", new Vector2(-190f, 18f), 32f);
         status = Label(hitCard.transform, 25, new Vector2(24f, 22f), new Vector2(360f, 40f));
@@ -163,19 +164,20 @@ public class Ascenso : MonoBehaviour
             collisionPips[i] = UiKit.Panel(hitCard.transform, new Vector2(-140f + i * 110f, -25f), new Vector2(95f, 9f), UiKit.Mint, UiKit.Mint, 0f);
         var right = UiKit.Group(hud.transform, new Vector2(1f, 1f), new Vector2(-30f, -25f));
         var travelCard = UiKit.Panel(right, new Vector2(-185f, -58f), new Vector2(370f, 116f), glass, glass, .06f);
+        UiKit.Persona(travelCard);
         altitude = Label(travelCard.transform, 25, new Vector2(0f, 20f), new Vector2(330f, 40f));
         UiKit.Panel(travelCard.transform, new Vector2(0f, -23f), new Vector2(300f, 7f), UiKit.Slate, UiKit.Slate, 0f);
         progressFill = UiKit.Panel(travelCard.transform, new Vector2(-150f, -23f), new Vector2(0f, 7f), UiKit.Sky, UiKit.Sky, 0f);
         progressFill.rectTransform.pivot = new Vector2(0f, .5f);
         var bottom = UiKit.Group(hud.transform, new Vector2(.5f, 0f), new Vector2(0f, 31f));
-        UiKit.Panel(bottom, Vector2.zero, new Vector2(1070f, 44f), glass, glass, .04f);
+        UiKit.Persona(UiKit.Panel(bottom, Vector2.zero, new Vector2(1070f, 44f), glass, glass, .04f));
         Label(bottom, 20, Vector2.zero, new Vector2(1020f, 38f)).text = L10n.T("ascent.controls");
         flash = UiKit.Panel(hud.transform, Vector2.zero, Vector2.zero, Color.clear, Color.clear, 0f);
         flash.rectTransform.anchorMin = Vector2.zero;
         flash.rectTransform.anchorMax = Vector2.one;
         flash.rectTransform.offsetMin = flash.rectTransform.offsetMax = Vector2.zero;
         var dialogueGlass = new Color(.06f, .09f, .19f, .94f);
-        dialogPanel = UiKit.Panel(hud.transform, new Vector2(0f, -330f), new Vector2(1420f, 270f), dialogueGlass, dialogueGlass, .035f);
+        dialogPanel = UiKit.Persona(UiKit.Panel(hud.transform, new Vector2(0f, -330f), new Vector2(1420f, 270f), dialogueGlass, dialogueGlass, .035f), 6f, 14f);
         UiKit.Panel(dialogPanel.transform, new Vector2(0f, 130f), new Vector2(1320f, 3f), UiKit.Sky, UiKit.Sky, 0f);
         speaker = Label(dialogPanel.transform, 26, new Vector2(0f, 93f), new Vector2(1280f, 38f));
         speaker.color = UiKit.Sky;
@@ -230,8 +232,12 @@ public class Ascenso : MonoBehaviour
         else if (phase == Phase.Arrived)
         {
             leaving = true;
-            if (Story.Active && Story.AscentPending) Story.PassAscent();
-            SceneManager.LoadScene("sandScenario");
+            if (Story.Active && Story.AscentPending)
+            {
+                Story.PassAscent();
+                SceneManager.LoadScene("historiaDialogos");
+            }
+            else SceneManager.LoadScene("sandScenario");
         }
     }
 
@@ -248,6 +254,21 @@ public class Ascenso : MonoBehaviour
     {
         flightAudio.Flight(phase == Phase.Flying && !paused && !leaving, elapsed / Mathf.Max(1f, duration));
         if (leaving) return;
+        if (!paused && Story.TakeTestAdvance())
+        {
+            if (phase == Phase.Arrived) { dialogueAge = 1f; Confirm(); }
+            else
+            {
+                phase = Phase.Arrived;
+                elapsed = duration;
+                flightAudio.Flight(false, 1f);
+                backdrop.Refresh(1f, 0f);
+                foreach (var renderer in trainRenderers) renderer.enabled = true;
+                flash.color = flash.bottom = Color.clear;
+                ShowDialog("ascent.arrived", "quiz.ok");
+            }
+            return;
+        }
         float dt = Time.unscaledDeltaTime;
         dialogueAge += dt;
         var keyboard = Keyboard.current;

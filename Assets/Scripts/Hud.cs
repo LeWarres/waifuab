@@ -15,21 +15,32 @@ public class Hud : MonoBehaviour
         public Slanted colour;
         public float width;
 
-        public Meter(Transform parent, Vector2 position, Vector2 size)
+        public Meter(Transform parent, Vector2 position, Vector2 size, int notches = 0)
         {
             width = size.x;
-            var back = new Color(0.02f, 0.03f, 0.08f, 0.6f);
+            var back = new Color(0.01f, 0.02f, 0.06f, 0.8f);
             root = UiKit.Panel(parent, position, size, back, back, 0.25f).rectTransform;
             colour = UiKit.Panel(root, Vector2.zero, size, UiKit.Mint, UiKit.Mint, 0.25f);
             fill = colour.rectTransform;
             fill.pivot = new Vector2(0f, 0.5f);
             fill.anchoredPosition = new Vector2(-size.x * 0.5f, 0f);
+            root.GetComponent<Slanted>().pixelsPerUnitMultiplier = colour.pixelsPerUnitMultiplier = 3f; // squarer ends
+            // Notches across it, so how much is left reads at a glance; a light line along its top.
+            var notch = new Color(0.01f, 0.02f, 0.06f, 0.55f);
+            for (int i = 1; i < notches; i++) UiKit.Panel(root, new Vector2((i / (float)notches - 0.5f) * size.x, 0f), new Vector2(2f, size.y), notch, notch, 0.25f);
+            if (notches > 0)
+            {
+                RectTransform shine = UiKit.Panel(fill, Vector2.zero, new Vector2(size.x, size.y * 0.18f), new Color(1f, 1f, 1f, 0.28f), new Color(1f, 1f, 1f, 0.28f), 0f).rectTransform;
+                shine.anchorMin = shine.anchorMax = shine.pivot = new Vector2(0f, 0.5f);
+                shine.anchoredPosition = new Vector2(0f, size.y * 0.28f);
+            }
         }
 
         public void Set(float fraction, bool health = true)
         {
             fraction = Mathf.Clamp01(fraction);
             fill.sizeDelta = new Vector2(Mathf.Max(width * fraction, fraction > 0f ? fill.sizeDelta.y * 0.6f : 0f), fill.sizeDelta.y);
+            if (fill.childCount > 0) ((RectTransform)fill.GetChild(0)).sizeDelta = new Vector2(fill.sizeDelta.x, fill.sizeDelta.y * 0.18f);
             colour.enabled = fraction > 0f;
             if (health) colour.color = fraction > 0.5f ? UiKit.Mint : fraction > 0.25f ? UiKit.Gold : UiKit.Rose; // clean steps, not a muddy blend
         }
@@ -37,7 +48,9 @@ public class Hud : MonoBehaviour
 
     TrainSim train;
     Canvas canvas;
-    Text where, level, trainText, money, leg, kits, heroText, hint, warnTitle, warnDetail, toastText;
+    Text where, level, trainText, money, leg, kits, heroText, hint, warnTitle, warnDetail, toastText, stationNumber;
+    Prompt controls, ultimateKey, ultimateNoticeLine;
+    RectTransform tripMarker;
     Slanted warnBand, toastPanel, hintPanel;
     float toastUntil;
     readonly List<Text> numbers = new();
@@ -87,70 +100,97 @@ public class Hud : MonoBehaviour
         train = GetComponent<TrainSim>();
         canvas = UiKit.NewCanvas("Hud", 0);
 
-        // Small dark glass panels and thin bars: readable at a glance, out of the way of the action.
-        var glass = new Color(0.06f, 0.09f, 0.19f, 0.62f);
+        // Station signs, as at the stations: dark plates on hard shadows, a badge with a number or an icon, the big
+        // words in the display font, thick bars with notches.
         var dim = new Color(0.8f, 0.87f, 1f, 0.72f);
+        var paper = new Color(1f, 0.985f, 0.94f);
 
-        // ---- train, top left: where we are, health, the trip; money and medkits in two pills under it ----
+        // ---- train, top left: the station's badge, the biome, health, the trip as a stretch of track with the
+        // train running along it to the next station; money and medkits on tickets under it ----
         RectTransform left = UiKit.Group(canvas.transform, new Vector2(0f, 1f), new Vector2(26f, -22f));
-        left.localScale = Vector3.one * 1.15f;
-        Slanted card = UiKit.Panel(left, new Vector2(215f, -52f), new Vector2(430f, 104f), glass, glass, 0.06f);
-        UiKit.Panel(card.transform, new Vector2(-207f, 0f), new Vector2(5f, 104f), UiKit.Sky, UiKit.Sky, 0.06f);
-        where = UiKit.Label(card.transform, UiKit.Heading, 24, Color.white, TextAnchor.MiddleLeft, new Vector2(-35f, 30f), new Vector2(300f, 30f), true);
-        level = UiKit.Label(card.transform, UiKit.Body, 16, dim, TextAnchor.MiddleRight, new Vector2(150f, 30f), new Vector2(100f, 24f), true);
-        UiKit.Picture(card.transform, "wagon", new Vector2(-180f, -2f), 28f);
-        trainBar = new Meter(card.transform, new Vector2(-15f, -2f), new Vector2(290f, 12f));
-        trainText = UiKit.Label(card.transform, UiKit.Body, 16, Color.white, TextAnchor.MiddleRight, new Vector2(170f, -2f), new Vector2(70f, 22f), true);
-        tripBar = new Meter(card.transform, new Vector2(-15f, -22f), new Vector2(290f, 5f));
-        tripBar.colour.color = UiKit.Sky;
-        leg = UiKit.Label(card.transform, UiKit.Body, 14, dim, TextAnchor.MiddleLeft, new Vector2(-15f, -38f), new Vector2(290f, 20f), true);
-        Slanted purse = UiKit.Panel(left, new Vector2(72f, -130f), new Vector2(140f, 40f), glass, glass, 0.12f);
-        UiKit.Picture(purse.transform, "money", new Vector2(-44f, 0f), 30f);
-        money = UiKit.Label(purse.transform, UiKit.Heading, 24, UiKit.Gold, TextAnchor.MiddleLeft, new Vector2(18f, 0f), new Vector2(86f, 30f), true);
-        Slanted bag = UiKit.Panel(left, new Vector2(222f, -130f), new Vector2(140f, 40f), glass, glass, 0.12f);
-        bag.gameObject.SetActive(TrainSim.KitsInUse); // the medkits, put away for now
+        left.localScale = Vector3.one * 1.1f;
+        left.localRotation = Quaternion.Euler(0f, 0f, 1.2f); // a touch off level, Persona style
+        Slanted card = Plate(left, new Vector2(222f, -64f), new Vector2(444f, 128f));
+        (_, stationNumber) = Badge(card.transform, new Vector2(-172f, 6f), 84f, UiKit.Ink.Main);
+        where = UiKit.Label(card.transform, UiKit.Display, 32, Color.white, TextAnchor.MiddleLeft, new Vector2(-6f, 38f), new Vector2(220f, 42f), true);
+        Slanted tag = UiKit.Paint(Sharp(UiKit.Panel(card.transform, new Vector2(160f, 40f), new Vector2(96f, 30f), Color.white, Color.white, 0.25f), 3f), UiKit.Ink.Hot);
+        level = UiKit.Label(tag.transform, UiKit.Display, 20, UiKit.Navy, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(88f, 28f), true);
+        trainBar = new Meter(card.transform, new Vector2(25f, 4f), new Vector2(274f, 20f), 10);
+        trainText = Numbers(card.transform, new Vector2(25f, 4f), new Vector2(262f, 24f), 20);
+        // The track: sleepers, two rails, the stretch done lit in blue, a station at its end and the train on it.
+        for (float x = -108f; x <= 158f; x += 11f) UiKit.Panel(card.transform, new Vector2(x, -26f), new Vector2(3f, 12f), new Color(0.45f, 0.36f, 0.3f), new Color(0.45f, 0.36f, 0.3f), 0f);
+        foreach (float y in new[] { -22f, -30f }) UiKit.Panel(card.transform, new Vector2(25f, y), new Vector2(274f, 2f), new Color(0.65f, 0.7f, 0.8f), new Color(0.65f, 0.7f, 0.8f), 0f);
+        tripBar = new Meter(card.transform, new Vector2(25f, -26f), new Vector2(274f, 4f));
+        UiKit.Paint(tripBar.colour, UiKit.Ink.Main);
+        tripBar.root.GetComponent<Slanted>().color = tripBar.root.GetComponent<Slanted>().bottom = new Color(0f, 0f, 0f, 0f);
+        Slanted stop = UiKit.Paint(UiKit.Panel(card.transform, new Vector2(166f, -26f), new Vector2(20f, 20f), Color.white, Color.white, 0f), UiKit.Ink.Main);
+        stop.sprite = UiKit.Disc();
+        UiKit.Panel(stop.transform, Vector2.zero, new Vector2(10f, 10f), Color.white, Color.white, 0f).sprite = UiKit.Disc();
+        tripMarker = UiKit.Picture(card.transform, "wagon", new Vector2(-110f, -20f), 30f).rectTransform;
+        leg = UiKit.Label(card.transform, UiKit.Body, 14, dim, TextAnchor.MiddleLeft, new Vector2(25f, -48f), new Vector2(274f, 20f), true);
+        Slanted purse = Ticket(left, new Vector2(74f, -158f), new Vector2(144f, 42f), paper);
+        UiKit.Picture(purse.transform, "money", new Vector2(-44f, 0f), 32f);
+        money = UiKit.Label(purse.transform, UiKit.Display, 28, UiKit.Navy, TextAnchor.MiddleLeft, new Vector2(18f, 0f), new Vector2(86f, 36f), true);
+        Slanted bag = Ticket(left, new Vector2(228f, -158f), new Vector2(144f, 42f), paper);
+        bag.transform.parent.gameObject.SetActive(TrainSim.KitsInUse); // the medkits, put away for now
         UiKit.Picture(bag.transform, "medkit", new Vector2(-44f, 0f), 28f);
-        kits = UiKit.Label(bag.transform, UiKit.Body, 18, Color.white, TextAnchor.MiddleLeft, new Vector2(18f, 0f), new Vector2(86f, 28f), true);
-        // Square see-through boxes side by side, Vampire Survivors style: five drawn even when empty, one more for
-        // every thing past five.
+        kits = UiKit.Label(bag.transform, UiKit.Display, 22, UiKit.Navy, TextAnchor.MiddleLeft, new Vector2(18f, 0f), new Vector2(86f, 30f), true);
+        // Square boxes side by side, Vampire Survivors style: five drawn even when empty, one more for every thing
+        // past five. The level on a small gold tag in the corner.
         void Boxes(List<(RawImage, Text)> row, int count, float y, Color edge)
         {
-            var fill = new Color(0f, 0f, 0f, 0.22f);
+            var fill = new Color(0.04f, 0.06f, 0.14f, 0.72f);
             for (int i = 0; i < count; i++)
             {
-                Slanted box = UiKit.Panel(left, new Vector2(20f + i * 40f, y), new Vector2(40f, 40f), fill, fill, 0f);
+                Slanted box = UiKit.Panel(left, new Vector2(21f + i * 42f, y), new Vector2(40f, 40f), fill, fill, 0f);
+                box.sprite = null; // square, as its frame
                 foreach (var (at, size) in new[] { (new Vector2(0f, 19f), new Vector2(40f, 2f)), (new Vector2(0f, -19f), new Vector2(40f, 2f)),
                                                    (new Vector2(-19f, 0f), new Vector2(2f, 40f)), (new Vector2(19f, 0f), new Vector2(2f, 40f)) })
                     UiKit.Panel(box.transform, at, size, edge, edge, 0f);
-                RawImage icon = UiKit.Picture(box.transform, null, new Vector2(0f, 1f), 32f);
-                Text lv = UiKit.Label(box.transform, UiKit.Heading, 13, UiKit.Gold, TextAnchor.LowerRight, new Vector2(1f, 0f), new Vector2(36f, 38f), true);
+                RawImage icon = UiKit.Picture(box.transform, null, new Vector2(0f, 2f), 34f);
+                Slanted badge = UiKit.Panel(box.transform, new Vector2(10f, -15f), new Vector2(30f, 16f), UiKit.Gold, UiKit.Gold, 0.25f);
+                badge.sprite = null;
+                Text lv = UiKit.Label(badge.transform, UiKit.Display, 14, UiKit.Navy, TextAnchor.MiddleCenter, new Vector2(0f, 0.5f), new Vector2(30f, 16f));
+                lv.fontStyle = FontStyle.Normal;
+                lv.verticalOverflow = VerticalWrapMode.Overflow; // the display font's line is taller than the tag
+                badge.gameObject.SetActive(false);
                 row.Add((icon, lv));
             }
         }
-        var line = new Color(1f, 1f, 1f, 0.35f);
-        Boxes(weapons, 14, -178f, line);
-        Boxes(passives, TrainSim.Passives.Length, -218f, line);
+        var line = new Color(1f, 1f, 1f, 0.22f);
+        Boxes(weapons, 14, -206f, line);
+        Boxes(passives, TrainSim.Passives.Length, -250f, line);
 
-        // ---- hero, top right: weapon and health; the stats only at a station, the controls only at the start ----
+        // ---- hero, top right: the weapon in its badge, its name and level, health; the ultimate under it; the
+        // stats only at a station, the controls (their buttons drawn) only at the start ----
         RectTransform right = UiKit.Group(canvas.transform, new Vector2(1f, 1f), new Vector2(-26f, -22f));
-        right.localScale = Vector3.one * 1.15f;
-        Slanted hero = UiKit.Panel(right, new Vector2(-175f, -38f), new Vector2(350f, 76f), glass, glass, 0.06f);
-        UiKit.Panel(hero.transform, new Vector2(167f, 0f), new Vector2(5f, 76f), UiKit.Gold, UiKit.Gold, 0.06f);
-        ammoIcon = UiKit.Picture(hero.transform, null, new Vector2(-138f, 0f), 46f);
-        ammoText = UiKit.Label(hero.transform, UiKit.Heading, 20, Color.white, TextAnchor.MiddleLeft, new Vector2(20f, 15f), new Vector2(250f, 26f), true);
-        heroBar = new Meter(hero.transform, new Vector2(-13f, -14f), new Vector2(185f, 10f));
-        heroText = UiKit.Label(hero.transform, UiKit.Body, 16, Color.white, TextAnchor.MiddleRight, new Vector2(122f, -14f), new Vector2(76f, 22f), true);
-        // The ultimate: its own panel under the hero's, a wide bar that blazes in every colour once full.
-        ultimatePanel = UiKit.Panel(right, new Vector2(-175f, -100f), new Vector2(350f, 40f), glass, glass, 0.06f);
-        ultimateEdge = UiKit.Panel(ultimatePanel.transform, new Vector2(167f, 0f), new Vector2(5f, 40f), UiKit.Sky, UiKit.Sky, 0.06f);
-        UiKit.Label(ultimatePanel.transform, UiKit.Heading, 17, Color.white, TextAnchor.MiddleLeft, new Vector2(-125f, 0f), new Vector2(80f, 26f), true).text = "ULTI";
-        ultimateBar = new Meter(ultimatePanel.transform, new Vector2(10f, 0f), new Vector2(190f, 14f));
-        ultimateText = UiKit.Label(ultimatePanel.transform, UiKit.Heading, 17, Color.white, TextAnchor.MiddleRight, new Vector2(128f, 0f), new Vector2(70f, 26f), true);
-        hintPanel = UiKit.Panel(right, new Vector2(-260f, -144f), new Vector2(520f, 32f), glass, glass, 0.12f);
-        RectTransform top = UiKit.Group(canvas.transform, new Vector2(0.5f, 1f), new Vector2(0f, -22f));
-        Slanted killsPanel = UiKit.Panel(top, Vector2.zero, new Vector2(220f, 36f), glass, glass, 0.12f);
-        killsText = UiKit.Label(killsPanel.transform, UiKit.Heading, 22, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(200f, 30f), true);
-        hint = UiKit.Label(hintPanel.transform, UiKit.Body, 15, dim, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(500f, 26f), true);
+        right.localScale = Vector3.one * 1.1f;
+        right.localRotation = Quaternion.Euler(0f, 0f, -1.2f);
+        Slanted hero = Plate(right, new Vector2(-184f, -46f), new Vector2(368f, 92f));
+        var (weaponBadge, _) = Badge(hero.transform, new Vector2(140f, 0f), 76f, UiKit.Ink.Hot);
+        ammoIcon = UiKit.Picture(weaponBadge.transform, null, Vector2.zero, 58f);
+        ammoText = UiKit.Label(hero.transform, UiKit.Display, 26, Color.white, TextAnchor.MiddleLeft, new Vector2(-38f, 20f), new Vector2(250f, 34f), true);
+        heroBar = new Meter(hero.transform, new Vector2(-38f, -16f), new Vector2(250f, 18f), 10);
+        heroText = Numbers(hero.transform, new Vector2(-38f, -16f), new Vector2(238f, 22f), 18);
+        // The ultimate: its own plate under the hero's, a wide bar that blazes in every colour once full, and then
+        // the button to press.
+        ultimatePanel = Plate(right, new Vector2(-184f, -120f), new Vector2(368f, 46f));
+        ultimateEdge = Sharp(UiKit.Panel(ultimatePanel.transform, new Vector2(-150f, 0f), new Vector2(70f, 32f), UiKit.Sky, UiKit.Sky, 0.25f), 3f);
+        Text ulti = UiKit.Label(ultimateEdge.transform, UiKit.Display, 22, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(66f, 30f), true);
+        ulti.text = "ULTI";
+        var rim = ulti.gameObject.AddComponent<Outline>(); // white on any of the colours it runs through
+        rim.effectColor = new Color(0f, 0f, 0.05f, 0.8f);
+        rim.effectDistance = new Vector2(1.5f, -1.5f);
+        ultimateBar = new Meter(ultimatePanel.transform, new Vector2(18f, 0f), new Vector2(206f, 18f), 10);
+        ultimateText = UiKit.Label(ultimatePanel.transform, UiKit.Display, 22, Color.white, TextAnchor.MiddleRight, new Vector2(140f, 0f), new Vector2(64f, 30f), true);
+        ultimateKey = Prompt.Make(ultimatePanel.transform, new Vector2(148f, 0f), 22, Color.white, UiKit.Display);
+        Slanted hintPlate = Plate(right, new Vector2(-280f, -178f), new Vector2(560f, 46f));
+        hintPanel = Whole(hintPlate);
+        RectTransform top = UiKit.Group(canvas.transform, new Vector2(0.5f, 1f), new Vector2(0f, -24f));
+        Slanted killsPanel = Plate(top, Vector2.zero, new Vector2(230f, 46f));
+        killsText = UiKit.Label(killsPanel.transform, UiKit.Display, 22, dim, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(210f, 42f), true);
+        hint = UiKit.Label(hintPlate.transform, UiKit.Body, 16, dim, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(540f, 30f), true);
+        controls = Prompt.Make(hintPlate.transform, Vector2.zero, 19, Color.white);
 
         world = UiKit.Group(canvas.transform, Vector2.zero, Vector2.zero);
         world.SetAsFirstSibling(); // world bars under the cards
@@ -158,35 +198,41 @@ public class Hud : MonoBehaviour
         // Warning strip across the screen, and the short message that reports how an event went.
         warnBand = UiKit.Panel(canvas.transform, new Vector2(0f, -330f), new Vector2(2400f, 150f), UiKit.Gold, UiKit.Gold, 0f);
         warnBand.rectTransform.anchorMin = warnBand.rectTransform.anchorMax = new Vector2(0.5f, 1f);
+        warnBand.rectTransform.localRotation = Quaternion.Euler(0f, 0f, -2.5f);
         UiKit.Panel(warnBand.transform, new Vector2(0f, 71f), new Vector2(2400f, 8f), UiKit.Navy, UiKit.Navy, 0f);
         UiKit.Panel(warnBand.transform, new Vector2(0f, -71f), new Vector2(2400f, 8f), UiKit.Navy, UiKit.Navy, 0f);
-        warnTitle = UiKit.Label(warnBand.transform, UiKit.Heading, 68, UiKit.Navy, TextAnchor.MiddleCenter, new Vector2(0f, 22f), new Vector2(1700f, 84f), true);
+        warnTitle = UiKit.Label(warnBand.transform, UiKit.Display, 76, UiKit.Navy, TextAnchor.MiddleCenter, new Vector2(0f, 22f), new Vector2(1700f, 84f), true);
         warnDetail = UiKit.Label(warnBand.transform, UiKit.Body, 30, UiKit.Navy, TextAnchor.MiddleCenter, new Vector2(0f, -40f), new Vector2(1700f, 42f), true);
         warnBand.gameObject.SetActive(false);
 
-        var dark = new Color(UiKit.Navy.r, UiKit.Navy.g, UiKit.Navy.b, 0.9f);
-        toastPanel = UiKit.Panel(canvas.transform, new Vector2(0f, 250f), new Vector2(1100f, 78f), dark, dark, 0.25f);
+        Slanted toastPlate = UiKit.Plate(canvas.transform, new Vector2(0f, 250f), new Vector2(1100f, 78f), 0.25f, 5f, 10f);
+        toastPanel = Whole(toastPlate);
         toastPanel.rectTransform.anchorMin = toastPanel.rectTransform.anchorMax = new Vector2(0.5f, 0f);
-        toastText = UiKit.Label(toastPanel.transform, UiKit.Heading, 38, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(1040f, 70f), true);
+        toastPanel.rectTransform.localRotation = Quaternion.Euler(0f, 0f, 1.5f);
+        toastText = UiKit.Label(toastPlate.transform, UiKit.Display, 42, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(1040f, 70f), true);
         toastPanel.gameObject.SetActive(false);
 
-        ultimateNotice = UiKit.Panel(canvas.transform, Vector2.zero, new Vector2(760f, 82f), dark, dark, 0.12f);
+        Slanted noticePlate = UiKit.Plate(canvas.transform, Vector2.zero, new Vector2(760f, 82f), 0.12f, 5f, 10f);
+        ultimateNotice = Whole(noticePlate);
         ultimateNotice.gameObject.name = "UltimateReadyNotice";
         ultimateNoticeFade = ultimateNotice.gameObject.AddComponent<CanvasGroup>();
         ultimateNoticeFade.blocksRaycasts = false;
         ultimateNoticeFade.interactable = false;
-        ultimateNoticeText = UiKit.Label(ultimateNotice.transform, UiKit.Heading, 30, Color.white, TextAnchor.MiddleCenter,
+        ultimateNoticeText = UiKit.Label(noticePlate.transform, UiKit.Display, 34, Color.white, TextAnchor.MiddleCenter,
             Vector2.zero, new Vector2(600f, 65f), true);
+        ultimateNoticeText.enabled = false; // the line is drawn with its button
+        ultimateNoticeLine = Prompt.Make(noticePlate.transform, Vector2.zero, 32, Color.white, UiKit.Display);
         foreach (float x in new[] { -330f, 330f })
         {
             var triangle = new GameObject("Warning", typeof(RectTransform), typeof(CanvasRenderer), typeof(UltimateWarning)).GetComponent<UltimateWarning>();
-            triangle.transform.SetParent(ultimateNotice.transform, false);
+            triangle.transform.SetParent(noticePlate.transform, false);
             triangle.rectTransform.anchoredPosition = new Vector2(x, 0f);
             triangle.rectTransform.sizeDelta = new Vector2(46f, 44f);
-            triangle.color = UiKit.Gold;
+            UiKit.Paint(triangle, UiKit.Ink.Hot);
             triangle.raycastTarget = false;
-            UiKit.Label(triangle.transform, UiKit.Heading, 30, UiKit.Navy, TextAnchor.MiddleCenter,
-                new Vector2(0f, -7f), new Vector2(28f, 34f)).text = "!";
+            Text bang = UiKit.Label(triangle.transform, UiKit.Display, 30, UiKit.Navy, TextAnchor.MiddleCenter, new Vector2(0f, -6f), new Vector2(28f, 34f));
+            bang.fontStyle = FontStyle.Normal;
+            bang.text = "!";
         }
         ultimateNotice.gameObject.SetActive(false);
     }
@@ -242,12 +288,13 @@ public class Hud : MonoBehaviour
     {
         if (bossPanel == null)
         {
-            var glass = new Color(0.06f, 0.09f, 0.19f, 0.78f);
-            bossPanel = UiKit.Panel(canvas.transform, new Vector2(0f, -100f), new Vector2(780f, 84f), glass, glass, 0.1f); // under the kill count
+            Slanted plate = UiKit.Plate(canvas.transform, new Vector2(0f, -104f), new Vector2(780f, 84f), 0.1f, 4f, 9f); // under the kill count
+            bossPanel = Whole(plate);
             bossPanel.rectTransform.anchorMin = bossPanel.rectTransform.anchorMax = new Vector2(0.5f, 1f);
-            UiKit.Panel(bossPanel.transform, new Vector2(0f, 41f), new Vector2(780f, 6f), UiKit.Rose, UiKit.Rose, 0.1f);
-            bossName = UiKit.Label(bossPanel.transform, UiKit.Heading, 30, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 22f), new Vector2(740f, 34f), true);
-            bossBar = new Meter(bossPanel.transform, new Vector2(0f, -16f), new Vector2(700f, 18f));
+            bossPanel.rectTransform.localRotation = Quaternion.Euler(0f, 0f, -1f);
+            UiKit.Paint(UiKit.Panel(plate.transform, new Vector2(-6f, 39f), new Vector2(768f, 6f), Color.white, Color.white, 0.1f), UiKit.Ink.Main).sprite = null;
+            bossName = UiKit.Label(plate.transform, UiKit.Display, 34, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 18f), new Vector2(740f, 38f), true);
+            bossBar = new Meter(plate.transform, new Vector2(0f, -18f), new Vector2(700f, 22f), 20);
         }
         bossName.text = name;
         bossBar.Set(fraction, false);
@@ -257,13 +304,66 @@ public class Hud : MonoBehaviour
 
     const int BaseBoxes = 5;
 
+    // The pad's face button for the ultimate, as a glyph: Xbox's Y is told apart from the key Y.
+    string KitGlyph => train.KitButton == "Y" ? "xY" : train.KitButton;
+
+    // The Persona plate, a little lighter for the HUD: the biome's hard shadow, a white outline, the dark plate.
+    static Slanted Plate(Transform parent, Vector2 at, Vector2 size) => UiKit.Plate(parent, at, size, 0.12f, 3f, 7f);
+    // The root of a plate (its shadow): what is shown, hidden, scaled.
+    static Slanted Whole(Slanted plate) => UiKit.Root(plate).GetComponent<Slanted>();
+
+    // Tighter corners than the menus' soft ones.
+    static Slanted Sharp(Slanted panel, float by = 2.5f)
+    {
+        panel.pixelsPerUnitMultiplier = by;
+        return panel;
+    }
+
+    // A cream ticket on a hard shadow (the money, the medkits); its shadow holds it, to show or hide both.
+    static Slanted Ticket(Transform parent, Vector2 at, Vector2 size, Color paper)
+    {
+        var shadow = new Color(0f, 0f, 0.03f, 0.55f);
+        Slanted under = Sharp(UiKit.Panel(parent, at + new Vector2(5f, -5f), size, shadow, shadow, 0.2f));
+        return Sharp(UiKit.Panel(under.transform, new Vector2(-5f, 5f), size, paper, new Color(0.95f, 0.91f, 0.83f), 0.2f));
+    }
+
+    // A station badge: a rounded square in its colour, white inside, a number in its colour (or an icon put in it).
+    static (Slanted frame, Text number) Badge(Transform parent, Vector2 at, float size, UiKit.Ink ink)
+    {
+        Slanted frame = Sharp(UiKit.Panel(parent, at, new Vector2(size, size), Color.white, Color.white, 0f), 2f);
+        UiKit.Paint(frame, ink);
+        Sharp(UiKit.Panel(frame.transform, Vector2.zero, new Vector2(size - 16f, size - 16f), Color.white, new Color(0.88f, 0.92f, 0.98f), 0f), 3f);
+        Text number = UiKit.Label(frame.transform, UiKit.Display, Mathf.RoundToInt(size * 0.58f), Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 2f), new Vector2(size - 16f, size - 16f), true);
+        UiKit.Paint(number, ink);
+        number.fontStyle = FontStyle.Normal;
+        return (frame, number);
+    }
+
+    // The numbers on a bar, white on a dark rim, at its right end.
+    static Text Numbers(Transform parent, Vector2 at, Vector2 box, int size)
+    {
+        Text text = UiKit.Label(parent, UiKit.Display, size, Color.white, TextAnchor.MiddleRight, at, box, true);
+        var rim = text.gameObject.AddComponent<Outline>();
+        rim.effectColor = new Color(0f, 0f, 0.05f, 0.9f);
+        rim.effectDistance = new Vector2(1.5f, -1.5f);
+        return text;
+    }
+
+    // The level on a box's tag; no level, no tag.
+    static void Level((RawImage icon, Text level) box, string text)
+    {
+        box.level.text = text;
+        GameObject tag = box.level.transform.parent.gameObject;
+        if (tag.activeSelf != (text != "")) tag.SetActive(text != "");
+    }
+
     // A box on screen (slot), with or without a symbol in it (shown).
     static void Show((RawImage icon, Text level) box, bool shown, bool slot)
     {
         GameObject frame = box.icon.transform.parent.gameObject;
         if (frame.activeSelf != slot) frame.SetActive(slot);
         if (box.icon.enabled != shown) box.icon.enabled = shown;
-        if (!shown) box.level.text = "";
+        if (!shown) Level(box, "");
     }
 
     public void Toast(string text, float seconds = 2.5f)
@@ -304,7 +404,7 @@ public class Hud : MonoBehaviour
                 popupCanvas = UiKit.NewCanvas("DamageNumbers", 1);
                 Destroy(popupCanvas.GetComponent<GraphicRaycaster>()); // nothing here is clicked
             }
-            Text text = UiKit.Label(popupCanvas.transform, UiKit.Heading, 46, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(200f, 70f), true);
+            Text text = UiKit.Label(popupCanvas.transform, UiKit.Display, 50, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(200f, 70f), true);
             text.rectTransform.anchorMin = text.rectTransform.anchorMax = Vector2.zero; // placed in screen points
             var outline = text.gameObject.AddComponent<Outline>(); // keeps it readable over any ground
             outline.effectColor = new Color(0f, 0f, 0f, 0.9f);
@@ -313,7 +413,7 @@ public class Hud : MonoBehaviour
         }
         popup.text.text = caption ?? Mathf.Max(1, Mathf.RoundToInt(amount)).ToString() + (critical ? "!" : "");
         popup.text.color = tint ?? (critical ? new Color(1f, 0.55f, 0.1f) : onTrain ? UiKit.Gold : new Color(1f, 0.25f, 0.2f)); // a critical: orange, and it ends in "!"
-        popup.text.fontSize = critical ? 56 : 46;
+        popup.text.fontSize = critical ? 62 : 50;
         popup.at = at;
         popup.amount = amount;
         popup.onTrain = onTrain;
@@ -355,10 +455,13 @@ public class Hud : MonoBehaviour
     {
         evolutions = UiKit.NewCanvas("Evolutions", 15); // over the pause menu
         Transform root = evolutions.transform;
-        var shade = new Color(0.03f, 0.05f, 0.12f, 1f); // solid: the pause menu stays hidden under it
+        var shade = UiKit.Now.deep; // solid: the pause menu stays hidden under it
         var dim = new Color(0.8f, 0.87f, 1f, 0.72f);
         UiKit.Panel(root, Vector2.zero, new Vector2(2600f, 1500f), shade, shade, 0f);
-        UiKit.Label(root, UiKit.Heading, 46, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 480f), new Vector2(1600f, 60f), true).text = L10n.T("evo.title");
+        RectTransform head = UiKit.Group(root, new Vector2(0.5f, 0.5f), new Vector2(0f, 482f));
+        head.localRotation = Quaternion.Euler(0f, 0f, 1.5f);
+        UiKit.Paint(UiKit.Panel(head, Vector2.zero, new Vector2(900f, 80f), Color.white, Color.white, 0.25f), UiKit.Ink.Main).sprite = null;
+        UiKit.Label(head, UiKit.Display, 58, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 2f), new Vector2(880f, 76f), true).text = L10n.T("evo.title").ToUpperInvariant();
         UiKit.Label(root, UiKit.Body, 22, dim, TextAnchor.MiddleCenter, new Vector2(0f, 436f), new Vector2(1700f, 32f), true).text = L10n.T("evo.rule");
         var all = new List<(Weapon, bool)>();
         foreach (Weapon w in Weapon.Hero) all.Add((w, true));
@@ -374,7 +477,7 @@ public class Hud : MonoBehaviour
             UiKit.Label(line, UiKit.Heading, 30, dim, TextAnchor.MiddleCenter, new Vector2(-348f, 0f), new Vector2(30f, 40f), true).text = "+";
             RawImage partner = UiKit.Picture(line, passive >= 0 ? TrainSim.PassiveIcons[passive] : null, new Vector2(-296f, 0f), 56f);
             UiKit.Label(line, UiKit.Heading, 30, dim, TextAnchor.MiddleCenter, new Vector2(-240f, 0f), new Vector2(40f, 40f), true).text = "=";
-            Text name = UiKit.Label(line, UiKit.Heading, 26, Color.white, TextAnchor.MiddleLeft, new Vector2(0f, 10f), new Vector2(420f, 34f), true);
+            Text name = UiKit.Label(line, UiKit.Display, 28, Color.white, TextAnchor.MiddleLeft, new Vector2(0f, 10f), new Vector2(420f, 34f), true);
             name.text = weapon.EvolvedName;
             UiKit.Label(line, UiKit.Body, 17, dim, TextAnchor.MiddleLeft, new Vector2(0f, -18f), new Vector2(420f, 24f), true).text =
                 L10n.T(hero ? "evo.hero" : "evo.wagon", weapon.Name, passive >= 0 ? L10n.T("passive." + weapon.evolvesWith) : "");
@@ -422,7 +525,7 @@ public class Hud : MonoBehaviour
         {
             float left = ultimateNoticeUntil - Time.unscaledTime;
             float age = UltimateNoticeSeconds - left;
-            ultimateNoticeText.text = L10n.T("ultimate.ready", train.KitButton);
+            ultimateNoticeLine.Set(L10n.T("ultimate.ready", "[" + KitGlyph + "]"));
             ultimateNoticeFade.alpha = Mathf.Min(Mathf.Clamp01(age / 0.15f), Mathf.Clamp01(left / 0.25f));
             ultimateNotice.rectTransform.localScale = Vector3.one * (1f + 0.025f * Mathf.Sin(age * 8f));
         }
@@ -435,7 +538,7 @@ public class Hud : MonoBehaviour
         while (numbers.Count < tags)
         {
             Slanted pill = UiKit.Panel(world, Vector2.zero, new Vector2(64f, 56f), UiKit.Navy, UiKit.Navy, 0.1f);
-            numbers.Add(UiKit.Label(pill.transform, UiKit.Heading, 38, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(58f, 52f), true));
+            numbers.Add(UiKit.Label(pill.transform, UiKit.Display, 42, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(58f, 52f), true));
         }
         for (int i = 0; i < numbers.Count; i++)
         {
@@ -472,15 +575,19 @@ public class Hud : MonoBehaviour
 
         Player hero = train.Player;
         float health = train.Health, max = train.MaxHealth;
-        where.text = Story.Active ? L10n.T("hud.chapter", Story.Chapter + 1, train.BiomeLabel, train.StoryTime) : L10n.T("hud.where", train.Stations, train.BiomeLabel);
-        level.text = L10n.T("hud.level", train.Difficulty);
+        // The badge: the station (the chapter, in the story); the sign: the biome; the tag: the difficulty.
+        stationNumber.text = (Story.Active ? Story.Chapter + 1 : train.AtStation ? train.Stations : train.Stations + 1).ToString("00"); // on the way: the station ahead
+        where.text = train.BiomeLabel.ToUpperInvariant();
+        level.text = L10n.T("hud.level", train.Difficulty).ToUpperInvariant();
         trainBar.Set(health / max);
         trainText.text = $"{Mathf.Round(health)}/{Mathf.Round(max)}";
         money.text = train.money.ToString();
-        leg.text = train.LegLabel;
+        leg.text = Story.Active ? train.StoryTime + "  ·  " + train.LegLabel : train.LegLabel;
         tripBar.Set(train.LegProgress, false);
+        tripMarker.anchoredPosition = new Vector2(-110f + 274f * Mathf.Clamp01(train.LegProgress), -20f + (train.AtStation ? 0f : Mathf.Abs(Mathf.Sin(Time.time * 9f)) * 1.5f));
         kits.text = $"{train.Kits}  ·  {train.KitButton}";
-        killsText.text = L10n.T("hud.kills", train.Kills);
+        killsText.supportRichText = true;
+        killsText.text = string.Format(L10n.T("hud.kills").ToUpperInvariant(), "<size=34><color=#ffffff>" + train.Kills + "</color></size>");
         // The ultimate: sky blue while it fills; once full, the bar runs through every colour, the panel throbs and
         // shows its button (dimmed while an alert holds it back).
         ultimateBar.Set(train.UltimateFill, false);
@@ -491,23 +598,25 @@ public class Hud : MonoBehaviour
             ultimateBar.colour.color = Color.HSVToRGB(Mathf.Repeat(now * 0.6f, 1f), 0.75f, 1f);
             ultimateBar.colour.bottom = Color.HSVToRGB(Mathf.Repeat(now * 0.6f + 0.35f, 1f), 0.75f, 1f);
             ultimateEdge.color = ultimateEdge.bottom = ultimateBar.colour.color;
-            ultimatePanel.rectTransform.localScale = Vector3.one * (1f + 0.04f * Mathf.Sin(now * 8f));
-            ultimateText.text = L10n.T("hud.ultimate", train.KitButton);
-            ultimateText.color = train.Alerting ? new Color(1f, 1f, 1f, 0.4f) : UiKit.Gold;
+            Whole(ultimatePanel).rectTransform.localScale = Vector3.one * (1f + 0.04f * Mathf.Sin(now * 8f));
+            ultimateText.text = "";
+            ultimateKey.gameObject.SetActive(!train.Alerting); // held back while an alert is up
+            ultimateKey.Set("[" + KitGlyph + "]");
         }
         else
         {
-            ultimateBar.colour.color = ultimateBar.colour.bottom = UiKit.Sky;
-            ultimateEdge.color = ultimateEdge.bottom = UiKit.Sky;
-            ultimatePanel.rectTransform.localScale = Vector3.one;
+            ultimateBar.colour.color = ultimateBar.colour.bottom = UiKit.Now.main;
+            ultimateEdge.color = ultimateEdge.bottom = UiKit.Now.main;
+            Whole(ultimatePanel).rectTransform.localScale = Vector3.one;
             ultimateText.text = Mathf.RoundToInt(train.UltimateFill * 100f) + "%";
             ultimateText.color = Color.white;
+            ultimateKey.gameObject.SetActive(false);
         }
 
         heroBar.Set(hero.Health / hero.maxHealth);
         heroText.text = hero.Alive ? $"{hero.Health:0}/{hero.maxHealth:0}" : "0";
         UiKit.SetIcon(ammoIcon, hero.ammo.id);
-        ammoText.text = !hero.Alive ? L10n.T("player.down") : hero.level >= Weapon.Evolved ? L10n.T("player.evo", hero.ammo.EvolvedName) : L10n.T("player.slot", hero.ammo.Name, hero.level);
+        ammoText.text = (!hero.Alive ? L10n.T("player.down") : hero.level >= Weapon.Evolved ? L10n.T("player.evo", hero.ammo.EvolvedName) : L10n.T("player.slot", hero.ammo.Name, hero.level)).ToUpperInvariant();
         // The weapons on board, then those waiting for a wagon (faded).
         var arsenal = new List<(Weapon weapon, int level)>(train.Arsenal());
         int onBoard = arsenal.Count;
@@ -520,7 +629,7 @@ public class Hud : MonoBehaviour
             UiKit.SetIcon(weapons[i].icon, arsenal[i].weapon.id);
             weapons[i].icon.color = new Color(1f, 1f, 1f, i < onBoard ? 1f : 0.4f);
             int lv = arsenal[i].level;
-            weapons[i].level.text = lv >= Weapon.Evolved ? "EVO" : lv >= Weapon.MaxLevel ? "MAX" : lv.ToString();
+            Level(weapons[i], lv >= Weapon.Evolved ? "EVO" : lv >= Weapon.MaxLevel ? "MAX" : lv.ToString());
         }
         for (int i = 0; i < passives.Count; i++)
         {
@@ -530,13 +639,16 @@ public class Hud : MonoBehaviour
             string id = train.passiveOrder[i];
             UiKit.SetIcon(passives[i].icon, TrainSim.PassiveIcons[System.Array.IndexOf(TrainSim.Passives, id)]);
             int lv = train.PassiveLevel(id);
-            passives[i].level.text = lv >= TrainSim.MaxPassive ? "MAX" : lv.ToString();
+            Level(passives[i], lv >= TrainSim.MaxPassive ? "MAX" : lv.ToString());
         }
         // One quiet line under the hero: the stats while shopping, the controls for the first stretch of a run.
         hint.text = train.AtStation ? L10n.T("hud.hero.stats", Mathf.RoundToInt(hero.damageBonus * 100f), hero.speed.ToString("0.#"),
-                Mathf.RoundToInt(hero.armor * 100f), Mathf.RoundToInt(hero.moneyBonus * 100f))
-            : train.Stations == 0 && train.LegProgress < 0.3f ? L10n.T(hero.UsingGamepad ? "player.help.gamepad" : "player.help.keyboard") : "";
-        if (hintPanel.gameObject.activeSelf != (hint.text != "")) hintPanel.gameObject.SetActive(hint.text != "");
+                Mathf.RoundToInt(hero.armor * 100f), Mathf.RoundToInt(hero.moneyBonus * 100f)) : "";
+        bool showControls = !train.AtStation && train.Stations == 0 && train.LegProgress < 0.3f;
+        if (controls.gameObject.activeSelf != showControls) controls.gameObject.SetActive(showControls);
+        if (showControls) controls.Set(L10n.T(hero.UsingGamepad ? "player.help.gamepad" : "player.help.keyboard"));
+        bool hinted = hint.text != "" || showControls;
+        if (hintPanel.gameObject.activeSelf != hinted) hintPanel.gameObject.SetActive(hinted);
 
         // One small bar over every wagon, one over the hero; hidden while a menu covers the train.
         int wanted = train.MenuShown || train.Swarming ? 0 : train.CarCount + (hero.Alive ? 1 : 0); // not from the gunner's seat

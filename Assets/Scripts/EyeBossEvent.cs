@@ -40,6 +40,9 @@ public class EyeBossEvent : MonoBehaviour
     class Orb { public Transform body; public Vector3 from; public float from0, land; }
 
     TrainSim train;
+    EyeBossAudio bossSound;
+    float nextStep;
+    bool charging;
     InputAction move, look;
     BrawlClips clips;
     Camera view;
@@ -82,6 +85,7 @@ public class EyeBossEvent : MonoBehaviour
     void Awake()
     {
         train = GetComponent<TrainSim>();
+        bossSound = GetComponent<EyeBossAudio>() ?? gameObject.AddComponent<EyeBossAudio>();
         move = InputSystem.actions.FindAction("Player/Move", true);
         look = InputSystem.actions.FindAction("Player/Look", true);
         clips = Resources.Load<BrawlClips>("Brawl/BrawlClips");
@@ -103,17 +107,20 @@ public class EyeBossEvent : MonoBehaviour
         board = UiKit.NewCanvas("EyeBoss", 6);
         var glass = new Color(0.06f, 0.09f, 0.19f, 0.62f);
         Slanted top = UiKit.Panel(board.transform, new Vector2(0f, -50f), new Vector2(640f, 26f), glass, glass, 0.1f);
+        UiKit.Persona(top);
         top.rectTransform.anchorMin = top.rectTransform.anchorMax = new Vector2(0.5f, 1f);
         bossFill = UiKit.Panel(top.transform, new Vector2(-310f, 0f), new Vector2(620f, 16f), new Color(0.75f, 0.3f, 1f), new Color(0.75f, 0.3f, 1f), 0f);
         bossFill.rectTransform.pivot = new Vector2(0f, 0.5f);
         Slanted left = UiKit.Panel(board.transform, new Vector2(150f, -60f), new Vector2(260f, 60f), glass, glass, 0.12f);
+        UiKit.Persona(left);
         left.rectTransform.anchorMin = left.rectTransform.anchorMax = new Vector2(0f, 1f);
-        heartsText = UiKit.Label(left.transform, UiKit.Heading, 34, UiKit.Rose, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(240f, 50f), true);
+        heartsText = UiKit.Label(left.transform, UiKit.Display, 34, UiKit.Rose, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(240f, 50f), true);
         Slanted help = UiKit.Panel(board.transform, new Vector2(0f, 50f), new Vector2(900f, 40f), glass, glass, 0.12f);
+        UiKit.Persona(help);
         help.rectTransform.anchorMin = help.rectTransform.anchorMax = new Vector2(0.5f, 0f);
         hint = UiKit.Label(help.transform, UiKit.Body, 20, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(880f, 34f), true);
-        message = UiKit.Label(board.transform, UiKit.Heading, 40, UiKit.Gold, TextAnchor.MiddleCenter, new Vector2(0f, 150f), new Vector2(1200f, 60f), true);
-        crosshair = UiKit.Label(board.transform, UiKit.Heading, 46, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(80f, 80f), true);
+        message = UiKit.Label(board.transform, UiKit.Display, 40, UiKit.Gold, TextAnchor.MiddleCenter, new Vector2(0f, 150f), new Vector2(1200f, 60f), true);
+        crosshair = UiKit.Label(board.transform, UiKit.Display, 46, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(80f, 80f), true);
         crosshair.text = "+";
         board.gameObject.SetActive(false);
     }
@@ -302,6 +309,8 @@ public class EyeBossEvent : MonoBehaviour
     // done(true): every eye shut.
     public void Begin(System.Action<bool> done)
     {
+        bossSound.Stop();
+        nextStep = 0f;
         this.done = done;
         Build();
         left = hearts * 2;
@@ -324,8 +333,11 @@ public class EyeBossEvent : MonoBehaviour
     }
 
     // Over: it stays on screen (for the last words, or the question whether to try again) until Close.
+    public void TestWin() { if (Active) End(true); }
+
     void End(bool won)
     {
+        bossSound.Stop();
         Active = false;
         board.gameObject.SetActive(false);
         Time.timeScale = 1f;
@@ -336,6 +348,7 @@ public class EyeBossEvent : MonoBehaviour
 
     public void Close()
     {
+        bossSound.Stop();
         view.enabled = false;
         hero?.Free();
         hero = null;
@@ -348,9 +361,13 @@ public class EyeBossEvent : MonoBehaviour
         if (arena) Destroy(arena.gameObject);
     }
 
+    void OnDisable() { if (bossSound) bossSound.Stop(); }
+
     void Enter(Phase next, float seconds)
     {
         phase = next;
+        charging = false;
+        bossSound.Phase(next == Phase.Attack && Kind == 1);
         phaseUntil = Time.unscaledTime + seconds;
         foreach (Beam b in beams) if (b.line) Destroy(b.line.gameObject);
         beams.Clear();
@@ -369,6 +386,15 @@ public class EyeBossEvent : MonoBehaviour
         marker.gameObject.SetActive(next == Phase.Turret);
         switch (next)
         {
+            case Phase.Intro:
+                bossSound.Cue("eye_intro");
+                break;
+            case Phase.Won:
+                bossSound.Cue("race_win", .6f);
+                break;
+            case Phase.Lost:
+                bossSound.Cue("race_lose", .6f);
+                break;
             case Phase.Attack:
                 foreach (Transform car in cars) car.gameObject.SetActive(true); // the ring whole again
                 survivor = (CarAt(angle) + cars.Count / 2 + Random.Range(-2, 3) + cars.Count) % cars.Count; // across from her
@@ -384,6 +410,7 @@ public class EyeBossEvent : MonoBehaviour
                 flipAt = -1f;
                 break;
             case Phase.Turret:
+                bossSound.Cue("eye_turret");
                 // up on the wagon across the ring from her, or on the last one standing
                 turretAngle = Kind == 2 ? CarAngle(survivor) : angle + Mathf.PI * Random.Range(0.6f, 1.4f);
                 Vector3 at = RingPoint(turretAngle);
@@ -394,6 +421,7 @@ public class EyeBossEvent : MonoBehaviour
                 hint.text = L10n.T("eyeboss.hint.turret");
                 break;
             case Phase.Gunner:
+                bossSound.Cue("eye_turret", .5f);
                 yaw = pitch = 0f;
                 message.text = "";
                 nextOrb = Time.unscaledTime + 1.5f;
@@ -401,6 +429,7 @@ public class EyeBossEvent : MonoBehaviour
                 fireIn = 0f;
                 break;
             case Phase.Blasted:
+                bossSound.Cue("eye_blast");
                 message.text = L10n.T("eyeboss.blasted");
                 Effect(turret.position + Vector3.up * 1.5f);
                 angle = turretAngle - 0.12f; // knocked off it, beside where it stood
@@ -415,6 +444,7 @@ public class EyeBossEvent : MonoBehaviour
     {
         if (!Active && Keyboard.current != null && (Keyboard.current.uKey.wasPressedThisFrame || (Keyboard.current.nKey.wasPressedThisFrame && (Story.Active ? Story.Current.eyeBoss : train.BiomeId == "space"))) && !train.Paused && !train.AtStation && !train.InEvent && !train.BossFight && !train.Racing)
             Begin(won => { if (Story.Active && Story.Current.eyeBoss) train.EyeBossFinished(won); else { Close(); train.Toast(L10n.T(won ? "eyeboss.won" : "eyeboss.lost.short")); } }); // testing aid: U starts it
+        if (Active) bossSound.Pause(train.Paused);
         if (!Active || train.Paused) return;
         Time.timeScale = 0f;
         float now = Time.unscaledTime, dt = Mathf.Min(Time.unscaledDeltaTime, 0.05f);
@@ -551,6 +581,7 @@ public class EyeBossEvent : MonoBehaviour
                 rock.warn.SetParent(cars[pick], false);
                 Block(rock.warn, Vector3.up * (roofY + 0.06f), new Vector3(wagonLength * 0.95f, 0.04f, 2.6f), beamWarn);
                 rocks.Add(rock);
+                bossSound.Cue("ascent_pass_2", .4f, .3f);
             }
         }
         for (int i = rocks.Count - 1; i >= 0; i--)
@@ -636,6 +667,9 @@ public class EyeBossEvent : MonoBehaviour
             fleet[k] = (f.body, a, f.way);
             f.body.position = RingPoint(a) + Vector3.up * (roofY + 0.55f + Mathf.Sin(now * 3f + k) * 0.08f);
             f.body.Rotate(0f, 160f * dt, 0f, Space.Self);
+            float oldGap = Mathf.DeltaAngle(f.angle * Mathf.Rad2Deg, angle * Mathf.Rad2Deg);
+            float newGap = Mathf.DeltaAngle(a * Mathf.Rad2Deg, angle * Mathf.Rad2Deg);
+            if (oldGap * newGap <= 0f && Mathf.Abs(newGap) < 10f) bossSound.Cue("ascent_pass_1", .35f, .35f);
             if (Mathf.Abs(Mathf.DeltaAngle(a * Mathf.Rad2Deg, angle * Mathf.Rad2Deg)) * Mathf.Deg2Rad * ringRadius < 1.1f && height < 0.9f) Hurt(now);
         }
     }
@@ -690,8 +724,8 @@ public class EyeBossEvent : MonoBehaviour
         bool falling = now < fallUntil;
         if (!falling && fallUntil > 0f) Land(now);
         float x = control && !falling ? move.ReadValue<Vector2>().x : 0f;
-        angle -= x * heroSpeed / ringRadius * dt; // the stick to the right runs her to the right as seen from outside
-        if (Mathf.Abs(x) > 0.2f) facing = -Mathf.Sign(x);
+        angle += x * heroSpeed / ringRadius * dt; // increasing the angle follows screen-right from the outside camera
+        if (Mathf.Abs(x) > 0.2f) facing = Mathf.Sign(x);
         spin = Mathf.Lerp(spin, (angle - prevAngle) / Mathf.Max(dt, 0.001f), 0.15f); // round the ring, radians a second
         prevAngle = angle;
         if (falling)
@@ -703,10 +737,20 @@ public class EyeBossEvent : MonoBehaviour
         else
         {
             bool jump = control && height <= 0f && ((Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame));
-            if (jump) vertical = jumpSpeed;
+            if (jump) { vertical = jumpSpeed; bossSound.Cue("eye_jump", .7f); }
+            float previousHeight = height;
             vertical -= gravity * dt;
             height = Mathf.Max(0f, height + vertical * dt);
             if (height <= 0f) vertical = Mathf.Max(0f, vertical);
+            if (height <= 0f && Solid(angle))
+            {
+                if (previousHeight > 0f) bossSound.Cue("eye_land", .7f);
+                else if (Mathf.Abs(x) > .2f && now >= nextStep)
+                {
+                    nextStep = now + .3f;
+                    bossSound.Cue("eye_land", .25f);
+                }
+            }
         }
         Vector3 at = RingPoint(angle);
         Vector3 tangent = new Vector3(-Mathf.Sin(angle), 0f, Mathf.Cos(angle)) * facing;
@@ -764,6 +808,7 @@ public class EyeBossEvent : MonoBehaviour
             if (hot && !b.hit)
             {
                 b.hit = true;
+                bossSound.Cue("eye_beam", .65f, .08f);
                 Effect(b.to);
                 Vector3 feet = heroRoot.position;
                 if ((new Vector3(feet.x, 0f, feet.z) - new Vector3(b.to.x, 0f, b.to.z)).magnitude < 2f && height < 1.5f) Hurt(now);
@@ -782,6 +827,7 @@ public class EyeBossEvent : MonoBehaviour
         b.line.SetParent(arena, false);
         Block(b.line, Vector3.zero, Vector3.one, beamWarn);
         beams.Add(b);
+        bossSound.Cue("eye_mark", .65f, .2f);
     }
 
     // The second attack: a beam swept round the ring at knee height; jump it. A second joins from the other side,
@@ -791,7 +837,7 @@ public class EyeBossEvent : MonoBehaviour
         sweep.gameObject.SetActive(true);
         bool two = now > phaseUntil - attackSeconds + 3f;
         sweep2.gameObject.SetActive(two);
-        if (now >= nextFlip && flipAt < 0f) flipAt = now + 0.6f;
+        if (now >= nextFlip && flipAt < 0f) { flipAt = now + 0.6f; bossSound.Cue("eye_mark", .9f); }
         bool warning = flipAt > 0f && now < flipAt;
         if (flipAt > 0f && now >= flipAt) { sweepWay = -sweepWay; flipAt = -1f; nextFlip = now + Random.Range(2.5f, 4.5f); }
         sweepSpeed += 3f * dt;
@@ -856,9 +902,11 @@ public class EyeBossEvent : MonoBehaviour
         pitch = Mathf.Clamp(pitch - stick.y * aimSpeed * dt - mouse.y * mouseAim, -35f, 30f);
         bool fire = (Gamepad.current != null && Gamepad.current.rightTrigger.ReadValue() > 0.3f) || (Mouse.current != null && Mouse.current.leftButton.isPressed)
                     || (Keyboard.current != null && Keyboard.current.jKey.isPressed);
+        bossSound.Firing(fire);
         float charge = phaseUntil - now;
         if (charge < chargeSeconds)
         {
+            if (!charging) { charging = true; bossSound.Charge(chargeSeconds); }
             message.text = L10n.T("eyeboss.charge");
             boss.localScale = Vector3.one * (1f + Mathf.PingPong(now * 4f, 0.08f));
         }
@@ -882,6 +930,7 @@ public class EyeBossEvent : MonoBehaviour
                 o.body = Ball(arena, Vector3.zero, 0.7f, orbMat);
                 o.body.position = o.from;
                 orbs.Add(o);
+                bossSound.Cue("eye_orb", .7f);
             }
         }
         for (int k = orbs.Count - 1; k >= 0; k--)
@@ -889,7 +938,7 @@ public class EyeBossEvent : MonoBehaviour
             Orb o = orbs[k];
             float u = Mathf.InverseLerp(o.from0, o.land, now);
             o.body.position = Vector3.Lerp(o.from, view.transform.position + view.transform.forward * 1.5f, u * u);
-            if (u >= 1f) { Destroy(o.body.gameObject); orbs.RemoveAt(k); Hurt(now); shake = 0.4f; }
+            if (u >= 1f) { bossSound.Cue("eye_hit", .9f); Destroy(o.body.gameObject); orbs.RemoveAt(k); Hurt(now); shake = 0.4f; }
         }
         if (fire && (fireIn -= dt) <= 0f)
         {
@@ -899,7 +948,7 @@ public class EyeBossEvent : MonoBehaviour
             {
                 Orb o = orbs[k];
                 float along = Vector3.Dot(o.body.position - ray.origin, ray.direction);
-                if (along > 0f && (ray.GetPoint(along) - o.body.position).sqrMagnitude < 1.6f) { Effect(o.body.position); Destroy(o.body.gameObject); orbs.RemoveAt(k); }
+                if (along > 0f && (ray.GetPoint(along) - o.body.position).sqrMagnitude < 1.6f) { bossSound.Cue("eye_hit", .65f); Effect(o.body.position); Destroy(o.body.gameObject); orbs.RemoveAt(k); }
             }
             Eye best = null;
             float bestAt = float.MaxValue;
@@ -914,7 +963,8 @@ public class EyeBossEvent : MonoBehaviour
             if (best != null)
             {
                 best.hits--;
-                if (best.Shut) { best.lid.gameObject.SetActive(true); best.iris.gameObject.SetActive(false); Effect(best.root.position); Sound.Play("confirm"); }
+                if (best.Shut) { best.lid.gameObject.SetActive(true); best.iris.gameObject.SetActive(false); Effect(best.root.position); bossSound.Cue("eye_shut"); }
+                else bossSound.Cue("eye_hit", .7f);
             }
         }
         if (now >= phaseUntil)

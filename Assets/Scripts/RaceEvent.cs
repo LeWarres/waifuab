@@ -11,7 +11,7 @@ using UnityEngine.UI;
 // the side. The course has a few hairpins. A crash into a wreck, or a wall hit head on, blows it up: it is put back
 // on the road crawling and blinking yellow for a moment, then races on. Outside, time stands still until it is
 // over, like the boarding (BrawlEvent). The course is built far from the run.
-public class RaceEvent : MonoBehaviour
+public partial class RaceEvent : MonoBehaviour // the trench run, its other mode: RaceTrench.cs
 {
     public float length = 12500f, roadWidth = 44f; // about three minutes of racing
     public float topSpeed = 64f, boostSpeed = 98f, accel = 24f, brakeForce = 30f, drag = 0.22f;
@@ -133,29 +133,32 @@ public class RaceEvent : MonoBehaviour
         board = UiKit.NewCanvas("Race", 6);
         var glass = new Color(0.06f, 0.09f, 0.19f, 0.62f);
         Slanted left = UiKit.Panel(board.transform, new Vector2(170f, -70f), new Vector2(300f, 96f), glass, glass, 0.12f);
+        UiKit.Persona(left);
         left.rectTransform.anchorMin = left.rectTransform.anchorMax = new Vector2(0f, 1f);
-        place = UiKit.Label(left.transform, UiKit.Heading, 46, UiKit.Gold, TextAnchor.MiddleLeft, new Vector2(10f, 14f), new Vector2(260f, 56f), true);
+        place = UiKit.Label(left.transform, UiKit.Display, 46, UiKit.Gold, TextAnchor.MiddleLeft, new Vector2(10f, 14f), new Vector2(260f, 56f), true);
         speedo = UiKit.Label(left.transform, UiKit.Body, 22, Color.white, TextAnchor.MiddleLeft, new Vector2(10f, -24f), new Vector2(260f, 30f), true);
         // The turbo's heat, bottom right: its name, the bar, the warning near the top.
         Slanted gauge = UiKit.Panel(board.transform, new Vector2(-210f, 90f), new Vector2(340f, 90f), glass, glass, 0.12f);
+        UiKit.Persona(gauge);
         gauge.rectTransform.anchorMin = gauge.rectTransform.anchorMax = new Vector2(1f, 0f);
-        turboLabel = UiKit.Label(gauge.transform, UiKit.Heading, 22, UiKit.Ice, TextAnchor.MiddleLeft, new Vector2(10f, 22f), new Vector2(300f, 30f), true);
+        turboLabel = UiKit.Label(gauge.transform, UiKit.Display, 22, UiKit.Ice, TextAnchor.MiddleLeft, new Vector2(10f, 22f), new Vector2(300f, 30f), true);
         UiKit.Panel(gauge.transform, new Vector2(0f, -14f), new Vector2(290f, 22f), new Color(0f, 0f, 0f, 0.55f), new Color(0f, 0f, 0f, 0.55f), 0f);
         heatFill = UiKit.Panel(gauge.transform, new Vector2(-142f, -14f), new Vector2(0f, 16f), UiKit.Gold, UiKit.Gold, 0f);
         heatFill.rectTransform.pivot = new Vector2(0f, 0.5f);
-        track = UiKit.Panel(board.transform, new Vector2(0f, -40f), new Vector2(620f, 12f), glass, glass, 0f);
+        track = UiKit.Persona(UiKit.Panel(board.transform, new Vector2(0f, -40f), new Vector2(620f, 12f), glass, glass, 0f), 3f, 5f);
         track.rectTransform.anchorMin = track.rectTransform.anchorMax = new Vector2(0.5f, 1f);
         Slanted right = UiKit.Panel(board.transform, new Vector2(-170f, -150f), new Vector2(300f, 220f), glass, glass, 0.12f);
+        UiKit.Persona(right);
         right.rectTransform.anchorMin = right.rectTransform.anchorMax = new Vector2(1f, 1f);
         standings = UiKit.Label(right.transform, UiKit.Body, 20, Color.white, TextAnchor.UpperLeft, Vector2.zero, new Vector2(270f, 200f));
         standings.supportRichText = true;
-        countdown = UiKit.Label(board.transform, UiKit.Heading, 120, UiKit.Gold, TextAnchor.MiddleCenter, new Vector2(0f, 60f), new Vector2(600f, 160f), true);
-        message = UiKit.Label(board.transform, UiKit.Heading, 38, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 160f), new Vector2(1200f, 60f), true);
+        countdown = UiKit.Label(board.transform, UiKit.Display, 120, UiKit.Gold, TextAnchor.MiddleCenter, new Vector2(0f, 60f), new Vector2(600f, 160f), true);
+        message = UiKit.Label(board.transform, UiKit.Display, 38, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 160f), new Vector2(1200f, 60f), true);
         // The controls, shown once on the grid before the countdown (not all race long).
-        briefing = UiKit.Panel(board.transform, new Vector2(0f, 20f), new Vector2(760f, 420f), glass, glass, 0.06f);
-        UiKit.Label(briefing.transform, UiKit.Heading, 40, UiKit.Gold, TextAnchor.MiddleCenter, new Vector2(0f, 160f), new Vector2(700f, 56f), true).text = L10n.T("race.controls.title");
+        briefing = UiKit.Persona(UiKit.Panel(board.transform, new Vector2(0f, 20f), new Vector2(760f, 420f), glass, glass, 0.06f), 6f, 14f);
+        UiKit.Label(briefing.transform, UiKit.Display, 40, UiKit.Gold, TextAnchor.MiddleCenter, new Vector2(0f, 160f), new Vector2(700f, 56f), true).text = L10n.T("race.controls.title");
         hint = UiKit.Label(briefing.transform, UiKit.Body, 24, Color.white, TextAnchor.MiddleLeft, new Vector2(20f, -10f), new Vector2(640f, 260f));
-        UiKit.Label(briefing.transform, UiKit.Heading, 24, UiKit.Ice, TextAnchor.MiddleCenter, new Vector2(0f, -172f), new Vector2(700f, 40f), true).text = L10n.T("race.controls.start");
+        UiKit.Label(briefing.transform, UiKit.Display, 24, UiKit.Ice, TextAnchor.MiddleCenter, new Vector2(0f, -172f), new Vector2(700f, 40f), true).text = L10n.T("race.controls.start");
         board.gameObject.SetActive(false);
     }
 
@@ -169,7 +172,7 @@ public class RaceEvent : MonoBehaviour
         dirs.Clear();
         wrecks.Clear();
         // The centre line: straight off the grid and into the launcher, bending in between, smoothly and both ways.
-        int n = Mathf.CeilToInt(length / Step);
+        int n = Mathf.CeilToInt((trench ? trenchLength : length) / Step);
         float heading = 0f, seed = Random.value * 100f;
         // Hairpins, podracer style: a long hard swing from one side to the other (up to 160 degrees), the next one
         // back. The heading never strays more than MaxHeading from straight on, so the course always moves forward
@@ -182,11 +185,12 @@ public class RaceEvent : MonoBehaviour
             hairpins.Add((Mathf.RoundToInt(Mathf.Lerp(18f, n - 40f, (h + 0.5f) / pins)), Random.Range(6, 10), sign * Random.Range(55f, MaxHeading)));
             sign = -sign;
         }
+        if (trench) hairpins.Clear(); // the trench runs straight on, bending only a little
         Vector3 p = Origin;
         for (int i = 0; i <= n; i++)
         {
             points.Add(p);
-            float bend = i > 10 && i < n - 14 ? (Mathf.PerlinNoise(seed, i * 0.045f) * 2f - 1f) * 5f : 0f;
+            float bend = i > 10 && i < n - 14 ? (Mathf.PerlinNoise(seed, i * 0.045f) * 2f - 1f) * (trench ? 2f : 5f) : 0f;
             foreach (var h in hairpins) if (i >= h.at && i < h.at + h.steps) bend = (h.target - heading) / (h.at + h.steps - i);
             if (i >= n - 24) bend = i < n - 8 ? -heading / (n - 8 - i) : 0f; // straightened out for the run into the launcher
             heading = Mathf.Clamp(heading + bend, -MaxHeading, MaxHeading);
@@ -200,14 +204,17 @@ public class RaceEvent : MonoBehaviour
         // the right), gantries over it now and then and lamps along it; the city's ground painting all round, and
         // far out a skyline of towers fading into the haze.
         Material asphalt = TrainSim.Mat(Color.white, false), wall = TrainSim.Mat(new Color(0.5f, 0.52f, 0.6f)), steel = TrainSim.Mat(new Color(0.62f, 0.65f, 0.72f));
-        asphalt.mainTexture = AsphaltTexture();
+        asphalt.mainTexture = trench ? Resources.Load<Texture2D>("Ground/fortress") : AsphaltTexture();
+        if (trench) { asphalt.mainTextureScale = new Vector2(2f, 0.5f); Tint(wall, new Color(0.26f, 0.3f, 0.34f)); } // the trench: the base's plates, steel walls
         wall.SetInt("_Culling", 0);
         Material cyan = TrainSim.Mat(new Color(0.3f, 2.2f, 2.6f), false), pink = TrainSim.Mat(new Color(2.6f, 0.45f, 1.7f), false), gold = TrainSim.Mat(new Color(2.8f, 1.9f, 0.4f), false);
         Ribbon("Road", -roadWidth / 2f, roadWidth / 2f, 0.05f, asphalt);
-        Wall("WallL", -roadWidth / 2f - 0.8f, -roadWidth / 2f, 1.2f, wall);
-        Wall("WallR", roadWidth / 2f, roadWidth / 2f + 0.8f, 1.2f, wall);
-        Ribbon("EdgeL", -roadWidth / 2f - 0.8f, -roadWidth / 2f, 1.22f, cyan);
-        Ribbon("EdgeR", roadWidth / 2f, roadWidth / 2f + 0.8f, 1.22f, pink);
+        float wallHigh = trench ? 22f : 1.2f; // the trench: sheer walls either side
+        Wall("WallL", -roadWidth / 2f - 0.8f, -roadWidth / 2f, wallHigh, wall);
+        Wall("WallR", roadWidth / 2f, roadWidth / 2f + 0.8f, wallHigh, wall);
+        Ribbon("EdgeL", -roadWidth / 2f - 0.8f, -roadWidth / 2f, wallHigh + 0.02f, cyan);
+        Ribbon("EdgeR", roadWidth / 2f, roadWidth / 2f + 0.8f, wallHigh + 0.02f, pink);
+        if (trench) { Ribbon("GlowL", -roadWidth / 2f - 0.05f, -roadWidth / 2f, 6f, cyan); Ribbon("GlowR", roadWidth / 2f, roadWidth / 2f + 0.05f, 6f, pink); }
         int gantry = 0;
         for (float s = 150f; s < total - 220f; s += 210f, gantry++)
         {
@@ -216,7 +223,7 @@ public class RaceEvent : MonoBehaviour
             for (int side = -1; side <= 1; side += 2) Block(c + right * side * (roadWidth / 2f + 3f) + Vector3.up * 8f, rot, new Vector3(1.8f, 16f, 1.8f), steel);
             Block(c + Vector3.up * 16.5f, rot, new Vector3(roadWidth + 8f, 1.8f, 2f), steel);
             Block(c + Vector3.up * 15.4f, rot, new Vector3(roadWidth + 6f, 0.4f, 0.8f), gantry % 2 == 0 ? cyan : pink);
-            Block(c + Vector3.up * 17.8f, rot, new Vector3(roadWidth * 0.45f, 3.2f, 0.5f), gantry % 2 == 0 ? pink : cyan); // its sign
+            if (trench) Block(c + Vector3.up * 17.8f, rot, new Vector3(roadWidth * 0.45f, 3.2f, 0.5f), gantry % 2 == 0 ? pink : cyan); // its sign (the city's: a poster, RaceCity)
         }
         for (float s = 20f; s < total; s += 45f)
         {
@@ -228,21 +235,6 @@ public class RaceEvent : MonoBehaviour
                 Block(c + right * side * (roadWidth / 2f + 0.8f) + Vector3.up * 9f, rot, new Vector3(3f, 0.45f, 0.9f), side < 0 ? cyan : pink);
             }
         }
-        Material skyline = TrainSim.Mat(new Color(0.32f, 0.33f, 0.46f)), lit = TrainSim.Mat(new Color(2.6f, 2f, 1.1f), false), red = TrainSim.Mat(new Color(3f, 0.3f, 0.2f), false);
-        for (int k = 0, towers = Mathf.Min(700, Mathf.RoundToInt(240f * length / 2600f)); k < towers; k++)
-        {
-            Vector3 c = PointAt(Random.Range(0f, total), out Vector3 d);
-            Vector3 at = c + Vector3.Cross(Vector3.up, d) * (Random.value < 0.5f ? -1f : 1f) * Random.Range(130f, 520f);
-            float wide = Random.Range(16f, 42f), high = Mathf.Lerp(35f, 170f, Mathf.Pow(Random.value, 1.8f));
-            bool clear = true;
-            for (int q = 0; q < points.Count && clear; q += 3) if ((points[q] - at).sqrMagnitude < (roadWidth + wide) * (roadWidth + wide)) clear = false;
-            if (!clear) continue;
-            Quaternion rot = Quaternion.Euler(0f, Random.Range(0f, 90f), 0f);
-            Block(at + Vector3.up * high / 2f, rot, new Vector3(wide, high, wide * Random.Range(0.7f, 1.3f)), skyline);
-            for (float y = 8f; y < high - 4f; y += Random.Range(9f, 16f)) // a few lit floors
-                if (Random.value < 0.35f) Block(at + Vector3.up * y, rot, new Vector3(wide + 0.2f, 0.9f, wide * 0.5f), lit);
-            if (high > 110f) Ball(at + Vector3.up * (high + 1.5f), 2.2f, red);
-        }
         var ground = GameObject.CreatePrimitive(PrimitiveType.Quad);
         Destroy(ground.GetComponent<Collider>());
         ground.transform.SetParent(course, false);
@@ -252,7 +244,7 @@ public class RaceEvent : MonoBehaviour
         ground.transform.SetPositionAndRotation(area.center + Vector3.down * 0.02f, Quaternion.Euler(90f, 0f, 0f));
         ground.transform.localScale = Vector3.one * groundSize;
         Material groundMat = TrainSim.Mat(Color.white, false);
-        groundMat.mainTexture = Resources.Load<Texture2D>("Ground/city");
+        groundMat.mainTexture = Resources.Load<Texture2D>(trench ? "Ground/fortress" : "Ground/city");
         groundMat.mainTextureScale = Vector2.one * (groundSize / 54f);
         ground.GetComponent<Renderer>().sharedMaterial = groundMat;
 
@@ -261,10 +253,11 @@ public class RaceEvent : MonoBehaviour
         var junk = new List<GameObject>();
         beacons.Clear();
         Material hazard = TrainSim.Mat(new Color(2.4f, 0.9f, 0.1f), false), hazardDark = TrainSim.Mat(new Color(0.12f, 0.1f, 0.1f), false), beacon = TrainSim.Mat(new Color(3f, 0.5f, 0.2f), false);
-        foreach (GameObject kind in Resources.LoadAll<GameObject>("Scenery/city"))
+        foreach (GameObject kind in Resources.LoadAll<GameObject>(trench ? "Scenery/fortress" : "Scenery/city"))
         {
             Bounds box = Bounds(kind);
-            if (box.size.y > 4f) tall.Add(kind);
+            if (trench) { if (box.size.y > 1f && box.size.y < 4f) junk.Add(kind); } // the base's crates, cores and radars in the trench
+            else if (box.size.y > 4f) tall.Add(kind);
             else if (kind.name.Contains("car") || kind.name.Contains("Taxi") || kind.name.Contains("Police") || kind.name.Contains("barrier")) junk.Add(kind);
         }
         for (float s = 30f; s < total - 160f && tall.Count > 0; s += Random.Range(26f, 40f))
@@ -275,7 +268,7 @@ public class RaceEvent : MonoBehaviour
                 if (!OffRoad(at, 12f)) continue; // a bend's other leg runs close by: nothing on its road
                 Instantiate(tall[Random.Range(0, tall.Count)], at, Quaternion.LookRotation(dir) * Quaternion.Euler(0f, Random.Range(0, 4) * 90f, 0f), course);
             }
-        for (int i = 0, wreckCount = Mathf.RoundToInt(obstacles * length / 2600f); i < wreckCount && junk.Count > 0; i++)
+        for (int i = 0, wreckCount = Mathf.RoundToInt(obstacles * (trench ? trenchLength * 0.5f : length) / 2600f); i < wreckCount && junk.Count > 0; i++)
         {
             float s = Mathf.Lerp(220f, total - 260f, (i + Random.value) / wreckCount);
             Vector3 at = PointAt(s, out Vector3 dir) + Vector3.Cross(Vector3.up, dir) * Random.Range(-roadWidth * 0.38f, roadWidth * 0.38f);
@@ -290,6 +283,8 @@ public class RaceEvent : MonoBehaviour
             wrecks.Add((at, 3.4f));
         }
 
+        if (trench) { BuildVent(); course.gameObject.SetActive(false); return; } // the trench ends at the vent, not a launcher
+        DressCity();
         // The launcher at B: chevrons on the road point at it, a chequered line, then a ramp that curves up to the
         // sky through rings of light, between two striped towers.
         Vector3 end = points[^1], fwd = dirs[^1], side0 = Vector3.Cross(Vector3.up, fwd);
@@ -496,6 +491,7 @@ public class RaceEvent : MonoBehaviour
         var others = new List<int>();
         for (int i = 0; i < Locomotives.Models.Length; i++) if (!field.Contains(i)) others.Add(i);
         while (field.Count < 6 && others.Count > 0) { int k = Random.Range(0, others.Count); field.Add(others[k]); others.RemoveAt(k); }
+        if (trench) field.RemoveRange(1, field.Count - 1); // alone down the trench
         // On the grid, two abreast; ours in the middle of it.
         int[] slot = { 2, 0, 1, 3, 4, 5 };
         float hard = Mathf.Clamp01(train.Difficulty / 30f);
@@ -528,13 +524,16 @@ public class RaceEvent : MonoBehaviour
         startsAt = float.MaxValue; // the countdown waits for the controls to be read
         endsAt = -1f;
         message.text = "";
-        hint.text = L10n.T("race.controls");
+        hint.text = L10n.T(trench ? "trench.controls" : "race.controls");
+        sky.GetComponent<Renderer>().sharedMaterial.mainTexture = Resources.Load<Texture2D>(trench ? "Sky/fortress" : "Sky/city");
+        standings.transform.parent.gameObject.SetActive(!trench); // alone in the trench: no standings
+        if (trench) TrenchBegin();
         briefing.gameObject.SetActive(true);
         dots.Clear();
         foreach (Transform c in track.transform) Destroy(c.gameObject);
         foreach (Racer r in racers)
         {
-            Color c = r.player ? UiKit.Gold : r == racers[1] ? UiKit.Rose : UiKit.Ice;
+            Color c = r.player ? UiKit.Gold : racers.Count > 1 && r == racers[1] ? UiKit.Rose : UiKit.Ice;
             Slanted dot = UiKit.Panel(track.transform, Vector2.zero, r.player ? new Vector2(16f, 24f) : new Vector2(10f, 18f), c, c, 0f);
             dots.Add(dot);
         }
@@ -548,13 +547,22 @@ public class RaceEvent : MonoBehaviour
         UpdateCamera(1f, true);
     }
 
+    public void TestWin()
+    {
+        if (!Active) return;
+        winner = me;
+        trenchWon = true;
+        End();
+    }
+
     void End()
     {
         Active = false;
         raceSound.Stop();
         board.gameObject.SetActive(false);
         foreach (Transform s in streaks) s.gameObject.SetActive(false);
-        if (winner == me)
+        bool won = trench ? trenchWon : winner == me;
+        if (won)
         {
             // lost, it stays on screen while the player is asked whether to try again (Begin builds it anew)
             view.enabled = false;
@@ -570,7 +578,8 @@ public class RaceEvent : MonoBehaviour
         unscaled.Clear();
         System.Action<bool> finished = done;
         done = null;
-        finished?.Invoke(winner == me);
+        trench = false;
+        finished?.Invoke(won);
     }
 
     // ---------------- the race ----------------
@@ -578,8 +587,11 @@ public class RaceEvent : MonoBehaviour
     void Update()
     {
         // Testing aid: N on the keyboard starts a race on the spot.
-        if (!Active && Keyboard.current != null && Keyboard.current.nKey.wasPressedThisFrame && !(Story.Active ? Story.Current.eyeBoss : train.BiomeId == "space") && !train.Racing && !train.Paused && !train.AtStation && !train.InEvent && !train.BossFight)
-            Begin(won => { if (Story.Active && Story.Current.race) train.RaceFinished(won); else train.Toast(L10n.T(won ? "race.won" : "race.lost.short")); }); // in the race's chapter, as the real finale
+        if (!Active && Keyboard.current != null && Keyboard.current.nKey.wasPressedThisFrame && !(Story.Active ? Story.Current.eyeBoss || Story.Current.cave || (Story.Current.gates && !Story.GatesPassed) : train.BiomeId == "space") && !train.Racing && !train.Paused && !train.AtStation && !train.InEvent && !train.BossFight)
+        {
+            if (Story.Active && Story.Current.trench) BeginTrench(train.RaceFinished); // the base's chapter: the trench run, as its real finale
+            else Begin(won => { if (Story.Active && Story.Current.race) train.RaceFinished(won); else train.Toast(L10n.T(won ? "race.won" : "race.lost.short")); }); // in the race's chapter, as the real finale
+        }
         raceSound.Pause(train.Paused);
         if (!Active || train.Paused) return;
         Time.timeScale = 0f; // everything outside waits (a pause and back would have let it run)
@@ -613,7 +625,7 @@ public class RaceEvent : MonoBehaviour
             float throttle = 0f, steer = 0f;
             bool brake = false, boost = false;
             int shoveWay = 0;
-            if (going && r.finishedAt < 0f)
+            if (going && r.finishedAt < 0f && !aiming)
             {
                 if (r.player && !autoDrive) Controls(out throttle, out steer, out brake, out boost, out shoveWay);
                 else Drive(r, now, out throttle, out steer, out brake, out boost, out shoveWay);
@@ -636,6 +648,8 @@ public class RaceEvent : MonoBehaviour
         }
         Show(now);
         UpdateCamera(dt, false);
+        if (trench && going) TrenchUpdate(now, dt);
+        if (!trench) CityUpdate(now, going, dt);
         UpdateSound(now);
         if (endsAt > 0f && now >= endsAt) End();
     }
@@ -938,7 +952,7 @@ public class RaceEvent : MonoBehaviour
 
     void UpdateCamera(float dt, bool snap)
     {
-        if (me == null) return;
+        if (me == null || (trench && aiming)) return; // at the hatch: RaceTrench.AimCamera
         if (winner != null && ramp.Count > 0)
         {
             // Whoever won: filmed from beside the launcher going up it and off into the sky.
@@ -989,6 +1003,7 @@ public class RaceEvent : MonoBehaviour
     // A crash: it blows up, and a moment later is put back on the road where it was, crawling and blinking.
     void Crash(Racer r, float now)
     {
+        if (trench && r.player) TrenchHurt(25); // in the trench a crash costs her health
         Effect("grenade", r.body.position + Vector3.up, 6f);
         Effect("smoke", r.body.position + Vector3.up, 4f);
         Fireball(r.body.position + Vector3.up * 1.5f, now);
