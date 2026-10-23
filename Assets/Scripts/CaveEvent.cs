@@ -34,6 +34,8 @@ public class CaveEvent : MonoBehaviour
     Vector2 aim;
     Vector3 scareFrom;
     Transform eyes;
+    Light torch; // the flashlight
+    readonly List<Light> suns = new();
 
     Canvas board;
     RawImage dark, flash;
@@ -74,7 +76,7 @@ public class CaveEvent : MonoBehaviour
         {
             var edge = new GameObject("DarkEdge", typeof(RectTransform), typeof(Image)).GetComponent<Image>();
             edge.transform.SetParent(dark.transform, false);
-            edge.color = Color.black;
+            edge.color = new Color(0f, 0f, 0f, Shade);
             edge.raycastTarget = false;
             float sheet = lightRadius * 16f, far = 8000f;
             edge.rectTransform.sizeDelta = k < 2 ? new Vector2(far, far * 2f) : new Vector2(sheet, far);
@@ -111,6 +113,9 @@ public class CaveEvent : MonoBehaviour
         scream = Scream();
     }
 
+    // How dark the dark is: not quite black, so the crystals' glow and the shapes of the rocks show faintly.
+    const float Shade = 0.9f;
+
     // A black texture, clear in a soft round middle.
     static Texture2D Hole()
     {
@@ -121,7 +126,7 @@ public class CaveEvent : MonoBehaviour
             for (int x = 0; x < size; x++)
             {
                 float d = new Vector2(x - size / 2f + 0.5f, y - size / 2f + 0.5f).magnitude / (size / 16f); // 1 = the light's edge
-                byte a = (byte)(255f * Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.55f, 1.15f, d)));
+                byte a = (byte)(Shade * 255f * Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.55f, 1.15f, d)));
                 px[y * size + x] = new Color32(0, 0, 0, a);
             }
         tex.SetPixels32(px);
@@ -160,22 +165,34 @@ public class CaveEvent : MonoBehaviour
         cave = new GameObject("Cave").transform;
         cave.position = Inside;
         covers.Clear();
-        Material rock = TrainSim.Mat(new Color(0.32f, 0.28f, 0.4f)), rockDark = TrainSim.Mat(new Color(0.18f, 0.16f, 0.24f)), moss = TrainSim.Mat(new Color(0.3f, 1.6f, 1.2f), false);
-        Shape(PrimitiveType.Cube, new Vector3(0f, -0.05f, 8f), new Vector3(40f, 0.1f, 30f), rockDark);
-        for (int k = 0; k < 26; k++) // the walls and roof: boulders all round the back and sides
+        // A real cave: a floor of rough stone, walls of piled boulders all round the back and sides, a low roof with
+        // stalactites hanging from it, stalagmites, and alien crystals glowing in the dark, each throwing a little
+        // coloured light about. The sun is off in here (Begin): the flashlight (a real spot light) and the crystals
+        // are all there is.
+        Material floor = Interior.Textured(Interior.Rock(), new Color(0.3f, 0.27f, 0.36f), new Vector2(8f, 6f));
+        Material roof = Interior.Textured(Interior.Rock(), new Color(0.18f, 0.16f, 0.24f), new Vector2(8f, 6f));
+        Interior.Box(cave, new Vector3(0f, -0.05f, 8f), new Vector3(44f, 0.1f, 34f), floor);
+        Interior.Box(cave, new Vector3(0f, 7.6f, 8f), new Vector3(44f, 0.2f, 34f), roof);
+        for (int k = 0; k < 11; k++) // the walls: chunks of piled rock on an arc round the back and sides
         {
-            float a = Mathf.Lerp(-100f, 100f, k / 25f) * Mathf.Deg2Rad;
-            Vector3 at = new Vector3(Mathf.Sin(a) * 15f, Random.Range(0f, 5f), 9f + Mathf.Cos(a) * 11f);
-            Shape(PrimitiveType.Sphere, at, Vector3.one * Random.Range(5f, 9f), k % 3 == 0 ? rockDark : rock);
+            float a = Mathf.Lerp(-105f, 105f, k / 10f);
+            Vector3 at = new Vector3(Mathf.Sin(a * Mathf.Deg2Rad) * 16f, -0.5f, 9f + Mathf.Cos(a * Mathf.Deg2Rad) * 12f);
+            Interior.Place("wall", cave, at, a + Random.Range(-15f, 15f), Random.Range(1f, 1.3f));
         }
-        for (int k = 0; k < 14; k++) // stalactites
+        for (int k = 0; k < 16; k++) // stalactites, their tops in the roof
         {
-            Transform s = Shape(PrimitiveType.Cylinder, new Vector3(Random.Range(-12f, 12f), 7.5f, Random.Range(4f, 18f)), new Vector3(0.6f, Random.Range(1f, 2.6f), 0.6f), rock);
-            s.localRotation = Quaternion.Euler(0f, 0f, 180f);
+            float scale = Random.Range(0.7f, 1.4f);
+            Interior.Place("stalactite", cave, new Vector3(Random.Range(-13f, 13f), 7.6f - 2.4f * scale, Random.Range(3f, 19f)), Random.Range(0f, 360f), scale);
         }
-        for (int k = 0; k < 10; k++) // faint glowing moss, to make out the shapes
-            Shape(PrimitiveType.Sphere, new Vector3(Random.Range(-12f, 12f), Random.Range(0.1f, 3f), Random.Range(6f, 19f)), Vector3.one * Random.Range(0.15f, 0.3f), moss);
-
+        for (int k = 0; k < 7; k++)
+            Interior.Place("stalagmite", cave, new Vector3(Random.Range(-14f, 14f), 0f, Random.Range(14f, 19f)), Random.Range(0f, 360f), Random.Range(0.8f, 1.5f));
+        Color[] glows = { new Color(0.3f, 1f, 0.85f), new Color(0.95f, 0.35f, 0.85f) };
+        for (int k = 0; k < 7; k++) // the crystals, each lighting the rock round it
+        {
+            Vector3 at = new Vector3((k % 2 == 0 ? -1f : 1f) * Random.Range(5f, 14f), 0f, Random.Range(4f, 18f));
+            Interior.Place("crystals", cave, at, Random.Range(0f, 360f), Random.Range(0.8f, 1.4f));
+            Interior.Lamp(cave, at + Vector3.up * 1f, glows[k % 2], 500000f, 7f, false);
+        }
 
         // Faceless, behind one of them.
         string id = Locomotives.HeroId(rival);
@@ -197,29 +214,27 @@ public class CaveEvent : MonoBehaviour
 
     // Where it can hide, new every round: rocks, crates and barrels (each big enough for it) in new places, a new
     // number of them, none on top of another.
-    Material wood, steel, stone;
     readonly List<Vector3> rest = new(); // each cover's own place, to shudder about
+    readonly List<Vector3> sizes = new(); // and how big it is
     void Shuffle()
     {
         foreach (Transform c in covers) if (c) Destroy(c.gameObject);
         covers.Clear();
         rest.Clear();
-        wood ??= TrainSim.Mat(new Color(0.55f, 0.36f, 0.2f));
-        steel ??= TrainSim.Mat(new Color(0.45f, 0.5f, 0.55f));
-        stone ??= TrainSim.Mat(new Color(0.5f, 0.45f, 0.58f));
+        sizes.Clear();
         int count = Random.Range(hides - 1, hides + 2);
         for (int tries = 0; covers.Count < count && tries < 200; tries++)
         {
             Vector3 at = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(6.5f, 12.5f));
             if (rest.Exists(r => Mathf.Abs(r.x - at.x) < 2.9f)) continue; // side by side from where she stands: none hidden behind another
-            int kind = Random.Range(0, 3);
-            float grow = Random.Range(0.9f, 1.2f);
-            Transform c = kind == 0 ? Shape(PrimitiveType.Sphere, at + Vector3.up * 1.1f * grow, new Vector3(2.8f, 2.3f, 2.2f) * grow, stone)
-                : kind == 1 ? Shape(PrimitiveType.Cube, at + Vector3.up * 1.1f * grow, Vector3.one * 2.2f * grow, wood)
-                : Shape(PrimitiveType.Cylinder, at + Vector3.up * 1.2f * grow, new Vector3(1.6f, 1.2f, 1.6f) * grow, steel);
-            c.localRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+            // each big enough for it to crouch behind: rocks most often, the miners' crates and barrels too
+            string[] kinds = { "boulder_a", "boulder_b", "boulder_c", "crate", "barrel" };
+            string kind = kinds[Random.Range(0, kinds.Length)];
+            float grow = (kind == "crate" ? 1.9f : kind == "barrel" ? 1.7f : 1f) * Random.Range(0.95f, 1.15f);
+            Transform c = Interior.Place(kind, cave, at, Random.Range(0f, 360f), grow);
             covers.Add(c);
             rest.Add(c.localPosition);
+            sizes.Add(Interior.Bounds(c).size);
         }
     }
 
@@ -245,6 +260,17 @@ public class CaveEvent : MonoBehaviour
         Active = true;
         cave.gameObject.SetActive(true);
         view.enabled = true;
+        // In here only the flashlight and the crystals give light: the sun goes off until she is out.
+        suns.Clear();
+        foreach (Light sun in FindObjectsByType<Light>(FindObjectsSortMode.None))
+            if (sun.type == LightType.Directional && sun.enabled) { sun.enabled = false; suns.Add(sun); }
+        if (!torch)
+        {
+            torch = Interior.Lamp(view.transform, Vector3.zero, new Color(1f, 0.95f, 0.85f), 3500000f, 40f, true, LightType.Spot);
+            torch.spotAngle = 30f;
+            torch.innerSpotAngle = 14f;
+            torch.GetComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalLightData>().enableSpotReflector = true; // all its light in the cone
+        }
         view.transform.SetPositionAndRotation(Inside + new Vector3(0f, 1.7f, -2f), Quaternion.Euler(6f, 0f, 0f));
         board.gameObject.SetActive(true);
         Time.timeScale = 0f;
@@ -267,6 +293,8 @@ public class CaveEvent : MonoBehaviour
         gunSound.Stop();
         Active = false;
         view.enabled = false;
+        foreach (Light sun in suns) if (sun) sun.enabled = true;
+        suns.Clear();
         board.gameObject.SetActive(false);
         rig?.Free();
         rig = null;
@@ -296,7 +324,7 @@ public class CaveEvent : MonoBehaviour
             behind = Random.Range(0, covers.Count);
             Transform cover = covers[behind];
             clue = Random.Range(0, 2);
-            float edge = cover.localScale.x * 0.5f - 0.1f;
+            float edge = sizes[behind].x * 0.5f - 0.1f;
             faceless.localPosition = new Vector3(rest[behind].x, 0f, rest[behind].z) + new Vector3(clue == 0 ? edge * (Random.value < 0.5f ? -1f : 1f) : 0f, 0f, 1.2f);
             nextShudder = Time.unscaledTime + Random.Range(1f, 2f);
             faceless.localRotation = Quaternion.Euler(0f, 180f, 0f);
@@ -335,6 +363,7 @@ public class CaveEvent : MonoBehaviour
         RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)board.transform, aim, null, out local);
         dark.rectTransform.anchoredPosition = local;
         crosshair.rectTransform.anchoredPosition = local;
+        torch.transform.rotation = Quaternion.LookRotation(view.ScreenPointToRay(aim).direction); // where the hole is
         // a little sway, as a hand holds it
         view.transform.localRotation = Quaternion.Euler(6f + Mathf.Sin(now * 1.3f) * 0.4f, Mathf.Sin(now * 0.9f) * 0.6f, 0f);
         bool shoot = (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.rightTrigger.wasPressedThisFrame)
@@ -380,7 +409,7 @@ public class CaveEvent : MonoBehaviour
     void Glint(float now)
     {
         Transform cover = covers[behind];
-        Vector3 top = cover.position + Vector3.up * (cover.localScale.y * 0.5f + 0.05f) + Vector3.forward * 0.2f;
+        Vector3 top = cover.position + Vector3.up * (sizes[behind].y * 0.9f) + Vector3.forward * 0.2f;
         bool lit = (view.WorldToScreenPoint(top) - (Vector3)aim).magnitude < lightRadius * 1.4f;
         bool on = lit && now >= nextGlint && now < nextGlint + 0.35f;
         if (now >= nextGlint + 0.35f) nextGlint = now + Random.Range(1.4f, 2.8f);
@@ -403,7 +432,7 @@ public class CaveEvent : MonoBehaviour
         float best = float.MaxValue;
         for (int i = 0; i < covers.Count; i++)
         {
-            Bounds b = covers[i].GetComponent<Renderer>().bounds;
+            Bounds b = Interior.Bounds(covers[i]);
             if (b.IntersectRay(ray, out float at) && at < best) { best = at; hit = i; }
         }
         gunSound.Play();

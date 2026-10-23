@@ -10,7 +10,7 @@ using UnityEngine.UI;
 // rock at it. In: "Yuuuuujuuuu!" and the chapter is won; out of throws, of health, she has lost.
 public partial class RaceEvent
 {
-    public float trenchLength = 5200f, droneEvery = 1.3f, droneSpeed = 14f, droneDamage = 20f, trenchFireRate = 6f;
+    public float trenchLength = 5200f, droneEvery = 2.6f, droneSpeed = 12f, droneDamage = 8f, trenchFireRate = 6f;
 
     bool trench, aiming, trenchWon;
     int life, throws;
@@ -79,11 +79,11 @@ public partial class RaceEvent
             }
         }
         // Laser gates: a low beam across the whole trench but for one gap, somewhere new each time.
-        for (float s = 420f; s < total - 300f; s += Random.Range(300f, 420f))
+        for (float s = 420f; s < total - 300f; s += Random.Range(420f, 560f))
         {
             Vector3 c = PointAt(s, out Vector3 d), right = Vector3.Cross(Vector3.up, d);
             Quaternion rot = Quaternion.LookRotation(d);
-            float gapWide = Mathf.Lerp(16f, 10f, s / total), gapAt = Random.Range(-w + gapWide * 0.5f + 2f, w - gapWide * 0.5f - 2f);
+            float gapWide = Mathf.Lerp(20f, 14f, s / total), gapAt = Random.Range(-w + gapWide * 0.5f + 2f, w - gapWide * 0.5f - 2f);
             var beam = new GameObject("LaserGate").transform;
             beam.SetParent(course, false);
             // the beam in two parts, either side of the gap; posts at the gap's edges
@@ -131,12 +131,12 @@ public partial class RaceEvent
     // base blows up round her as she goes, for the show.
     void Dangers(float now, float dt)
     {
-        for (int i = 0; i < turrets.Count; i++)
+        for (int i = 0; i < turrets.Count && me.progress > 200f; i++) // a quiet first stretch to get going in
         {
             Vector3 to = me.body.position - turrets[i].at;
             float along = Vector3.Dot(to, dirs[Mathf.Clamp(me.seg, 0, dirs.Count - 1)]);
             if (along > -20f || along < -150f || now < turretReady[i]) continue; // ahead of her, in range
-            turretReady[i] = now + Random.Range(1.2f, 2.2f);
+            turretReady[i] = now + Random.Range(2.8f, 4.4f);
             Vector3 lead = me.body.position + Quaternion.Euler(0f, me.way, 0f) * Vector3.forward * me.speed * 0.9f + Vector3.up * 1.5f;
             Transform bolt = Ball(turrets[i].at, 1.1f, boltMat);
             bolts.Add((bolt, (lead - turrets[i].at).normalized * 75f, now + 4f));
@@ -145,7 +145,7 @@ public partial class RaceEvent
         {
             var b = bolts[i];
             b.body.position += b.velocity * dt;
-            if ((b.body.position - (me.body.position + Vector3.up * 1.5f)).magnitude < 3.2f) { TrenchHurt(15); Fireball(b.body.position, now); Destroy(b.body.gameObject); bolts.RemoveAt(i); continue; }
+            if ((b.body.position - (me.body.position + Vector3.up * 1.5f)).magnitude < 3.2f) { TrenchHurt(5); Fireball(b.body.position, now); Destroy(b.body.gameObject); bolts.RemoveAt(i); continue; }
             if (now > b.until || b.body.position.y < 0f) { Destroy(b.body.gameObject); bolts.RemoveAt(i); }
         }
         for (int i = lasers.Count - 1; i >= 0; i--)

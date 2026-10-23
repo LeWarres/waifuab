@@ -58,12 +58,20 @@ public class Ascenso : MonoBehaviour
         exposure.fixedExposure.value = 13.7f;
         look.profile.Add<UnityEngine.Rendering.HighDefinition.Tonemapping>(true).mode.value = UnityEngine.Rendering.HighDefinition.TonemappingMode.Neutral;
         var bloom = look.profile.Add<UnityEngine.Rendering.HighDefinition.Bloom>(true);
-        bloom.intensity.value = .35f;
+        bloom.intensity.value = .6f;
         bloom.scatter.value = .7f;
         bloom.threshold.value = 1f;
+        // The same bright, vivid grade as the ride (TrainSim.Grade), in space's colours.
         var grade = look.profile.Add<UnityEngine.Rendering.HighDefinition.ColorAdjustments>(true);
-        grade.saturation.value = 8f;
+        grade.saturation.value = 14f;
         grade.contrast.value = 6f;
+        grade.postExposure.value = .25f;
+        var toning = look.profile.Add<UnityEngine.Rendering.HighDefinition.SplitToning>(true);
+        Color.RGBToHSV(UiKit.Biome("space").main, out float hue, out _, out _);
+        toning.shadows.value = Color.HSVToRGB(.58f, .45f, .5f);
+        toning.highlights.value = Color.HSVToRGB(hue, .12f, .5f);
+        toning.balance.value = 10f;
+        UiKit.SetBiome("space"); // and its UI
 
         train = new GameObject("FlyingLocomotive").transform;
         var model = Locomotives.Create(train, Locomotives.Selected);
@@ -156,7 +164,7 @@ public class Ascenso : MonoBehaviour
         var left = UiKit.Group(hud.transform, new Vector2(0f, 1f), new Vector2(30f, -25f));
         var hitCard = UiKit.Panel(left, new Vector2(235f, -58f), new Vector2(470f, 116f), glass, glass, .06f);
         UiKit.Persona(hitCard);
-        UiKit.Panel(hitCard.transform, new Vector2(-227f, 0f), new Vector2(5f, 108f), UiKit.Sky, UiKit.Sky, 0f);
+        UiKit.Paint(UiKit.Panel(hitCard.transform, new Vector2(-227f, 0f), new Vector2(5f, 108f), Color.white, Color.white, 0f), UiKit.Ink.Main);
         UiKit.Picture(hitCard.transform, "wagon", new Vector2(-190f, 18f), 32f);
         status = Label(hitCard.transform, 25, new Vector2(24f, 22f), new Vector2(360f, 40f));
         status.alignment = TextAnchor.MiddleLeft;
@@ -167,7 +175,7 @@ public class Ascenso : MonoBehaviour
         UiKit.Persona(travelCard);
         altitude = Label(travelCard.transform, 25, new Vector2(0f, 20f), new Vector2(330f, 40f));
         UiKit.Panel(travelCard.transform, new Vector2(0f, -23f), new Vector2(300f, 7f), UiKit.Slate, UiKit.Slate, 0f);
-        progressFill = UiKit.Panel(travelCard.transform, new Vector2(-150f, -23f), new Vector2(0f, 7f), UiKit.Sky, UiKit.Sky, 0f);
+        progressFill = UiKit.Paint(UiKit.Panel(travelCard.transform, new Vector2(-150f, -23f), new Vector2(0f, 7f), Color.white, Color.white, 0f), UiKit.Ink.Main);
         progressFill.rectTransform.pivot = new Vector2(0f, .5f);
         var bottom = UiKit.Group(hud.transform, new Vector2(.5f, 0f), new Vector2(0f, 31f));
         UiKit.Persona(UiKit.Panel(bottom, Vector2.zero, new Vector2(1070f, 44f), glass, glass, .04f));
@@ -178,16 +186,22 @@ public class Ascenso : MonoBehaviour
         flash.rectTransform.offsetMin = flash.rectTransform.offsetMax = Vector2.zero;
         var dialogueGlass = new Color(.06f, .09f, .19f, .94f);
         dialogPanel = UiKit.Persona(UiKit.Panel(hud.transform, new Vector2(0f, -330f), new Vector2(1420f, 270f), dialogueGlass, dialogueGlass, .035f), 6f, 14f);
-        UiKit.Panel(dialogPanel.transform, new Vector2(0f, 130f), new Vector2(1320f, 3f), UiKit.Sky, UiKit.Sky, 0f);
-        speaker = Label(dialogPanel.transform, 26, new Vector2(0f, 93f), new Vector2(1280f, 38f));
-        speaker.color = UiKit.Sky;
+        UiKit.Paint(UiKit.Panel(dialogPanel.transform, new Vector2(0f, -128f), new Vector2(1380f, 6f), Color.white, Color.white, 0f), UiKit.Ink.Main).sprite = null;
+        var nameTag = UiKit.Paint(UiKit.Panel(dialogPanel.transform, new Vector2(-480f, 135f), new Vector2(380f, 60f), Color.white, Color.white, .25f), UiKit.Ink.Main);
+        nameTag.sprite = null;
+        nameTag.rectTransform.localRotation = Quaternion.Euler(0f, 0f, 3f);
+        speaker = Label(nameTag.transform, 36, new Vector2(0f, 2f), new Vector2(360f, 56f));
+        speaker.font = UiKit.Display;
+        speaker.color = Color.white;
         dialogue = Label(dialogPanel.transform, 28, new Vector2(0f, 16f), new Vector2(1290f, 100f));
-        var action = UiKit.Panel(dialogPanel.transform, new Vector2(0f, -86f), new Vector2(360f, 52f), UiKit.Sky, UiKit.Sky);
+        var action = UiKit.Paint(UiKit.Panel(dialogPanel.transform, new Vector2(0f, -86f), new Vector2(360f, 56f), Color.white, Color.white, .25f), UiKit.Ink.Main);
+        action.sprite = null;
         action.raycastTarget = true;
         var clicks = action.gameObject.AddComponent<Clicks>();
         clicks.click = _ => Confirm();
         clicks.hover = _ => Sound.Play("click");
-        actionText = Label(action.transform, 24, Vector2.zero, new Vector2(330f, 44f));
+        actionText = Label(action.transform, 30, Vector2.zero, new Vector2(330f, 50f));
+        actionText.font = UiKit.Display;
     }
 
     static UnityEngine.UI.Text Label(Transform parent, int size, Vector2 at, Vector2 box)

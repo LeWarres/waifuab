@@ -1003,7 +1003,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
     // A crash: it blows up, and a moment later is put back on the road where it was, crawling and blinking.
     void Crash(Racer r, float now)
     {
-        if (trench && r.player) TrenchHurt(25); // in the trench a crash costs her health
+        if (trench && r.player) TrenchHurt(15); // in the trench a crash costs her health
         Effect("grenade", r.body.position + Vector3.up, 6f);
         Effect("smoke", r.body.position + Vector3.up, 4f);
         Fireball(r.body.position + Vector3.up * 1.5f, now);

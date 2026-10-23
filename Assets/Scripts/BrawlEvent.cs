@@ -340,45 +340,84 @@ public class BrawlEvent : MonoBehaviour
     {
         room = new GameObject("WagonInside").transform;
         room.position = Inside;
-        Color wood = new Color(0.62f, 0.4f, 0.22f), woodDark = new Color(0.46f, 0.29f, 0.16f);
-        Color wall = new Color(0.78f, 0.28f, 0.22f), wallLow = new Color(0.36f, 0.16f, 0.14f), steel = new Color(0.5f, 0.53f, 0.6f);
-        Color gold = new Color(1f, 0.8f, 0.3f), roof = new Color(0.9f, 0.85f, 0.75f), crate = new Color(0.75f, 0.55f, 0.3f);
-        // Floor of planks, a roof with steel ribs and lamps.
-        for (int k = 0; k < 8; k++)
-            Block(new Vector3(0f, -0.1f, -HalfWidth + (k + 0.5f) * HalfWidth / 4f), new Vector3(HalfLength * 2f, 0.2f, HalfWidth / 4f - 0.04f), k % 2 == 0 ? wood : woodDark);
-        Block(new Vector3(0f, Height + 0.1f, 0f), new Vector3(HalfLength * 2f + 0.4f, 0.2f, HalfWidth * 2f + 0.4f), roof);
-        for (int k = 0; k < 6; k++)
+        // A freight wagon fitted out: boards underfoot, wood panelling up to the windows and riveted green steel over
+        // them, a roof of dark boards on steel ribs, three lamps hanging from it (real lights, shadows and all), doors
+        // at the ends inside hazard stripes, and its cargo along the walls: crates, a stack under a tarp, barrels,
+        // sacks. The sun still comes in through the windows and the roof; the lamps add their warm pools over it.
+        float length = HalfLength * 2f, width = HalfWidth * 2f;
+        Material floor = Interior.Textured(Interior.Planks(), new Color(0.72f, 0.5f, 0.32f), new Vector2(length / 3f, width / 1.9f));
+        Material panel = Interior.Textured(Interior.Panels(), new Color(0.6f, 0.4f, 0.25f), new Vector2(length / 1.6f, 1f));
+        Material plate = Interior.Textured(Interior.Riveted(), new Color(0.36f, 0.56f, 0.5f), new Vector2(length / 2.4f, 1f));
+        Material endPlate = Interior.Textured(Interior.Riveted(), new Color(0.36f, 0.56f, 0.5f), new Vector2(width / 2.4f, Height / 2.4f));
+        Material roofBoards = Interior.Textured(Interior.Planks(), new Color(0.38f, 0.27f, 0.2f), new Vector2(length / 3f, width / 1.9f));
+        Material steel = TrainSim.Mat(new Color(0.42f, 0.45f, 0.5f)), steelDark = TrainSim.Mat(new Color(0.2f, 0.21f, 0.24f));
+        Material brass = TrainSim.Mat(new Color(1f, 0.78f, 0.35f)), postWood = TrainSim.Mat(new Color(0.38f, 0.24f, 0.14f));
+        Material yellow = TrainSim.Mat(new Color(1f, 0.78f, 0.1f), false), black = TrainSim.Mat(new Color(0.08f, 0.08f, 0.09f), false);
+        Material glass = TrainSim.Mat(new Color(0.6f, 0.85f, 1f) * 1.6f, false);
+
+        Interior.Box(room, new Vector3(0f, -0.1f, 0f), new Vector3(length, 0.2f, width), floor);
+        foreach (float side in new[] { -1f, 1f }) // steel kick plates where the floor meets the walls
+            Interior.Box(room, new Vector3(0f, 0.04f, side * (HalfWidth - 0.12f)), new Vector3(length, 0.08f, 0.24f), steel);
+        // The roof: boards on ribs, a knee brace where each rib meets the wall.
+        Interior.Box(room, new Vector3(0f, Height + 0.1f, 0f), new Vector3(length + 0.4f, 0.2f, width + 0.4f), roofBoards);
+        for (int k = 0; k <= 8; k++)
         {
-            float x = -HalfLength + (k + 0.5f) * HalfLength / 3f;
-            Block(new Vector3(x, Height - 0.1f, 0f), new Vector3(0.25f, 0.22f, HalfWidth * 2f), steel);
-            Block(new Vector3(x + HalfLength / 6f, Height - 0.06f, 0f), new Vector3(1.2f, 0.1f, 0.4f), new Color(1f, 0.92f, 0.7f) * 2.5f, false); // a lamp: bright enough to bloom
+            float x = -HalfLength + k * length / 8f;
+            Interior.Box(room, new Vector3(x, Height - 0.12f, 0f), new Vector3(0.22f, 0.24f, width), steelDark);
+            foreach (float side in new[] { -1f, 1f })
+            {
+                Transform brace = Interior.Box(room, new Vector3(x, Height - 0.45f, side * (HalfWidth - 0.35f)), new Vector3(0.16f, 0.9f, 0.16f), steelDark);
+                brace.localRotation = Quaternion.Euler(side * 45f, 0f, 0f);
+                Interior.Box(room, new Vector3(x, (2.7f + Height) * 0.5f, side * (HalfWidth - 0.02f)), new Vector3(0.18f, Height - 2.7f, 0.1f), steelDark); // the rib down the wall
+            }
         }
-        // The ends, each with a door.
-        foreach (float end in new[] { -1f, 1f })
-        {
-            Block(new Vector3(end * (HalfLength + 0.1f), Height * 0.5f, 0f), new Vector3(0.2f, Height, HalfWidth * 2f), wall);
-            Block(new Vector3(end * HalfLength, 1.15f, 0f), new Vector3(0.1f, 2.3f, 1.3f), steel);
-            Block(new Vector3(end * (HalfLength - 0.06f), 1.6f, 0f), new Vector3(0.05f, 0.6f, 0.8f), new Color(0.6f, 0.85f, 1f) * 1.6f, false);
-        }
-        // The sides: dark panelling up to the windows, the red wall over them, posts between, a gold trim.
+        // The sides: panelling up to the windows, a brass rail, posts between the windows, riveted plate over them.
         const int Windows = 7;
         foreach (float side in new[] { -1f, 1f })
         {
             float z = side * (HalfWidth + 0.1f);
-            Block(new Vector3(0f, 0.65f, z), new Vector3(HalfLength * 2f, 1.3f, 0.2f), wallLow);
-            Block(new Vector3(0f, (2.7f + Height) * 0.5f, z), new Vector3(HalfLength * 2f, Height - 2.7f, 0.2f), wall);
+            Interior.Box(room, new Vector3(0f, 0.65f, z), new Vector3(length, 1.3f, 0.2f), panel);
+            Interior.Box(room, new Vector3(0f, (2.7f + Height) * 0.5f, z), new Vector3(length, Height - 2.7f, 0.2f), plate);
             for (int k = 0; k <= Windows; k++)
-                Block(new Vector3(-HalfLength + k * HalfLength * 2f / Windows, 2f, z), new Vector3(0.7f, 1.4f, 0.22f), wall);
-            Block(new Vector3(0f, 1.33f, z - side * 0.12f), new Vector3(HalfLength * 2f, 0.07f, 0.06f), gold);
-            Block(new Vector3(0f, 2.68f, z - side * 0.12f), new Vector3(HalfLength * 2f, 0.07f, 0.06f), gold);
+                Interior.Box(room, new Vector3(-HalfLength + k * length / Windows, 2f, z), new Vector3(0.7f, 1.4f, 0.22f), postWood);
+            foreach (float y in new[] { 1.33f, 2.68f }) Interior.Box(room, new Vector3(0f, y, z - side * 0.12f), new Vector3(length, 0.08f, 0.08f), y < 2f ? brass : steel);
         }
-        // Crates by the walls: cover, and in the way.
-        foreach (Vector3 at in new[] { new Vector3(-6.5f, 0f, 2.9f), new Vector3(-1.5f, 0f, -2.9f), new Vector3(4f, 0f, 2.9f), new Vector3(8.5f, 0f, -2.9f) })
+        // The ends: riveted steel, a door with a lit window, hazard stripes round it.
+        foreach (float end in new[] { -1f, 1f })
         {
-            Block(at + Vector3.up * 0.55f, new Vector3(1.6f, 1.1f, 1.1f), crate);
-            Block(at + new Vector3(0.2f, 1.45f, 0f), new Vector3(0.9f, 0.7f, 0.9f), crate * 0.85f);
-            crates.Add(new Rect(at.x - 0.8f, at.z - 0.55f, 1.6f, 1.1f));
+            Interior.Box(room, new Vector3(end * (HalfLength + 0.1f), Height * 0.5f, 0f), new Vector3(0.2f, Height, width), endPlate);
+            Interior.Box(room, new Vector3(end * HalfLength, 1.15f, 0f), new Vector3(0.1f, 2.3f, 1.3f), steel);
+            Interior.Box(room, new Vector3(end * (HalfLength - 0.06f), 1.6f, 0f), new Vector3(0.05f, 0.6f, 0.8f), glass, 0f, false);
+            for (int k = 0; k < 9; k++) // the stripes: up both sides of the door and across its top
+            {
+                Material stripe = k % 2 == 0 ? yellow : black;
+                foreach (float s in new[] { -1f, 1f })
+                    Interior.Box(room, new Vector3(end * (HalfLength - 0.04f), 0.15f + k * 0.28f, s * 0.82f), new Vector3(0.04f, 0.28f, 0.22f), stripe, 0f, false);
+            }
+            Interior.Box(room, new Vector3(end * (HalfLength - 0.9f), 0.012f, 0f), new Vector3(1.4f, 0.02f, 1.8f), yellow, 0f, false); // the floor in front of it, marked
+            for (int k = 0; k < 5; k++)
+                Interior.Box(room, new Vector3(end * (HalfLength - 0.9f), 0.024f, -0.72f + k * 0.36f), new Vector3(1.4f, 0.02f, 0.14f), black, 0f, false);
         }
+        // The lamps: hanging from the roof, each a real warm light with shadows.
+        foreach (float x in new[] { -HalfLength * 0.6f, 0f, HalfLength * 0.6f })
+        {
+            Interior.Place("lamp", room, new Vector3(x, Height - 2.28f * 0.6f, 0f), 0f, 0.6f);
+            Interior.Lamp(room, new Vector3(x, Height - 1.4f, 0f), new Color(1f, 0.8f, 0.55f), 260000f, 11f, true);
+        }
+        // The cargo, along the walls: cover, and in the way (each one's footprint blocks the floor).
+        void Cargo(string kit, Vector3 at, float turn, float scale, float wide, float deep)
+        {
+            Interior.Place(kit, room, at, turn, scale);
+            crates.Add(new Rect(at.x - wide * 0.5f, at.z - deep * 0.5f, wide, deep));
+        }
+        Cargo("stack", new Vector3(-6.5f, 0f, HalfWidth - 0.8f), 0f, 1f, 2.4f, 1.4f);
+        Cargo("crate", new Vector3(-1.5f, 0f, -HalfWidth + 0.75f), 8f, 1.1f, 1.45f, 1.45f);
+        Interior.Place("crate", room, new Vector3(-1.45f, 1.2f, -HalfWidth + 0.75f), -12f, 0.7f); // a small one on top
+        Cargo("barrel", new Vector3(3.5f, 0f, HalfWidth - 0.65f), 0f, 1f, 1.1f, 1.1f);
+        Cargo("barrel", new Vector3(4.65f, 0f, HalfWidth - 0.65f), 40f, 1f, 1.1f, 1.1f);
+        Cargo("sacks", new Vector3(8.3f, 0f, -HalfWidth + 0.6f), 0f, 1f, 2.6f, 1f);
+        Cargo("barrel", new Vector3(-HalfLength + 0.9f, 0f, -HalfWidth + 0.7f), 0f, 1f, 1.1f, 1.1f);
+        Cargo("crate", new Vector3(HalfLength - 1f, 0f, HalfWidth - 0.75f), -6f, 1.1f, 1.45f, 1.45f);
         // Outside: the ground going by, under the windows.
         ground = GameObject.CreatePrimitive(PrimitiveType.Quad).transform;
         Destroy(ground.GetComponent<Collider>());
@@ -414,7 +453,7 @@ public class BrawlEvent : MonoBehaviour
         if (!paints.TryGetValue(colour, out Material paint)) paints[colour] = paint = TrainSim.Mat(colour, outline);
         var look = block.GetComponent<Renderer>();
         look.sharedMaterial = paint;
-        look.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; // the sun comes in through the roof: no dark inside
+        look.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
     }
 
     // A spot on the floor (about the room's middle) moved out of the walls and crates, keeping room around it.

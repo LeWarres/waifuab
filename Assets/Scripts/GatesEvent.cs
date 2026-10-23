@@ -11,9 +11,9 @@ using UnityEngine.UI;
 // stands still, like the other set pieces (CaveEvent, RaceEvent).
 public partial class GatesEvent : MonoBehaviour
 {
-    public int gates = 4, locksPerGate = 5, lockHits = 5, health = 100;
+    public int gates = 4, locksPerGate = 4, lockHits = 4, health = 100;
     public float gateDistance = 115f, trainSpeed = 6.5f, aimSpeed = 900f, fireRate = 7f;
-    public float guardEvery = 1.05f, guardSpeed = 12f, guardDamage = 15f;
+    public float guardEvery = 2.3f, guardSpeed = 8f, guardDamage = 8f;
 
     public bool Active { get; private set; }
 
@@ -126,7 +126,7 @@ public partial class GatesEvent : MonoBehaviour
         int count = locksPerGate + gateIndex; // one more each gate
         for (int i = 0; i < count; i++)
         {
-            var l = new Lock { hits = lockHits, sway = gateIndex == 0 ? 0f : Random.Range(1.5f, 3f) * (Random.value < 0.5f ? -1f : 1f) };
+            var l = new Lock { hits = lockHits, sway = gateIndex == 0 ? 0f : Random.Range(1f, 2f) * (Random.value < 0.5f ? -1f : 1f) };
             l.body = new GameObject("Lock").transform;
             l.body.SetParent(door, false);
             Vector3 at;
@@ -249,7 +249,7 @@ public partial class GatesEvent : MonoBehaviour
         if (step == Step.Lost) { Asking(); return; }
 
         // the train rolls on; she aims from beside its cab
-        if (step == Step.Rolling) travelled += trainSpeed * (1f + gateIndex * 0.15f) * dt;
+        if (step == Step.Rolling) travelled += trainSpeed * (1f + gateIndex * 0.1f) * dt;
         engine.localPosition = new Vector3(0f, 0f, travelled);
         Vector3 seat = Arena + new Vector3(-4.6f, 5.6f, travelled - 9f); // beside and behind the cab: its side in the picture
         view.transform.position = seat + (shake > 0f ? Random.insideUnitSphere * shake * 0.3f : Vector3.zero);
@@ -385,7 +385,7 @@ public partial class GatesEvent : MonoBehaviour
     {
         if (step == Step.Rolling && now >= nextGuard)
         {
-            nextGuard = now + guardEvery * Mathf.Lerp(1f, 0.6f, gateIndex / 2f);
+            nextGuard = now + guardEvery * Mathf.Lerp(1f, 0.75f, gateIndex / 3f);
             var g = new Guard { from = Arena + new Vector3(Random.Range(-10f, 10f), Random.Range(3f, 14f), gateAt - 2f), speed = guardSpeed * (1f + gateIndex * 0.15f) };
             var go = new GameObject("Guard");
             go.transform.SetParent(arena, false);

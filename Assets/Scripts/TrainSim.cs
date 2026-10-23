@@ -1268,6 +1268,10 @@ public class TrainSim : MonoBehaviour
         toning.shadows.value = Color.HSVToRGB(0.58f, 0.45f, 0.5f);
         toning.highlights.value = Color.HSVToRGB(mainHue, 0.12f, 0.5f);
         toning.balance.value = 10f; // less of the picture counts as shadow
+        // Some grounds need a hand: the snow glares white, the jungle's green goes neon, the volcano is dark.
+        (float light, float colour) = BiomeId switch { "snow" => (-0.35f, 6f), "jungle" => (0f, -14f), "volcano" => (0.25f, 0f), _ => (0f, 0f) };
+        grade.postExposure.value = 0.25f + light;
+        grade.saturation.value = 14f + colour;
     }
 
     void Update()

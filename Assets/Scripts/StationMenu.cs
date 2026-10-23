@@ -79,38 +79,52 @@ public class Prompt : MonoBehaviour
     }
 }
 
-// The shadow and outline behind a panel made Persona (UiKit.Persona): they keep to its place, size and turn, and
-// show and go with it.
+// The shadow and outline behind a panel made Persona (UiKit.Persona): each keeps to the panel's place, size and
+// turn, and shows only while the panel does. They do it themselves, every frame, so they also notice when the
+// panel is switched off (its own scripts stop then).
 public class Backed : MonoBehaviour
 {
     public RectTransform shadow, rim;
     public float outline, offset;
 
-    void OnEnable() => Show(true);
-    void OnDisable() => Show(false);
-    void OnDestroy()
-    {
-        if (shadow) Destroy(shadow.gameObject);
-        if (rim) Destroy(rim.gameObject);
-    }
-    void Show(bool on)
-    {
-        if (!transform.parent || !transform.parent.gameObject.activeInHierarchy) return; // the whole lot is going: they go with it
-        if (shadow) shadow.gameObject.SetActive(on);
-        if (rim) rim.gameObject.SetActive(on);
-    }
-    void LateUpdate() => Sync();
+    void Awake() => Sync(); // panels saved with a scene get their followers too
 
     public void Sync()
     {
-        Copy(shadow, new Vector2(offset, -offset));
-        Copy(rim, Vector2.zero);
+        Follow(shadow, new Vector2(offset, -offset));
+        Follow(rim, Vector2.zero);
     }
 
-    void Copy(RectTransform to, Vector2 by)
+    void Follow(RectTransform part, Vector2 by)
     {
-        if (!to) return;
-        var me = (RectTransform)transform;
+        if (!part) return;
+        var follower = part.GetComponent<BackedPart>() ?? part.gameObject.AddComponent<BackedPart>();
+        follower.owner = (RectTransform)transform;
+        follower.by = by;
+        follower.outline = outline;
+        follower.Copy();
+    }
+}
+
+public class BackedPart : MonoBehaviour
+{
+    public RectTransform owner;
+    public Vector2 by;
+    public float outline;
+    Graphic look;
+
+    void LateUpdate()
+    {
+        if (!owner) { Destroy(gameObject); return; }
+        Copy();
+    }
+
+    public void Copy()
+    {
+        if (!look) look = GetComponent<Graphic>();
+        look.enabled = owner.gameObject.activeInHierarchy;
+        var to = (RectTransform)transform;
+        var me = owner;
         to.anchorMin = me.anchorMin;
         to.anchorMax = me.anchorMax;
         to.pivot = me.pivot;
@@ -219,7 +233,7 @@ public static class UiKit
         text.color = color;
         text.alignment = anchor;
         text.raycastTarget = false;
-        if (font == display) text.verticalOverflow = VerticalWrapMode.Overflow; // its lines are taller than its letters: never cut them off
+        if (font == display && !fit) text.verticalOverflow = VerticalWrapMode.Overflow; // its lines are taller than its letters: never cut them off (best fit shrinks them to the box instead)
         if (fit)
         {
             text.resizeTextForBestFit = true;
