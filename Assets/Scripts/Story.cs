@@ -24,7 +24,7 @@ public static class Story
     // and after the chapter (strings story.<hero>.<chapter>.intro.<n> / .outro.<n>); the first chapter's intro
     // is the prologue the story scene always had. before / after: who speaks each line of the talk on the track
     // as the duel starts and once it is won, h the hero and r the rival (strings ...before.<n> / ...after.<n>).
-    public struct Part { public int biome, rival, intro, outro; public string before, after; public bool inspection; public QuestionnaireMode questionnaire; public bool race, eyeBoss, cave, gates, trench; } // trench: the finale is the run down the base's trench (RaceEvent, RaceTrench.cs) // gates: before the biome, the gates of the base to shoot open (GatesEvent) // cave: the duel's driver turn is the flashlight hunt (CaveEvent) // the finale instead of a duel: race, a race to the launcher (RaceEvent); eyeBoss, the ball of eyes on a ring of wagons (EyeBossEvent)
+    public struct Part { public int biome, rival, intro, outro; public string before, after; public bool inspection; public QuestionnaireMode questionnaire; public bool race, eyeBoss, cave, gates, trench, drawings; } // trench: the finale is the run down the base's trench (RaceEvent, RaceTrench.cs) // gates: before the biome, the gates of the base to shoot open (GatesEvent) // cave: the duel's driver turn is the flashlight hunt (CaveEvent) // the finale instead of a duel: race, a race to the launcher (RaceEvent); eyeBoss, the ball of eyes on a ring of wagons (EyeBossEvent)
 
     static readonly Part[] Bba =
     {
@@ -35,10 +35,13 @@ public static class Story
         new Part { biome = 8, rival = 3,  intro = 2,  outro = 5, before = "rhr", after = "rh", gates = true, trench = true }, // the alien base: Tzmil and the Night Skull
     };
 
-    // Faceless currently has his prologue and first playable chapter; later chapters are still to be written.
     static readonly Part[] Faceless =
     {
-        new Part { biome = 0, rival = 2, intro = 12, outro = 1, before = "hr", after = "h" },
+        new Part { biome = 7, rival = 0, intro = 12, outro = 3, before = "rhh", after = "hhr", cave = true },
+        new Part { biome = 8, rival = 7, intro = 5, outro = 3, before = "rhh", after = "hr", cave = true, inspection = true, questionnaire = QuestionnaireMode.Alien },
+        new Part { biome = 6, rival = 4, intro = 3, outro = 2, before = "rh", after = "h", eyeBoss = true },
+        new Part { biome = 2, rival = 8, intro = 3, outro = 3, before = "rh", after = "hr" },
+        new Part { biome = 2, rival = 8, intro = 3, outro = 6, before = "h", after = "h", drawings = true },
     };
 
     public static Part[] Route(string hero) => hero switch { "bba" => Bba, "faceless" => Faceless, _ => null };
@@ -53,9 +56,10 @@ public static class Story
     public static void RetryAscent() => replayArrival = true;
     public static void PassAscent() { AscentPending = false; ascentPassed = true; }
     public static QuestionnaireMode InspectionMode => Current.questionnaire;
-    static bool replayArrival, ascentPassed;
+    static bool replayArrival, ascentPassed, inspectionPassed;
+    public static bool Descending => Active && Hero == "faceless" && Chapter == 3;
     public static void RetryInspection() => replayArrival = true;
-    public static void PassInspection() => InspectionPending = false;
+    public static void PassInspection() { InspectionPending = false; inspectionPassed = true; }
     public static bool Over => JustWon && Chapter == Route(Hero).Length - 1; // the last one: the end of it all
 
     // Chapters that can be played: every one up to the first not beaten yet.
@@ -94,7 +98,7 @@ public static class Story
         JustWon = true;
         if (Chapter == 0) Achievements.Unlock("chapter1");
         if (Current.race) Achievements.Unlock("race");
-        if (Hero == "bba" && Chapter == Bba.Length - 1) Achievements.Unlock("story"); // Faceless's full ending is not written yet.
+        if (Chapter == Route(Hero).Length - 1) Achievements.Unlock("story");
     }
 
     // The chapter is lost: it is the one to play again, from its start.
@@ -114,7 +118,7 @@ public static class Story
         Chapter = Mathf.Clamp(TestChapter >= 0 ? TestChapter : chapter, 0, (Route(Hero)?.Length ?? 1) - 1);
         JustWon = false;
         GatesPassed = false;
-        InspectionPending = replayArrival = false;
+        InspectionPending = replayArrival = inspectionPassed = false;
         ascentPassed = false;
         AscentPending = false;
     }
@@ -145,14 +149,25 @@ public static class Story
                             _ => "bba_ending_reflection"
                         }),
                         _ => null
-                    } : Hero == "faceless" ? "Story/faceless_idea" : null });
+                    } : Hero == "faceless" ? FacelessArt(ending, false, n) : null });
             replayArrival = false;
             if (JustWon)
             {
                 if (Chapter == route.Length - 1) return pages.ToArray(); // the end: no next chapter
                 Chapter++;
+                ascentPassed = inspectionPassed = false;
                 JustWon = false;
             }
+        }
+        // Faceless enters Earth through the same flight challenge, in reverse, before the jungle narration.
+        if (Hero == "faceless" && Chapter == 3 && !ascentPassed)
+        {
+            InspectionPending = false;
+            AscentPending = true;
+            if (pages.Count == 0)
+                for (int n = 1; n <= route[2].outro; n++)
+                    pages.Add(new StoryIntro.Page { textKey = $"story.faceless.2.outro.{n}", titleKey = "story.faceless.2.title", number = 3, artwork = FacelessArt(2, false, n) });
+            return pages.ToArray();
         }
         // The city ending leads into the flight, before any narration already set in space.
         if (Hero == "bba" && Chapter == 2 && TestChapter != 2 && !ascentPassed) // (testing space: straight in)
@@ -170,7 +185,8 @@ public static class Story
             for (int n = 1; n <= route[0].intro; n++)
                 pages.Add(new StoryIntro.Page { image = PrologueImages[n - 1], textKey = $"story.page.{n:00}" });
         else
-            for (int n = 1; n <= route[Chapter].intro; n++)
+            for (int n = Hero == "faceless" && Chapter == 1 && inspectionPassed ? 3 : 1;
+                n <= (Hero == "faceless" && Chapter == 1 && !inspectionPassed ? 2 : route[Chapter].intro); n++)
                 pages.Add(new StoryIntro.Page { image = 5, textKey = $"story.{Hero}.{Chapter}.intro.{n}", titleKey = $"story.{Hero}.{Chapter}.title", number = Chapter + 1,
                     artwork = Hero == "bba" ? Chapter switch
                     {
@@ -179,8 +195,8 @@ public static class Story
                         3 => n == 1 ? "Story/bba_alien_arrival" : "Story/bba_space_landing",
                         4 => "Story/bba_fortress_arrival",
                         _ => null
-                    } : Hero == "faceless" ? "Story/faceless_" + FacelessImages[n - 1] : null });
-        InspectionPending = route[Chapter].inspection;
+                    } : Hero == "faceless" ? FacelessArt(Chapter, true, n) : null });
+        InspectionPending = route[Chapter].inspection && !inspectionPassed;
         return pages.ToArray();
     }
 
@@ -202,6 +218,26 @@ public static class Story
 
     static readonly int[] PrologueImages = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5 }; // as the story scene had them
     static readonly string[] FacelessImages = { "champion", "orders", "legacy", "legacy", "artist", "artist", "friend", "friend", "artist", "idea", "idea", "idea" };
+
+    public static string FacelessArt(int chapter, bool opening, int n)
+    {
+        string name = opening ? chapter switch
+        {
+            0 => FacelessImages[n - 1],
+            1 => n <= 2 ? "bba_bluff" : n <= 4 ? "resignation" : "fortress",
+            2 => "space_escape",
+            3 => "earth_arrival",
+            _ => n == 1 ? "tie_choice" : "stolen_drawings"
+        } : chapter switch
+        {
+            0 => "bba_bluff",
+            1 => "cerebron_bluff",
+            2 => "eye_escape",
+            3 => n == 1 ? "r20_peace" : "tie_choice",
+            _ => n <= 3 ? "cabin_artist" : "texe_job"
+        };
+        return "Story/faceless_" + name;
+    }
 
     // Upgrades as tokens, so a chapter can remember one and the next can hand it back: "ammo:<id>" (the hero's
     // weapon), "wagon:<id>" (a wagon weapon), "evolve" (a level on the hero's weapon) or a hero stat

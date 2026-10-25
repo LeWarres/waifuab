@@ -11,8 +11,9 @@ public class SpiderLegs : MonoBehaviour
     static readonly float[] HipX = { -1.5f, -0.5f, 0.5f, 1.5f }, FootX = { -2.7f, -1.05f, 0.75f, 2.4f }, FootZ = { 1.75f, 2.15f, 2.15f, 1.8f };
     const float HipY = 1.3f, HipZ = 0.72f;
 
-    readonly Transform[] thighs = new Transform[8], shins = new Transform[8];
-    TrainSim train;
+    // Keep the live joints across an Editor script reload; Start is not called again for existing instances.
+    [SerializeField] Transform[] thighs = new Transform[8], shins = new Transform[8];
+    [SerializeField] TrainSim train;
     float walked;
 
     void Start()

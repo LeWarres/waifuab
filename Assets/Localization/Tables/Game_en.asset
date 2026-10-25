@@ -3891,7 +3891,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4902801282248715
-    m_Localized: "Reach the turret and press \u25CB / E"
+    m_Localized: Reach the turret to jump in
     m_Metadata:
       m_Items: []
   - m_Id: 4902801282248716
@@ -4496,19 +4496,333 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6071604535963660
-    m_Localized: I did not come for another title.
+    m_Localized: Move that locomotive! I have a mission to finish.
     m_Metadata:
       m_Items: []
   - m_Id: 6071604535963661
-    m_Localized: Then show me what you came for.
+    m_Localized: And I have orders to stop you. I am this planet's champion.
     m_Metadata:
       m_Items: []
   - m_Id: 6071604535963662
-    m_Localized: There is a long road ahead. This time, I want to choose it myself.
+    m_Localized: I think if I keep winning, I will never get out of this...
     m_Metadata:
       m_Items: []
   - m_Id: 6071604535963663
-    m_Localized: To be continued...
+    m_Localized: 'I had won again. That was exactly the problem: if I kept winning,
+      they would never stop calling me champion.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477405220864
+    m_Localized: Although I am starting to think that title needs a holiday.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477451358208
+    m_Localized: Oh, noooooooo! You defeated me! I cannot follow you anymore!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477451358209
+    m_Localized: Huh? But you... Well, I am not arguing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552512
+    m_Localized: So I performed history's least convincing defeat. 'Oh, noooooooo!
+      You defeated me! I cannot follow you!' BBA seemed to accept it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552513
+    m_Localized: I would speak to my boss. A mere human had defeated the champion.
+      Clearly, I was no longer qualified for the job.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552514
+    m_Localized: A RESIGNATION REJECTED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552515
+    m_Localized: I returned to the station with my resignation ready. T.exe knew
+      me too well to believe that performance.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552516
+    m_Localized: Before seeing the boss, I had to prove I was not a human infiltrator.
+      A questionnaire. Just what my great escape needed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552517
+    m_Localized: I told him about my humiliating defeat and asked to stop being champion.
+      My boss did not even finish reading my resignation.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552518
+    m_Localized: '''Denied. Especially in the middle of a war.'' Another invader
+      had reached the fortress. Guess who had to stop him.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552519
+    m_Localized: So we returned to the rails. T.exe and I, heading for the fortress.
+      My artistic career was still waiting in a drawer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552520
+    m_Localized: I am not stopping here. That base is in my way.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552521
+    m_Localized: Cerebron. My boss insists I must stop you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552522
+    m_Localized: I tried resigning. Apparently, paperwork is tougher than your locomotive.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552523
+    m_Localized: Not much trouble. Although perhaps you should have told me reinforcements
+      were coming...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552524
+    m_Localized: Reinforcements? I never said anything about...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552525
+    m_Localized: Stopping Cerebron was not much trouble. Going back to work afterward
+      would have been.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552526
+    m_Localized: If I pretended he had told me about reinforcements and said I was
+      going to intercept them, nobody would try to stop me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552527
+    m_Localized: I called on the radio, used my most professional voice, and we launched
+      into space. For once, I had invented the next order myself.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552528
+    m_Localized: OUTSIDE THE FRAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552529
+    m_Localized: My lie worked for a few minutes. Enough to leave the planet. Not
+      enough to disappear.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552530
+    m_Localized: They soon noticed their champion was not heading toward reinforcements.
+      He was heading anywhere without a boss.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552531
+    m_Localized: So they sent someone after me. Someone with so many eyes that hiding
+      my sketchbook would be difficult.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552532
+    m_Localized: The champion must return. There is nowhere we cannot see you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552533
+    m_Localized: With all those eyes, can you really not see that I want to quit?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552534
+    m_Localized: Finally, some privacy. Now to find a planet where nobody knows me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552535
+    m_Localized: Earth was probably the best place to hide. They were too busy with
+      their own war to look for an artist.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552536
+    m_Localized: T.exe set course for the planet. A descent through space junk awaited
+      us. Freedom had very poor maintenance.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552537
+    m_Localized: AN ALIEN WITHOUT AN APPOINTMENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552538
+    m_Localized: We landed on Earth. I expected a patrol, an alarm, or someone shouting
+      at me to put my hands up.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552539
+    m_Localized: But nobody came. Being an alien, I expected a slightly more... organized
+      welcome.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552540
+    m_Localized: We could continue without trouble. Naturally, I made the mistake
+      of saying that out loud.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552541
+    m_Localized: I was sent to stop you, you blasted alien! Then I will be this world's
+      great hero!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552542
+    m_Localized: 'I just stopped being another world''s great hero. Trust me: ask
+      about the contract first.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552543
+    m_Localized: I am sorry to break your dream. I just want somewhere safe. I am
+      not going to bother anyone.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552544
+    m_Localized: You were not even going to conquer a small town?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552545
+    m_Localized: I conquered no towns. I kept looking for a place where I would not
+      have to prove anything to anyone.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552546
+    m_Localized: I had been through a lot to hide. I noticed everyone here wore clothes.
+      Once I had a home, I would get an elegant suit.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552547
+    m_Localized: And perhaps a blue tie... Or would red look better? An important
+      decision. I did not want to start my new life with a fashion crime.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552548
+    m_Localized: A CORNER OF MY OWN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552549
+    m_Localized: At last, I found my place in the woods. A cabin, silence, and trees
+      for my drawings. I needed little else.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552550
+    m_Localized: Until some little visitors decided to take my drawings. I wonder
+      what story they had heard about collecting pages in the woods.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552551
+    m_Localized: Now I was the one chasing them. Hey! Those pages are not clues!
+      They are my drawings!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552552
+    m_Localized: Please give my drawings back!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552553
+    m_Localized: Thank you. If you want one, just ask.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552554
+    m_Localized: I got my drawings back. The little visitors learned they could ask
+      for one. I learned I needed better pins.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552555
+    m_Localized: After everything, I still do not know why the war started or how
+      it will end. Right now, my world fits inside this cabin.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552556
+    m_Localized: 'I just want nobody to discover I am here. To keep drawing and decorate
+      the woods with my pictures. Oh, and the tie: I chose red.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552557
+    m_Localized: And T.exe? She changed her shape. Now she looks like a human-world
+      locomotive and has a job of her own.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552558
+    m_Localized: I think the children adore her. She likes carrying passengers who
+      do not order her to destroy anything.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552559
+    m_Localized: We meet now and then and remember old times. My best friend is still
+      there. We only left the job behind. The end.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552560
+    m_Localized: Earth is down there. If we dodge this junk, perhaps we can start
+      again. Easy, T.exe... we are going down.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552561
+    m_Localized: Land in sight. Now we just need a railway... and nobody asking where
+      we came from.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552562
+    m_Localized: 'Descent: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552563
+    m_Localized: THOSE ARE MY DRAWINGS!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552564
+    m_Localized: Recover all 5 drawings before time runs out. Approach each little
+      visitor and press X / Space to ask for the page. No fighting.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552565
+    m_Localized: "Stick / WASD: move   \xB7   R2 / Shift: sprint   \xB7   X / Space:
+      recover"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552566
+    m_Localized: 'X / Space: ''That drawing is mine, please'''
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552567
+    m_Localized: 'Drawings recovered: {0} / {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552568
+    m_Localized: "{0}s   \xB7   Stamina: {1}%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552569
+    m_Localized: MY DRAWINGS ARE SAFE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552570
+    m_Localized: 'No war was needed. Just asking for the pages back. Now: time to
+      draw in peace.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552571
+    m_Localized: THEY GOT AWAY WITH MY PAGES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552572
+    m_Localized: I can still find them. I will return to the clearing and recover
+      my drawings.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6172046045556736
+    m_Localized: Recover my drawings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6172046074916864
+    m_Localized: Begin descent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6175109212876800
+    m_Localized: DESCENT FAILED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6175109246431232
+    m_Localized: Three collisions... We are not reaching Earth like this. We will
+      have to try again, T.exe.
     m_Metadata:
       m_Items: []
   references:

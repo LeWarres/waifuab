@@ -3104,7 +3104,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4902801282248715
-    m_Localized: "Chegue \xE0 torre e aperte \u25CB / E"
+    m_Localized: "Chegue \xE0 torre para subir"
     m_Metadata:
       m_Items: []
   - m_Id: 4902801282248716
@@ -3713,19 +3713,338 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6071604535963660
-    m_Localized: "N\xE3o vim por mais um t\xEDtulo."
+    m_Localized: "Tire essa locomotiva! Tenho uma miss\xE3o para terminar."
     m_Metadata:
       m_Items: []
   - m_Id: 6071604535963661
-    m_Localized: "Ent\xE3o me mostre a que veio."
+    m_Localized: "E eu tenho ordens para deter voc\xEA. Sou o campe\xE3o deste planeta."
     m_Metadata:
       m_Items: []
   - m_Id: 6071604535963662
-    m_Localized: "Ainda h\xE1 um longo caminho. E desta vez eu quero escolh\xEA-lo."
+    m_Localized: Acho que, se eu continuar vencendo, nunca vou me livrar disso...
     m_Metadata:
       m_Items: []
   - m_Id: 6071604535963663
-    m_Localized: Continua...
+    m_Localized: "Eu tinha vencido de novo. Esse era o problema: enquanto eu ganhasse,
+      nunca deixariam de me chamar de campe\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477405220864
+    m_Localized: "Mas estou come\xE7ando a achar que esse t\xEDtulo precisa de f\xE9rias."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477451358208
+    m_Localized: "Ah, n\xE3\xE3\xE3\xE3\xE3\xE3o! Voc\xEA me derrotou! N\xE3o posso
+      mais seguir voc\xEA!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477451358209
+    m_Localized: "H\xE3? Mas voc\xEA... Bom, n\xE3o vou discutir."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552512
+    m_Localized: "Ent\xE3o encenei a pior derrota da hist\xF3ria. \xABAh, n\xE3\xE3\xE3\xE3o!
+      Voc\xEA me derrotou! N\xE3o posso mais seguir voc\xEA!\xBB BBA pareceu aceitar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552513
+    m_Localized: "Eu falaria com meu chefe. Uma simples humana havia derrotado o
+      campe\xE3o. Claramente, eu j\xE1 n\xE3o servia para o cargo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552514
+    m_Localized: "UMA DEMISS\xC3O RECUSADA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552515
+    m_Localized: "Voltei \xE0 esta\xE7\xE3o com minha demiss\xE3o pronta. T.exe me
+      conhecia bem demais para acreditar naquela atua\xE7\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552516
+    m_Localized: "Antes de ver o chefe, precisava provar que n\xE3o era um humano
+      infiltrado. Um question\xE1rio. Exatamente o que minha grande fuga precisava."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552517
+    m_Localized: "Contei minha derrota vergonhosa e pedi para deixar de ser campe\xE3o.
+      Meu chefe nem terminou de ler a demiss\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552518
+    m_Localized: "\xABNegado. Ainda mais no meio de uma guerra\xBB. Outro invasor
+      tinha chegado \xE0 fortaleza. Adivinhem quem precisava det\xEA-lo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552519
+    m_Localized: "Ent\xE3o voltamos aos trilhos. T.exe e eu, rumo \xE0 fortaleza.
+      Minha carreira art\xEDstica continuava esperando numa gaveta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552520
+    m_Localized: "N\xE3o vou parar aqui. Essa base est\xE1 no meu caminho."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552521
+    m_Localized: "Cerebron. Meu chefe insiste que preciso deter voc\xEA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552522
+    m_Localized: "Tentei me demitir. Pelo visto, a burocracia \xE9 mais resistente
+      que sua locomotiva."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552523
+    m_Localized: "N\xE3o foi t\xE3o dif\xEDcil. Mas talvez voc\xEA devesse ter contado
+      que v\xEAm refor\xE7os..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552524
+    m_Localized: "Refor\xE7os? Eu n\xE3o disse nada de..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552525
+    m_Localized: "Deter Cerebron n\xE3o foi grande problema. Voltar ao trabalho depois
+      disso \xE9 que seria."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552526
+    m_Localized: "Se eu fingisse que ele falou de mais refor\xE7os e dissesse que
+      iria intercept\xE1-los, ningu\xE9m tentaria me deter."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552527
+    m_Localized: "Avisei pelo r\xE1dio com minha voz mais profissional e partimos
+      para o espa\xE7o. Pela primeira vez, a pr\xF3xima ordem era inven\xE7\xE3o
+      minha."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552528
+    m_Localized: FORA DA MOLDURA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552529
+    m_Localized: "Minha mentira funcionou por alguns minutos. O bastante para sair
+      do planeta. N\xE3o para desaparecer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552530
+    m_Localized: "Logo perceberam que seu campe\xE3o n\xE3o estava indo atr\xE1s
+      de refor\xE7os. Estava indo para qualquer lugar sem chefe."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552531
+    m_Localized: "Mandaram algu\xE9m me buscar. Algu\xE9m com tantos olhos que esconder
+      meu caderno seria complicado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552532
+    m_Localized: "O campe\xE3o deve voltar. N\xE3o h\xE1 lugar onde n\xE3o possamos
+      ver voc\xEA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552533
+    m_Localized: "Com todos esses olhos, n\xE3o consegue ver que quero parar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552534
+    m_Localized: "Finalmente um pouco de privacidade. Agora, um planeta onde ningu\xE9m
+      me conhe\xE7a."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552535
+    m_Localized: "A Terra provavelmente era o melhor esconderijo. Estavam ocupados
+      demais com a pr\xF3pria guerra para procurar um desenhista."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552536
+    m_Localized: "T.exe rumou para o planeta. Uma descida cheia de sucata nos esperava.
+      A liberdade precisava de manuten\xE7\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552537
+    m_Localized: UM ALIEN SEM HORA MARCADA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552538
+    m_Localized: "Pousamos na Terra. Eu esperava uma patrulha, um alarme ou algu\xE9m
+      mandando levantar as m\xE3os."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552539
+    m_Localized: "Mas ningu\xE9m veio. Sendo alien\xEDgena, esperava uma recep\xE7\xE3o
+      um pouco mais... organizada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552540
+    m_Localized: "Pod\xEDamos seguir sem problemas. Claro que cometi o erro de dizer
+      isso em voz alta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552541
+    m_Localized: "Recebi a miss\xE3o de deter voc\xEA, alien maldito! Assim serei
+      o grande her\xF3i deste mundo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552542
+    m_Localized: "Acabei de deixar de ser o grande her\xF3i de outro mundo. Acredite:
+      pergunte pelas condi\xE7\xF5es do contrato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552543
+    m_Localized: "Desculpe acabar com seu sonho. S\xF3 quero um lugar seguro. N\xE3o
+      vou incomodar ningu\xE9m."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552544
+    m_Localized: Nem ia conquistar uma cidadezinha?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552545
+    m_Localized: "N\xE3o conquistei cidade alguma. Continuei procurando um lugar
+      onde n\xE3o precisasse provar nada a ningu\xE9m."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552546
+    m_Localized: Passei por muito para me esconder. Notei que aqui todos usavam roupas.
+      Quando tivesse um lar, compraria um terno elegante.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552547
+    m_Localized: "E talvez uma gravata azul... Ou ficaria melhor vermelha? Decis\xE3o
+      importante. N\xE3o queria come\xE7ar a nova vida com um crime de moda."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552548
+    m_Localized: "MEU PR\xD3PRIO CANTO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552549
+    m_Localized: "Enfim encontrei meu lugar na floresta. Uma cabana, sil\xEAncio
+      e \xE1rvores para pendurar desenhos. N\xE3o precisava de muito mais."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552550
+    m_Localized: "At\xE9 uns pequenos curiosos resolverem levar meus desenhos. Que
+      hist\xF3ria ter\xE3o ouvido sobre recolher folhas na floresta?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552551
+    m_Localized: "Agora era minha vez de persegui-los. Ei! Essas folhas n\xE3o s\xE3o
+      pistas! S\xE3o meus desenhos!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552552
+    m_Localized: Devolvam meus desenhos, por favor!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552553
+    m_Localized: "Obrigado. Se quiserem um, \xE9 s\xF3 pedir."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552554
+    m_Localized: "Recuperei meus desenhos. Os pequenos visitantes aprenderam que
+      podiam pedir um. Eu aprendi a prend\xEA-los melhor."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552555
+    m_Localized: "Depois de tudo, nem sei por que a guerra come\xE7ou ou como terminar\xE1.
+      Agora, meu mundo cabe nesta cabana."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552556
+    m_Localized: "S\xF3 quero que ningu\xE9m descubra que estou aqui. Continuar desenhando
+      e decorar a floresta. Ah, a gravata: escolhi a vermelha."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552557
+    m_Localized: "E T.exe? Mudou de forma. Agora parece uma locomotiva humana e tem
+      seu pr\xF3prio trabalho."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552558
+    m_Localized: "Acho que as crian\xE7as a adoram. Ela gosta de levar passageiros
+      que n\xE3o mandam destruir nada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552559
+    m_Localized: "De vez em quando nos encontramos e lembramos os velhos tempos.
+      Minha melhor amiga continua aqui. S\xF3 deixamos o emprego para tr\xE1s. Fim."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552560
+    m_Localized: "A Terra est\xE1 l\xE1 embaixo. Se desviarmos da sucata, talvez
+      possamos recome\xE7ar. Calma, T.exe... vamos descer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552561
+    m_Localized: "Terra \xE0 vista. Agora s\xF3 precisamos de trilhos... e que ningu\xE9m
+      pergunte de onde viemos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552562
+    m_Localized: 'Descida: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552563
+    m_Localized: "ESSES DESENHOS S\xC3O MEUS!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552564
+    m_Localized: "Recupere os 5 desenhos antes do tempo acabar. Aproxime-se de cada
+      pequeno curioso e aperte X / Espa\xE7o para pedir a folha. Sem brigas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552565
+    m_Localized: "Stick / WASD: mover   \xB7   R2 / Shift: correr   \xB7   X / Espa\xE7o:
+      recuperar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552566
+    m_Localized: "X / Espa\xE7o: \xABEsse desenho \xE9 meu, por favor\xBB"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552567
+    m_Localized: 'Desenhos recuperados: {0} / {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552568
+    m_Localized: "{0}s   \xB7   Energia: {1}%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552569
+    m_Localized: MEUS DESENHOS A SALVO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552570
+    m_Localized: "N\xE3o precisava de guerra. S\xF3 pedir as folhas de volta. Agora:
+      desenhar em paz."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552571
+    m_Localized: FUGIRAM COM MINHAS FOLHAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552572
+    m_Localized: "Ainda posso encontr\xE1-los. Vou voltar \xE0 clareira e recuperar
+      meus desenhos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6172046045556736
+    m_Localized: Recuperar meus desenhos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6172046074916864
+    m_Localized: Iniciar descida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6175109212876800
+    m_Localized: DESCIDA FALHOU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6175109246431232
+    m_Localized: "Tr\xEAs colis\xF5es... Assim n\xE3o vamos chegar \xE0 Terra. Vamos
+      ter que tentar de novo, T.exe."
     m_Metadata:
       m_Items: []
   references:

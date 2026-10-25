@@ -3371,6 +3371,278 @@ MonoBehaviour:
     m_Key: story.faceless.0.outro.1
     m_Metadata:
       m_Items: []
+  - m_Id: 6170477405220864
+    m_Key: story.faceless.0.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477451358208
+    m_Key: story.faceless.0.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477451358209
+    m_Key: story.faceless.0.after.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552512
+    m_Key: story.faceless.0.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552513
+    m_Key: story.faceless.0.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552514
+    m_Key: story.faceless.1.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552515
+    m_Key: story.faceless.1.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552516
+    m_Key: story.faceless.1.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552517
+    m_Key: story.faceless.1.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552518
+    m_Key: story.faceless.1.intro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552519
+    m_Key: story.faceless.1.intro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552520
+    m_Key: story.faceless.1.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552521
+    m_Key: story.faceless.1.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552522
+    m_Key: story.faceless.1.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552523
+    m_Key: story.faceless.1.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552524
+    m_Key: story.faceless.1.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552525
+    m_Key: story.faceless.1.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552526
+    m_Key: story.faceless.1.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552527
+    m_Key: story.faceless.1.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552528
+    m_Key: story.faceless.2.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552529
+    m_Key: story.faceless.2.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552530
+    m_Key: story.faceless.2.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552531
+    m_Key: story.faceless.2.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552532
+    m_Key: story.faceless.2.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552533
+    m_Key: story.faceless.2.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552534
+    m_Key: story.faceless.2.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552535
+    m_Key: story.faceless.2.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552536
+    m_Key: story.faceless.2.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552537
+    m_Key: story.faceless.3.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552538
+    m_Key: story.faceless.3.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552539
+    m_Key: story.faceless.3.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552540
+    m_Key: story.faceless.3.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552541
+    m_Key: story.faceless.3.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552542
+    m_Key: story.faceless.3.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552543
+    m_Key: story.faceless.3.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552544
+    m_Key: story.faceless.3.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552545
+    m_Key: story.faceless.3.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552546
+    m_Key: story.faceless.3.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552547
+    m_Key: story.faceless.3.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552548
+    m_Key: story.faceless.4.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552549
+    m_Key: story.faceless.4.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552550
+    m_Key: story.faceless.4.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552551
+    m_Key: story.faceless.4.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552552
+    m_Key: story.faceless.4.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552553
+    m_Key: story.faceless.4.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552554
+    m_Key: story.faceless.4.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552555
+    m_Key: story.faceless.4.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552556
+    m_Key: story.faceless.4.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552557
+    m_Key: story.faceless.4.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552558
+    m_Key: story.faceless.4.outro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552559
+    m_Key: story.faceless.4.outro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552560
+    m_Key: descent.intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552561
+    m_Key: descent.arrived
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552562
+    m_Key: descent.progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552563
+    m_Key: forest.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552564
+    m_Key: forest.intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552565
+    m_Key: forest.controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552566
+    m_Key: forest.catch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552567
+    m_Key: forest.score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552568
+    m_Key: forest.time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552569
+    m_Key: forest.won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552570
+    m_Key: forest.won.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552571
+    m_Key: forest.lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6170477455552572
+    m_Key: forest.lost.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6172046045556736
+    m_Key: forest.begin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6172046074916864
+    m_Key: descent.begin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6175109212876800
+    m_Key: descent.failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6175109246431232
+    m_Key: descent.lost
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

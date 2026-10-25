@@ -6,19 +6,21 @@ using UnityEngine.UI;
 // A chapter's finale as a boss fight in the style of Klonoa (Story.Part.eyeBoss): the hero runs round a ring of
 // wagons floating in space, and in the middle hangs a purple ball covered in eyes. In turn: it attacks (first beams
 // from its eyes at where she stands, then a beam swept round the ring that she has to jump), then a turret comes up
-// on one of the wagons; she gets to it and takes it, and the fight is seen from the gunner's seat (as against the
+// on one of the wagons; she gets to it and is in its seat at once, and the fight is seen from the gunner's seat (as against the
 // swarm), shooting its eyes shut; until it charges and blasts the turret, and she is back on the ring for the next
 // attack. The third attack hurls great burning rocks that smash the wagons one by one, until only one is left
-// under her, where the turret comes up; once the turret is blasted the ring is whole again. Every eye shut, it is beaten. Out of hearts, the chapter is lost. Outside, time stands still, like the
+// under her, where the turret comes up; once the turret is blasted the ring is whole again. Its eyes are its life, in
+// three thirds: shut a third from the seat and the turret is blasted at once, on to the next attack (a seat that runs
+// out first: the same attack again), so the fight always goes through all three. Every eye shut, it is beaten. Out of hearts, the chapter is lost. Outside, time stands still, like the
 // boarding (BrawlEvent).
-public class EyeBossEvent : MonoBehaviour
+public partial class EyeBossEvent : MonoBehaviour
 {
-    public int hearts = 3;                             // counted in halves: a beam, the sweep or a ship takes half, a fall a whole one
+    public int hearts = 4;                             // counted in halves: a beam, the sweep, a ship or a fall takes half
     public float gapWidth = 2.4f;                      // the ring's two gaps, an easy jump; walk into one and she falls
-    public int ships = 3;                              // little ships drifting round the ring all fight long: jump them
-    public float shipSpeed = 3.2f, heartSpeed = 2.4f, heartEvery = 20f, heartChance = 0.15f; // a heart: rare, once a fight at most, and only from the third attack on
+    public int ships = 2;                              // little ships drifting round the ring all fight long: jump them
+    public float shipSpeed = 2.6f, heartSpeed = 2.4f, heartEvery = 18f, heartChance = 0.5f; // a heart: once a fight at most, from the second attack on
     public float ringRadius = 24f, heroSpeed = 9f, jumpSpeed = 8.5f, gravity = 24f;
-    public int eyeCount = 22, eyeHits = 3;              // eyes all round it; shots to shut each
+    public int eyeCount = 22, eyeHits = 2;              // eyes all round it; shots to shut each
     public float attackSeconds = 13f, turretWait = 14f, gunnerSeconds = 10f, chargeSeconds = 1.8f;
     public float fireRate = 9f, aimSpeed = 90f, mouseAim = 0.12f;
 
@@ -65,7 +67,7 @@ public class EyeBossEvent : MonoBehaviour
     Transform sweep2;
     float sweepAngle2, sweepWay = 1f, nextFlip, flipAt = -1f, nextOrb, shake;
     Material scorchMat, waveMat, orbMat;
-    float Warn => Mathf.Lerp(0.85f, 0.5f, attack / 6f); // how long a beam's mark shows before it fires: less each round
+    float Warn => Mathf.Lerp(1f, 0.65f, attack / 6f); // how long a beam's mark shows before it fires: less each round
     Renderer[] heroParts;
     static MaterialPropertyBlock yellow;
     float nextRock;
@@ -228,11 +230,11 @@ public class EyeBossEvent : MonoBehaviour
         barrels.gameObject.SetActive(false);
         sweep = new GameObject("Sweep").transform;
         sweep.SetParent(arena, false);
-        Block(sweep, new Vector3(0f, roofY + 0.7f, ringRadius * 0.5f + 3f), new Vector3(1.1f, 1.1f, ringRadius + 8f), beamHot);
+        Block(sweep, new Vector3(0f, roofY + 0.5f, ringRadius * 0.5f + 3f), new Vector3(0.9f, 0.9f, ringRadius + 8f), beamHot); // low: a jump clears it
         sweep.gameObject.SetActive(false);
         sweep2 = new GameObject("Sweep2").transform;
         sweep2.SetParent(arena, false);
-        Block(sweep2, new Vector3(0f, roofY + 0.7f, ringRadius * 0.5f + 3f), new Vector3(1.1f, 1.1f, ringRadius + 8f), TrainSim.Mat(new Color(0.4f, 2.6f, 2.8f), false));
+        Block(sweep2, new Vector3(0f, roofY + 0.5f, ringRadius * 0.5f + 3f), new Vector3(0.9f, 0.9f, ringRadius + 8f), TrainSim.Mat(new Color(0.4f, 2.6f, 2.8f), false));
         sweep2.gameObject.SetActive(false);
         scorchMat = TrainSim.Mat(new Color(3f, 0.9f, 1.6f), false);
         waveMat = TrainSim.Mat(new Color(3f, 1.8f, 0.3f), false);
@@ -328,6 +330,7 @@ public class EyeBossEvent : MonoBehaviour
         view.enabled = true;
         board.gameObject.SetActive(true);
         Time.timeScale = 0f;
+        if (Botting) BotBegin();
         Enter(Phase.Intro, 2.5f);
         message.text = L10n.T("eyeboss.intro");
     }
@@ -338,6 +341,7 @@ public class EyeBossEvent : MonoBehaviour
     void End(bool won)
     {
         bossSound.Stop();
+        if (Botting) BotEnd(won);
         Active = false;
         board.gameObject.SetActive(false);
         Time.timeScale = 1f;
@@ -404,7 +408,7 @@ public class EyeBossEvent : MonoBehaviour
                 nextBeam = Time.unscaledTime + 1f;
                 sweepAngle = angle * Mathf.Rad2Deg + 180f;
                 sweepAngle2 = sweepAngle + 180f;
-                sweepSpeed = 65f + attack * 10f;
+                sweepSpeed = 55f + attack * 8f;
                 sweepWay = Random.value < 0.5f ? 1f : -1f;
                 nextFlip = Time.unscaledTime + Random.Range(3f, 5f);
                 flipAt = -1f;
@@ -421,6 +425,7 @@ public class EyeBossEvent : MonoBehaviour
                 hint.text = L10n.T("eyeboss.hint.turret");
                 break;
             case Phase.Gunner:
+                seatStage = Kind;
                 bossSound.Cue("eye_turret", .5f);
                 yaw = pitch = 0f;
                 message.text = "";
@@ -448,6 +453,7 @@ public class EyeBossEvent : MonoBehaviour
         if (!Active || train.Paused) return;
         Time.timeScale = 0f;
         float now = Time.unscaledTime, dt = Mathf.Min(Time.unscaledDeltaTime, 0.05f);
+        if (Botting) BotThink(now);
 
         // The ball bobs and turns, its eyes on her (or on the turret's seat).
         boss.localPosition = Vector3.up * (BossHeight + Mathf.Sin(now * 1.3f) * 0.6f);
@@ -478,7 +484,7 @@ public class EyeBossEvent : MonoBehaviour
             case Phase.Turret:
                 RunHero(dt, now, true);
                 Beams(now, 2.2f); // a few, slower, while she runs for it
-                if (Near(turretAngle) && Interact()) Enter(Phase.Gunner, gunnerSeconds + chargeSeconds);
+                if (Near(turretAngle)) Enter(Phase.Gunner, gunnerSeconds + chargeSeconds + (Kind == 2 ? 4f : 0f)); // the last third: every eye left, some round the back
                 else if (now >= phaseUntil) { attack++; Enter(Phase.Attack, attackSeconds); }
                 break;
             case Phase.Gunner:
@@ -537,7 +543,10 @@ public class EyeBossEvent : MonoBehaviour
     }
 
     int OpenEyes { get { int n = 0; foreach (Eye e in eyes) if (!e.Shut) n++; return n; } }
-    int Kind => attack % 3; // 0 beams, 1 the sweep, 2 the rocks
+    // The attack is the boss's third: 0 beams, 1 the sweep, 2 the rocks, by how many eyes are shut.
+    int Kind { get { int shut = eyes.Count - OpenEyes; return shut < StageEnd(0) ? 0 : shut < StageEnd(1) ? 1 : 2; } }
+    int StageEnd(int stage) => eyes.Count * (stage + 1) / 3; // eyes shut to end that third
+    int seatStage;
     // The wagon nearest that angle round the ring.
     int CarAt(float a)
     {
@@ -566,7 +575,7 @@ public class EyeBossEvent : MonoBehaviour
     {
         if (now >= nextRock && rocks.Count < 3)
         {
-            nextRock = now + Mathf.Lerp(0.75f, 0.45f, attack / 6f);
+            nextRock = now + Mathf.Lerp(1f, 0.6f, attack / 6f);
             var left = new List<int>();
             for (int i = 0; i < cars.Count; i++) if (i != survivor && cars[i].gameObject.activeSelf && !rocks.Exists(r => r.car == i)) left.Add(i);
             if (left.Count > 0)
@@ -612,7 +621,7 @@ public class EyeBossEvent : MonoBehaviour
     {
         if (fallUntil > 0f || height > 0.15f || cars.Count == 0 || Solid(angle)) return;
         hurtUntil = 0f;
-        Hurt(now, 2); // a fall: a whole heart
+        if (Kind != 2) Hurt(now); // a fall: half a heart, like any other hit; not while the rocks smash the ring from under her
         fallUntil = now + 1f; // seen dropping away below the ring first (RunHero), then back up
         vertical = 0f;
         hurtUntil = fallUntil + 2f;
@@ -640,8 +649,6 @@ public class EyeBossEvent : MonoBehaviour
     Vector3 RingPoint(float a) => Arena + new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a)) * ringRadius;
 
     bool Near(float a) => Mathf.Abs(Mathf.DeltaAngle(angle * Mathf.Rad2Deg, a * Mathf.Rad2Deg)) * Mathf.Deg2Rad * ringRadius < 3f;
-
-    static bool Interact() => (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame);
 
     // The little ships: a few drifting round the ring at her height, slow, each its own way; touch one and it takes
     // half a heart. Jumped, they go by underneath.
@@ -680,7 +687,7 @@ public class EyeBossEvent : MonoBehaviour
         if (pickup == null && now >= nextPickup)
         {
             nextPickup = now + heartEvery * Random.Range(0.7f, 1.4f);
-            if (!heartGiven && attack >= 2 && left < hearts * 2 && Random.value < heartChance)
+            if (!heartGiven && attack >= 1 && left < hearts * 2 && Random.value < heartChance)
             {
                 heartGiven = true;
                 pickup = new GameObject("Heart").transform;
@@ -723,7 +730,7 @@ public class EyeBossEvent : MonoBehaviour
     {
         bool falling = now < fallUntil;
         if (!falling && fallUntil > 0f) Land(now);
-        float x = control && !falling ? move.ReadValue<Vector2>().x : 0f;
+        float x = control && !falling ? (Botting ? botX : move.ReadValue<Vector2>().x) : 0f;
         angle += x * heroSpeed / ringRadius * dt; // increasing the angle follows screen-right from the outside camera
         if (Mathf.Abs(x) > 0.2f) facing = Mathf.Sign(x);
         spin = Mathf.Lerp(spin, (angle - prevAngle) / Mathf.Max(dt, 0.001f), 0.15f); // round the ring, radians a second
@@ -736,7 +743,7 @@ public class EyeBossEvent : MonoBehaviour
         }
         else
         {
-            bool jump = control && height <= 0f && ((Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame));
+            bool jump = control && height <= 0f && ((Botting && botJump) || (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame));
             if (jump) { vertical = jumpSpeed; bossSound.Cue("eye_jump", .7f); }
             float previousHeight = height;
             vertical -= gravity * dt;
@@ -771,16 +778,17 @@ public class EyeBossEvent : MonoBehaviour
         if (heroParts != null) foreach (Renderer part in heroParts) if (part) part.SetPropertyBlock(back && flash ? yellow : null);
     }
 
-    void Hurt(float now, int halves = 1)
+    void Hurt(float now, int halves = 1, [System.Runtime.CompilerServices.CallerMemberName] string from = "")
     {
         if (now < hurtUntil) return;
+        if (Botting) BotNote(halves, from);
         left -= halves;
-        hurtUntil = now + 1.6f;
+        hurtUntil = now + 2f;
         Sound.Play("wagonbad");
     }
 
     // The first attack: one eye after another marks where she is (a thin red line), then fires down it.
-    void Beams(float now, float every = 0.9f)
+    void Beams(float now, float every = 1.25f)
     {
         if (now >= nextBeam)
         {
@@ -830,17 +838,17 @@ public class EyeBossEvent : MonoBehaviour
         bossSound.Cue("eye_mark", .65f, .2f);
     }
 
-    // The second attack: a beam swept round the ring at knee height; jump it. A second joins from the other side,
-    // the two now and then turn back all at once (both flash red first), and they speed up as it goes on.
+    // The second attack: a beam swept round the ring at knee height; jump it. When it comes round again a second joins
+    // from the other side; now and then they turn back all at once (flashing red first), and they speed up as it goes on.
     void Sweep(float dt, float now)
     {
         sweep.gameObject.SetActive(true);
-        bool two = now > phaseUntil - attackSeconds + 3f;
+        bool two = attack >= 2 && now > phaseUntil - attackSeconds + 6f; // the second only when the sweep comes round again
         sweep2.gameObject.SetActive(two);
         if (now >= nextFlip && flipAt < 0f) { flipAt = now + 0.6f; bossSound.Cue("eye_mark", .9f); }
         bool warning = flipAt > 0f && now < flipAt;
         if (flipAt > 0f && now >= flipAt) { sweepWay = -sweepWay; flipAt = -1f; nextFlip = now + Random.Range(2.5f, 4.5f); }
-        sweepSpeed += 3f * dt;
+        sweepSpeed += 2f * dt;
         float step = (warning ? 0.25f : 1f) * sweepSpeed * dt * sweepWay;
         sweepAngle += step;
         sweepAngle2 -= step;
@@ -848,16 +856,16 @@ public class EyeBossEvent : MonoBehaviour
         sweep2.localRotation = Quaternion.Euler(0f, -sweepAngle2 + 90f, 0f);
         sweep.GetComponentInChildren<Renderer>().sharedMaterial = warning && (int)(now * 12f) % 2 == 0 ? beamWarn : beamHot;
         float her = -angle * Mathf.Rad2Deg + 90f, reach = Mathf.Abs(step) + 2.5f;
-        if (height < 1.3f && (Mathf.Abs(Mathf.DeltaAngle(sweep.localEulerAngles.y, her)) < reach || (two && Mathf.Abs(Mathf.DeltaAngle(sweep2.localEulerAngles.y, her)) < reach))) Hurt(now);
+        if (height < 1f && (Mathf.Abs(Mathf.DeltaAngle(sweep.localEulerAngles.y, her)) < reach || (two && Mathf.Abs(Mathf.DeltaAngle(sweep2.localEulerAngles.y, her)) < reach))) Hurt(now);
     }
 
-    // A burning patch on a wagon's roof where a beam struck, for a couple of seconds.
+    // A burning patch on a wagon's roof where a beam struck, for a moment.
     void Scorch(Vector3 at, float now)
     {
-        var h = new Hazard { at = Mathf.Atan2(at.z - Arena.z, at.x - Arena.x), from = now, until = now + 2.2f };
+        var h = new Hazard { at = Mathf.Atan2(at.z - Arena.z, at.x - Arena.x), from = now, until = now + 1.2f };
         h.body = Ball(arena, Vector3.zero, 1f, scorchMat);
         h.body.position = new Vector3(at.x, Arena.y + roofY + 0.05f, at.z);
-        h.body.localScale = new Vector3(3f, 0.08f, 3f);
+        h.body.localScale = new Vector3(2f, 0.08f, 2f);
         hazards.Add(h);
     }
 
@@ -866,7 +874,7 @@ public class EyeBossEvent : MonoBehaviour
     {
         for (int s = -1; s <= 1; s += 2)
         {
-            var h = new Hazard { at = at, way = s, from = now, until = now + 2.6f, wave = true };
+            var h = new Hazard { at = at, way = s, from = now, until = now + 1.6f, wave = true }; // dies out before it is round the ring
             h.body = new GameObject("Wave").transform;
             h.body.SetParent(arena, false);
             Block(h.body, Vector3.zero, new Vector3(3.6f, 0.55f, 0.35f), waveMat);
@@ -883,14 +891,14 @@ public class EyeBossEvent : MonoBehaviour
             float a = h.at;
             if (h.wave)
             {
-                a = h.at + h.way * 10f * (now - h.from) / ringRadius; // ten metres a second round the ring
+                a = h.at + h.way * 9f * (now - h.from) / ringRadius; // nine metres a second round the ring
                 h.body.position = RingPoint(a) + Vector3.up * (roofY + 0.3f);
                 h.body.rotation = Quaternion.LookRotation(new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a))); // across the ring
                 h.body.gameObject.SetActive(Solid(a)); // nothing to run along over a gap
             }
-            else h.body.localScale = new Vector3(3f, 0.08f, 3f) * (1f - 0.3f * (now - h.from) / 2.2f);
+            else h.body.localScale = new Vector3(2f, 0.08f, 2f) * (1f - 0.3f * (now - h.from) / 1.2f);
             float gap = Mathf.Abs(Mathf.DeltaAngle(a * Mathf.Rad2Deg, angle * Mathf.Rad2Deg)) * Mathf.Deg2Rad * ringRadius;
-            if (gap < (h.wave ? 0.9f : 1.3f) && height < (h.wave ? 0.75f : 0.3f) && h.body.gameObject.activeSelf) Hurt(now);
+            if (gap < (h.wave ? 0.9f : 0.8f) && height < (h.wave ? 0.75f : 0.3f) && h.body.gameObject.activeSelf) Hurt(now);
         }
     }
 
@@ -898,9 +906,9 @@ public class EyeBossEvent : MonoBehaviour
     void Gunner(float dt, float now)
     {
         Vector2 stick = move.ReadValue<Vector2>(), mouse = Mouse.current != null ? look.ReadValue<Vector2>() : Vector2.zero;
-        yaw = Mathf.Clamp(yaw + stick.x * aimSpeed * dt + mouse.x * mouseAim, -45f, 45f);
-        pitch = Mathf.Clamp(pitch - stick.y * aimSpeed * dt - mouse.y * mouseAim, -35f, 30f);
-        bool fire = (Gamepad.current != null && Gamepad.current.rightTrigger.ReadValue() > 0.3f) || (Mouse.current != null && Mouse.current.leftButton.isPressed)
+        if (!Botting) yaw = Mathf.Clamp(yaw + stick.x * aimSpeed * dt + mouse.x * mouseAim, -45f, 45f);
+        if (!Botting) pitch = Mathf.Clamp(pitch - stick.y * aimSpeed * dt - mouse.y * mouseAim, -35f, 30f);
+        bool fire = Botting || (Gamepad.current != null && Gamepad.current.rightTrigger.ReadValue() > 0.3f) || (Mouse.current != null && Mouse.current.leftButton.isPressed)
                     || (Keyboard.current != null && Keyboard.current.jKey.isPressed);
         bossSound.Firing(fire);
         float charge = phaseUntil - now;
@@ -922,7 +930,7 @@ public class EyeBossEvent : MonoBehaviour
         // It fires orbs at the seat; shot down they burst, let through they take half a heart.
         if (now >= nextOrb && charge > chargeSeconds)
         {
-            nextOrb = now + Mathf.Lerp(1.5f, 0.8f, attack / 6f);
+            nextOrb = now + Mathf.Lerp(2.2f, 1.3f, attack / 6f);
             Eye from = eyes[Random.Range(0, eyes.Count)];
             if (!from.Shut)
             {
@@ -963,7 +971,14 @@ public class EyeBossEvent : MonoBehaviour
             if (best != null)
             {
                 best.hits--;
-                if (best.Shut) { best.lid.gameObject.SetActive(true); best.iris.gameObject.SetActive(false); Effect(best.root.position); bossSound.Cue("eye_shut"); }
+                if (best.Shut)
+                {
+                    best.lid.gameObject.SetActive(true);
+                    best.iris.gameObject.SetActive(false);
+                    Effect(best.root.position);
+                    bossSound.Cue("eye_shut");
+                    if (OpenEyes > 0 && eyes.Count - OpenEyes >= StageEnd(seatStage)) phaseUntil = now; // its third shut: the turret goes now
+                }
                 else bossSound.Cue("eye_hit", .7f);
             }
         }

@@ -100,7 +100,8 @@ public class StoryIntro : MonoBehaviour
         if(Story.Active && Story.Over) { StartCoroutine(Thanks()); return; } // the end of it all: a word of thanks first
         Wipe.Load(Story.Active && Story.Over ? "MainMenu" :
             Story.Active && Story.AscentPending ? "ascenso" :
-            Story.Active && Story.InspectionPending ? "cuestionario" : gameScene);
+            Story.Active && Story.InspectionPending ? "cuestionario" :
+            Story.Active && Story.Current.drawings ? "bosque" : gameScene);
     }
 
     // After the last page: thanks and the closing note stay until the player confirms.

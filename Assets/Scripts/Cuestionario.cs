@@ -83,7 +83,7 @@ public class Cuestionario : MonoBehaviour
             else
             {
                 Story.PassInspection();
-                Wipe.Load("sandScenario");
+                Wipe.Load(Story.Hero == "faceless" ? "historiaDialogos" : "sandScenario");
             }
             return;
         }

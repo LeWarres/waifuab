@@ -29,6 +29,8 @@ public class Ascenso : MonoBehaviour
     int lastPattern = -1;
     float nextBarrier = 5f;
     bool paused, leaving;
+    bool descending;
+    string ArrivalKey => descending ? "descent.arrived" : "ascent.arrived";
     UnityEngine.Rendering.Volume look;
     AscentAudio flightAudio;
 
@@ -39,10 +41,11 @@ public class Ascenso : MonoBehaviour
         view = Camera.main;
         InputSystem.actions.Enable();
         move = InputSystem.actions.FindAction("Player/Move", true);
+        descending = Story.Descending;
         BuildWorld();
         BuildUI();
         flightAudio = GetComponent<AscentAudio>() ?? gameObject.AddComponent<AscentAudio>();
-        ShowDialog("ascent.intro", "ascent.begin");
+        ShowDialog(descending ? "descent.intro" : "ascent.intro", descending ? "descent.begin" : "ascent.begin");
         RefreshStatus();
     }
 
@@ -76,13 +79,13 @@ public class Ascenso : MonoBehaviour
         train = new GameObject("FlyingLocomotive").transform;
         var model = Locomotives.Create(train, Locomotives.Selected);
         // Models point along -X. Tilt the roof toward the camera, then point the nose upward.
-        model.localRotation = Quaternion.Euler(0f, 0f, -90f) * Quaternion.Euler(-56f, -12f, 0f);
+        model.localRotation = Quaternion.Euler(0f, 0f, descending ? 90f : -90f) * Quaternion.Euler(-56f, -12f, 0f);
         Bounds bounds = BoundsOf(model);
         model.localScale *= 4.2f / bounds.size.y;
         bounds = BoundsOf(model);
         model.position -= bounds.center;
         trainHalf = new Vector2(bounds.size.x * .36f, 1.65f);
-        train.position = new Vector3(0f, -3.7f, 0f);
+        train.position = new Vector3(0f, descending ? 3.7f : -3.7f, 0f);
         var drive = Instantiate(Resources.Load<GameObject>("Ascent/Prefabs/FlightDrive"), train).transform;
         drive.localPosition = new Vector3(0f, -1.9f, 0f);
         drive.localRotation = Quaternion.Euler(-16f, 0f, 0f);
@@ -96,6 +99,12 @@ public class Ascenso : MonoBehaviour
         {
             Flame(exhaust, new Vector3(side * .45f, 0f, 0f), .22f, 1.6f, outer);
             Flame(exhaust, new Vector3(side * .45f, -.02f, -.035f), .11f, 1.05f, core);
+        }
+        if (descending)
+        {
+            drive.localPosition = new Vector3(0f, 1.9f, 0f);
+            exhaust.localPosition = new Vector3(0f, 2.25f, 0f);
+            exhaust.localRotation = Quaternion.Euler(0f, 0f, 180f);
         }
         trainRenderers = train.GetComponentsInChildren<Renderer>();
 
@@ -113,6 +122,7 @@ public class Ascenso : MonoBehaviour
         backdrop.rectTransform.anchorMax = Vector2.one;
         backdrop.rectTransform.offsetMin = backdrop.rectTransform.offsetMax = Vector2.zero;
         backdrop.raycastTarget = false;
+        backdrop.descending = descending;
         backdrop.Refresh(0f, 0f);
     }
 
@@ -215,8 +225,8 @@ public class Ascenso : MonoBehaviour
     {
         dialogPanel.gameObject.SetActive(true);
         dialogueAge = 0f;
-        speaker.text = paused ? L10n.T("ascent.pause") : phase == Phase.Lost ? L10n.T("ascent.failed") : L10n.T(Locomotives.HeroNameKey(Locomotives.Selected));
-        dialogue.text = L10n.T(key);
+        speaker.text = paused ? L10n.T("ascent.pause") : phase == Phase.Lost ? L10n.T(descending ? "descent.failed" : "ascent.failed") : L10n.T(Locomotives.HeroNameKey(Locomotives.Selected));
+        dialogue.text = L10n.T(descending && key == "ascent.lost" ? "descent.lost" : key);
         dialogue.color = phase == Phase.Lost ? UiKit.Rose : Color.white;
         actionText.text = L10n.T(button);
     }
@@ -279,7 +289,7 @@ public class Ascenso : MonoBehaviour
                 backdrop.Refresh(1f, 0f);
                 foreach (var renderer in trainRenderers) renderer.enabled = true;
                 flash.color = flash.bottom = Color.clear;
-                ShowDialog("ascent.arrived", "quiz.ok");
+                ShowDialog(ArrivalKey, "quiz.ok");
             }
             return;
         }
@@ -303,7 +313,7 @@ public class Ascenso : MonoBehaviour
         Vector3 position = train.position + (Vector3)(input * (12.5f * dt));
         float edge = Mathf.Min(14f, view.orthographicSize * view.aspect - trainHalf.x - .6f);
         position.x = Mathf.Clamp(position.x, -edge, edge);
-        position.y = Mathf.Clamp(position.y, -6f, 1f);
+        position.y = descending ? Mathf.Clamp(position.y, -1f, 6f) : Mathf.Clamp(position.y, -6f, 1f);
         train.position = position;
         // Small bank gives steering feedback while the nose continues pointing upward.
         train.rotation = Quaternion.Euler(0f, input.x * -9f, input.x * -6f);
@@ -319,13 +329,13 @@ public class Ascenso : MonoBehaviour
         {
             var piece = debris[i];
             Vector3 before = piece.body.position;
-            piece.body.position += new Vector3(piece.drift, -piece.speed, 0f) * dt;
+            piece.body.position += new Vector3(piece.drift, descending ? piece.speed : -piece.speed, 0f) * dt;
             piece.body.Rotate(0f, 0f, piece.spin * dt);
             Vector3 after = piece.body.position;
             Vector3 half = piece.renderer.bounds.extents * .78f;
             // Swept vertical interval avoids missed impacts on slow frames; z is decorative.
             bool collision = Mathf.Abs(after.x - train.position.x) < half.x + trainHalf.x &&
-                after.y - half.y <= train.position.y + trainHalf.y && before.y + half.y >= train.position.y - trainHalf.y;
+                Mathf.Min(before.y, after.y) - half.y <= train.position.y + trainHalf.y && Mathf.Max(before.y, after.y) + half.y >= train.position.y - trainHalf.y;
             if (collision && immunity <= 0f)
             {
                 Destroy(piece.body.gameObject);
@@ -336,9 +346,9 @@ public class Ascenso : MonoBehaviour
             else
             {
                 float distance = after.x - train.position.x;
-                if (before.y > train.position.y && after.y <= train.position.y && Mathf.Abs(distance) < 5.5f)
+                if ((descending ? before.y < train.position.y && after.y >= train.position.y : before.y > train.position.y && after.y <= train.position.y) && Mathf.Abs(distance) < 5.5f)
                     flightAudio.NearMiss(distance);
-                if (after.y < -13f) { Destroy(piece.body.gameObject); debris.RemoveAt(i); }
+                if (descending ? after.y > 13f : after.y < -13f) { Destroy(piece.body.gameObject); debris.RemoveAt(i); }
             }
         }
         RefreshStatus();
@@ -347,7 +357,7 @@ public class Ascenso : MonoBehaviour
             phase = Phase.Arrived;
             foreach (var renderer in trainRenderers) renderer.enabled = true;
             flash.color = flash.bottom = Color.clear;
-            ShowDialog("ascent.arrived", "quiz.ok");
+            ShowDialog(ArrivalKey, "quiz.ok");
         }
     }
 
@@ -367,7 +377,7 @@ public class Ascenso : MonoBehaviour
         status.text = L10n.T("ascent.hits", hits);
         status.color = hits >= 2 ? UiKit.Rose : UiKit.Ice;
         for (int i = 0; i < collisionPips.Length; i++) collisionPips[i].color = collisionPips[i].bottom = i < hits ? UiKit.Rose : UiKit.Mint;
-        altitude.text = L10n.T("ascent.altitude", Mathf.RoundToInt(Mathf.Clamp01(elapsed / duration) * 100f));
+        altitude.text = L10n.T(descending ? "descent.progress" : "ascent.altitude", Mathf.RoundToInt(Mathf.Clamp01(elapsed / duration) * 100f));
     }
 
     float SpawnWave(float edge)
@@ -398,7 +408,7 @@ public class Ascenso : MonoBehaviour
             // An occasional aimed piece asks for a dodge without filling the rest of the screen.
             float target = Mathf.Clamp(train.position.x + Random.Range(-.5f, .5f), -edge, edge);
             float start = Mathf.Clamp(target + Random.Range(-3.5f, 3.5f), -edge, edge);
-            float fallTime = (12f - train.position.y) / speed;
+            float fallTime = (descending ? train.position.y + 12f : 12f - train.position.y) / speed;
             Spawn(start, speed, (target - start) / fallTime);
             return Mathf.Lerp(1f, .8f, difficulty);
         }
@@ -424,7 +434,7 @@ public class Ascenso : MonoBehaviour
         model.localScale *= width / Mathf.Max(.01f, bounds.size.x);
         bounds = BoundsOf(model);
         model.position -= bounds.center;
-        root.position = new Vector3(x, 12f, 0f);
+        root.position = new Vector3(x, descending ? -12f : 12f, 0f);
         debris.Add(new Debris {
             body = root, renderer = model.GetComponentInChildren<Renderer>(),
             speed = speed, drift = drift,

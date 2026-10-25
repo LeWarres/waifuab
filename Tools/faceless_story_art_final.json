@@ -1,0 +1,125 @@
+{
+  "tool": "built-in image_gen",
+  "illustrations": [
+    {
+      "id": "bba_bluff",
+      "prompt": "Use case: illustration-story. One full 16:9 landscape illustration, no panels, captions or text. Continue reference 1's SIMPLE SPARSE BLACK INK comic drawing: white featureless Faceless, completely blank oval head NO EYES NO NOSE NO MOUTH NO HAIR, lean adult smooth ivory body, non-anatomical mannequin suit. Few irregular black lines, little hatch, white figures. Background extremely simple filler drawing: only 2-4 SATURATED FLAT COLOR blocks and a few circles/triangles/rectangles, broad empty space. NOT detailed scenery, not realistic, no crayon, no glossy rendering, no Persona panels. Keep full-size train many times larger than adult where present. Faceless theatrically pretends defeat after actually winning: kneeling dramatically, hand on blank forehead, other hand waving goodbye to BBA. BBA from reference2 red witch mecha hat/white red armor/yellow accents, mildly puzzled standing in distance by her full-size blue/yellow locomotive. Purple alien ground, cyan mushroom silhouettes, saturated orange sky. No injuries, comic exaggeration.",
+      "refs": [
+        "C:/Users/r20/WaifuTren/Assets/Resources/Story/faceless_friend.png",
+        "C:/Users/r20/WaifuTren/Tools/hero_renders/bba.png"
+      ],
+      "correction": "Keep the same blank Faceless kneeling theatrically, BBA red witch armor looking puzzled, sparse alien mushroom background and ink style. Remove the ENTIRE locomotive currently behind BBA. There should be NO TRAIN at all in this image. Both characters are normal adult humans of similar height, Faceless kneels nearer camera. Keep no face on Faceless.",
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-a829c9b7-20bc-4904-afcc-bc8729b2b941.png",
+      "destination": "Assets/Resources/Story/faceless_bba_bluff.png"
+    },
+    {
+      "id": "resignation",
+      "prompt": "Use case: illustration-story. One full 16:9 landscape illustration, no panels, captions or text. Continue reference 1's SIMPLE SPARSE BLACK INK comic drawing: white featureless Faceless, completely blank oval head NO EYES NO NOSE NO MOUTH NO HAIR, lean adult smooth ivory body, non-anatomical mannequin suit. Few irregular black lines, little hatch, white figures. Background extremely simple filler drawing: only 2-4 SATURATED FLAT COLOR blocks and a few circles/triangles/rectangles, broad empty space. NOT detailed scenery, not realistic, no crayon, no glossy rendering, no Persona panels. Keep full-size train many times larger than adult where present. Faceless at alien administrative desk politely hands a single blank resignation sheet to a giant BLACK SILHOUETTE boss seated behind it; boss holds up flat palm refusing. Minimal purple wall, lime window, orange floor. One alien triangular emblem. No readable text. Faceless posture weary yet dignified.",
+      "refs": [
+        "C:/Users/r20/WaifuTren/Assets/Resources/Story/faceless_friend.png"
+      ],
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-dbb61706-4dce-475e-baf6-01d3222d2eb0.png",
+      "destination": "Assets/Resources/Story/faceless_resignation.png"
+    },
+    {
+      "id": "fortress",
+      "prompt": "Use case: illustration-story. One full 16:9 landscape illustration, no panels, captions or text. Continue reference 1's SIMPLE SPARSE BLACK INK comic drawing: white featureless Faceless, completely blank oval head NO EYES NO NOSE NO MOUTH NO HAIR, lean adult smooth ivory body, non-anatomical mannequin suit. Few irregular black lines, little hatch, white figures. Background extremely simple filler drawing: only 2-4 SATURATED FLAT COLOR blocks and a few circles/triangles/rectangles, broad empty space. NOT detailed scenery, not realistic, no crayon, no glossy rendering, no Persona panels. Keep full-size train many times larger than adult where present. Tiny Faceless at controls visible through side window of his HUGE sentient purple spider steam locomotive T.exe from ref2, driving TOWARD a distant angular dark alien fortress with a huge lime-green gate. Train travels rightward toward fortress on a SINGLE railway, white spider legs, yellow round cab windows/pink boiler/red buffer. Minimal saturated turquoise sky and dark purple ground, just fortress rectangle silhouette.",
+      "refs": [
+        "C:/Users/r20/WaifuTren/Assets/Resources/Story/faceless_friend.png",
+        "C:/Users/r20/WaifuTren/Assets/Resources/Menu/loco_spider.png"
+      ],
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-dedcbbaf-506e-4fde-961a-64a9bb6af8f6.png",
+      "destination": "Assets/Resources/Story/faceless_fortress.png"
+    },
+    {
+      "id": "cerebron_bluff",
+      "prompt": "Use case: illustration-story. One full 16:9 landscape illustration, no panels, captions or text. Continue reference 1's SIMPLE SPARSE BLACK INK comic drawing: white featureless Faceless, completely blank oval head NO EYES NO NOSE NO MOUTH NO HAIR, lean adult smooth ivory body, non-anatomical mannequin suit. Few irregular black lines, little hatch, white figures. Background extremely simple filler drawing: only 2-4 SATURATED FLAT COLOR blocks and a few circles/triangles/rectangles, broad empty space. NOT detailed scenery, not realistic, no crayon, no glossy rendering, no Persona panels. Keep full-size train many times larger than adult where present. Faceless standing in front of defeated but unharmed Cerebron from ref2: exposed oversized pink brain head with single eye, dark armored robot body. Faceless points dramatically upward to two tiny black spacecraft triangle silhouettes, as if reporting reinforcements; holds sketchbook behind back. Cerebron sits tired against one black fortress wall, lime sky and violet floor. Comic deceit, very simple ink characters.",
+      "refs": [
+        "C:/Users/r20/WaifuTren/Assets/Resources/Story/faceless_friend.png",
+        "C:/Users/r20/WaifuTren/Tools/hero_renders/cerebron.png"
+      ],
+      "correction": "Use case: precise-object-edit. Repair ONLY the notebook-holding arm and hand of Faceless in this illustration. Preserve his OTHER raised pointing arm, blank featureless white head, torso, legs, fortress, sky, orange sun, ships, sparse ink style, flat saturated colors and 16:9 framing exactly. REPLACE THE ENTIRE CURRENT NOTEBOOK-HOLDING ARM, HAND AND NOTEBOOK WITH A NEW SIMPLE CLEAR POSE: the arm on the RIGHT SIDE OF THE IMAGE hangs naturally down beside his hip, elbow only slightly bent, forearm and wrist aligned in a normal relaxed position. His normal-sized human hand grips the TOP EDGE of a CLOSED vertical rectangular spiral sketchbook hanging BESIDE HIS OUTER THIGH, OUTSIDE HIS BODY SILHOUETTE. Thumb rests visibly on the front cover close to upper edge, four fingers curl over the top edge behind the cover. Show a clean continuous connection shoulder > upper arm > elbow > forearm > wrist > hand. The upper arm and forearm remain completely ABOVE the book, never behind or crossing THROUGH its cover. Notebook top around upper thigh height, notebook bottom around mid-thigh. Leave a small visible gap between hanging book and leg. The book's front cover faces viewer and is plain white with black outline and small spiral along its outer side; no writing. Normal human bone lengths, proportionate hand, five fingers total, no crooked wrist, no extra fingers, no tangled linework, no arm merging into paper. Keep the drawing intentionally simple and economically inked; DO NOT add anatomical detail or shading. Faceless has exactly TWO ARMS and remains the ONLY character. No other changes.",
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-31772050-bc83-420a-ade6-80a47ab99c31.png",
+      "destination": "Assets/Resources/Story/faceless_cerebron_bluff.png"
+    },
+    {
+      "id": "space_escape",
+      "prompt": "Use case: illustration-story. One full 16:9 landscape illustration, no panels, captions or text. Continue reference 1's SIMPLE SPARSE BLACK INK comic drawing: white featureless Faceless, completely blank oval head NO EYES NO NOSE NO MOUTH NO HAIR, lean adult smooth ivory body, non-anatomical mannequin suit. Few irregular black lines, little hatch, white figures. Background extremely simple filler drawing: only 2-4 SATURATED FLAT COLOR blocks and a few circles/triangles/rectangles, broad empty space. NOT detailed scenery, not realistic, no crayon, no glossy rendering, no Persona panels. Keep full-size train many times larger than adult where present. HUGE purple spider locomotive T.exe from ref2 climbing diagonally away from a very simple purple alien planet, with SMALL Faceless in round yellow cab window. Two tiny black pursuit ships far behind, sparse stars as five crosses, saturated cobalt outer space. No other trains. Full-scale purple cab pink boiler yellow bands red buffer and white spider legs.",
+      "refs": [
+        "C:/Users/r20/WaifuTren/Assets/Resources/Story/faceless_friend.png",
+        "C:/Users/r20/WaifuTren/Assets/Resources/Menu/loco_spider.png"
+      ],
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-298fc5fa-4657-4949-90ab-b51f6e177980.png",
+      "destination": "Assets/Resources/Story/faceless_space_escape.png"
+    },
+    {
+      "id": "eye_escape",
+      "prompt": "Use case: illustration-story. One full 16:9 landscape illustration, no panels, captions or text. Continue reference 1's SIMPLE SPARSE BLACK INK comic drawing: white featureless Faceless, completely blank oval head NO EYES NO NOSE NO MOUTH NO HAIR, lean adult smooth ivory body, non-anatomical mannequin suit. Few irregular black lines, little hatch, white figures. Background extremely simple filler drawing: only 2-4 SATURATED FLAT COLOR blocks and a few circles/triangles/rectangles, broad empty space. NOT detailed scenery, not realistic, no crayon, no glossy rendering, no Persona panels. Keep full-size train many times larger than adult where present. Faceless small silhouette in cab of purple spider locomotive T.exe escaping toward simple blue-green Earth circle at right, behind at left a giant floating dark ball with MANY WHITE EYES, receding and defeated with cartoon spirals no gore. Minimal near-black space, turquoise circle planet, four stars. Train many times adult size.",
+      "refs": [
+        "C:/Users/r20/WaifuTren/Assets/Resources/Story/faceless_friend.png",
+        "C:/Users/r20/WaifuTren/Assets/Resources/Menu/loco_spider.png"
+      ],
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-b4d1cfbc-1a15-48c3-93fb-b3d4d58587c2.png",
+      "destination": "Assets/Resources/Story/faceless_eye_escape.png"
+    },
+    {
+      "id": "earth_arrival",
+      "prompt": "Use case: illustration-story. One full 16:9 landscape illustration, no panels, captions or text. Continue reference 1's SIMPLE SPARSE BLACK INK comic drawing: white featureless Faceless, completely blank oval head NO EYES NO NOSE NO MOUTH NO HAIR, lean adult smooth ivory body, non-anatomical mannequin suit. Few irregular black lines, little hatch, white figures. Background extremely simple filler drawing: only 2-4 SATURATED FLAT COLOR blocks and a few circles/triangles/rectangles, broad empty space. NOT detailed scenery, not realistic, no crayon, no glossy rendering, no Persona panels. Keep full-size train many times larger than adult where present. Faceless at foot of HUGE parked T.exe in a sunny simple Earth clearing, looking about expectantly with outstretched hands. Nobody came to arrest him. Plain saturated cyan sky, two dark-green tree shapes, warm yellow ground. Maintain full-size giant purple spider train from ref2. Empty scenery communicates surprise. No humans or crowds.",
+      "refs": [
+        "C:/Users/r20/WaifuTren/Assets/Resources/Story/faceless_friend.png",
+        "C:/Users/r20/WaifuTren/Assets/Resources/Menu/loco_spider.png"
+      ],
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-29fd4ee9-fb9e-43f7-be4b-0ae76b2895f5.png",
+      "destination": "Assets/Resources/Story/faceless_earth_arrival.png"
+    },
+    {
+      "id": "r20_peace",
+      "prompt": "Use case: illustration-story. One full 16:9 landscape illustration, no panels, captions or text. Continue reference 1's SIMPLE SPARSE BLACK INK comic drawing: white featureless Faceless, completely blank oval head NO EYES NO NOSE NO MOUTH NO HAIR, lean adult smooth ivory body, non-anatomical mannequin suit. Few irregular black lines, little hatch, white figures. Background extremely simple filler drawing: only 2-4 SATURATED FLAT COLOR blocks and a few circles/triangles/rectangles, broad empty space. NOT detailed scenery, not realistic, no crayon, no glossy rendering, no Persona panels. Keep full-size train many times larger than adult where present. Faceless stands with open peaceful palms near his huge purple spider locomotive, addressing a tiny HUMAN-FORM driver beside a rust-orange and moss-green twin-front-turbine JET locomotive from reference2 (R-20). Minimal dense-green jungle represented by just three leaf shapes, orange ground cyan sky. Faceless calm, no fight injuries. Main emphasis Faceless's posture and sketchbook.",
+      "refs": [
+        "C:/Users/r20/WaifuTren/Assets/Resources/Story/faceless_friend.png",
+        "C:/Users/r20/WaifuTren/Assets/Resources/Menu/loco_jet.png"
+      ],
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-0915e341-9fa2-4b46-aa53-283e64ed021c.png",
+      "destination": "Assets/Resources/Story/faceless_r20_peace.png"
+    },
+    {
+      "id": "tie_choice",
+      "prompt": "Use case: illustration-story. One full 16:9 landscape illustration, no panels, captions or text. Continue reference 1's SIMPLE SPARSE BLACK INK comic drawing: white featureless Faceless, completely blank oval head NO EYES NO NOSE NO MOUTH NO HAIR, lean adult smooth ivory body, non-anatomical mannequin suit. Few irregular black lines, little hatch, white figures. Background extremely simple filler drawing: only 2-4 SATURATED FLAT COLOR blocks and a few circles/triangles/rectangles, broad empty space. NOT detailed scenery, not realistic, no crayon, no glossy rendering, no Persona panels. Keep full-size train many times larger than adult where present. Faceless in a simple forest clearing holds up two neckties, one BRIGHT BLUE and one BRIGHT RED, comparing them against his smooth completely blank white head. A black elegant suit hangs from one tree branch behind, small sketchbook under arm. No face or hair. Very sparse flat lime ground, cobalt sky, only two flat deep-green tree trunks/canopies. Visual joke about choosing tie, no text.",
+      "refs": [
+        "C:/Users/r20/WaifuTren/Assets/Resources/Story/faceless_friend.png"
+      ],
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-27930e92-8fd1-4519-b687-d7bd480b931c.png",
+      "destination": "Assets/Resources/Story/faceless_tie_choice.png"
+    },
+    {
+      "id": "stolen_drawings",
+      "prompt": "Use case: illustration-story. One full 16:9 landscape illustration, no panels, captions or text. Continue reference 1's SIMPLE SPARSE BLACK INK comic drawing: white featureless Faceless, completely blank oval head NO EYES NO NOSE NO MOUTH NO HAIR, lean adult smooth ivory body, non-anatomical mannequin suit. Few irregular black lines, little hatch, white figures. Background extremely simple filler drawing: only 2-4 SATURATED FLAT COLOR blocks and a few circles/triangles/rectangles, broad empty space. NOT detailed scenery, not realistic, no crayon, no glossy rendering, no Persona panels. Keep full-size train many times larger than adult where present. Comic forest chase: tall white featureless Faceless reaches after THREE SMALL fully clothed childlike cartoon explorers who are running away clutching his innocent flower and train DRAWINGS taken from one tree. No threatening weapons, no violence, no horror face. Sheets pinned on single dark tree, 2-3 remain. Super simple ink human figures, flat saturated emerald ground and cyan sky. Funny reversal of forest monster collecting pages. No suits on Faceless yet.",
+      "refs": [
+        "C:/Users/r20/WaifuTren/Assets/Resources/Story/faceless_friend.png"
+      ],
+      "correction": "Versión elegida explícitamente por el usuario: Faceless persiguiendo a tres niños con los dibujos; piel blanca y ropa coloreada. Usar el archivo final del proyecto como referencia canónica.",
+      "source": "C:/Users/r20/AppData/Local/Temp/codex-clipboard-dd699f2c-d579-4beb-8211-83dfb3b6dae3.png",
+      "destination": "Assets/Resources/Story/faceless_stolen_drawings.png"
+    },
+    {
+      "id": "cabin_artist",
+      "prompt": "Use case: illustration-story. One full 16:9 landscape illustration, no panels, captions or text. Continue reference 1's SIMPLE SPARSE BLACK INK comic drawing: white featureless Faceless, completely blank oval head NO EYES NO NOSE NO MOUTH NO HAIR, lean adult smooth ivory body, non-anatomical mannequin suit. Few irregular black lines, little hatch, white figures. Background extremely simple filler drawing: only 2-4 SATURATED FLAT COLOR blocks and a few circles/triangles/rectangles, broad empty space. NOT detailed scenery, not realistic, no crayon, no glossy rendering, no Persona panels. Keep full-size train many times larger than adult where present. Peaceful ending: white completely featureless Faceless seated drawing flowers at a wooden table inside tiny woodland CABIN. On wall NEXT TO HIM hangs an empty elegant BLACK SUIT WITH A VERY CLEAR RED NECKTIE, not worn. Four simple drawings pinned to wood wall and two trees beyond square window. Cozy but extremely simple black/white ink interior, SATURATED ORANGE wall, dark green window, tiny blue tabletop accent. No face. No train inside cabin.",
+      "refs": [
+        "C:/Users/r20/WaifuTren/Assets/Resources/Story/faceless_friend.png"
+      ],
+      "correction": "Change only the activity at the table: Faceless is DRAWING IN AN OPEN SKETCHBOOK WITH A PENCIL. Put a sketchbook clearly flat on tabletop directly in front of him; one hand rests on the sketchbook page while OTHER HAND holds a clearly visible pencil touching a simple flower drawing on paper. Remove flower arranging activity and any loose real flowers in his hands. Keep his blank head with NO facial features, cabin, orange walls, framed simple drawings, green window and EMPTY black suit with bright red tie hanging beside him.",
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-21159dac-b94d-4bf3-ba05-a1e1aba1fcbc.png",
+      "destination": "Assets/Resources/Story/faceless_cabin_artist.png"
+    },
+    {
+      "id": "texe_job",
+      "prompt": "Use case: illustration-story. One full 16:9 landscape illustration, no panels, captions or text. Continue reference 1's SIMPLE SPARSE BLACK INK comic drawing: white featureless Faceless, completely blank oval head NO EYES NO NOSE NO MOUTH NO HAIR, lean adult smooth ivory body, non-anatomical mannequin suit. Few irregular black lines, little hatch, white figures. Background extremely simple filler drawing: only 2-4 SATURATED FLAT COLOR blocks and a few circles/triangles/rectangles, broad empty space. NOT detailed scenery, not realistic, no crayon, no glossy rendering, no Persona panels. Keep full-size train many times larger than adult where present. Warm funny epilogue in very simple sunny railway station: T.exe has transformed into a full-size friendly HUMAN-WORLD LOCOMOTIVE: purple rectangular cab, yellow round windows, magenta boiler/yellow bands, gray circular smiling mechanical train front with red lamps/yellow grille, RED buffer, ordinary purple WHEELS, absolutely NO SPIDER LEGS. Tiny clothed children wave from platform to beloved huge train. Small Faceless visits carrying sketchbook at far left near platform, unobserved by children. Train dwarfs humans. Flat cyan sky, lime ground, one orange station rectangle, no detail.",
+      "refs": [
+        "C:/Users/r20/WaifuTren/Assets/Resources/Story/faceless_friend.png",
+        "C:/Users/r20/WaifuTren/Assets/Resources/Menu/loco_spider.png"
+      ],
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-2d057ddb-aa69-4b5b-9d7a-c6185ff23a83.png",
+      "destination": "Assets/Resources/Story/faceless_texe_job.png"
+    }
+  ]
+}

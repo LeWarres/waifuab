@@ -1,0 +1,514 @@
+{
+  "locales": [
+    "es",
+    "en",
+    "pt",
+    "ja"
+  ],
+  "rows": [
+    [
+      "story.faceless.0.before.1",
+      "¡Aparta esa locomotora! Tengo una misión que terminar.",
+      "Move that locomotive! I have a mission to finish.",
+      "Tire essa locomotiva! Tenho uma missão para terminar.",
+      "その機関車をどけて！こっちは任務の途中なの！"
+    ],
+    [
+      "story.faceless.0.before.2",
+      "Y yo tengo órdenes de detenerte. Soy el campeón de este planeta.",
+      "And I have orders to stop you. I am this planet's champion.",
+      "E eu tenho ordens para deter você. Sou o campeão deste planeta.",
+      "僕には君を止める命令がある。この星の王者だからね。"
+    ],
+    [
+      "story.faceless.0.before.3",
+      "Aunque empiezo a pensar que ese título necesita unas vacaciones.",
+      "Although I am starting to think that title needs a holiday.",
+      "Mas estou começando a achar que esse título precisa de férias.",
+      "でも、その肩書きにも休暇が必要な気がしてきた。"
+    ],
+    [
+      "story.faceless.0.after.1",
+      "Creo que, si sigo ganando, nunca podré librarme de esto...",
+      "I think if I keep winning, I will never get out of this...",
+      "Acho que, se eu continuar vencendo, nunca vou me livrar disso...",
+      "勝ち続けたら、いつまでもここから抜け出せない気がする……。"
+    ],
+    [
+      "story.faceless.0.after.2",
+      "¡Oh, noooooooo! ¡Me derrotaste! ¡Ya no puedo seguirte!",
+      "Oh, noooooooo! You defeated me! I cannot follow you anymore!",
+      "Ah, nãããããão! Você me derrotou! Não posso mais seguir você!",
+      "ああ、なんてことだあああ！負けてしまった！もう追えないぞ！"
+    ],
+    [
+      "story.faceless.0.after.3",
+      "¿Eh? Pero si... Bueno, no pienso discutirlo.",
+      "Huh? But you... Well, I am not arguing.",
+      "Hã? Mas você... Bom, não vou discutir.",
+      "え？でも、そっちが……まあ、文句はないけど。"
+    ],
+    [
+      "story.faceless.0.outro.1",
+      "Había ganado otra vez. Ese era precisamente el problema: si seguía ganando, jamás dejarían de llamarme campeón.",
+      "I had won again. That was exactly the problem: if I kept winning, they would never stop calling me champion.",
+      "Eu tinha vencido de novo. Esse era o problema: enquanto eu ganhasse, nunca deixariam de me chamar de campeão.",
+      "また勝ってしまった。それこそが問題だった。勝つ限り、僕はずっと王者のままだ。"
+    ],
+    [
+      "story.faceless.0.outro.2",
+      "Así que interpreté la peor derrota de la historia. «¡Oh, noooooooo! ¡Me derrotaste! ¡Ya no puedo seguirte!» BBA pareció aceptarlo.",
+      "So I performed history's least convincing defeat. 'Oh, noooooooo! You defeated me! I cannot follow you!' BBA seemed to accept it.",
+      "Então encenei a pior derrota da história. «Ah, nãããão! Você me derrotou! Não posso mais seguir você!» BBA pareceu aceitar.",
+      "そこで史上最も下手な敗北を演じた。「うわあ、負けた！もう追えない！」BBAは納得してくれたらしい。"
+    ],
+    [
+      "story.faceless.0.outro.3",
+      "Hablaría con mi jefe. Una simple humana había derrotado al campeón. Claramente, yo ya no estaba capacitado para el cargo.",
+      "I would speak to my boss. A mere human had defeated the champion. Clearly, I was no longer qualified for the job.",
+      "Eu falaria com meu chefe. Uma simples humana havia derrotado o campeão. Claramente, eu já não servia para o cargo.",
+      "上司に話そう。たかが人間に王者が負けたのだ。どう考えても、もう適任じゃない。"
+    ],
+    [
+      "story.faceless.1.title",
+      "UNA RENUNCIA RECHAZADA",
+      "A RESIGNATION REJECTED",
+      "UMA DEMISSÃO RECUSADA",
+      "受理されない辞職"
+    ],
+    [
+      "story.faceless.1.intro.1",
+      "Volví a la estación con mi renuncia preparada. T.exe me conocía demasiado bien para creerse aquella actuación.",
+      "I returned to the station with my resignation ready. T.exe knew me too well to believe that performance.",
+      "Voltei à estação com minha demissão pronta. T.exe me conhecia bem demais para acreditar naquela atuação.",
+      "辞表を用意して駅へ戻った。T.exeには、あんな芝居はお見通しだった。"
+    ],
+    [
+      "story.faceless.1.intro.2",
+      "Antes de ver al jefe, tocaba demostrar que no era un humano infiltrado. Un cuestionario. Justo lo que necesitaba mi gran fuga.",
+      "Before seeing the boss, I had to prove I was not a human infiltrator. A questionnaire. Just what my great escape needed.",
+      "Antes de ver o chefe, precisava provar que não era um humano infiltrado. Um questionário. Exatamente o que minha grande fuga precisava.",
+      "上司に会う前に、人間のスパイでないことを証明するらしい。質問票だ。大脱走にぴったりの足止めだね。"
+    ],
+    [
+      "story.faceless.1.intro.3",
+      "Le conté mi vergonzosa derrota y pedí dejar de ser campeón. Mi jefe ni siquiera terminó de leer la renuncia.",
+      "I told him about my humiliating defeat and asked to stop being champion. My boss did not even finish reading my resignation.",
+      "Contei minha derrota vergonhosa e pedi para deixar de ser campeão. Meu chefe nem terminou de ler a demissão.",
+      "屈辱の敗北を報告し、王者を辞めたいと伝えた。上司は辞表を最後まで読みもしなかった。"
+    ],
+    [
+      "story.faceless.1.intro.4",
+      "«Denegado. Y menos en mitad de una guerra». Otro invasor había llegado a la fortaleza. Adivinen quién debía detenerlo.",
+      "'Denied. Especially in the middle of a war.' Another invader had reached the fortress. Guess who had to stop him.",
+      "«Negado. Ainda mais no meio de uma guerra». Outro invasor tinha chegado à fortaleza. Adivinhem quem precisava detê-lo.",
+      "「却下だ。まして戦争の真っ最中だぞ」。別の侵入者が要塞に来たらしい。誰が止める役か、もう分かるよね。"
+    ],
+    [
+      "story.faceless.1.intro.5",
+      "Así que volvimos a las vías. T.exe y yo, rumbo a la fortaleza. Mi carrera artística seguía esperando en un cajón.",
+      "So we returned to the rails. T.exe and I, heading for the fortress. My artistic career was still waiting in a drawer.",
+      "Então voltamos aos trilhos. T.exe e eu, rumo à fortaleza. Minha carreira artística continuava esperando numa gaveta.",
+      "また線路に戻った。T.exeと一緒に要塞へ。芸術家としての人生は、まだ引き出しの中で待っている。"
+    ],
+    [
+      "story.faceless.1.before.1",
+      "No pienso detenerme aquí. Esa base está en mi camino.",
+      "I am not stopping here. That base is in my way.",
+      "Não vou parar aqui. Essa base está no meu caminho.",
+      "ここで止まる気はない。その基地が邪魔なんだ。"
+    ],
+    [
+      "story.faceless.1.before.2",
+      "Cerebron. Mi jefe insiste en que debo detenerte.",
+      "Cerebron. My boss insists I must stop you.",
+      "Cerebron. Meu chefe insiste que preciso deter você.",
+      "Cerebron。上司が君を止めろと言って聞かないんだ。"
+    ],
+    [
+      "story.faceless.1.before.3",
+      "Intenté renunciar. Al parecer, el papeleo es más resistente que tu locomotora.",
+      "I tried resigning. Apparently, paperwork is tougher than your locomotive.",
+      "Tentei me demitir. Pelo visto, a burocracia é mais resistente que sua locomotiva.",
+      "辞めようとはしたんだよ。どうやら書類仕事は、君の機関車より手ごわい。"
+    ],
+    [
+      "story.faceless.1.after.1",
+      "No fue gran problema. Aunque quizá deberías haberme contado que vienen refuerzos...",
+      "Not much trouble. Although perhaps you should have told me reinforcements were coming...",
+      "Não foi tão difícil. Mas talvez você devesse ter contado que vêm reforços...",
+      "大したことはなかった。でも、増援が来ると教えてくれてもよかったのに……。"
+    ],
+    [
+      "story.faceless.1.after.2",
+      "¿Refuerzos? Yo no he dicho nada de...",
+      "Reinforcements? I never said anything about...",
+      "Reforços? Eu não disse nada de...",
+      "増援？そんなこと一言も……。"
+    ],
+    [
+      "story.faceless.1.outro.1",
+      "Detener a Cerebron no fue gran problema. Volver al trabajo después de eso sí lo habría sido.",
+      "Stopping Cerebron was not much trouble. Going back to work afterward would have been.",
+      "Deter Cerebron não foi grande problema. Voltar ao trabalho depois disso é que seria.",
+      "Cerebronを止めるのは難しくなかった。その後、仕事に戻るほうが大問題だった。"
+    ],
+    [
+      "story.faceless.1.outro.2",
+      "Si fingía que me había hablado de más refuerzos y decía que iba a interceptarlos, nadie intentaría detenerme.",
+      "If I pretended he had told me about reinforcements and said I was going to intercept them, nobody would try to stop me.",
+      "Se eu fingisse que ele falou de mais reforços e dissesse que iria interceptá-los, ninguém tentaria me deter.",
+      "増援の情報を聞いたことにして、迎撃に行くと言えば、誰も止めないはずだ。"
+    ],
+    [
+      "story.faceless.1.outro.3",
+      "Avisé por radio, puse mi voz más profesional y nos lanzamos al espacio. Por una vez, la siguiente orden la había inventado yo.",
+      "I called on the radio, used my most professional voice, and we launched into space. For once, I had invented the next order myself.",
+      "Avisei pelo rádio com minha voz mais profissional e partimos para o espaço. Pela primeira vez, a próxima ordem era invenção minha.",
+      "無線で、一番仕事のできそうな声を出して宇宙へ向かった。初めて、自分で作った命令に従って。"
+    ],
+    [
+      "story.faceless.2.title",
+      "FUERA DEL MARCO",
+      "OUTSIDE THE FRAME",
+      "FORA DA MOLDURA",
+      "枠の外へ"
+    ],
+    [
+      "story.faceless.2.intro.1",
+      "Mi mentira funcionó durante unos minutos. Los suficientes para alejarnos del planeta. No los suficientes para desaparecer.",
+      "My lie worked for a few minutes. Enough to leave the planet. Not enough to disappear.",
+      "Minha mentira funcionou por alguns minutos. O bastante para sair do planeta. Não para desaparecer.",
+      "嘘は数分だけ通用した。星を離れるには十分だったけど、姿をくらますには足りなかった。"
+    ],
+    [
+      "story.faceless.2.intro.2",
+      "Pronto notaron que su campeón no iba hacia ningún refuerzo. Iba hacia cualquier sitio donde no tuviera jefe.",
+      "They soon noticed their champion was not heading toward reinforcements. He was heading anywhere without a boss.",
+      "Logo perceberam que seu campeão não estava indo atrás de reforços. Estava indo para qualquer lugar sem chefe.",
+      "すぐに気づかれた。王者が向かうのは増援ではなく、上司のいない場所だと。"
+    ],
+    [
+      "story.faceless.2.intro.3",
+      "Y enviaron a alguien a buscarme. Alguien con tantos ojos que esconder mi cuaderno iba a resultar complicado.",
+      "So they sent someone after me. Someone with so many eyes that hiding my sketchbook would be difficult.",
+      "Mandaram alguém me buscar. Alguém com tantos olhos que esconder meu caderno seria complicado.",
+      "迎えが来た。あれだけ目が多い相手だと、スケッチブックを隠すのも一苦労だ。"
+    ],
+    [
+      "story.faceless.2.before.1",
+      "El campeón debe regresar. No hay lugar donde no podamos verte.",
+      "The champion must return. There is nowhere we cannot see you.",
+      "O campeão deve voltar. Não há lugar onde não possamos ver você.",
+      "王者は戻れ。我々の目から逃れられる場所などない。"
+    ],
+    [
+      "story.faceless.2.before.2",
+      "Con todos esos ojos, ¿de verdad no ves que quiero dejarlo?",
+      "With all those eyes, can you really not see that I want to quit?",
+      "Com todos esses olhos, não consegue ver que quero parar?",
+      "それだけ目があって、僕が辞めたいことは見えないの？"
+    ],
+    [
+      "story.faceless.2.after.1",
+      "Por fin un poco de privacidad. Y ahora, a buscar un planeta donde nadie me conozca.",
+      "Finally, some privacy. Now to find a planet where nobody knows me.",
+      "Finalmente um pouco de privacidade. Agora, um planeta onde ninguém me conheça.",
+      "やっと一人になれた。次は、誰も僕を知らない星を探そう。"
+    ],
+    [
+      "story.faceless.2.outro.1",
+      "Probablemente el mejor lugar para esconderme fuera la Tierra. Estaban demasiado ocupados con su propia guerra para buscar a un dibujante.",
+      "Earth was probably the best place to hide. They were too busy with their own war to look for an artist.",
+      "A Terra provavelmente era o melhor esconderijo. Estavam ocupados demais com a própria guerra para procurar um desenhista.",
+      "隠れるなら、地球が一番かもしれない。あちらは戦争で忙しくて、絵描きを探す暇はないはずだ。"
+    ],
+    [
+      "story.faceless.2.outro.2",
+      "T.exe puso rumbo al planeta. Nos esperaba un descenso lleno de chatarra. La libertad tenía muy poco mantenimiento.",
+      "T.exe set course for the planet. A descent through space junk awaited us. Freedom had very poor maintenance.",
+      "T.exe rumou para o planeta. Uma descida cheia de sucata nos esperava. A liberdade precisava de manutenção.",
+      "T.exeが進路を取った。待っていたのは、がらくただらけの降下だ。自由って、整備が行き届いていないね。"
+    ],
+    [
+      "story.faceless.3.title",
+      "UN ALIEN SIN CITA",
+      "AN ALIEN WITHOUT AN APPOINTMENT",
+      "UM ALIEN SEM HORA MARCADA",
+      "予約のない宇宙人"
+    ],
+    [
+      "story.faceless.3.intro.1",
+      "Aterrizamos en la Tierra. Esperaba encontrar una patrulla, una alarma o a alguien gritándome que levantara las manos.",
+      "We landed on Earth. I expected a patrol, an alarm, or someone shouting at me to put my hands up.",
+      "Pousamos na Terra. Eu esperava uma patrulha, um alarme ou alguém mandando levantar as mãos.",
+      "地球に降りた。巡回隊か、警報か、手を上げろと叫ぶ誰かを覚悟していた。"
+    ],
+    [
+      "story.faceless.3.intro.2",
+      "Pero no vino nadie. Siendo alienígena, pensé que tendría una bienvenida un poco más... organizada.",
+      "But nobody came. Being an alien, I expected a slightly more... organized welcome.",
+      "Mas ninguém veio. Sendo alienígena, esperava uma recepção um pouco mais... organizada.",
+      "でも誰も来なかった。宇宙人なんだから、もう少し……手配された歓迎があると思ったのに。"
+    ],
+    [
+      "story.faceless.3.intro.3",
+      "Podíamos seguir nuestro camino sin problema. Por supuesto, cometí el error de decirlo en voz alta.",
+      "We could continue without trouble. Naturally, I made the mistake of saying that out loud.",
+      "Podíamos seguir sem problemas. Claro que cometi o erro de dizer isso em voz alta.",
+      "問題なく進めそうだ。もちろん、それを声に出してしまったのが間違いだった。"
+    ],
+    [
+      "story.faceless.3.before.1",
+      "¡Me dieron la misión de detenerte, maldito alien! ¡Entonces seré el gran héroe de este mundo!",
+      "I was sent to stop you, you blasted alien! Then I will be this world's great hero!",
+      "Recebi a missão de deter você, alien maldito! Assim serei o grande herói deste mundo!",
+      "貴様を止める任務を受けたぞ、宇宙人め！これで俺が、この世界の大英雄だ！"
+    ],
+    [
+      "story.faceless.3.before.2",
+      "Vengo de ser el gran héroe de otro mundo. Créeme: pregunta primero por las condiciones del contrato.",
+      "I just stopped being another world's great hero. Trust me: ask about the contract first.",
+      "Acabei de deixar de ser o grande herói de outro mundo. Acredite: pergunte pelas condições do contrato.",
+      "僕も別の星の大英雄だった。悪いことは言わないから、まず契約条件を確認したほうがいい。"
+    ],
+    [
+      "story.faceless.3.after.1",
+      "Lamento romper tu sueño. Solo quiero encontrar un lugar donde sentirme seguro. No voy a molestar a nadie.",
+      "I am sorry to break your dream. I just want somewhere safe. I am not going to bother anyone.",
+      "Desculpe acabar com seu sonho. Só quero um lugar seguro. Não vou incomodar ninguém.",
+      "夢を壊してごめんね。安心できる場所が欲しいだけなんだ。誰にも迷惑はかけないよ。"
+    ],
+    [
+      "story.faceless.3.after.2",
+      "¿Ni siquiera ibas a conquistar una ciudad pequeña?",
+      "You were not even going to conquer a small town?",
+      "Nem ia conquistar uma cidadezinha?",
+      "小さな町一つくらいは、征服するつもりだったんじゃないのか？"
+    ],
+    [
+      "story.faceless.3.outro.1",
+      "No conquisté ninguna ciudad. Seguí buscando un lugar donde no tuviera que demostrar nada a nadie.",
+      "I conquered no towns. I kept looking for a place where I would not have to prove anything to anyone.",
+      "Não conquistei cidade alguma. Continuei procurando um lugar onde não precisasse provar nada a ninguém.",
+      "町なんて征服しなかった。誰にも何も証明しなくていい場所を、探し続けた。"
+    ],
+    [
+      "story.faceless.3.outro.2",
+      "Había pasado por bastante para ocultarme. Noté que aquí todos llevaban ropa. Cuando tuviera un hogar, conseguiría un traje elegante.",
+      "I had been through a lot to hide. I noticed everyone here wore clothes. Once I had a home, I would get an elegant suit.",
+      "Passei por muito para me esconder. Notei que aqui todos usavam roupas. Quando tivesse um lar, compraria um terno elegante.",
+      "隠れるだけで、ずいぶん苦労した。ここの人はみんな服を着ている。家を見つけたら、立派なスーツを買おう。"
+    ],
+    [
+      "story.faceless.3.outro.3",
+      "Y quizá una corbata azul... ¿O se vería mejor roja? Importante decisión. No quería empezar mi nueva vida cometiendo un crimen de moda.",
+      "And perhaps a blue tie... Or would red look better? An important decision. I did not want to start my new life with a fashion crime.",
+      "E talvez uma gravata azul... Ou ficaria melhor vermelha? Decisão importante. Não queria começar a nova vida com um crime de moda.",
+      "ネクタイは青かな……赤のほうが似合うかな？大事な決断だ。新生活を、服装の罪から始めたくはない。"
+    ],
+    [
+      "story.faceless.4.title",
+      "MI PROPIO RINCÓN",
+      "A CORNER OF MY OWN",
+      "MEU PRÓPRIO CANTO",
+      "僕だけの居場所"
+    ],
+    [
+      "story.faceless.4.intro.1",
+      "Por fin encontré mi lugar en el bosque. Una cabaña, silencio y árboles donde colgar mis dibujos. No necesitaba mucho más.",
+      "At last, I found my place in the woods. A cabin, silence, and trees for my drawings. I needed little else.",
+      "Enfim encontrei meu lugar na floresta. Uma cabana, silêncio e árvores para pendurar desenhos. Não precisava de muito mais.",
+      "やっと森に居場所を見つけた。小屋と静けさと、絵を飾れる木。それ以上は、ほとんど要らなかった。"
+    ],
+    [
+      "story.faceless.4.intro.2",
+      "Hasta que unos pequeños curiosos decidieron llevarse mis dibujos. No sé qué historia les habrán contado sobre recoger hojas en el bosque.",
+      "Until some little visitors decided to take my drawings. I wonder what story they had heard about collecting pages in the woods.",
+      "Até uns pequenos curiosos resolverem levar meus desenhos. Que história terão ouvido sobre recolher folhas na floresta?",
+      "小さな訪問者たちが、僕の絵を持っていくまでは。森で紙を集める話でも聞いたのかな。"
+    ],
+    [
+      "story.faceless.4.intro.3",
+      "Ahora me tocaba perseguirlos a mí. ¡Oigan! ¡Esas hojas no son pistas! ¡Son mis dibujos!",
+      "Now I was the one chasing them. Hey! Those pages are not clues! They are my drawings!",
+      "Agora era minha vez de persegui-los. Ei! Essas folhas não são pistas! São meus desenhos!",
+      "今度は僕が追いかける番だ。「おーい！それは手掛かりじゃない！僕の絵だよ！」"
+    ],
+    [
+      "story.faceless.4.before.1",
+      "¡Devuelvan mis dibujos, por favor!",
+      "Please give my drawings back!",
+      "Devolvam meus desenhos, por favor!",
+      "お願いだから、絵を返して！"
+    ],
+    [
+      "story.faceless.4.after.1",
+      "Gracias. Si quieren uno, pueden pedírmelo.",
+      "Thank you. If you want one, just ask.",
+      "Obrigado. Se quiserem um, é só pedir.",
+      "ありがとう。欲しいなら、言ってくれればいいんだよ。"
+    ],
+    [
+      "story.faceless.4.outro.1",
+      "Recuperé mis dibujos. Los pequeños visitantes aprendieron que podían pedirme uno. Yo aprendí que debía sujetarlos mejor.",
+      "I got my drawings back. The little visitors learned they could ask for one. I learned I needed better pins.",
+      "Recuperei meus desenhos. Os pequenos visitantes aprenderam que podiam pedir um. Eu aprendi a prendê-los melhor.",
+      "絵は戻ってきた。小さな訪問者は、欲しければ頼めばいいと覚えた。僕は、もっと丈夫な画鋲が必要だと覚えた。"
+    ],
+    [
+      "story.faceless.4.outro.2",
+      "Después de todo, no sé ni por qué empezó la guerra ni cómo terminará. Ahora mismo, mi mundo cabe en esta cabaña.",
+      "After everything, I still do not know why the war started or how it will end. Right now, my world fits inside this cabin.",
+      "Depois de tudo, nem sei por que a guerra começou ou como terminará. Agora, meu mundo cabe nesta cabana.",
+      "結局、戦争がなぜ始まって、どう終わるのかも分からない。今の僕の世界は、この小屋に収まっている。"
+    ],
+    [
+      "story.faceless.4.outro.3",
+      "Solo quiero que nadie descubra que estoy aquí. Seguir dibujando y decorar el bosque con mis dibujos. Ah, y la corbata: elegí la roja.",
+      "I just want nobody to discover I am here. To keep drawing and decorate the woods with my pictures. Oh, and the tie: I chose red.",
+      "Só quero que ninguém descubra que estou aqui. Continuar desenhando e decorar a floresta. Ah, a gravata: escolhi a vermelha.",
+      "ここにいると誰にも知られず、絵を描き、森に飾っていたい。ああ、ネクタイは赤にしたよ。"
+    ],
+    [
+      "story.faceless.4.outro.4",
+      "¿Y T.exe? Cambió de forma. Ahora parece una locomotora humana y tiene su propio trabajo.",
+      "And T.exe? She changed her shape. Now she looks like a human-world locomotive and has a job of her own.",
+      "E T.exe? Mudou de forma. Agora parece uma locomotiva humana e tem seu próprio trabalho.",
+      "T.exeはどうしたかって？姿を変えたんだ。今は人間の機関車に見えるし、自分の仕事もある。"
+    ],
+    [
+      "story.faceless.4.outro.5",
+      "Me parece que los niños la adoran. A ella le gusta llevar pasajeros que no le ordenan destruir nada.",
+      "I think the children adore her. She likes carrying passengers who do not order her to destroy anything.",
+      "Acho que as crianças a adoram. Ela gosta de levar passageiros que não mandam destruir nada.",
+      "子どもたちに大人気らしい。何も壊せと命令しないお客さんを運ぶのが、楽しいそうだ。"
+    ],
+    [
+      "story.faceless.4.outro.6",
+      "De vez en cuando nos reunimos y recordamos viejos tiempos. Mi mejor amiga sigue ahí. Solo dejamos atrás el trabajo. Fin.",
+      "We meet now and then and remember old times. My best friend is still there. We only left the job behind. The end.",
+      "De vez em quando nos encontramos e lembramos os velhos tempos. Minha melhor amiga continua aqui. Só deixamos o emprego para trás. Fim.",
+      "時々会って、昔を思い出す。親友は今もそばにいる。置いてきたのは仕事だけ。おしまい。"
+    ],
+    [
+      "descent.intro",
+      "Allá abajo está la Tierra. Si esquivamos esta chatarra, quizá podamos empezar de nuevo. Suave, T.exe... vamos hacia abajo.",
+      "Earth is down there. If we dodge this junk, perhaps we can start again. Easy, T.exe... we are going down.",
+      "A Terra está lá embaixo. Se desviarmos da sucata, talvez possamos recomeçar. Calma, T.exe... vamos descer.",
+      "下に地球がある。がらくたを避けられれば、やり直せるかも。ゆっくり、T.exe……降りよう。"
+    ],
+    [
+      "descent.arrived",
+      "Tierra a la vista. Ahora solo necesitamos una vía... y que nadie pregunte de dónde venimos.",
+      "Land in sight. Now we just need a railway... and nobody asking where we came from.",
+      "Terra à vista. Agora só precisamos de trilhos... e que ninguém pergunte de onde viemos.",
+      "地上が見えた。あとは線路と……出身を聞かない人がいればいい。"
+    ],
+    [
+      "descent.progress",
+      "Descenso: {0}%",
+      "Descent: {0}%",
+      "Descida: {0}%",
+      "降下：{0}%"
+    ],
+    [
+      "forest.title",
+      "¡ESOS DIBUJOS SON MÍOS!",
+      "THOSE ARE MY DRAWINGS!",
+      "ESSES DESENHOS SÃO MEUS!",
+      "それ、僕の絵だよ！"
+    ],
+    [
+      "forest.intro",
+      "Recupera los 5 dibujos antes de que termine el tiempo. Acércate a cada pequeño curioso y pulsa X / Espacio para pedirle la hoja. Sin golpes.",
+      "Recover all 5 drawings before time runs out. Approach each little visitor and press X / Space to ask for the page. No fighting.",
+      "Recupere os 5 desenhos antes do tempo acabar. Aproxime-se de cada pequeno curioso e aperte X / Espaço para pedir a folha. Sem brigas.",
+      "時間内に絵を5枚取り戻そう。小さな訪問者に近づき、X／スペースで紙を返してもらおう。戦う必要はない。"
+    ],
+    [
+      "forest.controls",
+      "Stick / WASD: moverse   ·   R2 / Mayús: correr   ·   X / Espacio: recuperar",
+      "Stick / WASD: move   ·   R2 / Shift: sprint   ·   X / Space: recover",
+      "Stick / WASD: mover   ·   R2 / Shift: correr   ·   X / Espaço: recuperar",
+      "スティック／WASD：移動　R2／Shift：ダッシュ　X／スペース：回収"
+    ],
+    [
+      "forest.catch",
+      "X / Espacio: «Ese dibujo es mío, por favor»",
+      "X / Space: 'That drawing is mine, please'",
+      "X / Espaço: «Esse desenho é meu, por favor»",
+      "X／スペース：「その絵、返してくれる？」"
+    ],
+    [
+      "forest.score",
+      "Dibujos recuperados: {0} / {1}",
+      "Drawings recovered: {0} / {1}",
+      "Desenhos recuperados: {0} / {1}",
+      "回収した絵：{0}／{1}"
+    ],
+    [
+      "forest.time",
+      "{0}s   ·   Energía: {1}%",
+      "{0}s   ·   Stamina: {1}%",
+      "{0}s   ·   Energia: {1}%",
+      "残り{0}秒　スタミナ：{1}%"
+    ],
+    [
+      "forest.won",
+      "MIS DIBUJOS, A SALVO",
+      "MY DRAWINGS ARE SAFE",
+      "MEUS DESENHOS A SALVO",
+      "絵が戻ってきた"
+    ],
+    [
+      "forest.won.text",
+      "No hacía falta una guerra. Solo pedir las hojas de vuelta. Ahora sí: a dibujar en paz.",
+      "No war was needed. Just asking for the pages back. Now: time to draw in peace.",
+      "Não precisava de guerra. Só pedir as folhas de volta. Agora: desenhar em paz.",
+      "戦争なんて必要なかった。紙を返してと頼めばよかったんだ。さあ、静かに絵を描こう。"
+    ],
+    [
+      "forest.lost",
+      "SE ESCAPARON CON MIS HOJAS",
+      "THEY GOT AWAY WITH MY PAGES",
+      "FUGIRAM COM MINHAS FOLHAS",
+      "絵を持って逃げられた"
+    ],
+    [
+      "forest.lost.text",
+      "Todavía puedo encontrarlos. Volveré al claro y recuperaré mis dibujos.",
+      "I can still find them. I will return to the clearing and recover my drawings.",
+      "Ainda posso encontrá-los. Vou voltar à clareira e recuperar meus desenhos.",
+      "まだ見つけられる。広場に戻って、絵を取り戻そう。"
+    ],
+    [
+      "forest.begin",
+      "Recuperar mis dibujos",
+      "Recover my drawings",
+      "Recuperar meus desenhos",
+      "絵を取り戻す"
+    ],
+    [
+      "descent.begin",
+      "Iniciar descenso",
+      "Begin descent",
+      "Iniciar descida",
+      "降下開始"
+    ],
+    [
+      "descent.failed",
+      "DESCENSO FALLIDO",
+      "DESCENT FAILED",
+      "DESCIDA FALHOU",
+      "降下失敗"
+    ],
+    [
+      "descent.lost",
+      "Tres choques... Así no vamos a llegar a la Tierra. Tendremos que intentarlo otra vez, T.exe.",
+      "Three collisions... We are not reaching Earth like this. We will have to try again, T.exe.",
+      "Três colisões... Assim não vamos chegar à Terra. Vamos ter que tentar de novo, T.exe.",
+      "三回も衝突……。これじゃ地球に着けない。もう一度やろう、T.exe。"
+    ]
+  ]
+}

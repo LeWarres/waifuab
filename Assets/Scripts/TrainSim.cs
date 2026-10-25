@@ -502,7 +502,7 @@ public class TrainSim : MonoBehaviour
     {
         if (!won) { RaceFinished(false); return; }
         Time.timeScale = 0f;
-        talk.Show(new[] { L10n.T(Locomotives.HeroNameKey(Locomotives.Selected)) }, new[] { L10n.T("eyeboss.post") }, new[] { false }, () => RaceFinished(true));
+        talk.Show(new[] { L10n.T(Locomotives.HeroNameKey(Locomotives.Selected)) }, new[] { L10n.T(Story.Active && Story.Hero == "faceless" ? "story.faceless.2.after.1" : "eyeboss.post") }, new[] { false }, () => RaceFinished(true));
     }
 
     // Again: the lit heart goes out, and the finale starts over.
@@ -1401,10 +1401,19 @@ public class TrainSim : MonoBehaviour
                 }
                 else if (Story.Current.eyeBoss)
                 {
-                    // Moho, the ball of eyes, will not let her by.
-                    string her = L10n.T(Locomotives.HeroNameKey(Locomotives.Selected)), moho = L10n.T("eyeboss.name");
-                    talk.Show(new[] { moho, her, moho, moho }, new[] { L10n.T("eyeboss.pre.1"), L10n.T("eyeboss.pre.2"), L10n.T("eyeboss.pre.3"), L10n.T("eyeboss.pre.4") },
-                        new[] { true, false, true, true }, StartFinale);
+                    if (Story.Hero == "faceless")
+                    {
+                        Story.Duel(true, out string[] names, out string[] lines, out bool[] rivals);
+                        names[0] = L10n.T("eyeboss.name");
+                        talk.Show(names, lines, rivals, StartFinale);
+                    }
+                    else
+                    {
+                        // Moho, the ball of eyes, will not let her by.
+                        string her = L10n.T(Locomotives.HeroNameKey(Locomotives.Selected)), moho = L10n.T("eyeboss.name");
+                        talk.Show(new[] { moho, her, moho, moho }, new[] { L10n.T("eyeboss.pre.1"), L10n.T("eyeboss.pre.2"), L10n.T("eyeboss.pre.3"), L10n.T("eyeboss.pre.4") },
+                            new[] { true, false, true, true }, StartFinale);
+                    }
                 }
                 else
                 {

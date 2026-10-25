@@ -5,11 +5,12 @@ using UnityEngine.UI;
 public class AscentBackdrop : MaskableGraphic
 {
     public float flight, travel;
+    public bool descending;
     RawImage sky, space;
 
     public void Refresh(float progress, float dt)
     {
-        flight = progress;
+        flight = descending ? 1f - progress : progress;
         travel += dt;
         if (!sky)
         {
@@ -58,7 +59,7 @@ public class AscentBackdrop : MaskableGraphic
         {
             float x = Mathf.Repeat(i * .713f, 1f);
             if (x > .28f && x < .72f) continue;
-            float y = Mathf.Repeat(i * .317f - travel * .32f, 1f);
+            float y = Mathf.Repeat(i * .317f + travel * (descending ? .32f : -.32f), 1f);
             Vector2 at = new Vector2(Mathf.Lerp(r.xMin, r.xMax, x), Mathf.Lerp(r.yMin, r.yMax, y));
             int n = mesh.currentVertCount;
             Color tint = new Color(.77f, .9f, 1f, .16f);
