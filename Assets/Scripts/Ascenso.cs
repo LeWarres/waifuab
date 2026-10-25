@@ -239,9 +239,9 @@ public class Ascenso : MonoBehaviour
             if (Story.Active && Story.AscentPending)
             {
                 Story.RetryAscent();
-                SceneManager.LoadScene("historiaDialogos");
+                Wipe.Load("historiaDialogos");
             }
-            else SceneManager.LoadScene("ascenso");
+            else Wipe.Load("ascenso");
         }
         else if (phase == Phase.Arrived)
         {
@@ -249,9 +249,9 @@ public class Ascenso : MonoBehaviour
             if (Story.Active && Story.AscentPending)
             {
                 Story.PassAscent();
-                SceneManager.LoadScene("historiaDialogos");
+                Wipe.Load("historiaDialogos");
             }
-            else SceneManager.LoadScene("sandScenario");
+            else Wipe.Load("sandScenario");
         }
     }
 

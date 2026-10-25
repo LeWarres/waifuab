@@ -69,7 +69,7 @@ public class AutoPlay : MonoBehaviour
         if (train.BossFight != fighting) { fighting = train.BossFight; Note(fighting ? "BOSS IN" : "BOSS OUT"); }
         if (train.Health < lastHealth - train.MaxHealth * 0.15f) Note("HIT"); // a big loss at once: who did it
         lastHealth = train.Health;
-        if (train.Talking) { train.SkipTalk(); return; }
+        if (train.Talking) return; // Dialogue always waits for the player's confirmation, including bot sessions.
         if (train.DeliveryOpen) { train.CloseDelivery(); return; }
         if (train.ChestOpen) { train.CloseChest(); return; }
         int kind = train.MenuKind;

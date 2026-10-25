@@ -1,0 +1,136 @@
+{
+  "title": "Un legado en blanco",
+  "tool": "built-in image_gen",
+  "style": "Use case: stylized-concept. One 16:9 LANDSCAPE story illustration for this game's Faceless prologue. Reference roles: Image 1 is CHARACTER IDENTITY ONLY: FACELESS, a tall lean adult featureless ivory-white mannequin-like hero in a perfectly smooth full-cover white bodysuit including head, hands and feet. Absolutely blank oval head: NO EYES, NO MOUTH, NO NOSE, NO HAIR, NO FACIAL FEATURES, no face mask seams. No exposed anatomy details. Communicate emotion only through posture and hands. Image 2 is TRAIN IDENTITY ONLY when a train is needed: the hero's sentient best friend T.exe, small PURPLE steam locomotive, rectangular purple cab with dark flat roof and round yellow-rim windows, magenta/pink cylindrical boiler with yellow bands, grey circular skull-like front with two red round lights and yellow grille teeth, red front buffer beam, purple wheels and EIGHT thin WHITE articulated spider legs with round joints (four per side). Keep train recognizable, friendly, no new human face. Image 3 is a BLACK INK DRAWING reference, not the subject: take the economical hand-drawn black lines, stark white figure, a few rough hatching strokes and old printed comic feel. SIMPLIFY FAR MORE than the reference. MAIN VISUAL DIRECTION: very SIMPLE, intentionally naive sparse drawing. Figures in BLACK AND WHITE INK only, except the locomotive may have ONE flat purple fill and tiny red/yellow identity accents. Backdrops are extremely basic, like a quick filler drawing: just 2-5 flat SATURATED COLOR areas and a handful of elementary rectangles, circles or triangles. Bright saturated flat background, NOT realistic, not detailed, no rendered lighting, no gradients, no texture painting, no realistic landscapes, no intricate buildings or dense foliage, no Persona style, no crayon. Sparse clean linework with small irregularities; broad empty space is essential. One composition, no panels, no text, lettering, captions, logos, watermark, speech bubbles or UI. All important objects and the full blank head inside safe margins. Opaque illustrated background. ",
+  "illustrations": [
+    {
+      "id": "champion",
+      "prompt": "CHAMPION WITHOUT A CHOICE. Faceless stands alone on a small very simple black podium, holding a roughly drawn cup trophy down at his side rather than celebrating. Shoulders heavy, head slightly bowed. A huge flat acid-YELLOW circle behind his blank white head; saturated COBALT-blue sky and flat MAGENTA ground. Only six tiny black triangular crowd silhouettes near bottom edges and two plain vertical pennant shapes. Not a detailed arena. His silhouette dominates center-left; visual contrast public victory versus private weariness. No train in this scene.",
+      "destination": "Assets/Resources/Story/faceless_champion.png"
+    },
+    {
+      "id": "orders",
+      "prompt": "THE ORDERS. Faceless in the lower center, black-and-white white-suited blank-faced hero, standing with one hand reluctantly accepting a blank sheet from a large black-sleeved pointing official's hand entering from the upper left. At his other side just two abstract broken toy robot silhouettes on the floor (clean mechanical fragments, no bodies or gore). A simple flat saturated VERMILION-red wall and one dark plum rectangle behind. Floor is one flat orange band, no perspective detail except two black floor lines. Sparse, oppressive and quiet. Faceless head remains perfectly featureless. No train in this scene.",
+      "destination": "Assets/Resources/Story/faceless_orders.png"
+    },
+    {
+      "id": "legacy",
+      "prompt": "THREE GENERATIONS PASSING DOWN A DUTY. In a single sparse scene, three featureless WHITE black-ink mannequin men arranged left-to-right: slightly stooped grandfather on left, broad older father in middle, and young adult Faceless on right. All heads completely blank, no hair or facial features. The father offers the same simple black cup/champion baton toward Faceless while grandfather rests a hand on father's shoulder. Faceless reaches for the object hesitantly with lowered shoulders. Grandfather and father are older only through posture and proportions, not faces. Background merely a saturated TURQUOISE rectangle wall and flat hot-PINK floor, with TWO simple empty black picture frames on wall, no room detail. No train.",
+      "destination": "Assets/Resources/Story/faceless_legacy.png"
+    },
+    {
+      "id": "artist",
+      "prompt": "THE LIFE HE WANTS. Faceless seated on a plain wooden stool at one very simple table, body fully covered smooth ivory white, blank oval head inclined affectionately toward an open sketchbook. His pen hand draws a tiny simple flower and a wobbly little landscape in black ink on paper, other hand steadying notebook. Expressive quiet absorbed posture. A few spare black hatch lines on his shoulder and beneath table, otherwise clean white figure. Saturated ULTRAMARINE background with a single flat lemon-YELLOW square window showing one bright GREEN hill and one plain white cloud. Only one small pencil cup. Intentionally empty filler background, no elaborate studio, no full room rendering. No train.",
+      "destination": "Assets/Resources/Story/faceless_artist.png"
+    },
+    {
+      "id": "friend",
+      "prompt": "HIS BEST FRIEND HAS A SOUL. Faceless seated on a simple low platform at left, resting his white hand gently on the purple boiler of T.exe locomotive at right, blank head tilted toward her as if confiding. T.exe has exactly the purple rectangular cab, magenta cylindrical boiler with yellow rings, grey round skull front with red circular eyes and small yellow grille, red buffer and EIGHT WHITE thin spider legs of train reference, simplified into a charming sparse ink drawing with flat purple fill only. Her round red lamps attentive, subtle front tilt toward him; she feels alive without becoming a different locomotive. One single simple railway line under her. Background is flat saturated CORAL-pink sky, one enormous flat tangerine sun half cut by a single deep-blue horizon stripe. No scenery beyond these three shapes. Tender friendship, not romantic.",
+      "destination": "Assets/Resources/Story/faceless_friend.png"
+    },
+    {
+      "id": "idea",
+      "prompt": "WAR INTERRUPTS A DRAWING, AN IDEA BEGINS. Medium-wide view of Faceless inside T.exe's simple purple cab, seated at left holding an open sketchbook and a pencil. Blank white face tilted from paper toward the big window at right; one hand on the purple window ledge as if sharing a new thought with his sentient train friend. Window frame and wall are two or three flat purple rectangles with one yellow circular rim detail that visually matches T.exe. Outside the window: flat ELECTRIC-CYAN sky, one hot MAGENTA ground strip, TWO elementary black triangular UFO silhouettes and a single orange zigzag burst far in distance to suggest a war. NOTHING detailed or realistic. The sketchbook remains mostly white with a few tiny black drawing marks. A small simple yellow ink-outlined lightbulb symbol above his lifted pencil suggests an idea without text. His head absolutely smooth and featureless. Keep mood thoughtful and hopeful amid chaos, not battle action.",
+      "destination": "Assets/Resources/Story/faceless_idea.png"
+    }
+  ],
+  "pages": [
+    {
+      "number": 1,
+      "artwork": "Story/faceless_champion",
+      "es": "Soy el campeón de este planeta. Todos lo dicen con orgullo. A mí nunca me preguntaron si quería serlo.",
+      "en": "I am this planet's champion. Everyone says it with pride. Nobody ever asked whether I wanted to be.",
+      "pt": "Sou o campeão deste planeta. Todos dizem isso com orgulho. Nunca me perguntaram se eu queria ser.",
+      "ja": "僕はこの星の王者だ。みんな誇らしげにそう呼ぶ。僕がそうなりたいか、聞いた人はいない。"
+    },
+    {
+      "number": 2,
+      "artwork": "Story/faceless_orders",
+      "es": "Mi trabajo es competir. Ganar. Y destruir a quien me señalen. Cada victoria celebra un nombre que siento cada vez menos mío.",
+      "en": "My job is to compete. To win. And to destroy whoever they point at. Every victory celebrates a name that feels less and less like mine.",
+      "pt": "Meu trabalho é competir. Vencer. E destruir quem mandarem. Cada vitória celebra um nome que sinto cada vez menos meu.",
+      "ja": "僕の仕事は競い、勝ち、命じられた相手を倒すこと。勝つたびに、自分の名が少しずつ他人のものに思えてくる。"
+    },
+    {
+      "number": 3,
+      "artwork": "Story/faceless_legacy",
+      "es": "Mi padre hizo lo mismo antes que yo. Y antes de él, mi abuelo.",
+      "en": "My father did the same before me. And before him, my grandfather.",
+      "pt": "Meu pai fez o mesmo antes de mim. E, antes dele, meu avô.",
+      "ja": "僕の前には父が同じ仕事をしていた。その前は、祖父だった。"
+    },
+    {
+      "number": 4,
+      "artwork": "Story/faceless_legacy",
+      "es": "No heredé una vocación. Heredé una obligación. A eso lo llaman legado.",
+      "en": "I did not inherit a calling. I inherited an obligation. They call that a legacy.",
+      "pt": "Não herdei uma vocação. Herdei uma obrigação. É isso que chamam de legado.",
+      "ja": "受け継いだのは夢じゃない。義務だった。みんなはそれを「伝統」と呼ぶ。"
+    },
+    {
+      "number": 5,
+      "artwork": "Story/faceless_artist",
+      "es": "Yo quería otra cosa: una vida dedicada al arte. Aprender a dibujar lo que veo... y también lo que todavía no existe.",
+      "en": "I wanted something else: a life devoted to art. To learn to draw what I see... and what does not exist yet.",
+      "pt": "Eu queria outra coisa: uma vida dedicada à arte. Aprender a desenhar o que vejo... e o que ainda nem existe.",
+      "ja": "僕は別の人生が欲しかった。芸術に生きて、見えるものを描く。そして、まだ存在しないものも。"
+    },
+    {
+      "number": 6,
+      "artwork": "Story/faceless_artist",
+      "es": "En lugar de contar derrotados, quería llenar cuadernos. Que mis manos sirvieran para crear algo.",
+      "en": "Instead of counting the defeated, I wanted to fill sketchbooks. To use my hands to create something.",
+      "pt": "Em vez de contar derrotados, eu queria encher cadernos. Usar minhas mãos para criar alguma coisa.",
+      "ja": "倒した相手を数えるより、スケッチブックを埋めたかった。この手で、何かを生み出したかった。"
+    },
+    {
+      "number": 7,
+      "artwork": "Story/faceless_friend",
+      "es": "Mi locomotora es mi mejor amiga. No es una forma de hablar: tiene un alma, una conciencia y su propia manera de entenderme.",
+      "en": "My locomotive is my best friend. That is no figure of speech: she has a soul, a mind, and her own way of understanding me.",
+      "pt": "Minha locomotiva é minha melhor amiga. Não é força de expressão: ela tem alma, consciência e seu próprio jeito de me entender.",
+      "ja": "僕の機関車は親友だ。たとえ話じゃない。彼女には魂と意識があり、彼女なりに僕を理解してくれる。"
+    },
+    {
+      "number": 8,
+      "artwork": "Story/faceless_friend",
+      "es": "No es ella quien me encadena. Es lo que todos esperan de nosotros. Mientras yo siguiera a sus mandos, tendría que seguir siendo el campeón.",
+      "en": "She is not the one who chains me down. It is what everyone expects of us. As long as I stayed at her controls, I had to remain the champion.",
+      "pt": "Não é ela que me prende. É o que todos esperam de nós. Enquanto eu estivesse no comando dela, teria que continuar sendo o campeão.",
+      "ja": "僕を縛るのは彼女じゃない。僕らに寄せられる期待だ。彼女を操縦する限り、僕は王者でいなければならなかった。"
+    },
+    {
+      "number": 9,
+      "artwork": "Story/faceless_artist",
+      "es": "Guardaba mis dibujos entre un viaje y el siguiente. Siempre había otra orden. Siempre alguien más a quien vencer.",
+      "en": "I tucked my drawings away between journeys. There was always another order. Always someone else to defeat.",
+      "pt": "Eu guardava meus desenhos entre uma viagem e outra. Sempre havia outra ordem. Sempre mais alguém para vencer.",
+      "ja": "旅の合間に、描いた絵をしまい込んだ。次の命令が待っていた。次に倒す相手が待っていた。"
+    },
+    {
+      "number": 10,
+      "artwork": "Story/faceless_idea",
+      "es": "Hasta que comenzó la guerra. El planeta entero dejó de hablar de mis victorias y empezó a hablar de sobrevivir.",
+      "en": "Then the war began. The whole planet stopped talking about my victories and started talking about survival.",
+      "pt": "Até que a guerra começou. O planeta inteiro parou de falar das minhas vitórias e começou a falar de sobreviver.",
+      "ja": "そして戦争が始まった。星中の人々は僕の勝利を語るのをやめ、生き残る方法を語り始めた。"
+    },
+    {
+      "number": 11,
+      "artwork": "Story/faceless_idea",
+      "es": "Miré a mi amiga. Luego miré mis dibujos. Por primera vez, aquel futuro que parecía escrito se había quedado en blanco.",
+      "en": "I looked at my friend. Then at my drawings. For the first time, the future that had seemed already written was a blank page.",
+      "pt": "Olhei para minha amiga. Depois, para meus desenhos. Pela primeira vez, aquele futuro que parecia escrito tinha virado uma página em branco.",
+      "ja": "親友を見た。それから、自分の絵を見た。決まりきっていたはずの未来が、初めて白紙になっていた。"
+    },
+    {
+      "number": 12,
+      "artwork": "Story/faceless_idea",
+      "es": "Y entonces tuve una idea.",
+      "en": "And then I had an idea.",
+      "pt": "E então tive uma ideia.",
+      "ja": "その時、ひとつの考えが浮かんだ。"
+    }
+  ],
+  "scope": "Prólogo y primer tramo jugable. La continuación de la historia está pendiente."
+}

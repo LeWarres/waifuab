@@ -60,7 +60,7 @@ public class Hud : MonoBehaviour
     {
         public Text text;
         public Vector3 at;
-        public float birth, amount;
+        public float birth, amount, drift;
         public bool onTrain, critical, delivery;
     }
 
@@ -257,6 +257,7 @@ public class Hud : MonoBehaviour
     // Asking again while it is still playing does nothing, so callers can ask every frame.
     public void Flash(string effect)
     {
+        if (!Comfort.Flashes) return; // full-screen effects turned off (accessibility)
         if (!screens.TryGetValue(effect, out var screen))
         {
             // The pack's script has just sized it for the camera as it is now; from here on it only rides the
@@ -286,6 +287,7 @@ public class Hud : MonoBehaviour
     // Call every frame while a boss is on the field; it hides itself a moment after the last call.
     public void Boss(string name, float fraction)
     {
+        if (Time.unscaledTime > bossUntil + 4f) Entrance(name); // just came on
         if (bossPanel == null)
         {
             Slanted plate = UiKit.Plate(canvas.transform, new Vector2(0f, -104f), new Vector2(780f, 84f), 0.1f, 4f, 9f); // under the kill count
@@ -300,6 +302,130 @@ public class Hud : MonoBehaviour
         bossBar.Set(fraction, false);
         bossBar.colour.color = bossBar.colour.bottom = UiKit.Rose; // a boss does not go green as it is worn down
         bossUntil = Time.unscaledTime + 0.25f;
+    }
+
+    // ---- a boss's entrance: a dark band in the biome's colours across the screen, tilted, the boss's name huge on it
+    // under a "BOSS!" tag; it slams in, holds while the game runs slow, and sweeps out.
+    RectTransform entrance;
+    Text entranceName;
+    float entranceAt = -10f;
+    const float EntranceSeconds = 1.9f;
+
+    void Entrance(string name)
+    {
+        if (!entrance)
+        {
+            entrance = UiKit.Group(canvas.transform, new Vector2(0.5f, 0.5f), new Vector2(0f, 120f));
+            entrance.localRotation = Quaternion.Euler(0f, 0f, -6f);
+            UiKit.Paint(UiKit.Panel(entrance, new Vector2(0f, -14f), new Vector2(3200f, 230f), Color.white, Color.white, 0f), UiKit.Ink.Main).sprite = null;
+            UiKit.Panel(entrance, Vector2.zero, new Vector2(3200f, 218f), Color.white, Color.white, 0f).sprite = null;
+            UiKit.Paint(UiKit.Panel(entrance, Vector2.zero, new Vector2(3200f, 200f), Color.white, Color.white, 0f), UiKit.Ink.Deep).sprite = null;
+            Slanted dots = UiKit.Panel(entrance, Vector2.zero, new Vector2(3200f, 200f), Color.white, Color.white, 0f);
+            dots.sprite = UiKit.Halftone();
+            dots.type = Image.Type.Tiled;
+            UiKit.Paint(dots, UiKit.Ink.Main, 0.18f);
+            Slanted tag = UiKit.Paint(UiKit.Panel(entrance, new Vector2(-420f, 112f), new Vector2(300f, 62f), Color.white, Color.white, 0.25f), UiKit.Ink.Hot);
+            tag.sprite = null;
+            tag.rectTransform.localRotation = Quaternion.Euler(0f, 0f, 4f);
+            UiKit.Paint(UiKit.Label(tag.transform, UiKit.Display, 44, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 2f), new Vector2(290f, 58f), true), UiKit.Ink.Deep).text = L10n.T("boss.title");
+            Text shadow = UiKit.Paint(UiKit.Label(entrance, UiKit.Display, 130, Color.white, TextAnchor.MiddleCenter, new Vector2(10f, -12f), new Vector2(1700f, 170f), true), UiKit.Ink.Main);
+            entranceName = UiKit.Label(entrance, UiKit.Display, 130, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, -2f), new Vector2(1700f, 170f), true);
+            shadow.gameObject.AddComponent<Echo>().of = entranceName;
+        }
+        entranceName.text = name.ToUpperInvariant();
+        entranceAt = Time.unscaledTime;
+        entrance.gameObject.SetActive(true);
+        train.SlowMotion(EntranceSeconds * 0.8f, 0.3f);
+        train.Shake(0.4f);
+        Sound.Play("newcard");
+    }
+
+    void Entering()
+    {
+        if (!entrance || !entrance.gameObject.activeSelf) return;
+        float t = Time.unscaledTime - entranceAt;
+        if (t > EntranceSeconds || train.MenuShown) { entrance.gameObject.SetActive(false); return; }
+        float x = t < 0.25f ? Mathf.LerpUnclamped(-2600f, 0f, UiKit.Back(t / 0.25f)) : t < EntranceSeconds - 0.3f ? (t - 0.25f) * 40f : Mathf.Lerp((EntranceSeconds - 0.55f) * 40f, 2800f, (t - EntranceSeconds + 0.3f) / 0.3f);
+        entrance.anchoredPosition = new Vector2(x, 120f);
+        entranceName.transform.localScale = Vector3.one * (t < 0.35f ? Mathf.Lerp(1.5f, 1f, t / 0.35f) : 1f);
+    }
+
+    // ---- an achievement won: a band slides in from the right, its icon, "ACHIEVEMENT!", its name and the tickets
+    RectTransform award;
+    RawImage awardIcon;
+    Text awardName, awardReward;
+    float awardAt = -10f;
+    readonly Queue<Achievements.Def> awards = new();
+    public void Achievement(Achievements.Def def) => awards.Enqueue(def);
+
+    void Awarding()
+    {
+        float t = Time.unscaledTime - awardAt;
+        if (t > 3.6f && awards.Count > 0)
+        {
+            if (!award)
+            {
+                award = UiKit.Group(canvas.transform, new Vector2(1f, 1f), Vector2.zero);
+                award.localRotation = Quaternion.Euler(0f, 0f, 3f);
+                Slanted plate = UiKit.Plate(award, Vector2.zero, new Vector2(560f, 110f), 0.15f, 5f, 10f);
+                Slanted tag = UiKit.Paint(UiKit.Panel(award, new Vector2(-150f, 58f), new Vector2(260f, 46f), Color.white, Color.white, 0.25f), UiKit.Ink.Hot);
+                tag.sprite = null;
+                UiKit.Paint(UiKit.Label(tag.transform, UiKit.Display, 30, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 1f), new Vector2(250f, 44f), true), UiKit.Ink.Deep).text = L10n.T("ach.title");
+                awardIcon = UiKit.Picture(plate.transform, null, new Vector2(-210f, -4f), 76f);
+                awardName = UiKit.Label(plate.transform, UiKit.Display, 34, Color.white, TextAnchor.MiddleLeft, new Vector2(40f, 10f), new Vector2(400f, 46f), true);
+                awardReward = UiKit.Label(plate.transform, UiKit.Body, 20, Color.white, TextAnchor.MiddleLeft, new Vector2(40f, -26f), new Vector2(400f, 30f), true);
+            }
+            Achievements.Def def = awards.Dequeue();
+            UiKit.SetIcon(awardIcon, def.icon);
+            awardName.text = L10n.T("ach." + def.id).ToUpperInvariant();
+            awardReward.text = L10n.T("ach.reward", def.reward);
+            awardAt = Time.unscaledTime;
+            t = 0f;
+            Sound.Play("newcard");
+        }
+        if (!award) return;
+        bool on = t < 3.6f && !train.MenuShown;
+        award.gameObject.SetActive(on);
+        if (!on) return;
+        float slide = t < 0.3f ? 1f - UiKit.Back(t / 0.3f) : t > 3.2f ? (t - 3.2f) / 0.4f : 0f;
+        award.anchoredPosition = new Vector2(-320f + slide * 700f, -430f); // under the hero plate and the controls line
+    }
+
+    // ---- arrows at the edge of the screen for the big threats out of sight (Combat.Threats)
+    readonly List<(Vector3 at, bool boss)> threats = new();
+    readonly List<RectTransform> arrows = new();
+    void Arrows()
+    {
+        if (train.MenuShown || train.Swarming || !Combat.Instance) threats.Clear();
+        else Combat.Instance.Threats(threats);
+        Camera view = Camera.main;
+        int used = 0;
+        Vector2 size = ((RectTransform)canvas.transform).rect.size, half = size * 0.5f;
+        foreach (var (at, boss) in threats)
+        {
+            Vector3 seen = view.WorldToViewportPoint(at);
+            if (seen.x > 0f && seen.x < 1f && seen.y > 0f && seen.y < 1f) continue;
+            if (used == arrows.Count)
+            {
+                var arrow = UiKit.Group(canvas.transform, new Vector2(0.5f, 0.5f), Vector2.zero);
+                UiKit.Paint(UiKit.Panel(arrow, Vector2.zero, new Vector2(54f, 54f), Color.white, Color.white, 0f), UiKit.Ink.Deep, 0.85f).sprite = UiKit.Disc();
+                Text head = UiKit.Label(arrow, UiKit.Display, 44, Color.white, TextAnchor.MiddleCenter, new Vector2(3f, 2f), new Vector2(54f, 54f));
+                head.fontStyle = FontStyle.Normal;
+                head.text = "▶";
+                arrows.Add(arrow);
+            }
+            RectTransform a = arrows[used++];
+            a.gameObject.SetActive(true);
+            Vector2 dir = new Vector2(seen.x - 0.5f, seen.y - 0.5f);
+            if (seen.z < 0f) dir = -dir;
+            dir = dir.sqrMagnitude < 0.0001f ? Vector2.right : dir.normalized;
+            float reach = Mathf.Min((half.x - 60f) / Mathf.Max(Mathf.Abs(dir.x), 0.001f), (half.y - 60f) / Mathf.Max(Mathf.Abs(dir.y), 0.001f));
+            a.anchoredPosition = dir * reach;
+            a.localRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+            a.GetChild(1).GetComponent<Text>().color = boss ? new Color(1f, 0.3f, 0.3f) : UiKit.Now.hot;
+            a.localScale = Vector3.one * (boss ? 1.25f : 0.9f) * (1f + 0.08f * Mathf.Sin(Time.unscaledTime * 8f));
+        }
+        for (int i = used; i < arrows.Count; i++) if (arrows[i].gameObject.activeSelf) arrows[i].gameObject.SetActive(false);
     }
 
     const int BaseBoxes = 5;
@@ -378,6 +504,7 @@ public class Hud : MonoBehaviour
 
     public void DamageNumber(Vector3 at, float amount, bool onTrain, bool critical = false, string caption = null, Color? tint = null)
     {
+        if (!Comfort.Numbers && caption == null) return; // turned off (accessibility); the payouts still show
         Popup popup = null;
         float now = Time.unscaledTime;
         for (int i = popups.Count - 1; i >= 0 && now - popups[i].birth <= MergeTime; i--) // newest last
@@ -412,14 +539,16 @@ public class Hud : MonoBehaviour
             popup = new Popup { text = text };
         }
         popup.text.text = caption ?? Mathf.Max(1, Mathf.RoundToInt(amount)).ToString() + (critical ? "!" : "");
-        popup.text.color = tint ?? (critical ? new Color(1f, 0.55f, 0.1f) : onTrain ? UiKit.Gold : new Color(1f, 0.25f, 0.2f)); // a critical: orange, and it ends in "!"
-        popup.text.fontSize = critical ? 62 : 50;
+        // An ordinary blow small and white, so the crowd stays in sight; a critical big and orange, ending in "!".
+        popup.text.color = tint ?? (critical ? new Color(1f, 0.55f, 0.1f) : onTrain ? UiKit.Gold : new Color(1f, 0.97f, 0.9f));
+        popup.text.fontSize = critical ? 62 : caption != null ? 50 : onTrain ? 40 : 30;
         popup.at = at;
         popup.amount = amount;
         popup.onTrain = onTrain;
         popup.critical = critical;
         popup.delivery = caption != null;
         popup.birth = now;
+        popup.drift = Random.Range(-1f, 1f);
         popup.text.gameObject.SetActive(true);
         popups.Add(popup);
     }
@@ -491,6 +620,7 @@ public class Hud : MonoBehaviour
         canvas.enabled = !train.Racing; // the race has a board of its own
         if (train.UltimatePresenting) return;
         Evolutions();
+        if (!Camera.main) return; // between scenes: no camera to place anything with
         float zoom = Camera.main.orthographicSize;
         foreach (var entry in screens)
         {
@@ -530,6 +660,9 @@ public class Hud : MonoBehaviour
             ultimateNotice.rectTransform.localScale = Vector3.one * (1f + 0.025f * Mathf.Sin(age * 8f));
         }
 
+        Entering();
+        Awarding();
+        Arrows();
         bool boss = Time.unscaledTime < bossUntil && !train.MenuShown;
         if (bossPanel != null && bossPanel.gameObject.activeSelf != boss) bossPanel.gameObject.SetActive(boss);
 
@@ -566,8 +699,11 @@ public class Hud : MonoBehaviour
             }
             float k = age / popupLife;
             Vector3 screen = view.WorldToScreenPoint(popup.at + Vector3.up * (k * 1.9f));
-            popup.text.rectTransform.anchoredPosition = new Vector2(screen.x, screen.y) / canvas.scaleFactor;
-            popup.text.rectTransform.localScale = Vector3.one * (1f + 0.6f * Mathf.Clamp01(1f - k * 5f)); // a little pop as it is born
+            popup.text.rectTransform.anchoredPosition = new Vector2(screen.x, screen.y) / canvas.scaleFactor + new Vector2(popup.drift * 46f * k, 0f);
+            // born big, it drops past its size and springs back (a bounce), then holds
+            float pop = k < 0.1f ? Mathf.Lerp(2f, 0.85f, k / 0.1f) : k < 0.22f ? Mathf.Lerp(0.85f, 1.08f, (k - 0.1f) / 0.12f) : Mathf.Lerp(1.08f, 1f, Mathf.Clamp01((k - 0.22f) / 0.2f));
+            popup.text.rectTransform.localScale = Vector3.one * pop * (popup.critical ? 1.2f : 1f);
+            popup.text.rectTransform.localRotation = Quaternion.Euler(0f, 0f, popup.critical ? popup.drift * -12f : 0f);
             Color colour = popup.text.color;
             colour.a = 1f - Mathf.Clamp01((k - 0.55f) / 0.45f);
             popup.text.color = colour;

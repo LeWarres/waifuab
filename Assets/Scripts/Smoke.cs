@@ -21,12 +21,16 @@ public class Smoke : MonoBehaviour
     TrainSim train;
     float next;
 
-    void Start()
+    void Start() => train = FindAnyObjectByType<TrainSim>(); // none on the selection screen: the smoke just goes straight up
+
+    // Made the first time it is drawn, not in Awake: whoever adds it sets its colour after (the jetpack's fire), and
+    // not in Start either: a copy made while the frame is being drawn gets a LateUpdate before its Start.
+    static Mesh ball;
+    Combat.Batch Batch()
     {
-        train = FindAnyObjectByType<TrainSim>(); // none on the selection screen: the smoke just goes straight up
-        var ball = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        batch = new Combat.Batch(colour, false, ball.GetComponent<MeshFilter>().sharedMesh);
-        Destroy(ball);
+        if (batch != null) return batch;
+        if (!ball) ball = Resources.GetBuiltinResource<Mesh>("Sphere.fbx");
+        return batch = new Combat.Batch(colour, false, ball);
     }
 
     void Update()
@@ -54,8 +58,8 @@ public class Smoke : MonoBehaviour
             float along = puff.age / life;
             // Swells out of the stack, then thins away.
             float wide = size * Mathf.Min(0.3f + along * 2.2f, 1f) * (1f - Mathf.Clamp01((along - 0.6f) / 0.4f));
-            batch.Add(puff.at, Vector3.one * wide, Quaternion.Euler(0f, puff.turn, 0f));
+            Batch().Add(puff.at, Vector3.one * wide, Quaternion.Euler(0f, puff.turn, 0f));
         }
-        batch.Flush();
+        Batch().Flush();
     }
 }

@@ -1,0 +1,19 @@
+{
+  "tool": "built-in image_gen",
+  "style": "Use case: style-transfer. Production 16:9 landscape background illustration for a video-game station checkpoint dialogue. Image 1 is the EDIT TARGET and authoritative identity/composition reference. Image 2 is STYLE ONLY, a newly made character illustration for this same game. Repaint the WHOLE target in a coherent bold graphic anime / Persona-inspired art-book style matching Image 2: confident angular black ink outlines, strong clean black shadow shapes, flat limited spot-color fills, crisp cream-white highlights, controlled fine halftone in shadow areas, expressive slightly elongated adult anime facial proportions. Professional stylish 2D illustration, sharp designed silhouettes and graphic architecture. No 3D render, no glossy soft airbrush, no watercolor, no pastel haze, no bloom. Keep the officer seated behind the station service window, positioned center-right and looking warmly but knowingly at the viewer, fully dressed in her navy railway-official uniform and peaked cap with brass gold details. One hand holds a fountain pen above the clipboard on the counter and the other rests on the paperwork. Preserve the desk microphone on left, stamp and papers on right, service window frame, railway station background, station insignia banner. Keep coherent perspective and plausible hands. Leave the lower counter area relatively quiet for dialogue UI, but do not draw any UI, text, labels, lettering, logos, watermark or Persona franchise characters. Opaque full illustrated background, not a transparent character cutout. Preserve source character's hair and eye color exactly. ",
+  "styleReference": "Assets/Resources/Menu/hero_bba_cut.png",
+  "variants": [
+    {
+      "id": "human",
+      "reference": "C:/Users/r20/WaifuTren/Assets/Resources/Questionnaire/officer_window.png",
+      "prompt": "HUMAN OFFICER VERSION. Exactly the human officer from image 1: fair human skin, short messy cobalt BLUE wavy hair with unruly side tufts, bright GREEN eyes, normal human ears, navy peaked cap with a small golden winged badge, navy jacket with lavender piping, cream shirt and navy tie with gold tie clip. Keep her friendly wry smile and readable lively eyes. NO antennas, no alien ears, no pink skin, no purple hair. The human station remains terrestrial with straight architecture and a train visible at the platform on left. Palette dominated by ink-black/navy, cobalt blue, warm cream and muted brass, with green eyes as a clear accent. The shadow treatment should feel bold and designed like Persona graphic key art, not a polished 3D screenshot.",
+      "destination": "Assets/Art/Questionnaire/Ink/officer_human_ink.png"
+    },
+    {
+      "id": "alien",
+      "reference": "C:/Users/r20/WaifuTren/Assets/Resources/Questionnaire/officer_alien_matte.png",
+      "prompt": "ALIEN OFFICER VERSION. Exactly the alien officer from image 1: muted warm PINK skin, short tousled LIGHT LAVENDER/PURPLE wavy hair, GOLDEN YELLOW eyes, long pointed alien ears, TWO curved YELLOW antenna stalks rising through/around her navy peaked cap with ROUND yellow ball tips. Navy official uniform with lavender edging and gold planetary/winged badge, narrow pale central shirt panel and round gold collar ornament. Friendly wry smile, clearly alien while still recognizably the same officer. The station must also remain ALIEN: curved ribbed oval window frame, sweeping organic platforms, sleek unusual train on the left, starry lavender sky with large planet and smaller moon, geometric planetary insignia banner, alien potted plant on right. Palette ink-black/navy, dusty pink, light lavender, warm yellow/gold and cream; pink and lavender remain medium/light flat fills, dramatic black shadows rather than increased overall brightness. Match the human alternative's linework, contrast and restrained exposure.",
+      "destination": "Assets/Art/Questionnaire/Ink/officer_alien_ink.png"
+    }
+  ]
+}

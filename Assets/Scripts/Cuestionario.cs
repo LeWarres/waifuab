@@ -78,12 +78,12 @@ public class Cuestionario : MonoBehaviour
             if (stage == Stage.Arrested)
             {
                 Story.RetryInspection();
-                SceneManager.LoadScene("historiaDialogos");
+                Wipe.Load("historiaDialogos");
             }
             else
             {
                 Story.PassInspection();
-                SceneManager.LoadScene("sandScenario");
+                Wipe.Load("sandScenario");
             }
             return;
         }

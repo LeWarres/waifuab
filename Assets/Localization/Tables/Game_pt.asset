@@ -929,7 +929,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1055763532689414
-    m_Localized: "[W][S] escolher    [Espa\xE7o] confirmar    [Esc] voltar"
+    m_Localized: "[W][A][S][D] escolher    [Espa\xE7o] confirmar    [Esc] voltar"
     m_Metadata:
       m_Items: []
   - m_Id: 1055763532689415
@@ -1083,14 +1083,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1128996265078784
     m_Localized: "MINHA HIST\xD3RIA"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1128996265078785
-    m_Localized: "Autom\xE1tico: sim"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1128996265078786
-    m_Localized: "Autom\xE1tico: n\xE3o"
     m_Metadata:
       m_Items: []
   - m_Id: 1128996265078787
@@ -1303,7 +1295,7 @@ MonoBehaviour:
 
       {0}
 
-      Arma: {1}'
+      {1}'
     m_Metadata:
       m_Items: []
   - m_Id: 1338355876179968
@@ -3311,6 +3303,429 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5415102645088256
     m_Localized: "Percurso pulado: armas e melhorias aleat\xF3rias"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5690100890808320
+    m_Localized: CARREGANDO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209452417024
+    m_Localized: "Escolha um maquinista e comece sua hist\xF3ria desde o in\xEDcio."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777152
+    m_Localized: "Continue a hist\xF3ria de onde parou."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777153
+    m_Localized: "Ainda n\xE3o h\xE1 um jogo salvo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777154
+    m_Localized: "Viaje por todos os biomas sem fim e v\xE1 o mais longe poss\xEDvel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777155
+    m_Localized: Tela, som e idioma.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777156
+    m_Localized: Fecha o jogo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277619060736
+    m_Localized: Fim da viagem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615168
+    m_Localized: "Cap\xEDtulo perdido"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615169
+    m_Localized: Tempo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615170
+    m_Localized: "Esta\xE7\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615171
+    m_Localized: Inimigos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615172
+    m_Localized: Dinheiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615173
+    m_Localized: 'Chegou a: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615174
+    m_Localized: Dano por arma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615175
+    m_Localized: Nenhuma arma causou dano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615176
+    m_Localized: "Recorde: {0} esta\xE7\xF5es \xB7 {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615177
+    m_Localized: "+{0} bilhetes  (voc\xEA tem {1})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615178
+    m_Localized: NOVO RECORDE!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615179
+    m_Localized: De novo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615180
+    m_Localized: Menu principal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615181
+    m_Localized: CONQUISTA!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615182
+    m_Localized: +{0} bilhetes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615183
+    m_Localized: Primeira parada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809472
+    m_Localized: "Chegue a uma esta\xE7\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809473
+    m_Localized: Maquinista veterano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809474
+    m_Localized: "Chegue a 10 esta\xE7\xF5es em uma partida."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809475
+    m_Localized: Rumo ao fogo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809476
+    m_Localized: "Chegue ao vulc\xE3o no modo infinito."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809477
+    m_Localized: Fim da linha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809478
+    m_Localized: "Chegue \xE0 fortaleza alien\xEDgena no modo infinito."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809479
+    m_Localized: "Caminh\xE3o derrubado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809480
+    m_Localized: Derrote o chefe de um bioma.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809481
+    m_Localized: Limpeza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809482
+    m_Localized: Elimine 500 inimigos em uma partida.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809483
+    m_Localized: Exterminador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809484
+    m_Localized: Elimine 2000 inimigos em uma partida.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809485
+    m_Localized: "Evolu\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809486
+    m_Localized: Evolua uma arma.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809487
+    m_Localized: "Ba\xFA lend\xE1rio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809488
+    m_Localized: "Abra um ba\xFA lend\xE1rio."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809489
+    m_Localized: Trem longo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809490
+    m_Localized: "Puxe 8 vag\xF5es de uma vez."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809491
+    m_Localized: Bolso cheio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809492
+    m_Localized: Junte 1000 de dinheiro.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809493
+    m_Localized: Chuva de meteoros
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809494
+    m_Localized: Use seu ultimate.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809495
+    m_Localized: "Primeiro cap\xEDtulo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809496
+    m_Localized: "Ven\xE7a o cap\xEDtulo do deserto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809497
+    m_Localized: Primeiro na chegada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809498
+    m_Localized: "Ven\xE7a a corrida da cidade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809499
+    m_Localized: "Fim da hist\xF3ria"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809500
+    m_Localized: "Termine a hist\xF3ria de BBA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809501
+    m_Localized: Oficina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809502
+    m_Localized: "Melhorias permanentes para o modo infinito. Voc\xEA tem {0} bilhetes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809503
+    m_Localized: Conquistas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809504
+    m_Localized: "Voc\xEA tem {0} de {1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809505
+    m_Localized: '{0} bilhetes'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809506
+    m_Localized: Nv {0}/{1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809507
+    m_Localized: '{0} bilhetes'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809508
+    m_Localized: "M\xC1X"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809509
+    m_Localized: Blindagem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809510
+    m_Localized: "+8% de vida para cada vag\xE3o por n\xEDvel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809511
+    m_Localized: Calibre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809512
+    m_Localized: "+6% de dano da hero\xEDna por n\xEDvel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809513
+    m_Localized: "Coura\xE7a"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809514
+    m_Localized: "+3% de armadura da hero\xEDna por n\xEDvel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809515
+    m_Localized: Botas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809516
+    m_Localized: "+4% de velocidade da hero\xEDna por n\xEDvel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809517
+    m_Localized: "Gan\xE2ncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809518
+    m_Localized: "+8% de dinheiro por inimigo por n\xEDvel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809519
+    m_Localized: Economias
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809520
+    m_Localized: "Comece com +40 de dinheiro por n\xEDvel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809521
+    m_Localized: Acessibilidade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809522
+    m_Localized: 'Tremor de tela: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809523
+    m_Localized: 'Pausas de impacto: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809524
+    m_Localized: "Clar\xF5es: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809525
+    m_Localized: "N\xFAmeros de dano: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809526
+    m_Localized: 'Tamanho da interface: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913332342784
+    m_Localized: ARMA DO PILOTO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480128
+    m_Localized: Em breve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480129
+    m_Localized: "\u2605 Com hist\xF3ria"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480130
+    m_Localized: "Hist\xF3ria: em breve"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480131
+    m_Localized: "Modo hist\xF3ria"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480132
+    m_Localized: Modo infinito
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480133
+    m_Localized: Partiu!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604498214912
+    m_Localized: UM LEGADO EM BRANCO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963648
+    m_Localized: "Sou o campe\xE3o deste planeta. Todos dizem isso com orgulho. Nunca
+      me perguntaram se eu queria ser."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963649
+    m_Localized: "Meu trabalho \xE9 competir. Vencer. E destruir quem mandarem. Cada
+      vit\xF3ria celebra um nome que sinto cada vez menos meu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963650
+    m_Localized: "Meu pai fez o mesmo antes de mim. E, antes dele, meu av\xF4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963651
+    m_Localized: "N\xE3o herdei uma voca\xE7\xE3o. Herdei uma obriga\xE7\xE3o. \xC9
+      isso que chamam de legado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963652
+    m_Localized: "Eu queria outra coisa: uma vida dedicada \xE0 arte. Aprender a
+      desenhar o que vejo... e o que ainda nem existe."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963653
+    m_Localized: "Em vez de contar derrotados, eu queria encher cadernos. Usar minhas
+      m\xE3os para criar alguma coisa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963654
+    m_Localized: "Minha locomotiva \xE9 minha melhor amiga. N\xE3o \xE9 for\xE7a
+      de express\xE3o: ela tem alma, consci\xEAncia e seu pr\xF3prio jeito de me
+      entender."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963655
+    m_Localized: "N\xE3o \xE9 ela que me prende. \xC9 o que todos esperam de n\xF3s.
+      Enquanto eu estivesse no comando dela, teria que continuar sendo o campe\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963656
+    m_Localized: "Eu guardava meus desenhos entre uma viagem e outra. Sempre havia
+      outra ordem. Sempre mais algu\xE9m para vencer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963657
+    m_Localized: "At\xE9 que a guerra come\xE7ou. O planeta inteiro parou de falar
+      das minhas vit\xF3rias e come\xE7ou a falar de sobreviver."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963658
+    m_Localized: "Olhei para minha amiga. Depois, para meus desenhos. Pela primeira
+      vez, aquele futuro que parecia escrito tinha virado uma p\xE1gina em branco."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963659
+    m_Localized: "E ent\xE3o tive uma ideia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963660
+    m_Localized: "N\xE3o vim por mais um t\xEDtulo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963661
+    m_Localized: "Ent\xE3o me mostre a que veio."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963662
+    m_Localized: "Ainda h\xE1 um longo caminho. E desta vez eu quero escolh\xEA-lo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963663
+    m_Localized: Continua...
     m_Metadata:
       m_Items: []
   references:

@@ -1031,14 +1031,6 @@ MonoBehaviour:
     m_Key: story.name
     m_Metadata:
       m_Items: []
-  - m_Id: 1128996265078785
-    m_Key: story.auto.on
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1128996265078786
-    m_Key: story.auto.off
-    m_Metadata:
-      m_Items: []
   - m_Id: 1128996265078787
     m_Key: story.skip
     m_Metadata:
@@ -2965,6 +2957,418 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5415102645088256
     m_Key: test.skipped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5690100890808320
+    m_Key: loading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209452417024
+    m_Key: main.new.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777152
+    m_Key: main.load.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777153
+    m_Key: main.load.empty.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777154
+    m_Key: main.endless.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777155
+    m_Key: main.options.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777156
+    m_Key: main.exit.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277619060736
+    m_Key: results.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615168
+    m_Key: results.story
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615169
+    m_Key: results.time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615170
+    m_Key: results.stations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615171
+    m_Key: results.kills
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615172
+    m_Key: results.money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615173
+    m_Key: results.biome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615174
+    m_Key: results.damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615175
+    m_Key: results.nodamage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615176
+    m_Key: results.best
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615177
+    m_Key: results.tickets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615178
+    m_Key: results.record
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615179
+    m_Key: results.again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615180
+    m_Key: results.menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615181
+    m_Key: ach.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615182
+    m_Key: ach.reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615183
+    m_Key: ach.station1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809472
+    m_Key: ach.station1.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809473
+    m_Key: ach.station10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809474
+    m_Key: ach.station10.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809475
+    m_Key: ach.volcano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809476
+    m_Key: ach.volcano.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809477
+    m_Key: ach.endline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809478
+    m_Key: ach.endline.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809479
+    m_Key: ach.truck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809480
+    m_Key: ach.truck.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809481
+    m_Key: ach.kills500
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809482
+    m_Key: ach.kills500.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809483
+    m_Key: ach.kills2000
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809484
+    m_Key: ach.kills2000.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809485
+    m_Key: ach.evolve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809486
+    m_Key: ach.evolve.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809487
+    m_Key: ach.legendary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809488
+    m_Key: ach.legendary.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809489
+    m_Key: ach.wagons8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809490
+    m_Key: ach.wagons8.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809491
+    m_Key: ach.rich
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809492
+    m_Key: ach.rich.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809493
+    m_Key: ach.ultimate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809494
+    m_Key: ach.ultimate.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809495
+    m_Key: ach.chapter1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809496
+    m_Key: ach.chapter1.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809497
+    m_Key: ach.race
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809498
+    m_Key: ach.race.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809499
+    m_Key: ach.story
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809500
+    m_Key: ach.story.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809501
+    m_Key: main.workshop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809502
+    m_Key: main.workshop.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809503
+    m_Key: main.achievements
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809504
+    m_Key: main.achievements.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809505
+    m_Key: workshop.tickets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809506
+    m_Key: workshop.level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809507
+    m_Key: workshop.cost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809508
+    m_Key: workshop.max
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809509
+    m_Key: workshop.vitality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809510
+    m_Key: workshop.vitality.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809511
+    m_Key: workshop.damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809512
+    m_Key: workshop.damage.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809513
+    m_Key: workshop.armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809514
+    m_Key: workshop.armor.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809515
+    m_Key: workshop.speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809516
+    m_Key: workshop.speed.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809517
+    m_Key: workshop.greed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809518
+    m_Key: workshop.greed.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809519
+    m_Key: workshop.purse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809520
+    m_Key: workshop.purse.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809521
+    m_Key: menu.comfort
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809522
+    m_Key: comfort.shake
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809523
+    m_Key: comfort.hitstop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809524
+    m_Key: comfort.flashes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809525
+    m_Key: comfort.numbers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809526
+    m_Key: comfort.scale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913332342784
+    m_Key: loco.weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480128
+    m_Key: loco.soon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480129
+    m_Key: loco.story.yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480130
+    m_Key: loco.story.soon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480131
+    m_Key: loco.mode.story
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480132
+    m_Key: loco.mode.endless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480133
+    m_Key: loco.go
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604498214912
+    m_Key: story.faceless.0.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963648
+    m_Key: story.faceless.0.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963649
+    m_Key: story.faceless.0.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963650
+    m_Key: story.faceless.0.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963651
+    m_Key: story.faceless.0.intro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963652
+    m_Key: story.faceless.0.intro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963653
+    m_Key: story.faceless.0.intro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963654
+    m_Key: story.faceless.0.intro.7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963655
+    m_Key: story.faceless.0.intro.8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963656
+    m_Key: story.faceless.0.intro.9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963657
+    m_Key: story.faceless.0.intro.10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963658
+    m_Key: story.faceless.0.intro.11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963659
+    m_Key: story.faceless.0.intro.12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963660
+    m_Key: story.faceless.0.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963661
+    m_Key: story.faceless.0.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963662
+    m_Key: story.faceless.0.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963663
+    m_Key: story.faceless.0.outro.1
     m_Metadata:
       m_Items: []
   m_Metadata:

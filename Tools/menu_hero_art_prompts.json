@@ -1,0 +1,61 @@
+{
+  "tool": "built-in image_gen",
+  "style": "Use case: stylized-concept. Production game main-menu character key art, single isolated full-body figure, tall portrait canvas, genuine transparent background. Image 1 is the authoritative IN-GAME CHARACTER IDENTITY reference; preserve that exact creature type, silhouette, facial covering, hair/head structure, outfit, armor shapes and main colors. Image 2 is STYLE ONLY: bold Persona 5 promotional art-book graphic anime illustration: angular expressive ink strokes, graphic black shadow masses, flat limited spot colors, sharp white highlights, subtle screenprint halftone selectively inside shadows. Draw a NEW confident stylish asymmetrical action pose with strong foreshortening and a clearly readable head/face turned toward viewer, dynamically balanced; do NOT copy the stiff game-model pose. Polished professional hand-drawn 2D key visual, NOT a 3D render, NOT generic soft glossy anime, no gradients or airbrush. Preserve original character identity, do not import Persona characters, masks, clothing or franchise symbols. Figure occupies 88-94% of frame with clear margins for the entire headpiece, hands and feet; transparent empty space around silhouette. No background, floor, scenery, cast shadow, graphic backdrop, text, labels, watermark, logos or detached floating ornaments. ",
+  "styleReference": "C:/Users/r20/AppData/Local/Temp/codex-clipboard-b4a9f3f9-bbf8-420e-a5a4-6994c500e08e.png",
+  "characters": [
+    {
+      "id": "bba",
+      "identity": "BBA: adult pink-haired mecha witch, short messy coral-pink bob and emerald green eyes. Keep the model's wide crimson witch hat with silver mechanical star/V-shaped forehead frame, blue oval jewel, silver brim rings and curled red spike/ribbon rising from crown. Fitted crimson torso armor, white/silver mechanical shoulder, forearm and thigh/knee plates, dark gunmetal articulated joints and black mechanical gloves, yellow hip skirt armor and yellow armored boots. Strong cocky playful wrestler personality. Pose one gloved hand lifting hat brim so face and both eyes are visible, other hand on hip, bent forward leg; keep all armor, not a school uniform. Prioritize these design notes over the overexposed reference lighting. No halo.",
+      "reference": "Tools/hero_renders/bba.png",
+      "destination": "Assets/Resources/Menu/hero_bba_cut.png"
+    },
+    {
+      "id": "culu",
+      "identity": "CULU: adult woman with a HUMAN FACE, green skin, red eyes, pointed ears and a mischievous human smile. Her HAIR consists of thick green tentacles emerging from the scalp and curling behind the head and shoulders. No tentacles on mouth, nose, cheeks, jaw or chin. White frilly maid headband, black maid dress with white apron and frills, dark stockings, black shoes. Graphic ink, strong black shadow shapes and flat colors matching the rest of the menu set.",
+      "reference": "Tools/hero_renders/culu.png",
+      "destination": "Assets/Resources/Menu/hero_culu_cut.png"
+    },
+    {
+      "id": "onini",
+      "identity": "ONINI: fierce female oni fighter, RED FULL FACE ONI MASK with narrow dark eye slits, long BLACK horns rising vertically from mask, wild long spiky WHITE hair sweeping outward, red cropped armored/bomber jacket with black shoulder/forearm sections and gold trim, white chest accents, black gloves, black loose track trousers with broad WHITE outer side stripes and red-and-black chunky sneakers. Face remains entirely masked, do NOT invent a human female face. Red is the MASK not the horns. Leaning cocky fighting pose, one fist forward, rear arm relaxed and bent, strong hair silhouette.",
+      "reference": "Tools/hero_renders/onini.png",
+      "destination": "Assets/Resources/Menu/hero_onini_cut.png"
+    },
+    {
+      "id": "cerebron",
+      "identity": "CEREBRON: a cyborg whose entire enormous round HEAD IS AN EXPOSED PINK BRAIN with dense brain folds, one single LARGE EYE embedded in lower-front brain, absolutely no human head, jaw, hair, nose or human face. Lean muscular mechanical body in dark olive-green and charcoal segmented armor with silver joints and tubes around shoulder/back, clawed articulated fingers and mechanical toe boots. Huge round brain silhouette remains prominent. Scheming pose, long clawed hand extending toward viewer while other hand curls near chest, body twisting, eye looking directly at viewer.",
+      "reference": "Tools/hero_renders/cerebron.png",
+      "destination": "Assets/Resources/Menu/hero_cerebron_cut.png"
+    },
+    {
+      "id": "sentinel",
+      "identity": "SENTINEL: extremely bulky heavy armored ROBOT/MECHA, NO HUMAN FACE, round helmet sunk between large shoulders, dark charcoal armor with vivid orange chest/belly plate, orange lower legs/feet and orange rectangular glowing visor with tiny central yellow mark. Circular orange ear-like helmet side hardware, massive rounded shoulder armor with winglike side plates, oversized mechanical fists, ribbed orange flexible tube across waist. Heavy threatening but charismatic low angle stance, one huge fist foreshortened towards camera, bent back leg. Keep thick industrial proportions, not a thin human superhero.",
+      "reference": "Tools/hero_renders/sentinel.png",
+      "destination": "Assets/Resources/Menu/hero_sentinel_cut.png"
+    },
+    {
+      "id": "faceless",
+      "identity": "FACELESS: an uncanny completely smooth ivory-white featureless humanoid mannequin, tall lean muscular male anatomy, NO EYES, NO MOUTH, NO NOSE, NO HAIR, NO MASK EDGES, NO CLOTHING, no sexual anatomical details. Full smooth fitted white mannequin surface. Elongated oval head with a tapered chin. Hand-drawn graphic treatment with pure white lit surfaces and strong angular cool slate/black shadows sculpting the silhouette. Theatrical eerie twisting dancer stance, one splayed hand reaching towards viewer, other arm swept back, head tilted. Maintain the absolute featureless blank head.",
+      "reference": "Tools/hero_renders/faceless.png",
+      "destination": "Assets/Resources/Menu/hero_faceless_cut.png"
+    },
+    {
+      "id": "skullmonk",
+      "identity": "SKULLMONK: tall sinister monk, keep his model's elongated bone-white grinning SKULL FACE/MASK with dark hollow sockets, dusty crimson segmented domed forehead skull helmet/crest with long central vertical seam, huge long wild black dreadlock/feather-like mane flowing backwards. White very loose long-sleeved kimono top, deep crimson wide pleated hakama trousers almost to ankles, black wrapped shin/feet with bone-like markings, red prayer beads/collar, black gloves. NOT a generic human priest, no human skin face. Full-body twisting martial arts monk stance, palm held up near skull, other sweeping arm showing the billowing white sleeve and red hakama.",
+      "reference": "Tools/hero_renders/skullmonk.png",
+      "destination": "Assets/Resources/Menu/hero_skullmonk_cut.png"
+    },
+    {
+      "id": "tzmil",
+      "identity": "TZMIL: female death deity in skeletal costume. Keep towering spiky dark TEAL feather/radial hair crown surrounding the whole head, THREE SMALL IVORY SKULLS across brow and gold filigree. Pale ivory skull-like FACE paint/mask with dark eye sockets, not a generic pretty human. Black sleeveless fitted bodysuit with exposed IVORY RIBCAGE and SPINE motif on torso, dark thigh-high stockings, ornate gold-and-bone armor on thigh/shin and high boots, huge gold/olive intertwined snake belt around hips. Dramatic poised dancer pose, one arm reaching out and the other bent, head held up so skull face visible. Preserve giant teal headdress and snake hip belt.",
+      "reference": "Tools/hero_renders/tzmil.png",
+      "destination": "Assets/Resources/Menu/hero_tzmil_cut.png"
+    },
+    {
+      "id": "xiuhtecuhtli",
+      "identity": "XIUHTECUHTLI: imposing skeletal Aztec fire deity. No ordinary human face: pale gold/ivory grinning SKULL HEAD with dark eye sockets, huge radial fan of long vivid turquoise and emerald feathers with gold band, smaller ivory skull ornaments at temples and shoulders. Black skin-tight body, gold bone/brass rib-like chest ornaments, broad gold bracers with red-orange wraps, ornate belt with MULTIPLE little skulls, long crimson loincloth front, dark legs, gold ankle armor and clawed black/gold feet. Regal forceful pose, one arm pointing decisively diagonally forward and the other lifted palm open. Keep the skeletal face, feather fan and red long loincloth; no invented human handsome warrior face.",
+      "reference": "Tools/hero_renders/xiuhtecuhtli.png",
+      "destination": "Assets/Resources/Menu/hero_xiuhtecuhtli_cut.png"
+    }
+  ]
+}

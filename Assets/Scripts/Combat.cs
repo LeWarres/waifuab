@@ -19,12 +19,14 @@ public class Combat : MonoBehaviour
         readonly Mesh mesh; // null: a cube
         readonly bool round; // ground marks: a flat disc instead of a cube
         readonly float glow; // > 1: the colour is pushed past white this many times so the bloom lights it up, no outline
+        readonly bool plain; // a model in its batch's colour alone, its vertex colours ignored (the hit flash)
         Material material;
         int count;
 
         // mesh: a model painted with vertex colours (Tools/make_enemies.py); the batch's colour tints it.
-        public Batch(Color color, bool shadows, Mesh mesh = null, bool round = false, float glow = 1f)
+        public Batch(Color color, bool shadows, Mesh mesh = null, bool round = false, float glow = 1f, bool plain = false)
         {
+            this.plain = plain;
             this.glow = glow;
             this.mesh = mesh;
             this.round = round;
@@ -48,7 +50,7 @@ public class Combat : MonoBehaviour
             if (!material)
             {
                 material = glow > 1f ? TrainSim.Mat(new Color(color.r * glow, color.g * glow, color.b * glow), false) : TrainSim.Mat(color);
-                if (shape != cube) material.SetFloat("_MVCOL", 1f); // RealToon: multiply by the vertex colours
+                if (shape != cube && !plain) material.SetFloat("_MVCOL", 1f); // RealToon: multiply by the vertex colours
             }
             var parameters = new RenderParams(material)
             {
@@ -101,8 +103,8 @@ public class Combat : MonoBehaviour
 
         Batch batch;
         // Enemies are robots with a model each, loot is a balloon carrying its cargo (Tools/make_mechs.py, Tools/make_cargo.py).
-        public Batch Batch => batch ??= new Batch(model != null ? tint : color, true,
-            customMesh ? customMesh : Resources.Load<Mesh>(model != null ? "Models/" + model : "Models/Balloon_" + loot));
+        public Batch Batch => batch ??= new Batch(model != null ? tint : color, true, Shape);
+        Mesh Shape => customMesh ? customMesh : Resources.Load<Mesh>(model != null ? "Models/" + model : "Models/Balloon_" + loot);
         public bool Spins => model == null && flies; // a model of its own faces its way
         public EnemyType Copy() { var c = (EnemyType)MemberwiseClone(); c.batch = null; return c; } // its own batch: its own tint
     }
@@ -373,6 +375,7 @@ public class Combat : MonoBehaviour
     // to the middle, a net that hurts all of them at once.
     void Web(Enemy centre, Weapon weapon, int level)
     {
+        source = weapon;
         chainSkip.Clear();
         chainSkip.Add(centre);
         Vector3 last = centre.position;
@@ -443,6 +446,7 @@ public class Combat : MonoBehaviour
             }
             // Down: everything around is crushed.
             heroHit = true;
+            source = m.weapon;
             float damage = 90f * Balance.Scale * (1f + healthPerLevel * level);
             for (int j = enemies.Count - 1; j >= 0; j--)
             {
@@ -466,6 +470,7 @@ public class Combat : MonoBehaviour
     readonly Batch dragonScale = new Batch(new Color(0.2f, 0.5f, 1f), false, glow: 1.4f);   // its scales, a lighter blue
     readonly Batch dragonFire = new Batch(new Color(0.35f, 0.7f, 1f), false, glow: 2.6f);   // and the blue flames all over it: only these glow
     readonly Batch stain = new Batch(new Color(0.02f, 0.02f, 0.025f), false, round: true); // round black marks left by the dead
+    readonly Batch blob = new Batch(new Color(0.03f, 0.03f, 0.04f), false, round: true); // a dark spot under each robot: it stands out from any ground
     const float StationFlashSize = 2.2f; // the heavy guns leave a much bigger flare than a wagon turret
     public float calmDistance = 15f, calmRetreat = 12f; // how far enemies keep during a button game, and how fast they get there
     const float ModelScale = 1.4f;  // the robots are slimmer than the cubes they replace
@@ -863,6 +868,7 @@ public class Combat : MonoBehaviour
                     Burst("smoke", at, 0.6f + hit.type.size * 0.4f); // a puff where the shot lands
                     if (b.weapon.slow > 0f && !hit.type.slowImmune) hit.slowUntil = now + b.weapon.slow * Duration;
                     heroHit = b.hero;
+                    source = b.weapon;
                     float damage = b.weapon.Damage(b.level) * Power * b.power, splash = b.weapon.Splash(b.level);
                     bool evolved = b.level >= Weapon.Evolved;
                     if (evolved && b.weapon.style == Weapon.Pellets) splash = Mathf.Max(splash, 2f); // Golden Buckshot: every pellet bursts
@@ -928,10 +934,12 @@ public class Combat : MonoBehaviour
             if (t == MiniBoss && e.velocity.sqrMagnitude > 0.01f) toTrain = bossMode == BackOff ? -e.velocity : e.velocity; // it backs off facing the train
             Quaternion facing = t.Spins ? Quaternion.Euler(0f, clock * 140f + e.id * 47f, 0f)
                 : toTrain.sqrMagnitude > 0.01f ? Quaternion.LookRotation(toTrain) : Quaternion.identity;
+            blob.Add(new Vector3(at.x, 0.04f, at.z), new Vector3(t.size * 1.1f, 0.02f, t.size * 1.1f));
             if (t.flies) at.y += 0.7f + Mathf.Sin(clock * 3f + e.id) * 0.18f;
             t.Batch.Add(at, Vector3.one * (t.size * ModelScale), facing);
         }
         foreach (Bullet b in bullets) DrawBullet(b, clock);
+        Shards(clock);
         Meteors();
         if (player && player.Alive && player.ammo.id == "smg" && player.level >= Weapon.Evolved)
             for (int k = 0; k < 2; k++)
@@ -969,6 +977,7 @@ public class Combat : MonoBehaviour
         dragonScale.Flush();
         dragonFire.Flush();
         stain.Flush();
+        blob.Flush();
         foreach (Weapon w in Weapon.Wagon) w.Batch.Flush();
         Weapon.Truck.Batch.Flush();
         foreach (Weapon w in Weapon.Hero) w.Batch.Flush();
@@ -1555,6 +1564,7 @@ public class Combat : MonoBehaviour
             b.hits.Add(e.id);
             Burst("spark", e.position, 0.7f);
             heroHit = b.hero;
+            source = b.weapon;
             Hurt(e, b.weapon.Damage(b.level) * Power * (b.style == Weapon.Slash && b.phase > 0f ? 2f : 1f)); // the dragon bites twice as hard
             heroHit = false;
         }
@@ -1842,6 +1852,7 @@ public class Combat : MonoBehaviour
     // Lightning: instant hit, drawn as a jagged bolt from the sky.
     public void Strike(Enemy target, Weapon weapon, int level)
     {
+        source = weapon;
         Bolt(target.position + new Vector3(Random.Range(-2f, 2f), 14f, Random.Range(-2f, 2f)), target.position, weapon.Batch, 5, 1.2f, 0.4f, 0.15f);
         Burst(weapon.id, target.position, 1.5f);
         if (level >= Weapon.Evolved)
@@ -1864,6 +1875,7 @@ public class Combat : MonoBehaviour
     // Weapon blast: damages every enemy within radius (measured on the ground). Only the VFX shows it.
     public void Explode(Vector3 center, float radius, float damage, Weapon weapon)
     {
+        source = weapon;
         radius *= Area;
         Burst(weapon.id, center, radius * BurstSize);
         for (int i = enemies.Count - 1; i >= 0; i--)
@@ -1876,6 +1888,7 @@ public class Combat : MonoBehaviour
     // Laser: one instant straight ray. Weak per enemy, but it crosses every enemy standing on the line.
     public void Beam(Vector3 from, Vector3 direction, Weapon weapon, int level, Batch look = null)
     {
+        source = weapon;
         bool evolved = level >= Weapon.Evolved;
         float range = weapon.range * (evolved ? 2f : 1f), damage = weapon.Damage(level) * Power, thick = evolved ? 0.6f : 0.28f;
         Spawn(from + direction * (range * 0.5f), new Vector3(thick, thick, range), look ?? weapon.Batch, evolved ? 0.14f : 0.08f, Quaternion.LookRotation(direction));
@@ -1945,13 +1958,73 @@ public class Combat : MonoBehaviour
             for (int i = enemies.Count - 1; i >= 0; i--)
             {
                 Vector3 d = enemies[i].position - blast.center;
-                if (d.x * d.x + d.z * d.z <= radius * radius) Hurt(enemies[i], blast.type.explodeDamage * Balance.Scale, false);
+                if (d.x * d.x + d.z * d.z <= radius * radius) { source = null; Hurt(enemies[i], blast.type.explodeDamage * Balance.Scale, false); }
             }
         }
         blasts.Clear();
     }
 
-    float Power => heroHit ? player.damageBonus : 1f; // the hero's damage upgrades, on the hero's shots only
+    // What is about to hurt, shown before it does: a ring on the ground, the size of its blast, round everything that
+    // blows up when it dies or reaches a wagon, once it is close to the train or the hero; it beats faster the closer.
+    // The ones worth an arrow at the edge of the screen when out of it (Hud): mini bosses and anything big or tough.
+    public void Threats(List<(Vector3 at, bool boss)> into)
+    {
+        into.Clear();
+        foreach (Enemy e in enemies)
+        {
+            EnemyType t = e.type;
+            if (t.projectile || t.loot >= 0) continue;
+            bool boss = IsMiniBoss(t);
+            if (boss || (!t.Fodder && t.size >= 1.6f)) into.Add((e.position, boss));
+        }
+    }
+
+    // A kill breaks apart: chunks in its colour fly out, tumble, bounce and shrink away, and a white flash where it was.
+    struct Chunk { public Vector3 at, velocity, axis; public float born, life, size, spin; public Batch look; }
+    readonly List<Chunk> chunks = new();
+    readonly Dictionary<Color, Batch> chunkLooks = new();
+    Batch popLook;
+    const int MaxChunks = 360;
+
+    void Shatter(EnemyType t, Vector3 at)
+    {
+        float now = Time.time;
+        if (!chunkLooks.TryGetValue(t.color, out Batch look)) chunkLooks[t.color] = look = new Batch(t.color, false);
+        int count = t.Fodder ? 4 : t.size > 2.5f ? 12 : 7;
+        for (int k = 0; k < count && chunks.Count < MaxChunks; k++)
+        {
+            Vector3 fly = Random.onUnitSphere;
+            fly.y = Mathf.Abs(fly.y) + 0.4f;
+            chunks.Add(new Chunk
+            {
+                at = at + Vector3.up * t.size * 0.5f, velocity = fly * Random.Range(5f, 10f) * Mathf.Sqrt(t.size), axis = Random.onUnitSphere,
+                born = now, life = Random.Range(0.6f, 1f), size = t.size * Random.Range(0.12f, 0.24f), spin = Random.Range(360f, 900f), look = look,
+            });
+        }
+        if (chunks.Count < MaxChunks && Comfort.Flashes) chunks.Add(new Chunk { at = at + Vector3.up * t.size * 0.5f, born = now, life = 0.16f, size = t.size * 1.6f, look = null }); // the flash
+    }
+
+    void Shards(float now)
+    {
+        float dt = Time.deltaTime;
+        popLook ??= new Batch(new Color(1f, 0.92f, 0.7f), false, Resources.GetBuiltinResource<Mesh>("Sphere.fbx"), glow: 3f, plain: true);
+        for (int i = chunks.Count - 1; i >= 0; i--)
+        {
+            Chunk c = chunks[i];
+            float age = (now - c.born) / c.life;
+            if (age >= 1f) { chunks[i] = chunks[^1]; chunks.RemoveAt(chunks.Count - 1); continue; }
+            if (c.look == null) { popLook.Add(c.at, Vector3.one * c.size * (0.4f + age) * (1f - age)); continue; }
+            c.velocity += Vector3.down * 22f * dt;
+            c.at += c.velocity * dt;
+            if (c.at.y < c.size * 0.5f) { c.at.y = c.size * 0.5f; c.velocity = new Vector3(c.velocity.x * 0.6f, -c.velocity.y * 0.35f, c.velocity.z * 0.6f); } // a bounce
+            chunks[i] = c;
+            float size = c.size * (age < 0.7f ? 1f : 1f - (age - 0.7f) / 0.3f);
+            c.look.Add(c.at, Vector3.one * size, Quaternion.AngleAxis((now - c.born) * c.spin, c.axis));
+        }
+    }
+
+    float Power => heroHit ? player.damageBonus : 1f;
+    Weapon source; // the weapon of the hit being dealt (RunStats); null for blasts of the enemies' own // the hero's damage upgrades, on the hero's shots only
 
     void Hurt(Enemy e, float damage, bool weaponHit = true)
     {
@@ -1960,9 +2033,18 @@ public class Combat : MonoBehaviour
         if (weaponHit) damage = train.CriticalDamage(damage, out critical);
         if (Time.time < e.markedUntil) damage *= 2f;
         float applied = Mathf.Max(damage - e.type.armor * Balance.Scale, damage * 0.2f);
+        RunStats.Deal(source, Mathf.Min(applied, Mathf.Max(0f, e.hp))); // what it really took, not the overkill
         e.hp -= applied;
         if (applied > 0f) train.DamageNumber(e.position + Vector3.up * (e.type.size + 0.5f), applied, false, critical);
+        if (applied > 0f && e.type.loot < 0)
+        {
+            // knocked back, away from the train, the more the smaller it is (a boss hardly moves)
+            Vector3 away = new Vector3(e.position.x, 0f, e.position.z);
+            if (!IsMiniBoss(e.type) && !e.type.projectile && away.sqrMagnitude > 0.01f)
+                e.position += away.normalized * Mathf.Clamp(0.5f / e.type.size, 0.04f, 0.35f) * (critical ? 2f : 1f);
+        }
         if (e.hp > 0f) return;
+        if (e.type.loot < 0 && !e.type.Fodder) { train.HitStop(IsMiniBoss(e.type) ? 0.16f : 0.045f); train.Shake(IsMiniBoss(e.type) ? 0.5f : 0.08f); }
         if (e.type.loot < 0) train.Charge(); // a kill counts and fills the ultimate (the station's guns kill elsewhere: they do not)
         if (IsMiniBoss(e.type))
         {
@@ -1988,6 +2070,7 @@ public class Combat : MonoBehaviour
         if (t.loot < 0)
         {
             Burst("smoke", new Vector3(at.x, 0.15f, at.z), 0.8f + t.size * 0.5f);
+            if (killed && !t.projectile) Shatter(t, at);
         }
         if (killed && t.loot >= 0) train.AddLoot(t.loot);
         if (t.explode > 0f) blasts.Add(new Blast { center = at, type = t });

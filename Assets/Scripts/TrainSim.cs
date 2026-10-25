@@ -241,6 +241,7 @@ public class TrainSim : MonoBehaviour
     public void BossDefeated()
     {
         bossBeaten = Biome;
+        Achievements.Unlock("truck");
         GiveTruck(1, false);
         OpenChest();
     }
@@ -351,6 +352,7 @@ public class TrainSim : MonoBehaviour
         // One prize mostly; three now and then; five only with a lot of luck.
         int luck = PassiveLevel("luck");
         int rolls = Random.value < 0.03f + 0.01f * luck ? 5 : Random.value < 0.22f + 0.03f * luck ? 3 : 1;
+        if (rolls == 5) Achievements.Unlock("legendary");
         var prizes = new List<Chest.Prize>();
         for (int roll = 0; roll < rolls; roll++)
         {
@@ -536,7 +538,7 @@ public class TrainSim : MonoBehaviour
         Story.Lose();
         Story.Play(Story.Chapter);
         Time.timeScale = 1f;
-        SceneManager.LoadScene("historiaDialogos");
+        Wipe.Load("historiaDialogos");
     }
 
     // The two tries as two big hearts over the question: the one used black, the one left lit.
@@ -565,7 +567,21 @@ public class TrainSim : MonoBehaviour
     // The gunner's camera while the swarm is fought, so the HUD can place its damage numbers from that seat.
     public Camera SwarmCamera => swarm != null && swarm.Aiming ? swarm.View : brawl != null && brawl.Fighting ? brawl.View : null;
     public Vector3 CarPosition(int i) => cars[i].pos;
-    public void Shake(float seconds) => shake = Mathf.Max(shake, seconds);
+    public void Shake(float seconds) => shake = Mathf.Max(shake, seconds * Comfort.Shake);
+
+    // A hard hit lands with a jolt: the game nearly stops for a blink (only when it runs at normal speed, and not
+    // over and over).
+    float busy; // how crowded the field is, 0 to 1, eased (the camera's pull-back)
+    float hitStopUntil = -1f, hitStopNext, hitStopScale;
+    public void HitStop(float seconds) => SlowMotion(seconds, 0.05f);
+    // The game slowed to `scale` for a moment (a boss coming on); only from normal speed, and not over and over.
+    public void SlowMotion(float seconds, float scale)
+    {
+        if (!Comfort.HitStop || Time.timeScale != 1f || Time.unscaledTime < hitStopNext) return;
+        Time.timeScale = hitStopScale = scale;
+        hitStopUntil = Time.unscaledTime + seconds;
+        hitStopNext = hitStopUntil + 0.3f;
+    }
 
     // The gunner the swarm is fought from: the first armed wagon still standing (its turret and its number).
     // Any armed wagon still standing, a different one each time: the swarm does not always fall on the first.
@@ -861,7 +877,7 @@ public class TrainSim : MonoBehaviour
     public bool Paused { get; private set; }
     float scaleBeforePause; // a curve or jump may have been running in slow motion
     int confirming;         // pause menu asking "are you sure?": 0 no, 1 restart, 2 quit
-    bool soundMenu, sideHeld; // pause menu showing the volumes
+    bool soundMenu, comfortMenu, sideHeld; // pause menu showing the volumes
 
     void SetPaused(bool pause)
     {
@@ -869,7 +885,7 @@ public class TrainSim : MonoBehaviour
         Sound.Play("Pause");
         Paused = pause;
         confirming = 0;
-        soundMenu = false;
+        soundMenu = comfortMenu = false;
         evolutionsMenu = false;
         if (pause) scaleBeforePause = Time.timeScale;
         Time.timeScale = pause ? 0f : scaleBeforePause;
@@ -902,6 +918,8 @@ public class TrainSim : MonoBehaviour
         skipHealth *= Balance.Scale;
         vitalityReward *= Balance.Scale;
         kitHeal *= Balance.Scale;
+        RunStats.Begin();
+        if (!Story.Active) wagonMaxHealth *= Workshop.WagonHealth; // the workshop's upgrades: endless runs only
 
         if (Story.Active) Biome = Story.Current.biome; // a story chapter is ridden in one biome, start to end
         Material steel = Mat(Color.gray);
@@ -953,6 +971,7 @@ public class TrainSim : MonoBehaviour
         Mount(0, Weapon.Wagon[0]); // two wagons to start with, one armed: the other waits for the first weapon won
         Player = new GameObject("Player").AddComponent<Player>();
         Player.Init(this);
+        if (!Story.Active) Workshop.Apply(Player, ref money);
         if (Story.Active) foreach (string token in Story.Kept()) Apply(token); // what earlier chapters handed down
         if (Story.Active && Story.CarriedTruck > 0) GiveTruck(Story.CarriedTruck, true); // the truck's wagon, one chapter on
         navigate = InputSystem.actions.FindAction("Player/Move", true);
@@ -987,7 +1006,13 @@ public class TrainSim : MonoBehaviour
                 }
                 float tall = box.size.y, wide = Mathf.Max(box.size.x, box.size.z);
                 if (tall > 7f) tallKinds.Add(kind);
-                bySize[tall < 1.3f && wide < 3f ? 0 : tall > 4.2f || wide > 6f ? 2 : 1].Add(kind);
+                bySize[tall < 1.3f && wide < 3f ? 0 : tall > 3f || wide > 4f ? 2 : 1].Add(kind); // anything big enough to hide the hero or a crowd is a big thing: out past her leash
+            }
+            // the relief out to the sides (hills, mesas, dunes...), among the big things
+            foreach (GameObject hill in Ambience.Relief(Biomes[b].id, sceneryRoot))
+            {
+                bySize[2].Add(hill);
+                tallKinds.Add(hill); // always out on the far side: never between the train and the camera
             }
             sceneryKinds[b] = System.Array.ConvertAll(bySize, list => list.ToArray());
         }
@@ -1026,6 +1051,12 @@ public class TrainSim : MonoBehaviour
         grade.contrast.value = 6f;
         grade.postExposure.value = 0.25f;
         toning = look.profile.Add<UnityEngine.Rendering.HighDefinition.SplitToning>(true);
+        // Soft contact shadows where things meet the ground and each other: the props, wagons and robots sit in the
+        // world instead of floating over it.
+        var contact = look.profile.Add<UnityEngine.Rendering.HighDefinition.ScreenSpaceAmbientOcclusion>(true);
+        contact.intensity.value = 0.9f;
+        contact.radius.value = 1.6f;
+        contact.directLightingStrength.value = 0.35f;
         lookBiome = null;
 
         station = new GameObject("Station").transform;
@@ -1274,8 +1305,17 @@ public class TrainSim : MonoBehaviour
         grade.saturation.value = 14f + colour;
     }
 
+    Results results;
+    float checkAt;
+
     void Update()
     {
+        if (Time.unscaledTime >= checkAt && Health > 0f) { checkAt = Time.unscaledTime + 1f; Achievements.Check(this); }
+        if (hitStopUntil > 0f && Time.unscaledTime >= hitStopUntil && Time.timeScale != 0f) // a menu (a chest) holding time keeps it for later: it gives the slow scale back
+        {
+            hitStopUntil = -1f;
+            if (Time.timeScale == hitStopScale) Time.timeScale = 1f; // unless something else has changed time meanwhile
+        }
         UiKit.SetBiome(BiomeId); // the UI's colours: this biome's
         if (lookBiome != BiomeId) Grade();
         Scroll = 0f; // the ground only slides while the train is running (below)
@@ -1405,7 +1445,9 @@ public class TrainSim : MonoBehaviour
             var point = new Vector3(corner % 4 < 2 ? half : -half, corner < 4 ? 0f : 3.5f, corner % 2 == 0 ? flyRoom : -flyRoom);
             fit = Mathf.Max(fit, Mathf.Abs(Vector3.Dot(point, up)), Mathf.Abs(Vector3.Dot(point, right)) / view.aspect);
         }
-        float wanted = Mathf.Max(cameraSize, fit) * (Zigzag ? zigZoom : 1f) * cameraZoom;
+        // The busier the field, the further the camera pulls back (up to a fifth), slowly; in close when it is quiet.
+        busy = Mathf.MoveTowards(busy, Mathf.Clamp01((Combat.Instance ? Combat.Instance.EnemyCount : 0) / 90f), 0.25f * Time.unscaledDeltaTime);
+        float wanted = Mathf.Max(cameraSize, fit) * (Zigzag ? zigZoom : 1f) * cameraZoom * (1f + 0.2f * busy);
         view.orthographicSize = Mathf.MoveTowards(view.orthographicSize, wanted, (Paused ? 0f : 9f) * Time.unscaledDeltaTime);
         shake = Mathf.Max(0f, shake - Time.unscaledDeltaTime);
         view.transform.position = Focus - view.transform.forward * 60f + Random.insideUnitSphere * shake * 1.5f;
@@ -1429,6 +1471,8 @@ public class TrainSim : MonoBehaviour
             else if (UltimateReady && Player.Alive && !Alerting)
             {
                 ultimateCharge = 0f;
+                RunStats.Ultimates++;
+                Achievements.Unlock("ultimate");
                 if (!ultimateCutIn) ultimateCutIn = gameObject.AddComponent<UltimateCutIn>();
                 ultimateCutIn.Play(() => Combat.Instance.Ultimate(Player.Position, Player.ammo));
                 if (UltimatePresenting) return;
@@ -1443,7 +1487,7 @@ public class TrainSim : MonoBehaviour
             BuildMenu();
             Navigate();
         }
-        string help = soundMenu ? (Player.UsingGamepad ? "sound.help.gamepad" : "sound.help.keyboard")
+        string help = soundMenu || comfortMenu ? (Player.UsingGamepad ? "sound.help.gamepad" : "sound.help.keyboard")
             : settingsMenu ? (Player.UsingGamepad ? "settings.help.gamepad" : "settings.help.keyboard")
             : Paused ? (Player.UsingGamepad ? "pause.help.gamepad" : "pause.help.keyboard")
                              : (Player.UsingGamepad ? "menu.help.gamepad" : "menu.help.keyboard");
@@ -2144,20 +2188,20 @@ public class TrainSim : MonoBehaviour
         // Saved: what this chapter hands on (the truck's wagon only if won here), and the next one to continue with.
         Story.Win(keep, keptPassive, truckCar != null && truckCar.mount && !truckCarried ? truckCar.mount.Level : 0);
         Time.timeScale = 1f;
-        SceneManager.LoadScene("historiaDialogos");
+        Wipe.Load("historiaDialogos");
     }
 
     void Restart()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Wipe.Load(SceneManager.GetActiveScene().buildIndex);
     }
 
     // Back to the title screen, dropping the run.
     void GoToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        Wipe.Load("MainMenu");
     }
 
     // Ends the run for good: closes the build, or stops play mode when testing in the editor.
@@ -2408,12 +2452,21 @@ public class TrainSim : MonoBehaviour
             Add("mute", L10n.T("sound.mute", L10n.T(Sound.Muted ? "menu.yes" : "menu.no")), Sound.ToggleMute);
             Add("back", L10n.T("menu.back"), () => soundMenu = false);
         }
+        else if (Paused && comfortMenu)
+        {
+            kind = 10;
+            menuTitle = L10n.T("menu.comfort");
+            foreach (var (label, run, adjust) in Comfort.Rows())
+                options.Add(new Option { icon = "sight", label = label, enabled = true, run = run, adjust = adjust });
+            Add("back", L10n.T("menu.back"), () => comfortMenu = false);
+        }
         else if (Paused)
         {
             kind = 8;
             menuTitle = L10n.T("menu.pause");
             Add("resume", L10n.T("pause.resume"), () => SetPaused(false));
             Add("sound", L10n.T("pause.sound"), () => soundMenu = true);
+            Add("sight", L10n.T("menu.comfort"), () => comfortMenu = true);
             Add("evolutions", L10n.T("pause.evolutions"), () => evolutionsMenu = true);
             Add("language", L10n.T("language"), L10n.NextLocale);
             Add("restart", L10n.T("pause.restart"), () => confirming = 1);
@@ -2459,11 +2512,14 @@ public class TrainSim : MonoBehaviour
         }
         else if (Health <= 0f)
         {
-            if (Story.Active) Story.Lose(); // saved: this chapter again, from its start
-            kind = 0;
-            menuTitle = L10n.T("menu.gameover");
-            Add("yes", L10n.T("menu.yes"), Restart);
-            Add("no", L10n.T("menu.no"), GoToMainMenu);
+            // The run is over: the results screen (Results.cs), its own buttons to play again or leave.
+            if (!results)
+            {
+                if (Story.Active) Story.Lose(); // saved: this chapter again, from its start
+                results = gameObject.AddComponent<Results>();
+                results.Show(this, Restart, GoToMainMenu);
+            }
+            return;
         }
         else if (stage >= 4)
         {
@@ -2696,6 +2752,7 @@ public class TrainSim : MonoBehaviour
 
     void Navigate()
     {
+        if (options.Count == 0) return; // the results screen has its own buttons
         if ((Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame) || (Keyboard.current != null && Keyboard.current.backspaceKey.wasPressedThisFrame))
         {
             // Cancel the current submenu or placement before leaving its parent menu.
@@ -2844,11 +2901,17 @@ public class TrainSim : MonoBehaviour
         if (kinds.Length == 0 || Random.value > share) return; // this stretch leaves the slot empty
         prop.kind = kinds[Random.Range(0, kinds.Length)];
         if (!spareProps.TryGetValue(prop.kind, out Stack<Transform> spare)) spareProps[prop.kind] = spare = new Stack<Transform>();
-        prop.body = spare.Count > 0 ? spare.Pop() : Instantiate(prop.kind, sceneryRoot).transform;
+        if (spare.Count > 0) prop.body = spare.Pop();
+        else
+        {
+            prop.body = Instantiate(prop.kind, sceneryRoot).transform;
+            if (prop.kind.transform.parent != sceneryRoot) Fade(prop.body); // the relief is painted to sit back already
+        }
         prop.body.gameObject.SetActive(true);
         prop.body.localScale = Vector3.one * Random.Range(0.8f, 1.25f);
         prop.yaw = city ? Random.Range(0, 4) * 90f : Random.Range(0f, 360f); // a city is square to its streets (the ground's, along the track)
-        float away = prop.size == 0 ? Random.Range(4.5f, 14f) : prop.size == 1 ? Random.Range(9f, 20f) : Random.Range(19f, 30f);
+        bool relief = prop.kind.transform.parent == sceneryRoot; // a template made by Ambience.Relief (prefabs have no parent)
+        float away = relief ? Random.Range(36f, 50f) : prop.size == 0 ? Random.Range(4.5f, 14f) : prop.size == 1 ? Random.Range(10f, 22f) : Random.Range(31f, 44f); // the big things and the relief stand past the hero's leash (Player.leash): the field she fights on stays clear
         if (Biomes[Biome].id == "space") away = prop.size == 1 ? Random.Range(16f, 32f) : Random.Range(34f, 60f); // far off
         prop.side = Random.value < 0.5f ? away : -away;
         if (tallKinds.Contains(prop.kind) && Camera.main)
@@ -2856,6 +2919,31 @@ public class TrainSim : MonoBehaviour
             Path(prop.s, out float heading);
             Vector3 across = transform.TransformDirection(Quaternion.Euler(0f, heading, 0f) * Vector3.forward);
             prop.side = away * (Vector3.Dot(across, Camera.main.transform.forward) > 0f ? 1f : -1f); // on the far side of the track
+        }
+    }
+
+    // Scenery is backdrop: its colours drawn halfway to the ground's and no outline, so the fight reads first.
+    static readonly Dictionary<(Material, Color), Material> faded = new();
+    void Fade(Transform body)
+    {
+        Color ground = Biomes[Biome].ground;
+        foreach (Renderer part in body.GetComponentsInChildren<Renderer>(true))
+        {
+            Material[] mats = part.sharedMaterials;
+            for (int i = 0; i < mats.Length; i++)
+            {
+                if (!mats[i] || !mats[i].HasProperty(MainColor)) continue;
+                if (!faded.TryGetValue((mats[i], ground), out Material twin))
+                {
+                    twin = new Material(mats[i]) { name = mats[i].name + " (faded)" };
+                    twin.SetColor(MainColor, Color.Lerp(mats[i].GetColor(MainColor), ground.linear, 0.5f));
+                    twin.DisableKeyword("N_F_O_ON");
+                    twin.SetShaderPassEnabled("SRPDefaultUnlit", false); // the outline's pass
+                    faded[(mats[i], ground)] = twin;
+                }
+                mats[i] = twin;
+            }
+            part.sharedMaterials = mats;
         }
     }
 

@@ -191,9 +191,20 @@ public static class UiKit
         canvas.sortingOrder = order;
         var scaler = canvas.GetComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
+        scaler.referenceResolution = new Vector2(1920f, 1080f) / Comfort.Scale; // the interface's size (accessibility)
         scaler.matchWidthOrHeight = 1f;
+        scalers.Add(scaler);
         return canvas;
+    }
+
+    // Every canvas made here, resized when the interface's size setting changes.
+    static readonly List<CanvasScaler> scalers = new();
+    public static void Rescale()
+    {
+        scalers.RemoveAll(s => !s);
+        foreach (CanvasScaler s in scalers) s.referenceResolution = new Vector2(1920f, 1080f) / Comfort.Scale;
+        foreach (CanvasScaler s in Object.FindObjectsByType<CanvasScaler>(FindObjectsSortMode.None)) // the ones saved with a scene too
+            if (s.uiScaleMode == CanvasScaler.ScaleMode.ScaleWithScreenSize) s.referenceResolution = new Vector2(1920f, 1080f) / Comfort.Scale;
     }
 
     public static RectTransform Group(Transform parent, Vector2 anchor, Vector2 position)
@@ -385,6 +396,16 @@ public static class UiKit
         if (key == toneKey) return;
         toneKey = key;
         Now = tones();
+        ToneVersion++;
+    }
+
+    // A step of the way from the colours now to others (k: how far, 1 the whole way): a blend instead of a cut.
+    public static void EaseTones(Tones to, float k)
+    {
+        Tones from = Now;
+        Now = new Tones { main = Color.Lerp(from.main, to.main, k), deep = Color.Lerp(from.deep, to.deep, k), hot = Color.Lerp(from.hot, to.hot, k) };
+        if (Now.main == from.main && Now.deep == from.deep && Now.hot == from.hot) return;
+        toneKey = "";
         ToneVersion++;
     }
 

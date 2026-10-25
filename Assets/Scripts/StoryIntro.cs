@@ -10,25 +10,29 @@ public class StoryIntro : MonoBehaviour
     public Page[] pages;
     [SerializeField] Canvas canvas;
     [SerializeField] UnityEngine.UI.RawImage art;
-    [SerializeField] UnityEngine.UI.Text narration, chapter, progress, automaticLabel, storyName, hint;
-    [SerializeField] UnityEngine.UI.Button next, automatic, skip;
+    [SerializeField] UnityEngine.UI.Text narration, chapter, progress, storyName, hint;
+    [SerializeField] UnityEngine.UI.Button next, skip;
+    [SerializeField] RectTransform illustrationArea;
     string currentText;
     int page, visible;
-    float elapsed, reading;
-    bool auto=true, leaving;
+    float elapsed;
+    bool leaving;
     bool placeholder;
+    Vector2 layoutSize;
+    UnityEngine.UI.RawImage artBackdrop; // the page's picture again, filling the screen behind, darkened
+    RectTransform artFrame, artShadow;   // the picture's white border and hard shadow, kept to its size
 
     void Awake()
     {
         Time.timeScale=1;Display.Apply();
         UiKit.SetBiome("menu"); // the menus' colours
-        placeholder = Locomotives.HeroId(Locomotives.Selected) != "bba";
+        placeholder = Story.Route(Locomotives.HeroId(Locomotives.Selected)) == null;
         if (placeholder) { BuildPlaceholder(); return; }
         if(!canvas) BuildUI();
+        RefreshLayout();
         if(!backgrounds) backgrounds=Resources.Load<Texture2D>("Story/prologue");
         if(Story.Active) pages=Story.Pages(); // story mode: this chapter's opening, after the last one's ending
         next.onClick.AddListener(()=>{Sound.Play("confirm");Advance();});
-        automatic.onClick.AddListener(()=>{Sound.Play("confirm");auto=!auto;reading=0;UpdateAutomaticLabel();});
         skip.onClick.AddListener(()=>{Sound.Play("confirm");Finish();});
         if(pages==null || pages.Length==0) {Finish();return;}
         ShowPage(0,false);
@@ -44,14 +48,14 @@ public class StoryIntro : MonoBehaviour
             return;
         }
         if(Gamepad.current!=null && Gamepad.current.buttonEast.wasPressedThisFrame) {
-            Sound.Play("menuback");leaving=true;SceneManager.LoadScene(Story.Active ? "MainMenu" : "selectHero");return;
+            Sound.Play("menuback");leaving=true;Wipe.Load(Story.Active ? "MainMenu" : "selectHero");return;
         }
         if (placeholder)
         {
             elapsed += Time.unscaledDeltaTime;
             bool proceed = (Keyboard.current != null && (Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame)) ||
                 (Gamepad.current != null && (Gamepad.current.buttonSouth.wasPressedThisFrame || Gamepad.current.startButton.wasPressedThisFrame));
-            if (elapsed >= 2f || (elapsed > 0.3f && proceed)) { if(proceed) Sound.Play("confirm"); Finish(); }
+            if (elapsed > 0.3f && proceed) { Sound.Play("confirm"); Finish(); }
             return;
         }
         if(pages==null || pages.Length==0) return;
@@ -63,10 +67,6 @@ public class StoryIntro : MonoBehaviour
         art.color=new Color(1,1,1,Mathf.Clamp01(elapsed/.5f));
         int count=Mathf.Min(currentText.Length,Mathf.FloorToInt(elapsed*34));
         if(count>visible) {visible=count;narration.text=currentText.Substring(0,visible);}
-        if(visible==currentText.Length) {
-            if(auto) reading+=Time.unscaledDeltaTime;
-            if(auto && reading>=4f) Advance();
-        }
     }
 
     void BuildPlaceholder()
@@ -88,7 +88,7 @@ public class StoryIntro : MonoBehaviour
     {
         if(leaving) return;
         if(visible<currentText.Length) {
-            visible=currentText.Length;narration.text=currentText;elapsed=visible/34f;reading=0;
+            visible=currentText.Length;narration.text=currentText;elapsed=visible/34f;
         } else if(page+1<pages.Length) ShowPage(page+1,false);
         else Finish();
     }
@@ -98,13 +98,12 @@ public class StoryIntro : MonoBehaviour
         if(leaving) return;
         leaving=true;
         if(Story.Active && Story.Over) { StartCoroutine(Thanks()); return; } // the end of it all: a word of thanks first
-        SceneManager.LoadScene(Story.Active && Story.Over ? "MainMenu" :
+        Wipe.Load(Story.Active && Story.Over ? "MainMenu" :
             Story.Active && Story.AscentPending ? "ascenso" :
             Story.Active && Story.InspectionPending ? "cuestionario" : gameScene);
     }
 
-    // After the last page: black, "thanks for playing", and a reminder that this is only part of the story; a press
-    // (or a while) and back to the main menu.
+    // After the last page: thanks and the closing note stay until the player confirms.
     System.Collections.IEnumerator Thanks()
     {
         Canvas card = UiKit.NewCanvas("Thanks", 50);
@@ -124,19 +123,19 @@ public class StoryIntro : MonoBehaviour
             note.color = new Color(1f, 1f, 1f, 0.75f * t);
             yield return null;
         }
-        for (float t = 0f; t < 12f; t += Time.unscaledDeltaTime)
+        for (float t = 0f; ; t += Time.unscaledDeltaTime)
         {
             bool press = (Keyboard.current != null && (Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame))
                 || (Gamepad.current != null && (Gamepad.current.buttonSouth.wasPressedThisFrame || Gamepad.current.startButton.wasPressedThisFrame));
             if (press && t > 1.5f) break;
             yield return null;
         }
-        SceneManager.LoadScene("MainMenu");
+        Wipe.Load("MainMenu");
     }
 
     public void ShowPage(int index,bool complete)
     {
-        page=Mathf.Clamp(index,0,pages.Length-1);elapsed=reading=0;
+        page=Mathf.Clamp(index,0,pages.Length-1);elapsed=0;
         currentText=Localized(pages[page].textKey);
         visible=complete ? currentText.Length:0;
         narration.text=complete ? currentText:"";
@@ -147,6 +146,7 @@ public class StoryIntro : MonoBehaviour
         art.texture=illustration ? illustration : backgrounds;
         art.uvRect=illustration ? new Rect(0f,0f,1f,1f) : new Rect((image%3)/3f, image<3 ? .5f:0, 1f/3,.5f);
         art.color=Color.white;
+        RefreshLayout();
         chapter.text=string.IsNullOrEmpty(pages[page].titleKey) ? (image+1).ToString("00")+"  /  "+Localized("story.chapter."+image)
             : Localized("story.chapter.number").Replace("{0}",pages[page].number.ToString())+"  /  "+Localized(pages[page].titleKey);
         progress.text=(page+1).ToString("00")+" / "+pages.Length.ToString("00");
@@ -159,9 +159,110 @@ public class StoryIntro : MonoBehaviour
         hint.text=Localized("story.help");
         skip.GetComponentInChildren<UnityEngine.UI.Text>().text=Localized("story.skip");
         next.GetComponentInChildren<UnityEngine.UI.Text>().text=Localized("story.continue");
-        UpdateAutomaticLabel();
     }
-    void UpdateAutomaticLabel() => automaticLabel.text=Localized(auto ? "story.auto.on":"story.auto.off");
+
+    void LateUpdate()
+    {
+        if (!placeholder && canvas && ((RectTransform)canvas.transform).rect.size != layoutSize) RefreshLayout();
+        if (artFrame)
+        {
+            Vector2 size = art.rectTransform.rect.size;
+            artFrame.localPosition = art.rectTransform.localPosition;
+            artFrame.sizeDelta = size + Vector2.one * 20f;
+            artShadow.localPosition = art.rectTransform.localPosition + new Vector3(18f, -18f, 0f);
+            artShadow.sizeDelta = artFrame.sizeDelta;
+        }
+    }
+
+    // Reserve separate areas for the complete illustration and the dialogue, including its raised name tag.
+    public void RefreshLayout()
+    {
+        if (!canvas || !art || !narration) return;
+        layoutSize = ((RectTransform)canvas.transform).rect.size;
+        float scale = Mathf.Min(1f, Mathf.Max(0.1f, (layoutSize.x - 80f) / 1780f));
+        var dialog = (RectTransform)narration.transform.parent;
+        dialog.anchoredPosition = new Vector2(0f, 146f * scale);
+        dialog.localScale = Vector3.one * scale;
+        var plate = dialog.GetComponentInChildren<Backed>();
+        if (plate)
+        {
+            ((RectTransform)plate.transform).sizeDelta = new Vector2(1780f, 230f);
+            plate.Sync();
+        }
+        foreach (Slanted panel in dialog.GetComponentsInChildren<Slanted>())
+            if (panel.rectTransform.sizeDelta == new Vector2(1740f, 6f)) panel.rectTransform.anchoredPosition = new Vector2(0f, -112f);
+        var nameTag = (RectTransform)storyName.transform.parent;
+        nameTag.anchoredPosition = new Vector2(-640f, 122f);
+        nameTag.sizeDelta = new Vector2(420f, 52f);
+        storyName.rectTransform.sizeDelta = new Vector2(400f, 48f);
+        narration.rectTransform.anchoredPosition = new Vector2(0f, 4f);
+        narration.rectTransform.sizeDelta = new Vector2(1640f, 122f);
+        narration.resizeTextForBestFit = true;
+        narration.resizeTextMinSize = 25;
+        narration.resizeTextMaxSize = 31;
+        skip.GetComponent<RectTransform>().anchoredPosition = new Vector2(220f, -88f);
+        next.GetComponent<RectTransform>().anchoredPosition = new Vector2(650f, -88f);
+        foreach (var button in new[] { skip, next })
+        {
+            button.GetComponent<RectTransform>().sizeDelta = new Vector2(330f, 44f);
+            button.GetComponentInChildren<UnityEngine.UI.Text>().rectTransform.sizeDelta = new Vector2(318f, 36f);
+        }
+        var header = (RectTransform)chapter.transform.parent;
+        header.localScale = Vector3.one * scale;
+        header.anchoredPosition = new Vector2(0f, -50f * scale);
+        if (!illustrationArea)
+        {
+            illustrationArea = new GameObject("StoryArtArea", typeof(RectTransform)).GetComponent<RectTransform>();
+            illustrationArea.SetParent(canvas.transform, false);
+            illustrationArea.SetSiblingIndex(art.transform.GetSiblingIndex());
+            art.transform.SetParent(illustrationArea, false);
+        }
+        illustrationArea.anchorMin = Vector2.zero;
+        illustrationArea.anchorMax = Vector2.one;
+        illustrationArea.offsetMin = new Vector2(24f, 310f * scale);
+        illustrationArea.offsetMax = new Vector2(-24f, -108f * scale);
+        var fit = art.GetComponent<UnityEngine.UI.AspectRatioFitter>();
+        fit.aspectMode = UnityEngine.UI.AspectRatioFitter.AspectMode.FitInParent;
+        fit.aspectRatio = art.texture ? art.texture.width * art.uvRect.width / (art.texture.height * art.uvRect.height) : 16f / 9f;
+        // Persona's way with a picture: tilted in a white frame with a hard shadow, over a slash of colour, dots and the
+        // same picture blown up and darkened behind, so no bare ground is left round it.
+        illustrationArea.localRotation = Quaternion.Euler(0f, 0f, -1.5f);
+        if (!artBackdrop && Application.isPlaying)
+        {
+            int under = illustrationArea.GetSiblingIndex();
+            artBackdrop = new GameObject("StoryArtBackdrop", typeof(RectTransform), typeof(UnityEngine.UI.RawImage), typeof(UnityEngine.UI.AspectRatioFitter)).GetComponent<UnityEngine.UI.RawImage>();
+            artBackdrop.transform.SetParent(canvas.transform, false);
+            artBackdrop.raycastTarget = false;
+            artBackdrop.color = new Color(0.3f, 0.3f, 0.38f);
+            artBackdrop.GetComponent<UnityEngine.UI.AspectRatioFitter>().aspectMode = UnityEngine.UI.AspectRatioFitter.AspectMode.EnvelopeParent;
+            var slash = UiKit.Paint(UiKit.Panel(canvas.transform, new Vector2(0f, 40f), new Vector2(3400f, 360f), Color.white, Color.white, 0f), UiKit.Ink.Main, 0.85f);
+            slash.sprite = null;
+            slash.rectTransform.localRotation = Quaternion.Euler(0f, 0f, 14f);
+            var dots = UiKit.Panel(canvas.transform, Vector2.zero, new Vector2(3400f, 2000f), Color.white, Color.white, 0f);
+            dots.sprite = UiKit.Halftone();
+            dots.type = UnityEngine.UI.Image.Type.Tiled;
+            UiKit.Paint(dots, UiKit.Ink.Deep, 0.35f);
+            artShadow = UiKit.Paint(UiKit.Panel(illustrationArea, Vector2.zero, Vector2.zero, Color.white, Color.white, 0f), UiKit.Ink.Main).rectTransform;
+            artFrame = UiKit.Panel(illustrationArea, Vector2.zero, Vector2.zero, Color.white, Color.white, 0f).rectTransform;
+            artShadow.GetComponent<UnityEngine.UI.Image>().sprite = artFrame.GetComponent<UnityEngine.UI.Image>().sprite = null;
+            foreach (Transform layer in new[] { artBackdrop.transform, slash.transform, dots.transform }) layer.SetSiblingIndex(under++);
+            artShadow.SetAsFirstSibling();
+            artFrame.SetSiblingIndex(1);
+        }
+        if (artBackdrop)
+        {
+            artBackdrop.texture = art.texture;
+            artBackdrop.uvRect = art.uvRect;
+            artBackdrop.GetComponent<UnityEngine.UI.AspectRatioFitter>().aspectRatio = fit.aspectRatio;
+        }
+        hint.transform.SetParent(dialog, false);
+        hint.rectTransform.anchorMin = hint.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        hint.rectTransform.anchoredPosition = new Vector2(-390f, -88f);
+        hint.rectTransform.sizeDelta = new Vector2(850f, 40f);
+        hint.resizeTextForBestFit = true;
+        hint.resizeTextMinSize = 14;
+        hint.resizeTextMaxSize = 18;
+    }
 
     static string Localized(string key)
     {
@@ -199,7 +300,6 @@ public class StoryIntro : MonoBehaviour
         storyName=Label(nameTag.transform,38,new Vector2(0,2),new Vector2(400,60),Color.white);storyName.font=UiKit.Display;storyName.alignment=TextAnchor.MiddleCenter;
         narration=Label(dialog,31,new Vector2(0,16),new Vector2(1640,146),Color.white);
         narration.alignment=TextAnchor.UpperLeft;narration.resizeTextForBestFit=false;
-        automatic=Button(dialog,new Vector2(-665,-111),new Vector2(290,52),"",out automaticLabel);
         skip=Button(dialog,new Vector2(220,-111),new Vector2(330,52),"",out var skipLabel);
         next=Button(dialog,new Vector2(650,-111),new Vector2(330,52),"",out var nextLabel);
         hint=Label(canvas.transform,18,new Vector2(0,23),new Vector2(1600,36),Color.white);

@@ -35,8 +35,13 @@ public static class Story
         new Part { biome = 8, rival = 3,  intro = 2,  outro = 5, before = "rhr", after = "rh", gates = true, trench = true }, // the alien base: Tzmil and the Night Skull
     };
 
-    // The heroes with a story so far; the others will get theirs.
-    public static Part[] Route(string hero) => hero == "bba" ? Bba : null;
+    // Faceless currently has his prologue and first playable chapter; later chapters are still to be written.
+    static readonly Part[] Faceless =
+    {
+        new Part { biome = 0, rival = 2, intro = 12, outro = 1, before = "hr", after = "h" },
+    };
+
+    public static Part[] Route(string hero) => hero switch { "bba" => Bba, "faceless" => Faceless, _ => null };
     public static string Hero => Locomotives.Hero;
     public static bool Active => Locomotives.StoryMode && Route(Hero) != null;
     public static int Chapter { get; set; }          // the one being played
@@ -54,7 +59,7 @@ public static class Story
     public static bool Over => JustWon && Chapter == Route(Hero).Length - 1; // the last one: the end of it all
 
     // Chapters that can be played: every one up to the first not beaten yet.
-    public static int Reached => SaveGame.HasStory ? Mathf.Min(SaveGame.Reached, Bba.Length - 1) : 0;
+    public static int Reached => SaveGame.HasStory ? Mathf.Min(SaveGame.Reached, (Route(Locomotives.HeroId(SaveGame.Locomotive))?.Length ?? 1) - 1) : 0;
 
     // What a chapter carries over: the upgrade kept from each one before it, as Tokens.
     public static List<string> Kept()
@@ -87,13 +92,16 @@ public static class Story
     {
         SaveGame.Won(Chapter, keep, passive, truck, Route(Hero).Length - 1);
         JustWon = true;
+        if (Chapter == 0) Achievements.Unlock("chapter1");
+        if (Current.race) Achievements.Unlock("race");
+        if (Hero == "bba" && Chapter == Bba.Length - 1) Achievements.Unlock("story"); // Faceless's full ending is not written yet.
     }
 
     // The chapter is lost: it is the one to play again, from its start.
     public static void Lose() => SaveGame.Lost(Chapter);
 
     // The story saved can be continued: there is one, and its chapters are not all done.
-    public static bool CanContinue => SaveGame.HasStory && SaveGame.Chapter < Bba.Length;
+    public static bool CanContinue => SaveGame.HasStory && SaveGame.Chapter < (Route(Locomotives.HeroId(SaveGame.Locomotive))?.Length ?? 0);
 
     // The truck's wagon won in a chapter rides on into the next one only (at the level it had), never further.
     // (Kept in the save with the chapter's other results: see Win.)
@@ -103,7 +111,7 @@ public static class Story
     public static int TestChapter = -1; // -1 follows the chapter selected in the menu.
     public static void Play(int chapter)
     {
-        Chapter = TestChapter >= 0 ? TestChapter : chapter;
+        Chapter = Mathf.Clamp(TestChapter >= 0 ? TestChapter : chapter, 0, (Route(Hero)?.Length ?? 1) - 1);
         JustWon = false;
         GatesPassed = false;
         InspectionPending = replayArrival = false;
@@ -137,7 +145,7 @@ public static class Story
                             _ => "bba_ending_reflection"
                         }),
                         _ => null
-                    } : null });
+                    } : Hero == "faceless" ? "Story/faceless_idea" : null });
             replayArrival = false;
             if (JustWon)
             {
@@ -158,7 +166,7 @@ public static class Story
             return pages.ToArray();
         }
         AscentPending = false;
-        if (Chapter == 0)
+        if (Chapter == 0 && Hero == "bba")
             for (int n = 1; n <= route[0].intro; n++)
                 pages.Add(new StoryIntro.Page { image = PrologueImages[n - 1], textKey = $"story.page.{n:00}" });
         else
@@ -171,7 +179,7 @@ public static class Story
                         3 => n == 1 ? "Story/bba_alien_arrival" : "Story/bba_space_landing",
                         4 => "Story/bba_fortress_arrival",
                         _ => null
-                    } : null });
+                    } : Hero == "faceless" ? "Story/faceless_" + FacelessImages[n - 1] : null });
         InspectionPending = route[Chapter].inspection;
         return pages.ToArray();
     }
@@ -193,6 +201,7 @@ public static class Story
     }
 
     static readonly int[] PrologueImages = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5 }; // as the story scene had them
+    static readonly string[] FacelessImages = { "champion", "orders", "legacy", "legacy", "artist", "artist", "friend", "friend", "artist", "idea", "idea", "idea" };
 
     // Upgrades as tokens, so a chapter can remember one and the next can hand it back: "ammo:<id>" (the hero's
     // weapon), "wagon:<id>" (a wagon weapon), "evolve" (a level on the hero's weapon) or a hero stat

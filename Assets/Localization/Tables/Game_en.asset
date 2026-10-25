@@ -955,7 +955,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1055763532689414
-    m_Localized: '[W][S] choose    [Space] confirm    [Esc] back'
+    m_Localized: '[W][A][S][D] choose    [Space] confirm    [Esc] back'
     m_Metadata:
       m_Items: []
   - m_Id: 1055763532689415
@@ -1107,14 +1107,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1128996265078784
     m_Localized: MY STORY
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1128996265078785
-    m_Localized: 'Auto: on'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1128996265078786
-    m_Localized: 'Auto: off'
     m_Metadata:
       m_Items: []
   - m_Id: 1128996265078787
@@ -1336,7 +1328,7 @@ MonoBehaviour:
 
       {0}
 
-      Weapon: {1}'
+      {1}'
     m_Metadata:
       m_Items: []
   - m_Id: 1338355876179968
@@ -4095,6 +4087,428 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5415102645088256
     m_Localized: 'Ride skipped: random weapons and upgrades'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5690100890808320
+    m_Localized: LOADING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209452417024
+    m_Localized: Choose a driver and start their story from the beginning.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777152
+    m_Localized: Pick the story up where you left it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777153
+    m_Localized: There is no saved game yet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777154
+    m_Localized: Ride through every biome, endlessly, as far as you can.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777155
+    m_Localized: Display, sound and language.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5695209481777156
+    m_Localized: Close the game.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277619060736
+    m_Localized: End of the line
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615168
+    m_Localized: Chapter lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615169
+    m_Localized: Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615170
+    m_Localized: Stations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615171
+    m_Localized: Enemies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615172
+    m_Localized: Money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615173
+    m_Localized: 'Reached: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615174
+    m_Localized: Damage by weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615175
+    m_Localized: No weapon dealt damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615176
+    m_Localized: "Best: {0} stations \xB7 {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615177
+    m_Localized: +{0} tickets  (you have {1})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615178
+    m_Localized: NEW RECORD!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615179
+    m_Localized: Again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615180
+    m_Localized: Main menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615181
+    m_Localized: ACHIEVEMENT!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615182
+    m_Localized: +{0} tickets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277652615183
+    m_Localized: First stop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809472
+    m_Localized: Reach a station.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809473
+    m_Localized: Veteran driver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809474
+    m_Localized: Reach 10 stations in one run.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809475
+    m_Localized: Into the fire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809476
+    m_Localized: Reach the volcano in endless mode.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809477
+    m_Localized: End of the line
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809478
+    m_Localized: Reach the alien fortress in endless mode.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809479
+    m_Localized: Truck down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809480
+    m_Localized: Beat a biome boss.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809481
+    m_Localized: Clean sweep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809482
+    m_Localized: Defeat 500 enemies in one run.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809483
+    m_Localized: Exterminator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809484
+    m_Localized: Defeat 2000 enemies in one run.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809485
+    m_Localized: Evolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809486
+    m_Localized: Evolve a weapon.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809487
+    m_Localized: Legendary chest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809488
+    m_Localized: Open a legendary chest.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809489
+    m_Localized: Long train
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809490
+    m_Localized: Pull 8 wagons at once.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809491
+    m_Localized: Deep pockets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809492
+    m_Localized: Hold 1000 money.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809493
+    m_Localized: Meteor shower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809494
+    m_Localized: Use your ultimate.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809495
+    m_Localized: First chapter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809496
+    m_Localized: Win the desert chapter.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809497
+    m_Localized: First past the post
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809498
+    m_Localized: Win the city race.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809499
+    m_Localized: The end
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809500
+    m_Localized: Finish BBA's story.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809501
+    m_Localized: Workshop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809502
+    m_Localized: Permanent upgrades for endless mode. You have {0} tickets.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809503
+    m_Localized: Achievements
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809504
+    m_Localized: You have {0} of {1}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809505
+    m_Localized: '{0} tickets'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809506
+    m_Localized: Lv {0}/{1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809507
+    m_Localized: '{0} tickets'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809508
+    m_Localized: MAX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809509
+    m_Localized: Plating
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809510
+    m_Localized: +8% health to every wagon per level.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809511
+    m_Localized: Calibre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809512
+    m_Localized: +6% to the hero's damage per level.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809513
+    m_Localized: Breastplate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809514
+    m_Localized: +3% to the hero's armour per level.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809515
+    m_Localized: Boots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809516
+    m_Localized: +4% to the hero's speed per level.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809517
+    m_Localized: Greed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809518
+    m_Localized: +8% money per kill per level.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809519
+    m_Localized: Savings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809520
+    m_Localized: Start with +40 money per level.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809521
+    m_Localized: Accessibility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809522
+    m_Localized: 'Screen shake: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809523
+    m_Localized: 'Hit pauses: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809524
+    m_Localized: 'Flashes: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809525
+    m_Localized: 'Damage numbers: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5800277656809526
+    m_Localized: 'Interface size: {0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913332342784
+    m_Localized: PILOT'S WEAPON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480128
+    m_Localized: Coming soon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480129
+    m_Localized: "\u2605 Has a story"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480130
+    m_Localized: 'Story: coming soon'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480131
+    m_Localized: Story mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480132
+    m_Localized: Endless mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6042913378480133
+    m_Localized: All aboard!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604498214912
+    m_Localized: A BLANK LEGACY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963648
+    m_Localized: I am this planet's champion. Everyone says it with pride. Nobody
+      ever asked whether I wanted to be.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963649
+    m_Localized: My job is to compete. To win. And to destroy whoever they point
+      at. Every victory celebrates a name that feels less and less like mine.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963650
+    m_Localized: My father did the same before me. And before him, my grandfather.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963651
+    m_Localized: I did not inherit a calling. I inherited an obligation. They call
+      that a legacy.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963652
+    m_Localized: 'I wanted something else: a life devoted to art. To learn to draw
+      what I see... and what does not exist yet.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963653
+    m_Localized: Instead of counting the defeated, I wanted to fill sketchbooks.
+      To use my hands to create something.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963654
+    m_Localized: 'My locomotive is my best friend. That is no figure of speech: she
+      has a soul, a mind, and her own way of understanding me.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963655
+    m_Localized: She is not the one who chains me down. It is what everyone expects
+      of us. As long as I stayed at her controls, I had to remain the champion.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963656
+    m_Localized: I tucked my drawings away between journeys. There was always another
+      order. Always someone else to defeat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963657
+    m_Localized: Then the war began. The whole planet stopped talking about my victories
+      and started talking about survival.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963658
+    m_Localized: I looked at my friend. Then at my drawings. For the first time,
+      the future that had seemed already written was a blank page.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963659
+    m_Localized: And then I had an idea.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963660
+    m_Localized: I did not come for another title.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963661
+    m_Localized: Then show me what you came for.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963662
+    m_Localized: There is a long road ahead. This time, I want to choose it myself.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6071604535963663
+    m_Localized: To be continued...
     m_Metadata:
       m_Items: []
   references:

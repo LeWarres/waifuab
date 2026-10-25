@@ -226,7 +226,7 @@ loco.redwhite	ReyMar	ReyMar	ReyMar	ReyMar
 loco.classic.description	Azul y amarillo · diseño original	Blue and yellow · original design	Azul e amarelo · design original	青と黄色・オリジナルデザイン
 loco.redwhite.description	Rojo y blanco · detalles negros	Red and white · black details	Vermelho e branco · detalhes pretos	赤と白・黒のディテール
 loco.start	Comenzar viaje	Start journey	Começar viagem	出発する
-loco.help.keyboard	[W][S] elegir    [Espacio] confirmar    [Esc] volver	[W][S] choose    [Space] confirm    [Esc] back	[W][S] escolher    [Espaço] confirmar    [Esc] voltar	[W][S] 選択    [Space] 決定    [Esc] 戻る
+loco.help.keyboard	[W][A][S][D] elegir    [Espacio] confirmar    [Esc] volver	[W][A][S][D] choose    [Space] confirm    [Esc] back	[W][A][S][D] escolher    [Espaço] confirmar    [Esc] voltar	[W][A][S][D] 選択    [Space] 決定    [Esc] 戻る
 loco.help.gamepad	[LS] elegir    [{0}] confirmar    [{1}] volver	[LS] choose    [{0}] confirm    [{1}] back	[LS] escolher    [{0}] confirmar    [{1}] voltar	[LS] 選択    [{0}] 決定    [{1}] 戻る
 loco.random	Aleatoria	Random	Aleatória	ランダム
 loco.random.description	Elige al azar entre las locomotoras disponibles.	Picks a random available locomotive.	Escolhe uma locomotiva disponível ao acaso.	利用可能な機関車からランダムに選びます。
@@ -263,8 +263,6 @@ loco.crochet	Crochtrain	Crochtrain	Crochtrain	Crochtrain
 loco.crochet.description	Verde · tejida a crochet · ruedas de botón · pompón	Green · crocheted · button wheels · pompom	Verde · feita em crochê · rodas de botão · pompom	緑 · かぎ針編み · ボタンの車輪 · ポンポン
 main.operations	OPERACIONES FERROVIARIAS	RAILWAY OPERATIONS	OPERAÇÕES FERROVIÁRIAS	鉄道運行
 story.name	MI HISTORIA	MY STORY	MINHA HISTÓRIA	私の物語
-story.auto.on	Automático: sí	Auto: on	Automático: sim	オート：オン
-story.auto.off	Automático: no	Auto: off	Automático: não	オート：オフ
 story.skip	Omitir · Start	Skip · Start	Pular · Start	スキップ · Start
 story.continue	Continuar  ›	Continue  ›	Continuar  ›	次へ  ›
 story.help	Espacio / Enter / A: completar texto o continuar     Start: omitir introducción	Space / Enter / A: reveal text or continue     Start: skip introduction	Espaço / Enter / A: revelar texto ou continuar     Start: pular introdução	スペース / Enter / A：全文表示・次へ     Start：イントロをスキップ
@@ -308,7 +306,7 @@ delivery.amount	{0} ¤	{0} ¤	{0} ¤	{0} ¤
 hero.character.bba	BBA	BBA	BBA	BBA
 hero.character.test	test	test	test	test
 loco.hero	HERO · {0}	HERO · {0}	HERO · {0}	ヒーロー · {0}
-loco.pilot.data	PILOTO\n{0}\nArma: {1}	PILOT\n{0}\nWeapon: {1}	PILOTO\n{0}\nArma: {1}	パイロット\n{0}\n武器：{1}
+loco.pilot.data	PILOTO\n{0}\n{1}	PILOT\n{0}\n{1}	PILOTO\n{0}\n{1}	パイロット\n{0}\n{1}
 hero.character.skullmonk	Crimson Skull	Crimson Skull	Crimson Skull	Crimson Skull
 hero.character.onini	Onini	Onini	Onini	Onini
 hero.character.tzmil	Tzmil	Tzmil	Tzmil	Tzmil
@@ -732,3 +730,105 @@ delivery.stamp.empty	SIN CARGA	NO CARGO	SEM CARGA	積荷なし
 delivery.go	CONTINUAR	CONTINUE	CONTINUAR	続ける
 delivery.total.short	TOTAL	TOTAL	TOTAL	合計
 test.skipped	Recorrido saltado: armas y mejoras al azar	Ride skipped: random weapons and upgrades	Percurso pulado: armas e melhorias aleatórias	走行スキップ：ランダムな武器と強化
+loading	CARGANDO	LOADING	CARREGANDO	ロード中
+main.new.desc	Elige un maquinista y empieza su historia desde el principio.	Choose a driver and start their story from the beginning.	Escolha um maquinista e comece sua história desde o início.	運転士を選び、その物語を最初から始める。
+main.load.desc	Sigue la historia donde la dejaste.	Pick the story up where you left it.	Continue a história de onde parou.	中断したところから物語を再開する。
+main.load.empty.desc	Todavía no hay una partida guardada.	There is no saved game yet.	Ainda não há um jogo salvo.	セーブデータはまだない。
+main.endless.desc	Viaja por todos los biomas sin fin y llega lo más lejos posible.	Ride through every biome, endlessly, as far as you can.	Viaje por todos os biomas sem fim e vá o mais longe possível.	全バイオームを果てしなく走り、どこまで行けるか挑戦する。
+main.options.desc	Pantalla, sonido e idioma.	Display, sound and language.	Tela, som e idioma.	画面、サウンド、言語。
+main.exit.desc	Cierra el juego.	Close the game.	Fecha o jogo.	ゲームを終了する。
+results.title	Fin del viaje	End of the line	Fim da viagem	旅の終わり
+results.story	Capítulo perdido	Chapter lost	Capítulo perdido	チャプター失敗
+results.time	Tiempo	Time	Tempo	時間
+results.stations	Estaciones	Stations	Estações	駅
+results.kills	Enemigos	Enemies	Inimigos	撃破数
+results.money	Dinero	Money	Dinheiro	所持金
+results.biome	Llegaste a: {0}	Reached: {0}	Chegou a: {0}	到達：{0}
+results.damage	Daño por arma	Damage by weapon	Dano por arma	武器別ダメージ
+results.nodamage	Ningún arma hizo daño	No weapon dealt damage	Nenhuma arma causou dano	ダメージなし
+results.best	Récord: {0} estaciones · {1}	Best: {0} stations · {1}	Recorde: {0} estações · {1}	最高記録：{0}駅 · {1}
+results.tickets	+{0} boletos  (tienes {1})	+{0} tickets  (you have {1})	+{0} bilhetes  (você tem {1})	チケット+{0}（所持 {1}）
+results.record	¡NUEVO RÉCORD!	NEW RECORD!	NOVO RECORDE!	新記録！
+results.again	Otra vez	Again	De novo	もう一度
+results.menu	Menú principal	Main menu	Menu principal	メインメニュー
+ach.title	¡LOGRO!	ACHIEVEMENT!	CONQUISTA!	実績解除！
+ach.reward	+{0} boletos	+{0} tickets	+{0} bilhetes	チケット+{0}
+ach.station1	Primera parada	First stop	Primeira parada	最初の駅
+ach.station1.desc	Llega a una estación.	Reach a station.	Chegue a uma estação.	駅に到着する。
+ach.station10	Maquinista veterano	Veteran driver	Maquinista veterano	ベテラン機関士
+ach.station10.desc	Llega a 10 estaciones en una partida.	Reach 10 stations in one run.	Chegue a 10 estações em uma partida.	1回のプレイで10駅に到着する。
+ach.volcano	Hacia el fuego	Into the fire	Rumo ao fogo	炎の中へ
+ach.volcano.desc	Llega al volcán en modo infinito.	Reach the volcano in endless mode.	Chegue ao vulcão no modo infinito.	エンドレスで火山に到達する。
+ach.endline	Fin de la línea	End of the line	Fim da linha	終着駅
+ach.endline.desc	Llega a la fortaleza alienígena en modo infinito.	Reach the alien fortress in endless mode.	Chegue à fortaleza alienígena no modo infinito.	エンドレスでエイリアン要塞に到達する。
+ach.truck	Camión derribado	Truck down	Caminhão derrubado	トラック撃破
+ach.truck.desc	Derrota al jefe de un bioma.	Beat a biome boss.	Derrote o chefe de um bioma.	バイオームのボスを倒す。
+ach.kills500	Limpieza	Clean sweep	Limpeza	掃討
+ach.kills500.desc	Elimina 500 enemigos en una partida.	Defeat 500 enemies in one run.	Elimine 500 inimigos em uma partida.	1回のプレイで500体倒す。
+ach.kills2000	Exterminador	Exterminator	Exterminador	殲滅者
+ach.kills2000.desc	Elimina 2000 enemigos en una partida.	Defeat 2000 enemies in one run.	Elimine 2000 inimigos em uma partida.	1回のプレイで2000体倒す。
+ach.evolve	Evolución	Evolution	Evolução	進化
+ach.evolve.desc	Evoluciona un arma.	Evolve a weapon.	Evolua uma arma.	武器を進化させる。
+ach.legendary	Cofre legendario	Legendary chest	Baú lendário	伝説の宝箱
+ach.legendary.desc	Abre un cofre legendario.	Open a legendary chest.	Abra um baú lendário.	伝説の宝箱を開ける。
+ach.wagons8	Tren largo	Long train	Trem longo	長い列車
+ach.wagons8.desc	Lleva 8 vagones a la vez.	Pull 8 wagons at once.	Puxe 8 vagões de uma vez.	8両編成にする。
+ach.rich	Bolsillo lleno	Deep pockets	Bolso cheio	大金持ち
+ach.rich.desc	Junta 1000 de dinero.	Hold 1000 money.	Junte 1000 de dinheiro.	1000マネー貯める。
+ach.ultimate	Lluvia de meteoros	Meteor shower	Chuva de meteoros	流星群
+ach.ultimate.desc	Usa tu ultimate.	Use your ultimate.	Use seu ultimate.	必殺技を使う。
+ach.chapter1	Primer capítulo	First chapter	Primeiro capítulo	第1章クリア
+ach.chapter1.desc	Gana el capítulo del desierto.	Win the desert chapter.	Vença o capítulo do deserto.	砂漠の章をクリアする。
+ach.race	Primero en la meta	First past the post	Primeiro na chegada	一着でゴール
+ach.race.desc	Gana la carrera de la ciudad.	Win the city race.	Vença a corrida da cidade.	街のレースに勝つ。
+ach.story	Fin de la historia	The end	Fim da história	物語の終わり
+ach.story.desc	Termina la historia de BBA.	Finish BBA's story.	Termine a história de BBA.	BBAの物語をクリアする。
+main.workshop	Taller	Workshop	Oficina	工房
+main.workshop.desc	Mejoras permanentes para el modo infinito. Tienes {0} boletos.	Permanent upgrades for endless mode. You have {0} tickets.	Melhorias permanentes para o modo infinito. Você tem {0} bilhetes.	エンドレス用の永続強化。チケット{0}枚所持。
+main.achievements	Logros	Achievements	Conquistas	実績
+main.achievements.desc	Has conseguido {0} de {1}.	You have {0} of {1}.	Você tem {0} de {1}.	{1}個中{0}個達成。
+workshop.tickets	{0} boletos	{0} tickets	{0} bilhetes	チケット{0}枚
+workshop.level	Nv {0}/{1}	Lv {0}/{1}	Nv {0}/{1}	Lv {0}/{1}
+workshop.cost	{0} boletos	{0} tickets	{0} bilhetes	チケット{0}枚
+workshop.max	MÁX	MAX	MÁX	最大
+workshop.vitality	Blindaje	Plating	Blindagem	装甲
+workshop.vitality.desc	+8% de vida a cada vagón por nivel.	+8% health to every wagon per level.	+8% de vida para cada vagão por nível.	レベルごとに全車両の体力+8%。
+workshop.damage	Calibre	Calibre	Calibre	口径
+workshop.damage.desc	+6% de daño de la heroína por nivel.	+6% to the hero's damage per level.	+6% de dano da heroína por nível.	レベルごとにヒロインのダメージ+6%。
+workshop.armor	Coraza	Breastplate	Couraça	胸当て
+workshop.armor.desc	+3% de armadura de la heroína por nivel.	+3% to the hero's armour per level.	+3% de armadura da heroína por nível.	レベルごとにヒロインの防御+3%。
+workshop.speed	Botas	Boots	Botas	ブーツ
+workshop.speed.desc	+4% de velocidad de la heroína por nivel.	+4% to the hero's speed per level.	+4% de velocidade da heroína por nível.	レベルごとにヒロインの速度+4%。
+workshop.greed	Codicia	Greed	Ganância	強欲
+workshop.greed.desc	+8% de dinero por enemigo por nivel.	+8% money per kill per level.	+8% de dinheiro por inimigo por nível.	レベルごとに撃破報酬+8%。
+workshop.purse	Ahorros	Savings	Economias	貯金
+workshop.purse.desc	Empieza con +40 de dinero por nivel.	Start with +40 money per level.	Comece com +40 de dinheiro por nível.	レベルごとに初期資金+40。
+menu.comfort	Accesibilidad	Accessibility	Acessibilidade	アクセシビリティ
+comfort.shake	Sacudida de pantalla: {0}%	Screen shake: {0}%	Tremor de tela: {0}%	画面の揺れ：{0}%
+comfort.hitstop	Pausas de impacto: {0}	Hit pauses: {0}	Pausas de impacto: {0}	ヒットストップ：{0}
+comfort.flashes	Destellos: {0}	Flashes: {0}	Clarões: {0}	フラッシュ：{0}
+comfort.numbers	Números de daño: {0}	Damage numbers: {0}	Números de dano: {0}	ダメージ表示：{0}
+comfort.scale	Tamaño de interfaz: {0}%	Interface size: {0}%	Tamanho da interface: {0}%	UIサイズ：{0}%
+loco.weapon	ARMA DEL PILOTO	PILOT'S WEAPON	ARMA DO PILOTO	パイロットの武器
+loco.soon	Próximamente	Coming soon	Em breve	近日公開
+loco.story.yes	★ Con historia	★ Has a story	★ Com história	★ ストーリーあり
+loco.mode.story	Modo historia	Story mode	Modo história	ストーリーモード
+loco.mode.endless	Modo infinito	Endless mode	Modo infinito	エンドレスモード
+loco.go	¡En marcha!	All aboard!	Partiu!	出発！
+story.faceless.0.title	UN LEGADO EN BLANCO	A BLANK LEGACY	UM LEGADO EM BRANCO	白紙の遺産
+story.faceless.0.intro.1	Soy el campeón de este planeta. Todos lo dicen con orgullo. A mí nunca me preguntaron si quería serlo.	I am this planet's champion. Everyone says it with pride. Nobody ever asked whether I wanted to be.	Sou o campeão deste planeta. Todos dizem isso com orgulho. Nunca me perguntaram se eu queria ser.	僕はこの星の王者だ。みんな誇らしげにそう呼ぶ。僕がそうなりたいか、聞いた人はいない。
+story.faceless.0.intro.2	Mi trabajo es competir. Ganar. Y destruir a quien me señalen. Cada victoria celebra un nombre que siento cada vez menos mío.	My job is to compete. To win. And to destroy whoever they point at. Every victory celebrates a name that feels less and less like mine.	Meu trabalho é competir. Vencer. E destruir quem mandarem. Cada vitória celebra um nome que sinto cada vez menos meu.	僕の仕事は競い、勝ち、命じられた相手を倒すこと。勝つたびに、自分の名が少しずつ他人のものに思えてくる。
+story.faceless.0.intro.3	Mi padre hizo lo mismo antes que yo. Y antes de él, mi abuelo.	My father did the same before me. And before him, my grandfather.	Meu pai fez o mesmo antes de mim. E, antes dele, meu avô.	僕の前には父が同じ仕事をしていた。その前は、祖父だった。
+story.faceless.0.intro.4	No heredé una vocación. Heredé una obligación. A eso lo llaman legado.	I did not inherit a calling. I inherited an obligation. They call that a legacy.	Não herdei uma vocação. Herdei uma obrigação. É isso que chamam de legado.	受け継いだのは夢じゃない。義務だった。みんなはそれを「伝統」と呼ぶ。
+story.faceless.0.intro.5	Yo quería otra cosa: una vida dedicada al arte. Aprender a dibujar lo que veo... y también lo que todavía no existe.	I wanted something else: a life devoted to art. To learn to draw what I see... and what does not exist yet.	Eu queria outra coisa: uma vida dedicada à arte. Aprender a desenhar o que vejo... e o que ainda nem existe.	僕は別の人生が欲しかった。芸術に生きて、見えるものを描く。そして、まだ存在しないものも。
+story.faceless.0.intro.6	En lugar de contar derrotados, quería llenar cuadernos. Que mis manos sirvieran para crear algo.	Instead of counting the defeated, I wanted to fill sketchbooks. To use my hands to create something.	Em vez de contar derrotados, eu queria encher cadernos. Usar minhas mãos para criar alguma coisa.	倒した相手を数えるより、スケッチブックを埋めたかった。この手で、何かを生み出したかった。
+story.faceless.0.intro.7	Mi locomotora es mi mejor amiga. No es una forma de hablar: tiene un alma, una conciencia y su propia manera de entenderme.	My locomotive is my best friend. That is no figure of speech: she has a soul, a mind, and her own way of understanding me.	Minha locomotiva é minha melhor amiga. Não é força de expressão: ela tem alma, consciência e seu próprio jeito de me entender.	僕の機関車は親友だ。たとえ話じゃない。彼女には魂と意識があり、彼女なりに僕を理解してくれる。
+story.faceless.0.intro.8	No es ella quien me encadena. Es lo que todos esperan de nosotros. Mientras yo siguiera a sus mandos, tendría que seguir siendo el campeón.	She is not the one who chains me down. It is what everyone expects of us. As long as I stayed at her controls, I had to remain the champion.	Não é ela que me prende. É o que todos esperam de nós. Enquanto eu estivesse no comando dela, teria que continuar sendo o campeão.	僕を縛るのは彼女じゃない。僕らに寄せられる期待だ。彼女を操縦する限り、僕は王者でいなければならなかった。
+story.faceless.0.intro.9	Guardaba mis dibujos entre un viaje y el siguiente. Siempre había otra orden. Siempre alguien más a quien vencer.	I tucked my drawings away between journeys. There was always another order. Always someone else to defeat.	Eu guardava meus desenhos entre uma viagem e outra. Sempre havia outra ordem. Sempre mais alguém para vencer.	旅の合間に、描いた絵をしまい込んだ。次の命令が待っていた。次に倒す相手が待っていた。
+story.faceless.0.intro.10	Hasta que comenzó la guerra. El planeta entero dejó de hablar de mis victorias y empezó a hablar de sobrevivir.	Then the war began. The whole planet stopped talking about my victories and started talking about survival.	Até que a guerra começou. O planeta inteiro parou de falar das minhas vitórias e começou a falar de sobreviver.	そして戦争が始まった。星中の人々は僕の勝利を語るのをやめ、生き残る方法を語り始めた。
+story.faceless.0.intro.11	Miré a mi amiga. Luego miré mis dibujos. Por primera vez, aquel futuro que parecía escrito se había quedado en blanco.	I looked at my friend. Then at my drawings. For the first time, the future that had seemed already written was a blank page.	Olhei para minha amiga. Depois, para meus desenhos. Pela primeira vez, aquele futuro que parecia escrito tinha virado uma página em branco.	親友を見た。それから、自分の絵を見た。決まりきっていたはずの未来が、初めて白紙になっていた。
+story.faceless.0.intro.12	Y entonces tuve una idea.	And then I had an idea.	E então tive uma ideia.	その時、ひとつの考えが浮かんだ。
+story.faceless.0.before.1	No vine por otro título.	I did not come for another title.	Não vim por mais um título.	また称号を取りに来たわけじゃない。
+story.faceless.0.before.2	Entonces demuéstrame a qué has venido.	Then show me what you came for.	Então me mostre a que veio.	なら、何をしに来たのか見せてみな。
+story.faceless.0.after.1	Queda mucho camino. Y esta vez quiero elegirlo yo.	There is a long road ahead. This time, I want to choose it myself.	Ainda há um longo caminho. E desta vez eu quero escolhê-lo.	道はまだ長い。今度は、自分で選びたい。
+story.faceless.0.outro.1	Continuará...	To be continued...	Continua...	つづく……

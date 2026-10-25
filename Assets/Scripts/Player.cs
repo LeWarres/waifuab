@@ -111,6 +111,13 @@ public class Player : MonoBehaviour
                 float coarse = parts[0].transform.lossyScale.x / body.lossyScale.x;
                 if (coarse > 1.5f) skin.SetFloat("_OutlineWidth", skin.GetFloat("_OutlineWidth") / coarse);
             }
+            // A warm rim of light round the heroes, so they stand out of the crowd and off the ground (RealToon).
+            skin.EnableKeyword("N_F_RL_ON");
+            skin.SetFloat("_N_F_RL", 1f);
+            skin.SetColor("_RimLightColor", new Color(1f, 0.9f, 0.75f));
+            skin.SetFloat("_RimLightColorPower", 0.45f);
+            skin.SetFloat("_RimLightUnfill", 2.4f); // a thin edge, not a wash over the hat
+            skin.SetFloat("_RimLightSoftness", 0.6f);
         }
         foreach (Renderer part in parts) part.sharedMaterials = System.Array.ConvertAll(part.sharedMaterials, _ => skin);
     }

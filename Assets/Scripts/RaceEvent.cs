@@ -283,7 +283,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             wrecks.Add((at, 3.4f));
         }
 
-        if (trench) { BuildVent(); course.gameObject.SetActive(false); return; } // the trench ends at the vent, not a launcher
+        if (trench) { BuildVent(); Freeze(); course.gameObject.SetActive(false); return; } // the trench ends at the vent, not a launcher
         DressCity();
         // The launcher at B: chevrons on the road point at it, a chequered line, then a ramp that curves up to the
         // sky through rings of light, between two striped towers.
@@ -330,7 +330,30 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             for (int y = 0; y < 10; y++) Block(foot + Vector3.up * (y * 10f + 5f), look, new Vector3(7f, 10f, 7f), y % 2 == 0 ? white : stripe);
             Ball(foot + Vector3.up * 102f, 3f, gold);
         }
+        Freeze();
         course.gameObject.SetActive(false);
+    }
+
+    // Everything of the course that never moves, batched together: thousands of blocks drawn as a few big meshes.
+    // What moves (the crowd, the traffic, the holograms and blimps, the beacons, the laser gates) stays as it is.
+    void Freeze()
+    {
+        var moving = new HashSet<Transform>();
+        foreach (var c in crowd) moving.Add(c.t);
+        foreach (var c in traffic) moving.Add(c.t);
+        foreach (Transform h in holograms) moving.Add(h);
+        foreach (Transform b in beacons) moving.Add(b);
+        foreach (var l in lasers) moving.Add(l.beam);
+        var still = new List<GameObject>();
+        foreach (MeshRenderer part in course.GetComponentsInChildren<MeshRenderer>(true))
+        {
+            MeshFilter shape = part.GetComponent<MeshFilter>();
+            if (!shape || !shape.sharedMesh || !shape.sharedMesh.isReadable) continue;
+            bool moves = false;
+            for (Transform up = part.transform; up && up != course && !moves; up = up.parent) moves = moving.Contains(up);
+            if (!moves) still.Add(part.gameObject);
+        }
+        StaticBatchingUtility.Combine(still.ToArray(), course.gameObject);
     }
 
     void Ribbon(string name, float from, float to, float y, Material m, int dashEvery = 0)
@@ -1062,53 +1085,47 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
     }
 
     // The blast itself, drawn here so it shows whatever the effects do on real time: a burst of balls of fire
-    // flying out and burning down, and puffs of smoke rising after them.
-    readonly List<(Transform ball, Vector3 velocity, float from, float until, float size)> fireballs = new();
+    // flying out and burning down, and puffs of smoke rising after them. No objects: each ball is a spot in a list,
+    // all drawn instanced, a batch per material (fireworks throw hundreds of them).
+    readonly List<(Vector3 at, Vector3 velocity, float from, float until, float size, Material look)> fireballs = new();
+    readonly Dictionary<Material, List<Matrix4x4>> fireDraws = new();
     Material[] fireMats;
+    static Mesh sphere;
+    Material[] FireMats => fireMats ??= new[] { TrainSim.Mat(new Color(3.2f, 1.4f, 0.2f), false), TrainSim.Mat(new Color(3f, 2.6f, 0.6f), false), TrainSim.Mat(new Color(0.3f, 0.3f, 0.33f), false) };
     void Fireball(Vector3 at, float now)
     {
-        fireMats ??= new[] { TrainSim.Mat(new Color(3.2f, 1.4f, 0.2f), false), TrainSim.Mat(new Color(3f, 2.6f, 0.6f), false), TrainSim.Mat(new Color(0.3f, 0.3f, 0.33f), false) };
         for (int k = 0; k < 22; k++)
         {
             bool smoke = k >= 14;
-            var ball = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            Destroy(ball.GetComponent<Collider>());
-            var look = ball.GetComponent<Renderer>();
-            look.sharedMaterial = fireMats[smoke ? 2 : k % 2];
-            look.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            ball.transform.SetParent(course, false);
-            ball.transform.position = at;
             Vector3 v = Random.onUnitSphere;
             v.y = Mathf.Abs(v.y);
             float from = now + (smoke ? 0.4f : 0f);
-            fireballs.Add((ball.transform, smoke ? v * 2f + Vector3.up * 4f : v * Random.Range(7f, 14f), from, from + (smoke ? Random.Range(1.2f, 1.8f) : Random.Range(0.8f, 1.3f)), smoke ? Random.Range(1.6f, 2.6f) : Random.Range(1f, 2.4f)));
+            fireballs.Add((at, smoke ? v * 2f + Vector3.up * 4f : v * Random.Range(7f, 14f), from, from + (smoke ? Random.Range(1.2f, 1.8f) : Random.Range(0.8f, 1.3f)), smoke ? Random.Range(1.6f, 2.6f) : Random.Range(1f, 2.4f), FireMats[smoke ? 2 : k % 2]));
         }
     }
-    void Spark(Vector3 at, float now)
-    {
-        fireMats ??= new[] { TrainSim.Mat(new Color(3.2f, 1.4f, 0.2f), false), TrainSim.Mat(new Color(3f, 2.6f, 0.6f), false), TrainSim.Mat(new Color(0.3f, 0.3f, 0.33f), false) };
-        var ball = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        Destroy(ball.GetComponent<Collider>());
-        var look = ball.GetComponent<Renderer>();
-        look.sharedMaterial = fireMats[Random.Range(0, 2)];
-        look.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        ball.transform.SetParent(course, false);
-        ball.transform.position = at;
-        fireballs.Add((ball.transform, Random.insideUnitSphere * 3f - Vector3.up * 2f, now, now + 0.5f, Random.Range(0.8f, 1.6f)));
-    }
+    void Spark(Vector3 at, float now) =>
+        fireballs.Add((at, Random.insideUnitSphere * 3f - Vector3.up * 2f, now, now + 0.5f, Random.Range(0.8f, 1.6f), FireMats[Random.Range(0, 2)]));
 
     void Fireballs(float now)
     {
         float dt = Time.unscaledDeltaTime;
+        foreach (var list in fireDraws.Values) list.Clear();
         for (int i = fireballs.Count - 1; i >= 0; i--)
         {
             var f = fireballs[i];
-            if (!f.ball || now >= f.until) { if (f.ball) Destroy(f.ball.gameObject); fireballs.RemoveAt(i); continue; }
+            if (now >= f.until) { fireballs[i] = fireballs[^1]; fireballs.RemoveAt(fireballs.Count - 1); continue; }
             float t = Mathf.Clamp01((now - f.from) / (f.until - f.from));
-            f.ball.localScale = Vector3.one * (now < f.from ? 0f : f.size * (1f - t) * (0.6f + t));
-            f.ball.position += f.velocity * dt;
-            fireballs[i] = (f.ball, f.velocity * (1f - 2.5f * dt), f.from, f.until, f.size); // slowing as it burns
+            f.at += f.velocity * dt;
+            f.velocity *= 1f - 2.5f * dt; // slowing as it burns
+            fireballs[i] = f;
+            if (now < f.from) continue;
+            if (!fireDraws.TryGetValue(f.look, out var draws)) fireDraws[f.look] = draws = new List<Matrix4x4>();
+            draws.Add(Matrix4x4.TRS(f.at, Quaternion.identity, Vector3.one * f.size * (1f - t) * (0.6f + t)));
         }
+        if (!sphere) sphere = Resources.GetBuiltinResource<Mesh>("Sphere.fbx");
+        foreach (var pair in fireDraws)
+            if (pair.Value.Count > 0)
+                Graphics.RenderMeshInstanced(new RenderParams(pair.Key) { worldBounds = new Bounds(Vector3.zero, Vector3.one * 100000f), shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off }, sphere, 0, pair.Value);
     }
 
     // An effect out here: time stands still outside, so it is played by hand, on real time (as in BrawlEvent).

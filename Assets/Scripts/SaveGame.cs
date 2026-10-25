@@ -18,6 +18,13 @@ public static class SaveGame
         public List<string> keep = new();     // per chapter won: the upgrade chosen to keep (a Story token)
         public List<string> passive = new();  // per chapter won: the upgrade carried at random, "<id>*<level>"
         public List<int> truck = new();       // per chapter won: the level of the truck's wagon won in it, 0 none
+        // Across every run (Records.cs): tickets to spend in the workshop, its upgrades bought, the achievements
+        // won, and the best endless run so far.
+        public int tickets;
+        public List<int> workshop = new();
+        public List<string> achievements = new();
+        public int bestStations, bestKills;
+        public float bestTime;
     }
 
     static Data data;
@@ -89,6 +96,30 @@ public static class SaveGame
         if (D.chapter == chapter) return; // already so: nothing to write
         D.chapter = chapter;
         Write();
+    }
+
+    public static int Tickets => D.tickets;
+    public static void AddTickets(int amount) { D.tickets = Mathf.Max(0, D.tickets + amount); Write(); }
+    public static int WorkshopLevel(int upgrade) => upgrade < D.workshop.Count ? D.workshop[upgrade] : 0;
+    public static void SetWorkshopLevel(int upgrade, int level)
+    {
+        while (D.workshop.Count <= upgrade) D.workshop.Add(0);
+        D.workshop[upgrade] = level;
+        Write();
+    }
+    public static bool HasAchievement(string id) => D.achievements.Contains(id);
+    public static void AddAchievement(string id) { if (!D.achievements.Contains(id)) { D.achievements.Add(id); Write(); } }
+    public static int BestStations => D.bestStations;
+    public static int BestKills => D.bestKills;
+    public static float BestTime => D.bestTime;
+    // An endless run over: true if it is the best yet (by stations reached, then by time).
+    public static bool Record(int stations, int kills, float time)
+    {
+        bool best = stations > D.bestStations || (stations == D.bestStations && time > D.bestTime);
+        if (best) { D.bestStations = stations; D.bestTime = time; }
+        D.bestKills = Mathf.Max(D.bestKills, kills);
+        Write();
+        return best;
     }
 
     public static string Keep(int chapter) => chapter < D.keep.Count ? D.keep[chapter] : "";

@@ -346,15 +346,6 @@ public partial class RaceEvent
         Material m = fireworkMats[Random.Range(0, fireworkMats.Length)], m2 = fireworkMats[Random.Range(0, fireworkMats.Length)];
         float speed = Random.Range(24f, 34f);
         for (int k = 0; k < 40; k++)
-        {
-            var ball = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            Destroy(ball.GetComponent<Collider>());
-            var look = ball.GetComponent<Renderer>();
-            look.sharedMaterial = k % 3 == 0 ? m2 : m;
-            look.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            ball.transform.SetParent(course, false);
-            ball.transform.position = at;
-            fireballs.Add((ball.transform, Random.onUnitSphere * speed * Random.Range(0.85f, 1f), now, now + Random.Range(1.4f, 2f), Random.Range(2.6f, 4f)));
-        }
+            fireballs.Add((at, Random.onUnitSphere * speed * Random.Range(0.85f, 1f), now, now + Random.Range(1.4f, 2f), Random.Range(2.6f, 4f), k % 3 == 0 ? m2 : m));
     }
 }
