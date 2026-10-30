@@ -162,9 +162,10 @@ public class EventPanel : MonoBehaviour
         bool button = state != 4 && IsButton(text);
         box.text.text = state == 4 ? "X" : button ? "" : text;
         box.glyph.Set(button ? "[" + text + "]" : "");
-        // To come: pale; now: the hot colour, big, beating; right: the main colour with a pop; wrong: red, shaking.
+        // To come: pale; now: the hot colour, big, beating; right: green with a pop (never the hero's colour, which
+        // may be red); wrong: red, shaking.
         var wrong = new Color(1f, 0.25f, 0.28f);
-        box.back.color = box.back.bottom = state == 4 ? UiKit.Slate : state == 1 ? tone.main : state == 2 ? wrong : state == 3 ? tone.hot : new Color(1f, 1f, 1f, 0.9f);
+        box.back.color = box.back.bottom = state == 4 ? UiKit.Slate : state == 1 ? UiKit.Mint :state == 2 ? wrong : state == 3 ? tone.hot : new Color(1f, 1f, 1f, 0.9f);
         box.text.color = state == 0 || state == 3 ? tone.deep : Color.white;
         float since = now - box.changed;
         float size = state == 3 ? 1.22f + Mathf.Sin(now * 9f) * 0.05f : state == 1 ? 1f + 0.35f * Mathf.Clamp01(1f - since / 0.18f) : state == 0 ? 0.92f : 1f;

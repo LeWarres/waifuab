@@ -267,6 +267,7 @@ public class Combat : MonoBehaviour
         new EnemyType { name = "Armas", loot = 2, color = new Color(0.4f, 0.7f, 0.25f), health = 14f, size = 1.3f, reward = 0, flies = true },
     };
 
+    static int lastEnemyId;
     public class Enemy
     {
         public Vector3 position, velocity; // velocity: only floating goods use it
@@ -275,7 +276,7 @@ public class Combat : MonoBehaviour
         public float markedUntil; // the Hawk Eye's mark: everything hurts it twice as much meanwhile
         public float punch = 1f;  // its blow on a wagon, times its type's (a stampede's come in hard)
         public int index, pick; // pick: a number of its own, which decides the wagon it goes for
-        public int id; // changes when the enemy dies; whoever targets it compares ids to notice
+        public int id = ++lastEnemyId; // unique, and new when the enemy dies: whoever targets it (or has hit it) compares ids
         public System.Func<float, float> onUltimateHit; // a proxy body can account against its owner's actual HP
     }
 
@@ -507,7 +508,7 @@ public class Combat : MonoBehaviour
     readonly Batch dragonDark = new Batch(new Color(0.05f, 0.14f, 0.55f), false);             // the Masamune dragon's deep blue hide, outlined
     readonly Batch dragonScale = new Batch(new Color(0.2f, 0.5f, 1f), false, glow: 1.4f);   // its scales, a lighter blue
     readonly Batch giantCut = new Batch(new Color(1f, 0.85f, 0.15f), false, glow: 4f);       // Onini's ultimate cut, gold
-    const float GiantCutReach = 120f, GiantCutHalf = 28f;                                   // far past the screen's edge; its half width
+    const float GiantCutReach = 120f, GiantCutHalf = 28f, GiantCutBand = 4f; // far past the screen's edge; its half width; how deep its hit runs
     readonly Batch dragonFire = new Batch(new Color(0.35f, 0.7f, 1f), false, glow: 2.6f);   // and the blue flames all over it: only these glow
     readonly Batch stain = new Batch(new Color(0.02f, 0.02f, 0.025f), false, round: true); // round black marks left by the dead
     readonly Batch blob = new Batch(new Color(0.03f, 0.03f, 0.04f), false, round: true); // a dark spot under each robot: it stands out from any ground
@@ -1628,11 +1629,19 @@ public class Combat : MonoBehaviour
     void Pierce(Bullet b, float radius)
     {
         radius *= Area;
+        bool giant = b.style == Weapon.Slash && b.phase < 0f;
+        Vector3 side = Vector3.Cross(Vector3.up, b.dir);
         for (int j = enemies.Count - 1; j >= 0; j--)
         {
             Enemy e = enemies[j];
             float reach = radius + e.type.size * 0.5f, dx = e.position.x - b.position.x, dz = e.position.z - b.position.z;
-            if (dx * dx + dz * dz > reach * reach || b.hits.Contains(e.id)) continue;
+            if (giant)
+            {
+                // The giant cut is a crescent bowed back (as DrawSlash draws it), not a disc: tip to tip, a band along it.
+                float across = dx * side.x + dz * side.z, along = dx * b.dir.x + dz * b.dir.z, bow = -across * across / radius * 0.55f;
+                if (Mathf.Abs(across) > reach || Mathf.Abs(along - bow) > GiantCutBand + e.type.size * 0.5f || b.hits.Contains(e.id)) continue;
+            }
+            else if (dx * dx + dz * dz > reach * reach || b.hits.Contains(e.id)) continue;
             b.hits.Add(e.id);
             Burst("spark", e.position, 0.7f);
             heroHit = b.hero;
@@ -2183,7 +2192,7 @@ public class Combat : MonoBehaviour
     {
         int last = enemies.Count - 1;
         Enemy e = enemies[i];
-        e.id++;
+        e.id = ++lastEnemyId;
         enemyPool.Push(e);
         enemies[i] = enemies[last];
         enemies[i].index = i;
