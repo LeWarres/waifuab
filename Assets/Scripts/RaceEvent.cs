@@ -254,6 +254,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         if (trench) { asphalt.mainTextureScale = new Vector2(2f, 0.5f); Tint(wall, new Color(0.26f, 0.3f, 0.34f)); } // the trench: the base's plates, steel walls
         wall.SetInt("_Culling", 0);
         Material cyan = TrainSim.Mat(new Color(0.3f, 2.2f, 2.6f), false), pink = TrainSim.Mat(new Color(2.6f, 0.45f, 1.7f), false), gold = TrainSim.Mat(new Color(2.8f, 1.9f, 0.4f), false);
+        if (!trench && !crateRun) { Tint(cyan, new Color(0.45f, 1f, 1.35f)); Tint(pink, new Color(0.2f, 0.5f, 1.5f)); } // the city: Persona 3's blues, ice and electric, and dimmer
         if (crateRun) { Tint(cyan,new Color(2.4f,.35f,.08f)); Tint(pink,new Color(2.6f,.85f,.12f)); Tint(steel,new Color(.17f,.1f,.12f)); Tint(wall,new Color(.2f,.09f,.12f)); }
         Ribbon("Road", -roadWidth / 2f, roadWidth / 2f, 0.05f, asphalt);
         float wallHigh = trench ? 22f : 1.2f; // the trench: sheer walls either side
@@ -320,7 +321,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         var junk = new List<GameObject>();
         beacons.Clear();
         Material[] carPaints = System.Array.ConvertAll(new[] { new Color(0.85f, 0.12f, 0.14f), new Color(0.15f, 0.35f, 0.85f), new Color(0.95f, 0.95f, 0.97f), new Color(0.12f, 0.12f, 0.14f), new Color(1f, 0.75f, 0.1f), new Color(0.4f, 0.8f, 0.6f) }, c => TrainSim.Mat(c));
-        Material hazard = TrainSim.Mat(new Color(2.4f, 0.9f, 0.1f), false), hazardDark = TrainSim.Mat(new Color(0.12f, 0.1f, 0.1f), false), beacon = TrainSim.Mat(new Color(3f, 0.5f, 0.2f), false);
+        Material hazard = TrainSim.Mat(new Color(2.4f, 0.9f, 0.1f), false), hazardDark = TrainSim.Mat(new Color(0.12f, 0.1f, 0.1f), false), beacon = TrainSim.Mat(new Color(2.2f, 0.3f, 0.15f), false); // red: danger, the one warm light
         foreach (GameObject kind in Resources.LoadAll<GameObject>(crateRun ? "Scenery/hell" : trench ? "Scenery/fortress" : "Scenery/city"))
         {
             Bounds box = Bounds(kind);
@@ -691,7 +692,9 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         endsAt = -1f;
         message.text = "";
         hint.text = L10n.T(crateRun ? "giger.crates.controls" : trench ? "trench.controls" : "race.controls");
-        sky.GetComponent<Renderer>().sharedMaterial.mainTexture = Resources.Load<Texture2D>(crateRun ? "Sky/hell" : trench ? "Sky/fortress" : "Sky/city");
+        sky.GetComponent<Renderer>().sharedMaterial.mainTexture = Resources.Load<Texture2D>(crateRun ? "Sky/hell" : trench ? "Sky/fortress" : "Sky/race");
+        // The city race at blue hour (Tools/make_race_sky.py), its haze cool to match; the others keep their warm one.
+        if (haze.profile.TryGet(out UnityEngine.Rendering.HighDefinition.Fog fog)) fog.color.value = trench || crateRun ? new Color(1f, 0.74f, 0.58f) : new Color(0.32f, 0.46f, 0.78f);
         standings.transform.parent.gameObject.SetActive(!trench && !crateRun); // alone in the trench: no standings
         if (trench) TrenchBegin();
         briefing.gameObject.SetActive(true);

@@ -25,8 +25,10 @@ public partial class RaceEvent
         startLights.Clear();
         holograms.Clear();
         facades.Clear();
-        Material cyan = Glow(new Color(0.3f, 2.4f, 2.8f)), pink = Glow(new Color(2.8f, 0.45f, 1.8f)), gold = Glow(new Color(2.8f, 1.9f, 0.4f)), lime = Glow(new Color(0.6f, 2.8f, 0.4f));
-        Material[] neons = { cyan, pink, gold, lime, Glow(new Color(1.4f, 0.6f, 3f)) };
+        // Persona 3's blues, and only those: ice, electric blue, a deep one and a cool white, none of them blinding (the
+        // UI is in the same blues). Red is kept for danger and the start lights.
+        Material cyan = Glow(new Color(0.45f, 1f, 1.35f)), pink = Glow(new Color(0.2f, 0.5f, 1.5f)), gold = Glow(new Color(1.25f, 1.3f, 1.45f)), lime = Glow(new Color(0.12f, 0.28f, 1.2f));
+        Material[] neons = { cyan, pink, gold, lime };
         Material steel = TrainSim.Mat(new Color(0.62f, 0.65f, 0.72f)), dark = TrainSim.Mat(new Color(0.08f, 0.08f, 0.1f)), white = TrainSim.Mat(new Color(0.95f, 0.95f, 0.97f));
         Material red = Glow(new Color(3f, 0.3f, 0.2f)), kerbRed = TrainSim.Mat(new Color(0.85f, 0.12f, 0.1f), false), kerbWhite = TrainSim.Mat(new Color(0.95f, 0.95f, 0.95f), false);
         var posters = new List<Material>();
@@ -86,7 +88,7 @@ public partial class RaceEvent
         }
 
         // Chevron boards round the outside of every hard bend, pointing the way.
-        Material chevron = Glow(new Color(3f, 2.2f, 0.2f));
+        Material chevron = Glow(new Color(1.7f, 1.25f, 0.15f));
         for (int i = 2; i < points.Count - 6; i++)
         {
             float turn = Vector3.SignedAngle(dirs[i], dirs[i + 4], Vector3.up);
@@ -103,7 +105,7 @@ public partial class RaceEvent
         Skyline(neons, steel, red, posters);
         Blimps(posters);
         Traffic(neons);
-        fireworkMats = new[] { Glow(new Color(4f, 0.6f, 0.3f)), Glow(new Color(0.4f, 3.6f, 4f)), Glow(new Color(4f, 3.2f, 0.6f)), Glow(new Color(3.6f, 0.6f, 3.4f)), Glow(new Color(0.7f, 4f, 0.8f)), Glow(new Color(3.4f, 3.4f, 4f)) };
+        fireworkMats = new[] { Glow(new Color(0.5f, 1.6f, 2.4f)), Glow(new Color(0.3f, 0.8f, 2.6f)), Glow(new Color(2.2f, 2.3f, 2.6f)), Glow(new Color(2.4f, 1.8f, 0.5f)) }; // blues and white, one gold
         nextFirework = 0f;
     }
 
@@ -165,7 +167,7 @@ public partial class RaceEvent
             Material neon = neons[Random.Range(0, neons.Length)];
             // One of the modelled towers (Tools/make_race_kit.py, about 100 m), stretched to this one's height and
             // girth, its windows the shared facade, its bands of light this one's neon.
-            GameObject tower = Kit("tower" + Random.Range(1, 5), at, rot, neon);
+            GameObject tower = Kit("tower" + Random.Range(1, 5), at, rot, Random.value < 0.45f ? steel : neon); // under half lit up: the windows carry it
             float girth = Mathf.Clamp(wide / 30f, 0.6f, 1.4f);
             tower.transform.localScale = new Vector3(girth, high / 100f, girth);
             Renderer look = tower.GetComponentInChildren<Renderer>();
@@ -184,7 +186,7 @@ public partial class RaceEvent
                 float pw = Mathf.Min(wide * 1.5f, 54f);
                 Picture(at - away * (Mathf.Max(wide, deep) * 0.75f + 1f) + Vector3.up * high * Random.Range(0.45f, 0.7f), Quaternion.LookRotation(away), pw, pw / 3f, posters[Random.Range(0, posters.Count)]);
             }
-            if (Random.value < 0.1f) // a hologram over the roof
+            if (Random.value < 0.04f) // a hologram over the roof, now and then
             {
                 var holo = new GameObject("Hologram").transform;
                 holo.SetParent(course, false);
@@ -225,7 +227,7 @@ public partial class RaceEvent
     // Lanes of flying cars over the city on both sides, some each way, kept round wherever ours is.
     void Traffic(Material[] neons)
     {
-        Material shell = TrainSim.Mat(new Color(0.2f, 0.22f, 0.3f)), tail = Glow(new Color(4f, 0.3f, 0.2f)), head = Glow(new Color(3.5f, 3.5f, 3f));
+        Material shell = TrainSim.Mat(new Color(0.2f, 0.22f, 0.3f)), tail = Glow(new Color(2.2f, 0.25f, 0.15f)), head = Glow(new Color(2f, 2.05f, 2.2f));
         for (int lane = 0; lane < 8; lane++)
         {
             float off = (lane % 2 == 0 ? -1f : 1f) * Random.Range(60f, 240f), high = Random.Range(28f, 95f), speed = (lane % 4 < 2 ? 1f : -1f) * Random.Range(35f, 80f);
