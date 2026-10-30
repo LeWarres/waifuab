@@ -414,6 +414,7 @@ public class Combat : MonoBehaviour
 
     public void Ultimate(Vector3 from, Weapon weapon)
     {
+        if (Story.Hero == "onini") { GiantCut(from, weapon); return; }
         // The shot up: a tall glowing column from the hero, a flash at her feet.
         Spawn(from + Vector3.up * 20f, new Vector3(0.7f, 40f, 0.7f), weapon.Batch, 0.35f);
         Burst("levelup", from, 2.5f);
@@ -444,6 +445,24 @@ public class Combat : MonoBehaviour
             Vector3 at = ground.Raycast(ray, out float hit) ? ray.GetPoint(hit) : from;
             meteors.Add(new Meteor { at = at, landAt = Time.time + MeteorDelay + MeteorFall + k * MeteorGap, look = look, weapon = weapon });
         }
+    }
+
+    // Onini's ultimate: one huge yellow crescent, the Masamune's cut grown giant, flying on until it leaves the screen.
+    void GiantCut(Vector3 from, Weapon weapon)
+    {
+        Enemy first = null;
+        foreach (Enemy e in enemies)
+            if (!e.type.projectile && (first == null || (e.position - from).sqrMagnitude < (first.position - from).sqrMagnitude)) first = e;
+        Vector3 dir = first != null ? FlatDir(first, from) : Vector3.ProjectOnPlane(Camera.main.transform.right, Vector3.up).normalized;
+        Bullet b = Spawn(from, Vector3.one, giantCut, 99f);
+        b.weapon = weapon;
+        b.hero = true;
+        b.style = Weapon.Slash;
+        b.dir = dir;
+        b.phase = -1f;
+        b.span = GiantCutReach / weapon.speed;
+        Burst("spark", from + dir, 5f);
+        train.Shake(0.4f);
     }
 
     void Meteors()
@@ -487,6 +506,8 @@ public class Combat : MonoBehaviour
     readonly Batch healRing = new Batch(new Color(0.5f, 1f, 0.45f), false, glow: 3f);        // the Solar Heart's mending beat
     readonly Batch dragonDark = new Batch(new Color(0.05f, 0.14f, 0.55f), false);             // the Masamune dragon's deep blue hide, outlined
     readonly Batch dragonScale = new Batch(new Color(0.2f, 0.5f, 1f), false, glow: 1.4f);   // its scales, a lighter blue
+    readonly Batch giantCut = new Batch(new Color(1f, 0.85f, 0.15f), false, glow: 4f);       // Onini's ultimate cut, gold
+    const float GiantCutReach = 120f, GiantCutHalf = 14f;                                   // far past the screen's edge; its half width
     readonly Batch dragonFire = new Batch(new Color(0.35f, 0.7f, 1f), false, glow: 2.6f);   // and the blue flames all over it: only these glow
     readonly Batch stain = new Batch(new Color(0.02f, 0.02f, 0.025f), false, round: true); // round black marks left by the dead
     readonly Batch blob = new Batch(new Color(0.03f, 0.03f, 0.04f), false, round: true); // a dark spot under each robot: it stands out from any ground
@@ -1001,6 +1022,7 @@ public class Combat : MonoBehaviour
         foreach (Batch b in prism) b.Flush();
         dragonScale.Flush();
         dragonFire.Flush();
+        giantCut.Flush();
         stain.Flush();
         blob.Flush();
         foreach (Weapon w in Weapon.Wagon) w.Batch.Flush();
@@ -1541,7 +1563,7 @@ public class Combat : MonoBehaviour
     static float Zig(Bullet b, float d) => b.phase > 0f ? (Mathf.PingPong(d / 4f + 1f, 2f) - 1f) * 4f : 0f;
 
     // Half the width the cut sweeps: it widens as it flies; the dragon's jaws are wide all along.
-    static float SlashHalf(Bullet b) => b.phase > 0f ? 3.5f : (1.6f + 0.25f * b.level) * (0.7f + 0.5f * b.age / b.span);
+    static float SlashHalf(Bullet b) => b.phase > 0f ? 3.5f : b.phase < 0f ? GiantCutHalf : (1.6f + 0.25f * b.level) * (0.7f + 0.5f * b.age / b.span);
 
     void DrawSlash(Bullet b, float clock)
     {
@@ -1556,7 +1578,7 @@ public class Combat : MonoBehaviour
                 float u = s / (Pieces - 1f) * 2f - 1f;
                 Vector3 at = b.position + Vector3.up * 0.8f + side * (u * half) - b.dir * (u * u * half * 0.55f);
                 Vector3 tangent = side - b.dir * (1.1f * u);
-                float thick = 0.45f * (1f - u * u * 0.75f);
+                float thick = 0.45f * (b.phase < 0f ? 6f : 1f) * (1f - u * u * 0.75f);
                 b.batch.Add(at, new Vector3(thick, 0.1f, half * 2.6f / (Pieces - 1)), Quaternion.LookRotation(tangent));
             }
             return;
@@ -1615,7 +1637,8 @@ public class Combat : MonoBehaviour
             Burst("spark", e.position, 0.7f);
             heroHit = b.hero;
             source = b.weapon;
-            Hurt(e, b.weapon.Damage(b.level) * Power * (b.style == Weapon.Slash && b.phase > 0f ? 2f : 1f)); // the dragon bites twice as hard
+            if (b.style == Weapon.Slash && b.phase < 0f) Hurt(e, 90f * Balance.Scale * (1f + healthPerLevel * level), false, true); // the giant cut hits like a meteor
+            else Hurt(e, b.weapon.Damage(b.level) * Power * (b.style == Weapon.Slash && b.phase > 0f ? 2f : 1f)); // the dragon bites twice as hard
             heroHit = false;
         }
     }

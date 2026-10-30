@@ -220,7 +220,7 @@ public partial class TrainSim : MonoBehaviour
     bool ultimateAnnounce; // "ultimate ready" is still to be said, as soon as nothing else is on screen
     // A button game, a warning, a swarm coming or a talk is on: the ultimate (and its announcement) waits.
     public bool Alerting => InEvent || Warning || swarm.Incoming || brawl.Incoming || talk.Open;
-    public string KitButton => !Player.UsingGamepad ? "R" : Gamepad.current is DualShockGamepad ? "ÃƒÂ¢Ã¢â‚¬â€œÃ‚Â³" : "Y";
+    public string KitButton => !Player.UsingGamepad ? "R" : Gamepad.current is DualShockGamepad ? "△" : "Y";
     public float CarFill(int i) => cars[i].health / cars[i].maxHealth;
     public Vector3 CarTop(int i) => cars[i].pos + Vector3.up * (1.5f + wagonSize.y);
     public bool MenuShown => menuView.Visible || (deliveryReport && deliveryReport.Visible);
@@ -591,7 +591,7 @@ public partial class TrainSim : MonoBehaviour
                 edge.effectDistance = new Vector2(3f, -3f);
             }
         }
-        foreach (var h in triesHearts) { h.text = "ÃƒÂ¢Ã¢â€žÂ¢Ã‚Â¥"; h.rectTransform.localScale = Vector3.one; h.rectTransform.localRotation = Quaternion.identity; }
+        foreach (var h in triesHearts) { h.text = "♥"; h.rectTransform.localScale = Vector3.one; h.rectTransform.localRotation = Quaternion.identity; }
         triesBoard.gameObject.SetActive(on);
     }
     public void BossBar(string name, float fraction) => hud.Boss(name, fraction);
@@ -2605,8 +2605,8 @@ public partial class TrainSim : MonoBehaviour
         {
             kind = 11;
             menuTitle = L10n.T("junction.title");
-            menuSub = L10n.T("junction.sub", Player.UsingGamepad ? (Gamepad.current is DualShockGamepad ? "ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¢" : "A") : L10n.T("junction.confirm"),
-                             Player.UsingGamepad ? (Gamepad.current is DualShockGamepad ? "ÃƒÂ¢Ã¢â‚¬â€œÃ‚Â¡" : "X") : "Q");
+            menuSub = L10n.T("junction.sub", Player.UsingGamepad ? (Gamepad.current is DualShockGamepad ? "✕" : "A") : L10n.T("junction.confirm"),
+                             Player.UsingGamepad ? (Gamepad.current is DualShockGamepad ? "□" : "X") : "Q");
             Add("truck", L10n.T("junction.fight"), () => Junction(true));
             Add("lever", L10n.T("junction.skip"), () => Junction(false));
         }
