@@ -1350,6 +1350,7 @@ public partial class TrainSim : MonoBehaviour
         ShapeTrack();
         float total = kneeHeading[knees.Count - 1];
         knees.Clear();
+        pathOrigin = Vector3.zero; // straight again: AimCamera below reads Focus before PlaceTrack reshapes
         if (total != 0f)
         {
             Quaternion back = Quaternion.Euler(0f, -total, 0f);
