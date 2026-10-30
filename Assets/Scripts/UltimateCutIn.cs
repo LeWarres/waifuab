@@ -30,6 +30,7 @@ public class UltimateCutIn : MonoBehaviour
             "sentinel" => new Color(1f, 0.45f, 0.05f),
             "tzmil" => new Color(1f, 0.12f, 0.65f),
             "culu" => new Color(1f, 0.85f, 0.12f),
+            "onini" => new Color(1f, 0.2f, 0.08f),
             _ => new Color(0.35f, 1f, 0.5f)
         };
         streaks.powerColor = power;

@@ -8,6 +8,7 @@ public static class CaptureUltimateReferences
 {
     public static string Run() => Capture(new[] { "cerebron", "faceless", "sentinel", "tzmil", "culu" });
     public static string Culu() => Capture(new[] { "culu" });
+    public static string Onini() => Capture(new[] { "onini" });
 
     static string Capture(string[] heroes)
     {
@@ -41,7 +42,8 @@ public static class CaptureUltimateReferences
                 foreach (var part in body.GetComponentsInChildren<Transform>()) part.gameObject.layer = 31;
                 var rig = body.GetComponent<Animator>(); if (rig) rig.enabled = false;
                 var renderers = body.GetComponentsInChildren<Renderer>();
-                var material = new Material(Shader.Find("HDRP/Lit"));
+                var material = new Material(Shader.Find(id == "onini" ? "HDRP/Unlit" : "HDRP/Lit"));
+                if (id == "onini") material.SetTexture("_UnlitColorMap", Resources.Load<Texture2D>(who));
                 material.SetTexture("_BaseColorMap", Resources.Load<Texture2D>(who));
                 material.SetColor("_BaseColor", Color.white);
                 material.SetFloat("_Smoothness", 0.2f);
