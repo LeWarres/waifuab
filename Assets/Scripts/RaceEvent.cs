@@ -213,16 +213,30 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         if (crateRun) { Tint(cyan,new Color(2.4f,.35f,.08f)); Tint(pink,new Color(2.6f,.85f,.12f)); Tint(steel,new Color(.17f,.1f,.12f)); Tint(wall,new Color(.2f,.09f,.12f)); }
         Ribbon("Road", -roadWidth / 2f, roadWidth / 2f, 0.05f, asphalt);
         float wallHigh = trench ? 22f : 1.2f; // the trench: sheer walls either side
-        Wall("WallL", -roadWidth / 2f - 0.8f, -roadWidth / 2f, wallHigh, wall);
-        Wall("WallR", roadWidth / 2f, roadWidth / 2f + 0.8f, wallHigh, wall);
-        Ribbon("EdgeL", -roadWidth / 2f - 0.8f, -roadWidth / 2f, wallHigh + 0.02f, cyan);
-        Ribbon("EdgeR", roadWidth / 2f, roadWidth / 2f + 0.8f, wallHigh + 0.02f, pink);
+        bool kit = !trench && !crateRun; // the city's roadside is modelled (Tools/make_race_kit.py)
+        if (kit)
+        {
+            Barriers(-1, cyan);
+            Barriers(1, pink);
+        }
+        else
+        {
+            Wall("WallL", -roadWidth / 2f - 0.8f, -roadWidth / 2f, wallHigh, wall);
+            Wall("WallR", roadWidth / 2f, roadWidth / 2f + 0.8f, wallHigh, wall);
+            Ribbon("EdgeL", -roadWidth / 2f - 0.8f, -roadWidth / 2f, wallHigh + 0.02f, cyan);
+            Ribbon("EdgeR", roadWidth / 2f, roadWidth / 2f + 0.8f, wallHigh + 0.02f, pink);
+        }
         if (trench) { Ribbon("GlowL", -roadWidth / 2f - 0.05f, -roadWidth / 2f, 6f, cyan); Ribbon("GlowR", roadWidth / 2f, roadWidth / 2f + 0.05f, 6f, pink); }
         int gantry = 0;
         for (float s = 150f; s < total - 220f; s += 210f, gantry++)
         {
             Vector3 c = PointAt(s, out Vector3 d), right = Vector3.Cross(Vector3.up, d);
             Quaternion rot = Quaternion.LookRotation(d);
+            if (kit)
+            {
+                Kit("gantry", c, rot, gantry % 2 == 0 ? cyan : pink);
+                continue;
+            }
             for (int side = -1; side <= 1; side += 2) Block(c + right * side * (roadWidth / 2f + 3f) + Vector3.up * 8f, rot, new Vector3(1.8f, 16f, 1.8f), steel);
             Block(c + Vector3.up * 16.5f, rot, new Vector3(roadWidth + 8f, 1.8f, 2f), steel);
             Block(c + Vector3.up * 15.4f, rot, new Vector3(roadWidth + 6f, 0.4f, 0.8f), gantry % 2 == 0 ? cyan : pink);
@@ -234,6 +248,12 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             Quaternion rot = Quaternion.LookRotation(d);
             for (int side = -1; side <= 1; side += 2)
             {
+                if (kit)
+                {
+                    // Its arm reaches out over the road (the model's +x).
+                    Kit("lamp", c + right * side * (roadWidth / 2f + 2.2f), side < 0 ? rot : rot * Quaternion.Euler(0f, 180f, 0f), side < 0 ? cyan : pink);
+                    continue;
+                }
                 Block(c + right * side * (roadWidth / 2f + 2.2f) + Vector3.up * 4.5f, rot, new Vector3(0.35f, 9f, 0.35f), steel);
                 Block(c + right * side * (roadWidth / 2f + 0.8f) + Vector3.up * 9f, rot, new Vector3(3f, 0.45f, 0.9f), side < 0 ? cyan : pink);
             }
@@ -467,6 +487,63 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         go.transform.SetParent(course, false);
         go.AddComponent<MeshFilter>().sharedMesh = mesh;
         go.AddComponent<MeshRenderer>().sharedMaterial = m;
+    }
+
+    // A piece of the city's roadside kit (Resources/Models/Race_<name>), toon materials, GlowAccent lit in accent.
+    void Kit(string name, Vector3 at, Quaternion turn, Material accent)
+    {
+        var go = Instantiate(Resources.Load<GameObject>("Models/Race_" + name), at, turn, course);
+        foreach (var r in go.GetComponentsInChildren<Renderer>()) Dress(r, accent);
+    }
+
+    static void Dress(Renderer r, Material accent)
+    {
+        TrainSim.Toon(r);
+        var mats = r.sharedMaterials;
+        for (int k = 0; k < mats.Length; k++) if (mats[k].name == "GlowAccent") mats[k] = accent;
+        r.sharedMaterials = mats;
+    }
+
+    // The concrete barrier along one side (1 right, -1 left), one model a stretch, bent to follow the course, all in
+    // one mesh. The model runs 0..-Step along z with its road face at x = 0 and its back towards -x; the left side's
+    // is mirrored.
+    void Barriers(int side, Material accent)
+    {
+        var model = Resources.Load<GameObject>("Models/Race_barrier");
+        Mesh src = model.GetComponentInChildren<MeshFilter>().sharedMesh;
+        Vector3[] sv = src.vertices, sn = src.normals;
+        var verts = new List<Vector3>();
+        var normals = new List<Vector3>();
+        var tris = new List<int>[src.subMeshCount];
+        for (int k = 0; k < tris.Length; k++) tris[k] = new List<int>();
+        for (int i = 0; i < points.Count - 1; i++)
+        {
+            int start = verts.Count;
+            for (int v = 0; v < sv.Length; v++)
+            {
+                float t = Mathf.Clamp01(-sv[v].z / Step), out_ = -sv[v].x;
+                Vector3 dir = Vector3.Slerp(dirs[i], dirs[i + 1], t).normalized, right = Vector3.Cross(Vector3.up, dir);
+                verts.Add(Vector3.Lerp(points[i], points[i + 1], t) + right * side * (roadWidth / 2f + out_) + Vector3.up * sv[v].y);
+                normals.Add((right * side * -sn[v].x + Vector3.up * sn[v].y - dir * sn[v].z).normalized);
+            }
+            for (int k = 0; k < tris.Length; k++)
+            {
+                int[] st = src.GetTriangles(k);
+                for (int j = 0; j < st.Length; j += 3) // mirrored on the left: wound the other way round
+                    tris[k].AddRange(side > 0 ? new[] { start + st[j], start + st[j + 1], start + st[j + 2] } : new[] { start + st[j], start + st[j + 2], start + st[j + 1] });
+            }
+        }
+        var mesh = new Mesh { name = "Barrier", indexFormat = UnityEngine.Rendering.IndexFormat.UInt32, subMeshCount = tris.Length };
+        mesh.SetVertices(verts);
+        mesh.SetNormals(normals);
+        for (int k = 0; k < tris.Length; k++) mesh.SetTriangles(tris[k], k);
+        mesh.RecalculateBounds();
+        var go = new GameObject(side < 0 ? "BarrierL" : "BarrierR");
+        go.transform.SetParent(course, false);
+        go.AddComponent<MeshFilter>().sharedMesh = mesh;
+        var r = go.AddComponent<MeshRenderer>();
+        r.sharedMaterials = model.GetComponentInChildren<MeshRenderer>().sharedMaterials;
+        Dress(r, accent);
     }
 
     // On the launcher's rail s metres past the line, and its pitch; past the top, off along the launch.
