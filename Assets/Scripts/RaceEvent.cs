@@ -313,7 +313,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         ground.transform.SetPositionAndRotation(area.center + Vector3.down * 0.02f, Quaternion.Euler(90f, 0f, 0f));
         ground.transform.localScale = Vector3.one * groundSize;
         Material groundMat = TrainSim.Mat(Color.white, false);
-        groundMat.mainTexture = Resources.Load<Texture2D>(crateRun ? "Ground/hell" : trench ? "Ground/fortress" : "Ground/city");
+        groundMat.mainTexture = Resources.Load<Texture2D>(crateRun ? "Ground/hell" : trench ? "Ground/fortress" : "Ground/race"); // the city race: its own night plaza (Tools/make_race_ground.py)
         groundMat.mainTextureScale = Vector2.one * (groundSize / 54f);
         ground.GetComponent<Renderer>().sharedMaterial = groundMat;
 
