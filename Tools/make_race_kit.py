@@ -14,6 +14,8 @@ from lowpoly import _added
 M = dict(
     concrete=("RaceConcrete", (0.42, 0.44, 0.5)), joint=("RaceJoint", (0.14, 0.15, 0.18)), kerb=("RaceKerb", (0.13, 0.13, 0.15)),
     steel=("RaceSteel", (0.55, 0.58, 0.66)), dark=("RaceDark", (0.1, 0.11, 0.14)), stripe=("RaceStripe", (1.0, 0.75, 0.1)),
+    paint=("CarPaint", (0.8, 0.8, 0.82)), glass=("CarGlass", (0.08, 0.12, 0.2)), tail=("GlowTail", (1.0, 0.1, 0.08)),
+    cone=("RaceCone", (1.0, 0.38, 0.05)), facade=("Facade", (1.0, 1.0, 1.0)), podium=("RacePodium", (0.2, 0.22, 0.3)),
     accent=("GlowAccent", (1.0, 1.0, 1.0)), white=("RaceWhite", (0.92, 0.93, 0.96)), seat=("RaceSeat", (0.1, 0.45, 0.95)),
     shirt=("Shirt", (0.9, 0.9, 0.9)), skin=("Skin", (0.95, 0.75, 0.6)), hair=("Hair", (0.12, 0.08, 0.06)), pants=("Pants", (0.16, 0.18, 0.28)), amber=("GlowAmber", (1.0, 0.55, 0.12)), light=("GlowLamp", (1.0, 0.95, 0.85)),
 )
@@ -153,11 +155,123 @@ def arch():
     box(-12, 12, -1.32, -1.2, 18.0, 20.0, m("kerb"))                          # the lights' black panel
     return finish("Race_arch")
 
+# A car smashed on the road, along +x (its nose), wheels on the ground. CarPaint takes a random colour in the game.
+def car():
+    body = [(-2.25, 0.32), (2.2, 0.32), (2.3, 0.62), (2.05, 0.9), (0.95, 1.0), (0.38, 1.46), (-1.05, 1.5), (-1.7, 1.06), (-2.25, 0.98), (-2.35, 0.62)]
+    prism(body, -0.92, 0.92, m("paint"))
+    prism([(0.86, 1.03), (0.42, 1.41), (-1.0, 1.44), (-1.56, 1.08)], -0.94, 0.94, m("glass"))      # the windows all round
+    box(-0.3, -0.22, -0.95, 0.95, 1.03, 1.44, m("paint"))                                          # the pillar between them
+    for x in (-1.45, 1.45):
+        for y in (-0.82, 0.82):
+            cyl((x, y, 0.36), 0.36, 0.28, "Y", m("kerb"), sides=10)
+    box(2.18, 2.34, -0.98, 0.98, 0.3, 0.55, m("kerb"))                                            # bumpers
+    box(-2.4, -2.24, -0.98, 0.98, 0.3, 0.55, m("kerb"))
+    for y in (-0.62, 0.62):
+        box(2.22, 2.3, y - 0.2, y + 0.2, 0.66, 0.8, m("light"))
+        box(-2.38, -2.3, y - 0.24, y + 0.24, 0.72, 0.86, m("tail"))
+    # The crash: a crumpled bonnet and a black scorch along its flank.
+    prism([(1.2, 0.95), (2.0, 0.92), (1.7, 1.18)], -0.6, 0.5, m("paint"))
+    box(-1.6, 0.4, 0.925, 0.94, 0.45, 0.9, m("kerb"))
+    return finish("Race_car")
+
+# Round a wreck: a ring of cones and, on the side the racers come from (-y), a warning sign on a stand.
+def hazard():
+    for k in range(10):
+        a = math.radians(k * 36 + 18)
+        x, y = 4.4 * math.cos(a), 4.4 * math.sin(a)
+        box(x - 0.32, x + 0.32, y - 0.32, y + 0.32, 0, 0.08, m("kerb"))
+        cyl((x, y, 0.5), 0.26, 0.85, "Z", m("cone"), sides=8, top=0.05)
+        cyl((x, y, 0.55), 0.19, 0.16, "Z", m("white"), sides=8, top=0.15)
+    # The sign on one pole just in front of the car, inside its crash radius (RaceEvent: 3.4 m), high over it.
+    sy, sz = -2.8, 5.6
+    cyl((0, sy, 3.0), 0.09, 6.0, "Z", m("steel"), sides=8)
+    d = [(0, sz - 1.5), (1.5, sz), (0, sz + 1.5), (-1.5, sz)]                     # a diamond, yellow edged in black
+    prism([(x, z) for x, z in d], sy - 0.08, sy - 0.02, m("kerb"))
+    prism([(x * 0.86, sz + (z - sz) * 0.86) for x, z in d], sy - 0.12, sy - 0.08, m("stripe"))
+    box(-0.15, 0.15, sy - 0.14, sy - 0.12, sz + 0.1, sz + 0.85, m("kerb"))       # !
+    box(-0.15, 0.15, sy - 0.14, sy - 0.12, sz - 0.6, sz - 0.3, m("kerb"))
+    box(-0.3, 0.3, sy - 0.3, sy + 0.3, sz + 1.6, sz + 1.75, m("dark"))             # the beacon's cap (RaceEvent puts the light on it)
+    return finish("Race_hazard")
+
+# Windows for the towers: every face in Facade gets UVs from its place in the world, one tile of the game's window
+# texture (eight windows a side) every 24 m, so all towers share one material and their windows match in size.
+def facade_uvs():
+    for ob in parts:
+        if not ob.data.materials or ob.data.materials[0].name != "Facade":
+            continue
+        layer = ob.data.uv_layers.new(name="UV")
+        mw = ob.matrix_world
+        for poly in ob.data.polygons:
+            n = (mw.to_3x3() @ poly.normal).normalized()
+            for li in poly.loop_indices:
+                co = mw @ ob.data.vertices[ob.data.loops[li].vertex_index].co
+                if abs(n.z) > 0.7:
+                    u, v = co.x, co.y
+                elif abs(n.x) > abs(n.y):
+                    u, v = co.y * (1 if n.x > 0 else -1), co.z
+                else:
+                    u, v = co.x * (-1 if n.y > 0 else 1), co.z
+                layer.data[li].uv = (u / 24.0, v / 24.0)
+
+def octo(r, z0, z1, mk, chamfer=0.22, sx=1.0, sy=1.0, name="octo"):
+    c = r * chamfer
+    pts = [(r - c, -r), (r, -r + c), (r, r - c), (r - c, r), (-r + c, r), (-r, r - c), (-r, -r + c), (-r + c, -r)]
+    pts = [(x * sx, y * sy) for x, y in pts]
+    verts = [(x, y, z0) for x, y in pts] + [(x, y, z1) for x, y in pts]
+    faces = [tuple(range(8))[::-1], tuple(range(8, 16))] + [(i, (i + 1) % 8, 8 + (i + 1) % 8, 8 + i) for i in range(8)]
+    return mesh(name, verts, faces, m(mk))
+
+# Four towers for the skyline, about 100 m, on a dark podium: setbacks and fins, bands of light, a sky bridge.
+def towers():
+    made = []
+    # 1: chamfered square, two setbacks, a crown of fins and a mast.
+    octo(14, 0, 8, "podium")
+    octo(11, 8, 62, "facade")
+    octo(8.5, 62, 86, "facade")
+    octo(6, 86, 100, "facade")
+    for z in (62, 86, 100):
+        octo({62: 11.4, 86: 8.9, 100: 6.4}[z], z - 0.6, z + 0.6, "accent")
+    for k in range(8):
+        a = math.radians(k * 45)
+        box(math.cos(a) * 6 - 0.3, math.cos(a) * 6 + 0.3, math.sin(a) * 6 - 0.3, math.sin(a) * 6 + 0.3, 100, 106, m("steel"))
+    cyl((0, 0, 112), 0.5, 24, "Z", m("steel"), sides=6)
+    facade_uvs(); made.append(finish("Race_tower1"))
+    # 2: an octagonal shaft ringed with light every 18 m, a slanted top.
+    octo(15, 0, 6, "podium", chamfer=0.4)
+    octo(10, 6, 96, "facade", chamfer=0.4)
+    for z in range(24, 96, 18):
+        octo(10.3, z - 0.5, z + 0.5, "accent", chamfer=0.4)
+    prism([(-10, 96), (10, 96), (10, 100), (-10, 108)], -7, 7, m("steel"))
+    facade_uvs(); made.append(finish("Race_tower2"))
+    # 3: twins joined by a sky bridge, each with its neon edges.
+    for x in (-11, 11):
+        box(x - 7, x + 7, -8, 8, 0, 6, m("podium"))
+        box(x - 6, x + 6, -6, 6, 6, 92 if x < 0 else 80, m("facade"))
+        for cx in (x - 6.1, x + 5.7):
+            for cy in (-6.1, 5.7):
+                box(cx, cx + 0.4, cy, cy + 0.4, 6, 92 if x < 0 else 80, m("accent"))
+    box(-5, 5, -3, 3, 52, 58, m("facade"))
+    box(-5.2, 5.2, -3.2, 3.2, 51.4, 52, m("accent"))
+    facade_uvs(); made.append(finish("Race_tower3"))
+    # 4: a stepped block, a slim top and a spire.
+    box(-18, 18, -14, 14, 0, 24, m("facade"))
+    box(-13, 13, -11, 11, 24, 46, m("facade"))
+    box(-8, 8, -8, 8, 46, 90, m("facade"))
+    for (w, d, z) in ((18.3, 14.3, 24), (13.3, 11.3, 46)):
+        box(-w, w, -d, d, z - 0.5, z + 0.5, m("accent"))
+    cyl((0, 0, 98), 4, 16, "Z", m("steel"), sides=8, top=0.4)
+    facade_uvs(); made.append(finish("Race_tower4"))
+    return made
+
 reset()
-made = [barrier(), gantry(), lamp(), fan("Race_fan"), fan("Race_fan2", wave=True), seats(), arch()]  # finish() exports each one on its own
+made = [barrier(), gantry(), lamp(), fan("Race_fan"), fan("Race_fan2", wave=True), seats(), arch(), car(), hazard(), *towers()]  # finish() exports each one on its own
 
 if "--" in sys.argv and "shot" in sys.argv[sys.argv.index("--") + 1:]:
-    b, g, l, f1, f2, st, ar = made
+    b, g, l, f1, f2, st, ar, cr, hz, *tw = made
+    cr.location = (-6, -6, 0); cr.rotation_euler = (0, 0, 0.6)
+    hz.location = (-6, -6, 0)
+    for k, o in enumerate(tw):
+        o.location = (-120 + k * 60, 200, 0)
     ar.location = (0, 60, 0)
     st.location = (-30, -4, 2.2)
     for k in range(10):
@@ -173,4 +287,4 @@ if "--" in sys.argv and "shot" in sys.argv[sys.argv.index("--") + 1:]:
             c.scale = (side, 1, 1)
     g.location = (0, 22, 0)
     l.location = (24.2, 4, 0)
-    render([("race_kit_preview", (30, -34, 12), (0, 14, 5)), ("race_kit_close", (14, -8, 2.2), (23, 8, 0.8)), ("race_kit_crowd", (-22, -6, 4.2), (-30, 0.5, 3.0))], lens=30)
+    render([("race_kit_preview", (30, -34, 12), (0, 14, 5)), ("race_kit_close", (14, -8, 2.2), (23, 8, 0.8)), ("race_kit_crowd", (-22, -6, 4.2), (-30, 0.5, 3.0)), ("race_kit_wreck", (4, -18, 6), (-6, -6, 1.5)), ("race_kit_towers", (-30, 30, 50), (-30, 200, 55))], lens=30)

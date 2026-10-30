@@ -73,9 +73,12 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
 
     Canvas board;
     Text place, placeOf, speedo, countdown, standings, hint, message, turboLabel;
-    Slanted heatFill, track, briefing, band;
+    Slanted track, trackFill, briefing, band;
+    RectTransform markers;
+    const int HeatCells = 14;
+    readonly List<Slanted> heatCells = new();
     readonly List<(Slanted strip, Text rank, Text name)> rows = new();
-    readonly List<Slanted> dots = new();
+    readonly List<(Slanted tag, Text rank)> dots = new();
 
     void Awake()
     {
@@ -148,11 +151,24 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         speedo = Leaning(gauge.transform, 84, new Vector2(-30f, 26f), new Vector2(260f, 96f), TextAnchor.MiddleRight);
         UiKit.Paint(UiKit.Label(gauge.transform, UiKit.Display, 26, Color.white, TextAnchor.MiddleLeft, new Vector2(150f, 10f), new Vector2(80f, 34f), true), UiKit.Ink.Hot).text = "KM/H";
         turboLabel = UiKit.Label(gauge.transform, UiKit.Display, 20, UiKit.Ice, TextAnchor.MiddleLeft, new Vector2(-30f, -34f), new Vector2(300f, 26f), true);
-        UiKit.Panel(gauge.transform, new Vector2(0f, -58f), new Vector2(300f, 18f), new Color(0f, 0f, 0f, 0.6f), new Color(0f, 0f, 0f, 0.6f), 0.5f);
-        heatFill = UiKit.Panel(gauge.transform, new Vector2(-148f, -58f), new Vector2(0f, 14f), UiKit.Gold, UiKit.Gold, 0.5f);
-        heatFill.rectTransform.pivot = new Vector2(0f, 0.5f);
-        track = UiKit.Persona(UiKit.Panel(board.transform, new Vector2(0f, -40f), new Vector2(620f, 12f), glass, glass, 0f), 3f, 5f);
+        // The turbo's heat: a row of slanted cells that light up blue, then white, then red as it climbs.
+        for (int i = 0; i < HeatCells; i++)
+            heatCells.Add(UiKit.Panel(gauge.transform, new Vector2(-140f + i * 21.5f, -58f), new Vector2(17f, 20f), Color.white, Color.white, 0.5f));
+        // The course, grid to launcher: ours filled in so far, a tick every tenth, the finish chequered, and over it
+        // a tag a racer with their place in it (ours white, bigger, pointing down at the strip).
+        track = UiKit.Persona(UiKit.Panel(board.transform, new Vector2(0f, -58f), new Vector2(700f, 24f), glass, glass, 0.4f), 3f, 6f);
         track.rectTransform.anchorMin = track.rectTransform.anchorMax = new Vector2(0.5f, 1f);
+        trackFill = UiKit.Paint(UiKit.Panel(track.transform, new Vector2(-340f, 0f), new Vector2(0f, 12f), Color.white, Color.white, 0.4f), UiKit.Ink.Main);
+        trackFill.rectTransform.pivot = new Vector2(0f, 0.5f);
+        for (int q = 1; q < 10; q++)
+            UiKit.Panel(track.transform, new Vector2(-340f + q * 68f, 0f), new Vector2(3f, 16f), new Color(1f, 1f, 1f, 0.35f), new Color(1f, 1f, 1f, 0.35f), 0f);
+        for (int x = 0; x < 3; x++)
+            for (int y = 0; y < 2; y++)
+            {
+                Color sq = (x + y) % 2 == 0 ? Color.white : Color.black;
+                UiKit.Panel(track.transform, new Vector2(334f + x * 7f, (y - 0.5f) * 7f), new Vector2(7f, 7f), sq, sq, 0f).sprite = null;
+            }
+        markers = UiKit.Group(track.transform, new Vector2(0.5f, 0.5f), Vector2.zero);
         // Top right: the standings, one strip a racer, each a little further in than the one above.
         RectTransform right = UiKit.Group(board.transform, new Vector2(1f, 1f), new Vector2(-30f, -110f));
         standings = UiKit.Label(right, UiKit.Display, 24, Color.white, TextAnchor.MiddleRight, Vector2.zero, Vector2.zero); // holds the group (hidden in the trench)
@@ -303,6 +319,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         var tall = new List<GameObject>();
         var junk = new List<GameObject>();
         beacons.Clear();
+        Material[] carPaints = System.Array.ConvertAll(new[] { new Color(0.85f, 0.12f, 0.14f), new Color(0.15f, 0.35f, 0.85f), new Color(0.95f, 0.95f, 0.97f), new Color(0.12f, 0.12f, 0.14f), new Color(1f, 0.75f, 0.1f), new Color(0.4f, 0.8f, 0.6f) }, c => TrainSim.Mat(c));
         Material hazard = TrainSim.Mat(new Color(2.4f, 0.9f, 0.1f), false), hazardDark = TrainSim.Mat(new Color(0.12f, 0.1f, 0.1f), false), beacon = TrainSim.Mat(new Color(3f, 0.5f, 0.2f), false);
         foreach (GameObject kind in Resources.LoadAll<GameObject>(crateRun ? "Scenery/hell" : trench ? "Scenery/fortress" : "Scenery/city"))
         {
@@ -323,10 +340,25 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         {
             float s = Mathf.Lerp(220f, total - 260f, (i + Random.value) / wreckCount);
             Vector3 at = PointAt(s, out Vector3 dir) + Vector3.Cross(Vector3.up, dir) * Random.Range(-roadWidth * 0.38f, roadWidth * 0.38f);
+            Quaternion flat = Quaternion.LookRotation(dir);
+            if (!trench)
+            {
+                // The city's (Tools/make_race_kit.py): a car slewed across the lane, ringed with cones, a warning sign
+                // on the side the racers come from and a beacon flashing on it.
+                GameObject car = Kit("car", at, flat * Quaternion.Euler(0f, Random.Range(30f, 150f), Random.Range(-8f, 8f)), null);
+                car.transform.localScale *= 1.6f;
+                Renderer body = car.GetComponentInChildren<Renderer>();
+                var mats = body.sharedMaterials;
+                for (int k = 0; k < mats.Length; k++) if (mats[k].name == "CarPaint") mats[k] = carPaints[Random.Range(0, carPaints.Length)];
+                body.sharedMaterials = mats;
+                Kit("hazard", at, flat * Quaternion.Euler(0f, 180f, 0f), null).transform.localScale *= 1.3f; // its sign towards the oncoming
+                beacons.Add(Ball(at - dir * 2.8f * 1.3f + Vector3.up * 10.2f, 1.1f, beacon));
+                wrecks.Add((at, 3.4f));
+                continue;
+            }
             // Seen from far off: a wreck twice the size, on a glowing hazard pad, under a beacon on a post.
             Transform wreck = Instantiate(junk[Random.Range(0, junk.Count)], at, Quaternion.LookRotation(dir) * Quaternion.Euler(0f, Random.Range(-60f, 60f), 0f), course).transform;
             wreck.localScale *= 2f;
-            Quaternion flat = Quaternion.LookRotation(dir);
             Block(at + Vector3.up * 0.09f, flat, new Vector3(9f, 0.04f, 9f), hazard);
             Block(at + Vector3.up * 0.1f, flat * Quaternion.Euler(0f, 45f, 0f), new Vector3(5.5f, 0.04f, 5.5f), hazardDark);
             Block(at + Vector3.up * 3f, flat, new Vector3(0.25f, 6f, 0.25f), hazardDark);
@@ -664,12 +696,15 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         if (trench) TrenchBegin();
         briefing.gameObject.SetActive(true);
         dots.Clear();
-        foreach (Transform c in track.transform) Destroy(c.gameObject);
-        foreach (Racer r in racers)
+        foreach (Transform c in markers) Destroy(c.gameObject);
+        UiKit.Tones blue = UiKit.Biome("race");
+        foreach (Racer r in BySlot())
         {
-            Color c = r.player ? UiKit.Gold : racers.Count > 1 && r == racers[1] ? UiKit.Rose : UiKit.Ice;
-            Slanted dot = UiKit.Panel(track.transform, Vector2.zero, r.player ? new Vector2(16f, 24f) : new Vector2(10f, 18f), c, c, 0f);
-            dots.Add(dot);
+            Color c = r.player ? Color.white : racers.Count > 1 && r == racers[1] ? UiKit.Rose : blue.main;
+            Slanted tag = UiKit.Panel(markers, new Vector2(0f, 26f), r.player ? new Vector2(40f, 30f) : new Vector2(30f, 22f), c, c, 0.3f);
+            if (r.player) UiKit.Panel(tag.transform, new Vector2(0f, -17f), new Vector2(10f, 10f), c, c, 0f).rectTransform.localRotation = Quaternion.Euler(0f, 0f, 45f);
+            Text rank = UiKit.Label(tag.transform, UiKit.Display, r.player ? 24 : 18, r.player ? blue.deep : Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 1f), tag.rectTransform.sizeDelta, true);
+            dots.Add((tag, rank));
         }
         course.gameObject.SetActive(true);
         view.enabled = true;
@@ -1066,11 +1101,18 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         bool hot = me.heat > 0.8f && (int)(now * 6f) % 2 == 0; // near the top: the warning flashes
         speedo.text = me.heat > 0.8f ? L10n.T("race.overheat") : Mathf.RoundToInt(me.speed * 4f).ToString();
         speedo.color = hot ? UiKit.Rose : Color.white;
-        heatFill.rectTransform.sizeDelta = new Vector2(296f * me.heat, 14f);
-        heatFill.color = me.turboLocked ? UiKit.Slate : me.heat > 0.75f ? UiKit.Rose : UiKit.Gold; // grey: cooling, not ready yet
+        UiKit.Tones blue = UiKit.Biome("race");
+        int lit = Mathf.CeilToInt(me.heat * HeatCells - 0.01f);
+        for (int i = 0; i < HeatCells; i++)
+        {
+            float share = i / (float)HeatCells;
+            Color on = me.turboLocked ? UiKit.Slate : share < 0.55f ? blue.hot : share < 0.8f ? Color.white : UiKit.Rose; // grey: cooling, not ready yet
+            Slanted cell = heatCells[i];
+            cell.color = cell.bottom = i < lit ? on : new Color(0f, 0f, 0f, 0.55f);
+            cell.rectTransform.localScale = new Vector3(1f, i == lit - 1 && !me.turboLocked ? 1.25f + 0.1f * Mathf.Sin(now * 20f) : 1f, 1f); // the newest one stands up, fizzing
+        }
         turboLabel.text = L10n.T(me.turboLocked ? "race.turbo.cooling" : "race.turbo");
         // Ours lit white with dark writing, the leader in the race's blue, the rest dark glass.
-        UiKit.Tones blue = UiKit.Biome("race");
         for (int i = 0; i < rows.Count; i++)
         {
             var (strip, rank, name) = rows[i];
@@ -1089,7 +1131,13 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         foreach (Racer r in BySlot())
         {
             float t = Mathf.Clamp01(r.progress / total);
-            dots[k].rectTransform.anchoredPosition = new Vector2(Mathf.Lerp(-305f, 305f, t), 0f);
+            dots[k].tag.rectTransform.anchoredPosition = new Vector2(Mathf.Lerp(-340f, 340f, t), r.player ? 30f : 24f);
+            dots[k].rank.text = (racers.IndexOf(r) + 1).ToString();
+            if (r.player)
+            {
+                trackFill.rectTransform.sizeDelta = new Vector2(680f * t, 12f);
+                dots[k].tag.transform.SetAsLastSibling(); // ours on top of the pack
+            }
             k++;
         }
     }

@@ -150,6 +150,7 @@ public partial class RaceEvent
     // the nearer ones a giant poster facing the road, a few a hologram spinning over the roof.
     void Skyline(Material[] neons, Material steel, Material red, List<Material> posters)
     {
+        Material windows = Facade(24f, 28f); // one tile of the window texture every 24 m, as the models' UVs are laid out
         int towers = Mathf.Min(700, Mathf.RoundToInt(240f * length / 2600f));
         for (int k = 0; k < towers; k++)
         {
@@ -162,18 +163,16 @@ public partial class RaceEvent
             if (!clear) continue;
             Quaternion rot = Quaternion.Euler(0f, Random.Range(0f, 90f), 0f);
             Material neon = neons[Random.Range(0, neons.Length)];
-            Block(at + Vector3.up * high / 2f, rot, new Vector3(wide, high, deep), Facade(wide, high));
-            float top = high;
-            if (Random.value < 0.6f) // a setback
-            {
-                float w2 = wide * Random.Range(0.55f, 0.75f), h2 = high * Random.Range(0.15f, 0.35f);
-                Block(at + Vector3.up * (high + h2 / 2f), rot, new Vector3(w2, h2, w2), Facade(w2, h2));
-                top += h2;
-            }
-            if (Random.value < 0.5f) Block(at + Vector3.up * (high - 0.6f), rot, new Vector3(wide + 0.5f, 1.2f, deep + 0.5f), neon); // a crown of light
-            if (Random.value < 0.3f)
-                for (int cx = -1; cx <= 1; cx += 2)
-                    for (int cz = -1; cz <= 1; cz += 2) Block(at + rot * new Vector3(cx * wide / 2f, high / 2f, cz * deep / 2f), rot, new Vector3(0.9f, high, 0.9f), neon);
+            // One of the modelled towers (Tools/make_race_kit.py, about 100 m), stretched to this one's height and
+            // girth, its windows the shared facade, its bands of light this one's neon.
+            GameObject tower = Kit("tower" + Random.Range(1, 5), at, rot, neon);
+            float girth = Mathf.Clamp(wide / 30f, 0.6f, 1.4f);
+            tower.transform.localScale = new Vector3(girth, high / 100f, girth);
+            Renderer look = tower.GetComponentInChildren<Renderer>();
+            var mats = look.sharedMaterials;
+            for (int q = 0; q < mats.Length; q++) if (mats[q].name == "Facade") mats[q] = windows;
+            look.sharedMaterials = mats;
+            float top = high * 1.05f;
             if (top > 110f)
             {
                 Block(at + Vector3.up * (top + 9f), rot, new Vector3(0.7f, 18f, 0.7f), steel);
