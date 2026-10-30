@@ -1307,20 +1307,34 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
     readonly Dictionary<Material, List<Matrix4x4>> fireDraws = new();
     Material[] fireMats;
     static Mesh sphere;
-    Material[] FireMats => fireMats ??= new[] { TrainSim.Mat(new Color(3.2f, 1.4f, 0.2f), false), TrainSim.Mat(new Color(3f, 2.6f, 0.6f), false), TrainSim.Mat(new Color(0.3f, 0.3f, 0.33f), false) };
+    // 0 orange, 1 yellow, 2 smoke (cool grey), 3 white-hot, 4 the drones' and turrets' red, 5 her blue.
+    Material[] FireMats => fireMats ??= new[] { TrainSim.Mat(new Color(2.8f, 1.1f, 0.15f), false), TrainSim.Mat(new Color(2.8f, 2.2f, 0.7f), false), TrainSim.Mat(new Color(0.32f, 0.35f, 0.44f), false),
+                                                TrainSim.Mat(new Color(4f, 3.8f, 3.4f), false), TrainSim.Mat(new Color(2.6f, 0.25f, 0.15f), false), TrainSim.Mat(new Color(0.6f, 1.6f, 3f), false) };
+    // Streaks: sparks stretched along their way, drawn with the fire.
+    readonly List<(Vector3 at, Vector3 velocity, float from, float until, float size, Material look)> flares = new();
+
+    // A blast: a white flash, a burst of fire and sparks streaking out. No smoke and no shock ring: solid balls and
+    // discs of them read as blobs up close, and the picture stays clean.
     void Fireball(Vector3 at, float now)
     {
-        for (int k = 0; k < 22; k++)
+        fireballs.Add((at, Vector3.zero, now, now + 0.14f, 5f, FireMats[3]));
+        for (int k = 0; k < 12; k++)
         {
-            bool smoke = k >= 14;
             Vector3 v = Random.onUnitSphere;
             v.y = Mathf.Abs(v.y);
-            float from = now + (smoke ? 0.4f : 0f);
-            fireballs.Add((at, smoke ? v * 2f + Vector3.up * 4f : v * Random.Range(7f, 14f), from, from + (smoke ? Random.Range(1.2f, 1.8f) : Random.Range(0.8f, 1.3f)), smoke ? Random.Range(1.6f, 2.6f) : Random.Range(1f, 2.4f), FireMats[smoke ? 2 : k % 2]));
+            fireballs.Add((at, v * Random.Range(6f, 12f), now, now + Random.Range(0.5f, 0.9f), Random.Range(1.2f, 2.6f), FireMats[k % 2]));
         }
+        for (int k = 0; k < 14; k++)
+            flares.Add((at, Random.onUnitSphere * Random.Range(22f, 36f) + Vector3.up * 4f, now, now + Random.Range(0.25f, 0.45f), Random.Range(0.25f, 0.4f), FireMats[k % 3 == 0 ? 3 : 1]));
     }
     void Spark(Vector3 at, float now) =>
         fireballs.Add((at, Random.insideUnitSphere * 3f - Vector3.up * 2f, now, now + 0.5f, Random.Range(0.8f, 1.6f), FireMats[Random.Range(0, 2)]));
+    // A small burst in one colour (a shot landing, a muzzle): a flash and a few streaks.
+    void Burst(Vector3 at, float now, Material look, float size = 1f)
+    {
+        fireballs.Add((at, Vector3.zero, now, now + 0.08f, 1.6f * size, FireMats[3]));
+        for (int k = 0; k < 6; k++) flares.Add((at, Random.onUnitSphere * 18f * size, now, now + 0.22f, 0.2f * size, look));
+    }
 
     void Fireballs(float now)
     {
@@ -1337,6 +1351,18 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             if (now < f.from) continue;
             if (!fireDraws.TryGetValue(f.look, out var draws)) fireDraws[f.look] = draws = new List<Matrix4x4>();
             draws.Add(Matrix4x4.TRS(f.at, Quaternion.identity, Vector3.one * f.size * (1f - t) * (0.6f + t)));
+        }
+        for (int i = flares.Count - 1; i >= 0; i--)
+        {
+            var f = flares[i];
+            if (now >= f.until) { flares[i] = flares[^1]; flares.RemoveAt(flares.Count - 1); continue; }
+            float t = Mathf.Clamp01((now - f.from) / (f.until - f.from));
+            f.at += f.velocity * dt;
+            f.velocity *= 1f - 3f * dt;
+            flares[i] = f;
+            if (!fireDraws.TryGetValue(f.look, out var draws)) fireDraws[f.look] = draws = new List<Matrix4x4>();
+            if (f.velocity.sqrMagnitude > 0.01f) // long while fast, thinning out
+                draws.Add(Matrix4x4.TRS(f.at, Quaternion.LookRotation(f.velocity), new Vector3(f.size, f.size, f.size + f.velocity.magnitude * 0.12f) * (1f - t)));
         }
         if (!sphere) sphere = Resources.GetBuiltinResource<Mesh>("Sphere.fbx");
         foreach (var pair in fireDraws)

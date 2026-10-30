@@ -90,7 +90,29 @@ public partial class RaceEvent
             Block(beam, c + right * gapAt + Vector3.up * 0.06f, rot, new Vector3(gapWide, 0.05f, 6f), lime); // the gap, lit on the floor
             lasers.Add((s, gapAt, gapWide, beam));
         }
-        boltMat = Glow(new Color(3f, 0.5f, 0.3f));
+        boltMat = Glow(new Color(2.6f, 0.25f, 0.15f));
+        boltCore ??= Glow(new Color(4f, 3.6f, 3.4f));
+    }
+
+    // A bolt of plasma along its way: a red shell round a white-hot core, both drawn out long (capsules).
+    Material boltCore;
+    Transform Plasma(Vector3 at, Vector3 way, Material shell, float thick, float length)
+    {
+        var bolt = new GameObject("Bolt").transform;
+        bolt.SetParent(course, false);
+        bolt.SetPositionAndRotation(at, Quaternion.LookRotation(way));
+        foreach (var (m, size) in new[] { (shell, new Vector3(thick, thick, length)), (boltCore, new Vector3(thick * 0.42f, thick * 0.42f, length * 0.72f)) })
+        {
+            var part = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            Destroy(part.GetComponent<Collider>());
+            part.transform.SetParent(bolt, false);
+            part.transform.localRotation = Quaternion.Euler(90f, 0f, 0f); // a capsule stands along its y
+            part.transform.localScale = new Vector3(size.x, size.z * 0.5f, size.y);
+            var look = part.GetComponent<Renderer>();
+            look.sharedMaterial = m;
+            look.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        }
+        return bolt;
     }
 
     static Material Glow(Color c)
@@ -111,13 +133,16 @@ public partial class RaceEvent
             if (along > -20f || along < -150f || now < turretReady[i]) continue; // ahead of her, in range
             turretReady[i] = now + Random.Range(2.8f, 4.4f);
             Vector3 lead = me.body.position + Quaternion.Euler(0f, me.way, 0f) * Vector3.forward * me.speed * 0.9f + Vector3.up * 1.5f;
-            Transform bolt = Ball(turrets[i].at, 1.1f, boltMat);
-            bolts.Add((bolt, (lead - turrets[i].at).normalized * 75f, now + 4f));
+            Vector3 way = (lead - turrets[i].at).normalized * 75f;
+            Burst(turrets[i].at, now, FireMats[4], 1.4f); // the muzzle flash
+            bolts.Add((Plasma(turrets[i].at, way, boltMat, 1.1f, 4.2f), way, now + 4f));
         }
         for (int i = bolts.Count - 1; i >= 0; i--)
         {
             var b = bolts[i];
             b.body.position += b.velocity * dt;
+            b.body.GetChild(1).localScale = new Vector3(0.45f, 0.45f, 3f) * (1f + 0.15f * Mathf.Sin(now * 40f + i)); // the core, fizzing
+            if (Random.value < 0.6f) flares.Add((b.body.position - b.velocity.normalized * 2f, -b.velocity * 0.05f + Random.insideUnitSphere * 3f, now, now + 0.25f, 0.35f, FireMats[4])); // embers trailing it
             if ((b.body.position - (me.body.position + Vector3.up * 1.5f)).magnitude < 3.2f) { TrenchHurt(5); Fireball(b.body.position, now); Destroy(b.body.gameObject); bolts.RemoveAt(i); continue; }
             if (now > b.until || b.body.position.y < 0f) { Destroy(b.body.gameObject); bolts.RemoveAt(i); }
         }
@@ -185,7 +210,7 @@ public partial class RaceEvent
         droneMesh = Resources.Load<Mesh>("Models/Enemy_warden");
         droneMat ??= TrainSim.Mat(Color.white);
         droneMat.SetFloat("_MVCOL", 1f);
-        tracerMat2 ??= TrainSim.Mat(new Color(0.5f, 2.6f, 3f), false);
+        tracerMat2 ??= TrainSim.Mat(new Color(0.6f, 1.6f, 3f), false);
         if (!sightImage)
         {
             sightImage = UiKit.Picture(board.transform, "sight", Vector2.zero, 150f); // the gunner's scope (SwarmEvent)
@@ -216,7 +241,8 @@ public partial class RaceEvent
         for (int i = trenchFlashes.Count - 1; i >= 0; i--)
         {
             if (!trenchFlashes[i].t || now > trenchFlashes[i].until) { if (trenchFlashes[i].t) Destroy(trenchFlashes[i].t.gameObject); trenchFlashes.RemoveAt(i); continue; }
-            trenchFlashes[i].t.localScale *= 1f + 3f * dt;
+            Vector3 sc = trenchFlashes[i].t.localScale;
+            trenchFlashes[i].t.localScale = new Vector3(sc.x * (1f - 9f * dt), sc.y * (1f - 9f * dt), sc.z); // the beam thinning out
         }
         place.text = Mathf.Max(0, life).ToString(); // her health, big where the place goes, its word small beside it
         placeOf.text = L10n.T("gates.life", "").Trim();
@@ -276,9 +302,16 @@ public partial class RaceEvent
             if (to.magnitude < bestAt && Vector3.Angle(new Vector3(fwd.x, 0f, fwd.z), new Vector3(to.x, 0f, to.z)) < 9f) { best = i; bestAt = to.magnitude; }
         }
         Vector3 end = best >= 0 ? drones[best].body.position : from + fwd * 150f;
-        Transform t = Block(course, (from + end) * 0.5f, Quaternion.LookRotation(end - from), new Vector3(0.18f, 0.18f, (end - from).magnitude), tracerMat2);
-        trenchFlashes.Add((t, now + 0.06f));
-        if (best >= 0) Pop(best, now);
+        // Her shot: a beam of her blue round a white core, thinning out over a tenth of a second; a flash at the gun
+        // and, where it lands, a burst of blue.
+        var beam = new GameObject("Shot").transform;
+        beam.SetParent(course, false);
+        beam.SetPositionAndRotation((from + end) * 0.5f, Quaternion.LookRotation(end - from));
+        Block(beam, beam.position, beam.rotation, new Vector3(0.5f, 0.5f, (end - from).magnitude), tracerMat2);
+        Block(beam, beam.position, beam.rotation, new Vector3(0.16f, 0.16f, (end - from).magnitude), boltCore);
+        trenchFlashes.Add((beam, now + 0.1f));
+        Burst(from + fwd * 2f, now, FireMats[5], 0.7f);
+        if (best >= 0) { Burst(end, now, FireMats[5], 1.3f); Pop(best, now); }
     }
 
     // At the hatch: the sight drifts and answers the hand sluggishly; one press throws the rock where it is.
