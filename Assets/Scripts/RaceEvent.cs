@@ -217,6 +217,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         points.Clear();
         dirs.Clear();
         wrecks.Clear();
+        foreground.Clear();
         // The centre line: straight off the grid and into the launcher, bending in between, smoothly and both ways.
         int n = Mathf.CeilToInt((crateRun ? 4600f : trench ? trenchLength : length) / Step);
         float heading = 0f, seed = Random.value * 100f;
@@ -347,12 +348,15 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
                 // The city's (Tools/make_race_kit.py): a car slewed across the lane, ringed with cones, a warning sign
                 // on the side the racers come from and a beacon flashing on it.
                 GameObject car = Kit("car", at, flat * Quaternion.Euler(0f, Random.Range(30f, 150f), Random.Range(-8f, 8f)), null);
+                foreground.Add(car.transform);
                 car.transform.localScale *= 1.6f;
                 Renderer body = car.GetComponentInChildren<Renderer>();
                 var mats = body.sharedMaterials;
                 for (int k = 0; k < mats.Length; k++) if (mats[k].name == "CarPaint") mats[k] = carPaints[Random.Range(0, carPaints.Length)];
                 body.sharedMaterials = mats;
-                Kit("hazard", at, flat * Quaternion.Euler(0f, 180f, 0f), null).transform.localScale *= 1.3f; // its sign towards the oncoming
+                Transform warning = Kit("hazard", at, flat * Quaternion.Euler(0f, 180f, 0f), null).transform; // its sign towards the oncoming
+                warning.localScale *= 1.3f;
+                foreground.Add(warning);
                 beacons.Add(Ball(at - dir * 2.8f * 1.3f + Vector3.up * 10.2f, 1.1f, beacon));
                 wrecks.Add((at, 3.4f));
                 continue;
@@ -360,6 +364,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             // Seen from far off: a wreck twice the size, on a glowing hazard pad, under a beacon on a post.
             Transform wreck = Instantiate(junk[Random.Range(0, junk.Count)], at, Quaternion.LookRotation(dir) * Quaternion.Euler(0f, Random.Range(-60f, 60f), 0f), course).transform;
             wreck.localScale *= 2f;
+            foreground.Add(wreck);
             Block(at + Vector3.up * 0.09f, flat, new Vector3(9f, 0.04f, 9f), hazard);
             Block(at + Vector3.up * 0.1f, flat * Quaternion.Euler(0f, 45f, 0f), new Vector3(5.5f, 0.04f, 5.5f), hazardDark);
             Block(at + Vector3.up * 3f, flat, new Vector3(0.25f, 6f, 0.25f), hazardDark);
@@ -421,8 +426,42 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
 
     // Everything of the course that never moves, batched together: thousands of blocks drawn as a few big meshes.
     // What moves (the crowd, the traffic, the holograms and blimps, the beacons, the laser gates) stays as it is.
+    // The course is backdrop, drawn the way the ride draws its scenery (TrainSim.Fade): no outline, its colours a part
+    // of the way to a cool haze, so the racers and the wrecks, outlined at full colour, read first. Lights (HDR) and
+    // pictures keep their colour.
+    readonly HashSet<Transform> foreground = new();
+    readonly Dictionary<Material, Material> backdrop = new();
+    void Backdrop()
+    {
+        backdrop.Clear();
+        Color haze = new Color(0.55f, 0.6f, 0.72f).linear;
+        foreach (Renderer part in course.GetComponentsInChildren<Renderer>(true))
+        {
+            bool kept = false;
+            for (Transform up = part.transform; up && up != course && !kept; up = up.parent) kept = foreground.Contains(up);
+            if (kept) continue;
+            Material[] mats = part.sharedMaterials;
+            for (int i = 0; i < mats.Length; i++)
+            {
+                if (!mats[i] || !mats[i].HasProperty("_MainColor")) continue;
+                if (!backdrop.TryGetValue(mats[i], out Material twin))
+                {
+                    twin = new Material(mats[i]) { name = mats[i].name + " (backdrop)" };
+                    Color c = mats[i].GetColor("_MainColor");
+                    if (c.maxColorComponent <= 1.05f && !mats[i].mainTexture) twin.SetColor("_MainColor", Color.Lerp(c, haze, 0.35f));
+                    twin.DisableKeyword("N_F_O_ON");
+                    twin.SetShaderPassEnabled("SRPDefaultUnlit", false); // the outline's pass
+                    backdrop[mats[i]] = twin;
+                }
+                mats[i] = twin;
+            }
+            part.sharedMaterials = mats;
+        }
+    }
+
     void Freeze()
     {
+        Backdrop();
         var moving = new HashSet<Transform>();
         foreach (var c in crowd) moving.Add(c.t);
         foreach (var c in traffic) moving.Add(c.t);
