@@ -728,8 +728,8 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         message.text = "";
         hint.text = L10n.T(crateRun ? "giger.crates.controls" : trench ? "trench.controls" : "race.controls");
         sky.GetComponent<Renderer>().sharedMaterial.mainTexture = Resources.Load<Texture2D>(crateRun ? "Sky/hell" : trench ? "Sky/trench" : "Sky/race");
-        // The city race at blue hour (Tools/make_race_sky.py), its haze cool to match; the others keep their warm one.
-        if (haze.profile.TryGet(out UnityEngine.Rendering.HighDefinition.Fog fog)) fog.color.value = crateRun ? new Color(1f, 0.74f, 0.58f) : new Color(0.32f, 0.46f, 0.78f);
+        // The city race at blue hour, the trench under open space (Tools/make_race_sky.py), each haze to match; the crates keep their warm one.
+        if (haze.profile.TryGet(out UnityEngine.Rendering.HighDefinition.Fog fog)) fog.color.value = crateRun ? new Color(1f, 0.74f, 0.58f) : trench ? new Color(0.07f, 0.1f, 0.22f) : new Color(0.32f, 0.46f, 0.78f);
         standings.transform.parent.gameObject.SetActive(!trench && !crateRun); // alone in the trench: no standings
         if (trench) TrenchBegin();
         briefing.gameObject.SetActive(true);
