@@ -1,4 +1,4 @@
-# Draws the city race's ground, Assets/Resources/Ground/race.png: one 54 m repeat of a night plaza round the course
+# Draws the city race's ground, Assets/Resources/Ground/race.png (and the trench run's deck, below): one 54 m repeat of a night plaza round the course
 # (RaceEvent tiles it every 54 m). Dark cool concrete in 3 m slabs, each a shade of its own, between pale granite
 # bands every 18 m that cross in lit squares, and a drain cover here and there. Low contrast, like the ride's ground,
 # so the racers and the barriers stay what the eye goes to. It tiles: the bands meet at the edges.
@@ -60,3 +60,31 @@ grain = Image.effect_noise((SIZE, SIZE), 10)
 img = ImageChops.add(img, Image.merge("RGB", [grain] * 3), scale=1.0, offset=-128).filter(ImageFilter.SMOOTH)
 img.save(OUT)
 print("GROUND", OUT, img.size)
+
+# The trench run's deck, Assets/Resources/Ground/trench.png, laid on its road once across (44 m) and every 40 m along
+# (RaceEvent): dark steel plates with seams and rivets, hazard stripes along both edges, a row of guide lights down
+# each lane line.
+D = 1024
+T = D / 44.0                         # pixels per metre across
+deck = Image.new("RGB", (D, D), (44, 50, 66))
+dp = ImageDraw.Draw(deck)
+plate = round(4 * T)
+for i in range(0, D, plate):
+    for j in range(0, D, plate):
+        k = random.randint(-5, 5)
+        dp.rectangle((i, j, i + plate, j + plate), fill=(44 + k, 50 + k, 66 + k), outline=(30, 34, 46), width=3)
+        for (rx, ry) in ((i + 8, j + 8), (i + plate - 8, j + 8), (i + 8, j + plate - 8), (i + plate - 8, j + plate - 8)):
+            dp.ellipse((rx - 3, ry - 3, rx + 3, ry + 3), fill=(70, 78, 96))
+edge = round(1.6 * T)
+for x0 in (0, D - edge):                                   # hazard stripes along both edges, black on a muted yellow
+    dp.rectangle((x0, 0, x0 + edge, D), fill=(150, 128, 52))
+    for y in range(-edge, D, edge):
+        dp.polygon([(x0, y), (x0 + edge, y + edge // 2), (x0 + edge, y + edge), (x0, y + edge // 2)], fill=(28, 28, 34))
+for lane in (0.25, 0.75):                                  # guide lights down the lane lines
+    x = round(lane * D)
+    for y in range(32, D, 128):
+        dp.rectangle((x - 6, y - 14, x + 6, y + 14), fill=(170, 205, 245))
+deck = ImageChops.add(deck, Image.merge("RGB", [Image.effect_noise((D, D), 8)] * 3), scale=1.0, offset=-128).filter(ImageFilter.SMOOTH)
+out = os.path.join(os.path.dirname(OUT), "trench.png")
+deck.save(out)
+print("DECK", out, deck.size)

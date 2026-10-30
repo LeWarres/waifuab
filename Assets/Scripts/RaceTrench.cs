@@ -33,15 +33,14 @@ public partial class RaceEvent
 
     static void Tint(Material m, Color c) => TrainSim.Tint(m, c);
 
-    // The trench's walls made a fortress: bands of light running its length, ribs and armour panels, pipes, glowing
-    // reactor windows, bridges over it; turrets along the tops; laser gates across it with one gap to steer through.
+    // The trench's walls are modelled (Tools/make_race_kit.py: armour plates, pipes, ribs, its bands of light), bent
+    // along it by RaceEvent.Barriers. Here: glowing reactor windows, bridges over it; turrets along the tops; laser
+    // gates across it with one gap to steer through. Lit in Persona 3's blues like the city race; red for danger.
     void DressTrench()
     {
-        Material cyan = Glow(new Color(0.3f, 2.4f, 2.8f)), pink = Glow(new Color(2.8f, 0.45f, 1.8f)), lime = Glow(new Color(0.6f, 2.8f, 0.4f)), red = Glow(new Color(3f, 0.35f, 0.25f));
-        Material plate = TrainSim.Mat(new Color(0.36f, 0.4f, 0.46f)), plateDark = TrainSim.Mat(new Color(0.16f, 0.18f, 0.22f)), pipe = TrainSim.Mat(new Color(0.55f, 0.58f, 0.64f));
+        Material cyan = Glow(new Color(0.45f, 1f, 1.35f)), pink = Glow(new Color(0.2f, 0.5f, 1.5f)), lime = Glow(new Color(0.9f, 1.2f, 1.5f)), red = Glow(new Color(2.4f, 0.3f, 0.2f));
+        Material plateDark = TrainSim.Mat(new Color(0.13f, 0.15f, 0.2f)), pipe = TrainSim.Mat(new Color(0.5f, 0.54f, 0.62f));
         float w = roadWidth / 2f;
-        foreach (var (y0, y1, m) in new[] { (2.6f, 3f, cyan), (9.6f, 9.9f, pink), (16f, 16.3f, cyan), (21.7f, 22f, lime) })
-            for (int s = -1; s <= 1; s += 2) Band("Band", s * (w - 0.02f), y0, y1, s < 0 ? m : (m == cyan ? pink : m == pink ? cyan : m));
         Ribbon("Centre", -0.3f, 0.3f, 0.06f, lime, 4);                                   // a dashed lit line down the middle
         turrets.Clear();
         turretReady.Clear();
@@ -53,10 +52,7 @@ public partial class RaceEvent
             Quaternion rot = Quaternion.LookRotation(d);
             for (int side = -1; side <= 1; side += 2)
             {
-                Vector3 face = c + right * side * (w - 0.3f);
-                Block(face + Vector3.up * 11f, rot, new Vector3(0.6f, 22f, 1.2f), plateDark);                        // a rib
-                if (k % 2 == 0) Block(face + Vector3.up * Random.Range(4f, 18f) - right * side * 0.2f, rot, new Vector3(0.4f, Random.Range(2f, 5f), Random.Range(4f, 9f)), plate); // an armour panel
-                if (k % 3 == side + 1) Block(face + Vector3.up * 6.4f - right * side * 0.35f, rot, new Vector3(0.5f, 0.5f, 14f), pipe); // a pipe along it
+                Vector3 face = c + right * side * (w + 0.6f); // the wall's upper face
                 if (k % 9 == 4 + side) // a reactor window, glowing behind bars
                 {
                     Block(face + Vector3.up * 13f - right * side * 0.1f, rot, new Vector3(0.2f, 4f, 7f), side < 0 ? cyan : pink);
@@ -102,29 +98,6 @@ public partial class RaceEvent
         Material m = TrainSim.Mat(c, false);
         m.SetInt("_Culling", 0);
         return m;
-    }
-
-    // One face along the trench at offset off, from y0 up to y1.
-    void Band(string name, float off, float y0, float y1, Material m)
-    {
-        var verts = new List<Vector3>();
-        var tris = new List<int>();
-        for (int i = 0; i < points.Count - 1; i++)
-        {
-            Vector3 r0 = Vector3.Cross(Vector3.up, dirs[i]), r1 = Vector3.Cross(Vector3.up, dirs[i + 1]);
-            int v = verts.Count;
-            verts.Add(points[i] + r0 * off + Vector3.up * y0); verts.Add(points[i] + r0 * off + Vector3.up * y1);
-            verts.Add(points[i + 1] + r1 * off + Vector3.up * y0); verts.Add(points[i + 1] + r1 * off + Vector3.up * y1);
-            tris.AddRange(new[] { v, v + 1, v + 2, v + 2, v + 1, v + 3 });
-        }
-        var mesh = new Mesh { name = name, indexFormat = UnityEngine.Rendering.IndexFormat.UInt32 };
-        mesh.SetVertices(verts);
-        mesh.SetTriangles(tris, 0);
-        mesh.RecalculateNormals();
-        var go = new GameObject(name);
-        go.transform.SetParent(course, false);
-        go.AddComponent<MeshFilter>().sharedMesh = mesh;
-        go.AddComponent<MeshRenderer>().sharedMaterial = m;
     }
 
     // The turrets fire at where she will be; the laser gates crash her unless she is through the gap; and the
@@ -245,7 +218,8 @@ public partial class RaceEvent
             if (!trenchFlashes[i].t || now > trenchFlashes[i].until) { if (trenchFlashes[i].t) Destroy(trenchFlashes[i].t.gameObject); trenchFlashes.RemoveAt(i); continue; }
             trenchFlashes[i].t.localScale *= 1f + 3f * dt;
         }
-        place.text = L10n.T("gates.life", Mathf.Max(0, life));
+        place.text = Mathf.Max(0, life).ToString(); // her health, big where the place goes, its word small beside it
+        placeOf.text = L10n.T("gates.life", "").Trim();
         standings.text = "";
         if (endsAt > 0f) { if (aiming) AimCamera(dt); return; }
         if (!aiming && me.progress >= total - 32f) { aiming = true; me.speed = 0f; sightAt = new Vector2(Screen.width * 0.35f, Screen.height * 0.35f); sightVelocity = Vector2.zero; message.text = L10n.T("trench.aim"); }

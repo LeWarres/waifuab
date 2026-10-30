@@ -16,6 +16,7 @@ M = dict(
     steel=("RaceSteel", (0.55, 0.58, 0.66)), dark=("RaceDark", (0.1, 0.11, 0.14)), stripe=("RaceStripe", (1.0, 0.75, 0.1)),
     paint=("CarPaint", (0.8, 0.8, 0.82)), glass=("CarGlass", (0.08, 0.12, 0.2)), tail=("GlowTail", (1.0, 0.1, 0.08)),
     cone=("RaceCone", (1.0, 0.38, 0.05)), facade=("Facade", (1.0, 1.0, 1.0)), podium=("RacePodium", (0.2, 0.22, 0.3)),
+    plate=("TrenchPlate", (0.2, 0.23, 0.3)), plateDark=("TrenchDark", (0.08, 0.09, 0.13)), pipe=("TrenchPipe", (0.36, 0.4, 0.48)),
     accent=("GlowAccent", (1.0, 1.0, 1.0)), white=("RaceWhite", (0.92, 0.93, 0.96)), seat=("RaceSeat", (0.1, 0.45, 0.95)),
     shirt=("Shirt", (0.9, 0.9, 0.9)), skin=("Skin", (0.95, 0.75, 0.6)), hair=("Hair", (0.12, 0.08, 0.06)), pants=("Pants", (0.16, 0.18, 0.28)), amber=("GlowAmber", (1.0, 0.55, 0.12)), light=("GlowLamp", (1.0, 0.95, 0.85)),
 )
@@ -263,11 +264,41 @@ def towers():
     facade_uvs(); made.append(finish("Race_tower4"))
     return made
 
+# The trench run's wall: one 20 m stretch, 22 m high, its face to the road at x = 0 and its bulk towards +x, like the
+# barrier (RaceEvent bends it along the course). A sloped skirt, armour plates in two tiers with dark seams, a deep
+# groove with a light strip at 2.8 m and another at 16 m, a run of pipes, a rib at each end and a coping on top.
+def trench_wall():
+    H = 22.0
+    prism([(0, 0), (1.6, 0), (1.6, 2.2), (0.6, 2.2)], 0, L, m("plateDark"))                # the skirt, sloped back
+    box(0.6, 1.6, 0, L, 2.2, 2.6, m("plateDark"))
+    box(0.7, 1.6, 0, L, 2.6, 3.0, m("accent"))                                             # the low strip, in its groove
+    box(0.6, 1.6, 0, L, 3.0, 3.4, m("plateDark"))
+    for z0, z1 in ((3.4, 9.4), (10.2, 15.6)):                                              # two tiers of armour plates
+        for k in range(4):
+            y0, y1 = k * 5.0 + 0.12, (k + 1) * 5.0 - 0.12
+            prism([(0.75, z0), (0.95, z0), (0.95, z1), (0.75, z1 - 0.3)], y0, y1, m("plate"))
+            box(0.95, 1.6, y0 - 0.12, y1 + 0.12, z0, z1, m("plateDark"))                   # the seam behind them
+    box(0.95, 1.6, 0, L, 9.4, 10.2, m("plateDark"))
+    for y in (0.4, 0.75):                                                                  # pipes along the seam
+        cyl((0.65, L / 2, 9.8 + (y - 0.55)), 0.18, L, "Y", m("pipe"), sides=8)
+    box(0.95, 1.6, 0, L, 15.6, 16.0, m("plateDark"))
+    box(1.05, 1.6, 0, L, 16.0, 16.3, m("accent"))                                          # the high strip
+    box(0.6, 1.6, 0, L, 16.3, H, m("plate"))                                              # the upper wall
+    for k in range(5):
+        y = k * 4.0 + 2.0
+        box(0.5, 0.6, y - 0.6, y + 0.6, 17.2, 20.8, m("plateDark"))                        # vents up top
+    box(0.3, 1.6, 0, L, H - 0.4, H, m("pipe"))                                             # the coping
+    for y in (0.0, L - 0.9):
+        box(0.2, 1.6, y, y + 0.9, 0, H - 0.4, m("plateDark"))                              # a rib at each end
+    return finish("Race_trenchwall")
+
 reset()
-made = [barrier(), gantry(), lamp(), fan("Race_fan"), fan("Race_fan2", wave=True), seats(), arch(), car(), hazard(), *towers()]  # finish() exports each one on its own
+made = [barrier(), gantry(), lamp(), fan("Race_fan"), fan("Race_fan2", wave=True), seats(), arch(), car(), hazard(), *towers(), trench_wall()]  # finish() exports each one on its own
 
 if "--" in sys.argv and "shot" in sys.argv[sys.argv.index("--") + 1:]:
     b, g, l, f1, f2, st, ar, cr, hz, *tw = made
+    tr = tw.pop()
+    tr.location = (60, 0, 0)
     cr.location = (-6, -6, 0); cr.rotation_euler = (0, 0, 0.6)
     hz.location = (-6, -6, 0)
     for k, o in enumerate(tw):
@@ -287,4 +318,4 @@ if "--" in sys.argv and "shot" in sys.argv[sys.argv.index("--") + 1:]:
             c.scale = (side, 1, 1)
     g.location = (0, 22, 0)
     l.location = (24.2, 4, 0)
-    render([("race_kit_preview", (30, -34, 12), (0, 14, 5)), ("race_kit_close", (14, -8, 2.2), (23, 8, 0.8)), ("race_kit_crowd", (-22, -6, 4.2), (-30, 0.5, 3.0)), ("race_kit_wreck", (4, -18, 6), (-6, -6, 1.5)), ("race_kit_towers", (-30, 30, 50), (-30, 200, 55))], lens=30)
+    render([("race_kit_preview", (30, -34, 12), (0, 14, 5)), ("race_kit_close", (14, -8, 2.2), (23, 8, 0.8)), ("race_kit_crowd", (-22, -6, 4.2), (-30, 0.5, 3.0)), ("race_kit_wreck", (4, -18, 6), (-6, -6, 1.5)), ("race_kit_towers", (-30, 30, 50), (-30, 200, 55)), ("race_kit_trench", (48, -14, 9), (61, 10, 9))], lens=30)

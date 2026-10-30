@@ -251,19 +251,19 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         // the right), gantries over it now and then and lamps along it; the city's ground painting all round, and
         // far out a skyline of towers fading into the haze.
         Material asphalt = TrainSim.Mat(Color.white, false), wall = TrainSim.Mat(new Color(0.5f, 0.52f, 0.6f)), steel = TrainSim.Mat(new Color(0.62f, 0.65f, 0.72f));
-        asphalt.mainTexture = crateRun ? Resources.Load<Texture2D>("Ground/hell") : trench ? Resources.Load<Texture2D>("Ground/fortress") : AsphaltTexture();
-        if (trench) { asphalt.mainTextureScale = new Vector2(2f, 0.5f); Tint(wall, new Color(0.26f, 0.3f, 0.34f)); } // the trench: the base's plates, steel walls
+        asphalt.mainTexture = crateRun ? Resources.Load<Texture2D>("Ground/hell") : trench ? Resources.Load<Texture2D>("Ground/trench") : AsphaltTexture();
+        if (trench) asphalt.mainTextureScale = new Vector2(1f, 0.5f); // the trench's deck: its pattern once across, a repeat every 40 m
         wall.SetInt("_Culling", 0);
         Material cyan = TrainSim.Mat(new Color(0.3f, 2.2f, 2.6f), false), pink = TrainSim.Mat(new Color(2.6f, 0.45f, 1.7f), false), gold = TrainSim.Mat(new Color(2.8f, 1.9f, 0.4f), false);
-        if (!trench && !crateRun) { Tint(cyan, new Color(0.45f, 1f, 1.35f)); Tint(pink, new Color(0.2f, 0.5f, 1.5f)); } // the city: Persona 3's blues, ice and electric, and dimmer
+        if (!crateRun) { Tint(cyan, new Color(0.45f, 1f, 1.35f)); Tint(pink, new Color(0.2f, 0.5f, 1.5f)); } // Persona 3's blues, ice and electric, and dimmer
         if (crateRun) { Tint(cyan,new Color(2.4f,.35f,.08f)); Tint(pink,new Color(2.6f,.85f,.12f)); Tint(steel,new Color(.17f,.1f,.12f)); Tint(wall,new Color(.2f,.09f,.12f)); }
         Ribbon("Road", -roadWidth / 2f, roadWidth / 2f, 0.05f, asphalt);
         float wallHigh = trench ? 22f : 1.2f; // the trench: sheer walls either side
         bool kit = !trench && !crateRun; // the city's roadside is modelled (Tools/make_race_kit.py)
-        if (kit)
+        if (kit || trench) // the trench's walls modelled too, 22 m of armour
         {
-            Barriers(-1, cyan);
-            Barriers(1, pink);
+            Barriers(-1, cyan, trench ? "trenchwall" : "barrier");
+            Barriers(1, pink, trench ? "trenchwall" : "barrier");
         }
         else
         {
@@ -272,9 +272,8 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             Ribbon("EdgeL", -roadWidth / 2f - 0.8f, -roadWidth / 2f, wallHigh + 0.02f, cyan);
             Ribbon("EdgeR", roadWidth / 2f, roadWidth / 2f + 0.8f, wallHigh + 0.02f, pink);
         }
-        if (trench) { Ribbon("GlowL", -roadWidth / 2f - 0.05f, -roadWidth / 2f, 6f, cyan); Ribbon("GlowR", roadWidth / 2f, roadWidth / 2f + 0.05f, 6f, pink); }
         int gantry = 0;
-        for (float s = 150f; s < total - 220f; s += 210f, gantry++)
+        for (float s = 150f; s < total - 220f && !trench; s += 210f, gantry++) // the trench has its bridges instead (RaceTrench)
         {
             Vector3 c = PointAt(s, out Vector3 d), right = Vector3.Cross(Vector3.up, d);
             Quaternion rot = Quaternion.LookRotation(d);
@@ -288,7 +287,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             Block(c + Vector3.up * 15.4f, rot, new Vector3(roadWidth + 6f, 0.4f, 0.8f), gantry % 2 == 0 ? cyan : pink);
             if (trench) Block(c + Vector3.up * 17.8f, rot, new Vector3(roadWidth * 0.45f, 3.2f, 0.5f), gantry % 2 == 0 ? pink : cyan); // its sign (the city's: a poster, RaceCity)
         }
-        for (float s = 20f; s < total; s += 45f)
+        for (float s = 20f; s < total && !trench; s += 45f) // nor lamps: its walls are lit
         {
             Vector3 c = PointAt(s, out Vector3 d), right = Vector3.Cross(Vector3.up, d);
             Quaternion rot = Quaternion.LookRotation(d);
@@ -322,7 +321,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         var junk = new List<GameObject>();
         beacons.Clear();
         Material[] carPaints = System.Array.ConvertAll(new[] { new Color(0.85f, 0.12f, 0.14f), new Color(0.15f, 0.35f, 0.85f), new Color(0.95f, 0.95f, 0.97f), new Color(0.12f, 0.12f, 0.14f), new Color(1f, 0.75f, 0.1f), new Color(0.4f, 0.8f, 0.6f) }, c => TrainSim.Mat(c));
-        Material hazard = TrainSim.Mat(new Color(2.4f, 0.9f, 0.1f), false), hazardDark = TrainSim.Mat(new Color(0.12f, 0.1f, 0.1f), false), beacon = TrainSim.Mat(new Color(2.2f, 0.3f, 0.15f), false); // red: danger, the one warm light
+        Material beacon = TrainSim.Mat(new Color(2.2f, 0.3f, 0.15f), false); // red: danger, the one warm light
         foreach (GameObject kind in Resources.LoadAll<GameObject>(crateRun ? "Scenery/hell" : trench ? "Scenery/fortress" : "Scenery/city"))
         {
             Bounds box = Bounds(kind);
@@ -343,10 +342,17 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             float s = Mathf.Lerp(220f, total - 260f, (i + Random.value) / wreckCount);
             Vector3 at = PointAt(s, out Vector3 dir) + Vector3.Cross(Vector3.up, dir) * Random.Range(-roadWidth * 0.38f, roadWidth * 0.38f);
             Quaternion flat = Quaternion.LookRotation(dir);
-            if (!trench)
+            // In the city a car slewed across the lane (Tools/make_race_kit.py), in the trench the base's junk at twice
+            // its size; either way ringed with cones, under a warning sign on a pole (on the side the racers come from)
+            // with a beacon flashing on it.
+            if (trench)
             {
-                // The city's (Tools/make_race_kit.py): a car slewed across the lane, ringed with cones, a warning sign
-                // on the side the racers come from and a beacon flashing on it.
+                Transform junkBody = Instantiate(junk[Random.Range(0, junk.Count)], at, flat * Quaternion.Euler(0f, Random.Range(-60f, 60f), 0f), course).transform;
+                junkBody.localScale *= 2f;
+                foreground.Add(junkBody);
+            }
+            else
+            {
                 GameObject car = Kit("car", at, flat * Quaternion.Euler(0f, Random.Range(30f, 150f), Random.Range(-8f, 8f)), null);
                 foreground.Add(car.transform);
                 car.transform.localScale *= 1.6f;
@@ -354,21 +360,11 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
                 var mats = body.sharedMaterials;
                 for (int k = 0; k < mats.Length; k++) if (mats[k].name == "CarPaint") mats[k] = carPaints[Random.Range(0, carPaints.Length)];
                 body.sharedMaterials = mats;
-                Transform warning = Kit("hazard", at, flat * Quaternion.Euler(0f, 180f, 0f), null).transform; // its sign towards the oncoming
-                warning.localScale *= 1.3f;
-                foreground.Add(warning);
-                beacons.Add(Ball(at - dir * 2.8f * 1.3f + Vector3.up * 10.2f, 1.1f, beacon));
-                wrecks.Add((at, 3.4f));
-                continue;
             }
-            // Seen from far off: a wreck twice the size, on a glowing hazard pad, under a beacon on a post.
-            Transform wreck = Instantiate(junk[Random.Range(0, junk.Count)], at, Quaternion.LookRotation(dir) * Quaternion.Euler(0f, Random.Range(-60f, 60f), 0f), course).transform;
-            wreck.localScale *= 2f;
-            foreground.Add(wreck);
-            Block(at + Vector3.up * 0.09f, flat, new Vector3(9f, 0.04f, 9f), hazard);
-            Block(at + Vector3.up * 0.1f, flat * Quaternion.Euler(0f, 45f, 0f), new Vector3(5.5f, 0.04f, 5.5f), hazardDark);
-            Block(at + Vector3.up * 3f, flat, new Vector3(0.25f, 6f, 0.25f), hazardDark);
-            beacons.Add(Ball(at + Vector3.up * 6.4f, 1.3f, beacon));
+            Transform warning = Kit("hazard", at, flat * Quaternion.Euler(0f, 180f, 0f), null).transform;
+            warning.localScale *= 1.3f;
+            foreground.Add(warning);
+            beacons.Add(Ball(at - dir * 2.8f * 1.3f + Vector3.up * 10.2f, 1.1f, beacon));
             wrecks.Add((at, 3.4f));
         }
 
@@ -434,7 +430,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
     void Backdrop()
     {
         backdrop.Clear();
-        Color haze = new Color(0.55f, 0.6f, 0.72f).linear;
+        Color haze = (trench ? new Color(0.14f, 0.17f, 0.26f) : new Color(0.55f, 0.6f, 0.72f)).linear; // the trench's steel kept dark
         foreach (Renderer part in course.GetComponentsInChildren<Renderer>(true))
         {
             bool kept = false;
@@ -605,12 +601,12 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         r.sharedMaterials = mats;
     }
 
-    // The concrete barrier along one side (1 right, -1 left), one model a stretch, bent to follow the course, all in
-    // one mesh. The model runs 0..-Step along z with its road face at x = 0 and its back towards -x; the left side's
-    // is mirrored.
-    void Barriers(int side, Material accent)
+    // A wall along one side (1 right, -1 left): the city's concrete barrier or the trench's, one model a stretch, bent
+    // to follow the course, all in one mesh. The model runs 0..-Step along z with its road face at x = 0 and its back
+    // towards -x; the left side's is mirrored.
+    void Barriers(int side, Material accent, string name = "barrier")
     {
-        var model = Resources.Load<GameObject>("Models/Race_barrier");
+        var model = Resources.Load<GameObject>("Models/Race_" + name);
         Mesh src = model.GetComponentInChildren<MeshFilter>().sharedMesh;
         Vector3[] sv = src.vertices, sn = src.normals;
         var verts = new List<Vector3>();
@@ -731,9 +727,9 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         endsAt = -1f;
         message.text = "";
         hint.text = L10n.T(crateRun ? "giger.crates.controls" : trench ? "trench.controls" : "race.controls");
-        sky.GetComponent<Renderer>().sharedMaterial.mainTexture = Resources.Load<Texture2D>(crateRun ? "Sky/hell" : trench ? "Sky/fortress" : "Sky/race");
+        sky.GetComponent<Renderer>().sharedMaterial.mainTexture = Resources.Load<Texture2D>(crateRun ? "Sky/hell" : trench ? "Sky/trench" : "Sky/race");
         // The city race at blue hour (Tools/make_race_sky.py), its haze cool to match; the others keep their warm one.
-        if (haze.profile.TryGet(out UnityEngine.Rendering.HighDefinition.Fog fog)) fog.color.value = trench || crateRun ? new Color(1f, 0.74f, 0.58f) : new Color(0.32f, 0.46f, 0.78f);
+        if (haze.profile.TryGet(out UnityEngine.Rendering.HighDefinition.Fog fog)) fog.color.value = crateRun ? new Color(1f, 0.74f, 0.58f) : new Color(0.32f, 0.46f, 0.78f);
         standings.transform.parent.gameObject.SetActive(!trench && !crateRun); // alone in the trench: no standings
         if (trench) TrenchBegin();
         briefing.gameObject.SetActive(true);

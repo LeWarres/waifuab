@@ -62,7 +62,8 @@ public partial class RaceEvent
 
     void CratesUpdate(float now, bool going)
     {
-        place.text = L10n.T("giger.crates.count", CratesBroken, CrateCount);
+        place.text = CratesBroken.ToString(); // the crates broken, big where the place goes, out of how many beside it
+        placeOf.text = "/ " + CrateCount;
         if (endsAt > 0f) return;
         message.text = L10n.T("giger.crates.target", CrateGoal, CrateCount);
         if (!going) { cratePrevious=me.pos; return; }

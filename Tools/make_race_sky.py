@@ -4,14 +4,16 @@ Deep navy overhead fading to a pale blue haze at the horizon (the bottom edge), 
 lower down, a big pale moon with a soft halo, and a few long thin clouds lit from below. The game wraps it mirrored
 round the shell, so its ends need not match. Saved to Assets/Resources/Sky/race.png.
 
-    python Tools/make_race_sky.py
+    python Tools/make_race_sky.py          (the city race: Sky/race.png)
+    python Tools/make_race_sky.py trench   (the trench run: the same blues under a storm, no moon: Sky/trench.png)
 """
-import os, random
+import os, random, sys
 from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 W, H = 1536, 768
-TOP, MID, LOW = (6, 12, 40), (18, 48, 120), (110, 160, 220)  # overhead, two thirds down, the horizon
+STORM = "trench" in sys.argv[1:]
+TOP, MID, LOW = ((4, 8, 26), (14, 30, 76), (60, 90, 150)) if STORM else ((6, 12, 40), (18, 48, 120), (110, 160, 220))  # overhead, two thirds down, the horizon
 
 def lerp(a, b, t):
     return tuple(round(x + (y - x) * t) for x, y in zip(a, b))
@@ -34,8 +36,8 @@ for _ in range(900):
     d.ellipse((x - r / 2, y - r / 2, x + r / 2, y + r / 2), fill=int(b))
 sky.paste((235, 242, 255), mask=stars)
 
-# The moon and its halo, up and to one side.
-mx, my, mr = int(W * 0.7), int(H * 0.28), 70
+# The moon and its halo, up and to one side (hidden by the storm).
+mx, my, mr = int(W * 0.7), int(H * 0.28), 0 if STORM else 70
 halo = Image.new("L", (W, H))
 ImageDraw.Draw(halo).ellipse((mx - mr * 3, my - mr * 3, mx + mr * 3, my + mr * 3), fill=70)
 halo = halo.filter(ImageFilter.GaussianBlur(70))
@@ -62,6 +64,19 @@ for _ in range(14):
 clouds = clouds.filter(ImageFilter.GaussianBlur(9))
 sky.paste((60, 90, 160), mask=clouds)
 
-out = os.path.join(ROOT, "Assets", "Resources", "Sky", "race.png")
+if STORM:
+    # Heavy banks of cloud over most of it, lit from inside here and there by lightning.
+    bank = Image.new("L", (W, H))
+    bd = ImageDraw.Draw(bank)
+    for _ in range(60):
+        y, x = int(H * rng.uniform(0.0, 0.8)), rng.randrange(-300, W)
+        bd.ellipse((x, y - rng.randint(20, 60), x + rng.randint(300, 800), y + rng.randint(20, 60)), fill=rng.randint(90, 200))
+    sky.paste((22, 32, 62), mask=bank.filter(ImageFilter.GaussianBlur(22)))
+    for _ in range(4):
+        glow = Image.new("L", (W, H))
+        x, y, r = rng.randrange(W), int(H * rng.uniform(0.15, 0.6)), rng.randint(70, 140)
+        ImageDraw.Draw(glow).ellipse((x - r * 2, y - r, x + r * 2, y + r), fill=rng.randint(50, 90))
+        sky.paste((150, 180, 255), mask=glow.filter(ImageFilter.GaussianBlur(50)))
+out = os.path.join(ROOT, "Assets", "Resources", "Sky", "trench.png" if STORM else "race.png")
 sky.save(out)
 print("SKY", out, sky.size)
