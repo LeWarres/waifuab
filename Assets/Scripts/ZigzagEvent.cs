@@ -92,6 +92,23 @@ public class ZigzagEvent : MonoBehaviour
     void LateUpdate()
     {
         if (outcome == null || !train.Zigzag) return;
+        // The button-game card, as the curve and the jump have: the whole run of flicks, each the way to push on
+        // screen, and the bar running to the next turn, its green stretch the window to flick in.
+        // Shown before the marks: a frame with marks and no card hides the card.
+        bool hot = Active && Mathf.Abs(TimeTo(next)) <= Window;
+        if (Active || (next == 0 && train.Warning))
+        {
+            EventPanel panel = train.Panel;
+            panel.Show(L10n.T("zig.title", L10n.T(train.Player.UsingGamepad ? "zig.stick" : "zig.keys")), outcome.Length);
+            for (int i = 0; i < outcome.Length; i++)
+                panel.Box(i, Way(i) > 0 ? "→" : "←", outcome[i] != 0 ? outcome[i] : Active && i == next ? 3 : 0);
+            if (Active && next < outcome.Length)
+            {
+                float span = lead + 2f * Window, arrow = Way(next);
+                panel.Bar(1f - (TimeTo(next) + Window) / span, lead / span, 1f);
+                panel.Cue(L10n.T(hot ? "zig.now" : "zig.wait", arrow > 0 ? "→" : "←", arrow > 0 ? "→" : "←"), hot);
+            }
+        }
         for (int i = 0; i < outcome.Length && i < train.KneeCount; i++)
         {
             Combat.Batch marks = outcome[i] == 1 ? hitMarks : outcome[i] == 2 ? missMarks : pendingMarks;
@@ -114,13 +131,5 @@ public class ZigzagEvent : MonoBehaviour
         hitMarks.Flush();
         missMarks.Flush();
         cueMarks.Flush();
-
-        // No card over the track: every turn carries its own arrow, and the next one grows, then turns green
-        // (with the white frame closing on it) at the moment to flick.
-        if (!Active && (next != 0 || !train.Warning)) return;
-        bool hot = Active && Mathf.Abs(TimeTo(next)) <= Window;
-        for (int i = 0; i < outcome.Length && i < train.KneeCount; i++)
-            train.Panel.Mark(train.KneePoint(i) + Vector3.up * 3f, Way(i) > 0 ? "→" : "←",
-                outcome[i] != 0 ? outcome[i] : Active && i == next ? (hot ? 4 : 3) : 0);
     }
 }

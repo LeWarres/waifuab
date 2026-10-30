@@ -1,0 +1,366 @@
+[
+  {
+    "key": "story.gabriel.0.title",
+    "es": "Sin alas y sin vacaciones",
+    "en": "No wings, no holidays",
+    "pt": "Sem asas, sem férias",
+    "ja": "翼も休暇もなし"
+  },
+  {
+    "key": "story.gabriel.1.title",
+    "es": "Una derrota por amistad",
+    "en": "Losing for a friend",
+    "pt": "Uma derrota por amizade",
+    "ja": "友のための敗北"
+  },
+  {
+    "key": "story.gabriel.2.title",
+    "es": "Ni un día libre",
+    "en": "Not a single day off",
+    "pt": "Nem um dia de folga",
+    "ja": "休日は一日もなし"
+  },
+  {
+    "key": "story.gabriel.3.title",
+    "es": "Cuando termine mi turno",
+    "en": "When my shift ends",
+    "pt": "Quando meu turno acabar",
+    "ja": "勤務が終わったら"
+  },
+  {
+    "key": "hero.character.gabriel",
+    "es": "Gabriel",
+    "en": "Gabriel",
+    "pt": "Gabriel",
+    "ja": "ガブリエル"
+  },
+  {
+    "key": "story.gabriel.0.intro.1",
+    "es": "Ser un arcángel y nacer sin alas suena a vacaciones de por vida, ¿verdad? Si no puedes salir volando a luchar, alguien tendrá que dejarte descansar.",
+    "en": "Being an archangel born without wings sounds like a lifetime holiday, right? If you cannot fly off to fight, surely someone will let you rest.",
+    "pt": "Ser um arcanjo e nascer sem asas parece férias para sempre, né? Se não pode voar para lutar, alguém deve deixar você descansar.",
+    "ja": "翼のない大天使として生まれたら、一生休暇だと思うでしょ？飛んで戦えないなら、休ませてもらえるって。"
+  },
+  {
+    "key": "story.gabriel.0.intro.2",
+    "es": "Pues me presento: soy Gabriel, la mujer con la peor suerte del universo. Vieron mi caso y pensaron: qué buena oportunidad para encargarle la defensa desde una locomotora.",
+    "en": "Allow me to introduce myself: Gabriel, the unluckiest woman in the universe. They saw my situation and thought: perfect, she can defend heaven from a locomotive.",
+    "pt": "Então me apresento: Gabriel, a mulher mais azarada do universo. Viram meu caso e pensaram: perfeito, ela pode defender o céu numa locomotiva.",
+    "ja": "自己紹介するね。宇宙で一番ついてない女、ガブリエル。私を見て、皆こう思ったの。「列車で天界を守らせればいいじゃない」。"
+  },
+  {
+    "key": "story.gabriel.0.intro.3",
+    "es": "Y todavía dicen: qué trabajo tan fácil tiene Gabriel. ¡Para nada! Todos los días aparece un demonio, un monstruo o algún loco religioso que quiere conquistar el cielo.",
+    "en": "And they still say: Gabriel has such an easy job. Not even close! Every day some demon, monster or religious lunatic comes to conquer heaven.",
+    "pt": "E ainda dizem: que trabalho fácil a Gabriel tem. Nada disso! Todo dia chega um demônio, monstro ou fanático querendo conquistar o céu.",
+    "ja": "それでも「ガブリエルは楽な仕事でいいね」だって。全然！毎日、悪魔や怪物や変な信者が天界を征服しに来るんだから。"
+  },
+  {
+    "key": "story.gabriel.0.intro.4",
+    "es": "No tengo ni un momento para mí. Mi Gora-P y yo llevamos tantas guardias que ya reconozco a los invasores por cómo pisan los rieles.",
+    "en": "I never get a moment to myself. Gora-P and I have worked so many shifts I recognise invaders by their footsteps on the rails.",
+    "pt": "Não tenho um minuto para mim. Eu e Gora-P fizemos tantos plantões que reconheço os invasores pelo jeito de pisar nos trilhos.",
+    "ja": "自分の時間なんてない。ゴラＰと当直をしすぎて、線路を踏む音で侵入者がわかるくらい。"
+  },
+  {
+    "key": "story.gabriel.0.intro.5",
+    "es": "Encima soy la rara del cielo por vestirme como una gal. Perdón por querer verme bien mientras hago el trabajo que nadie más quiere hacer.",
+    "en": "And apparently I am the weird one for dressing like a gal. Sorry for wanting to look good while doing the job nobody else wants.",
+    "pt": "E ainda sou a estranha do céu por me vestir como uma gal. Desculpem querer ficar bonita enquanto faço o trabalho que ninguém quer fazer.",
+    "ja": "しかもギャルっぽい服だから天界の変わり者扱い。誰もやりたがらない仕事でも、おしゃれくらいしたいんですけど。"
+  },
+  {
+    "key": "story.gabriel.0.intro.6",
+    "es": "Como les decía: aquí no hay días libres. La alarma acaba de sonar. Parece que una demonio vino a visitarnos. Vamos, Gora-P... otro turno tranquilo.",
+    "en": "Like I said: no days off here. There goes the alarm. A demon woman has come to visit. Come on, Gora-P... another quiet shift.",
+    "pt": "Como eu disse: aqui não tem folga. Aí está o alarme. Uma demônia veio visitar. Vamos, Gora-P... mais um plantão tranquilo.",
+    "ja": "ほら、休みなんてないでしょ。もう警報。悪魔の女の子が来たみたい。行こう、ゴラＰ……今日も平和な当直だね。"
+  },
+  {
+    "key": "story.gabriel.0.before.1",
+    "es": "Solo vengo por una reliquia. Si te apartas, acabamos antes.",
+    "en": "I only came for a relic. Move aside and we finish sooner.",
+    "pt": "Só vim por uma relíquia. Sai da frente e terminamos logo.",
+    "ja": "遺物を取りに来ただけ。どけば早く済むわ。"
+  },
+  {
+    "key": "story.gabriel.0.before.2",
+    "es": "Eso me dicen todos. Luego rompen la puerta y a mí me toca rellenar el informe.",
+    "en": "Everyone says that. Then they break the gate and I get the paperwork.",
+    "pt": "Todo mundo diz isso. Depois quebra o portão e sobra o relatório para mim.",
+    "ja": "皆そう言うの。その後、門を壊して、報告書を書くのは私。"
+  },
+  {
+    "key": "story.gabriel.0.before.3",
+    "es": "Entonces procura escribir que peleé bastante bien.",
+    "en": "Then make sure you write that I fought well.",
+    "pt": "Então escreve que eu lutei muito bem.",
+    "ja": "なら、私の戦いぶりもちゃんと書いてね。"
+  },
+  {
+    "key": "story.gabriel.0.after.1",
+    "es": "¡Una menos! A ver si ahora puedo sentarme cinco minutos.",
+    "en": "One down! Maybe now I can sit for five minutes.",
+    "pt": "Uma a menos! Quem sabe agora posso sentar cinco minutos.",
+    "ja": "一人片付いた！今度こそ五分くらい座れるかな。"
+  },
+  {
+    "key": "story.gabriel.0.after.2",
+    "es": "Todavía me falta hablar con la guardiana. Esto no termina aquí.",
+    "en": "I still need to speak with the guardian. This is not over.",
+    "pt": "Ainda preciso falar com a guardiã. Isso não acaba aqui.",
+    "ja": "まだ守護者に用があるの。これで終わりじゃないわ。"
+  },
+  {
+    "key": "story.gabriel.0.outro.1",
+    "es": "Claro. Yo hago el trabajo difícil y después la guardiana de muchos ojos se queda con el crédito de la pelea final. Bla, bla, bla... qué gran defensa del cielo.",
+    "en": "Of course. I do the hard work, then the many-eyed guardian gets the credit for the final fight. Blah, blah... what a glorious defence of heaven.",
+    "pt": "Claro. Eu faço o trabalho difícil e a guardiã de muitos olhos leva o crédito da luta final. Blá, blá... que bela defesa do céu.",
+    "ja": "やっぱりね。苦労するのは私、最後の戦いで手柄を取るのは多眼の守護者。はいはい、天界を守った英雄ですね。"
+  },
+  {
+    "key": "story.gabriel.0.outro.2",
+    "es": "¿Qué les dije? Ya viene otra. No apaguen la alarma, que así nos ahorramos volver a encenderla.",
+    "en": "What did I tell you? Here comes another. Leave the alarm on; it saves switching it back on.",
+    "pt": "O que eu disse? Lá vem outra. Deixa o alarme ligado para não ter que ligar de novo.",
+    "ja": "ほら、言ったとおり。また来た。警報は切らなくていいよ。すぐ鳴らすんだから。"
+  },
+  {
+    "key": "story.gabriel.1.intro.1",
+    "es": "Un momento... conozco a esa chica. Es Tzmil. Y ese bulto que trae es mi amigo de la infancia. Más le vale no estar durmiendo otra vez.",
+    "en": "Wait... I know her. Tzmil. And that lump she is carrying is my childhood friend. He had better not be sleeping again.",
+    "pt": "Espera... conheço essa garota. Tzmil. E aquele peso que carrega é meu amigo de infância. Espero que não esteja dormindo de novo.",
+    "ja": "待って……あの子、ツミルだ。背負ってるの、幼なじみじゃん。また寝てるだけじゃないでしょうね。"
+  },
+  {
+    "key": "story.gabriel.1.before.1",
+    "es": "Gabriel, necesito llevar a mi hermano con nuestro padre. Por favor, déjanos pasar.",
+    "en": "Gabriel, I need to take my brother to our father. Please let us through.",
+    "pt": "Gabriel, preciso levar meu irmão ao nosso pai. Deixe a gente passar, por favor.",
+    "ja": "ガブリエル、兄を父のところへ連れていきたいの。通してくれない？"
+  },
+  {
+    "key": "story.gabriel.1.before.2",
+    "es": "Tzmil... tengo órdenes de detener a cualquiera que cruce. Dame una buena excusa para perder esta pelea.",
+    "en": "Tzmil... my orders are to stop anyone crossing. Give me a good excuse to lose this fight.",
+    "pt": "Tzmil... mandaram deter quem atravessar. Me dê uma boa desculpa para perder esta luta.",
+    "ja": "ツミル……通る人は全員止めろって命令なの。私が負ける口実、作ってよ。"
+  },
+  {
+    "key": "story.gabriel.1.before.3",
+    "es": "Creo que puedo ayudarte con eso.",
+    "en": "I think I can help with that.",
+    "pt": "Acho que posso ajudar com isso.",
+    "ja": "それなら、手伝えると思う。"
+  },
+  {
+    "key": "story.gabriel.1.after.1",
+    "es": "¡Oh, no! Qué derrota tan terrible. No podré detenerlos... pasa rápido antes de que alguien pregunte.",
+    "en": "Oh no! Such a terrible defeat. I cannot stop you... hurry through before anyone asks.",
+    "pt": "Ah, não! Que derrota terrível. Não posso impedir... passem logo antes que alguém pergunte.",
+    "ja": "ああ、大変！ひどい負け方！もう止められない……誰かに聞かれる前に、早く行って。"
+  },
+  {
+    "key": "story.gabriel.1.after.2",
+    "es": "Gracias, Gabriel. Se lo contaré cuando despierte.",
+    "en": "Thank you, Gabriel. I will tell him when he wakes.",
+    "pt": "Obrigada, Gabriel. Vou contar quando ele acordar.",
+    "ja": "ありがとう、ガブリエル。兄が起きたら伝えるね。"
+  },
+  {
+    "key": "story.gabriel.1.outro.1",
+    "es": "No esperaba que su hermana quisiera traerlo al cielo. No me quedaba otra que hacerme la derrotada y dejarlos pasar. Una actuación impecable, si me preguntan.",
+    "en": "I did not expect his sister to bring him to heaven. I had to pretend to lose and let them through. Flawless acting, if you ask me.",
+    "pt": "Não esperava que a irmã fosse trazê-lo ao céu. Tive que fingir a derrota e deixar passar. Uma atuação impecável, na minha opinião.",
+    "ja": "妹が彼を天界へ連れてくるとはね。負けたふりをして通すしかなかった。なかなかの名演技だったでしょ。"
+  },
+  {
+    "key": "story.gabriel.1.outro.2",
+    "es": "Espero que por fin me invite esa comida que me prometió ese pollo estafador. Lleva pendiente desde antes de que lo mandaran a la Tierra...",
+    "en": "I hope that cheating chicken finally treats me to the meal he promised. He has owed me since before they sent him to Earth...",
+    "pt": "Espero que aquele frango caloteiro finalmente pague a comida que prometeu. Deve desde antes de mandarem ele para a Terra...",
+    "ja": "あの口先だけの鳥、今度こそ約束のご飯に誘ってよね。地上へ送られる前から、ずっと待ってるんだから……"
+  },
+  {
+    "key": "story.gabriel.1.outro.3",
+    "es": "Y no, no estoy sonriendo. Es la luz del cielo. La luz hace cosas raras con mi cara.",
+    "en": "And no, I am not smiling. It is the heavenly light. It does strange things to my face.",
+    "pt": "E não, não estou sorrindo. É a luz do céu. Ela faz coisas estranhas com meu rosto.",
+    "ja": "別に、にやけてないし。天界の光のせい。この光、顔に変な作用があるんだよ。"
+  },
+  {
+    "key": "story.gabriel.2.intro.1",
+    "es": "Otra alarma. Esta vez viene una locomotora con una boca enorme. ¿A quién se le ocurrió dejar entrar eso?",
+    "en": "Another alarm. This time it is a train with an enormous mouth. Who let that in?",
+    "pt": "Outro alarme. Agora é uma locomotiva com uma boca enorme. Quem deixou isso entrar?",
+    "ja": "また警報。今度は巨大な口の機関車。誰があれを入れたの？"
+  },
+  {
+    "key": "story.gabriel.2.before.1",
+    "es": "¡Eh! Este lugar no es un buffet.",
+    "en": "Hey! This place is not a buffet.",
+    "pt": "Ei! Isto aqui não é um bufê.",
+    "ja": "ちょっと！ここは食べ放題じゃないよ。"
+  },
+  {
+    "key": "story.gabriel.2.before.2",
+    "es": "¡Entonces voy a probarlo todo!",
+    "en": "Then I will try everything!",
+    "pt": "Então vou experimentar tudo!",
+    "ja": "なら、全部試してみる！"
+  },
+  {
+    "key": "story.gabriel.2.before.3",
+    "es": "Sí, claro. La comprensión lectora también está de vacaciones.",
+    "en": "Of course. Reading comprehension is on holiday too.",
+    "pt": "Claro. A interpretação de texto também está de férias.",
+    "ja": "はいはい。読解力も休暇中なのね。"
+  },
+  {
+    "key": "story.gabriel.2.after.1",
+    "es": "¡Fuera de mi estación! Y no muerdas el letrero al salir.",
+    "en": "Out of my station! And do not bite the sign on your way out.",
+    "pt": "Fora da minha estação! E não morde a placa na saída.",
+    "ja": "私の駅から出ていって！帰りに看板を噛まないでよ。"
+  },
+  {
+    "key": "story.gabriel.2.outro.1",
+    "es": "¿Ven a lo que me refiero? ¿Qué rayos era esa cosa? Hay días en que hasta extraño a los fanáticos que solo querían discutir.",
+    "en": "See what I mean? What was that thing? Some days I even miss the fanatics who only wanted to argue.",
+    "pt": "Viram do que estou falando? Que coisa era aquela? Tem dia que sinto falta dos fanáticos que só queriam discutir.",
+    "ja": "わかったでしょ？何なの、あれ。口論するだけの信者が懐かしくなる日もあるよ。"
+  },
+  {
+    "key": "story.gabriel.2.outro.2",
+    "es": "Aunque creo que el pollo ya dejó de comer con su padre y me ha estado buscando. Quién sabe... por él quizá podría pedir un día libre.",
+    "en": "Though I think the chicken has finished eating with his father and has been looking for me. Who knows... I might ask for a day off for him.",
+    "pt": "Mas acho que o frango terminou de comer com o pai e anda me procurando. Quem sabe... por ele talvez peça uma folga.",
+    "ja": "でも、あの鳥、父親との食事は終わって、私を探してるみたい。どうしようかな……彼のためなら、休暇を申請してもいいかも。"
+  },
+  {
+    "key": "story.gabriel.2.outro.3",
+    "es": "Llevo casi cinco años sin pedir ni uno. Seguro que el formulario ya ni se acuerda de mí.",
+    "en": "I have not asked for one in almost five years. The form probably does not even remember me.",
+    "pt": "Faz quase cinco anos que não peço uma. O formulário nem deve lembrar de mim.",
+    "ja": "もう五年近く、一日も申請してないんだよ。申請書のほうが私を忘れてそう。"
+  },
+  {
+    "key": "story.gabriel.3.intro.1",
+    "es": "No. No puede estar sonando otra vez. Hay una ReyMar acercándose... Gora-P, dime que trae a alguien de relevo.",
+    "en": "No. That alarm cannot be ringing again. A ReyMar is approaching... Gora-P, tell me it is my relief.",
+    "pt": "Não. Esse alarme não pode tocar de novo. Uma ReyMar vem chegando... Gora-P, diz que é minha substituta.",
+    "ja": "嘘でしょ。また鳴るなんて。レイマールが来る……ゴラＰ、交代要員だって言って。"
+  },
+  {
+    "key": "story.gabriel.3.before.1",
+    "es": "¡Dicen que aquí hay una guardia que nunca deja pasar una buena pelea!",
+    "en": "I hear there is a guard here who never turns down a good fight!",
+    "pt": "Dizem que tem uma guarda aqui que nunca recusa uma boa luta!",
+    "ja": "ここには、いい勝負を断らない番人がいるって聞いたよ！"
+  },
+  {
+    "key": "story.gabriel.3.before.2",
+    "es": "No. Dicen que nunca me dejan terminar el turno. Es distinto.",
+    "en": "No. They mean nobody lets my shift end. Different thing.",
+    "pt": "Não. Disseram que nunca deixam meu turno acabar. É diferente.",
+    "ja": "違う。「勤務を終わらせてもらえない番人」なの。全然違う。"
+  },
+  {
+    "key": "story.gabriel.3.before.3",
+    "es": "¡Entonces acabemos con una pelea memorable!",
+    "en": "Then let us finish with a memorable fight!",
+    "pt": "Então vamos terminar com uma luta memorável!",
+    "ja": "なら、忘れられない勝負で締めよう！"
+  },
+  {
+    "key": "story.gabriel.3.after.1",
+    "es": "¡Se acabó! No acepto revancha, encuesta de satisfacción ni otra visita.",
+    "en": "It is over! No rematches, satisfaction surveys or further visits.",
+    "pt": "Acabou! Nada de revanche, pesquisa de satisfação ou nova visita.",
+    "ja": "終わり！再戦も、満足度アンケートも、再訪問も、お断り。"
+  },
+  {
+    "key": "story.gabriel.3.after.2",
+    "es": "¡Qué carácter! Me gusta.",
+    "en": "What an attitude! I like it.",
+    "pt": "Que temperamento! Gostei.",
+    "ja": "いい気迫！気に入ったよ。"
+  },
+  {
+    "key": "story.gabriel.3.outro.1",
+    "es": "¡Maldita loca! ¿Cómo hay gente que solo quiere pelear? Estoy cansada de todo esto. Hoy necesito algo que no intente conquistar, romper o morder el cielo.",
+    "en": "That lunatic! How can anyone only want to fight? I am tired of all this. Today I need something that will not conquer, break or bite heaven.",
+    "pt": "Maluca! Como pode alguém só querer lutar? Cansei disso. Hoje preciso de algo que não tente conquistar, quebrar ou morder o céu.",
+    "ja": "あの戦闘狂！戦うことしか考えてないの？もう疲れた。今日は天界を征服したり壊したり噛んだりしないものが必要。"
+  },
+  {
+    "key": "story.gabriel.3.outro.2",
+    "es": "Fue entonces cuando apareció el conductor de R-20. Mi pollo estafador. Dijo que estaba esperando a que terminara mi turno. Como si eso fuera a ocurrir por sí solo.",
+    "en": "Then the R-20 driver appeared. My cheating chicken. He said he was waiting for my shift to end. As if that would happen on its own.",
+    "pt": "Foi quando apareceu o condutor da R-20. Meu frango caloteiro. Disse que esperava meu turno acabar. Como se isso fosse acontecer sozinho.",
+    "ja": "そこへＲ２０の機関士が来た。私の口先だけの鳥。「勤務が終わるのを待ってた」だって。放っておいて終わるとでも？"
+  },
+  {
+    "key": "story.gabriel.3.outro.3",
+    "es": "Me contó que tardó un poco en regresar y bastante más en entender qué quería su padre para él. Pero hubo algo de lo que estuvo seguro todo el tiempo.",
+    "en": "He said returning took a while, and understanding what his father wanted took longer. But he had been sure of one thing all along.",
+    "pt": "Disse que demorou para voltar e mais ainda para entender o que o pai queria dele. Mas sempre teve certeza de uma coisa.",
+    "ja": "帰ってくるのに時間がかかって、父親の望みを理解するのにはもっとかかったって。でも、ずっと確かなことが一つあったらしい。"
+  },
+  {
+    "key": "story.gabriel.3.outro.4",
+    "es": "No quería volver solo para ver a su padre. Esta vez quería hacer las cosas bien y no dejarlo todo a la mitad. Aunque la primera vez lo mandaron a la Tierra, no es que él quisiera irse.",
+    "en": "He had not wanted to return only for his father. This time he wanted to do things properly and not leave halfway through. Though last time he was sent to Earth; he had not chosen to leave.",
+    "pt": "Não queria voltar só pelo pai. Desta vez queria fazer direito e não deixar tudo pela metade. Mas antes o mandaram para a Terra; não foi porque quis ir embora.",
+    "ja": "父親に会うためだけに戻りたかったんじゃない。今度はちゃんと、途中で投げ出さずにやりたいって。まあ前は、自分から去ったんじゃなく、地上へ送られたんだけど。"
+  },
+  {
+    "key": "story.gabriel.3.outro.5",
+    "es": "Yo sonreí. He oído que abrieron un maid café nuevo en el mundo humano. Se llama Baratito. Tal vez podrías llevarme en mi próximo día libre.",
+    "en": "I smiled. I heard a new maid café opened in the human world. Baratito. Maybe you could take me on my next day off.",
+    "pt": "Eu sorri. Ouvi que abriram um maid café no mundo humano. Baratito. Talvez possa me levar na minha próxima folga.",
+    "ja": "私は笑った。「人間界に新しいメイドカフェができたって。バラティートっていうの。次の休みに、連れていってくれてもいいよ」。"
+  },
+  {
+    "key": "story.gabriel.3.outro.6",
+    "es": "Solo espero que esta vez sí pague él. Y que, por una vez, la alarma pueda esperar.",
+    "en": "I just hope he pays this time. And that, for once, the alarm can wait.",
+    "pt": "Só espero que desta vez ele pague. E que, por uma vez, o alarme possa esperar.",
+    "ja": "今度こそ彼が払いますように。そして一度くらい、警報が待ってくれますように。"
+  },
+  {
+    "key": "gabriel.upgrade.weapon",
+    "es": "Antes del siguiente turno: elige un arma",
+    "en": "Before the next shift: choose a weapon",
+    "pt": "Antes do próximo turno: escolha uma arma",
+    "ja": "次の勤務へ：武器を選択"
+  },
+  {
+    "key": "gabriel.upgrade.passive",
+    "es": "Ahora elige una mejora secundaria",
+    "en": "Now choose a passive upgrade",
+    "pt": "Agora escolha uma melhoria passiva",
+    "ja": "次に補助強化を選択"
+  },
+  {
+    "key": "gabriel.upgrade.hint",
+    "es": "Conservas tu tren y tus mejoras. Después comienza el siguiente duelo.",
+    "en": "Keep your train and upgrades. The next duel starts afterwards.",
+    "pt": "Seu trem e melhorias continuam. Depois começa o próximo duelo.",
+    "ja": "列車と強化は維持されます。選択後、次の対決へ。"
+  },
+  {
+    "key": "gabriel.upgrade.repair",
+    "es": "Equipo al máximo: reparación completa",
+    "en": "Equipment maxed: full repair",
+    "pt": "Equipamento no máximo: reparo completo",
+    "ja": "装備最大：完全修理"
+  },
+  {
+    "key": "gabriel.upgrade.take",
+    "es": "Mejorar: {0}",
+    "en": "Upgrade: {0}",
+    "pt": "Melhorar: {0}",
+    "ja": "強化: {0}"
+  }
+]

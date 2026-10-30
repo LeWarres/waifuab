@@ -1,0 +1,465 @@
+{
+  "locales": [
+    "es",
+    "en",
+    "pt",
+    "ja"
+  ],
+  "rows": [
+    [
+      "story.xiuhtecuhtli.0.title",
+      "TARJETA DIVINA RECHAZADA",
+      "DIVINE CARD DECLINED",
+      "CARTÃO DIVINO RECUSADO",
+      "神のカード、利用停止"
+    ],
+    [
+      "story.xiuhtecuhtli.0.intro.1",
+      "Soy lo que conocerían como un semidiós. Mi padre, el dios de dioses de los aztecas, prácticamente me cortó la tarjeta premium.",
+      "I am what you would call a demigod. My father, the Aztec god of gods, practically cut off my premium card.",
+      "Sou o que chamariam de semideus. Meu pai, o deus dos deuses astecas, praticamente cortou meu cartão premium.",
+      "僕はいわゆる半神だ。父はアステカの神々の頂点にいる。その父に、プレミアムカードを止められた。"
+    ],
+    [
+      "story.xiuhtecuhtli.0.intro.2",
+      "Me mandó a convertirme en héroe antes de dejarme regresar al reino de los dioses. Yo culpo a esa película de Hércules que vio.",
+      "He sent me to become a hero before allowing me back into the realm of the gods. I blame that Hercules movie he watched.",
+      "Mandou que eu virasse herói antes de voltar ao reino dos deuses. Culpo aquele filme do Hércules que ele assistiu.",
+      "英雄になるまで神々の国に戻るな、と追い出された。父が見た、あのヘラクレスの映画のせいだと思う。"
+    ],
+    [
+      "story.xiuhtecuhtli.0.intro.3",
+      "Así que aquí estaba: sin privilegios divinos y sin la menor idea de qué había que hacer para ser un héroe. ¿Había un formulario?",
+      "So there I was: no divine privileges and no idea how to become a hero. Was there a form?",
+      "Lá estava eu: sem privilégios divinos e sem ideia de como virar herói. Será que tinha formulário?",
+      "神の特権もなく、英雄になる方法も分からない。申込書でも書けばいいのかな？"
+    ],
+    [
+      "story.xiuhtecuhtli.0.intro.4",
+      "Entonces se acercaron unos extraños hombres del gobierno. Me ofrecieron salvar el planeta arrojando una piedra en una base alienígena. O algo así.",
+      "Then some strange government men approached me. They offered me a chance to save the planet by throwing a rock into an alien base. Something like that.",
+      "Uns homens estranhos do governo se aproximaram. Ofereceram salvar o planeta jogando uma pedra numa base alienígena. Ou algo assim.",
+      "そこへ怪しい政府の男たちが来た。宇宙人の基地に石を投げ込めば、星を救えるらしい。たしかそんな話だった。"
+    ],
+    [
+      "story.xiuhtecuhtli.0.intro.5",
+      "Los detalles me los perdí imaginando a mi padre felicitándome. Yo, el gran héroe. Mi tarjeta premium, funcionando otra vez.",
+      "I missed the details while imagining my father congratulating me. Me, the great hero. My premium card, working again.",
+      "Perdi os detalhes imaginando meu pai me parabenizando. Eu, o grande herói. Meu cartão premium funcionando de novo.",
+      "詳しい説明は聞き逃した。父に褒められる自分を想像していたからだ。大英雄の僕。復活するプレミアムカード。"
+    ],
+    [
+      "story.xiuhtecuhtli.0.intro.6",
+      "Primero tenía que salir de esta selva. Mi R-20 sería pequeña para algunos, pero para llegar a la gloria me sobraba locomotora.",
+      "First, I had to leave this jungle. My R-20 might look small to some, but it was more than enough locomotive to reach glory.",
+      "Primeiro precisava sair desta selva. Minha R-20 podia parecer pequena, mas era locomotiva suficiente para alcançar a glória.",
+      "まずはこの密林を出よう。R-20を小さいと思う人もいる。でも栄光へ向かうには、十分すぎる機関車だ。"
+    ],
+    [
+      "story.xiuhtecuhtli.0.before.1",
+      "Disculpa, estoy perdida. ¿Sabes cómo llegar a la ciudad?",
+      "Excuse me, I am lost. Do you know the way to the city?",
+      "Com licença, estou perdida. Sabe chegar à cidade?",
+      "すみません、道に迷ってしまって。街への道をご存じですか？"
+    ],
+    [
+      "story.xiuhtecuhtli.0.before.2",
+      "Lo único que te diré es... ¡Sayonara!",
+      "The only thing I will tell you is... Sayonara!",
+      "A única coisa que vou dizer é... Sayonara!",
+      "僕から言えることは一つだけ……サヨナラ！"
+    ],
+    [
+      "story.xiuhtecuhtli.0.before.3",
+      "¿Eso es una dirección o acabas de retarme?",
+      "Is that a direction, or did you just challenge me?",
+      "Isso é uma direção ou acabou de me desafiar?",
+      "それは道案内ですか？それとも勝負のお誘い？"
+    ],
+    [
+      "story.xiuhtecuhtli.0.after.1",
+      "Sí, sí. La ciudad está por... aquel lado. Sin duda.",
+      "Yes, yes. The city is... that way. Definitely.",
+      "Sim, sim. A cidade fica... para aquele lado. Sem dúvida.",
+      "ああ、街なら……あっちだよ。間違いない。"
+    ],
+    [
+      "story.xiuhtecuhtli.0.after.2",
+      "Gracias... creo. Tú vas hacia el otro lado.",
+      "Thank you... I think. You are going the other way.",
+      "Obrigada... eu acho. Você está indo para o outro lado.",
+      "ありがとう……でいいのかしら。あなたは反対に行くのですね。"
+    ],
+    [
+      "story.xiuhtecuhtli.0.outro.1",
+      "No quiero admitir que, después de ganar, terminé dándole a Culu una dirección falsa. No era mi mejor momento heroico.",
+      "I would rather not admit that, after winning, I gave Culu false directions. Not my finest heroic moment.",
+      "Prefiro não admitir que, depois de vencer, dei uma direção falsa para Culu. Não foi meu melhor momento heroico.",
+      "勝った後、Culuに嘘の道を教えたことは認めたくない。英雄らしい行動とは言えなかった。"
+    ],
+    [
+      "story.xiuhtecuhtli.0.outro.2",
+      "Luego me dirigí a la ciudad. Mi destino era la gloria; el suyo, según mis indicaciones, probablemente otra parte de la selva.",
+      "Then I headed to the city. My destination was glory; hers, according to my directions, probably another part of the jungle.",
+      "Depois fui para a cidade. Meu destino era a glória; o dela, pelas minhas instruções, provavelmente outra parte da selva.",
+      "それから街へ向かった。僕の目的地は栄光。僕の案内どおりなら、彼女の目的地は密林の別の場所だろう。"
+    ],
+    [
+      "story.xiuhtecuhtli.1.title",
+      "PRIMERO, PERO NO ELEGIDO",
+      "FIRST, BUT NOT CHOSEN",
+      "PRIMEIRO, MAS NÃO ESCOLHIDO",
+      "一着、でも選ばれず"
+    ],
+    [
+      "story.xiuhtecuhtli.1.intro.1",
+      "La ciudad estaba cerca. Solo faltaba convencer a una oficial de que era humano. Semidiós no figuraba entre las opciones.",
+      "The city was close. I only had to convince an officer I was human. Demigod was not listed as an option.",
+      "A cidade estava perto. Só faltava convencer uma oficial de que eu era humano. Semideus não estava nas opções.",
+      "街は近い。あとは係官に、人間だと信じてもらうだけ。半神という選択肢はなかった。"
+    ],
+    [
+      "story.xiuhtecuhtli.1.intro.2",
+      "Después buscaría el lanzador. Si era el primero en llegar, sería el primero en salvar el planeta. El plan sonaba impecable.",
+      "Then I would find the launcher. If I arrived first, I would save the planet first. The plan sounded flawless.",
+      "Depois procuraria o lançador. Chegando primeiro, salvaria o planeta primeiro. O plano parecia impecável.",
+      "次は発射台だ。一番に着けば、一番に星を救える。完璧な計画に聞こえた。"
+    ],
+    [
+      "story.xiuhtecuhtli.1.before.1",
+      "¡Solo queda energía para un lanzamiento! El primero que llegue tendrá el último viaje al espacio.",
+      "Only one launch has power left! The first to arrive gets the last trip to space.",
+      "Só resta energia para um lançamento! Quem chegar primeiro terá a última viagem ao espaço.",
+      "発射できるのはあと一回！一着の者が、最後の宇宙行きを勝ち取る！"
+    ],
+    [
+      "story.xiuhtecuhtli.1.before.2",
+      "Entonces háganme sitio. ¡El próximo héroe está por llegar!",
+      "Then make room. The next hero is on his way!",
+      "Então abram espaço. O próximo herói está chegando!",
+      "それなら道を空けてくれ。次の英雄のお通りだ！"
+    ],
+    [
+      "story.xiuhtecuhtli.1.after.1",
+      "¡Primero! Padre, espero que estés mirando.",
+      "First! Father, I hope you are watching.",
+      "Primeiro! Pai, espero que esteja assistindo.",
+      "一着だ！父さん、見ているかい？"
+    ],
+    [
+      "story.xiuhtecuhtli.1.outro.1",
+      "Mi locomotora entró primero. ¡Primero! Pero los inútiles del gobierno no activaron el lanzador a tiempo.",
+      "My locomotive entered first. First! But those government idiots did not activate the launcher in time.",
+      "Minha locomotiva entrou primeiro. Primeiro! Mas os inúteis do governo não ativaram o lançador a tempo.",
+      "僕の機関車が一番に入った。一番だ！なのに、政府の役立たずは発射装置を作動させなかった。"
+    ],
+    [
+      "story.xiuhtecuhtli.1.outro.2",
+      "Alegaron que mi máquina era demasiado pequeña. Demasiado pequeña para sus sensores, supongo; para ganarles a todos sí les había servido.",
+      "They claimed my machine was too small. Too small for their sensors, I suppose; it had been big enough to beat everyone.",
+      "Disseram que minha máquina era pequena demais. Para os sensores, talvez; para vencer todos, tinha sido suficiente.",
+      "機体が小さすぎると言い訳した。センサーには小さかったのだろう。全員を追い抜くには十分だったのに。"
+    ],
+    [
+      "story.xiuhtecuhtli.1.outro.3",
+      "¡Y lanzaron a la bruja en mi lugar! Ahora no tenía manera de ser un héroe. Solo una piedra verde y muchísimas ganas de quejarme.",
+      "And they launched the witch instead! Now I had no way to become a hero. Just a green rock and an overwhelming urge to complain.",
+      "E lançaram a bruxa no meu lugar! Agora não tinha como virar herói. Só uma pedra verde e muita vontade de reclamar.",
+      "しかも代わりに魔女を飛ばした！英雄になる道は閉ざされた。残ったのは緑の石と、とてつもない不満だけだ。"
+    ],
+    [
+      "story.xiuhtecuhtli.2.title",
+      "HÉROE A LA DERIVA",
+      "A HERO ADRIFT",
+      "HERÓI À DERIVA",
+      "漂流する英雄"
+    ],
+    [
+      "story.xiuhtecuhtli.2.intro.1",
+      "Acabé junto al mar buscando otra salida. Ya no había lanzador para mí, pero todavía llevaba la roca. Qué detalle tan considerado.",
+      "I ended up by the sea looking for another way. There was no launcher for me, but I still had the rock. How considerate.",
+      "Acabei perto do mar procurando outra saída. Não havia lançador para mim, mas ainda tinha a pedra. Que consideração.",
+      "別の道を探して海まで来た。僕の発射台はない。でも石だけは手元にある。なんて気の利いた配慮だ。"
+    ],
+    [
+      "story.xiuhtecuhtli.2.intro.2",
+      "Y allí estaba BBA. Al parecer, ni quedarse con mi puesto en el lanzador iba a librarme de cruzarme otra vez con aquella bruja.",
+      "And there was BBA. Apparently, even taking my launch slot would not spare me another encounter with that witch.",
+      "E lá estava BBA. Pelo visto, nem ficar com minha vaga no lançador evitaria outro encontro com aquela bruxa.",
+      "そこにBBAがいた。発射枠を奪っただけでは飽き足らず、またあの魔女に会うことになるらしい。"
+    ],
+    [
+      "story.xiuhtecuhtli.2.before.1",
+      "¿Otra vez tú? Deja de atravesarte en mi camino.",
+      "You again? Stop getting in my way.",
+      "Você de novo? Pare de entrar no meu caminho.",
+      "またあなた？進路を塞がないで。"
+    ],
+    [
+      "story.xiuhtecuhtli.2.before.2",
+      "¡Te dieron mi lanzamiento! ¡Mi momento heroico!",
+      "They gave you my launch! My heroic moment!",
+      "Deram meu lançamento para você! Meu momento heroico!",
+      "君が僕の発射枠をもらったんだ！僕の英雄になる瞬間を！"
+    ],
+    [
+      "story.xiuhtecuhtli.2.before.3",
+      "Si no puedo llegar al espacio, al menos puedo ganarte aquí.",
+      "If I cannot reach space, at least I can beat you here.",
+      "Se não posso chegar ao espaço, pelo menos posso vencer você aqui.",
+      "宇宙に行けないなら、せめてここで君に勝ってやる。"
+    ],
+    [
+      "story.xiuhtecuhtli.2.after.1",
+      "Ganaste. ¿Ya puedes dejar de culparme por sus decisiones?",
+      "You won. Can you stop blaming me for their decisions now?",
+      "Você venceu. Pode parar de me culpar pelas decisões deles?",
+      "あなたの勝ちよ。そろそろ政府の判断を私のせいにするのはやめてくれる？"
+    ],
+    [
+      "story.xiuhtecuhtli.2.after.2",
+      "Lo estoy intentando. No se me está dando muy bien.",
+      "I am trying. I am not doing very well.",
+      "Estou tentando. Não estou indo muito bem.",
+      "努力はしている。あまりうまくいっていないけど。"
+    ],
+    [
+      "story.xiuhtecuhtli.2.outro.1",
+      "Si algo me dejó esta experiencia es que no puedo ser un héroe. ¡Y ya estoy harto! Padre, si no puedo ser un dios bueno y heroico...",
+      "If this experience taught me anything, it is that I cannot be a hero. And I have had enough! Father, if I cannot be a good, heroic god...",
+      "Se aprendi algo, é que não consigo ser herói. E já estou farto! Pai, se não posso ser um deus bom e heroico...",
+      "この経験で分かった。僕は英雄になれない。もうたくさんだ！父さん、善良で英雄的な神になれないなら……。"
+    ],
+    [
+      "story.xiuhtecuhtli.2.outro.2",
+      "¡Seré el villano de esta historia! Arrojaré la roca verde del gobierno al volcán de mi hermana y todo se irá al carajo.",
+      "I will be this story's villain! I will throw the government's green rock into my sister's volcano, and everything can go to hell.",
+      "Serei o vilão desta história! Vou jogar a pedra verde do governo no vulcão da minha irmã, e tudo vai para o inferno.",
+      "この物語の悪役になってやる！政府の緑の石を姉の火山に投げ込んで、全部めちゃくちゃにしてやる！"
+    ],
+    [
+      "story.xiuhtecuhtli.3.title",
+      "LA HERMANA Y EL VOLCÁN",
+      "THE SISTER AND THE VOLCANO",
+      "A IRMÃ E O VULCÃO",
+      "姉と火山"
+    ],
+    [
+      "story.xiuhtecuhtli.3.intro.1",
+      "Puse rumbo al volcán de Tzmil. También lo anuncié por radio. Si iba a tener una gran escena de villano, necesitaba público.",
+      "I headed for Tzmil's volcano. I announced it on the radio too. A grand villain scene needed an audience.",
+      "Fui para o vulcão de Tzmil. Também anunciei pelo rádio. Uma grande cena de vilão precisava de público.",
+      "Tzmilの火山へ向かった。無線でも宣言した。悪役の大舞台には、観客が必要だからね。"
+    ],
+    [
+      "story.xiuhtecuhtli.3.intro.2",
+      "Mi hermana me esperaba. Su mirada decía que ya conocía el discurso. Yo todavía no sabía cómo sostenerle la mirada.",
+      "My sister was waiting. Her expression said she had heard my speech. I still did not know how to meet her eyes.",
+      "Minha irmã me esperava. Seu olhar dizia que já ouvira o discurso. Eu ainda não sabia como encará-la.",
+      "姉が待っていた。あの顔は、もう演説を聞いている顔だ。僕はまだ、その目を見返せずにいた。"
+    ],
+    [
+      "story.xiuhtecuhtli.3.before.1",
+      "¡Tzmil, no intentes detenerme! ¡Voy a tirar esta roca a tu volcán!",
+      "Tzmil, do not try to stop me! I am throwing this rock into your volcano!",
+      "Tzmil, não tente me deter! Vou jogar esta pedra no seu vulcão!",
+      "Tzmil、止めようとしないで！この石を君の火山に投げ込む！"
+    ],
+    [
+      "story.xiuhtecuhtli.3.before.2",
+      "Volar la mitad del mundo no hará que nuestro padre te ame.",
+      "Blowing up half the world will not make our father love you.",
+      "Explodir metade do mundo não fará nosso pai amar você.",
+      "世界の半分を吹き飛ばしても、お父様に愛してもらえるわけじゃないわ。"
+    ],
+    [
+      "story.xiuhtecuhtli.3.before.3",
+      "¡Me quitaron mi oportunidad de ser un héroe!",
+      "They took away my chance to be a hero!",
+      "Tiraram minha chance de ser herói!",
+      "英雄になる機会を奪われたんだ！"
+    ],
+    [
+      "story.xiuhtecuhtli.3.before.4",
+      "Entonces enfádate con el gobierno que no te lanzó. Y antes de hacer una estupidez, siéntate: resolvamos esto en un holo duelo.",
+      "Then be angry with the government that did not launch you. Before doing something stupid, sit down: let us settle this in a holo duel.",
+      "Então fique bravo com o governo que não lançou você. Antes de fazer besteira, sente-se: vamos resolver num holo duelo.",
+      "なら、飛ばしてくれなかった政府に怒りなさい。馬鹿なことをする前に座って。ホロデュエルで決めましょう。"
+    ],
+    [
+      "story.xiuhtecuhtli.3.after.1",
+      "Puedes ganar una partida. También puedes decidir no hacer daño.",
+      "You can win a match. You can also choose not to hurt anyone.",
+      "Você pode vencer uma partida. Também pode escolher não machucar ninguém.",
+      "勝負には勝てる。誰も傷つけないことだって、選べるのよ。"
+    ],
+    [
+      "story.xiuhtecuhtli.3.after.2",
+      "No pongas esa cara. Está bien... no voy a tirar la roca.",
+      "Do not look at me like that. Fine... I am not throwing the rock.",
+      "Não me olhe assim. Está bem... não vou jogar a pedra.",
+      "そんな顔をしないで。分かったよ……石は投げない。"
+    ],
+    [
+      "story.xiuhtecuhtli.3.outro.1",
+      "Al final no pude tirarla al volcán. Vi la cara de mi hermana y entendí que destrozarlo todo no iba a arreglar nada.",
+      "In the end, I could not throw it into the volcano. I saw my sister's face and understood that destroying everything would fix nothing.",
+      "No fim, não consegui jogar no vulcão. Vi o rosto da minha irmã e entendi que destruir tudo não resolveria nada.",
+      "結局、火山には投げられなかった。姉の顔を見て、全部壊しても何も解決しないと分かった。"
+    ],
+    [
+      "story.xiuhtecuhtli.3.outro.2",
+      "Tampoco era buena idea vengarme del gobierno. Así que iría a devolver la roca, agradecer la experiencia y olvidarme de todo.",
+      "Revenge against the government was no better. I would return the rock, thank them for the experience, and forget everything.",
+      "Vingar-me do governo também não era boa ideia. Eu devolveria a pedra, agradeceria a experiência e esqueceria tudo.",
+      "政府への復讐も、いい考えではない。石を返して、経験に感謝して、全部忘れることにした。"
+    ],
+    [
+      "story.xiuhtecuhtli.3.outro.3",
+      "Pero entendieron que quería usarla contra ellos. Supongo que amenazar por radio con acabar con la mitad del mundo no les hizo mucha gracia.",
+      "But they thought I wanted to use it against them. I suppose my radio threat to destroy half the world did not amuse them.",
+      "Mas acharam que eu queria usá-la contra eles. Acho que ameaçar pelo rádio destruir metade do mundo não teve graça para eles.",
+      "ところが、彼らは自分たちに使うつもりだと思ったらしい。世界の半分を壊すと無線で脅したのが、気に入らなかったのかな。"
+    ],
+    [
+      "story.xiuhtecuhtli.4.title",
+      "EL HÉROE DE REPUESTO",
+      "THE SPARE HERO",
+      "O HERÓI SOBRESSALENTE",
+      "予備の英雄"
+    ],
+    [
+      "story.xiuhtecuhtli.4.intro.1",
+      "«¡Emergencia máxima de seguridad! ¡Todos, deténganlo!» No era exactamente el recibimiento que esperaba para una devolución.",
+      "'Maximum security emergency! Everyone, stop him!' Not exactly the welcome I expected for a return.",
+      "«Emergência máxima de segurança! Todos, detenham-no!» Não era a recepção que eu esperava para uma devolução.",
+      "「最高警戒態勢！全員で奴を止めろ！」返品に来た相手への歓迎としては、予想外だった。"
+    ],
+    [
+      "story.xiuhtecuhtli.4.intro.2",
+      "Entré en la base del gobierno buscando a alguien que escuchara. Encontré hangares, soldados... y una silueta demasiado familiar.",
+      "I entered the government base looking for someone who would listen. I found hangars, soldiers... and a terribly familiar silhouette.",
+      "Entrei na base do governo procurando alguém que ouvisse. Encontrei hangares, soldados... e uma silhueta familiar demais.",
+      "話を聞いてくれる人を探して、政府基地に入った。格納庫、兵士……それに、見覚えがありすぎる姿があった。"
+    ],
+    [
+      "story.xiuhtecuhtli.4.before.1",
+      "No necesitas entregar nada. Yo soy tu sustituto. Tu clon.",
+      "You do not need to deliver anything. I am your replacement. Your clone.",
+      "Não precisa entregar nada. Sou seu substituto. Seu clone.",
+      "何も届ける必要はない。俺がお前の代わりだ。お前のクローンだ。"
+    ],
+    [
+      "story.xiuhtecuhtli.4.before.2",
+      "¿Me clonaron? ¡Ni siquiera me dejaron ir al espacio!",
+      "They cloned me? They did not even let me go to space!",
+      "Me clonaram? Nem me deixaram ir ao espaço!",
+      "僕を複製した？宇宙にすら行かせなかったくせに！"
+    ],
+    [
+      "story.xiuhtecuhtli.4.before.3",
+      "Precisamente. Si te hubieran dejado ir, no habrían tomado tu información. Hicieron lo mismo con los otros corredores.",
+      "Exactly. If they had let you leave, they could not have taken your data. They did the same to the other racers.",
+      "Exatamente. Se tivessem deixado você partir, não teriam coletado seus dados. Fizeram o mesmo com os outros corredores.",
+      "そのためだ。行かせていたら、データを取れなかった。他の走者にも同じことをした。"
+    ],
+    [
+      "story.xiuhtecuhtli.4.before.4",
+      "Hasta para quitarme mi momento heroico tuvieron que copiarme. ¡Pues veremos cuál de los dos es el original!",
+      "They even copied me to steal my heroic moment. Let us see which of us is the original!",
+      "Até para roubar meu momento heroico precisaram me copiar. Vamos ver qual de nós é o original!",
+      "英雄の出番を奪うために、僕までコピーしたのか。どちらが本物か、確かめようじゃないか！"
+    ],
+    [
+      "story.xiuhtecuhtli.4.after.1",
+      "Habrá otros. El proyecto no dependía de una sola copia.",
+      "There will be others. The project never relied on one copy.",
+      "Haverá outros. O projeto nunca dependeu de uma só cópia.",
+      "次が来る。計画は、一体のコピーに頼ってはいない。"
+    ],
+    [
+      "story.xiuhtecuhtli.4.after.2",
+      "Entonces es hora de que alguien me explique para qué era todo esto.",
+      "Then it is time someone explained what all this was for.",
+      "Então está na hora de alguém explicar para que servia tudo isso.",
+      "それなら、何のための計画だったのか、説明してもらおう。"
+    ],
+    [
+      "story.xiuhtecuhtli.4.outro.1",
+      "Tras derrotar a mi copia, encontré la verdad. El gobierno estaba creando supersoldados. Todos clones de los mejores corredores del planeta.",
+      "After defeating my copy, I found the truth. The government was creating super soldiers. All clones of the planet's best racers.",
+      "Depois de derrotar minha cópia, descobri a verdade. O governo criava supersoldados, todos clones dos melhores corredores do planeta.",
+      "コピーを倒して、真実を知った。政府は超兵士を作っていた。この星の最高の走者たちを複製して。"
+    ],
+    [
+      "story.xiuhtecuhtli.4.outro.2",
+      "Los alienígenas aparecieron en el momento perfecto. El gobierno reunió a sus mejores soldados con aquella competición, los estudió y los clonó.",
+      "The aliens appeared at the perfect moment. The government gathered its finest soldiers through that competition, studied them, and cloned them.",
+      "Os alienígenas apareceram na hora perfeita. O governo reuniu seus melhores soldados naquela competição, estudou e clonou todos.",
+      "宇宙人は、都合のいい時に現れた。政府は競技会で精鋭を集め、調べ、複製したのだ。"
+    ],
+    [
+      "story.xiuhtecuhtli.4.outro.3",
+      "En realidad habían venido a comerciar silicio. El ejército de clones serviría para conquistarlos. Mandar a Cerebron y BBA a arrasar su base militar facilitaría el resto.",
+      "They had actually come to trade silicon. The clone army would conquer them. Sending Cerebron and BBA to wreck their military base would make the rest easy.",
+      "Na verdade, vieram comerciar silício. O exército de clones os conquistaria. Mandar Cerebron e BBA arrasarem sua base militar facilitaria o resto.",
+      "本当はシリコンを売りに来ただけだった。複製軍で侵略するつもりなのだ。CerebronとBBAに軍事基地を壊させれば、後は簡単だ。"
+    ],
+    [
+      "story.xiuhtecuhtli.4.outro.4",
+      "Simplemente perdí la cabeza y tiré la roca en un hueco donde imagino que no debía hacerlo. Todos empezaron a correr. Yo no miré atrás.",
+      "I simply lost my head and threw the rock down a hole where I imagine it did not belong. Everyone started running. I did not look back.",
+      "Simplesmente perdi a cabeça e joguei a pedra num buraco onde imagino que não devia. Todos começaram a correr. Não olhei para trás.",
+      "ただ、頭に血が上って、石を穴に投げた。投げてはいけない穴だったのだろう。皆が走り出した。僕は振り返らなかった。"
+    ],
+    [
+      "story.xiuhtecuhtli.4.outro.5",
+      "Solo escuché una explosión enorme. Unos segundos después estaba festejando con mi padre en una mesa larga larga.",
+      "I only heard an enormous explosion. A few seconds later, I was celebrating with my father at a long long table.",
+      "Só ouvi uma explosão enorme. Poucos segundos depois, festejava com meu pai numa mesa longa longa.",
+      "ものすごい爆発が聞こえただけだ。数秒後、僕は父と、長い長い食卓で宴を楽しんでいた。"
+    ],
+    [
+      "story.xiuhtecuhtli.4.outro.6",
+      "No vi a mi hermana. Supongo que todavía no era su momento de unirse a nosotros.",
+      "I did not see my sister. I suppose it was not her time to join us yet.",
+      "Não vi minha irmã. Acho que ainda não era a hora de se juntar a nós.",
+      "姉の姿はなかった。まだ、こちらに加わる時ではなかったのだろう。"
+    ],
+    [
+      "story.xiuhtecuhtli.4.outro.7",
+      "Al menos ahora soy feliz. Mi padre me considera uno de los suyos. Lo de la tarjeta premium... preferí no preguntarlo durante la cena.",
+      "At least I am happy now. My father considers me one of his own. As for the premium card... I decided not to ask during dinner.",
+      "Pelo menos agora estou feliz. Meu pai me considera um dos seus. Quanto ao cartão premium... preferi não perguntar durante o jantar.",
+      "少なくとも、今は幸せだ。父は僕を仲間だと認めてくれた。プレミアムカードのことは……食事中には聞かないでおいた。"
+    ],
+    [
+      "story.xiuhtecuhtli.clone",
+      "Clon de Xiuhtecuhtli",
+      "Xiuhtecuhtli Clone",
+      "Clone de Xiuhtecuhtli",
+      "Xiuhtecuhtliのクローン"
+    ],
+    [
+      "story.xiuhtecuhtli.race.denied",
+      "¡Primero! Lanzamiento denegado: máquina demasiado pequeña.",
+      "First! Launch denied: machine too small.",
+      "Primeiro! Lançamento negado: máquina pequena demais.",
+      "一着！発射拒否：機体が小さすぎます。"
+    ],
+    [
+      "biome.government",
+      "Base del gobierno",
+      "Government Base",
+      "Base do governo",
+      "政府基地"
+    ],
+    [
+      "boss.name.government",
+      "Blindado de seguridad",
+      "Security War Rig",
+      "Blindado de segurança",
+      "警備装甲車"
+    ]
+  ]
+}

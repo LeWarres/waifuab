@@ -40,7 +40,7 @@ public class SelectLocomotive : MonoBehaviour
     bool Exists => selected<Locomotives.Models.Length;
     // One that can be taken out: opened by the save and, for a story, with a pilot who has one (the rest: coming soon).
     static bool Open(int i) => i<Locomotives.Models.Length && !Locomotives.Locked(i) && !Soon(i);
-    static bool Soon(int i) => Locomotives.StoryMode && Story.Route(Locomotives.HeroId(i))==null;
+    static bool Soon(int i) => Locomotives.StoryMode && Story.Route(Locomotives.CampaignHeroId(i))==null;
     bool Available => selected==RandomSlot || Open(selected);
     float lockIn=-1f;         // when the choice was taken: the card jumps, then off
     float nextStep;           // a direction held steps again after a moment, then quicker
@@ -194,6 +194,7 @@ public class SelectLocomotive : MonoBehaviour
     {
         if (heroes.Count == 0 && heroPreview) heroes["bba"] = heroPreview;
         if (heroes.TryGetValue(id, out Transform hero)) return hero;
+        if (id == "giger" || id == "gabriel" || id == "nath") return null;
         string who = "Characters/" + id + "/" + id;
         hero = Instantiate(Resources.Load<GameObject>(who), transform).transform;
         hero.name = id + "HeroPreview";
@@ -450,15 +451,15 @@ public class SelectLocomotive : MonoBehaviour
     {
         bool rolling=selected==RandomSlot;
         // The hero's colours, blended into over a moment.
-        UiKit.EaseTones(rolling || !Exists ? UiKit.Biome("menu") : UiKit.Hero(Locomotives.HeroId(selected)),Application.isPlaying ? Time.unscaledDeltaTime*8f : 1f);
+        UiKit.EaseTones(rolling || !Exists ? UiKit.Biome("menu") : UiKit.Hero(Locomotives.CampaignHeroId(selected)),Application.isPlaying ? Time.unscaledDeltaTime*8f : 1f);
         if(!canvas) return;
         bool random=selected==RandomSlot;
         bool locked=!Available;
         if (heroName)
         {
             // The selected locomotive's own hero stands there; the one that stood there before steps out.
-            string id = Exists && !random ? Locomotives.HeroId(selected) : null;
-            Texture2D picture = pictures && id != null && Application.isPlaying ? Resources.Load<Texture2D>("Menu/hero_" + id) : null;
+            string id = Exists && !random ? Locomotives.CampaignHeroId(selected) : null;
+            Texture2D picture = (pictures || id == "giger" || id == "gabriel" || id == "nath") && id != null && Application.isPlaying ? Resources.Load<Texture2D>(id == "giger" ? "Menu/loco_beast" : "Menu/hero_" + id) : null;
             if (picture && !heroFrame)
             {
                 heroFrame = UiKit.Panel(heroPlaceholderPanel.transform.parent, new Vector2(880f, 62f), new Vector2(304f, 437f), UiKit.Now.main, UiKit.Now.main, 0f);
@@ -520,13 +521,13 @@ public class SelectLocomotive : MonoBehaviour
         question.text="?";
         description.text=random || !Exists ? "" : Localized(Locomotives.DescriptionKeys[selected]);
         dataTitle.text=Localized("loco.weapon");
-        Weapon gun=random || !Exists ? null : Weapon.ForHero(Locomotives.HeroId(selected));
+        Weapon gun=random || !Exists ? null : Weapon.ForHero(Locomotives.CampaignHeroId(selected));
         weaponIcon.texture=gun!=null ? UiKit.Icon(gun.id) : null;weaponIcon.enabled=gun!=null;
         weaponName.text=gun!=null ? Localized("weapon."+gun.id+".name").ToUpperInvariant() : "?";
         weaponInfo.text=gun!=null ? Localized("weapon."+gun.id+".info") : Localized(random ? "loco.random.description":"loco.locked.description");
         bool soon=Exists && !random && Soon(selected);
         if (pilotData) pilotData.text = Localized("loco.pilot.data", random ? "?" : Localized(Exists ? Locomotives.HeroNameKey(selected) : "hero.character.test"),
-            random || !Exists ? "" : Localized(Story.Route(Locomotives.HeroId(selected)) != null ? "loco.story.yes" : "loco.soon"));
+            random || !Exists ? "" : Localized(Story.Route(Locomotives.CampaignHeroId(selected)) != null ? "loco.story.yes" : "loco.soon"));
         startText.text=Localized(lockIn>=0 ? "loco.go" : soon && !Locomotives.Locked(selected) ? "loco.soon" : locked ? "loco.locked":"loco.start");backText.text=Localized("menu.back");
         startPanel.color=startPanel.bottom=locked ? new Color(.12f,.15f,.20f) : focus==Start && (lockIn<0 || Time.unscaledTime*12f%2f<1f) ? UiKit.Now.hot : UiKit.Now.main;
         startText.color=focus==Start && !locked ? UiKit.Now.deep : Color.white;

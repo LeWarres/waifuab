@@ -1,0 +1,15 @@
+# Cerebron: webcómic de aficionado
+
+Referencia aprobada: `Tools/cerebron_art_trials/cerebron_doris_indie_test.png`, basada en las últimas dos referencias del usuario. Trazos marrones sueltos y algo torcidos, caras angulosas y cansadas con pupilas pequeñas, cuerpos sencillos y alargados, manchas amplias de pintura suave y colores apagados. Fondos menta, crema o lavanda con dos o tres formas grandes. El mismo acabado casero se aplica a humanos, aliens, fondos, trenes y utilería; sin rostros anime pulidos, anatomía profesional, maquinaria detallada, trama de imprenta, grano o sombras de cómic de horror.
+
+Cerebron sigue `Resources/Characters/cerebron/cerebron`: cabeza de cerebro rosado expuesto con un solo ojo inferior, sin rostro humano ni casco, cuerpo humanoide con armadura oliva oscura. Modelo de referencia: `Tools/hero_renders/cerebron.png`.
+
+Su locomotora asignada es `Locomotives.Models[7]`, `Models/Locomotive_Armor`, R-2D-2: gris, nariz en cuña, parabrisas amarillo, cuerpo largo blindado, pequeños cañones laterales, ruedas grises y antena. Mantener longitud, altura y escala respecto a las personas. Los trenes de BBA, Faceless y Crochtrain se basan en sus respectivos modelos/miniaturas, sin reinventarlos. Crochtrain no es un juguete junto a otra locomotora.
+
+La coherencia no consiste en repetir el ojo cansado: el torso estrecho e inclinado, los hombros caídos, las piernas y brazos largos y algo torcidos, la asimetría y los fondos casi vacíos forman parte de la referencia. No conservar la anatomía heroica ni la escenografía detallada de las versiones anteriores bajo un filtro de pintura. Simplificar las locomotoras manteniendo su silueta; R-2D-2 es una sola máquina continua, no tres vagones. Roger flota detrás del tren, nunca viaja como carga. Por petición posterior del usuario, en Baratito están el alien gris a la izquierda, Doris en lugar de la lagartija del centro y Cerebron a la derecha, atendidos por Culu; no hay teléfono ni cable sobre la mesa. Doris conserva su diseño de la escena del supermercado. Faceless todavía no viste traje durante su huida.
+
+El jefe de Faceless conserva el diseño de `faceless_resignation.png`: figura negra con cuello alto, hombros amplios, bordes amarillos y dos ojos ovalados amarillos huecos; redibujarlo con las líneas torcidas y la pintura suave del nuevo estilo. Faceless es blanco, calvo y sin facciones. Thulu conserva silueta verde, alas, crestas, ojos rojos y barba de tentáculos. Culu conserva cara humana verde, ojos rojos y tentáculos únicamente como pelo; su cara y expresión también deben seguir el webcómic sencillo de Doris, sin un rostro de anime insertado.
+
+El final respeta Baratito: pequeño café flotante, toldo rosado/crema, nombre visible. Redibujar los invitados y Culu con la tinta de Cerebron, conservando sus identidades.
+
+Procedencia y prompts finales: `cerebron_story_art_final.json`, generación integrada imagegen. Todas las imágenes definitivas se copian a `Assets/Resources/Story/cerebron_*.png`. La versión anterior de horror y su manifiesto quedan en `Tools/cerebron_art_backup_horror/`.

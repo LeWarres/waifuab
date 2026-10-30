@@ -83,6 +83,14 @@ public class Player : MonoBehaviour
     // (Tools/make_hero_gear.py) with a flame under each nozzle.
     void Dress()
     {
+        if (Locomotives.Selected == 9)
+        {
+            // The machine has no humanoid pilot: its combat avatar uses its own model.
+            var machine = Locomotives.Create(visuals.transform, 9);
+            machine.localScale = Vector3.one * .3f;
+            machine.localRotation = Quaternion.Euler(0f, 90f, 0f);
+            return;
+        }
         string who = "Characters/" + Locomotives.Hero + "/" + Locomotives.Hero; // each locomotive has its own
         Transform body = Instantiate(Resources.Load<GameObject>(who), visuals.transform).transform;
         Skin(body, who);
@@ -218,6 +226,7 @@ public class Player : MonoBehaviour
         kick = Mathf.Max(0f, kick - dt * 7f);
         float time = Time.time, paddle = Mathf.Sin(time * 2.3f) * 5f;
         visuals.transform.rotation = facing * Quaternion.Euler(lean.z * 20f, 0f, -lean.x * 16f);
+        if (Locomotives.Selected == 9) return;
         Quaternion turn = visuals.transform.rotation;
         for (int leg = 0; leg < 2; leg++)
         {
@@ -394,7 +403,7 @@ public class Player : MonoBehaviour
 
     // Station upgrades.
     public void SpeedUp() => speed *= 1.1f;
-    public void DamageUp() => damageBonus += 0.2f;
+    public void DamageUp() => damageBonus += Balance.DamagePerRank;
     public void GreedUp() => moneyBonus += 0.15f;
     public void ArmorUp() => armor = Mathf.Min(MaxArmor, armor + 0.1f);
     public void VitalityUp(float amount)

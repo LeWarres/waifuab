@@ -58,6 +58,12 @@ public class BossEvent : MonoBehaviour
         new Boss { id = "space",    accent = new Color(0.55f, 0.45f, 0.95f), healthMul = 2.10f },
         new Boss { id = "alien",    accent = new Color(0.30f, 0.95f, 0.75f), healthMul = 2.40f },
         new Boss { id = "fortress", accent = new Color(0.45f, 1.00f, 0.35f), healthMul = 2.80f },
+        new Boss { id = "government", accent = new Color(.2f, .65f, 1f), healthMul = 2.80f },
+        new Boss { id="hell",accent=new Color(1f,.2f,.08f),healthMul=1.3f },
+        new Boss { id="heaven",accent=new Color(1f,.82f,.35f),healthMul=2.4f },
+        new Boss { id="psychoworlds",accent=new Color(.85f,.15f,1f),healthMul=2.8f },
+        new Boss { id="thulu",accent=new Color(.45f,.9f,.65f),healthMul=2.8f },
+        new Boss { id="robotheaven",accent=new Color(1f,.72f,.25f),healthMul=2.8f },
     };
 
     // stage: 0 a bomb onto a wagon; a barrage missile 1 going out, 2 hanging out there, 3 diving onto a wagon.

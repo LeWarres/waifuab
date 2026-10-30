@@ -1,0 +1,11 @@
+RUNNING
+PASS: Golem flight X, three-hit failure/retry narration, orbital arrival and space continuation
+PASS chapter 1: government
+PASS chapter 2: space
+PASS: wrong component rejected, selection cancel, matching parts, wire rotation, undo, connected core activation
+PASS chapter 3: thulu
+PASS: all 13 questions, Circle review, exact tally 7 and high outcome saved
+PASS chapter 4: robotheaven
+PASS: all 13 questions, Circle review, exact tally 6 and low outcome saved
+PASS: both endings and Thanks, 7/13 vs 6/13 boundary, saved result
+PASS frames=6411 consoleErrors=0. Rides and combat wins accelerated; new puzzles solved through their real actions.

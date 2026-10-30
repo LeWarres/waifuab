@@ -145,9 +145,10 @@ public class SwarmEvent : MonoBehaviour
         assist = Mathf.Lerp(aimAssist, 3.5f, train.Tempo);
         Combat combat = Combat.Instance;
         float health = robotHealth * (1f + combat.healthPerLevel * train.Difficulty);
-        crashHurts = crashDamage * (1f + combat.damagePerLevel * train.Difficulty);
+        crashHurts = crashDamage * (1f + combat.damagePerLevel * Mathf.Min(train.Difficulty, 40));
         Turret gun = gunner.GetComponent<Turret>();
-        shotDamage = Mathf.Max(leastDamagePerSecond, gun.Weapon.Damage(gun.Level) / gun.Weapon.Interval(gun.Level)) * fireEvery;
+        float power = 1f + Balance.DamagePerRank * train.PassiveLevel("damage") + (Story.Active ? 0f : Workshop.DamageBonus);
+        shotDamage = Mathf.Max(leastDamagePerSecond, gun.Weapon.Damage(gun.Level) / gun.Weapon.Interval(gun.Level)) * fireEvery * power * train.fireRate;
         Vector3 wagonAt = train.CarPosition(wagon);
         for (int i = 0; i < total; i++)
             swarm.Add(new Robot

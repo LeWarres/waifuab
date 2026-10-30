@@ -3643,6 +3643,2502 @@ MonoBehaviour:
     m_Key: descent.lost
     m_Metadata:
       m_Items: []
+  - m_Id: 6284065147006976
+    m_Key: holo.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6284065184755712
+    m_Key: holo.intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6284065184755713
+    m_Key: holo.turn.you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6284065184755714
+    m_Key: holo.turn.rival
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6284065184755715
+    m_Key: holo.kind.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6284065184755716
+    m_Key: holo.kind.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6284065184755717
+    m_Key: holo.kind.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6284065184755718
+    m_Key: holo.beats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6284065184755719
+    m_Key: holo.fight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6284065184755720
+    m_Key: holo.rules.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6284065184755721
+    m_Key: holo.rules
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6284065184755722
+    m_Key: holo.help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6284065184755723
+    m_Key: holo.won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6284065184755724
+    m_Key: holo.lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6285937660473344
+    m_Key: story.faceless.1.before.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6285937689833472
+    m_Key: story.faceless.1.before.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6289036265467904
+    m_Key: holo.pick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6289036290633728
+    m_Key: holo.where
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6289036290633729
+    m_Key: holo.piece.mine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6289036290633730
+    m_Key: holo.piece.theirs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6289036290633731
+    m_Key: holo.left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6290823248687104
+    m_Key: holo.odds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6290823273852928
+    m_Key: holo.name.mine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6290823273852929
+    m_Key: holo.name.theirs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6290823273852930
+    m_Key: holo.hit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6290823273852931
+    m_Key: holo.out
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6290823273852932
+    m_Key: holo.tie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6291412355461120
+    m_Key: holo.rolling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6465130474057728
+    m_Key: holo.even
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6469827293425664
+    m_Key: forest.unpin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6469827318591488
+    m_Key: forest.panic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6469827318591489
+    m_Key: forest.lost.panic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909045256192
+    m_Key: story.xiuhtecuhtli.0.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199232
+    m_Key: story.xiuhtecuhtli.0.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199233
+    m_Key: story.xiuhtecuhtli.0.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199234
+    m_Key: story.xiuhtecuhtli.0.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199235
+    m_Key: story.xiuhtecuhtli.0.intro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199236
+    m_Key: story.xiuhtecuhtli.0.intro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199237
+    m_Key: story.xiuhtecuhtli.0.intro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199238
+    m_Key: story.xiuhtecuhtli.0.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199239
+    m_Key: story.xiuhtecuhtli.0.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199240
+    m_Key: story.xiuhtecuhtli.0.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199241
+    m_Key: story.xiuhtecuhtli.0.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199242
+    m_Key: story.xiuhtecuhtli.0.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199243
+    m_Key: story.xiuhtecuhtli.0.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199244
+    m_Key: story.xiuhtecuhtli.0.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199245
+    m_Key: story.xiuhtecuhtli.1.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199246
+    m_Key: story.xiuhtecuhtli.1.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199247
+    m_Key: story.xiuhtecuhtli.1.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199248
+    m_Key: story.xiuhtecuhtli.1.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199249
+    m_Key: story.xiuhtecuhtli.1.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199250
+    m_Key: story.xiuhtecuhtli.1.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199251
+    m_Key: story.xiuhtecuhtli.1.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199252
+    m_Key: story.xiuhtecuhtli.1.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199253
+    m_Key: story.xiuhtecuhtli.1.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199254
+    m_Key: story.xiuhtecuhtli.2.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199255
+    m_Key: story.xiuhtecuhtli.2.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199256
+    m_Key: story.xiuhtecuhtli.2.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199257
+    m_Key: story.xiuhtecuhtli.2.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199258
+    m_Key: story.xiuhtecuhtli.2.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199259
+    m_Key: story.xiuhtecuhtli.2.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199260
+    m_Key: story.xiuhtecuhtli.2.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199261
+    m_Key: story.xiuhtecuhtli.2.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199262
+    m_Key: story.xiuhtecuhtli.2.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199263
+    m_Key: story.xiuhtecuhtli.2.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199264
+    m_Key: story.xiuhtecuhtli.3.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199265
+    m_Key: story.xiuhtecuhtli.3.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199266
+    m_Key: story.xiuhtecuhtli.3.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199267
+    m_Key: story.xiuhtecuhtli.3.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199268
+    m_Key: story.xiuhtecuhtli.3.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199269
+    m_Key: story.xiuhtecuhtli.3.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199270
+    m_Key: story.xiuhtecuhtli.3.before.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199271
+    m_Key: story.xiuhtecuhtli.3.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199272
+    m_Key: story.xiuhtecuhtli.3.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199273
+    m_Key: story.xiuhtecuhtli.3.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199274
+    m_Key: story.xiuhtecuhtli.3.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199275
+    m_Key: story.xiuhtecuhtli.3.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199276
+    m_Key: story.xiuhtecuhtli.4.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199277
+    m_Key: story.xiuhtecuhtli.4.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199278
+    m_Key: story.xiuhtecuhtli.4.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199279
+    m_Key: story.xiuhtecuhtli.4.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199280
+    m_Key: story.xiuhtecuhtli.4.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909087199281
+    m_Key: story.xiuhtecuhtli.4.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393536
+    m_Key: story.xiuhtecuhtli.4.before.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393537
+    m_Key: story.xiuhtecuhtli.4.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393538
+    m_Key: story.xiuhtecuhtli.4.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393539
+    m_Key: story.xiuhtecuhtli.4.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393540
+    m_Key: story.xiuhtecuhtli.4.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393541
+    m_Key: story.xiuhtecuhtli.4.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393542
+    m_Key: story.xiuhtecuhtli.4.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393543
+    m_Key: story.xiuhtecuhtli.4.outro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393544
+    m_Key: story.xiuhtecuhtli.4.outro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393545
+    m_Key: story.xiuhtecuhtli.4.outro.7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393546
+    m_Key: story.xiuhtecuhtli.clone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393547
+    m_Key: story.xiuhtecuhtli.race.denied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393548
+    m_Key: biome.government
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6486909091393549
+    m_Key: boss.name.government
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128633700352
+    m_Key: story.onini.0.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032000
+    m_Key: story.onini.0.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032001
+    m_Key: story.onini.0.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032002
+    m_Key: story.onini.0.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032003
+    m_Key: story.onini.0.intro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032004
+    m_Key: story.onini.0.intro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032005
+    m_Key: story.onini.0.intro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032006
+    m_Key: story.onini.0.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032007
+    m_Key: story.onini.0.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032008
+    m_Key: story.onini.0.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032009
+    m_Key: story.onini.0.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032010
+    m_Key: story.onini.0.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032011
+    m_Key: story.onini.0.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032012
+    m_Key: story.onini.0.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032013
+    m_Key: story.onini.1.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032014
+    m_Key: story.onini.1.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032015
+    m_Key: story.onini.1.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032016
+    m_Key: story.onini.1.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032017
+    m_Key: story.onini.1.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032018
+    m_Key: story.onini.1.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032019
+    m_Key: story.onini.1.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032020
+    m_Key: story.onini.1.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032021
+    m_Key: story.onini.1.after.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032022
+    m_Key: story.onini.1.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032023
+    m_Key: story.onini.1.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032024
+    m_Key: story.onini.1.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032025
+    m_Key: story.onini.2.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032026
+    m_Key: story.onini.2.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032027
+    m_Key: story.onini.2.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032028
+    m_Key: story.onini.2.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032029
+    m_Key: story.onini.2.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032030
+    m_Key: story.onini.2.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032031
+    m_Key: story.onini.2.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032032
+    m_Key: story.onini.2.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032033
+    m_Key: story.onini.2.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032034
+    m_Key: story.onini.2.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032035
+    m_Key: story.onini.2.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032036
+    m_Key: story.onini.2.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032037
+    m_Key: story.onini.3.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032038
+    m_Key: story.onini.3.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032039
+    m_Key: story.onini.3.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032040
+    m_Key: story.onini.3.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032041
+    m_Key: story.onini.3.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032042
+    m_Key: story.onini.3.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032043
+    m_Key: story.onini.3.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032044
+    m_Key: story.onini.3.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032045
+    m_Key: story.onini.3.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032046
+    m_Key: story.onini.3.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032047
+    m_Key: story.onini.3.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032048
+    m_Key: story.onini.3.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032049
+    m_Key: story.onini.3.outro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032050
+    m_Key: story.onini.4.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032051
+    m_Key: story.onini.4.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032052
+    m_Key: story.onini.4.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032053
+    m_Key: story.onini.4.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032054
+    m_Key: story.onini.4.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128684032055
+    m_Key: story.onini.4.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226304
+    m_Key: story.onini.4.before.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226305
+    m_Key: story.onini.4.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226306
+    m_Key: story.onini.4.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226307
+    m_Key: story.onini.4.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226308
+    m_Key: story.onini.4.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226309
+    m_Key: story.onini.4.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226310
+    m_Key: story.onini.shadow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226311
+    m_Key: eyeboss.heaven.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226312
+    m_Key: eyeboss.heaven.intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226313
+    m_Key: biome.hell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226314
+    m_Key: biome.heaven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226315
+    m_Key: biome.psychoworlds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226316
+    m_Key: boss.name.hell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226317
+    m_Key: boss.name.heaven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6715128688226318
+    m_Key: boss.name.psychoworlds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476354486272
+    m_Key: story.culu.0.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623616
+    m_Key: story.culu.1.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623617
+    m_Key: story.culu.2.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623618
+    m_Key: story.culu.3.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623619
+    m_Key: story.culu.4.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623620
+    m_Key: story.culu.0.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623621
+    m_Key: story.culu.0.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623622
+    m_Key: story.culu.0.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623623
+    m_Key: story.culu.0.intro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623624
+    m_Key: story.culu.0.intro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623625
+    m_Key: story.culu.0.intro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623626
+    m_Key: story.culu.0.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623627
+    m_Key: story.culu.0.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623628
+    m_Key: story.culu.0.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623629
+    m_Key: story.culu.0.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623630
+    m_Key: story.culu.0.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623631
+    m_Key: story.culu.0.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623632
+    m_Key: story.culu.0.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623633
+    m_Key: story.culu.1.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623634
+    m_Key: story.culu.1.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623635
+    m_Key: story.culu.1.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623636
+    m_Key: story.culu.1.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623637
+    m_Key: story.culu.1.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623638
+    m_Key: story.culu.1.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623639
+    m_Key: story.culu.1.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623640
+    m_Key: story.culu.1.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623641
+    m_Key: story.culu.1.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623642
+    m_Key: story.culu.2.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623643
+    m_Key: story.culu.2.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623644
+    m_Key: story.culu.2.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623645
+    m_Key: story.culu.2.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623646
+    m_Key: story.culu.2.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623647
+    m_Key: story.culu.2.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623648
+    m_Key: story.culu.2.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623649
+    m_Key: story.culu.2.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623650
+    m_Key: story.culu.2.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623651
+    m_Key: story.culu.2.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623652
+    m_Key: story.culu.2.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623653
+    m_Key: story.culu.3.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623654
+    m_Key: story.culu.3.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623655
+    m_Key: story.culu.3.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623656
+    m_Key: story.culu.3.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623657
+    m_Key: story.culu.3.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623658
+    m_Key: story.culu.3.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623659
+    m_Key: story.culu.3.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623660
+    m_Key: story.culu.3.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623661
+    m_Key: story.culu.3.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623662
+    m_Key: story.culu.4.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623663
+    m_Key: story.culu.4.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623664
+    m_Key: story.culu.4.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623665
+    m_Key: story.culu.4.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623666
+    m_Key: story.culu.4.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623667
+    m_Key: story.culu.4.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623668
+    m_Key: story.culu.4.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623669
+    m_Key: story.culu.4.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623670
+    m_Key: story.culu.4.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623671
+    m_Key: story.culu.4.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623672
+    m_Key: story.culu.4.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623673
+    m_Key: story.culu.4.outro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623674
+    m_Key: biome.thulu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6777476400623675
+    m_Key: boss.thulu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6780573520834560
+    m_Key: boss.name.thulu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838631960576
+    m_Key: story.cerebron.0.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515008
+    m_Key: story.cerebron.1.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515009
+    m_Key: story.cerebron.2.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515010
+    m_Key: story.cerebron.3.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515011
+    m_Key: story.cerebron.roger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515012
+    m_Key: story.cerebron.roger.intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515013
+    m_Key: story.cerebron.0.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515014
+    m_Key: story.cerebron.0.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515015
+    m_Key: story.cerebron.0.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515016
+    m_Key: story.cerebron.0.intro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515017
+    m_Key: story.cerebron.0.intro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515018
+    m_Key: story.cerebron.0.intro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515019
+    m_Key: story.cerebron.0.intro.7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515020
+    m_Key: story.cerebron.0.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515021
+    m_Key: story.cerebron.0.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515022
+    m_Key: story.cerebron.0.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515023
+    m_Key: story.cerebron.0.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515024
+    m_Key: story.cerebron.0.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515025
+    m_Key: story.cerebron.0.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515026
+    m_Key: story.cerebron.0.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515027
+    m_Key: story.cerebron.1.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515028
+    m_Key: story.cerebron.1.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515029
+    m_Key: story.cerebron.1.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515030
+    m_Key: story.cerebron.1.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515031
+    m_Key: story.cerebron.1.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515032
+    m_Key: story.cerebron.1.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515033
+    m_Key: story.cerebron.1.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515034
+    m_Key: story.cerebron.1.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515035
+    m_Key: story.cerebron.1.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515036
+    m_Key: story.cerebron.1.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515037
+    m_Key: story.cerebron.2.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515038
+    m_Key: story.cerebron.2.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515039
+    m_Key: story.cerebron.2.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515040
+    m_Key: story.cerebron.2.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515041
+    m_Key: story.cerebron.2.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515042
+    m_Key: story.cerebron.2.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515043
+    m_Key: story.cerebron.3.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515044
+    m_Key: story.cerebron.3.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515045
+    m_Key: story.cerebron.3.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515046
+    m_Key: story.cerebron.3.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515047
+    m_Key: story.cerebron.3.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515048
+    m_Key: story.cerebron.3.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515049
+    m_Key: story.cerebron.3.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515050
+    m_Key: story.cerebron.3.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515051
+    m_Key: story.cerebron.3.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515052
+    m_Key: story.cerebron.3.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515053
+    m_Key: story.cerebron.3.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515054
+    m_Key: story.cerebron.3.outro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515055
+    m_Key: story.cerebron.2.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515056
+    m_Key: story.cerebron.2.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515057
+    m_Key: story.cerebron.2.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515058
+    m_Key: story.cerebron.2.before.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515059
+    m_Key: story.cerebron.2.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800838665515060
+    m_Key: story.cerebron.2.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087885488128
+    m_Key: story.tzmil.0.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625472
+    m_Key: story.tzmil.0.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625473
+    m_Key: story.tzmil.0.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625474
+    m_Key: story.tzmil.0.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625475
+    m_Key: story.tzmil.0.intro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625476
+    m_Key: story.tzmil.0.intro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625477
+    m_Key: story.tzmil.0.intro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625478
+    m_Key: story.tzmil.0.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625479
+    m_Key: story.tzmil.0.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625480
+    m_Key: story.tzmil.0.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625481
+    m_Key: story.tzmil.0.before.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625482
+    m_Key: story.tzmil.0.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625483
+    m_Key: story.tzmil.0.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625484
+    m_Key: story.tzmil.0.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625485
+    m_Key: story.tzmil.0.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625486
+    m_Key: story.tzmil.0.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625487
+    m_Key: story.tzmil.1.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625488
+    m_Key: story.tzmil.1.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625489
+    m_Key: story.tzmil.1.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625490
+    m_Key: story.tzmil.1.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625491
+    m_Key: story.tzmil.1.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625492
+    m_Key: story.tzmil.1.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625493
+    m_Key: story.tzmil.1.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625494
+    m_Key: story.tzmil.1.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625495
+    m_Key: story.tzmil.1.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625496
+    m_Key: story.tzmil.1.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625497
+    m_Key: story.tzmil.1.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625498
+    m_Key: story.tzmil.1.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625499
+    m_Key: story.tzmil.2.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625500
+    m_Key: story.tzmil.2.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625501
+    m_Key: story.tzmil.2.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625502
+    m_Key: story.tzmil.2.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625503
+    m_Key: story.tzmil.2.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625504
+    m_Key: story.tzmil.2.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625505
+    m_Key: story.tzmil.2.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625506
+    m_Key: story.tzmil.2.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625507
+    m_Key: story.tzmil.2.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625508
+    m_Key: story.tzmil.2.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625509
+    m_Key: story.tzmil.2.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625510
+    m_Key: story.tzmil.2.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625511
+    m_Key: story.tzmil.3.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625512
+    m_Key: story.tzmil.3.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625513
+    m_Key: story.tzmil.3.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625514
+    m_Key: story.tzmil.3.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625515
+    m_Key: story.tzmil.3.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625516
+    m_Key: story.tzmil.3.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625517
+    m_Key: story.tzmil.3.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625518
+    m_Key: story.tzmil.3.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625519
+    m_Key: story.tzmil.3.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625520
+    m_Key: story.tzmil.3.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625521
+    m_Key: story.tzmil.3.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625522
+    m_Key: story.tzmil.3.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625523
+    m_Key: story.tzmil.3.outro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625524
+    m_Key: story.tzmil.3.outro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6881087931625525
+    m_Key: story.tzmil.3.outro.7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197681238016
+    m_Key: story.sentinel.0.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621568
+    m_Key: story.sentinel.1.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621569
+    m_Key: story.sentinel.2.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621570
+    m_Key: story.sentinel.3.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621571
+    m_Key: story.sentinel.0.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621572
+    m_Key: story.sentinel.0.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621573
+    m_Key: story.sentinel.0.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621574
+    m_Key: story.sentinel.0.intro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621575
+    m_Key: story.sentinel.0.intro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621576
+    m_Key: story.sentinel.0.intro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621577
+    m_Key: story.sentinel.0.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621578
+    m_Key: story.sentinel.0.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621579
+    m_Key: story.sentinel.0.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621580
+    m_Key: story.sentinel.0.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621581
+    m_Key: story.sentinel.0.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621582
+    m_Key: story.sentinel.0.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621583
+    m_Key: story.sentinel.0.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621584
+    m_Key: story.sentinel.0.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621585
+    m_Key: story.sentinel.0.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621586
+    m_Key: story.sentinel.0.outro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621587
+    m_Key: story.sentinel.1.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621588
+    m_Key: story.sentinel.1.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621589
+    m_Key: story.sentinel.1.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621590
+    m_Key: story.sentinel.1.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621591
+    m_Key: story.sentinel.1.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621592
+    m_Key: story.sentinel.1.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621593
+    m_Key: story.sentinel.1.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621594
+    m_Key: story.sentinel.1.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621595
+    m_Key: story.sentinel.1.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621596
+    m_Key: story.sentinel.1.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621597
+    m_Key: story.sentinel.1.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621598
+    m_Key: story.sentinel.2.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621599
+    m_Key: story.sentinel.2.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621600
+    m_Key: story.sentinel.2.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621601
+    m_Key: story.sentinel.2.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621602
+    m_Key: story.sentinel.2.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621603
+    m_Key: story.sentinel.2.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621604
+    m_Key: story.sentinel.2.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621605
+    m_Key: story.sentinel.2.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621606
+    m_Key: story.sentinel.2.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621607
+    m_Key: story.sentinel.3.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621608
+    m_Key: story.sentinel.3.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621609
+    m_Key: story.sentinel.3.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621610
+    m_Key: story.sentinel.3.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197840621611
+    m_Key: story.sentinel.3.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815872
+    m_Key: story.sentinel.3.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815873
+    m_Key: story.sentinel.3.good.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815874
+    m_Key: story.sentinel.3.good.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815875
+    m_Key: story.sentinel.3.good.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815876
+    m_Key: story.sentinel.3.good.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815877
+    m_Key: story.sentinel.3.good.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815878
+    m_Key: story.sentinel.3.good.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815879
+    m_Key: story.sentinel.3.bad.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815880
+    m_Key: story.sentinel.3.bad.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815881
+    m_Key: story.sentinel.3.bad.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815882
+    m_Key: story.sentinel.3.bad.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815883
+    m_Key: story.sentinel.3.bad.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815884
+    m_Key: story.sentinel.3.bad.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815885
+    m_Key: story.sentinel.ascent.intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815886
+    m_Key: story.sentinel.ascent.arrived
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815887
+    m_Key: biome.robotheaven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815888
+    m_Key: boss.robotheaven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815889
+    m_Key: golem.begin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815890
+    m_Key: golem.circuit.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815891
+    m_Key: golem.circuit.intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815892
+    m_Key: golem.circuit.parts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815893
+    m_Key: golem.circuit.wires
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815894
+    m_Key: golem.circuit.core
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815895
+    m_Key: golem.circuit.instructions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815896
+    m_Key: golem.circuit.wrong
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815897
+    m_Key: golem.circuit.socket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815898
+    m_Key: golem.circuit.part.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815899
+    m_Key: golem.circuit.part.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815900
+    m_Key: golem.circuit.part.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815901
+    m_Key: golem.circuit.connect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815902
+    m_Key: golem.circuit.input
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815903
+    m_Key: golem.circuit.output
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815904
+    m_Key: golem.circuit.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815905
+    m_Key: golem.circuit.activate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815906
+    m_Key: golem.circuit.controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815907
+    m_Key: golem.judge.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815908
+    m_Key: golem.judge.progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815909
+    m_Key: golem.judge.intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815910
+    m_Key: golem.judge.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815911
+    m_Key: golem.judge.controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815912
+    m_Key: golem.moral.1.q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815913
+    m_Key: golem.moral.1.high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815914
+    m_Key: golem.moral.1.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815915
+    m_Key: golem.moral.2.q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815916
+    m_Key: golem.moral.2.high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815917
+    m_Key: golem.moral.2.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815918
+    m_Key: golem.moral.3.q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815919
+    m_Key: golem.moral.3.high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815920
+    m_Key: golem.moral.3.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815921
+    m_Key: golem.moral.4.q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815922
+    m_Key: golem.moral.4.high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815923
+    m_Key: golem.moral.4.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815924
+    m_Key: golem.moral.5.q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815925
+    m_Key: golem.moral.5.high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815926
+    m_Key: golem.moral.5.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815927
+    m_Key: golem.moral.6.q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815928
+    m_Key: golem.moral.6.high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815929
+    m_Key: golem.moral.6.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815930
+    m_Key: golem.moral.7.q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815931
+    m_Key: golem.moral.7.high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815932
+    m_Key: golem.moral.7.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815933
+    m_Key: golem.moral.8.q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815934
+    m_Key: golem.moral.8.high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815935
+    m_Key: golem.moral.8.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815936
+    m_Key: golem.moral.9.q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815937
+    m_Key: golem.moral.9.high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815938
+    m_Key: golem.moral.9.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815939
+    m_Key: golem.moral.10.q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815940
+    m_Key: golem.moral.10.high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815941
+    m_Key: golem.moral.10.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815942
+    m_Key: golem.moral.11.q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815943
+    m_Key: golem.moral.11.high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815944
+    m_Key: golem.moral.11.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815945
+    m_Key: golem.moral.12.q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815946
+    m_Key: golem.moral.12.high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815947
+    m_Key: golem.moral.12.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815948
+    m_Key: golem.moral.13.q
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815949
+    m_Key: golem.moral.13.high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7022197844815950
+    m_Key: golem.moral.13.low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7023636642082816
+    m_Key: boss.name.robotheaven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921727348736
+    m_Key: story.giger.0.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708864
+    m_Key: story.giger.1.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708865
+    m_Key: story.giger.2.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708866
+    m_Key: story.giger.3.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708867
+    m_Key: hero.character.giger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708868
+    m_Key: story.giger.0.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708869
+    m_Key: story.giger.0.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708870
+    m_Key: story.giger.0.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708871
+    m_Key: story.giger.0.intro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708872
+    m_Key: story.giger.0.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708873
+    m_Key: story.giger.0.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708874
+    m_Key: story.giger.0.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708875
+    m_Key: story.giger.0.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708876
+    m_Key: story.giger.0.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708877
+    m_Key: story.giger.0.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708878
+    m_Key: story.giger.0.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708879
+    m_Key: story.giger.0.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708880
+    m_Key: story.giger.1.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708881
+    m_Key: story.giger.1.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708882
+    m_Key: story.giger.1.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708883
+    m_Key: story.giger.1.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708884
+    m_Key: story.giger.1.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708885
+    m_Key: story.giger.1.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708886
+    m_Key: story.giger.1.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708887
+    m_Key: story.giger.1.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708888
+    m_Key: story.giger.1.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708889
+    m_Key: story.giger.2.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708890
+    m_Key: story.giger.2.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708891
+    m_Key: story.giger.2.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708892
+    m_Key: story.giger.2.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708893
+    m_Key: story.giger.2.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708894
+    m_Key: story.giger.2.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708895
+    m_Key: story.giger.2.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708896
+    m_Key: story.giger.3.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708897
+    m_Key: story.giger.3.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708898
+    m_Key: story.giger.3.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708899
+    m_Key: story.giger.3.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708900
+    m_Key: story.giger.3.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708901
+    m_Key: story.giger.3.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708902
+    m_Key: story.giger.3.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708903
+    m_Key: story.giger.3.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708904
+    m_Key: story.giger.3.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708905
+    m_Key: story.giger.3.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708906
+    m_Key: story.giger.3.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708907
+    m_Key: story.giger.3.outro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708908
+    m_Key: giger.crates.controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708909
+    m_Key: giger.crates.count
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708910
+    m_Key: giger.crates.target
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708911
+    m_Key: giger.crates.won
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7072921756708912
+    m_Key: giger.crates.lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288341897216
+    m_Key: story.gabriel.0.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645952
+    m_Key: story.gabriel.1.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645953
+    m_Key: story.gabriel.2.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645954
+    m_Key: story.gabriel.3.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645955
+    m_Key: hero.character.gabriel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645956
+    m_Key: story.gabriel.0.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645957
+    m_Key: story.gabriel.0.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645958
+    m_Key: story.gabriel.0.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645959
+    m_Key: story.gabriel.0.intro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645960
+    m_Key: story.gabriel.0.intro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645961
+    m_Key: story.gabriel.0.intro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645962
+    m_Key: story.gabriel.0.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645963
+    m_Key: story.gabriel.0.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645964
+    m_Key: story.gabriel.0.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645965
+    m_Key: story.gabriel.0.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645966
+    m_Key: story.gabriel.0.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645967
+    m_Key: story.gabriel.0.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645968
+    m_Key: story.gabriel.0.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645969
+    m_Key: story.gabriel.1.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645970
+    m_Key: story.gabriel.1.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645971
+    m_Key: story.gabriel.1.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645972
+    m_Key: story.gabriel.1.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645973
+    m_Key: story.gabriel.1.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645974
+    m_Key: story.gabriel.1.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645975
+    m_Key: story.gabriel.1.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645976
+    m_Key: story.gabriel.1.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645977
+    m_Key: story.gabriel.1.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645978
+    m_Key: story.gabriel.2.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645979
+    m_Key: story.gabriel.2.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645980
+    m_Key: story.gabriel.2.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645981
+    m_Key: story.gabriel.2.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645982
+    m_Key: story.gabriel.2.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645983
+    m_Key: story.gabriel.2.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645984
+    m_Key: story.gabriel.2.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645985
+    m_Key: story.gabriel.2.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645986
+    m_Key: story.gabriel.3.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645987
+    m_Key: story.gabriel.3.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645988
+    m_Key: story.gabriel.3.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645989
+    m_Key: story.gabriel.3.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645990
+    m_Key: story.gabriel.3.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645991
+    m_Key: story.gabriel.3.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645992
+    m_Key: story.gabriel.3.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645993
+    m_Key: story.gabriel.3.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645994
+    m_Key: story.gabriel.3.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645995
+    m_Key: story.gabriel.3.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645996
+    m_Key: story.gabriel.3.outro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645997
+    m_Key: story.gabriel.3.outro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645998
+    m_Key: gabriel.upgrade.weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379645999
+    m_Key: gabriel.upgrade.passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379646000
+    m_Key: gabriel.upgrade.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7184288379646001
+    m_Key: gabriel.upgrade.repair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7187932651008000
+    m_Key: gabriel.upgrade.take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409935425536
+    m_Key: story.nath.0.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368576
+    m_Key: story.nath.1.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368577
+    m_Key: story.nath.2.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368578
+    m_Key: story.nath.3.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368579
+    m_Key: story.nath.4.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368580
+    m_Key: hero.character.nath
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368581
+    m_Key: story.nath.0.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368582
+    m_Key: story.nath.0.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368583
+    m_Key: story.nath.0.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368584
+    m_Key: story.nath.0.intro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368585
+    m_Key: story.nath.0.intro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368586
+    m_Key: story.nath.0.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368587
+    m_Key: story.nath.0.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368588
+    m_Key: story.nath.0.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368589
+    m_Key: story.nath.0.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368590
+    m_Key: story.nath.0.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368591
+    m_Key: story.nath.0.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368592
+    m_Key: story.nath.0.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368593
+    m_Key: story.nath.1.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368594
+    m_Key: story.nath.1.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368595
+    m_Key: story.nath.1.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368596
+    m_Key: story.nath.1.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368597
+    m_Key: story.nath.1.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368598
+    m_Key: story.nath.1.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368599
+    m_Key: story.nath.1.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368600
+    m_Key: story.nath.2.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368601
+    m_Key: story.nath.2.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368602
+    m_Key: story.nath.2.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368603
+    m_Key: story.nath.2.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368604
+    m_Key: story.nath.2.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368605
+    m_Key: story.nath.2.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368606
+    m_Key: story.nath.2.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368607
+    m_Key: story.nath.2.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368608
+    m_Key: story.nath.3.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368609
+    m_Key: story.nath.3.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368610
+    m_Key: story.nath.3.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368611
+    m_Key: story.nath.3.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368612
+    m_Key: story.nath.3.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368613
+    m_Key: story.nath.3.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368614
+    m_Key: story.nath.3.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368615
+    m_Key: story.nath.3.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368616
+    m_Key: story.nath.3.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368617
+    m_Key: story.nath.3.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368618
+    m_Key: story.nath.3.outro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368619
+    m_Key: story.nath.3.outro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368620
+    m_Key: story.nath.4.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368621
+    m_Key: story.nath.4.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368622
+    m_Key: story.nath.4.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368623
+    m_Key: story.nath.4.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368624
+    m_Key: story.nath.4.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368625
+    m_Key: story.nath.4.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368626
+    m_Key: story.nath.4.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368627
+    m_Key: story.nath.4.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368628
+    m_Key: story.nath.4.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368629
+    m_Key: story.nath.4.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368630
+    m_Key: story.nath.4.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7536409977368631
+    m_Key: story.nath.4.outro.5
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

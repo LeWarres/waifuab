@@ -1,0 +1,3 @@
+RUNNING
+PASS real truck Begin/End, boss loop and return to desert
+PASS real final rival Begin/End, biome guard and selector transition; consoleErrors=0

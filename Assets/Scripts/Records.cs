@@ -10,19 +10,24 @@ public static class RunStats
     static readonly Dictionary<Weapon, float> dealt = new();
     public static float Started { get; private set; }
     public static int Ultimates;
+    public static float UltimateDamage;
+    public static int UltimateKills;
 
     public static void Begin()
     {
         dealt.Clear();
         Ultimates = 0;
+        UltimateDamage = 0f;
+        UltimateKills = 0;
         Started = Time.time;
     }
 
-    public static void Deal(Weapon weapon, float amount)
+    public static void Deal(Weapon weapon, float amount, bool ultimate = false)
     {
         if (weapon == null || amount <= 0f) return;
         dealt.TryGetValue(weapon, out float sum);
         dealt[weapon] = sum + amount;
+        if (ultimate) UltimateDamage += amount; // effective damage, excluding overkill
     }
 
     // The weapons that dealt the most, most first.
@@ -70,6 +75,7 @@ public static class Workshop
 
     static float Bonus(string id) { int i = System.Array.FindIndex(Upgrades, u => u.id == id); return Level(i) * Upgrades[i].per; }
     public static float WagonHealth => 1f + Bonus("vitality");
+    public static float DamageBonus => Bonus("damage");
     public static void Apply(Player hero, ref int money)
     {
         hero.damageBonus += Bonus("damage");

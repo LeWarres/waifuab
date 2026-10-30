@@ -1,0 +1,172 @@
+use_ultimate,minute,difficulty,stations,train_hp,train_max,lowest_fill,hero_hp,hero_max,cars,enemies,kills,casts,ultimate_kills,money,arms,upgrades
+== seed 1203
+0,0,0,0,800,800,1.00,250,250,2,13,0,0,0,0,blaster1 turret1 rocket1,luck2 critChance3 damage2 amount1
+  hurt:
+0,1,0,1,868,880,0.99,300,300,2,42,306,0,0,40,blaster1 turret1 rocket1,luck2 critChance3 damage2 amount1 vitality1
+  hurt: Pelusa=12
+0,2,2,3,860,880,0.98,300,300,2,42,694,0,0,125,blaster2 turret2 rocket1,luck2 critChance3 damage3 amount1 vitality1
+  hurt: Pelusa=12
+0,3,3,4,1213,1320,0.91,300,300,3,48,1168,0,0,63,blaster2 turret2 rocket1 laser1,luck2 critChance4 damage3 amount1 vitality1
+  hurt: Hexa=85 Saboteador=2
+0,4,4,5,1320,1320,0.67,300,300,5,74,1723,0,0,58,blaster3 turret5 rocket1 laser2,luck2 critChance4 damage3 amount1 vitality1
+  hurt: Pelusa=97 Saboteador=62 Hexa=41
+0,5,5,6,1164,1320,0.67,300,300,5,43,2440,0,0,287,blaster3 turret6 rocket1 laser3,luck2 critChance4 damage4 amount1 vitality1
+  hurt: Hexágono mayor=53 Hexa=35 Pelusa=9
+0,6,7,7,1467,1760,0.67,300,300,5,127,3160,0,0,290,blaster3 turret6 rocket4 laser3 masamune1,luck3 critChance4 damage5 amount1 vitality1
+  hurt: Hexa=14 Pelusa=5 Saboteador+1=4 Saboteador=4
+0,7,8,8,1900,2200,0.67,300,300,7,120,4086,0,0,124,blaster4 turret6 rocket4 laser3 masamune2 shotgun1,luck3 critChance4 damage5 amount1 vitality1
+  hurt: Pelusa=38 Hexa=6 Hexa+1=3 Saboteador=2
+0,8,10,9,2200,2200,0.67,300,300,5,134,4970,0,0,132,blaster6 turret6 rocket6 laser3 masamune2 shotgun2,luck3 critChance4 damage5 amount1 vitality1
+  hurt: Pelusa=39 Larva=20 Pelusa+1=12 Hexa+1=4 Saboteador+1=2
+0,9,12,10,2200,2200,0.67,300,300,6,87,6097,0,0,547,blaster6 turret6 rocket6 laser3 masamune3 shotgun2,luck3 critChance5 damage5 amount1 vitality1
+  hurt:
+0,10,14,11,2150,2600,0.67,400,400,6,147,7285,0,0,940,blaster6 turret6 rocket6 laser4 masamune3 shotgun2,luck3 critChance5 damage5 amount1 vitality3
+  hurt: Hexágono mayor+2=95 Hexágono mayor+1=75 Hexágono mayor=64 Larva=42 Pelusa+1=19 Pelusa=16 Hexa=9 Pelusa+2=8
+0,11,16,11,1734,2600,0.67,400,400,8,118,8607,0,0,1119,blaster6 turret6 rocket6 laser4 masamune3 shotgun3,luck3 critChance5 damage5 amount1 vitality3
+  hurt: Hexa=171 Hexágono mayor+2=97 Pelusa=55 Larva=22 Pelusa+1=20 Hexa+1=20 Hexa+2=20 Saboteador+2=10 Pelusa+2=8 Saboteador+1=8 Saboteador=4
+0,12,18,12,2674,2800,0.65,450,450,5,140,10080,0,0,1333,blaster6 turret6 rocket6 laser5 masamune3 shotgun3,luck3 critChance5 damage5 amount1 vitality4
+  hurt: Larva=68 Pelusa=45 Pelusa+1=20 Pelusa+2=17 Hexa=13 Saboteador+1=5 Saboteador=4 Hexa+1=4 Saboteador+2=3
+0,13,20,13,2409,3000,0.65,500,500,6,156,11661,0,0,1606,blaster6 turret6 rocket6 laser5 masamune4 shotgun3,luck4 critChance5 damage5 amount1 vitality5
+  hurt: Hexágono mayor+1=84 Pelusa+2=53 Pelusa+1=21 Hexa+1=13 Pelusa=12 Hexa=11
+0,14,22,14,2394,3000,0.65,500,500,5,170,13172,0,0,1768,blaster6 turret6 rocket6 laser5 masamune5 shotgun3,luck5 critChance5 damage5 amount1 vitality5
+  hurt: Hexágono mayor+2=110 Colmena+1=72 Colmena=61 Larva=49 Pelusa=49 Pelusa+1=43 Pelusa+2=27 Hexa=22 Hexa+1=22 Hexa+2=11 Hexa+3=7
+0,15,24,15,2960,3000,0.05,500,500,5,158,14618,0,0,1166,blaster6 turret6 rocket6 laser5 masamune6 shotgun5,luck5 critChance5 damage5 amount2 vitality5
+  hurt: Larva=1239 Pelusa=187 Pelusa+2=160 Pelusa+1=159 Hexágono mayor=151 Colmena=124 Hexágono mayor+2=113 Colmena+2=95 Hexa=57 Hexa+2=51 Pelusa+3=50 Hexa+1=50 Saboteador=30 Saboteador+1=18 Saboteador+2=15 Saboteador+3=10
+0,16,27,15,335,3000,0.05,458,500,5,182,16172,0,0,1476,blaster6 turret6 rocket6 laser5 masamune6 shotgun5,luck5 critChance5 damage5 amount2 vitality5
+  hurt: Pelusa=374 Hexa=305 Pelusa+1=275 Pelusa+2=227 Larva=208 Colmena+1=157 Hexa+1=137 Saboteador=136 Colmena=130 Pelusa+3=117 Hexa+2=71 Saboteador+1=50 Saboteador+2=47 Hexa+3=40 Saboteador+3=21
+0,17,29,17,2788,3000,0.05,458,500,5,188,17933,0,0,681,blaster6 turret6 rocket6 laser5 masamune6 shotgun5,luck5 critChance5 damage5 amount2 vitality5
+  hurt: Hexágono mayor+1=196 Hexágono mayor+2=122 Pelusa+3=68 Pelusa+2=41 Saboteador+1=39 Pelusa+1=32 Pelusa=27 Saboteador+2=24 Hexa+2=24 Saboteador+3=16 Saboteador=13 Hexa=12 Hexa+1=10
+0,18,32,18,1449,3000,0.03,458,500,5,206,19755,0,0,348,blaster6 turret6 rocket6 laser5 masamune6 shotgun5,luck5 critChance5 damage5 amount2 vitality5
+  hurt: Larva=536 Pelusa=280 Pelusa+1=278 Hexa=274 Pelusa+2=179 Pelusa+3=169 Hexa+1=146 Hexa+3=119 Hexa+2=108 Saboteador+1=104 Colmena=70 Saboteador+3=67 Saboteador=64 Saboteador+2=63
+0,end,34,18,0,3000,0.00,458,500,5,216,21229,0,0,549,blaster6 turret6 rocket6 laser5 masamune6 shotgun5,luck5 critChance5 damage5 amount2 vitality5
+  hurt: Larva=349 Colmena+1=174 Pelusa+1=148 Hexa+2=124 Colmena+2=108 Hexa+1=105 Pelusa+3=102 Hexa=83 Pelusa=80 Colmena=72 Hexa+3=70 Pelusa+2=66
+== seed 1203
+1,0,0,0,800,800,1.00,250,250,2,13,0,0,0,0,blaster1 turret1 rocket1,luck2 critChance3 damage2 amount1
+  hurt:
+1,1,0,1,800,800,1.00,250,250,2,39,300,1,10,39,blaster1 turret1 rocket1,luck2 critChance4 damage2 amount1
+  hurt:
+1,2,2,2,771,800,0.96,250,250,3,56,676,2,18,87,blaster1 turret2 rocket1,luck2 critChance4 damage2 amount1 fireRate1
+  hurt: Pelusa=29
+1,3,3,3,1055,1200,0.87,250,250,3,71,1151,3,20,241,blaster2 turret3 rocket1 flame1,luck2 critChance4 damage2 amount1 fireRate1
+  hurt: Hexa=89 Pelusa=46
+1,4,4,4,1989,2000,0.63,250,250,5,40,1735,4,31,88,blaster4 turret4 rocket1 flame2,luck2 critChance4 damage3 amount1 fireRate1
+  hurt: Pelusa=90 Hexa=60 Saboteador=31 Hexa+1=6
+1,5,5,4,1697,2000,0.63,250,250,6,47,2390,5,37,192,blaster4 turret4 rocket1 flame2,luck2 critChance4 damage3 amount2 fireRate1
+  hurt: Pelusa=184 Hexa=118 Saboteador=14 Hexa+1=3 Saboteador+1=2
+1,6,7,6,1468,2000,0.63,250,250,6,57,3114,6,55,395,blaster6 turret4 rocket1 flame2 storm1 chain1,luck2 critChance4 damage4 amount2 fireRate1
+  hurt: Pelusa=78 Hexa=66 Saboteador=35 Pelusa+1=17
+1,7,8,7,1855,2000,0.63,250,250,6,63,4018,7,72,550,blaster6 turret5 rocket1 flame2 storm1 chain1,luck2 critChance4 damage5 amount2 fireRate1
+  hurt: Pelusa=48 Hexa=36 Saboteador=23 Pelusa+1=11 Hexa+1=10 Saboteador+1=5 Saboteador+2=3
+1,8,10,8,1527,2000,0.63,250,250,5,129,4933,8,107,1019,blaster6 turret6 rocket1 flame3 storm1 chain2,luck2 critChance5 damage5 amount2 fireRate2
+  hurt: Larva=118 Pelusa=69 Hexa=33 Saboteador=10 Hexa+2=9 Hexa+1=7 Pelusa+1=6 Saboteador+2=3 Saboteador+1=2
+1,9,12,9,1679,2000,0.63,250,250,6,159,6095,9,129,924,blaster6 turret6 rocket1 flame4 storm2 chain2,luck2 critChance5 damage5 amount2 fireRate3
+  hurt: Hexágono mayor=60 Pelusa=41 Pelusa+1=12 Saboteador=8 Saboteador+1=2
+1,10,14,11,1940,2000,0.63,250,250,5,99,7341,10,138,949,blaster6 turret6 rocket1 flame5 storm3 chain2,luck2 critChance5 damage5 amount2 fireRate5
+  hurt: Pelusa=159 Larva=63 Pelusa+1=44 Saboteador=28 Pelusa+2=16 Saboteador+1=5 Hexa+2=5 Hexa=3
+1,11,16,11,1714,2000,0.63,250,250,6,203,8775,11,158,1189,blaster6 turret6 rocket1 flame5 storm5 chain2,luck3 critChance5 damage5 amount2 fireRate5
+  hurt: Pelusa=43 Larva=22 Pelusa+2=8 Pelusa+1=6
+1,12,18,12,1524,2000,0.63,250,250,6,177,10290,13,184,1877,blaster6 turret6 rocket1 flame5 storm6 chain5,luck3 critChance5 damage5 amount2 fireRate5
+  hurt: Hexa=3
+1,13,20,13,1524,2000,0.63,250,250,7,218,12337,14,218,2246,blaster6 turret6 rocket2 flame5 storm6 chain5,luck3 critChance5 damage5 amount2 fireRate5
+  hurt:
+1,14,22,14,1358,2000,0.63,250,250,6,149,14293,15,241,2781,blaster6 turret6 rocket6 flame5 storm6 chain5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt:
+1,15,24,15,2000,2000,0.63,250,250,7,164,16511,16,266,3280,blaster6 turret6 rocket6 flame5 storm6 chain5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt:
+1,16,27,16,1608,2000,0.63,250,250,5,178,18700,17,294,4053,blaster6 turret6 rocket6 flame5 storm6 chain5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt: Colmena+3=130 Larva=26 Hexa+1=9 Pelusa=7 Saboteador+2=4 Saboteador+1=3 Saboteador=3
+1,17,29,16,1369,2000,0.63,250,250,6,191,21203,18,309,4522,blaster6 turret6 rocket6 flame5 storm6 chain5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt: Larva=28 Saboteador+2=8 Pelusa+1=8 Pelusa=7 Saboteador+1=3
+1,18,32,17,1954,2000,0.60,250,250,6,208,24060,19,341,4706,blaster6 turret6 rocket6 flame5 storm6 chain5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt: Hexágono mayor+3=166 Hexa+1=10
+1,19,34,18,1548,2000,0.60,250,250,7,220,26881,20,373,5428,blaster6 turret6 rocket6 flame5 storm6 chain5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt: Colmena+3=148 Larva=117 Colmena+1=88 Pelusa+2=44 Saboteador+3=23 Pelusa=22 Saboteador=18 Hexa=17 Saboteador+1=14 Pelusa+1=9 Hexa+3=9 Hexa+1=5 Saboteador+2=4
+1,end,37,19,1371,2000,0.22,250,250,5,213,28901,21,398,5747,blaster6 turret6 rocket6 flame5 storm6 chain5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt: Hexágono mayor+3=360 Hexágono mayor+1=325 Hexágono mayor+2=274 Colmena+1=91 Pelusa+1=91 Hexágono mayor=90 Pelusa+2=79 Saboteador=45 Pelusa=45 Larva=30 Saboteador+1=29 Saboteador+2=23 Saboteador+3=18 Pelusa+3=15
+== seed 58
+0,0,0,0,800,800,1.00,250,250,2,13,0,0,0,0,blaster1 turret1 rocket1,luck2 critChance3 damage2 amount1
+  hurt:
+0,1,0,1,1200,1200,1.00,250,250,3,20,333,0,0,67,blaster1 turret1 rocket1 minigun1,luck2 critChance3 damage2 amount1 area1
+  hurt:
+0,2,2,2,1200,1200,1.00,250,250,3,33,715,0,0,116,blaster1 turret1 rocket1 minigun1,luck2 critChance3 damage2 amount2 area1
+  hurt:
+0,3,3,3,1582,1600,0.99,250,250,6,35,1173,0,0,60,blaster2 turret1 rocket1 minigun1 masamune1,luck2 critChance3 damage2 amount2 area1
+  hurt: Pelusa=21 Hexa=21 Saboteador=5
+0,4,4,5,1600,1600,0.74,250,250,4,46,1648,0,0,134,blaster5 turret1 rocket3 minigun1 masamune1,luck2 critChance4 damage3 amount2 area1
+  hurt: Pelusa=113 Hexa=34 Pelusa+1=11 Saboteador=9
+0,5,5,5,1568,1600,0.74,250,250,5,107,2290,0,0,222,blaster5 turret1 rocket3 minigun1 masamune1,luck2 critChance4 damage3 amount2 area1
+  hurt: Pelusa=45 Saboteador=20 Pelusa+1=11 Hexa=8 Saboteador+1=2
+0,6,7,7,1688,2000,0.74,250,250,5,114,2992,0,0,42,blaster6 turret1 rocket3 minigun2 masamune2 chain1,luck2 critChance4 damage5 amount2 area1
+  hurt: Hexa=90 Hexágono mayor+1=68 Saboteador=14 Hexa+1=7 Pelusa+1=6 Pelusa=5
+0,7,8,8,1303,2000,0.65,250,250,6,64,3855,0,0,230,blaster6 turret1 rocket3 minigun3 masamune2 chain1,luck2 critChance5 damage5 amount2 area1
+  hurt: Pelusa=148 Colmena=96 Larva=76 Hexágono mayor+1=68 Saboteador=21 Pelusa+1=11 Pelusa+2=7 Saboteador+1=2
+0,8,10,9,1900,2000,0.56,250,250,6,77,4881,0,0,364,blaster6 turret1 rocket4 minigun3 masamune2 chain2,luck2 critChance5 damage5 amount2 area2
+  hurt: Larva=78 Pelusa=54 Hexa=21 Pelusa+1=18 Saboteador=12
+0,9,12,10,1767,2000,0.56,250,250,5,88,6031,0,0,659,blaster6 turret1 rocket6 minigun4 masamune3 chain2,luck3 critChance5 damage5 amount2 area2
+  hurt: Pelusa=111 Larva=61 Hexa=57 Colmena=51 Saboteador=51 Hexa+1=7 Saboteador+1=2
+0,10,14,12,1969,2400,0.56,250,250,6,103,7422,0,0,941,blaster6 turret1 rocket6 minigun4 masamune3 chain3 minigun1,luck3 critChance5 damage5 amount2 area2
+  hurt: Larva=64 Hexa=10 Hexa+2=5 Hexa+1=4
+0,11,16,13,1489,2000,0.56,250,250,5,113,8854,0,0,1212,blaster6 turret1 rocket6 minigun5 masamune4 chain3,luck3 critChance5 damage5 amount2 area2
+  hurt: Larva=22 Pelusa+2=17 Saboteador=7 Saboteador+2=7 Pelusa=5 Hexa+1=4 Hexa=3 Saboteador+1=3
+0,12,18,13,1276,2000,0.56,250,250,7,125,10373,0,0,1422,blaster6 turret1 rocket6 minigun5 masamune6 chain5,luck4 critChance5 damage5 amount2 area2
+  hurt: Hexa=20 Pelusa=17 Pelusa+1=14 Saboteador+1=5 Hexa+1=4 Saboteador+2=3 Saboteador=2
+0,13,20,14,1700,2000,0.56,250,250,6,139,11996,0,0,1553,blaster6 turret2 rocket6 minigun5 masamune6 chain5,luck4 critChance5 damage5 amount2 area3
+  hurt: Hexágono mayor+1=84 Larva=70 Pelusa+2=35 Pelusa=29 Pelusa+1=21
+0,14,22,16,1910,2000,0.56,250,250,5,204,13762,0,0,2005,blaster6 turret5 rocket6 minigun5 masamune6 chain5,luck5 critChance5 damage5 amount2 area5
+  hurt: Hexágono mayor+1=88 Pelusa=55 Pelusa+1=22 Pelusa+2=18 Saboteador+2=15 Saboteador+1=12 Saboteador=7
+0,15,24,17,1190,2000,0.56,250,250,5,174,15878,0,0,2422,blaster6 turret6 rocket6 minigun5 masamune6 chain5,luck5 critChance5 damage5 amount2 area5
+  hurt: Hexágono mayor+2=457 Hexágono mayor+3=149 Hexágono mayor+1=91 Hexágono mayor=77 Larva=75 Pelusa+2=57 Pelusa=38 Pelusa+1=38 Hexa=27 Hexa+1=23 Hexa+2=6 Saboteador=5 Saboteador+2=4
+0,16,27,18,1710,2000,0.55,250,250,7,177,18177,0,0,2853,blaster6 turret6 rocket6 minigun5 masamune6 chain5,luck5 critChance5 damage5 amount2 area5
+  hurt: Larva=79 Hexa=59 Pelusa+2=30 Pelusa=26 Hexa+1=19 Pelusa+1=16 Pelusa+3=13 Hexa+2=12 Saboteador+3=5 Saboteador+1=3
+0,17,29,20,1716,2000,0.41,250,250,5,188,20264,0,0,3261,blaster6 turret6 rocket6 minigun5 masamune6 chain5,luck5 critChance5 damage5 amount2 area5
+  hurt: Larva=218 Colmena+3=136 Colmena+2=102 Colmena+1=82 Pelusa+3=54 Pelusa+2=51 Pelusa=48 Saboteador+2=33 Pelusa+1=33 Saboteador+1=23 Saboteador=16
+0,18,32,21,1406,2000,0.41,250,250,5,207,22539,0,0,3782,blaster6 turret6 rocket6 minigun5 masamune6 chain5,luck5 critChance5 damage5 amount2 area5
+  hurt: Hexágono mayor+1=202 Hexágono mayor+2=124 Pelusa+3=85 Pelusa=57 Pelusa+1=51 Hexa=39 Saboteador+1=37 Pelusa+2=31 Saboteador+2=30 Hexa+1=26 Saboteador+3=22 Saboteador=14 Hexa+2=13
+0,19,34,23,1774,2000,0.41,250,250,5,219,24840,0,0,4008,blaster6 turret6 rocket6 minigun5 masamune6 chain5,luck5 critChance5 damage5 amount2 area5
+  hurt: Hexágono mayor+3=175 Hexágono mayor+2=133 Pelusa+3=133 Pelusa=133 Hexágono mayor+1=104 Hexa+1=95 Hexágono mayor=89 Pelusa+2=89 Hexa=62 Hexa+2=59 Larva=58 Pelusa+1=44 Saboteador+1=43 Saboteador=35 Saboteador+2=27 Hexa+3=18 Saboteador+3=6
+0,end,36,23,0,2000,0.06,250,250,5,220,26027,0,0,4202,blaster6 turret6 rocket6 minigun5 masamune6 chain5,luck5 critChance5 damage5 amount2 area5
+  hurt: Hexágono mayor+2=409 Hexágono mayor+1=217 Hexágono mayor+3=180 Hexa=158 Pelusa+3=150 Pelusa=143 Pelusa+1=135 Pelusa+2=124 Hexa+1=108 Hexa+2=75 Hexa+3=45 Saboteador=33 Saboteador+1=29 Saboteador+3=24 Saboteador+2=23
+== seed 58
+1,0,0,0,800,800,1.00,250,250,2,13,0,0,0,0,blaster1 turret1 rocket1,luck2 critChance3 damage2 amount1
+  hurt:
+1,1,0,1,796,800,1.00,250,250,2,42,298,1,4,87,blaster1 turret1 rocket1,luck2 critChance3 damage2 amount1 fireRate1
+  hurt: Pelusa=32
+1,2,2,2,771,800,0.96,250,250,3,31,708,2,16,139,blaster2 turret1 rocket1,luck2 critChance3 damage2 amount1 fireRate1
+  hurt: Pelusa=54
+1,3,3,4,1543,1600,0.95,250,250,5,36,1136,3,25,67,blaster3 turret2 rocket1 storm2 minigun1,luck2 critChance3 damage2 amount1 fireRate2
+  hurt: Hexa=63 Pelusa=25 Pelusa+1=5 Hexa+1=3
+1,4,4,5,1471,1600,0.92,250,250,5,65,1771,4,30,323,blaster3 turret2 rocket1 storm3 minigun3,luck3 critChance3 damage3 amount1 fireRate2
+  hurt: Pelusa=22 Hexa=13 Saboteador=9 Pelusa+1=5
+1,5,5,6,1864,2000,0.92,250,250,6,66,2444,5,38,344,blaster4 turret2 rocket2 storm3 minigun3,luck3 critChance3 damage4 amount1 fireRate2
+  hurt: Hexa=8 Saboteador=7 Pelusa=5
+1,6,7,7,1788,2000,0.89,250,250,8,148,3123,6,55,508,blaster4 turret2 rocket2 storm3 minigun3 sniper1,luck4 critChance3 damage5 amount1 fireRate2
+  hurt: Pelusa=28 Pelusa+1=6 Saboteador=2
+1,7,8,7,1543,2000,0.77,250,250,10,172,3925,7,63,630,blaster4 turret2 rocket2 storm3 minigun3 sniper1,luck4 critChance3 damage5 amount1 fireRate2
+  hurt: Pelusa=153 Hexa=63 Larva=58 Hexágono mayor=58 Saboteador=24 Hexa+1=3 Saboteador+1=2
+1,8,10,8,1972,2000,0.74,250,250,5,131,4966,8,79,1491,blaster5 turret2 rocket2 storm3 minigun3 sniper2,luck4 critChance3 damage5 amount1 fireRate3
+  hurt: Pelusa=83 Larva=20 Hexa=15 Saboteador=8 Pelusa+1=6 Hexa+1=4 Saboteador+1=2
+1,9,12,9,1812,2000,0.74,250,250,6,158,6048,9,102,1929,blaster6 turret2 rocket2 storm3 minigun4 sniper2,luck4 critChance4 damage5 amount1 fireRate3
+  hurt: Hexa=46 Larva=41 Pelusa=36 Hexa+1=15 Hexa+2=14 Pelusa+1=12
+1,10,14,10,1712,2000,0.74,250,250,8,144,7301,10,149,2241,blaster6 turret2 rocket2 storm3 minigun5 sniper2,luck4 critChance4 damage5 amount1 fireRate4
+  hurt: Pelusa=68 Hexa=66 Pelusa+1=38 Saboteador=28 Hexa+1=11 Saboteador+1=3
+1,11,16,11,1502,2000,0.74,250,250,6,191,8601,11,165,2582,blaster6 turret3 rocket2 storm3 minigun6 sniper2,luck4 critChance4 damage5 amount1 fireRate5
+  hurt: Larva=108 Pelusa=92 Hexa=65 Pelusa+1=33 Saboteador=22 Hexa+1=12 Saboteador+1=10 Pelusa+2=8 Hexa+2=5 Saboteador+2=3
+1,12,18,13,2000,2000,0.66,250,250,5,127,10151,13,198,2937,blaster6 turret4 rocket4 storm4 minigun6 sniper2,luck5 critChance5 damage5 amount1 fireRate5
+  hurt:
+1,13,20,14,1798,2000,0.66,250,250,6,133,11922,14,215,3588,blaster6 turret6 rocket4 storm6 minigun6 sniper4,luck5 critChance5 damage5 amount1 fireRate5
+  hurt: Pelusa=94 Hexa+1=34 Pelusa+1=28 Pelusa+2=27 Saboteador=7 Hexa=7 Hexa+2=5
+1,14,22,15,1722,2000,0.66,250,250,6,150,13943,15,263,3939,blaster6 turret6 rocket4 storm6 minigun6 sniper5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt: Hexa=15 Saboteador=15 Hexa+1=13 Pelusa=12 Hexa+2=11 Pelusa+1=7 Saboteador+1=3
+1,15,24,16,1910,2000,0.66,250,250,5,166,16100,16,266,4468,blaster6 turret6 rocket5 storm6 minigun6 sniper5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt: Hexa=52 Pelusa+1=45 Pelusa+2=28 Pelusa=12 Hexa+1=9 Hexa+2=6 Saboteador=5 Saboteador+1=3
+1,16,27,17,1784,2000,0.66,250,250,5,174,18623,17,297,5125,blaster6 turret6 rocket6 storm6 minigun6 sniper5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt: Pelusa+2=10 Pelusa+1=8 Saboteador+3=5
+1,17,29,18,1784,2000,0.66,250,250,5,192,21251,18,311,5760,blaster6 turret6 rocket6 storm6 minigun6 sniper5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt: Hexágono mayor=82 Pelusa+2=31 Pelusa+1=24 Pelusa=20 Hexa=20 Hexa+3=8
+1,18,32,19,2000,2000,0.66,250,250,6,203,24039,19,337,6332,blaster6 turret6 rocket6 storm6 minigun6 sniper5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt: Pelusa+2=21 Hexa=21 Hexa+1=15 Pelusa+3=14 Pelusa=14 Hexa+2=13 Pelusa+1=8
+1,19,34,20,1761,2000,0.66,250,250,5,218,27103,20,370,7062,blaster6 turret6 rocket6 storm6 minigun6 sniper5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt:
+1,end,37,22,1791,2000,0.66,250,250,6,220,29905,21,398,7802,blaster6 turret6 rocket6 storm6 minigun6 sniper5,luck5 critChance5 damage5 amount2 fireRate5
+  hurt: Pelusa+1=9
+DONE consoleErrors=15

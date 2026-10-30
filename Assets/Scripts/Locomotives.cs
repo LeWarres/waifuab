@@ -5,7 +5,8 @@ public static class Locomotives
 {
     public static bool StoryMode { get; set; }
     public static string HeroId(int index) => (index >= 0 && index < Heroes.Length ? Heroes[index] : null) ?? "bba";
-    public static string HeroNameKey(int index) => "hero.character." + HeroId(index);
+    public static string CampaignHeroId(int index) => index == 1 ? "nath" : index == 5 ? "gabriel" : index == 9 ? "giger" : HeroId(index);
+    public static string HeroNameKey(int index) => "hero.character." + CampaignHeroId(index);
     // One entry per locomotive, in the order of the selection screen. To add one: its model (Tools/make_locos.py
     // builds them), its picture in Resources/Menu, and its two texts.
     public static readonly string[] Models = { "Models/Locomotive", "Prefabs/Locomotive_RedWhite", "Models/Locomotive_Steam", "Models/Locomotive_Dark", "Models/Locomotive_Future", "Models/Locomotive_Cat", "Models/Locomotive_Shark", "Models/Locomotive_Armor", "Models/Locomotive_Jet", "Models/Locomotive_Beast", "Models/Locomotive_Spider", "Models/Locomotive_Crochet" };
@@ -19,6 +20,17 @@ public static class Locomotives
     // Who flies beside each locomotive: Resources/Characters/<name>/<name>. null: bba.
     public static readonly string[] Heroes = { null, "skullmonk", "onini", "tzmil", "sentinel", null, "culu", "cerebron", "xiuhtecuhtli", null, "faceless", null };
     public static string Hero => HeroId(Selected);
+    public static void Shadow(Transform body)
+    {
+        var paint=new MaterialPropertyBlock();
+        foreach(Renderer renderer in body.GetComponentsInChildren<Renderer>(true))
+        {
+            renderer.GetPropertyBlock(paint);
+            foreach(string key in new[]{"_MainColor","_Color","_BaseColor","_RimLightColor","_HighlightColor","_EmissionColor","_OutlineColor"}) paint.SetColor(key,Color.black);
+            paint.SetFloat("_RimLightColorPower",0f);
+            renderer.SetPropertyBlock(paint);
+        }
+    }
     public static int Selected => Mathf.Clamp(PlayerPrefs.GetInt("locomotive.selected", 0), 0, Models.Length - 1);
 
     public static void Select(int index)

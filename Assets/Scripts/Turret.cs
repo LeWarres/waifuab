@@ -82,7 +82,7 @@ public class Turret : MonoBehaviour
         if (Time.time < stunnedUntil) return;
         if (target == null || target.id != targetId)
         {
-            target = combat.Nearest(transform.position, Weapon.range);
+            target = combat.Pick(transform.position, Weapon);
             if (target == null) return;
             targetId = target.id;
         }

@@ -1,0 +1,5 @@
+RUNNING
+PASS selector: 142.22s, loop wrap and playback with Time.timeScale=0
+PASS desert: 112.94s, loop wrap, advancing frames and music volume
+PASS restarting the same gameplay scene
+PASS biome and scene transitions, one persistent source; consoleErrors=0

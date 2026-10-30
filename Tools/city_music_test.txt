@@ -1,0 +1,3 @@
+RUNNING
+PASS real race Begin/TestWin, playback with paused world, both loop wraps, rival Begin/End and desert transition
+PASS real final rival Begin/End, biome guard and selector transition; consoleErrors=0

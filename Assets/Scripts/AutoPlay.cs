@@ -10,6 +10,8 @@ public class AutoPlay : MonoBehaviour
 {
     public float speed = 5f;     // time scale while riding
     public float every = 30f;    // seconds of game time between two notes
+    public bool smart;           // picks the hero's cards like a player who knows the game: her weapon, then damage first
+    public bool events;          // leaves the road's events on (it plays none of their buttons, so it fails them all)
     public static readonly StringBuilder Log = new(); // static: kept when a won chapter changes scene
     public bool Over { get; private set; }
 
@@ -21,7 +23,7 @@ public class AutoPlay : MonoBehaviour
     void Start()
     {
         train = GetComponent<TrainSim>();
-        TrainSim.NoEvents = true;
+        TrainSim.NoEvents = !events;
         Player.Bot = Steer;
         Note("start");
     }
@@ -82,7 +84,7 @@ public class AutoPlay : MonoBehaviour
                 Pick(Owned(false) >= 0 ? Owned(false) : 0);
                 break;
             case 4: // the hero: a level on her weapon, else an upgrade; never another weapon
-                Pick(Owned(true) >= 0 ? Owned(true) : NotAmmo());
+                Pick(Owned(true) >= 0 ? Owned(true) : smart ? Best() : NotAmmo());
                 break;
             case 3: if (train.OptionEnabled(0)) train.Choose(0); else train.Choose(1); break;
             case 5: train.Choose(train.OptionCount - 1); break; // no cargo
@@ -119,6 +121,23 @@ public class AutoPlay : MonoBehaviour
         for (int i = 0; i < train.OptionCount; i++)
             if (train.OptionEnabled(i) && System.Array.FindIndex(Weapon.Hero, w => w.id == train.OptionIcon(i)) < 0) return i;
         return 0;
+    }
+
+    // The upgrade a player who knows the game takes (by its icon, TrainSim.PassiveIcons): damage, fire rate,
+    // critical chance and damage, then armor and vitality; anything else only when none of those is offered.
+    static readonly string[] Wanted = { "arms", "minigun", "sniper", "rail", "armor", "vitality" };
+    // Before those: the upgrade that evolves a weapon she or a wagon carries (Weapon.evolvesWith), as a player who
+    // knows the evolutions builds for them.
+    int Best()
+    {
+        foreach (var a in train.Arsenal())
+        {
+            int stat = System.Array.IndexOf(TrainSim.Passives, a.weapon.evolvesWith);
+            int at = stat < 0 ? -1 : Find(TrainSim.PassiveIcons[stat]);
+            if (at >= 0 && train.OptionEnabled(at) && train.PassiveLevel(a.weapon.evolvesWith) == 0) return at;
+        }
+        foreach (string icon in Wanted) { int at = Find(icon); if (at >= 0 && train.OptionEnabled(at)) return at; }
+        return NotAmmo();
     }
 
     int Find(string icon)

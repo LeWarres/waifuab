@@ -1,0 +1,429 @@
+[
+  {
+    "key": "story.culu.0.title",
+    "es": "HIJA DE UN DIOS CÓSMICO",
+    "en": "DAUGHTER OF A COSMIC GOD",
+    "pt": "FILHA DE UM DEUS CÓSMICO",
+    "ja": "宇宙の神の娘"
+  },
+  {
+    "key": "story.culu.1.title",
+    "es": "TODO DERECHO",
+    "en": "STRAIGHT AHEAD",
+    "pt": "É SÓ SEGUIR RETO",
+    "ja": "まっすぐ行けば"
+  },
+  {
+    "key": "story.culu.2.title",
+    "es": "EL CACTUS DE LA SALVACIÓN",
+    "en": "THE CACTUS OF SALVATION",
+    "pt": "O CACTO DA SALVAÇÃO",
+    "ja": "救いのサボテン"
+  },
+  {
+    "key": "story.culu.3.title",
+    "es": "¿POR DÓNDE ERA?",
+    "en": "WHICH WAY WAS IT?",
+    "pt": "POR ONDE ERA?",
+    "ja": "どっちだったっけ？"
+  },
+  {
+    "key": "story.culu.4.title",
+    "es": "UN SUEÑO BARATITO",
+    "en": "A LITTLE BARGAIN DREAM",
+    "pt": "UM SONHO BARATITO",
+    "ja": "バラティートという夢"
+  },
+  {
+    "key": "story.culu.0.intro.1",
+    "es": "Soy Culu, hija de un dios cósmico cuyo nombre los humanos ni siquiera pueden pronunciar. A mí me gustan los maid cafés. Cada familia tiene sus prioridades.",
+    "en": "I'm Culu, daughter of a cosmic god whose name humans can't even pronounce. I love maid cafés. Every family has its priorities.",
+    "pt": "Sou Culu, filha de um deus cósmico cujo nome os humanos nem conseguem pronunciar. Eu adoro maid cafés. Cada família tem suas prioridades.",
+    "ja": "私はクル。人間には名前も発音できない宇宙の神の娘。メイドカフェが大好きなの。家族でも、大事なものは違うよね。"
+  },
+  {
+    "key": "story.culu.0.intro.2",
+    "es": "Una vez intenté seguir los pasos de papá y conquistar el mundo. No salió muy bien. Al parecer, los humanos se toman esas cosas bastante mal.",
+    "en": "I once tried following Dad's footsteps and conquering the world. It didn't go well. Humans apparently take that sort of thing rather badly.",
+    "pt": "Uma vez tentei seguir os passos do papai e conquistar o mundo. Não deu certo. Os humanos parecem levar essas coisas bem a mal.",
+    "ja": "一度はパパを見習って世界征服に挑戦した。でも失敗。人間って、ああいうことには結構怒るんだね。"
+  },
+  {
+    "key": "story.culu.0.intro.3",
+    "es": "Después ningún maid café quiso contratarme. Yo podía llevar seis pedidos con el pelo, pero todos se fijaban en el pequeño intento de conquista.",
+    "en": "Afterward, no maid café would hire me. I could carry six orders with my hair, but they kept bringing up that little conquest attempt.",
+    "pt": "Depois nenhum maid café quis me contratar. Eu podia levar seis pedidos com o cabelo, mas só falavam daquela tentativa de conquista.",
+    "ja": "その後、どのメイドカフェも雇ってくれなかった。髪で六組分の注文を運べるのに、みんな征服未遂の話ばかり。"
+  },
+  {
+    "key": "story.culu.0.intro.4",
+    "es": "Así que ahora vivo en mitad del mar con mi Kairi Resha. Hay tranquilidad, mucha agua y una cantidad preocupante de currículums mojados.",
+    "en": "So now I live out at sea with my Kairi Resha. It's peaceful, there's plenty of water, and a worrying number of soggy résumés.",
+    "pt": "Então agora moro no meio do mar com minha Kairi Resha. Há paz, muita água e uma quantidade preocupante de currículos molhados.",
+    "ja": "だから今はカイリ・レシャと海の真ん中暮らし。静かだし、水もいっぱい。濡れた履歴書も、心配になるほどいっぱい。"
+  },
+  {
+    "key": "story.culu.0.intro.5",
+    "es": "Hasta que unos hombres del gobierno me ofrecieron mi propio maid café si llevaba una piedra verde a una base alienígena y la arrojaba allí.",
+    "en": "Then some government men offered me my very own maid café if I took a green rock to an alien base and threw it in there.",
+    "pt": "Até que uns homens do governo me ofereceram meu próprio maid café se eu levasse uma pedra verde até uma base alienígena e a jogasse lá.",
+    "ja": "そんな時、政府の人が来た。緑の石を異星人の基地まで運んで投げ込めば、私だけのメイドカフェをくれるんだって。"
+  },
+  {
+    "key": "story.culu.0.intro.6",
+    "es": "Ni siquiera lo pensé dos veces. ¡Mi propio café! Solo tenía que llegar a la ciudad para que me mandaran al espacio. ¿Qué podía salir mal?",
+    "en": "I didn't think twice. My own café! I just had to reach the city so they could send me into space. What could possibly go wrong?",
+    "pt": "Nem pensei duas vezes. Meu próprio café! Só precisava chegar à cidade para me mandarem ao espaço. O que poderia dar errado?",
+    "ja": "即答したよ。私のお店だもん！まず街へ行って、宇宙に送ってもらうだけ。失敗する要素なんてある？"
+  },
+  {
+    "key": "story.culu.0.before.1",
+    "es": "¡Apártate, tentáculos! Yo también tengo una piedra que entregar.",
+    "en": "Out of my way, tentacles! I've got a rock to deliver too.",
+    "pt": "Sai da frente, tentáculos! Também tenho uma pedra para entregar.",
+    "ja": "どきなさい、触手！こっちも石の配達があるの！"
+  },
+  {
+    "key": "story.culu.0.before.2",
+    "es": "¿Tú también vas por el maid café? No recuerdo que ofrecieran dos.",
+    "en": "Are you after the maid café too? I don't remember them offering two.",
+    "pt": "Você também quer o maid café? Não lembro de oferecerem dois.",
+    "ja": "あなたもメイドカフェ目当て？二軒くれるとは聞いてないけど。"
+  },
+  {
+    "key": "story.culu.0.before.3",
+    "es": "Voy por algo bastante más importante. ¡Y voy primero!",
+    "en": "I'm after something much more important. And I'm going first!",
+    "pt": "Eu quero algo bem mais importante. E vou primeiro!",
+    "ja": "もっと大事なもののためよ。私が先に行く！"
+  },
+  {
+    "key": "story.culu.0.after.1",
+    "es": "Si no recuerdo mal, la ciudad queda pasando la selva. Todo derecho.",
+    "en": "If I remember right, the city is past the jungle. Straight ahead.",
+    "pt": "Se bem me lembro, a cidade fica depois da selva. É só seguir reto.",
+    "ja": "たしか街はジャングルの向こう。まっすぐ行けばいいんだよね。"
+  },
+  {
+    "key": "story.culu.0.after.2",
+    "es": "Como te fíes de eso, vas a acabar muy lejos de un café.",
+    "en": "Trust that and you'll end up a long way from any café.",
+    "pt": "Se confiar nisso, vai acabar bem longe de qualquer café.",
+    "ja": "それを信じたら、カフェから遠ざかる一方よ。"
+  },
+  {
+    "key": "story.culu.0.outro.1",
+    "es": "No recuerdo muy bien qué quería aquella demonio, pero yo sí sabía adónde iba. La ciudad quedaba pasando la selva. Eso me sonaba muchísimo.",
+    "en": "I don't quite remember what that demon wanted, but I knew where I was going. The city was past the jungle. That sounded very familiar.",
+    "pt": "Não lembro bem o que aquela demônio queria, mas eu sabia para onde ia. A cidade ficava depois da selva. Isso me parecia familiar.",
+    "ja": "あの悪魔の目的はよく覚えてないけど、私の行き先は決まってる。街はジャングルの向こう。すごく聞き覚えがある。"
+  },
+  {
+    "key": "story.culu.0.outro.2",
+    "es": "Conducir, seguir todo derecho y abrir mi café. Un plan sencillo, elegante y sin posibilidad alguna de perderse.",
+    "en": "Drive straight ahead and open my café. A simple, elegant plan with absolutely no chance of getting lost.",
+    "pt": "Dirigir, seguir reto e abrir meu café. Um plano simples, elegante e sem nenhuma chance de me perder.",
+    "ja": "まっすぐ運転して、カフェを開く。簡単で優雅な計画。迷子になる可能性なんて、絶対にない。"
+  },
+  {
+    "key": "story.culu.1.intro.1",
+    "es": "La selva tenía demasiadas hojas para mi gusto. Si alguien se perdía aquí, seguro que era por falta de carteles. Yo iba estupendamente.",
+    "en": "The jungle had far too many leaves for my liking. Anyone getting lost here could blame the lack of signs. I was doing wonderfully.",
+    "pt": "A selva tinha folhas demais para o meu gosto. Quem se perdesse aqui podia culpar a falta de placas. Eu estava indo muito bem.",
+    "ja": "ジャングルは葉っぱが多すぎる。ここで迷う人がいたら、標識不足のせいだよね。私は順調だった。"
+  },
+  {
+    "key": "story.culu.1.intro.2",
+    "es": "Entonces apareció un pollo gigante diciendo algo de ser un gran héroe. Por fin alguien de la zona que podría indicarme el camino.",
+    "en": "Then a giant chicken appeared, saying something about being a great hero. Finally, a local who could give me directions.",
+    "pt": "Então apareceu um frango gigante falando em ser um grande herói. Finalmente alguém da região para me indicar o caminho.",
+    "ja": "そこへ巨大なニワトリが現れて、偉大な英雄になるとか言っていた。やっと道を聞ける地元の人に会えた。"
+  },
+  {
+    "key": "story.culu.1.before.1",
+    "es": "¡Detente, invasora! Cuando te venza seré el héroe que este mundo necesita.",
+    "en": "Stop, invader! Once I defeat you, I'll be the hero this world needs.",
+    "pt": "Pare, invasora! Quando eu te vencer, serei o herói de que este mundo precisa.",
+    "ja": "止まれ、侵略者！お前を倒せば、俺はこの世界が求める英雄になれる！"
+  },
+  {
+    "key": "story.culu.1.before.2",
+    "es": "Solo busco la ciudad. ¿Está antes o después de tu discurso?",
+    "en": "I'm just looking for the city. Is it before or after your speech?",
+    "pt": "Só estou procurando a cidade. Fica antes ou depois do seu discurso?",
+    "ja": "街を探してるだけなんだけど。その演説の手前？それとも先？"
+  },
+  {
+    "key": "story.culu.1.before.3",
+    "es": "¡Primero combatimos! Después... ya te daré una dirección.",
+    "en": "First we fight! Then... I'll give you some directions.",
+    "pt": "Primeiro lutamos! Depois... eu te dou uma direção.",
+    "ja": "先に勝負だ！その後で……道を教えてやる。"
+  },
+  {
+    "key": "story.culu.1.after.1",
+    "es": "Sayonara. La ciudad está por allí. Sigue todo derecho.",
+    "en": "Sayonara. The city is that way. Just keep going straight.",
+    "pt": "Sayonara. A cidade fica por ali. Continue sempre reto.",
+    "ja": "サヨナラ。街はあっちだ。まっすぐ行け。"
+  },
+  {
+    "key": "story.culu.1.after.2",
+    "es": "¡Gracias, pollo gigante! Qué amable eres cuando dejas de atacarme.",
+    "en": "Thanks, giant chicken! You're so nice when you stop attacking me.",
+    "pt": "Obrigada, frango gigante! Você é tão gentil quando para de me atacar.",
+    "ja": "ありがとう、巨大ニワトリさん！攻撃してこない時は親切なんだね。"
+  },
+  {
+    "key": "story.culu.1.outro.1",
+    "es": "Estoy segura de que seguí las instrucciones del pollo a la perfección. Todo derecho. Sin desviarme. Con una concentración admirable.",
+    "en": "I'm certain I followed the chicken's directions perfectly. Straight ahead. No turns. Admirable concentration.",
+    "pt": "Tenho certeza de que segui perfeitamente as instruções do frango. Sempre reto. Sem desviar. Uma concentração admirável.",
+    "ja": "ニワトリの指示は完璧に守ったはず。まっすぐ。寄り道なし。見事な集中力だった。"
+  },
+  {
+    "key": "story.culu.1.outro.2",
+    "es": "Y aun así no terminé en la ciudad, sino en un desierto. A lo mejor la ciudad estaba de vacaciones. O el pollo no era de fiar.",
+    "en": "And yet I ended up in a desert, not the city. Maybe the city was on holiday. Or maybe the chicken wasn't trustworthy.",
+    "pt": "E mesmo assim fui parar num deserto, não na cidade. Talvez a cidade estivesse de férias. Ou o frango não fosse confiável.",
+    "ja": "なのに着いたのは街じゃなくて砂漠。街が休暇中だったのかな。それとも、ニワトリを信用しちゃ駄目だった？"
+  },
+  {
+    "key": "story.culu.2.intro.1",
+    "es": "El desierto era como el mar, pero con toda el agua mal puesta. Empezaba a echar muchísimo de menos mi plataforma.",
+    "en": "The desert was like the sea, except all the water was in the wrong place. I was really starting to miss my platform.",
+    "pt": "O deserto era como o mar, mas com toda a água no lugar errado. Eu começava a sentir muita falta da minha plataforma.",
+    "ja": "砂漠って、海から水の置き場所を間違えた感じ。海の足場がすごく恋しくなってきた。"
+  },
+  {
+    "key": "story.culu.2.intro.2",
+    "es": "Allí encontré a una bruja conocida. BBA. Quizá esta vez pudiera decirme algo útil en lugar de sus tonterías habituales.",
+    "en": "There I found a witch I knew. BBA. Maybe this time she'd say something useful instead of her usual nonsense.",
+    "pt": "Lá encontrei uma bruxa conhecida. BBA. Talvez desta vez dissesse algo útil em vez das bobagens de sempre.",
+    "ja": "そこで知り合いの魔女、BBAに会った。今度こそ、いつもの変な話じゃなくて役に立つことを言ってくれるかな。"
+  },
+  {
+    "key": "story.culu.2.before.1",
+    "es": "¿Culu? ¿Qué haces aquí? La ciudad no está por ese lado.",
+    "en": "Culu? What are you doing here? The city isn't that way.",
+    "pt": "Culu? O que faz aqui? A cidade não fica para esse lado.",
+    "ja": "クル？ここで何してるの？街はそっちじゃないわよ。"
+  },
+  {
+    "key": "story.culu.2.before.2",
+    "es": "Pues un pollo con muchísimas plumas me aseguró que sí.",
+    "en": "Well, a chicken with a lot of feathers assured me it was.",
+    "pt": "Um frango com muitas penas me garantiu que sim.",
+    "ja": "でも、羽根がいっぱいのニワトリさんは、こっちだって。"
+  },
+  {
+    "key": "story.culu.2.before.3",
+    "es": "No sigas sus indicaciones. Y, por lo que más quieras, no te comas nada raro.",
+    "en": "Don't follow his directions. And please, don't eat anything strange.",
+    "pt": "Não siga as instruções dele. E, por favor, não coma nada estranho.",
+    "ja": "そいつの道案内は信じないで。それと、絶対に変なものを食べちゃ駄目。"
+  },
+  {
+    "key": "story.culu.2.after.1",
+    "es": "¿Decías algo de un café con cactus? Con este ruido no te entendí.",
+    "en": "Did you say something about a cactus café? I couldn't hear over the noise.",
+    "pt": "Você falou em um café com cactos? Com esse barulho não entendi.",
+    "ja": "サボテンカフェが何だって？音がうるさくて聞こえなかった。"
+  },
+  {
+    "key": "story.culu.2.after.2",
+    "es": "He dicho que NO... Déjalo. ¡Al menos busca agua!",
+    "en": "I said DON'T... Never mind. At least find some water!",
+    "pt": "Eu disse para NÃO... Deixa pra lá. Pelo menos procure água!",
+    "ja": "食べるなって……もういいわ。せめて水を探して！"
+  },
+  {
+    "key": "story.culu.2.outro.1",
+    "es": "La bruja y yo ya nos habíamos visto antes, pero como siempre no dejaba de decir tonterías. No le entendí nada.",
+    "en": "The witch and I had met before, but as usual she kept talking nonsense. I didn't understand a thing.",
+    "pt": "A bruxa e eu já tínhamos nos encontrado, mas, como sempre, ela só dizia bobagens. Não entendi nada.",
+    "ja": "あの魔女とは前にも会ったけど、相変わらず変な話ばかり。何も分からなかった。"
+  },
+  {
+    "key": "story.culu.2.outro.2",
+    "es": "Seguí las indicaciones del pollo gigante y me perdí todavía más. Entonces mi locomotora dejó de funcionar y empecé a secarme al sol.",
+    "en": "I kept following the giant chicken's directions and got even more lost. Then my locomotive stopped, and I started drying out in the sun.",
+    "pt": "Continuei seguindo as instruções do frango gigante e me perdi ainda mais. Então a locomotiva parou e comecei a secar ao sol.",
+    "ja": "巨大ニワトリの案内を信じたら、もっと迷った。そのうち機関車も止まって、私まで日差しで干からびてきた。"
+  },
+  {
+    "key": "story.culu.2.outro.3",
+    "es": "Mi única salvación era encontrar algo de beber y comer. Y parece que los dioses aún me querían: ¡había un cactus! Uno morado y verde, muy peculiar.",
+    "en": "My only hope was finding something to eat and drink. The gods must still have loved me: a cactus! A very peculiar purple-and-green one.",
+    "pt": "Minha única salvação era achar algo para beber e comer. Os deuses ainda deviam gostar de mim: um cacto! Roxo e verde, bem peculiar.",
+    "ja": "助かるには飲み物と食べ物を探すしかない。でも神様は見捨ててなかった。サボテンがあったの！紫と緑の、すごく変わったやつ。"
+  },
+  {
+    "key": "story.culu.2.outro.4",
+    "es": "No sé qué le pasaba, pero el primer bocado sabía a esperanza. El segundo sabía a colores. ¿Los colores siempre habían tenido sabor?",
+    "en": "I don't know what was in it, but the first bite tasted like hope. The second tasted like colors. Had colors always had a flavor?",
+    "pt": "Não sei o que havia nele, mas a primeira mordida tinha gosto de esperança. A segunda, de cores. As cores sempre tiveram sabor?",
+    "ja": "何が入ってたのか分からないけど、一口目は希望の味。二口目は色の味。色って、前から味がしたっけ？"
+  },
+  {
+    "key": "story.culu.3.intro.1",
+    "es": "El camino se volvió bastante... creativo. Las vías se doblaban, las puertas flotaban y unos ojos enormes me miraban como si yo fuera la rara.",
+    "en": "The road got rather... creative. Tracks bent, doors floated, and enormous eyes stared as if I was the strange one.",
+    "pt": "O caminho ficou bem... criativo. Os trilhos se dobravam, as portas flutuavam e olhos enormes me encaravam como se eu fosse a estranha.",
+    "ja": "道がずいぶん……独創的になった。線路は曲がるし、扉は浮くし、巨大な目が私を変な人みたいに見てくる。"
+  },
+  {
+    "key": "story.culu.3.intro.2",
+    "es": "Había una máquina con demasiados dientes bloqueando el paso. Si aquello era una entrevista de trabajo, estaba siendo muy poco profesional.",
+    "en": "A machine with far too many teeth blocked the way. If this was a job interview, it was being very unprofessional.",
+    "pt": "Uma máquina com dentes demais bloqueava a passagem. Se aquilo era uma entrevista de emprego, estava sendo muito pouco profissional.",
+    "ja": "歯が多すぎる機械が道をふさいでいた。就職面接だとしたら、ずいぶん失礼な対応だよね。"
+  },
+  {
+    "key": "story.culu.3.before.1",
+    "es": "Disculpa, máquina con dientes. ¿Esto todavía cuenta como ir todo derecho?",
+    "en": "Excuse me, toothy machine. Does this still count as going straight ahead?",
+    "pt": "Com licença, máquina dentuça. Isso ainda conta como seguir reto?",
+    "ja": "歯だらけの機械さん。これも、まっすぐ進んでることになる？"
+  },
+  {
+    "key": "story.culu.3.before.2",
+    "es": "GRRR... CLAC. CLAC. GRRR...",
+    "en": "GRRR... CLACK. CLACK. GRRR...",
+    "pt": "GRRR... CLAC. CLAC. GRRR...",
+    "ja": "グルル……ガチャン、ガチャン……。"
+  },
+  {
+    "key": "story.culu.3.before.3",
+    "es": "Entendido. Tus instrucciones son igual de claras que las del pollo.",
+    "en": "Understood. Your directions are just as clear as the chicken's.",
+    "pt": "Entendido. Suas instruções são tão claras quanto as do frango.",
+    "ja": "なるほど。ニワトリと同じくらい分かりやすい説明だね。"
+  },
+  {
+    "key": "story.culu.3.after.1",
+    "es": "Gracias por dejarme pasar. Creo. ¿Te había pedido eso?",
+    "en": "Thanks for letting me through. I think. Is that what I asked for?",
+    "pt": "Obrigada por me deixar passar. Eu acho. Foi isso que pedi?",
+    "ja": "通してくれてありがとう。たぶん。私、そう頼んだんだっけ？"
+  },
+  {
+    "key": "story.culu.3.after.2",
+    "es": "CLAC...",
+    "en": "CLACK...",
+    "pt": "CLAC...",
+    "ja": "ガチャン……。"
+  },
+  {
+    "key": "story.culu.3.outro.1",
+    "es": "Para ser sincera, no entendí ni la mitad de lo que pasó. Había colores, dientes y unas vías que claramente no habían estudiado geometría.",
+    "en": "Honestly, I didn't understand half of what happened. There were colors, teeth, and tracks that clearly hadn't studied geometry.",
+    "pt": "Sinceramente, não entendi nem metade do que aconteceu. Havia cores, dentes e trilhos que claramente não tinham estudado geometria.",
+    "ja": "正直、半分も理解できなかった。色と歯と、明らかに幾何学を勉強してない線路があった。"
+  },
+  {
+    "key": "story.culu.3.outro.2",
+    "es": "Lo que sí entendí fue que ahora iba camino de algún sitio... dentro del estómago de mi padre. Supongo que aquí sí conocería a alguien.",
+    "en": "What I did understand was that I was now heading somewhere... inside my father's stomach. At least I'd know someone here.",
+    "pt": "O que entendi foi que agora ia para algum lugar... dentro do estômago do meu pai. Pelo menos aqui eu conheceria alguém.",
+    "ja": "一つだけ分かったのは、どこかへ向かっているらしいってこと。パパの胃の中で。ここなら知り合いはいるよね。"
+  },
+  {
+    "key": "story.culu.4.intro.1",
+    "es": "Si esto era una visita familiar, nadie me había avisado. El interior de papá era enorme. Y tenía demasiadas vías para ser un estómago normal.",
+    "en": "If this was a family visit, no one had told me. Dad's insides were enormous. And had far too many tracks for an ordinary stomach.",
+    "pt": "Se era uma visita em família, ninguém me avisou. O interior do papai era enorme. E tinha trilhos demais para um estômago normal.",
+    "ja": "家族訪問なら、先に知らせてほしかった。パパの中はとても広い。普通の胃にしては、線路も多すぎる。"
+  },
+  {
+    "key": "story.culu.4.intro.2",
+    "es": "Una locomotora de crochet apareció delante. Qué mona. Espero que no le dé por intentar tejerme a mí también.",
+    "en": "A crochet locomotive appeared ahead. How cute. I hoped it wouldn't try knitting me into something too.",
+    "pt": "Uma locomotiva de crochê apareceu à frente. Que fofa. Espero que não resolva me transformar em tricô também.",
+    "ja": "前にかぎ針編みの機関車が現れた。かわいい。私まで編み込もうとしないといいけど。"
+  },
+  {
+    "key": "story.culu.4.before.1",
+    "es": "Hola, tren blandito. Busco la salida. O a mi padre. Lo que esté más cerca.",
+    "en": "Hello, soft train. I'm looking for the exit. Or my father. Whichever's closer.",
+    "pt": "Olá, trem fofinho. Procuro a saída. Ou meu pai. O que estiver mais perto.",
+    "ja": "こんにちは、ふわふわ列車さん。出口かパパを探してるの。近い方でいいよ。"
+  },
+  {
+    "key": "story.culu.4.before.2",
+    "es": "FUUU... TAC, TAC, TAC.",
+    "en": "WHOOO... CLACK, CLACK, CLACK.",
+    "pt": "FUUU... TAC, TAC, TAC.",
+    "ja": "ポー……ガタン、ガタン、ガタン。"
+  },
+  {
+    "key": "story.culu.4.before.3",
+    "es": "Otra conversación muy productiva. ¿Nadie aquí atiende mesas?",
+    "en": "Another very productive conversation. Does no one here wait tables?",
+    "pt": "Outra conversa muito produtiva. Ninguém aqui atende mesas?",
+    "ja": "また実りある会話だね。ここには接客できる人、いないの？"
+  },
+  {
+    "key": "story.culu.4.after.1",
+    "es": "TAC... tac...",
+    "en": "CLACK... clack...",
+    "pt": "TAC... tac...",
+    "ja": "ガタン……ことん……。"
+  },
+  {
+    "key": "story.culu.4.after.2",
+    "es": "Bueno, ahora que hemos terminado, voy a pedir explicaciones. Y algo de comer.",
+    "en": "Well, now that's over, I'm going to ask for an explanation. And something to eat.",
+    "pt": "Bem, agora que terminamos, vou pedir explicações. E algo para comer.",
+    "ja": "さて、終わったし、説明を聞こうかな。それと食べ物もお願いしよう。"
+  },
+  {
+    "key": "story.culu.4.outro.1",
+    "es": "Después de la batalla escuché hablar a papá. Dijo algo de que el hijo de otro dios había muerto recientemente. La reunión se estaba poniendo seria.",
+    "en": "After the battle I heard Dad speaking. Something about another god's son having died recently. The family meeting was getting serious.",
+    "pt": "Depois da batalha ouvi o papai falar. Algo sobre o filho de outro deus ter morrido recentemente. A reunião estava ficando séria.",
+    "ja": "戦いの後、パパの声が聞こえた。別の神様の息子が最近亡くなった、とか。家族会議が深刻になってきた。"
+  },
+  {
+    "key": "story.culu.4.outro.2",
+    "es": "La verdad, después de un rato me quedé dormida. Me gustaría decir que entendí su discurso cósmico, pero ni siquiera recuerdo cuándo cerré los ojos.",
+    "en": "Honestly, after a while I fell asleep. I'd love to say I understood his cosmic speech, but I don't even remember closing my eyes.",
+    "pt": "Sinceramente, depois de um tempo dormi. Queria dizer que entendi o discurso cósmico, mas nem lembro de ter fechado os olhos.",
+    "ja": "でも正直、しばらくしたら眠っちゃった。宇宙の深遠な話を理解したって言いたいけど、いつ目を閉じたかさえ覚えてない。"
+  },
+  {
+    "key": "story.culu.4.outro.3",
+    "es": "Al despertar estaban allí mi Kairi Resha y un pequeño maid café flotante. Se llamaba Baratito. Era perfecto. ¡Y era mío!",
+    "en": "When I woke up, there were my Kairi Resha and a little floating maid café. It was called Baratito. It was perfect. And it was mine!",
+    "pt": "Quando acordei, lá estavam minha Kairi Resha e um pequeno maid café flutuante. Chamava-se Baratito. Era perfeito. E era meu!",
+    "ja": "目を覚ますと、カイリ・レシャと小さな水上メイドカフェがあった。名前はバラティート。完璧だった。しかも、私のお店！"
+  },
+  {
+    "key": "story.culu.4.outro.4",
+    "es": "Estoy segura de que el gobierno no tuvo nada que ver. Más que nada porque estoy segurísima de que perdí su piedra verde por el camino.",
+    "en": "I'm sure the government had nothing to do with it. Mostly because I'm absolutely certain I lost their green rock along the way.",
+    "pt": "Tenho certeza de que o governo não teve nada a ver. Principalmente porque tenho certeza absoluta de que perdi a pedra verde pelo caminho.",
+    "ja": "政府のおかげじゃないと思う。だって、預かった緑の石は途中でなくしたって、絶対の自信があるから。"
+  },
+  {
+    "key": "story.culu.4.outro.5",
+    "es": "Quizá papá no sea solo esa bestia controladora de mentes cuyo nombre nadie puede entender ni pronunciar. Y así comienza otro sueño para mí. ¡Bienvenidos a Baratito!",
+    "en": "Maybe Dad isn't just that mind-controlling beast whose name no one can understand or pronounce. And so another dream begins for me. Welcome to Baratito!",
+    "pt": "Talvez papai não seja só aquela fera controladora de mentes cujo nome ninguém entende nem pronuncia. E assim começa outro sonho para mim. Bem-vindos ao Baratito!",
+    "ja": "パパは、名前も理解もできない洗脳怪獣ってだけじゃないのかも。こうして、私の新しい夢が始まる。バラティートへようこそ！"
+  },
+  {
+    "key": "biome.thulu",
+    "es": "Thulu World",
+    "en": "Thulu World",
+    "pt": "Thulu World",
+    "ja": "トゥル・ワールド"
+  },
+  {
+    "key": "boss.name.thulu",
+    "es": "Guardián de Thulu World",
+    "en": "Guardian of Thulu World",
+    "pt": "Guardião de Thulu World",
+    "ja": "トゥル・ワールドの守護者"
+  }
+]

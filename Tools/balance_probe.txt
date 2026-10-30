@@ -1,0 +1,6 @@
+RUNNING real combat, fixed builds, no events/stations/miniboss, seed 741
+difficulty=0 seconds=60.0 frames=2041 train=792.0/800.0 hero=250.0/250.0 peakEnemies=59 kills=316
+difficulty=12 seconds=60.0 frames=1830 train=1600.0/1600.0 hero=250.0/250.0 peakEnemies=169 kills=1077
+difficulty=29 seconds=60.0 frames=1688 train=2389.1/2400.0 hero=250.0/250.0 peakEnemies=220 kills=2129
+difficulty=29 seconds=9.9 frames=333 train=0.0/800.0 hero=0.0/250.0 peakEnemies=220 kills=57
+DONE consoleErrors=0

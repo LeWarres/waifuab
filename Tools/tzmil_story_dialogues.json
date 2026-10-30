@@ -1,0 +1,387 @@
+[
+  {
+    "key": "story.tzmil.0.title",
+    "es": "Una hermana desde la cima",
+    "en": "A sister on the summit",
+    "pt": "Uma irmã no topo",
+    "ja": "頂から見守る妹"
+  },
+  {
+    "key": "story.tzmil.0.intro.1",
+    "es": "Soy Tzmil, una amorosa hermana menor. Lo de amorosa es importante: explica casi todas las malas decisiones que vienen después.",
+    "en": "I am Tzmil, a loving little sister. The loving part matters: it explains almost all the bad decisions that follow.",
+    "pt": "Sou Tzmil, uma irmã caçula amorosa. A parte amorosa importa: explica quase todas as más decisões que vêm depois.",
+    "ja": "私はツミル。兄思いの妹です。兄思い、というのが大事。これからする間違いのほとんどは、それが理由だから。"
+  },
+  {
+    "key": "story.tzmil.0.intro.2",
+    "es": "Mi hermano se pasaba el tiempo de fiesta y molestando a los humanos. Nuestro padre acabó cansándose y lo mandó directamente a vivir con ellos.",
+    "en": "My brother spent his days partying and bothering humans. Our father finally got fed up and sent him straight down to live with them.",
+    "pt": "Meu irmão vivia em festas e incomodando os humanos. Nosso pai acabou perdendo a paciência e o mandou morar com eles.",
+    "ja": "兄は宴会ばかりして、人間を困らせていました。とうとう父が怒って、兄を人間の世界へ放り出したんです。"
+  },
+  {
+    "key": "story.tzmil.0.intro.3",
+    "es": "A mí me pidió que lo cuidara. En realidad, solo quería que trabajara un poco y entendiera el valor de la vida. Una tarea sencilla... si tu hermano fuera otro.",
+    "en": "He asked me to look after him. Really, he just wanted my brother to work a little and learn the value of life. A simple task... if I had a different brother.",
+    "pt": "Ele me pediu para cuidar dele. Na verdade, só queria que meu irmão trabalhasse um pouco e entendesse o valor da vida. Uma tarefa simples... se meu irmão fosse outro.",
+    "ja": "父は私に兄の見守りを頼みました。少し働いて、命の大切さを学んでほしかっただけ。簡単な任務です。兄が別の人なら。"
+  },
+  {
+    "key": "story.tzmil.0.intro.4",
+    "es": "Así terminé como guardiana de un volcán. Desde la cima podía vigilarlo sin estarle diciendo cada cinco minutos que se portara bien.",
+    "en": "That is how I became guardian of a volcano. From the summit I could watch him without telling him to behave every five minutes.",
+    "pt": "Foi assim que virei guardiã de um vulcão. Do topo eu podia vigiá-lo sem pedir que se comportasse a cada cinco minutos.",
+    "ja": "それで私は火山の守り手になりました。頂上からなら、五分おきに「いい子にして」と言わずに見守れます。"
+  },
+  {
+    "key": "story.tzmil.0.intro.5",
+    "es": "Había preparado un lugar tranquilo, con buenas vistas. Lo que no preparé fue un protocolo para hermanos que llegan cargando una roca verde capaz de hacer explotar medio mundo.",
+    "en": "I had found a quiet spot with a lovely view. What I had not prepared was a procedure for brothers arriving with a green rock that could blow up half the world.",
+    "pt": "Eu tinha preparado um lugar tranquilo, com uma bela vista. Só não preparei um protocolo para irmãos chegando com uma pedra verde capaz de explodir metade do mundo.",
+    "ja": "静かで眺めもいい場所でした。でも、世界の半分を吹き飛ばす緑の石を抱えた兄が来る場合の手順までは、用意していません。"
+  },
+  {
+    "key": "story.tzmil.0.intro.6",
+    "es": "Y, por supuesto, vino a tirarla en MI volcán. Padre, si esto era para enseñarle a trabajar, creo que la que está haciendo horas extra soy yo.",
+    "en": "And of course he came to throw it into MY volcano. Father, if this was meant to teach him to work, I think I am the one doing overtime.",
+    "pt": "E, claro, ele veio jogá-la no MEU vulcão. Pai, se era para ensinar ele a trabalhar, acho que quem está fazendo hora extra sou eu.",
+    "ja": "しかも投げ込む先は、私の火山。父さん、働くことを教える任務なら、残業しているのは私のほうです。"
+  },
+  {
+    "key": "story.tzmil.0.before.1",
+    "es": "¡No intentes detenerme, hermana! ¡Si no puedo ser un héroe, seré el villano!",
+    "en": "Do not try to stop me, sister! If I cannot be a hero, I will be the villain!",
+    "pt": "Não tente me impedir, irmã! Se não posso ser um herói, serei o vilão!",
+    "ja": "止めるな、妹よ！英雄になれないなら悪役になってやる！"
+  },
+  {
+    "key": "story.tzmil.0.before.2",
+    "es": "Volar medio mundo no hará que padre te quiera más. Estás enfadado con el gobierno porque no te lanzó al espacio, no con toda la gente que vive aquí.",
+    "en": "Blowing up half the world will not make Father love you more. You are angry at the government for not launching you into space, not at everyone living here.",
+    "pt": "Explodir metade do mundo não vai fazer o pai te amar mais. Sua raiva é do governo que não te lançou ao espaço, não de todos que moram aqui.",
+    "ja": "世界を半分壊しても、父さんの愛は増えないよ。怒っているのは宇宙に送らなかった政府でしょ。ここで暮らす人たちじゃない。"
+  },
+  {
+    "key": "story.tzmil.0.before.3",
+    "es": "¡Entonces demuéstrame que tienes razón! ¡Acepta mi holoajedrez!",
+    "en": "Then prove you are right! Face me in holo-chess!",
+    "pt": "Então prove que tem razão! Encare meu holo-xadrez!",
+    "ja": "なら正しいと証明しろ！ホロチェスで勝負だ！"
+  },
+  {
+    "key": "story.tzmil.0.before.4",
+    "es": "Acepto. Pero la roca se queda fuera del tablero. Y del cráter.",
+    "en": "I accept. But the rock stays off the board. And out of the crater.",
+    "pt": "Aceito. Mas a pedra fica fora do tabuleiro. E da cratera.",
+    "ja": "いいよ。でも石は盤の外。火口の外にも置いてね。"
+  },
+  {
+    "key": "story.tzmil.0.after.1",
+    "es": "Está bien... No voy a tirarla. La llevaré de vuelta al gobierno.",
+    "en": "All right... I will not throw it in. I will take it back to the government.",
+    "pt": "Está bem... Não vou jogar. Vou devolver ao governo.",
+    "ja": "わかった……投げない。政府に返してくる。"
+  },
+  {
+    "key": "story.tzmil.0.after.2",
+    "es": "Eso ya se parece más al hermano que quiero. Ahora espera, podemos ir juntos...",
+    "en": "That sounds more like the brother I love. Now wait, we can go together...",
+    "pt": "Assim você parece mais com o irmão que eu amo. Agora espere, podemos ir juntos...",
+    "ja": "うん。それでこそ大好きな兄さん。待って、一緒に行こう……"
+  },
+  {
+    "key": "story.tzmil.0.outro.1",
+    "es": "Cuando terminó nuestra batalla, creo que entendió que lo que hacía no era correcto. Por un momento estuvo muy cerca de lo que nuestro padre quería enseñarle.",
+    "en": "When our battle ended, I think he understood that what he was doing was wrong. For a moment he came very close to the lesson our father wanted him to learn.",
+    "pt": "Quando nossa batalha terminou, acho que ele entendeu que estava errado. Por um momento, chegou bem perto da lição que nosso pai queria ensinar.",
+    "ja": "戦いが終わるころ、兄は自分の間違いに気づいたようでした。一瞬だけ、父が教えたかったことに近づいたんです。"
+  },
+  {
+    "key": "story.tzmil.0.outro.2",
+    "es": "Entonces la radio anunció que el gobierno lo consideraba una amenaza. Y él iba precisamente hacia su base para devolverles la roca. Tenía que detenerlo antes de que todo empeorara.",
+    "en": "Then the radio announced that the government considered him a threat. And he was heading straight to their base to return the rock. I had to stop him before it got worse.",
+    "pt": "Então o rádio anunciou que o governo o considerava uma ameaça. E ele estava indo justamente à base devolver a pedra. Eu precisava detê-lo antes que tudo piorasse.",
+    "ja": "でも無線は、政府が兄を脅威と見なしたと告げました。その基地へ石を返しに行くなんて。手遅れになる前に止めなくちゃ。"
+  },
+  {
+    "key": "story.tzmil.0.outro.3",
+    "es": "Salí tras él en mi Night Skull. Los del gobierno vieron venir otra locomotora y decidieron que yo también quería atacarlos. ¡Qué facilidad para sacar conclusiones!",
+    "en": "I followed him in my Night Skull. The government saw another locomotive approaching and decided I wanted to attack them too. What a gift for jumping to conclusions!",
+    "pt": "Saí atrás dele na minha Night Skull. O governo viu outra locomotiva chegando e decidiu que eu também queria atacar. Que talento para tirar conclusões!",
+    "ja": "ナイトスカルで追いかけたら、政府はもう一台の機関車も攻撃だと思ったようです。早とちりの才能だけはすごいですね。"
+  },
+  {
+    "key": "story.tzmil.1.title",
+    "es": "Solo vengo por mi hermano",
+    "en": "I am only here for my brother",
+    "pt": "Só vim buscar meu irmão",
+    "ja": "兄を迎えに来ただけ"
+  },
+  {
+    "key": "story.tzmil.1.intro.1",
+    "es": "La base del gobierno estaba llena de alarmas, soldados y robots. Yo solo quería encontrar a mi hermano y asegurarme de que no hiciera otra tontería.",
+    "en": "The government base was full of alarms, soldiers and robots. I only wanted to find my brother and make sure he did not do anything else foolish.",
+    "pt": "A base do governo estava cheia de alarmes, soldados e robôs. Eu só queria achar meu irmão e garantir que ele não fizesse outra besteira.",
+    "ja": "政府の基地は警報と兵士とロボットだらけ。私は兄を見つけて、これ以上ばかなことをしないようにしたいだけなのに。"
+  },
+  {
+    "key": "story.tzmil.1.intro.2",
+    "es": "Intenté explicarlo, pero un tal Golem me cortó el paso. Parece que aquí las visitas familiares también requieren una batalla.",
+    "en": "I tried to explain, but someone called Golem blocked my way. Apparently family visits here require a battle too.",
+    "pt": "Tentei explicar, mas um tal de Golem bloqueou meu caminho. Parece que até visita de família exige uma batalha por aqui.",
+    "ja": "説明しようとしたら、ゴーレムという相手に道をふさがれました。ここでは家族のお迎えにも戦闘が必要らしいです。"
+  },
+  {
+    "key": "story.tzmil.1.before.1",
+    "es": "¡Alto! ¡Su locomotora está entrando en una zona restringida!",
+    "en": "Halt! Your locomotive is entering a restricted area!",
+    "pt": "Alto! Sua locomotiva está entrando em uma área restrita!",
+    "ja": "停止せよ！制限区域への侵入を確認！"
+  },
+  {
+    "key": "story.tzmil.1.before.2",
+    "es": "Solo busco a mi hermano. Lleva una roca verde y toma decisiones terribles cuando está enfadado.",
+    "en": "I am only looking for my brother. He has a green rock and makes terrible decisions when he is angry.",
+    "pt": "Só procuro meu irmão. Ele carrega uma pedra verde e toma decisões horríveis quando está bravo.",
+    "ja": "兄を探しているだけです。緑の石を持っていて、怒るとひどい判断をするんです。"
+  },
+  {
+    "key": "story.tzmil.1.before.3",
+    "es": "Descripción compatible con amenaza máxima. ¡Activando protocolo de combate!",
+    "en": "Description matches a maximum threat. Activating combat protocol!",
+    "pt": "Descrição compatível com ameaça máxima. Ativando protocolo de combate!",
+    "ja": "最高度の脅威と一致。戦闘手順を開始！"
+  },
+  {
+    "key": "story.tzmil.1.after.1",
+    "es": "¿Podemos dejar de disparar y hablar como personas?",
+    "en": "Can we stop shooting and talk like people?",
+    "pt": "Podemos parar de atirar e conversar como pessoas?",
+    "ja": "撃つのをやめて、人みたいに話せませんか？"
+  },
+  {
+    "key": "story.tzmil.1.after.2",
+    "es": "Protocolo de conversación... no disponible.",
+    "en": "Conversation protocol... unavailable.",
+    "pt": "Protocolo de conversa... indisponível.",
+    "ja": "会話手順……利用不可。"
+  },
+  {
+    "key": "story.tzmil.1.outro.1",
+    "es": "La verdad, no entiendo por qué esos robots hablan como personas. Es muy raro. Después de la pelea ya no encontraba a mi hermano por ninguna parte.",
+    "en": "Honestly, I do not understand why those robots talk like people. It is very strange. After the fight I could not find my brother anywhere.",
+    "pt": "Sinceramente, não entendo por que esses robôs falam como pessoas. É muito estranho. Depois da luta, não achei meu irmão em lugar nenhum.",
+    "ja": "あのロボットたちが人みたいに話す理由は、今もわかりません。変なの。戦いの後には、兄の姿も見失っていました。"
+  },
+  {
+    "key": "story.tzmil.1.outro.2",
+    "es": "Hasta que escuché por radio que había tirado la piedra en un ducto de ventilación. La base iba a estallar. ¡Justo lo que uno espera de una devolución!",
+    "en": "Then I heard on the radio that he had dropped the rock into a ventilation shaft. The base was going to explode. Just what you expect from a return!",
+    "pt": "Até ouvir no rádio que ele jogou a pedra em um duto de ventilação. A base ia explodir. Exatamente o que se espera de uma devolução!",
+    "ja": "すると無線で、兄が石を換気ダクトへ投げたと聞きました。基地が爆発するそうです。返品って、そんなに大変でしたっけ。"
+  },
+  {
+    "key": "story.tzmil.1.outro.3",
+    "es": "Me dio tiempo de salir. A él no. Seguro se quedó viendo la explosión desde dentro... como si fuera el mejor asiento para un espectáculo.",
+    "en": "I had time to get out. He did not. He probably stayed to watch the explosion from inside... as if that were the best seat in the house.",
+    "pt": "Deu tempo de eu sair. Ele não. Deve ter ficado vendo a explosão por dentro... como se fosse o melhor lugar para assistir.",
+    "ja": "私は間に合いました。兄は違いました。きっと中から爆発を眺めていたんでしょう。特等席だとでも思ったのかな。"
+  },
+  {
+    "key": "story.tzmil.1.outro.4",
+    "es": "Con todo lo malo que había hecho, no podía confiar en que llegara con nuestro padre. Así que tuve que ir a buscarlo al infierno. Ser hermana menor debería incluir vacaciones.",
+    "en": "After all the bad things he had done, I could not trust that he would reach our father. So I had to look for him in hell. Being a little sister should come with holidays.",
+    "pt": "Depois de tudo de ruim que fez, eu não podia confiar que chegaria ao nosso pai. Então fui buscá-lo no inferno. Ser irmã caçula devia dar direito a férias.",
+    "ja": "悪さを重ねた兄が、父のもとへ行けるとは思えません。それで地獄まで迎えに行くことに。妹業にも休暇がほしいです。"
+  },
+  {
+    "key": "story.tzmil.2.title",
+    "es": "El precio de una comida",
+    "en": "The price of a meal",
+    "pt": "O preço de uma refeição",
+    "ja": "食事一回のお値段"
+  },
+  {
+    "key": "story.tzmil.2.intro.1",
+    "es": "Nunca pensé que ir al infierno sería parte de cuidar a mi hermano. Aunque, repasando su historial, quizá debí haberlo previsto.",
+    "en": "I never thought going to hell would be part of looking after my brother. Though, looking at his record, perhaps I should have expected it.",
+    "pt": "Nunca pensei que ir ao inferno faria parte de cuidar do meu irmão. Mas, pensando no histórico dele, talvez eu devesse ter previsto.",
+    "ja": "兄の世話に地獄行きまで含まれるとは。でも今までの行いを思えば、予想すべきだったのかもしれません。"
+  },
+  {
+    "key": "story.tzmil.2.intro.2",
+    "es": "Buscaba a alguien con un gran pico, muchas plumas y unas ganas enormes de no trabajar. Una diablita llamada Onini parecía saber por dónde empezar.",
+    "en": "I was looking for someone with a huge beak, lots of feathers and an immense desire not to work. A little devil called Onini seemed to know where to start.",
+    "pt": "Eu procurava alguém de bico enorme, muitas penas e uma vontade imensa de não trabalhar. Uma diabinha chamada Onini parecia saber por onde começar.",
+    "ja": "大きなくちばしに羽飾り、働きたくない気持ちだけは人一倍。そんな兄を、オニニという悪魔の子が知っていそうでした。"
+  },
+  {
+    "key": "story.tzmil.2.before.1",
+    "es": "¿Vienes por el pájaro? Aquí las salidas no son gratis.",
+    "en": "Here for the bird? Exits are not free around here.",
+    "pt": "Veio buscar o passarinho? Aqui a saída não é de graça.",
+    "ja": "鳥を迎えに来たの？ここの出口は無料じゃないよ。"
+  },
+  {
+    "key": "story.tzmil.2.before.2",
+    "es": "Es mi hermano. ¿Podrías decirme dónde está?",
+    "en": "He is my brother. Could you tell me where he is?",
+    "pt": "É meu irmão. Pode me dizer onde ele está?",
+    "ja": "兄なんです。どこにいるか教えてくれませんか？"
+  },
+  {
+    "key": "story.tzmil.2.before.3",
+    "es": "Primero demuestra que puedes seguirme el ritmo. ¡Y luego hablamos del menú!",
+    "en": "First show me you can keep up. Then we can discuss the menu!",
+    "pt": "Primeiro prove que consegue me acompanhar. Depois falamos do cardápio!",
+    "ja": "まずはついてこられるか見せて。メニューの相談はその後！"
+  },
+  {
+    "key": "story.tzmil.2.after.1",
+    "es": "Está bien, te mostraré el camino. Pero me debes algo de comer.",
+    "en": "All right, I will show you the way. But you owe me a meal.",
+    "pt": "Está bem, vou mostrar o caminho. Mas você me deve uma refeição.",
+    "ja": "いいよ、案内する。代わりに何かおごってね。"
+  },
+  {
+    "key": "story.tzmil.2.after.2",
+    "es": "Trato hecho. Esta vez pediré yo: no quiero acabar persiguiendo también tu cena.",
+    "en": "Deal. I will order this time: I do not want to end up chasing your dinner too.",
+    "pt": "Fechado. Desta vez eu peço: não quero acabar correndo atrás do seu jantar também.",
+    "ja": "約束ね。注文は私がするよ。夕食まで追いかけることになったら困るから。"
+  },
+  {
+    "key": "story.tzmil.2.outro.1",
+    "es": "Onini fue bastante amable al mostrarme el camino. Encontramos a mi hermano inconsciente. Yo creo que es tan flojo que simplemente aprovechó para dormirse.",
+    "en": "Onini was quite kind about showing me the way. We found my brother unconscious. I think he is so lazy he simply took the chance to have a nap.",
+    "pt": "Onini foi bem gentil em mostrar o caminho. Encontramos meu irmão inconsciente. Acho que ele é tão preguiçoso que só aproveitou para tirar um cochilo.",
+    "ja": "オニニは親切に案内してくれました。兄は意識を失っていましたが、あまりに面倒くさくて昼寝しただけのようにも見えます。"
+  },
+  {
+    "key": "story.tzmil.2.outro.2",
+    "es": "Me dijo que, si la invitaba a comer, podía llevármelo. Al parecer, a nadie le importaba demasiado que el hijo de un dios volviera a salirse con la suya.",
+    "en": "She said I could take him if I bought her a meal. Apparently nobody cared much if the son of a god got his own way again.",
+    "pt": "Ela disse que eu podia levá-lo se pagasse uma refeição. Parece que ninguém ligava muito se o filho de um deus escapasse de novo.",
+    "ja": "食事をおごれば連れていっていいそうです。神の息子がまた都合よく抜け出しても、誰もあまり気にしないらしくて。"
+  },
+  {
+    "key": "story.tzmil.2.outro.3",
+    "es": "Comimos juntas mientras él seguía sin moverse. Una negociación extrañamente agradable. La diablita tiene muy buen apetito; mi hermano, muy buen sueño.",
+    "en": "We ate together while he still refused to move. A strangely pleasant negotiation. The little devil has a fine appetite; my brother, a fine ability to sleep.",
+    "pt": "Comemos juntas enquanto ele continuava imóvel. Uma negociação estranhamente agradável. A diabinha tem um ótimo apetite; meu irmão, um ótimo sono.",
+    "ja": "兄が動かない間に、二人で食事をしました。不思議と楽しい交渉でした。悪魔の子はよく食べて、兄はよく眠ります。"
+  },
+  {
+    "key": "story.tzmil.2.outro.4",
+    "es": "Después de pagar, tocaba llevarlo al cielo y explicarle a nuestro padre que esta vez, de verdad, había intentado hacer lo correcto.",
+    "en": "After paying, it was time to take him to heaven and explain to our father that this time he really had tried to do the right thing.",
+    "pt": "Depois de pagar, era hora de levá-lo ao céu e explicar ao nosso pai que, desta vez, ele realmente tentou fazer o certo.",
+    "ja": "会計を済ませたら、兄を天へ。今度こそ正しいことをしようとしたのだと、父に説明しなくちゃ。"
+  },
+  {
+    "key": "story.tzmil.3.title",
+    "es": "Mi propio camino",
+    "en": "My own path",
+    "pt": "Meu próprio caminho",
+    "ja": "私だけの道"
+  },
+  {
+    "key": "story.tzmil.3.intro.1",
+    "es": "Subir al cielo con un hermano dormido no es fácil. Mucho menos cuando la entrada está vigilada por un ángel con demasiados ojos para mirar hacia otro lado.",
+    "en": "Getting to heaven with a sleeping brother is not easy. Especially when the entrance is guarded by an angel with far too many eyes to look the other way.",
+    "pt": "Subir ao céu com um irmão dormindo não é fácil. Ainda mais com a entrada vigiada por um anjo com olhos demais para olhar para o outro lado.",
+    "ja": "眠った兄を天まで運ぶのは大変です。入口の天使は、見逃すには目が多すぎる相手でした。"
+  },
+  {
+    "key": "story.tzmil.3.intro.2",
+    "es": "Solo faltaba una última explicación. Bueno, conociendo nuestro viaje, seguramente una última batalla antes de la explicación.",
+    "en": "All that remained was one last explanation. Well, given our journey, probably one last battle before the explanation.",
+    "pt": "Só faltava uma última explicação. Bem, conhecendo nossa viagem, provavelmente uma última batalha antes da explicação.",
+    "ja": "あとは最後の説明だけ。いえ、この旅の流れなら、説明の前に最後の戦いもありそうです。"
+  },
+  {
+    "key": "story.tzmil.3.before.1",
+    "es": "No puedes traer al cielo a quien acaba de salir del infierno.",
+    "en": "You cannot bring someone straight from hell into heaven.",
+    "pt": "Não pode trazer ao céu alguém que acabou de sair do inferno.",
+    "ja": "地獄から出たばかりの者を、天へ入れるわけにはいかない。"
+  },
+  {
+    "key": "story.tzmil.3.before.2",
+    "es": "Solo quiero hablar con nuestro padre. Mi hermano entendió algo importante, aunque eligió un momento terrible para demostrarlo.",
+    "en": "I only want to speak to our father. My brother learned something important, though he picked a terrible moment to show it.",
+    "pt": "Só quero falar com nosso pai. Meu irmão aprendeu algo importante, embora tenha escolhido uma péssima hora para mostrar.",
+    "ja": "父と話したいだけです。兄は大切なことを学びました。証明するタイミングは最悪だったけれど。"
+  },
+  {
+    "key": "story.tzmil.3.before.3",
+    "es": "Entonces demuestra que puedes llevar esa carga hasta el final.",
+    "en": "Then prove that you can carry that burden to the end.",
+    "pt": "Então prove que consegue levar esse peso até o fim.",
+    "ja": "ならば、その重荷を最後まで運べると示せ。"
+  },
+  {
+    "key": "story.tzmil.3.after.1",
+    "es": "Puedes pasar. Tu padre escuchará lo que tengas que decir.",
+    "en": "You may pass. Your father will hear what you have to say.",
+    "pt": "Pode passar. Seu pai ouvirá o que tem a dizer.",
+    "ja": "通るがよい。父はお前の言葉を聞くだろう。"
+  },
+  {
+    "key": "story.tzmil.3.after.2",
+    "es": "Gracias. Y si vuelve a dormirse durante la conversación, por favor, no lo devuelvan al infierno.",
+    "en": "Thank you. And if he falls asleep during the conversation, please do not send him back to hell.",
+    "pt": "Obrigada. E, se ele dormir durante a conversa, por favor não o mandem de volta ao inferno.",
+    "ja": "ありがとう。話の途中でまた眠っても、地獄へ送り返さないでくださいね。"
+  },
+  {
+    "key": "story.tzmil.3.outro.1",
+    "es": "Al final le expliqué a nuestro padre que mi hermano había entendido, en el último minuto, que no se trataba de perseguir la fama de un héroe.",
+    "en": "At last I explained to our father that, at the very last minute, my brother had understood it was not about chasing a hero's fame.",
+    "pt": "No fim, expliquei ao nosso pai que meu irmão entendeu, no último minuto, que não se tratava de perseguir a fama de um herói.",
+    "ja": "ようやく父に説明できました。兄は最後の最後に、英雄の名声を追うことが大事なのではないと気づいたんです。"
+  },
+  {
+    "key": "story.tzmil.3.outro.2",
+    "es": "Además, al parecer había detenido algo horrible que estaban haciendo los humanos. Su método necesitaba trabajo, pero quizá eso también contaba para convertirse en un dios nuevo.",
+    "en": "Besides, he apparently stopped something terrible the humans were doing. His methods needed work, but perhaps that counted toward becoming a new god too.",
+    "pt": "Além disso, parece que impediu algo horrível que os humanos estavam fazendo. O método precisava melhorar, mas talvez isso também contasse para virar um novo deus.",
+    "ja": "人間たちの恐ろしい計画も止めたらしいのです。やり方には問題があっても、新しい神になる理由にはなるかもしれません。"
+  },
+  {
+    "key": "story.tzmil.3.outro.3",
+    "es": "Nuestro padre lo dejó quedarse. Por fin mi hermano tenía un lugar a su lado. Yo ya estaba pensando en descansar cuando escuché: «Tú todavía tienes una misión en la Tierra».",
+    "en": "Our father let him stay. At last my brother had a place beside him. I was already thinking about resting when I heard: \"You still have a mission on Earth.\"",
+    "pt": "Nosso pai deixou ele ficar. Enfim meu irmão tinha um lugar ao seu lado. Eu já pensava em descansar quando ouvi: \"Você ainda tem uma missão na Terra.\"",
+    "ja": "父は兄が残ることを許しました。やっと父の隣に居場所ができたんです。休もうと思った私には、「お前にはまだ地上での任務がある」と。"
+  },
+  {
+    "key": "story.tzmil.3.outro.4",
+    "es": "Había que demostrarle a Thulu que SU hija podía tener un restaurante mejor que el de la hija de aquel dios cósmico. La competencia entre padres debe ser una fuerza de la naturaleza.",
+    "en": "We had to show Thulu that HIS daughter could run a better restaurant than that cosmic god's daughter. Rivalry between fathers must be a force of nature.",
+    "pt": "Era preciso mostrar a Thulu que a filha DELE podia ter um restaurante melhor que o da filha daquele deus cósmico. Rivalidade entre pais deve ser uma força da natureza.",
+    "ja": "あの宇宙の神トゥルーより、自分の娘の店のほうがいいと証明したいそうです。父親同士の競争心も、自然の力なのでしょうね。"
+  },
+  {
+    "key": "story.tzmil.3.outro.5",
+    "es": "Y así regresé a mi volcán, esta vez con un puesto de helados llamado Carito. No sé quién eligió el nombre, pero espero que no asuste a los clientes.",
+    "en": "And so I returned to my volcano, this time with an ice cream stand called Carito. I do not know who chose the name, but I hope it does not scare off the customers.",
+    "pt": "E assim voltei ao meu vulcão, desta vez com uma sorveteria chamada Carito. Não sei quem escolheu o nome, mas espero que não assuste os clientes.",
+    "ja": "こうして火山へ戻り、今度は「カリート」というアイス屋さんを開きました。誰が名づけたのか知りませんが、お客さんが逃げないといいな。"
+  },
+  {
+    "key": "story.tzmil.3.outro.6",
+    "es": "Disfruto mucho preparar helados. La competencia con la hija de Thulu no me la tomo tan en serio. Si viene, le guardaré una mesa y le recomendaré mi sabor favorito.",
+    "en": "I really enjoy making ice cream. I do not take the rivalry with Thulu's daughter too seriously. If she visits, I will save her a table and recommend my favorite flavor.",
+    "pt": "Gosto muito de preparar sorvetes. Não levo a competição com a filha de Thulu tão a sério. Se vier, guardo uma mesa e recomendo meu sabor favorito.",
+    "ja": "アイスを作るのは楽しいです。トゥルーの娘との競争は、そんなに本気ではありません。遊びに来たら席を取って、おすすめの味を出しましょう。"
+  },
+  {
+    "key": "story.tzmil.3.outro.7",
+    "es": "Creo que todo fue un plan de padre para que dejara de preocuparme tanto por mi hermano y encontrara mi propio camino. Por una vez, me gusta bastante el camino que me tocó.",
+    "en": "I think it was all Father's plan to make me stop worrying so much about my brother and find my own path. For once, I quite like the path I was given.",
+    "pt": "Acho que tudo foi um plano do pai para eu parar de me preocupar tanto com meu irmão e encontrar meu próprio caminho. Desta vez, gostei bastante do caminho que me coube.",
+    "ja": "きっと父は、私が兄の心配ばかりするのをやめて、自分の道を見つけてほしかったのでしょう。今度の道は、私もとても気に入っています。"
+  }
+]

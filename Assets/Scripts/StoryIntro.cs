@@ -16,8 +16,17 @@ public class StoryIntro : MonoBehaviour
     string currentText;
     int page, visible;
     float elapsed;
+    const float ArtTransition = .28f;
+    float artElapsed = ArtTransition;
     bool leaving;
     bool placeholder;
+    System.Action inlineFinished;
+    public static StoryIntro Inline(System.Action finished)
+    {
+        var root=new GameObject("InlineStory");root.SetActive(false);
+        var story=root.AddComponent<StoryIntro>();story.inlineFinished=finished;root.SetActive(true);
+        story.canvas.sortingOrder=90;Time.timeScale=0f;return story;
+    }
     Vector2 layoutSize;
     UnityEngine.UI.RawImage artBackdrop; // the page's picture again, filling the screen behind, darkened
     RectTransform artFrame, artShadow;   // the picture's white border and hard shadow, kept to its size
@@ -25,13 +34,13 @@ public class StoryIntro : MonoBehaviour
     void Awake()
     {
         Time.timeScale=1;Display.Apply();
-        UiKit.SetBiome("menu"); // the menus' colours
-        placeholder = Story.Route(Locomotives.HeroId(Locomotives.Selected)) == null;
+        UiKit.SetHeroTones(Story.Hero);
+        placeholder = Story.Route(Locomotives.CampaignHeroId(Locomotives.Selected)) == null;
         if (placeholder) { BuildPlaceholder(); return; }
+        if(!backgrounds) backgrounds=Resources.Load<Texture2D>("Story/prologue");
+        if(Story.Active) pages=Story.Pages(); // Set pages before a dynamically created UI draws its first page.
         if(!canvas) BuildUI();
         RefreshLayout();
-        if(!backgrounds) backgrounds=Resources.Load<Texture2D>("Story/prologue");
-        if(Story.Active) pages=Story.Pages(); // story mode: this chapter's opening, after the last one's ending
         next.onClick.AddListener(()=>{Sound.Play("confirm");Advance();});
         skip.onClick.AddListener(()=>{Sound.Play("confirm");Finish();});
         if(pages==null || pages.Length==0) {Finish();return;}
@@ -59,12 +68,13 @@ public class StoryIntro : MonoBehaviour
             return;
         }
         if(pages==null || pages.Length==0) return;
+        artElapsed=Mathf.Min(ArtTransition,artElapsed+Time.unscaledDeltaTime);
+        illustrationArea.localScale=Vector3.one*Mathf.Lerp(.97f,1f,Mathf.SmoothStep(0f,1f,artElapsed/ArtTransition));
         if(Gamepad.current!=null && Gamepad.current.startButton.wasPressedThisFrame) {Sound.Play("confirm");Finish();return;}
         bool confirm=(Keyboard.current!=null && (Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame))
             || (Gamepad.current!=null && Gamepad.current.buttonSouth.wasPressedThisFrame);
         if(confirm) {Sound.Play("confirm");Advance();return;}
         elapsed+=Time.unscaledDeltaTime;
-        art.color=new Color(1,1,1,Mathf.Clamp01(elapsed/.5f));
         int count=Mathf.Min(currentText.Length,Mathf.FloorToInt(elapsed*34));
         if(count>visible) {visible=count;narration.text=currentText.Substring(0,visible);}
     }
@@ -97,6 +107,11 @@ public class StoryIntro : MonoBehaviour
     {
         if(leaving) return;
         leaving=true;
+        if(inlineFinished!=null)
+        {
+            var finished=inlineFinished;inlineFinished=null;
+            Destroy(canvas.gameObject);Destroy(gameObject);finished();return;
+        }
         if(Story.Active && Story.Over) { StartCoroutine(Thanks()); return; } // the end of it all: a word of thanks first
         Wipe.Load(Story.Active && Story.Over ? "MainMenu" :
             Story.Active && Story.AscentPending ? "ascenso" :
@@ -144,10 +159,15 @@ public class StoryIntro : MonoBehaviour
         string artwork=pages[page].artwork;
         if(image==5 && string.IsNullOrEmpty(artwork)) artwork="Story/bba_alien_escape";
         var illustration=string.IsNullOrEmpty(artwork) ? null : Resources.Load<Texture2D>(artwork);
-        art.texture=illustration ? illustration : backgrounds;
-        art.uvRect=illustration ? new Rect(0f,0f,1f,1f) : new Rect((image%3)/3f, image<3 ? .5f:0, 1f/3,.5f);
+        Texture nextArt=illustration ? illustration : backgrounds;
+        Rect nextUV=illustration ? new Rect(0f,0f,1f,1f) : new Rect((image%3)/3f, image<3 ? .5f:0, 1f/3,.5f);
+        bool changed=art.texture!=nextArt || art.uvRect!=nextUV;
+        art.texture=nextArt;
+        art.uvRect=nextUV;
         art.color=Color.white;
         RefreshLayout();
+        // Text pages sharing one picture leave it untouched; atlas cells count as different pictures.
+        if(changed) { artElapsed=0f; illustrationArea.localScale=Vector3.one*.97f; }
         chapter.text=string.IsNullOrEmpty(pages[page].titleKey) ? (image+1).ToString("00")+"  /  "+Localized("story.chapter."+image)
             : Localized("story.chapter.number").Replace("{0}",pages[page].number.ToString())+"  /  "+Localized(pages[page].titleKey);
         progress.text=(page+1).ToString("00")+" / "+pages.Length.ToString("00");
@@ -160,6 +180,7 @@ public class StoryIntro : MonoBehaviour
         hint.text=Localized("story.help");
         skip.GetComponentInChildren<UnityEngine.UI.Text>().text=Localized("story.skip");
         next.GetComponentInChildren<UnityEngine.UI.Text>().text=Localized("story.continue");
+        foreach(var button in new[] {skip,next}) SetButtonTones(button);
     }
 
     void LateUpdate()
@@ -295,7 +316,7 @@ public class StoryIntro : MonoBehaviour
         var dialog=UiKit.Group(canvas.transform,new Vector2(.5f,0),new Vector2(0,195));
         UiKit.Persona(UiKit.Panel(dialog,new Vector2(0,0),new Vector2(1780,318),new Color(.035f,.09f,.19f,.96f),new Color(.035f,.09f,.19f,.96f),.035f),6f,14f);
         UiKit.Paint(UiKit.Panel(dialog,new Vector2(0,-150),new Vector2(1740,6),Color.white,Color.white,0),UiKit.Ink.Main);
-        // the speaker on a red tag breaking out of the box's top left
+        // The speaker's tag uses the selected hero's colour.
         var nameTag=UiKit.Paint(UiKit.Panel(dialog,new Vector2(-640,160),new Vector2(420,64),Color.white,Color.white,.25f),UiKit.Ink.Main);
         nameTag.rectTransform.localRotation=Quaternion.Euler(0,0,3);
         storyName=Label(nameTag.transform,38,new Vector2(0,2),new Vector2(400,60),Color.white);storyName.font=UiKit.Display;storyName.alignment=TextAnchor.MiddleCenter;
@@ -318,11 +339,18 @@ public class StoryIntro : MonoBehaviour
     {
         var panel=UiKit.Panel(parent,position,size,Color.white,Color.white,.25f);panel.raycastTarget=true;panel.sprite=null;
         var button=panel.gameObject.AddComponent<UnityEngine.UI.Button>();button.targetGraphic=panel;
-        var tone=UiKit.Biome("menu"); // dark, red under the pointer, gold pressed
-        var colors=button.colors;colors.normalColor=new Color(.16f,.08f,.12f);colors.highlightedColor=tone.main;colors.pressedColor=tone.hot;colors.selectedColor=new Color(.16f,.08f,.12f);button.colors=colors;
+        SetButtonTones(button);
         button.navigation=new UnityEngine.UI.Navigation{mode=UnityEngine.UI.Navigation.Mode.None};
         label=Label(panel.transform,26,Vector2.zero,size-Vector2.one*12,Color.white);label.alignment=TextAnchor.MiddleCenter;label.text=text;label.font=UiKit.Display;
         return button;
+    }
+    static void SetButtonTones(UnityEngine.UI.Button button)
+    {
+        var tone=UiKit.Hero(Story.Hero);
+        var colors=button.colors;
+        colors.normalColor=colors.selectedColor=tone.deep;
+        colors.highlightedColor=tone.main;colors.pressedColor=tone.hot;
+        button.colors=colors;
     }
 }
 

@@ -30,7 +30,7 @@ public class Ascenso : MonoBehaviour
     float nextBarrier = 5f;
     bool paused, leaving;
     bool descending;
-    string ArrivalKey => descending ? "descent.arrived" : "ascent.arrived";
+    string ArrivalKey => Story.Active && Story.Hero=="sentinel" ? "story.sentinel.ascent.arrived" : descending ? "descent.arrived" : "ascent.arrived";
     UnityEngine.Rendering.Volume look;
     AscentAudio flightAudio;
 
@@ -45,7 +45,7 @@ public class Ascenso : MonoBehaviour
         BuildWorld();
         BuildUI();
         flightAudio = GetComponent<AscentAudio>() ?? gameObject.AddComponent<AscentAudio>();
-        ShowDialog(descending ? "descent.intro" : "ascent.intro", descending ? "descent.begin" : "ascent.begin");
+        ShowDialog(Story.Active && Story.Hero=="sentinel" ? "story.sentinel.ascent.intro" : descending ? "descent.intro" : "ascent.intro", descending ? "descent.begin" : "ascent.begin");
         RefreshStatus();
     }
 

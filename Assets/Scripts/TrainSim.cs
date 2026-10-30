@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 // The train never moves: it sits at the origin and the track scrolls under it.
 // Enemies and bullets live in a fixed frame, and no track is ever built beyond the view.
-public class TrainSim : MonoBehaviour
+public partial class TrainSim : MonoBehaviour
 {
     [Header("Train")]
     public int wagons = 2;             // armed wagons at the start; the first one is the locomotive. More are bought, one per biome
@@ -32,7 +32,7 @@ public class TrainSim : MonoBehaviour
     [System.NonSerialized] public int healCost = 50;
     [System.NonSerialized] public int skipMoney = 20;                          // skipping the upgrade gives this...
     public float skipHealth = 10f;                      // ...or this much health to every wagon and the hero
-    public float vitalityReward = 10f;                  // max health per hero vitality upgrade
+    [System.NonSerialized] public float vitalityReward = 5f; // +20% of the hero's starting health per rank
     public int biomeDifficulty = 3;                     // a biome change is worth this many stations of difficulty
     [Range(0f, 1f)] [System.NonSerialized] public float cargoCost = 0.5f;      // share of its pay a cargo wagon costs to load
     [Range(0f, 1f)] [System.NonSerialized] public float bonusOfferChance = 0.06f; // a wagon offer turns into a free cargo wagon or an escort
@@ -114,9 +114,9 @@ public class TrainSim : MonoBehaviour
     public int Biome { get; private set; }
     // A story chapter grows harder with its clock (and each chapter starts harder than the one before) instead of
     // with stations and biome changes.
-    // In a story it climbs gently for the first minutes, while the weapons are few, and ever faster after: 2 at 4
-    // minutes, 10 at 10, 29 at the end of the chapter.
-    public int Difficulty => Story.Active ? Story.Chapter + (int)(storyClock / 90f + 4f * Mathf.Pow(storyClock / 600f, 2f)) : Stations + Biome * biomeDifficulty;
+    // In a story it climbs gently for the first minutes, while the weapons are few, and ever faster after: 3 at 4
+    // minutes, 10 at 10, 29 at the end of a 20-minute chapter (longer chapters use the same relative curve).
+    public int Difficulty => Story.Active ? Balance.StoryDifficulty(storyClock, Story.Duration, Story.Chapter) : Stations + Biome * biomeDifficulty;
     float storyClock;           // seconds ridden in this story chapter (not counting stations or pauses)
     bool duel, duelCalled, chapterWon; // the rival is out / was called for / is beaten and the upgrade to keep is being chosen
     bool testFinalePending;
@@ -124,6 +124,7 @@ public class TrainSim : MonoBehaviour
     RivalEvent rival;           // the rival's locomotive, on a track of its own
     RaceEvent race;             // or, in a chapter that ends in one, the race to the launcher
     EyeBossEvent eyeBoss;       // or the ball of eyes on a ring of wagons
+    HoloDuel holo;              // or a board game against the rival
     CaveEvent cave;             // the alien duel's flashlight hunt
     GatesEvent gates;           // the base's gates, before its biome
     // A finale (the race, the ball of eyes) can be tried twice: lost once, the player is asked whether to try it
@@ -134,14 +135,15 @@ public class TrainSim : MonoBehaviour
     UnityEngine.UI.Text[] triesHearts;
     readonly List<string> taken = new(); // every upgrade taken in this chapter, as Story tokens
 
-    // The hero's upgrades (Story tokens), each up to MaxPassive levels, like Vampire Survivors' passive items. One
+    // The hero's upgrades (Story tokens), up to five levels (Amount: two), like Vampire Survivors' passive items. One
     // of them, owned with a weapon at its top level, evolves that weapon (Weapon.evolvesWith).
     // regen: the train and the hero mend slowly; area: blasts and sweeps wider; amount: more shots; luck: more prizes
     // and golden chests; duration: slows, boomerangs and cuts last longer.
     public static readonly string[] Passives = { "speed", "armor", "vitality", "damage", "greed", "fireRate", "critChance", "critDamage", "regen", "area", "amount", "luck", "duration" };
     public static readonly string[] PassiveIcons = { "speed", "armor", "vitality", "arms", "greed", "minigun", "sniper", "rail", "regen", "area", "amount", "luck", "duration" };
-    public float regenPerLevel = 0.15f * Balance.Scale; // health a second, per level of regeneration, to every wagon (half to the hero)
+    [System.NonSerialized] public float regenPerLevel = 0.1f * Balance.Scale; // shared train HP/s per rank, half as much for the hero
     public const int MaxPassive = 5;
+    public static int PassiveCap(string id) => id == "amount" ? 2 : MaxPassive;
     public const int MaxOwnedPassives = 5;      // different upgrades the hero can hold at once
     const int HeroMoney = 20, HeroHealth = 21;  // the hero's cards when nothing else is left: money, health
     readonly Dictionary<string, int> passiveLevels = new();
@@ -185,7 +187,7 @@ public class TrainSim : MonoBehaviour
     void Took(string token) { if (Story.Active) taken.Add(token); }
     // What the HUD shows of a chapter's clock: the time still to ride, then the duel.
     public string StoryTime => duel ? L10n.T("story.duel") + rival.StatusLine() : $"{(int)(Left / 60f):0}:{(int)(Left % 60f):00}";
-    float Left => Mathf.Max(0f, Story.Seconds - storyClock);
+    float Left => Mathf.Max(0f, Story.Duration - storyClock);
     // Half length (x) and half width (z) of the whole train.
     public Vector2 HalfExtents => new Vector2((cars.Count * Step - wagonGap) * 0.5f, wagonSize.z * 0.5f);
     // Only armed wagons count: the run ends when all of them are down, whatever happens to the cargo.
@@ -218,7 +220,7 @@ public class TrainSim : MonoBehaviour
     bool ultimateAnnounce; // "ultimate ready" is still to be said, as soon as nothing else is on screen
     // A button game, a warning, a swarm coming or a talk is on: the ultimate (and its announcement) waits.
     public bool Alerting => InEvent || Warning || swarm.Incoming || brawl.Incoming || talk.Open;
-    public string KitButton => !Player.UsingGamepad ? "R" : Gamepad.current is DualShockGamepad ? "△" : "Y";
+    public string KitButton => !Player.UsingGamepad ? "R" : Gamepad.current is DualShockGamepad ? "ÃƒÂ¢Ã¢â‚¬â€œÃ‚Â³" : "Y";
     public float CarFill(int i) => cars[i].health / cars[i].maxHealth;
     public Vector3 CarTop(int i) => cars[i].pos + Vector3.up * (1.5f + wagonSize.y);
     public bool MenuShown => menuView.Visible || (deliveryReport && deliveryReport.Visible);
@@ -386,7 +388,7 @@ public class TrainSim : MonoBehaviour
                 }
             }
             foreach (string id in passiveOrder)
-                if (PassiveLevel(id) < MaxPassive)
+                if (PassiveLevel(id) < PassiveCap(id))
                 {
                     string pick = id;
                     choices.Add(() =>
@@ -443,7 +445,7 @@ public class TrainSim : MonoBehaviour
     {
         Time.timeScale = 0f;
         Story.Duel(false, out string[] names, out string[] lines, out bool[] rival);
-        talk.Show(names, lines, rival, () => chapterWon = true);
+        talk.Show(names, lines, rival, () => { if (Story.GabrielRun) EndChapter(null); else chapterWon = true; });
     }
     // The race to the launcher is over. Won: the chapter is, and straight on to the story scene (and from there the
     // ascent), keeping one of the chapter's upgrades at random as the won chapter's menu would have offered it.
@@ -473,9 +475,26 @@ public class TrainSim : MonoBehaviour
     // The finale this chapter ends in.
     void StartFinale()
     {
-        if (Story.Current.trench) race.BeginTrench(RaceFinished);
+        if(Story.Current.circuits || Story.Current.morality)
+        {
+            golemChallenge ??= gameObject.AddComponent<GolemChallenge>();
+            golemChallenge.Begin(Story.Current.morality,()=>
+            {
+                Story.Duel(false,out string[] names,out string[] lines,out bool[] speakers);
+                talk.Show(names,lines,speakers,()=>RaceFinished(true));
+            });
+            return;
+        }
+        if (Story.Current.crates) race.BeginCrates(won =>
+        {
+            if (!won) { RaceFinished(false); return; }
+            Story.Duel(false,out string[] names,out string[] lines,out bool[] speakers);
+            talk.Show(names,lines,speakers,()=>RaceFinished(true));
+        });
+        else if (Story.Current.trench) race.BeginTrench(RaceFinished);
         else if (Story.Current.race) race.Begin(RaceFinished);
         else if (Story.Current.eyeBoss) eyeBoss.Begin(EyeBossFinished);
+        else if (Story.Current.holo) holo.Begin(HoloFinished);
         else
         {
             // the duel again, the rival back at full strength
@@ -502,14 +521,28 @@ public class TrainSim : MonoBehaviour
     {
         if (!won) { RaceFinished(false); return; }
         Time.timeScale = 0f;
+        if(Story.Active && (Story.Hero=="onini" || Story.Hero=="cerebron" || Story.Hero=="tzmil"))
+        {
+            Story.Duel(false,out string[] names,out string[] lines,out bool[] rivals);
+            talk.Show(names,lines,rivals,()=>RaceFinished(true));return;
+        }
         talk.Show(new[] { L10n.T(Locomotives.HeroNameKey(Locomotives.Selected)) }, new[] { L10n.T(Story.Active && Story.Hero == "faceless" ? "story.faceless.2.after.1" : "eyeboss.post") }, new[] { false }, () => RaceFinished(true));
+    }
+
+    // The board game won: the rival's last word, then the chapter is.
+    void HoloFinished(bool won)
+    {
+        if (!won) { RaceFinished(false); return; }
+        Time.timeScale = 0f;
+        Story.Duel(false, out string[] names, out string[] lines, out bool[] rival);
+        talk.Show(names, lines, rival, () => RaceFinished(true));
     }
 
     // Again: the lit heart goes out, and the finale starts over.
     void RetryFinale()
     {
         finaleRetry = false;
-        if (!Story.Current.race && !Story.Current.eyeBoss && !Story.Current.trench) RestoreTrain(); // whole again at once, or it would count as lost again
+        if (!Story.Current.race && !Story.Current.eyeBoss && !Story.Current.trench && !Story.Current.holo) RestoreTrain(); // whole again at once, or it would count as lost again
         StartCoroutine(HeartGoes());
     }
 
@@ -558,11 +591,12 @@ public class TrainSim : MonoBehaviour
                 edge.effectDistance = new Vector2(3f, -3f);
             }
         }
-        foreach (var h in triesHearts) { h.text = "♥"; h.rectTransform.localScale = Vector3.one; h.rectTransform.localRotation = Quaternion.identity; }
+        foreach (var h in triesHearts) { h.text = "ÃƒÂ¢Ã¢â€žÂ¢Ã‚Â¥"; h.rectTransform.localScale = Vector3.one; h.rectTransform.localRotation = Quaternion.identity; }
         triesBoard.gameObject.SetActive(on);
     }
     public void BossBar(string name, float fraction) => hud.Boss(name, fraction);
-    public bool Racing => (cave && cave.Active) || (gates && gates.Active) || (race && (race.Active || race.Showing)) || (eyeBoss && (eyeBoss.Active || eyeBoss.Showing)); // a finale of its own on screen (or held there, lost, while the player is asked whether to try again)
+    GolemChallenge golemChallenge;
+    public bool Racing => (golemChallenge && golemChallenge.Active) || (cave && cave.Active) || (gates && gates.Active) || (race && (race.Active || race.Showing)) || (eyeBoss && (eyeBoss.Active || eyeBoss.Showing)) || (holo && holo.Active); // a finale of its own on screen (or held there, lost, while the player is asked whether to try again)
     public bool Swarming => swarm.Aiming || brawl.Fighting || Racing; // seen from the gunner's seat (or from inside a boarded wagon, or in the race) right now
     // The gunner's camera while the swarm is fought, so the HUD can place its damage numbers from that seat.
     public Camera SwarmCamera => swarm != null && swarm.Aiming ? swarm.View : brawl != null && brawl.Fighting ? brawl.View : null;
@@ -632,6 +666,12 @@ public class TrainSim : MonoBehaviour
         (2, new Color(0.95f, 0.72f, 0.08f), new Color(0.03f, 0.03f, 0.05f), new Color(1f, 0.85f, 0.2f), 2.2f),    // space: a yellow track on the black
         (2, new Color(0.45f, 0.2f, 0.55f), new Color(0.2f, 0.08f, 0.28f), new Color(0.2f, 1f, 0.8f), 2.5f),      // alien: violet, teal light
         (2, new Color(0.1f, 0.12f, 0.12f), new Color(0.05f, 0.07f, 0.07f), new Color(0.35f, 1f, 0.25f), 2.5f),   // fortress: black, green light
+        (1, new Color(.65f, .68f, .7f), new Color(.28f, .31f, .35f), new Color(.95f, .68f, .15f), 1f), // government: concrete, safety-yellow rails
+        (1, new Color(.12f,.05f,.06f), new Color(.2f,.03f,.02f), new Color(1f,.18f,.05f), 2f),
+        (2, new Color(.94f,.9f,.72f), new Color(.66f,.8f,.91f), new Color(1f,.76f,.3f), 1.4f),
+        (2, new Color(.45f,.08f,.65f), new Color(.06f,.02f,.12f), new Color(.1f,1f,.8f), 2f),
+        (2, new Color(.25f,.35f,.3f), new Color(.11f,.06f,.17f), new Color(.45f,.95f,.65f), 1.7f), // Thulu World: a causeway inside a cosmic god
+        (2, new Color(.92f,.94f,.97f), new Color(.56f,.73f,.85f), new Color(1f,.68f,.2f), 1.5f), // robotic heaven: white ceramic / gold circuit rails
     };
     Vector2 groundScroll;
     Transform ground;
@@ -676,11 +716,16 @@ public class TrainSim : MonoBehaviour
     // Each knee is (distance ahead of the train's middle, turn in degrees). They scroll back through the train;
     // once the last one is out of sight behind, the world is rotated so the train lies along X again and the
     // camera keeps whatever view that leaves. A single curve is one knee, a zigzag is several.
-    const int MaxKnees = 8;
+    const int MaxKnees = 9; // the longest zigzag: 6 turns + 3 at the hardest tempo
     readonly List<Vector2> knees = new();
-    readonly Vector3[] kneePos = new Vector3[MaxKnees], kneeDir = new Vector3[MaxKnees];
-    readonly float[] kneeHeading = new float[MaxKnees];
-    Vector3 pathOrigin;                  // where the train's middle falls on that polyline
+    // Each knee is rounded into an arc centred on it: kneePos is where the arc starts, kneeEnd where it ends,
+    // kneeArc its length along the track; kneeHeading and kneeDir are the way the track runs after it.
+    readonly Vector3[] kneePos = new Vector3[MaxKnees], kneeEnd = new Vector3[MaxKnees], kneeDir = new Vector3[MaxKnees];
+    readonly float[] kneeHeading = new float[MaxKnees], kneeArc = new float[MaxKnees];
+    const float CurveRadius = 18f;       // tighter only where knees are too close together for it (the zigzag)
+    const int ArcPieces = 8;             // straight rail pieces drawn along each arc
+    Transform[] arcRails;
+    Vector3 pathOrigin;                  // where the train's middle falls on the track
     float camYaw = 45f;                  // view of the track: 45 up-right, 0 across, -45 down-right, 90 up, 180 leftwards...
     static readonly float[] Views = { -135f, -90f, -45f, 0f, 45f, 90f, 135f, 180f }; // all the way round
     // Which side of the screen the driver's right hand is on: below zero the track's "right" looks left.
@@ -709,7 +754,7 @@ public class TrainSim : MonoBehaviour
     public int KneeCount => knees.Count;
     public float KneeS(int i) => knees[i].x;
     public float KneeTurn(int i) => knees[i].y;
-    public Vector3 KneePoint(int i) => kneePos[i] - pathOrigin;
+    public Vector3 KneePoint(int i) => Path(knees[i].x, out _);
     public float FrontS => WagonX(0) + wagonSize.x * 0.5f; // front of the first wagon
     public float NoseS => WagonX(-1) + 4.4f;               // nose of the locomotive (0.9 ahead of its slot, 3.5 half long)
     public float flyRoom = 6f;                             // clear space the picture keeps past both ends of the train
@@ -871,7 +916,7 @@ public class TrainSim : MonoBehaviour
     const bool mainMenu = false, settingsMenu = false; // the title screen is its own scene now (MainMenu.cs)
     InputAction navigate, confirm, stepRight, stepLeft;
     bool ListMenu => Paused || settingsMenu;  // both draw their options as a vertical list
-    bool MenuOpen => mainMenu || chapterWon || finaleRetry || junction || (AtStation && !Clearing && !deliveryPending) || Health <= 0f || Paused;
+    bool MenuOpen => gabrielDraft > 0 || mainMenu || chapterWon || finaleRetry || junction || (AtStation && !Clearing && !deliveryPending) || Health <= 0f || Paused;
 
     // Pause: Start on a gamepad, Esc on the keyboard. Freezes time and opens its own menu.
     public bool Paused { get; private set; }
@@ -904,6 +949,12 @@ public class TrainSim : MonoBehaviour
         ("space", new Color(0.03f, 0.03f, 0.08f), new Color(0.7f, 0.7f, 0.8f)),
         ("alien", new Color(0.4f, 0.15f, 0.5f), new Color(0.1f, 0.9f, 0.8f)),
         ("fortress", new Color(0.12f, 0.16f, 0.16f), new Color(0.3f, 1f, 0.2f)),
+        ("government", new Color(.4f, .44f, .48f), new Color(.75f, .78f, .82f)),
+        ("hell",new Color(.18f,.05f,.07f),new Color(.5f,.13f,.08f)),
+        ("heaven",new Color(.78f,.87f,.94f),new Color(.92f,.86f,.65f)),
+        ("psychoworlds",new Color(.2f,.05f,.3f),new Color(.5f,.1f,.65f)),
+        ("thulu",new Color(.12f,.2f,.19f),new Color(.37f,.55f,.39f)),
+        ("robotheaven",new Color(.82f,.9f,.95f),new Color(.94f,.79f,.42f)),
     };
 
     void Awake()
@@ -940,12 +991,15 @@ public class TrainSim : MonoBehaviour
         sleeperMat = Mat(Color.gray, false);
         GameObject railModel = Resources.Load<GameObject>("Models/Track_rail"); // one unit long, from its pivot
         rails = new Transform[MaxKnees + 1];
-        for (int i = 0; i < rails.Length; i++)
+        arcRails = new Transform[MaxKnees * ArcPieces];
+        for (int i = 0; i < rails.Length + arcRails.Length; i++)
         {
             // One unit long from its pivot; stretched to the length of its part of the track.
-            rails[i] = new GameObject("Rails").transform;
-            rails[i].SetParent(transform, false);
-            Dress(Instantiate(railModel, rails[i]));
+            Transform piece = new GameObject("Rails").transform;
+            piece.SetParent(transform, false);
+            Dress(Instantiate(railModel, piece));
+            if (i < rails.Length) rails[i] = piece;
+            else { arcRails[i - rails.Length] = piece; piece.gameObject.SetActive(false); }
         }
         RollEvent(); // the first leg rolls for a boss too, same as every other
 
@@ -957,6 +1011,7 @@ public class TrainSim : MonoBehaviour
         rival = gameObject.AddComponent<RivalEvent>();
         race = gameObject.AddComponent<RaceEvent>();
         eyeBoss = gameObject.AddComponent<EyeBossEvent>();
+        holo = gameObject.AddComponent<HoloDuel>();
         cave = gameObject.AddComponent<CaveEvent>();
         gates = gameObject.AddComponent<GatesEvent>();
         menuView = gameObject.AddComponent<StationMenu>();
@@ -972,7 +1027,9 @@ public class TrainSim : MonoBehaviour
         Player = new GameObject("Player").AddComponent<Player>();
         Player.Init(this);
         if (!Story.Active) Workshop.Apply(Player, ref money);
-        if (Story.Active) foreach (string token in Story.Kept()) Apply(token); // what earlier chapters handed down
+        if (Story.GabrielRun) { Apply("luck"); Apply("luck"); Apply("luck"); }
+        if (Story.GabrielRun && Story.Chapter > 0) { foreach (string token in SaveGame.GabrielBuild) { Apply(token); taken.Add(token); } gabrielDraft = SaveGame.GabrielDraft; gabrielResumeDuel = gabrielDraft == 0; }
+        else if (Story.Active) foreach (string token in Story.Kept()) Apply(token); // what earlier chapters handed down
         if (Story.Active && Story.CarriedTruck > 0) GiveTruck(Story.CarriedTruck, true); // the truck's wagon, one chapter on
         navigate = InputSystem.actions.FindAction("Player/Move", true);
         confirm = InputSystem.actions.FindAction("Player/Jump", true);
@@ -1110,31 +1167,53 @@ public class TrainSim : MonoBehaviour
         cam.position = Focus - cam.forward * 60f;
     }
 
-    // Works out where every knee is and which way the track runs after it. Cheap; run whenever the knees move.
+    // Works out where every knee's arc starts and ends and which way the track runs after it. Cheap; run whenever
+    // the knees move. Distances along the track (s) stay those of the knees, so timings do not change.
     void ShapeTrack()
     {
-        float heading = 0f;
-        Vector3 at = knees.Count > 0 ? new Vector3(knees[0].x, 0f, 0f) : Vector3.zero;
+        float heading = 0f, end = 0f; // end: s where the previous arc finished
+        Vector3 at = Vector3.zero;    // and where
         for (int i = 0; i < knees.Count; i++)
         {
+            // As round as CurveRadius allows without running into the next or previous knee's arc.
+            float room = Mathf.Min(i > 0 ? knees[i].x - knees[i - 1].x : float.MaxValue, i + 1 < knees.Count ? knees[i + 1].x - knees[i].x : float.MaxValue);
+            kneeArc[i] = Mathf.Min(CurveRadius * Mathf.Abs(knees[i].y) * Mathf.Deg2Rad, room * 0.9f);
+            float start = knees[i].x - kneeArc[i] * 0.5f;
+            kneePos[i] = at + Quaternion.Euler(0f, heading, 0f) * Vector3.right * (start - end);
+            kneeEnd[i] = Arc(i, heading, kneeArc[i]);
             kneeHeading[i] = heading += knees[i].y;
             kneeDir[i] = Quaternion.Euler(0f, heading, 0f) * Vector3.right;
-            kneePos[i] = at;
-            if (i + 1 < knees.Count) at += kneeDir[i] * (knees[i + 1].x - knees[i].x);
+            at = kneeEnd[i];
+            end = knees[i].x + kneeArc[i] * 0.5f;
         }
         pathOrigin = Vector3.zero;
         pathOrigin = Path(0f, out _);
+    }
+
+    // The point u along knee i's arc, which starts at kneePos[i] heading `from` degrees.
+    Vector3 Arc(int i, float from, float u)
+    {
+        float turn = knees[i].y * Mathf.Deg2Rad, a = from * Mathf.Deg2Rad;
+        if (kneeArc[i] < 0.01f || Mathf.Abs(turn) < 0.0001f) return kneePos[i] + Quaternion.Euler(0f, from, 0f) * Vector3.right * u;
+        float k = turn / kneeArc[i], b = a + k * u; // heading turns evenly along the arc (Unity's y: x = cos, z = -sin)
+        return kneePos[i] + new Vector3((Mathf.Sin(b) - Mathf.Sin(a)) / k, 0f, (Mathf.Cos(b) - Mathf.Cos(a)) / k);
     }
 
     // Ground position of the track `s` units ahead of the train's middle (negative = behind), and its heading there.
     Vector3 Path(float s, out float heading)
     {
         heading = 0f;
-        if (knees.Count == 0 || s <= knees[0].x) return new Vector3(s, 0f, 0f) - pathOrigin;
+        if (knees.Count == 0 || s <= knees[0].x - kneeArc[0] * 0.5f) return new Vector3(s, 0f, 0f) - pathOrigin;
         int i = 0;
-        while (i + 1 < knees.Count && s > knees[i + 1].x) i++;
+        while (i + 1 < knees.Count && s > knees[i + 1].x - kneeArc[i + 1] * 0.5f) i++;
+        float before = i > 0 ? kneeHeading[i - 1] : 0f, u = s - (knees[i].x - kneeArc[i] * 0.5f);
+        if (u < kneeArc[i])
+        {
+            heading = before + knees[i].y * u / kneeArc[i];
+            return Arc(i, before, u) - pathOrigin;
+        }
         heading = kneeHeading[i];
-        return kneePos[i] + kneeDir[i] * (s - knees[i].x) - pathOrigin;
+        return kneeEnd[i] + kneeDir[i] * (u - kneeArc[i]) - pathOrigin;
     }
 
     void SetRails(int piece, Vector3 from, float heading, float length)
@@ -1149,12 +1228,25 @@ public class TrainSim : MonoBehaviour
     {
         ShapeTrack();
         float far = viewRange * 4f;
-        float firstEnd = knees.Count > 0 ? knees[0].x : far * 0.5f;
+        float firstEnd = knees.Count > 0 ? knees[0].x - kneeArc[0] * 0.5f : far * 0.5f;
         SetRails(0, Path(firstEnd - far, out _), 0f, far);
         for (int i = 0; i < MaxKnees; i++)
         {
-            if (i >= knees.Count) rails[i + 1].gameObject.SetActive(false);
-            else SetRails(i + 1, kneePos[i] - pathOrigin, kneeHeading[i], i + 1 < knees.Count ? knees[i + 1].x - knees[i].x : far);
+            bool on = i < knees.Count;
+            if (!on) rails[i + 1].gameObject.SetActive(false);
+            else SetRails(i + 1, kneeEnd[i] - pathOrigin, kneeHeading[i],
+                i + 1 < knees.Count ? knees[i + 1].x - knees[i].x - (kneeArc[i] + kneeArc[i + 1]) * 0.5f : far);
+            // The arc: short straight pieces, chord to chord, a hair longer so their joins do not show.
+            float before = i > 0 ? kneeHeading[i - 1] : 0f;
+            for (int k = 0; k < ArcPieces; k++)
+            {
+                Transform piece = arcRails[i * ArcPieces + k];
+                if (!on || kneeArc[i] < 0.01f) { if (piece.gameObject.activeSelf) piece.gameObject.SetActive(false); continue; }
+                Vector3 a = Arc(i, before, kneeArc[i] * k / ArcPieces), b = Arc(i, before, kneeArc[i] * (k + 1) / ArcPieces), d = b - a;
+                piece.gameObject.SetActive(true);
+                piece.SetLocalPositionAndRotation(a - pathOrigin - d.normalized * 0.05f, Quaternion.Euler(0f, -Mathf.Atan2(d.z, d.x) * Mathf.Rad2Deg, 0f));
+                piece.localScale = new Vector3(d.magnitude + 0.1f, 1f, 1f);
+            }
         }
         Place(sleepers);
         foreach (Prop prop in props)
@@ -1279,7 +1371,7 @@ public class TrainSim : MonoBehaviour
         for (int i = 0; i < 4; i++) Apply("wagon:" + Weapon.Wagon[Random.Range(0, Weapon.Wagon.Length)].id);
         for (int i = 0; i < 6; i++)
         {
-            var open = System.Array.FindAll(Passives, p => PassiveLevel(p) < MaxPassive);
+            var open = System.Array.FindAll(Passives, p => PassiveLevel(p) < PassiveCap(p));
             if (open.Length > 0) Apply(open[Random.Range(0, open.Length)]);
         }
         Toast(L10n.T("test.skipped"));
@@ -1303,6 +1395,35 @@ public class TrainSim : MonoBehaviour
         (float light, float colour) = BiomeId switch { "snow" => (-0.35f, 6f), "jungle" => (0f, -14f), "volcano" => (0.25f, 0f), _ => (0f, 0f) };
         grade.postExposure.value = 0.25f + light;
         grade.saturation.value = 14f + colour;
+        // under the jungle's canopy the sun comes through in patches
+        if (!sun) foreach (Light l in FindObjectsByType<Light>(FindObjectsSortMode.None)) if (l.type == LightType.Directional) sun = l.GetComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalLightData>();
+        if (sun)
+        {
+            if (BiomeId == "jungle") sun.SetCookie(Canopy(), new Vector2(34f, 34f));
+            else sun.GetComponent<Light>().cookie = null; // HDRP SetCookie dereferences null; clear through the Light.
+        }
+    }
+
+    UnityEngine.Rendering.HighDefinition.HDAdditionalLightData sun;
+    static Texture2D canopy;
+    // Dappled light: mostly lit, with soft dark patches of leaf shade (a cookie on the sun, tiled across the ground).
+    static Texture2D Canopy()
+    {
+        if (canopy) return canopy;
+        const int size = 256;
+        canopy = new Texture2D(size, size, TextureFormat.RGBA32, true) { wrapMode = TextureWrapMode.Repeat, name = "CanopyCookie" };
+        for (int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+            {
+                // tileable noise: the same pattern sampled on a circle in each direction
+                float u = x / (float)size * Mathf.PI * 2f, v = y / (float)size * Mathf.PI * 2f;
+                float n = Mathf.PerlinNoise(3f + Mathf.Cos(u) * 1.6f, 5f + Mathf.Sin(u) * 1.6f + Mathf.Cos(v) * 1.6f) * 0.65f
+                        + Mathf.PerlinNoise(11f + Mathf.Sin(v) * 3.2f, 7f + Mathf.Cos(u) * 3.2f) * 0.35f;
+                float lit = Mathf.Lerp(0.42f, 1f, Mathf.SmoothStep(0.38f, 0.56f, n));
+                canopy.SetPixel(x, y, new Color(lit, lit, lit * 0.96f, 1f));
+            }
+        canopy.Apply();
+        return canopy;
     }
 
     Results results;
@@ -1310,6 +1431,9 @@ public class TrainSim : MonoBehaviour
 
     void Update()
     {
+        if (gabrielInterlude) { Time.timeScale = 0f; return; }
+        if (gabrielResumeDuel) { gabrielResumeDuel=false; BeginGabrielDuel(); }
+        if (gabrielDraft > 0) Time.timeScale=0f;
         if (Time.unscaledTime >= checkAt && Health > 0f) { checkAt = Time.unscaledTime + 1f; Achievements.Check(this); }
         if (hitStopUntil > 0f && Time.unscaledTime >= hitStopUntil && Time.timeScale != 0f) // a menu (a chest) holding time keeps it for later: it gives the slow scale back
         {
@@ -1329,6 +1453,8 @@ public class TrainSim : MonoBehaviour
             else if (brawl.Active) brawl.TestWin();
             else if (race.Active) race.TestWin();
             else if (eyeBoss.Active) eyeBoss.TestWin();
+            else if (holo.Active) holo.TestWin();
+            else if (golemChallenge && golemChallenge.Active) golemChallenge.TestComplete();
             else if (rival.Active) rival.TestWin();
             else if (chapterWon || finaleRetry || duel) RaceFinished(true);
             else testFinalePending = true;
@@ -1342,7 +1468,7 @@ public class TrainSim : MonoBehaviour
             duelCalled = true;
             junction = false;
             junctionAsked = true;
-            storyClock = Story.Seconds;
+            storyClock = Story.Duration;
             RestoreTrain();
             SkippedRide();
             StartFinale();
@@ -1359,7 +1485,10 @@ public class TrainSim : MonoBehaviour
         float regen = regenPerLevel * PassiveLevel("regen") * Time.deltaTime;
         if (regen > 0f && Health > 0f && !Paused)
         {
-            Repair(regen, true);
+            // A longer train adds firing positions and health, not free regeneration per wagon.
+            int standing = 0;
+            foreach (Car c in cars) if (c.Alive && c.health < c.maxHealth) standing++;
+            if (standing > 0) Repair(regen / standing, true);
             if (Player && Player.Alive) Player.Heal(regen * 0.5f, true);
         }
         if (!AtStation && !Paused && Health > 0f) { RideClock += Time.deltaTime; ChargeUltimate(Time.deltaTime); }
@@ -1382,16 +1511,25 @@ public class TrainSim : MonoBehaviour
                 Time.timeScale = 0f;
                 Sound.Play("Pause");
             }
-            if (!duelCalled && storyClock >= Story.Seconds && !BossFight && !InEvent && !Warning && !Bending)
+            if (!duelCalled && storyClock >= Story.Duration && !BossFight && !InEvent && !Warning && !Bending)
             {
                 // Time is up: the rival pulls alongside, a few words are traded over the stopped game, then the duel.
                 duelCalled = true;
                 Time.timeScale = 0f;
                 if (Story.Current.race)
                 {
+                    if (Story.Hero == "xiuhtecuhtli")
+                    {
+                        Story.Duel(true, out string[] names, out string[] lines, out bool[] rivals);
+                        names[0] = L10n.T("race.radio.name");
+                        talk.Show(names, lines, rivals, StartFinale);
+                    }
+                    else
+                    {
                     // The radio: power left for one more launch, so it is a race to the launcher.
                     talk.Show(new[] { L10n.T("race.radio.name") }, new[] { L10n.T("race.radio") }, new[] { false },
                         StartFinale);
+                    }
                 }
                 else if (Story.Current.trench)
                 {
@@ -1401,10 +1539,10 @@ public class TrainSim : MonoBehaviour
                 }
                 else if (Story.Current.eyeBoss)
                 {
-                    if (Story.Hero == "faceless")
+                    if (Story.Hero == "faceless" || Story.Hero == "onini" || Story.Hero == "cerebron" || Story.Hero == "tzmil")
                     {
                         Story.Duel(true, out string[] names, out string[] lines, out bool[] rivals);
-                        names[0] = L10n.T("eyeboss.name");
+                        names[0] = L10n.T(Story.Hero=="onini" || Story.Hero=="tzmil" ? "eyeboss.heaven.name" : Story.Hero=="cerebron" ? "story.cerebron.roger" : "eyeboss.name");
                         talk.Show(names, lines, rivals, StartFinale);
                     }
                     else
@@ -1418,7 +1556,7 @@ public class TrainSim : MonoBehaviour
                 else
                 {
                     Story.Duel(true, out string[] names, out string[] lines, out bool[] rival);
-                    talk.Show(names, lines, rival, () => { Time.timeScale = 1f; this.rival.Begin(Story.Current.rival); duel = true; });
+                    talk.Show(names, lines, rival, Story.Current.holo || Story.Current.circuits || Story.Current.morality || Story.Current.crates ? StartFinale : () => { Time.timeScale = 1f; this.rival.Begin(Story.Current.rival); duel = true; });
                 }
             }
         }
@@ -1437,7 +1575,7 @@ public class TrainSim : MonoBehaviour
             Junction(false); // the junction's second way, on its own button
         // Pause only out on the road: not at a station (the delivery, the upgrades, the market, the shop), nor while a
         // chest, the junction's choice or a won chapter's screen is up. Once paused, it can always be left.
-        bool canPause = Paused || (!AtStation && !ChestOpen && !junction && !chapterWon);
+        bool canPause = gabrielDraft == 0 && !(golemChallenge && golemChallenge.Active) && (Paused || (!AtStation && !ChestOpen && !junction && !chapterWon));
         if (canPause && !mainMenu && Health > 0f && !talk.Open && ((Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame) ||
                             (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)))
             SetPaused(!Paused);
@@ -1505,7 +1643,7 @@ public class TrainSim : MonoBehaviour
         menuView.Render(MenuOpen ? options : null, menuTitle, focus, L10n.T(help, UiKit.ConfirmGlyph(Player.UsingGamepad)), ActivateOption, i => { if (focus != i) Sound.Play("click"); focus = i; }, ListMenu,
             menuStep, menuSub, menuMoney ? money : -1, menuLines, Guiding && !Paused && Health > 0f, menuTab, tab => { Sound.Play("confirm"); marketTab = tab; focus = 0; }, menuCompact);
 
-        if (AtStation || Paused || mainMenu) return;
+        if (AtStation || Paused || mainMenu || gabrielDraft > 0) return;
 
         // Brake curve: fastest speed that can still stop exactly on the station. A boss on the field is the
         // exception: the train runs on at cruise but makes no headway, so the station is never reached mid-fight.
@@ -1740,7 +1878,8 @@ public class TrainSim : MonoBehaviour
     // Inserts a wagon at a position in the train and closes the train up around it.
     void AddCar(int index, int cargo, bool permanent = false)
     {
-        var car = new Car { cargo = cargo, permanent = permanent, health = wagonMaxHealth, maxHealth = wagonMaxHealth };
+        float armedHealth = wagonMaxHealth * (1f + Balance.WagonVitalityPerRank * PassiveLevel("vitality"));
+        var car = new Car { cargo = cargo, permanent = permanent, health = armedHealth, maxHealth = armedHealth };
         Vector3 size = wagonSize;
         Material mat = wagonMat;
         if (cargo >= 0)
@@ -1948,14 +2087,19 @@ public class TrainSim : MonoBehaviour
             if (cars[i].Alive) Damage(i, amount);
     }
 
+    // Not again right away: once a stun wears off the gun has StunGrace seconds to fire (Vampire Survivors' freeze
+    // immunity). Each saboteur touching it used to restart the stun, and a crowd of them kept every gun off for good.
+    const float StunGrace = 3f;
     public void Stun(int wagon, float seconds)
     {
-        if (cars[wagon].mount) cars[wagon].mount.stunnedUntil = Time.time + seconds;
+        Turret gun = cars[wagon].mount;
+        if (gun && Time.time >= gun.stunnedUntil + StunGrace) gun.stunnedUntil = Time.time + seconds;
     }
 
     public void Damage(int wagon, float amount)
     {
         if (rival && rival.OnUs(RivalEvent.Weak)) amount *= 2f; // the rival broke our armour
+        amount *= 1f - Balance.WagonArmorPerRank * PassiveLevel("armor");
         Car car = cars[wagon];
         bool stood = car.Alive;
         car.health = Mathf.Max(0f, car.health - amount);
@@ -2061,7 +2205,7 @@ public class TrainSim : MonoBehaviour
         {
             if (stat == 5) { if (Player.level < Weapon.MaxLevel) offerPool.Add(Weapon.Hero.Length + 5); continue; }
             string id = Passives[stat < 5 ? stat : stat - 1];
-            if (PassiveLevel(id) >= MaxPassive || (full && PassiveLevel(id) == 0)) continue;
+            if (PassiveLevel(id) >= PassiveCap(id) || (full && PassiveLevel(id) == 0)) continue;
             if ((stat == 1 && Player.armor >= Player.MaxArmor) || (stat == 7 && criticalChance >= 1f)) continue;
             offerPool.Add(Weapon.Hero.Length + stat);
         }
@@ -2069,7 +2213,16 @@ public class TrainSim : MonoBehaviour
         if (Random.value < fillerChance) offerPool.Add(Weapon.Hero.Length + (Random.value < 0.5f ? HeroMoney : HeroHealth));
         while (offerPool.Count < heroOffers.Length) offerPool.Add(Weapon.Hero.Length + (offerPool.Count % 2 == 0 ? HeroMoney : HeroHealth));
         Draw(heroOffers);
+        // A level on her weapon never stays away long: missing from two stations in a row, it is on the third. Left
+        // to the draw alone, a whole chapter could go by with her gun at level 1, whatever the player chose.
+        if (Player.level < Weapon.MaxLevel)
+        {
+            bool shown = System.Array.IndexOf(heroOffers, Weapon.Hero.Length + 5) >= 0;
+            if (!shown && weaponMissed >= 2) { heroOffers[Random.Range(0, heroOffers.Length)] = Weapon.Hero.Length + 5; shown = true; }
+            weaponMissed = shown ? 0 : weaponMissed + 1;
+        }
     }
+    int weaponMissed; // stations in a row the hero's weapon level was not among her cards
 
     void Draw(int[] into)
     {
@@ -2164,6 +2317,7 @@ public class TrainSim : MonoBehaviour
         string[] part = token.Split(':');
         if (System.Array.IndexOf(Passives, part[0]) >= 0)
         {
+            if (PassiveLevel(part[0]) >= PassiveCap(part[0])) return;
             if (PassiveLevel(part[0]) == 0) passiveOrder.Add(part[0]);
             passiveLevels[part[0]] = PassiveLevel(part[0]) + 1;
         }
@@ -2173,10 +2327,18 @@ public class TrainSim : MonoBehaviour
             case "evolve": Player.level = Mathf.Min(Weapon.MaxLevel, Player.level + 1); break;
             case "speed": Player.SpeedUp(); break;
             case "armor": Player.ArmorUp(); break;
-            case "vitality": Player.VitalityUp(vitalityReward); break;
+            case "vitality":
+                Player.VitalityUp(vitalityReward);
+                foreach (Car c in cars) if (c.cargo < 0)
+                {
+                    float extra = wagonMaxHealth * Balance.WagonVitalityPerRank;
+                    c.maxHealth += extra;
+                    if (c.Alive) c.health += extra;
+                }
+                break;
             case "damage": Player.DamageUp(); break;
             case "greed": Player.GreedUp(); break;
-            case "fireRate": fireRate += 0.2f; break;
+            case "fireRate": fireRate = 1f / (1f - Balance.CooldownPerRank * Mathf.Min(MaxPassive, PassiveLevel("fireRate"))); break;
             case "critChance": criticalChance = Mathf.Min(1f, criticalChance + 0.05f); break;
             case "critDamage": criticalMultiplier += 0.25f; break;
             case "wagon":
@@ -2195,8 +2357,10 @@ public class TrainSim : MonoBehaviour
     void EndChapter(string keep)
     {
         // Saved: what this chapter hands on (the truck's wagon only if won here), and the next one to continue with.
+        if (Story.GabrielRun) SaveGame.SaveGabrielBuild(taken);
         Story.Win(keep, keptPassive, truckCar != null && truckCar.mount && !truckCarried ? truckCar.mount.Level : 0);
         Time.timeScale = 1f;
+        if (Story.GabrielRun && !Story.Over) { GabrielInterlude(); return; }
         Wipe.Load("historiaDialogos");
     }
 
@@ -2426,7 +2590,8 @@ public class TrainSim : MonoBehaviour
         menuLines = null;
         menuCompact = false;
         int kind;
-        if (Paused && confirming != 0)
+        if (gabrielDraft > 0) { BuildGabrielDraft(); kind = 8; }
+        else if (Paused && confirming != 0)
         {
             // "No" comes first, so it is the one focused when the question opens.
             kind = 9;
@@ -2439,8 +2604,8 @@ public class TrainSim : MonoBehaviour
         {
             kind = 11;
             menuTitle = L10n.T("junction.title");
-            menuSub = L10n.T("junction.sub", Player.UsingGamepad ? (Gamepad.current is DualShockGamepad ? "✕" : "A") : L10n.T("junction.confirm"),
-                             Player.UsingGamepad ? (Gamepad.current is DualShockGamepad ? "□" : "X") : "Q");
+            menuSub = L10n.T("junction.sub", Player.UsingGamepad ? (Gamepad.current is DualShockGamepad ? "ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¢" : "A") : L10n.T("junction.confirm"),
+                             Player.UsingGamepad ? (Gamepad.current is DualShockGamepad ? "ÃƒÂ¢Ã¢â‚¬â€œÃ‚Â¡" : "X") : "Q");
             Add("truck", L10n.T("junction.fight"), () => Junction(true));
             Add("lever", L10n.T("junction.skip"), () => Junction(false));
         }
@@ -2537,7 +2702,7 @@ public class TrainSim : MonoBehaviour
             menuTitle = L10n.T("menu.route");
             menuSub = L10n.T("sub.route", LegName(nextLeg));
             Add("stay", L10n.T("menu.stay", BiomeName(Biome)), () => Depart());
-            if (Biome < Biomes.Length - 1 && !Story.Active) // a story chapter stays in its biome
+            if (Biome < 8 && !Story.Active) // government is a story destination; endless keeps its existing route
             {
                 // The desert's boss stands in the way: no leaving until it is down (and then it is gone for good).
                 // The other biomes have no boss yet, so their route out is always open.
@@ -2922,6 +3087,7 @@ public class TrainSim : MonoBehaviour
         bool relief = prop.kind.transform.parent == sceneryRoot; // a template made by Ambience.Relief (prefabs have no parent)
         float away = relief ? Random.Range(36f, 50f) : prop.size == 0 ? Random.Range(4.5f, 14f) : prop.size == 1 ? Random.Range(10f, 22f) : Random.Range(31f, 44f); // the big things and the relief stand past the hero's leash (Player.leash): the field she fights on stays clear
         if (Biomes[Biome].id == "space") away = prop.size == 1 ? Random.Range(16f, 32f) : Random.Range(34f, 60f); // far off
+        if (Biomes[Biome].id == "jungle" && !relief && tallKinds.Contains(prop.kind)) away = Random.Range(25f, 32f); // the jungle's trees close in round the line, on its far side
         prop.side = Random.value < 0.5f ? away : -away;
         if (tallKinds.Contains(prop.kind) && Camera.main)
         {
@@ -2980,7 +3146,7 @@ public class TrainSim : MonoBehaviour
         Texture2D painting = Resources.Load<Texture2D>("Ground/" + Biomes[Biome].id);
         groundMat.mainTexture = painting;
         groundMat.mainTextureScale = Vector2.one * (viewRange * 8f / GroundTile);
-        Tint(groundMat, painting ? Color.white : Biomes[Biome].ground);
+        Tint(groundMat, painting ? (Biomes[Biome].id == "jungle" ? new Color(0.76f, 0.84f, 0.7f) : Color.white) : Biomes[Biome].ground); // the jungle's floor in the canopy's shade
     }
 
     public static void Tint(Material mat, Color color) => mat.SetColor(MainColor, color.linear); // an HDR property: Unity does not convert it for us

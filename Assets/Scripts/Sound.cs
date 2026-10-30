@@ -38,6 +38,7 @@ public static class Sound
     }
 
     public static AudioSource AsEffect(AudioSource source, float loudness = 1f) => Join(source, loudness, false);
+    public static AudioSource AsMusic(AudioSource source, float loudness = 1f) => Join(source, loudness, true);
 
     public static AudioSource Effect(GameObject owner, string clip, float loudness = 1f)
     {

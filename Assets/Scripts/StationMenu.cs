@@ -367,6 +367,12 @@ public static class UiKit
         "alien" => new Tones { main = new(0.1f, 0.92f, 0.75f), deep = new(0.1f, 0.03f, 0.14f), hot = new(1f, 0.3f, 0.8f) },
         "menu" => new Tones { main = new(0.9f, 0.12f, 0.2f), deep = new(0.06f, 0.03f, 0.06f), hot = new(1f, 0.82f, 0.2f) }, // outside a run: the menus, the story
         "fortress" => new Tones { main = new(0.45f, 1f, 0.2f), deep = new(0.03f, 0.06f, 0.05f), hot = new(1f, 0.28f, 0.2f) },
+        "government" => new Tones { main = new(.2f, .65f, 1f), deep = new(.05f, .08f, .13f), hot = new(1f, .66f, .1f) },
+        "hell" => new Tones { main=new(.9f,.13f,.08f),deep=new(.1f,.015f,.025f),hot=new(1f,.68f,.15f) },
+        "heaven" => new Tones { main=new(.8f,.65f,.25f),deep=new(.04f,.12f,.2f),hot=new(.45f,.9f,1f) },
+        "psychoworlds" => new Tones { main=new(.8f,.13f,.9f),deep=new(.07f,.01f,.14f),hot=new(.1f,1f,.75f) },
+        "robotheaven" => new Tones { main=new(.95f,.62f,.16f),deep=new(.06f,.12f,.21f),hot=new(.45f,.9f,1f) },
+        "thulu" => new Tones { main=new(.35f,.75f,.5f),deep=new(.06f,.1f,.13f),hot=new(.85f,.6f,.95f) },
         _ => new Tones { main = new(1f, 0.55f, 0.15f), deep = new(0.17f, 0.07f, 0.03f), hot = new(1f, 0.88f, 0.25f) }, // the desert
     };
 
@@ -376,6 +382,9 @@ public static class UiKit
         "cerebron" => new Tones { main = new(0.6f, 0.28f, 1f), deep = new(0.07f, 0.03f, 0.12f), hot = new(1f, 0.62f, 0.5f) },
         "culu" => new Tones { main = new(0.45f, 0.8f, 0.25f), deep = new(0.04f, 0.09f, 0.04f), hot = new(1f, 0.3f, 0.3f) },
         "faceless" => new Tones { main = new(0.3f, 0.75f, 1f), deep = new(0.03f, 0.06f, 0.12f), hot = new(0.95f, 0.98f, 1f) },
+        "nath" => new Tones { main = new(.68f,.4f,.92f), deep = new(.12f,.06f,.17f), hot = new(1f,.66f,.24f) },
+        "gabriel" => new Tones { main = new(1f,.62f,.27f), deep = new(.12f,.07f,.1f), hot = new(1f,.68f,.82f) },
+        "giger" => new Tones { main = new(.68f, .42f, .23f), deep = new(.09f, .05f, .03f), hot = new(.55f, 1f, .2f) },
         "sentinel" => new Tones { main = new(1f, 0.5f, 0.08f), deep = new(0.1f, 0.05f, 0.02f), hot = new(1f, 0.86f, 0.3f) },
         "tzmil" => new Tones { main = new(0.95f, 0.2f, 0.8f), deep = new(0.09f, 0.03f, 0.1f), hot = new(0.72f, 0.5f, 1f) },
         "xiuhtecuhtli" => new Tones { main = new(0.1f, 0.92f, 0.78f), deep = new(0.02f, 0.09f, 0.08f), hot = new(1f, 0.45f, 0.15f) },
@@ -412,6 +421,9 @@ public static class UiKit
     // Whose colours a line of dialogue is in: the hero whose name it is, else the rival's red or the biome's.
     public static Color Speaker(string name, bool rival)
     {
+        if (L10n.T("hero.character.nath") == name) return Hero("nath").main;
+        if (L10n.T("hero.character.gabriel") == name) return Hero("gabriel").main;
+        if (L10n.T("hero.character.giger") == name) return Hero("giger").main;
         foreach (string id in Locomotives.Heroes)
             if (id != null && L10n.T("hero.character." + id) == name) return Hero(id).main;
         if (L10n.T("hero.character.bba") == name) return Hero("bba").main;

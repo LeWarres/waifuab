@@ -59,6 +59,8 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
     const float RampStep = 5f;
     Vector3 launchDir;
     bool launched;
+    bool LaunchDenied => winner != null && Story.Active && Story.Hero == "xiuhtecuhtli" && winner == me && Story.Chapter == 1;
+    Racer LaunchActor => LaunchDenied ? racers.Find(r => r.loco == 0) : winner;
     float sparkIn;
     GameObject sky;
     UnityEngine.Rendering.Volume haze;
@@ -172,7 +174,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         dirs.Clear();
         wrecks.Clear();
         // The centre line: straight off the grid and into the launcher, bending in between, smoothly and both ways.
-        int n = Mathf.CeilToInt((trench ? trenchLength : length) / Step);
+        int n = Mathf.CeilToInt((crateRun ? 4600f : trench ? trenchLength : length) / Step);
         float heading = 0f, seed = Random.value * 100f;
         // Hairpins, podracer style: a long hard swing from one side to the other (up to 160 degrees), the next one
         // back. The heading never strays more than MaxHeading from straight on, so the course always moves forward
@@ -185,12 +187,12 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             hairpins.Add((Mathf.RoundToInt(Mathf.Lerp(18f, n - 40f, (h + 0.5f) / pins)), Random.Range(6, 10), sign * Random.Range(55f, MaxHeading)));
             sign = -sign;
         }
-        if (trench) hairpins.Clear(); // the trench runs straight on, bending only a little
+        if (trench || crateRun) hairpins.Clear(); // the trench runs straight on, bending only a little
         Vector3 p = Origin;
         for (int i = 0; i <= n; i++)
         {
             points.Add(p);
-            float bend = i > 10 && i < n - 14 ? (Mathf.PerlinNoise(seed, i * 0.045f) * 2f - 1f) * (trench ? 2f : 5f) : 0f;
+            float bend = i > 10 && i < n - 14 ? (Mathf.PerlinNoise(seed, i * 0.045f) * 2f - 1f) * (crateRun ? .3f : trench ? 2f : 5f) : 0f;
             foreach (var h in hairpins) if (i >= h.at && i < h.at + h.steps) bend = (h.target - heading) / (h.at + h.steps - i);
             if (i >= n - 24) bend = i < n - 8 ? -heading / (n - 8 - i) : 0f; // straightened out for the run into the launcher
             heading = Mathf.Clamp(heading + bend, -MaxHeading, MaxHeading);
@@ -204,10 +206,11 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         // the right), gantries over it now and then and lamps along it; the city's ground painting all round, and
         // far out a skyline of towers fading into the haze.
         Material asphalt = TrainSim.Mat(Color.white, false), wall = TrainSim.Mat(new Color(0.5f, 0.52f, 0.6f)), steel = TrainSim.Mat(new Color(0.62f, 0.65f, 0.72f));
-        asphalt.mainTexture = trench ? Resources.Load<Texture2D>("Ground/fortress") : AsphaltTexture();
+        asphalt.mainTexture = crateRun ? Resources.Load<Texture2D>("Ground/hell") : trench ? Resources.Load<Texture2D>("Ground/fortress") : AsphaltTexture();
         if (trench) { asphalt.mainTextureScale = new Vector2(2f, 0.5f); Tint(wall, new Color(0.26f, 0.3f, 0.34f)); } // the trench: the base's plates, steel walls
         wall.SetInt("_Culling", 0);
         Material cyan = TrainSim.Mat(new Color(0.3f, 2.2f, 2.6f), false), pink = TrainSim.Mat(new Color(2.6f, 0.45f, 1.7f), false), gold = TrainSim.Mat(new Color(2.8f, 1.9f, 0.4f), false);
+        if (crateRun) { Tint(cyan,new Color(2.4f,.35f,.08f)); Tint(pink,new Color(2.6f,.85f,.12f)); Tint(steel,new Color(.17f,.1f,.12f)); Tint(wall,new Color(.2f,.09f,.12f)); }
         Ribbon("Road", -roadWidth / 2f, roadWidth / 2f, 0.05f, asphalt);
         float wallHigh = trench ? 22f : 1.2f; // the trench: sheer walls either side
         Wall("WallL", -roadWidth / 2f - 0.8f, -roadWidth / 2f, wallHigh, wall);
@@ -244,7 +247,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         ground.transform.SetPositionAndRotation(area.center + Vector3.down * 0.02f, Quaternion.Euler(90f, 0f, 0f));
         ground.transform.localScale = Vector3.one * groundSize;
         Material groundMat = TrainSim.Mat(Color.white, false);
-        groundMat.mainTexture = Resources.Load<Texture2D>(trench ? "Ground/fortress" : "Ground/city");
+        groundMat.mainTexture = Resources.Load<Texture2D>(crateRun ? "Ground/hell" : trench ? "Ground/fortress" : "Ground/city");
         groundMat.mainTextureScale = Vector2.one * (groundSize / 54f);
         ground.GetComponent<Renderer>().sharedMaterial = groundMat;
 
@@ -253,14 +256,14 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         var junk = new List<GameObject>();
         beacons.Clear();
         Material hazard = TrainSim.Mat(new Color(2.4f, 0.9f, 0.1f), false), hazardDark = TrainSim.Mat(new Color(0.12f, 0.1f, 0.1f), false), beacon = TrainSim.Mat(new Color(3f, 0.5f, 0.2f), false);
-        foreach (GameObject kind in Resources.LoadAll<GameObject>(trench ? "Scenery/fortress" : "Scenery/city"))
+        foreach (GameObject kind in Resources.LoadAll<GameObject>(crateRun ? "Scenery/hell" : trench ? "Scenery/fortress" : "Scenery/city"))
         {
             Bounds box = Bounds(kind);
             if (trench) { if (box.size.y > 1f && box.size.y < 4f) junk.Add(kind); } // the base's crates, cores and radars in the trench
             else if (box.size.y > 4f) tall.Add(kind);
             else if (kind.name.Contains("car") || kind.name.Contains("Taxi") || kind.name.Contains("Police") || kind.name.Contains("barrier")) junk.Add(kind);
         }
-        for (float s = 30f; s < total - 160f && tall.Count > 0; s += Random.Range(26f, 40f))
+        for (float s = 30f; s < total - 160f && tall.Count > 0 && !crateRun; s += Random.Range(26f, 40f))
             for (int side = -1; side <= 1; side += 2)
             {
                 if (Random.value < 0.25f) continue;
@@ -268,7 +271,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
                 if (!OffRoad(at, 12f)) continue; // a bend's other leg runs close by: nothing on its road
                 Instantiate(tall[Random.Range(0, tall.Count)], at, Quaternion.LookRotation(dir) * Quaternion.Euler(0f, Random.Range(0, 4) * 90f, 0f), course);
             }
-        for (int i = 0, wreckCount = Mathf.RoundToInt(obstacles * (trench ? trenchLength * 0.5f : length) / 2600f); i < wreckCount && junk.Count > 0; i++)
+        for (int i = 0, wreckCount = Mathf.RoundToInt(obstacles * (trench ? trenchLength * 0.5f : length) / 2600f); i < wreckCount && junk.Count > 0 && !crateRun; i++)
         {
             float s = Mathf.Lerp(220f, total - 260f, (i + Random.value) / wreckCount);
             Vector3 at = PointAt(s, out Vector3 dir) + Vector3.Cross(Vector3.up, dir) * Random.Range(-roadWidth * 0.38f, roadWidth * 0.38f);
@@ -283,6 +286,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             wrecks.Add((at, 3.4f));
         }
 
+        if (crateRun) { BuildCrates(); course.gameObject.SetActive(false); return; }
         if (trench) { BuildVent(); Freeze(); course.gameObject.SetActive(false); return; } // the trench ends at the vent, not a launcher
         DressCity();
         // The launcher at B: chevrons on the road point at it, a chequered line, then a ramp that curves up to the
@@ -511,10 +515,11 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         // Ours, the chapter's rival, and four more of the locomotives there are, at random.
         var field = new List<int> { Locomotives.Selected };
         if (Story.Active && !field.Contains(Story.Current.rival)) field.Add(Story.Current.rival);
+        if (Story.Active && Story.Hero == "xiuhtecuhtli" && Story.Current.race && !field.Contains(0)) field.Add(0); // BBA receives his launch slot.
         var others = new List<int>();
         for (int i = 0; i < Locomotives.Models.Length; i++) if (!field.Contains(i)) others.Add(i);
         while (field.Count < 6 && others.Count > 0) { int k = Random.Range(0, others.Count); field.Add(others[k]); others.RemoveAt(k); }
-        if (trench) field.RemoveRange(1, field.Count - 1); // alone down the trench
+        if (trench || crateRun) field.RemoveRange(1, field.Count - 1); // alone down the trench
         // On the grid, two abreast; ours in the middle of it.
         int[] slot = { 2, 0, 1, 3, 4, 5 };
         float hard = Mathf.Clamp01(train.Difficulty / 30f);
@@ -547,9 +552,9 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         startsAt = float.MaxValue; // the countdown waits for the controls to be read
         endsAt = -1f;
         message.text = "";
-        hint.text = L10n.T(trench ? "trench.controls" : "race.controls");
-        sky.GetComponent<Renderer>().sharedMaterial.mainTexture = Resources.Load<Texture2D>(trench ? "Sky/fortress" : "Sky/city");
-        standings.transform.parent.gameObject.SetActive(!trench); // alone in the trench: no standings
+        hint.text = L10n.T(crateRun ? "giger.crates.controls" : trench ? "trench.controls" : "race.controls");
+        sky.GetComponent<Renderer>().sharedMaterial.mainTexture = Resources.Load<Texture2D>(crateRun ? "Sky/hell" : trench ? "Sky/fortress" : "Sky/city");
+        standings.transform.parent.gameObject.SetActive(!trench && !crateRun); // alone in the trench: no standings
         if (trench) TrenchBegin();
         briefing.gameObject.SetActive(true);
         dots.Clear();
@@ -574,6 +579,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
     {
         if (!Active) return;
         winner = me;
+        if (crateRun) { CratesBroken = CrateCount; CratesSeen = CrateCount; }
         trenchWon = true;
         End();
     }
@@ -584,7 +590,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         raceSound.Stop();
         board.gameObject.SetActive(false);
         foreach (Transform s in streaks) s.gameObject.SetActive(false);
-        bool won = trench ? trenchWon : winner == me;
+        bool won = crateRun ? CratesPassed(CratesBroken) : trench ? trenchWon : winner == me;
         if (won)
         {
             // lost, it stays on screen while the player is asked whether to try again (Begin builds it anew)
@@ -602,6 +608,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         System.Action<bool> finished = done;
         done = null;
         trench = false;
+        crateRun = false;
         finished?.Invoke(won);
     }
 
@@ -612,7 +619,8 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         // Testing aid: N on the keyboard starts a race on the spot.
         if (!Active && Keyboard.current != null && Keyboard.current.nKey.wasPressedThisFrame && !(Story.Active ? Story.Current.eyeBoss || Story.Current.cave || (Story.Current.gates && !Story.GatesPassed) : train.BiomeId == "space") && !train.Racing && !train.Paused && !train.AtStation && !train.InEvent && !train.BossFight)
         {
-            if (Story.Active && Story.Current.trench) BeginTrench(train.RaceFinished); // the base's chapter: the trench run, as its real finale
+            if (Story.Active && Story.Current.crates) BeginCrates(train.RaceFinished);
+            else if (Story.Active && Story.Current.trench) BeginTrench(train.RaceFinished); // the base's chapter: the trench run, as its real finale
             else Begin(won => { if (Story.Active && Story.Current.race) train.RaceFinished(won); else train.Toast(L10n.T(won ? "race.won" : "race.lost.short")); }); // in the race's chapter, as the real finale
         }
         raceSound.Pause(train.Paused);
@@ -621,7 +629,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         float now = Time.unscaledTime, dt = Mathf.Min(Time.unscaledDeltaTime, 0.05f);
         if (briefing.gameObject.activeSelf)
         {
-            // On the grid, the controls up: ✕, Space or Enter and the countdown starts.
+            // On the grid, the controls up: âœ•, Space or Enter and the countdown starts.
             bool ready = (Keyboard.current != null && (Keyboard.current.spaceKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame))
                          || (Gamepad.current != null && (Gamepad.current.buttonSouth.wasPressedThisFrame || Gamepad.current.startButton.wasPressedThisFrame));
             if (ready)
@@ -662,24 +670,26 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         // Positions: by how far along; whoever is over the line first is first.
         racers.Sort((a, b) => a.finishedAt >= 0f && b.finishedAt >= 0f ? a.finishedAt.CompareTo(b.finishedAt)
             : a.finishedAt >= 0f ? -1 : b.finishedAt >= 0f ? 1 : b.progress.CompareTo(a.progress));
-        if (winner == null && racers[0].finishedAt >= 0f)
+        if (!crateRun && winner == null && racers[0].finishedAt >= 0f)
         {
             winner = racers[0];
+            if (LaunchDenied && LaunchActor != null) LaunchActor.finishedAt = now + .01f;
             raceSound.Cue(winner == me ? "race_win" : "race_lose");
-            message.text = winner == me ? L10n.T("race.won") : L10n.T("race.lost", winner.name);
+            message.text = LaunchDenied ? L10n.T("story.xiuhtecuhtli.race.denied") : winner == me ? L10n.T("race.won") : L10n.T("race.lost", winner.name);
             endsAt = now + 7f;
         }
         Show(now);
         UpdateCamera(dt, false);
         if (trench && going) TrenchUpdate(now, dt);
-        if (!trench) CityUpdate(now, going, dt);
+        if (crateRun) CratesUpdate(now, going);
+        else if (!trench) CityUpdate(now, going, dt);
         UpdateSound(now);
         if (endsAt > 0f && now >= endsAt) End();
     }
 
     void UpdateSound(float now)
     {
-        if (winner != null)
+        if (winner != null || (crateRun && endsAt > 0f))
         {
             raceSound.StopDriving();
             return;
@@ -762,7 +772,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         if (r.player) playerBraking = brake;
         if (r.finishedAt >= 0f)
         {
-            if (r == winner)
+            if (r == LaunchActor)
             {
                 // Up the rail ever faster, sparks off it, and at the top shot off into the sky.
                 r.speed = Mathf.MoveTowards(r.speed, boostSpeed * 1.6f, 40f * dt);
@@ -899,7 +909,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             if (r.progress >= total) r.finishedAt = now;
         }
         // On the ground: hovering, bobbing, leaning into the turn. The winner rides the launcher's rail.
-        if (r == winner && r.finishedAt >= 0f)
+        if (!crateRun && r == LaunchActor && r.finishedAt >= 0f)
         {
             Vector3 on = RampAt(r.rampS, out float rise);
             r.progress = total + r.rampS;
@@ -978,11 +988,12 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         if (me == null || (trench && aiming)) return; // at the hatch: RaceTrench.AimCamera
         if (winner != null && ramp.Count > 0)
         {
+            Racer filmed = LaunchActor ?? winner;
             // Whoever won: filmed from beside the launcher going up it and off into the sky.
             Vector3 side0 = Vector3.Cross(Vector3.up, dirs[^1]);
-            Vector3 spot = winner.body.position + side0 * 36f - dirs[^1] * 18f + Vector3.up * 4f; // alongside it as it climbs
+            Vector3 spot = filmed.body.position + side0 * 36f - dirs[^1] * 18f + Vector3.up * 4f; // alongside it as it climbs
             view.transform.position = Vector3.SmoothDamp(view.transform.position, spot, ref camVelocity, 0.45f, Mathf.Infinity, dt);
-            view.transform.rotation = Quaternion.Slerp(view.transform.rotation, Quaternion.LookRotation(winner.body.position - view.transform.position), 4f * dt);
+            view.transform.rotation = Quaternion.Slerp(view.transform.rotation, Quaternion.LookRotation(filmed.body.position - view.transform.position), 4f * dt);
             view.fieldOfView = Mathf.Lerp(view.fieldOfView, 50f, 2f * dt);
             sky.transform.position = view.transform.position;
             foreach (Transform s in streaks) s.gameObject.SetActive(false);

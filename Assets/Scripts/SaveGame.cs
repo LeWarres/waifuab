@@ -13,6 +13,9 @@ public static class SaveGame
     class Data
     {
         public List<int> unlocked = new();
+        public int golemMoralAnswers;
+        public List<string> gabrielBuild = new();
+        public int gabrielDraft = 1;
         public bool story;                    // a story is under way
         public int locomotive, chapter, reached;
         public List<string> keep = new();     // per chapter won: the upgrade chosen to keep (a Story token)
@@ -61,6 +64,10 @@ public static class SaveGame
         Write();
     }
 
+    public static List<string> GabrielBuild => new List<string>(D.gabrielBuild ?? new List<string>());
+    public static int GabrielDraft => Mathf.Clamp(D.gabrielDraft,0,2);
+    public static void SaveGabrielBuild(List<string> tokens,int stage=1) { D.gabrielBuild = new List<string>(tokens); D.gabrielDraft=stage; Write(); }
+
     public static bool HasStory => D.story;
     public static int Locomotive => D.locomotive;
     public static int Chapter => D.chapter;   // the one to continue with
@@ -72,6 +79,9 @@ public static class SaveGame
         D.story = true;
         D.locomotive = locomotive;
         D.chapter = D.reached = 0;
+        D.golemMoralAnswers = 0;
+        D.gabrielBuild = new();
+        D.gabrielDraft = 1;
         D.keep.Clear();
         D.passive.Clear();
         D.truck.Clear();
@@ -97,6 +107,9 @@ public static class SaveGame
         D.chapter = chapter;
         Write();
     }
+
+    public static bool GolemHighMorality => D.golemMoralAnswers >= 7;
+    public static void GolemJudged(int highAnswers) { D.golemMoralAnswers = Mathf.Clamp(highAnswers, 0, 13); Write(); }
 
     public static int Tickets => D.tickets;
     public static void AddTickets(int amount) { D.tickets = Mathf.Max(0, D.tickets + amount); Write(); }

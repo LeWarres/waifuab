@@ -775,7 +775,7 @@ public class Hud : MonoBehaviour
             string id = train.passiveOrder[i];
             UiKit.SetIcon(passives[i].icon, TrainSim.PassiveIcons[System.Array.IndexOf(TrainSim.Passives, id)]);
             int lv = train.PassiveLevel(id);
-            Level(passives[i], lv >= TrainSim.MaxPassive ? "MAX" : lv.ToString());
+            Level(passives[i], lv >= TrainSim.PassiveCap(id) ? "MAX" : lv.ToString());
         }
         // One quiet line under the hero: the stats while shopping, the controls for the first stretch of a run.
         hint.text = train.AtStation ? L10n.T("hud.hero.stats", Mathf.RoundToInt(hero.damageBonus * 100f), hero.speed.ToString("0.#"),

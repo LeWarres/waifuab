@@ -1,0 +1,174 @@
+[
+  {
+    "id": "premium",
+    "prompt": "Use the actual FBX head reference: ivory avian skull with empty orbital cavities, steeply down-curved dark-tipped beak, no yellow face, no eyeballs or human face underneath. Preserve the first image's red skull-faced father exactly. See Tools/r20_art_direction.md.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-0adfd617-a6fe-4740-99d3-5753a0ae87fa.png",
+    "destination": "Assets/Resources/Story/r20_premium.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-c9d49b3d-8f83-463b-a877-707725779bec.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  },
+  {
+    "id": "recruitment",
+    "prompt": "Edit image 1, preserving the narrative and Aztec codex composition. Image 2 is R20's ACTUAL MODEL HEAD; image 3 supplies the EXACT FATHER to use. Correct R20 both in the large foreground and the small thought cloud: head is the model's PALE IVORY/BONE AVIAN SKULL, with EMPTY dark orbital hole and bony nasal openings, thick curved beak descending steeply to a DARK BLACK/CHARCOAL TIP. No yellow/gold face, no eyeballs/iris/pupils/white eyes, no human face or mouth below the skull, no mask straps. Gold jewelry remains gold. Draw the model skull shape accurately in flat codex pigments. CRITICAL: replace the BIG BIRD-HEADED FATHER in the thought cloud with EXACTLY the RED SKULL-FACED FATHER AT RIGHT OF IMAGE 3: RED skin and striped red robe, IVORY SKULL FACE with RED sockets, long ivory fangs, round RED-AND-TURQUOISE crown jewel and turquoise feather crown, bone ornaments. He is praising his smaller son. Copy his face, crown and red clothing faithfully, not a generic red god or giant son. Preserve the two black-suited government agents in the foreground EXACTLY (black sunglasses, white shirts, black ties, black hair and gold hairband, red shoes), rock, tray and poses. Entire image must be AZTEC/MEXICA CODEX art on aged parchment, flat ochre/red/turquoise/black with strong black angular contours, no 3D shading or anime. No text.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-cfe498c5-3a8a-49cf-9c67-3f141e313588.png",
+    "destination": "Assets/Resources/Story/r20_recruitment.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-a6580fca-4add-41d2-9e08-b614d0813754.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  },
+  {
+    "id": "culu",
+    "prompt": "Edit image 1, preserving story content, layout, poses, props and parchment. Image 2 is the ACTUAL 3D MODEL'S head, obligatory anatomy/color reference. Image 3 is the corrected character and AZTEC CODEX style reference. Correct EVERY R20/Xiuhtecuhtli appearance, including clones, small figures and tank silhouettes: PALE IVORY/BONE AVIAN SKULL with large EMPTY orbital cavity, smaller bony nasal holes and skeletal struts; thick large hooked beak curving strongly DOWN to a DARK CHARCOAL/BLACK TIP, matching image 2 and the SON at left of image 3. No uniformly yellow/gold face. Gold shoulder/belt skull jewelry remains gold, the head is bone-colored. NO EYEBALLS, pupils, irises, white eyes, human face, human chin, lips or human teeth; no mask edge or straps. The empty bony orbital hole is hollow negative space, never a cartoon eye. It is literally an avian skull head on black feathered neck, not a smooth featureless nose. Keep turquoise feather fan, black body, red loincloth, gold cuffs, clawed feet. Uniform AZTEC/MEXICA CODEX painting throughout: flat earthy pigments and angular ink glyph contours, shallow symbolic space, parchment, profile figures, no 3D machinery or realistic shading, gradients, cinematic highlights, anime or western cartoon. Turn trains/buildings into flat codex glyphs but preserve their identifying colors and shapes. Two-arm anatomy, no text or watermarks. Preserve Culu: GREEN HUMAN WOMAN'S FACE, red eye, tentacles as hair ONLY, black-white maid apron, exactly two hands holding map. Preserve pointing-left gesture.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-cbd04027-8f0f-4ead-9811-ad6f6a29b452.png",
+    "destination": "Assets/Resources/Story/r20_culu.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-1694b7ea-1dc1-43fa-8230-641fa5845eb0.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  },
+  {
+    "id": "wrong_turn",
+    "prompt": "Edit image 1, preserving story content, layout, poses, props and parchment. Image 2 is the ACTUAL 3D MODEL'S head, obligatory anatomy/color reference. Image 3 is the corrected character and AZTEC CODEX style reference. Correct EVERY R20/Xiuhtecuhtli appearance, including clones, small figures and tank silhouettes: PALE IVORY/BONE AVIAN SKULL with large EMPTY orbital cavity, smaller bony nasal holes and skeletal struts; thick large hooked beak curving strongly DOWN to a DARK CHARCOAL/BLACK TIP, matching image 2 and the SON at left of image 3. No uniformly yellow/gold face. Gold shoulder/belt skull jewelry remains gold, the head is bone-colored. NO EYEBALLS, pupils, irises, white eyes, human face, human chin, lips or human teeth; no mask edge or straps. The empty bony orbital hole is hollow negative space, never a cartoon eye. It is literally an avian skull head on black feathered neck, not a smooth featureless nose. Keep turquoise feather fan, black body, red loincloth, gold cuffs, clawed feet. Uniform AZTEC/MEXICA CODEX painting throughout: flat earthy pigments and angular ink glyph contours, shallow symbolic space, parchment, profile figures, no 3D machinery or realistic shading, gradients, cinematic highlights, anime or western cartoon. Turn trains/buildings into flat codex glyphs but preserve their identifying colors and shapes. Two-arm anatomy, no text or watermarks. Preserve map/jungle on left and CITY DESTINATION ON RIGHT, hero driving R20 toward city. Train is rusty orange with moss-green roof, twin front turbines; draw as flat codex glyph, not realistic cylinder shading.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-b69f8e92-0ca1-443b-aa05-ac6f7ae8edbb.png",
+    "destination": "Assets/Resources/Story/r20_wrong_turn.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-6cd17ea8-d540-481a-92db-dc8bd34709cc.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  },
+  {
+    "id": "launcher",
+    "prompt": "Edit image 1, preserving story content, layout, poses, props and parchment. Image 2 is the ACTUAL 3D MODEL'S head, obligatory anatomy/color reference. Image 3 is the corrected character and AZTEC CODEX style reference. Correct EVERY R20/Xiuhtecuhtli appearance, including clones, small figures and tank silhouettes: PALE IVORY/BONE AVIAN SKULL with large EMPTY orbital cavity, smaller bony nasal holes and skeletal struts; thick large hooked beak curving strongly DOWN to a DARK CHARCOAL/BLACK TIP, matching image 2 and the SON at left of image 3. No uniformly yellow/gold face. Gold shoulder/belt skull jewelry remains gold, the head is bone-colored. NO EYEBALLS, pupils, irises, white eyes, human face, human chin, lips or human teeth; no mask edge or straps. The empty bony orbital hole is hollow negative space, never a cartoon eye. It is literally an avian skull head on black feathered neck, not a smooth featureless nose. Keep turquoise feather fan, black body, red loincloth, gold cuffs, clawed feet. Uniform AZTEC/MEXICA CODEX painting throughout: flat earthy pigments and angular ink glyph contours, shallow symbolic space, parchment, profile figures, no 3D machinery or realistic shading, gradients, cinematic highlights, anime or western cartoon. Turn trains/buildings into flat codex glyphs but preserve their identifying colors and shapes. Two-arm anatomy, no text or watermarks. Government people must match the AGENTS in image 4: modern black jacket and trousers, WHITE shirt, BLACK TIE, BLACK SUNGLASSES, slick black hair/gold narrow hairband, red shoes. No royal robes, crowns, or white sci-fi uniforms. Preserve rulers measuring R20, little rusty mossy twin-turbine engine blocked below, BBA's BLUE/YELLOW RECTANGULAR DIESEL being launched top-right. Its tiny HUMAN woman driver has pink hair/red pointed witch hat. No yellow face on R20.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-e855f909-12e9-43c3-b6f8-164fdece8153.png",
+    "destination": "Assets/Resources/Story/r20_launcher.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-58623f66-8818-4be4-a51e-5ba6565cde63.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  },
+  {
+    "id": "ocean",
+    "prompt": "Edit image 1, preserving story content, layout, poses, props and parchment. Image 2 is the ACTUAL 3D MODEL'S head, obligatory anatomy/color reference. Image 3 is the corrected character and AZTEC CODEX style reference. Correct EVERY R20/Xiuhtecuhtli appearance, including clones, small figures and tank silhouettes: PALE IVORY/BONE AVIAN SKULL with large EMPTY orbital cavity, smaller bony nasal holes and skeletal struts; thick large hooked beak curving strongly DOWN to a DARK CHARCOAL/BLACK TIP, matching image 2 and the SON at left of image 3. No uniformly yellow/gold face. Gold shoulder/belt skull jewelry remains gold, the head is bone-colored. NO EYEBALLS, pupils, irises, white eyes, human face, human chin, lips or human teeth; no mask edge or straps. The empty bony orbital hole is hollow negative space, never a cartoon eye. It is literally an avian skull head on black feathered neck, not a smooth featureless nose. Keep turquoise feather fan, black body, red loincloth, gold cuffs, clawed feet. Uniform AZTEC/MEXICA CODEX painting throughout: flat earthy pigments and angular ink glyph contours, shallow symbolic space, parchment, profile figures, no 3D machinery or realistic shading, gradients, cinematic highlights, anime or western cartoon. Turn trains/buildings into flat codex glyphs but preserve their identifying colors and shapes. Two-arm anatomy, no text or watermarks. Preserve green rock held high atop rusty mossy twin-turbine R20 train, ocean glyph waves and distant blue-yellow diesel BBA train. Main head has skull structure and black downward beak tip, no human lower jaw.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-0fcde2fa-e20d-4658-a3d3-ca8d5dc49f24.png",
+    "destination": "Assets/Resources/Story/r20_ocean.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-82dc8454-f75c-4d08-a0cd-e78674e9a55e.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  },
+  {
+    "id": "volcano",
+    "prompt": "Edit image 1, preserving story content, layout, poses, props and parchment. Image 2 is the ACTUAL 3D MODEL'S head, obligatory anatomy/color reference. Image 3 is the corrected character and AZTEC CODEX style reference. Correct EVERY R20/Xiuhtecuhtli appearance, including clones, small figures and tank silhouettes: PALE IVORY/BONE AVIAN SKULL with large EMPTY orbital cavity, smaller bony nasal holes and skeletal struts; thick large hooked beak curving strongly DOWN to a DARK CHARCOAL/BLACK TIP, matching image 2 and the SON at left of image 3. No uniformly yellow/gold face. Gold shoulder/belt skull jewelry remains gold, the head is bone-colored. NO EYEBALLS, pupils, irises, white eyes, human face, human chin, lips or human teeth; no mask edge or straps. The empty bony orbital hole is hollow negative space, never a cartoon eye. It is literally an avian skull head on black feathered neck, not a smooth featureless nose. Keep turquoise feather fan, black body, red loincloth, gold cuffs, clawed feet. Uniform AZTEC/MEXICA CODEX painting throughout: flat earthy pigments and angular ink glyph contours, shallow symbolic space, parchment, profile figures, no 3D machinery or realistic shading, gradients, cinematic highlights, anime or western cartoon. Turn trains/buildings into flat codex glyphs but preserve their identifying colors and shapes. Two-arm anatomy, no text or watermarks. Preserve raised green rock, angry posture and stepped volcano/smoke glyphs. Convey anger via pose only, not invented eyes/mouth.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-36c9b348-e5d1-4df1-a3c9-8b1835cfeff3.png",
+    "destination": "Assets/Resources/Story/r20_volcano.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-a1062a28-ae84-41c4-81c8-79a32d2716c2.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  },
+  {
+    "id": "sister",
+    "prompt": "Edit image 1, preserving story content, layout, poses, props and parchment. Image 2 is the ACTUAL 3D MODEL'S head, obligatory anatomy/color reference. Image 3 is the corrected character and AZTEC CODEX style reference. Correct EVERY R20/Xiuhtecuhtli appearance, including clones, small figures and tank silhouettes: PALE IVORY/BONE AVIAN SKULL with large EMPTY orbital cavity, smaller bony nasal holes and skeletal struts; thick large hooked beak curving strongly DOWN to a DARK CHARCOAL/BLACK TIP, matching image 2 and the SON at left of image 3. No uniformly yellow/gold face. Gold shoulder/belt skull jewelry remains gold, the head is bone-colored. NO EYEBALLS, pupils, irises, white eyes, human face, human chin, lips or human teeth; no mask edge or straps. The empty bony orbital hole is hollow negative space, never a cartoon eye. It is literally an avian skull head on black feathered neck, not a smooth featureless nose. Keep turquoise feather fan, black body, red loincloth, gold cuffs, clawed feet. Uniform AZTEC/MEXICA CODEX painting throughout: flat earthy pigments and angular ink glyph contours, shallow symbolic space, parchment, profile figures, no 3D machinery or realistic shading, gradients, cinematic highlights, anime or western cartoon. Turn trains/buildings into flat codex glyphs but preserve their identifying colors and shapes. Two-arm anatomy, no text or watermarks. Preserve Tzmil's skeletal FEMALE face, dark teal feather crown, gold ribs, white sash, gold boots and two calming open hands; preserve brother's two hands on green rock. Tzmil keeps HER own face, only brother has avian skull.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-c47e9a72-4660-48b6-a88d-606a94f34f0f.png",
+    "destination": "Assets/Resources/Story/r20_sister.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-4ec462e3-8bb8-498c-ae03-63a71b9335ab.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  },
+  {
+    "id": "return_rock",
+    "prompt": "Edit image 1, preserving story content, layout, poses, props and parchment. Image 2 is the ACTUAL 3D MODEL'S head, obligatory anatomy/color reference. Image 3 is the corrected character and AZTEC CODEX style reference. Correct EVERY R20/Xiuhtecuhtli appearance, including clones, small figures and tank silhouettes: PALE IVORY/BONE AVIAN SKULL with large EMPTY orbital cavity, smaller bony nasal holes and skeletal struts; thick large hooked beak curving strongly DOWN to a DARK CHARCOAL/BLACK TIP, matching image 2 and the SON at left of image 3. No uniformly yellow/gold face. Gold shoulder/belt skull jewelry remains gold, the head is bone-colored. NO EYEBALLS, pupils, irises, white eyes, human face, human chin, lips or human teeth; no mask edge or straps. The empty bony orbital hole is hollow negative space, never a cartoon eye. It is literally an avian skull head on black feathered neck, not a smooth featureless nose. Keep turquoise feather fan, black body, red loincloth, gold cuffs, clawed feet. Uniform AZTEC/MEXICA CODEX painting throughout: flat earthy pigments and angular ink glyph contours, shallow symbolic space, parchment, profile figures, no 3D machinery or realistic shading, gradients, cinematic highlights, anime or western cartoon. Turn trains/buildings into flat codex glyphs but preserve their identifying colors and shapes. Two-arm anatomy, no text or watermarks. Government people must match the AGENTS in image 4: modern black jacket and trousers, WHITE shirt, BLACK TIE, BLACK SUNGLASSES, slick black hair/gold narrow hairband, red shoes. No royal robes, crowns, or white sci-fi uniforms. Preserve offered GREEN ROCK, refusing government agents with red batons, blue banners and security architecture. Flatten building perspective to codex symbols.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-db89e9e5-7fd0-41b2-9fd5-dce9a1b14107.png",
+    "destination": "Assets/Resources/Story/r20_return_rock.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-5f16fbd1-5d13-423d-9317-c1283e689c91.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  },
+  {
+    "id": "clone",
+    "prompt": "Edit image 1, preserving story content, layout, poses, props and parchment. Image 2 is the ACTUAL 3D MODEL'S head, obligatory anatomy/color reference. Image 3 is the corrected character and AZTEC CODEX style reference. Correct EVERY R20/Xiuhtecuhtli appearance, including clones, small figures and tank silhouettes: PALE IVORY/BONE AVIAN SKULL with large EMPTY orbital cavity, smaller bony nasal holes and skeletal struts; thick large hooked beak curving strongly DOWN to a DARK CHARCOAL/BLACK TIP, matching image 2 and the SON at left of image 3. No uniformly yellow/gold face. Gold shoulder/belt skull jewelry remains gold, the head is bone-colored. NO EYEBALLS, pupils, irises, white eyes, human face, human chin, lips or human teeth; no mask edge or straps. The empty bony orbital hole is hollow negative space, never a cartoon eye. It is literally an avian skull head on black feathered neck, not a smooth featureless nose. Keep turquoise feather fan, black body, red loincloth, gold cuffs, clawed feet. Uniform AZTEC/MEXICA CODEX painting throughout: flat earthy pigments and angular ink glyph contours, shallow symbolic space, parchment, profile figures, no 3D machinery or realistic shading, gradients, cinematic highlights, anime or western cartoon. Turn trains/buildings into flat codex glyphs but preserve their identifying colors and shapes. Two-arm anatomy, no text or watermarks. BOTH foreground R20 rivals AND BOTH tank silhouettes get the exact same bone-colored bird-skull head with empty orbital holes and black hooked-beak tip. No human faces. Preserve white ID tag on right clone and green rock center.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-43ef27f9-aca8-4cde-81bd-f6e03ede545f.png",
+    "destination": "Assets/Resources/Story/r20_clone.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-5d3b6aa4-f5ce-4292-a3b6-861070d286a9.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  },
+  {
+    "id": "clones",
+    "prompt": "Edit image 1, preserving story content, layout, poses, props and parchment. Image 2 is the ACTUAL 3D MODEL'S head, obligatory anatomy/color reference. Image 3 is the corrected character and AZTEC CODEX style reference. Correct EVERY R20/Xiuhtecuhtli appearance, including clones, small figures and tank silhouettes: PALE IVORY/BONE AVIAN SKULL with large EMPTY orbital cavity, smaller bony nasal holes and skeletal struts; thick large hooked beak curving strongly DOWN to a DARK CHARCOAL/BLACK TIP, matching image 2 and the SON at left of image 3. No uniformly yellow/gold face. Gold shoulder/belt skull jewelry remains gold, the head is bone-colored. NO EYEBALLS, pupils, irises, white eyes, human face, human chin, lips or human teeth; no mask edge or straps. The empty bony orbital hole is hollow negative space, never a cartoon eye. It is literally an avian skull head on black feathered neck, not a smooth featureless nose. Keep turquoise feather fan, black body, red loincloth, gold cuffs, clawed feet. Uniform AZTEC/MEXICA CODEX painting throughout: flat earthy pigments and angular ink glyph contours, shallow symbolic space, parchment, profile figures, no 3D machinery or realistic shading, gradients, cinematic highlights, anime or western cartoon. Turn trains/buildings into flat codex glyphs but preserve their identifying colors and shapes. Two-arm anatomy, no text or watermarks. Government people must match the AGENTS in image 4: modern black jacket and trousers, WHITE shirt, BLACK TIE, BLACK SUNGLASSES, slick black hair/gold narrow hairband, red shoes. No royal robes, crowns, or white sci-fi uniforms. Correct EVERY cloned R20 in EVERY cylinder and the foreground R20 to bone avian skull with empty orbit and black beak tip. Preserve Cerebron with exposed brain in his tank. Last tank contains BBA, human pink-haired woman with oversized pointed red witch hat and red-white armor/yellow trim, not a skull-faced red god.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-da9f06ce-baee-4465-b0d0-94d4ee11b634.png",
+    "destination": "Assets/Resources/Story/r20_clones.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-f32ec9fe-8325-41bf-8c28-909825f2d90e.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  },
+  {
+    "id": "silicon",
+    "prompt": "Correct this AZTEC CODEX story image (image 1). Mandatory references: image 2 = actual R20 bird-skull head, image 3 = exact black-suited government agents, image 4 = BBA's character design only. R20 at left has a PALE IVORY/BONE AVIAN SKULL with hollow EMPTY orbital cavity and bony nasal holes, large thick beak arcing steeply DOWN, DARK BLACK/CHARCOAL distal tip as in model image 2. NO YELLOW FACE, no eyes/iris/pupils, no human mouth/chin/teeth under the skull and no mask: the skull is his head. Preserve turquoise plumage, black body, gold accessories. GOVERNMENT MEN at right must COPY image 3 agents' modern BLACK SUITS, WHITE SHIRTS, BLACK TIES, BLACK SUNGLASSES, slick black hair with thin gold band and red shoes. Remove their tall crowns/royal robes. Preserve pink alien and crystal silicon trade. CRITICAL PORTRAITS: left circle = Cerebron with exposed pink brain; middle circle = BBA (HUMAN WOMAN, pink bob hair, green eye, HUGE POINTED RED WITCH HAT, red/white mechanical armor, yellow accents), NOT a red skull god. Replace the red skull character entirely with recognizable BBA from image 4. Right circle remains the alien military base. BBA must be translated into the same Aztec codex PROFILE style, never anime. Entire artwork uses strictly flat earth pigments, hand-inked black glyph contours, warm parchment, symbolic shallow 2D space. No realistic rendering, gradients, 3D shading or text.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_recruitment.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Menu/hero_bba_cut.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-79055edf-8d6f-4afc-85f5-6152650830c4.png",
+    "destination": "Assets/Resources/Story/r20_silicon.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-3e0a1b05-3e32-452d-b44f-97f6cbbb73d0.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  },
+  {
+    "id": "shaft",
+    "prompt": "Edit image 1, preserving story content, layout, poses, props and parchment. Image 2 is the ACTUAL 3D MODEL'S head, obligatory anatomy/color reference. Image 3 is the corrected character and AZTEC CODEX style reference. Correct EVERY R20/Xiuhtecuhtli appearance, including clones, small figures and tank silhouettes: PALE IVORY/BONE AVIAN SKULL with large EMPTY orbital cavity, smaller bony nasal holes and skeletal struts; thick large hooked beak curving strongly DOWN to a DARK CHARCOAL/BLACK TIP, matching image 2 and the SON at left of image 3. No uniformly yellow/gold face. Gold shoulder/belt skull jewelry remains gold, the head is bone-colored. NO EYEBALLS, pupils, irises, white eyes, human face, human chin, lips or human teeth; no mask edge or straps. The empty bony orbital hole is hollow negative space, never a cartoon eye. It is literally an avian skull head on black feathered neck, not a smooth featureless nose. Keep turquoise feather fan, black body, red loincloth, gold cuffs, clawed feet. Uniform AZTEC/MEXICA CODEX painting throughout: flat earthy pigments and angular ink glyph contours, shallow symbolic space, parchment, profile figures, no 3D machinery or realistic shading, gradients, cinematic highlights, anime or western cartoon. Turn trains/buildings into flat codex glyphs but preserve their identifying colors and shapes. Two-arm anatomy, no text or watermarks. Government people must match the AGENTS in image 4: modern black jacket and trousers, WHITE shirt, BLACK TIE, BLACK SUNGLASSES, slick black hair/gold narrow hairband, red shoes. No royal robes, crowns, or white sci-fi uniforms. Preserve turned-away hero, GREEN ROCK FALLING into central shaft, explosion glyph and THREE fleeing agents. Agents wear canonical BLACK SUITS and sunglasses. Flat codex shaft cutaway, not 3D.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png"
+    ],
+    "poseCorrection": "Edit this existing AZTEC CODEX panel. Fix ONLY THE MAIN HERO'S WHOLE BODY POSE at left: it currently looks twisted in two opposing directions. Rebuild him as ONE anatomically coherent STRICT RIGHT-FACING SIDE PROFILE, looking toward the shaft on the RIGHT. Skull, neck, chest, shoulders, pelvis, both knees and BOTH CLAWED FEET must all clearly face RIGHT. Torso and pelvis in the same profile plane, no frontal chest/back mixed with sideways head, no backwards neck, no opposite-facing feet. A clear balanced standing side silhouette: right foot planted forward toward shaft, left foot behind, BOTH sets of toes point right. Exactly TWO arms attached correctly: near arm reaches forward/right toward the shaft in a relaxed open-handed RELEASE gesture after dropping the rock; far arm bent comfortably beside/behind his waist, no shoulder inversion, no extra limbs. Neck connects anatomically to REAR/BASE of the bird skull, no human face or mask. Preserve the established PALE IVORY avian skull head with large EMPTY orbital cavity, small bony nasal holes, large downward-curved beak with DARK CHARCOAL/BLACK TIP. No eyeballs/pupils, no yellow face. Same turquoise fan feathers, black feathered body, gold skull jewelry, red loincloth and gold cuffs. Preserve EVERYTHING ELSE: green rock already FALLING INTO THE CENTRAL SHAFT, black/yellow warning edge, geometric explosion glyph, THREE black-suited sunglass-wearing agents fleeing right, background pipes and parchment. Do not move the shaft or rock; keep scene composition. Flat Aztec/Mexica codex pigments, ink outlines and symbolic 2D space, no new shading, text or watermarks. Image 2 is the actual 3D head reference ONLY; keep the correct skull anatomy and ivory/black colors.",
+    "previousPoseSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-c99ba9ab-3193-456d-bd1a-45398e38fe7b.png",
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-a34c489d-cd56-4682-b43a-4d34f86effc9.png",
+    "destination": "Assets/Resources/Story/r20_shaft.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-ebc1121a-d2d0-4323-8ab6-1f0475c1ad75.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  },
+  {
+    "id": "feast",
+    "prompt": "Edit image 1, preserving story content, layout, poses, props and parchment. Image 2 is the ACTUAL 3D MODEL'S head, obligatory anatomy/color reference. Image 3 is the corrected character and AZTEC CODEX style reference. Correct EVERY R20/Xiuhtecuhtli appearance, including clones, small figures and tank silhouettes: PALE IVORY/BONE AVIAN SKULL with large EMPTY orbital cavity, smaller bony nasal holes and skeletal struts; thick large hooked beak curving strongly DOWN to a DARK CHARCOAL/BLACK TIP, matching image 2 and the SON at left of image 3. No uniformly yellow/gold face. Gold shoulder/belt skull jewelry remains gold, the head is bone-colored. NO EYEBALLS, pupils, irises, white eyes, human face, human chin, lips or human teeth; no mask edge or straps. The empty bony orbital hole is hollow negative space, never a cartoon eye. It is literally an avian skull head on black feathered neck, not a smooth featureless nose. Keep turquoise feather fan, black body, red loincloth, gold cuffs, clawed feet. Uniform AZTEC/MEXICA CODEX painting throughout: flat earthy pigments and angular ink glyph contours, shallow symbolic space, parchment, profile figures, no 3D machinery or realistic shading, gradients, cinematic highlights, anime or western cartoon. Turn trains/buildings into flat codex glyphs but preserve their identifying colors and shapes. Two-arm anatomy, no text or watermarks. Replace the HUMAN-FACED FATHER at LEFT with EXACTLY THE FATHER ON RIGHT OF IMAGE 3: RED skin and striped red robes, IVORY SKULL FACE, RED sockets, long ivory fangs, exact ROUND RED/TURQUOISE CROWN JEWEL and turquoise feather crown, bone ornaments. Copy that same face faithfully, no human face or bird head for father. Beside him son uses actual model's ivory bird skull/black beak tip with NO EYEBALLS OR HUMAN SMILE. Preserve toast with separate cups and the ABSURDLY LONG LONG TABLE stretching to far-right horizon with food. Keep the visual table-length joke intact.",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/r20_premium.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-2a19c994-65ee-4acc-96a0-189b913acf42.png",
+    "destination": "Assets/Resources/Story/r20_feast.png",
+    "previousSource": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-3232ded9-646b-4c63-8add-b2609a51cd95.png",
+    "review": "Compared with actual FBX head; bone/ivory skull, dark beak tip, hollow orbital cavities, Aztec codex style. Father and government agents checked against fixed references."
+  }
+]

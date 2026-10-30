@@ -142,7 +142,7 @@ public partial class EyeBossEvent : MonoBehaviour
         beamWarn = TrainSim.Mat(new Color(2.6f, 0.2f, 0.25f), false);
         beamHot = TrainSim.Mat(new Color(3f, 1.6f, 3f), false);
         glowMat = TrainSim.Mat(new Color(1f, 2.6f, 2.8f), false);
-        lidMat = TrainSim.Mat(new Color(0.42f, 0.14f, 0.58f));
+        lidMat = TrainSim.Mat(Celestial ? new Color(.9f,.71f,.3f) : new Color(0.42f, 0.14f, 0.58f));
 
         // The ring: wagons nose to tail round a circle, their roofs the path.
         GameObject wagon = Resources.Load<GameObject>("Models/Wagon");
@@ -173,7 +173,9 @@ public partial class EyeBossEvent : MonoBehaviour
         boss = new GameObject("EyeBall").transform;
         boss.SetParent(arena, false);
         boss.localPosition = Vector3.up * BossHeight;
-        Ball(boss, Vector3.zero, BossRadius, TrainSim.Mat(new Color(0.5f, 0.16f, 0.66f)));
+        boss.name=Celestial ? "HeavenGuardian" : "EyeBall";
+        Ball(boss, Vector3.zero, Celestial ? BossRadius*.6f : BossRadius, TrainSim.Mat(Celestial ? new Color(.12f,.18f,.26f) : new Color(0.5f, 0.16f, 0.66f)));
+        if(Celestial) BuildHeavenGuardian();
         Material white = TrainSim.Mat(new Color(0.97f, 0.96f, 0.94f)), iris = TrainSim.Mat(new Color(0.3f, 1.6f, 0.6f), false), pupil = TrainSim.Mat(new Color(0.04f, 0.03f, 0.05f));
         for (int k = 0; k < eyeCount; k++)
         {
@@ -249,10 +251,10 @@ public partial class EyeBossEvent : MonoBehaviour
         sky.transform.localScale = Vector3.one * 2400f;
         Material skyPaint = TrainSim.Mat(Color.white, false);
         skyPaint.SetInt("_Culling", 0);
-        skyPaint.mainTexture = Resources.Load<Texture2D>("Sky/space");
+        skyPaint.mainTexture = Resources.Load<Texture2D>(Celestial ? "Sky/heaven" : "Sky/space");
         sky.GetComponent<Renderer>().sharedMaterial = skyPaint;
         sky.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        var planets = Resources.LoadAll<GameObject>("Scenery/space");
+        var planets = Resources.LoadAll<GameObject>(Celestial ? "Scenery/heaven" : "Scenery/space");
         for (int k = 0; k < 7 && planets.Length > 0; k++)
         {
             float a = k * 0.9f + Random.value;
@@ -332,7 +334,8 @@ public partial class EyeBossEvent : MonoBehaviour
         Time.timeScale = 0f;
         if (Botting) BotBegin();
         Enter(Phase.Intro, 2.5f);
-        message.text = L10n.T("eyeboss.intro");
+        message.text = L10n.T(Celestial ? "eyeboss.heaven.intro" : Story.Active && Story.Hero=="cerebron" ? "story.cerebron.roger.intro" : "eyeboss.intro");
+        bossFill.color=bossFill.bottom=Celestial ? new Color(1f,.8f,.25f) : new Color(.75f,.3f,1f);
     }
 
     // Over: it stays on screen (for the last words, or the question whether to try again) until Close.

@@ -1,0 +1,514 @@
+{
+  "locales": [
+    "es",
+    "en",
+    "pt",
+    "ja"
+  ],
+  "rows": [
+    [
+      "story.onini.0.title",
+      "LA REBELDE DEL INFIERNO",
+      "HELL'S REBEL",
+      "A REBELDE DO INFERNO",
+      "地獄の反逆児"
+    ],
+    [
+      "story.onini.0.intro.1",
+      "Nací rebelde en el infierno. Sí, imagina lo difícil que es escandalizar a tus vecinos cuando tus vecinos son demonios.",
+      "I was born a rebel in hell. Imagine trying to shock your neighbors when your neighbors are demons.",
+      "Nasci rebelde no inferno. Imagine tentar escandalizar os vizinhos quando seus vizinhos são demônios.",
+      "私は地獄で生まれた反逆児。ご近所が全員悪魔だと、驚かせるだけでも一苦労だ。"
+    ],
+    [
+      "story.onini.0.intro.2",
+      "Desde pequeña soñaba con tres cosas: fama, poder y comer todas las cosas raras que pudiera encontrar. Sobre todo la tercera.",
+      "Since I was little I wanted three things: fame, power, and every strange food I could find. Especially the third.",
+      "Desde pequena eu queria três coisas: fama, poder e comer toda comida estranha que encontrasse. Principalmente a terceira.",
+      "小さい頃から欲しかったのは名声、力、それから世界中の変な食べ物。特に三つ目だ。"
+    ],
+    [
+      "story.onini.0.intro.3",
+      "Salir del infierno es bastante difícil para un demonio. Pero yo ya había escapado un par de veces. Digamos que encontré mi público.",
+      "Getting out of hell is hard for a demon. But I had escaped a couple of times already. Let's say I found my audience.",
+      "Sair do inferno é difícil para um demônio. Mas eu já tinha escapado algumas vezes. Digamos que encontrei meu público.",
+      "悪魔が地獄を出るのは難しい。でも私は何度か脱走していた。そこで自分の観客を見つけたんだ。"
+    ],
+    [
+      "story.onini.0.intro.4",
+      "Una arena, un cinturón de lucha libre y gente gritando mi nombre. Eso sí era música. Aunque los golpes también hacían bastante ruido.",
+      "An arena, a wrestling belt, and a crowd chanting my name. That was music. The punches were pretty loud too.",
+      "Uma arena, um cinturão de luta livre e uma plateia gritando meu nome. Aquilo era música. Os golpes também faziam barulho.",
+      "リング、王座のベルト、私の名を叫ぶ観客。最高の音楽だった。殴り合う音も結構うるさかったけど。"
+    ],
+    [
+      "story.onini.0.intro.5",
+      "Entonces el gobierno de la Tierra consiguió contactarme. Me ayudarían a escapar si llevaba una roca verde a otro planeta.",
+      "Then Earth's government contacted me. They would help me escape if I took a green rock to another planet.",
+      "Então o governo da Terra me contatou. Ajudariam na minha fuga se eu levasse uma pedra verde a outro planeta.",
+      "そこへ地球政府から連絡が来た。緑の石を別の惑星に運べば、脱走を手伝ってくれるという。"
+    ],
+    [
+      "story.onini.0.intro.6",
+      "¿Libertad, un viaje y la posibilidad de probar comida extraterrestre? Claro que acepté. Solo faltaba sacar mi locomotora de aquí.",
+      "Freedom, a trip, and a chance to try alien food? Of course I accepted. I just had to get my locomotive out of here.",
+      "Liberdade, uma viagem e comida alienígena? Claro que aceitei. Só faltava tirar minha locomotiva daqui.",
+      "自由と旅行、それに宇宙料理まで？もちろん引き受けた。あとは機関車をここから出すだけだ。"
+    ],
+    [
+      "story.onini.0.before.1",
+      "¿Otra vez intentando escapar, Onini?",
+      "Trying to escape again, Onini?",
+      "Tentando fugir de novo, Onini?",
+      "また脱走するの、オニニ？"
+    ],
+    [
+      "story.onini.0.before.2",
+      "Esta vez tengo patrocinador. Y una piedra. ¡Apártate, BBA!",
+      "This time I have a sponsor. And a rock. Move, BBA!",
+      "Desta vez tenho patrocinador. E uma pedra. Sai da frente, BBA!",
+      "今度はスポンサー付き。石もある。どいて、BBA！"
+    ],
+    [
+      "story.onini.0.before.3",
+      "Entonces tendrás que ganarte el paso.",
+      "Then you'll have to earn your way past.",
+      "Então vai ter que conquistar a passagem.",
+      "なら、実力で通ってみせて。"
+    ],
+    [
+      "story.onini.0.after.1",
+      "¡Y con ustedes, la próxima estrella fuera del infierno!",
+      "Introducing the next star outside hell!",
+      "Com vocês, a próxima estrela fora do inferno!",
+      "ご紹介します、地獄を飛び出す次のスター！"
+    ],
+    [
+      "story.onini.0.after.2",
+      "Guarda aire para el camino. Nos volveremos a encontrar.",
+      "Save your breath for the road. We'll meet again.",
+      "Guarde o fôlego para a estrada. Vamos nos reencontrar.",
+      "道中のために息を取っておきな。また会うよ。"
+    ],
+    [
+      "story.onini.0.outro.1",
+      "Escapé del infierno. Otra vez. Ahora tenía que llegar a la ciudad para que me lanzaran al espacio.",
+      "I escaped hell. Again. Now I had to reach the city so they could launch me into space.",
+      "Escapei do inferno. De novo. Agora precisava chegar à cidade para ser lançada ao espaço.",
+      "また地獄から逃げ出した。次は街まで行って、宇宙へ打ち上げてもらう番だ。"
+    ],
+    [
+      "story.onini.0.outro.2",
+      "Fama, poder, comida de otros mundos... y un desierto entero entre mi cena y yo. Mejor no perder tiempo.",
+      "Fame, power, food from other worlds... and a whole desert between me and dinner. No time to waste.",
+      "Fama, poder, comida de outros mundos... e um deserto inteiro entre mim e o jantar. Sem tempo a perder.",
+      "名声、力、異世界の料理……夕飯までの間には砂漠が丸ごと一つ。急がないと。"
+    ],
+    [
+      "story.onini.1.title",
+      "LA VICTORIA QUE SE ESCAPÓ",
+      "THE VICTORY THAT GOT AWAY",
+      "A VITÓRIA QUE ESCAPOU",
+      "逃げた勝利"
+    ],
+    [
+      "story.onini.1.intro.1",
+      "Mi máquina seguía avanzando, pero el escape no había sido precisamente suave. Algo dentro sonaba como una caja de cubiertos cayendo por una escalera.",
+      "My engine kept going, but the escape hadn't been gentle. Something inside sounded like cutlery falling down stairs.",
+      "Minha máquina avançava, mas a fuga não foi suave. Algo lá dentro soava como talheres caindo pela escada.",
+      "機関車は走っていたけど、脱走は無傷じゃなかった。中から食器が階段を転がるような音がする。"
+    ],
+    [
+      "story.onini.1.intro.2",
+      "Y entonces apareció BBA otra vez. Justo lo que necesitaba: una bruja compitiendo por el último viaje a la ciudad.",
+      "Then BBA appeared again. Just what I needed: a witch racing me to the city.",
+      "Então BBA apareceu de novo. Era só o que faltava: uma bruxa disputando comigo a viagem à cidade.",
+      "そこへまたBBAが来た。街までの競争相手に魔女とは、まったくありがたい話だ。"
+    ],
+    [
+      "story.onini.1.before.1",
+      "¡BBA! Esta vez la victoria es mía.",
+      "BBA! This time victory is mine.",
+      "BBA! Desta vez a vitória é minha.",
+      "BBA！今度の勝利は私のものだ！"
+    ],
+    [
+      "story.onini.1.before.2",
+      "Tu locomotora no parece estar de acuerdo.",
+      "Your locomotive doesn't seem to agree.",
+      "Sua locomotiva não parece concordar.",
+      "機関車のほうは同意してないみたい。"
+    ],
+    [
+      "story.onini.1.before.3",
+      "¡No la distraigas! Está haciendo su mejor esfuerzo.",
+      "Don't distract her! She's doing her best.",
+      "Não distraia ela! Está dando o melhor de si.",
+      "気を散らすな！この子だって頑張ってるんだ！"
+    ],
+    [
+      "story.onini.1.after.1",
+      "¡Maldita sea, BBA! ¡La victoria era mía, pero mi locomotora está demasiado dañada para seguir a máxima velocidad!",
+      "Damn it, BBA! Victory was mine, but my locomotive is too damaged to keep going at full speed!",
+      "Droga, BBA! A vitória era minha, mas minha locomotiva está danificada demais para continuar a toda velocidade!",
+      "くそっ、BBA！勝つはずだったのに、機関車が壊れすぎて全速力を出せない！"
+    ],
+    [
+      "story.onini.1.after.2",
+      "Busca un taller, Onini. Yo tengo que seguir.",
+      "Find a workshop, Onini. I have to keep going.",
+      "Procure uma oficina, Onini. Preciso continuar.",
+      "修理屋を探しな、オニニ。私は先へ行く。"
+    ],
+    [
+      "story.onini.1.after.3",
+      "¡A la siguiente te derrotaré! ¡Y no cuenta si no me escuchaste!",
+      "I'll beat you next time! And it still counts if you didn't hear me!",
+      "Na próxima eu te derroto! E vale mesmo se você não me ouviu!",
+      "次は絶対に倒す！聞こえてなくても宣言は有効だからな！"
+    ],
+    [
+      "story.onini.1.outro.1",
+      "Tras el escape del infierno y aquella derrota en el desierto, mi locomotora necesitaba reparaciones de verdad.",
+      "After escaping hell and that defeat in the desert, my locomotive needed real repairs.",
+      "Depois da fuga do inferno e daquela derrota no deserto, minha locomotiva precisava de reparos de verdade.",
+      "地獄からの脱走と砂漠での敗北を経て、機関車には本格的な修理が必要だった。"
+    ],
+    [
+      "story.onini.1.outro.2",
+      "Llegar así a la ciudad sería perder el tiempo. Así que pedí ayuda a mis flamantes patrocinadores: el gobierno.",
+      "Reaching the city like this would waste time. So I asked my wonderful new sponsors for help: the government.",
+      "Chegar à cidade assim seria perder tempo. Pedi ajuda aos meus novos patrocinadores: o governo.",
+      "この状態で街に向かっても時間の無駄だ。だから新しいスポンサー、政府に助けを求めた。"
+    ],
+    [
+      "story.onini.1.outro.3",
+      "Al parecer, para ellos «necesito un taller» significaba «los he traicionado». La atención al cliente era peor que en el infierno.",
+      "Apparently, to them 'I need a workshop' meant 'I have betrayed you.' Their customer service was worse than hell's.",
+      "Pelo visto, para eles, 'preciso de uma oficina' significava 'traí vocês'. O atendimento era pior que no inferno.",
+      "どうやら政府には「修理したい」が「裏切った」に聞こえたらしい。地獄よりひどい客対応だ。"
+    ],
+    [
+      "story.onini.2.title",
+      "SERVICIO TÉCNICO HOSTIL",
+      "HOSTILE TECH SUPPORT",
+      "SUPORTE TÉCNICO HOSTIL",
+      "敵意ある修理窓口"
+    ],
+    [
+      "story.onini.2.intro.1",
+      "Solo quería una reparación. Una llave inglesa, unos tornillos... quizá un refrigerio mientras esperaba.",
+      "I only wanted repairs. A wrench, some bolts... maybe a snack while I waited.",
+      "Eu só queria um conserto. Uma chave, uns parafusos... talvez um lanche enquanto esperava.",
+      "修理してほしいだけだった。レンチとボルト、それに待ち時間のおやつがあれば十分だ。"
+    ],
+    [
+      "story.onini.2.intro.2",
+      "Me recibieron con alarmas y el Golem. Supongo que había marcado mal la extensión del taller.",
+      "They greeted me with alarms and the Golem. I guess I dialed the wrong workshop extension.",
+      "Me receberam com alarmes e o Golem. Acho que disquei o ramal errado da oficina.",
+      "迎えてくれたのは警報とゴーレム。修理窓口の内線を間違えたのかな。"
+    ],
+    [
+      "story.onini.2.before.1",
+      "Objetivo localizado. Entrega la roca y detén tu locomotora.",
+      "Target located. Surrender the rock and stop your locomotive.",
+      "Alvo localizado. Entregue a pedra e pare a locomotiva.",
+      "目標発見。石を引き渡し、機関車を停止せよ。"
+    ],
+    [
+      "story.onini.2.before.2",
+      "¡Eso intento! ¡Detenerla en un taller, no contra tus cañones!",
+      "I'm trying! At a workshop, not against your cannons!",
+      "É o que estou tentando! Numa oficina, não nos seus canhões!",
+      "そのつもりだ！修理屋に停めたいんだよ、砲口の前じゃなくて！"
+    ],
+    [
+      "story.onini.2.before.3",
+      "Resistencia registrada. Iniciando protocolo de contención.",
+      "Resistance recorded. Initiating containment protocol.",
+      "Resistência registrada. Iniciando protocolo de contenção.",
+      "抵抗を確認。封じ込め手順を開始する。"
+    ],
+    [
+      "story.onini.2.after.1",
+      "Bueno, ¿ahora sí podemos hablar de la reparación?",
+      "Well, can we talk about repairs now?",
+      "Bom, agora podemos falar do conserto?",
+      "さて、今度こそ修理の話をしてもいいかな？"
+    ],
+    [
+      "story.onini.2.after.2",
+      "Unidad fuera de servicio. Solicitud de taller... pendiente.",
+      "Unit out of service. Workshop request... pending.",
+      "Unidade fora de serviço. Pedido de oficina... pendente.",
+      "本機、稼働不能。修理依頼は……保留中。"
+    ],
+    [
+      "story.onini.2.outro.1",
+      "Estos tontos habían malinterpretado todo. Y tenían un montón de esos robots. Ni siquiera parecía un problema de presupuesto.",
+      "Those fools had misunderstood everything. And they had loads of those robots. Budget clearly wasn't the problem.",
+      "Aqueles idiotas entenderam tudo errado. E tinham um monte daqueles robôs. O problema não era orçamento.",
+      "あいつらは全部勘違いしていた。しかもあんなロボットを山ほど持っている。予算不足じゃなさそうだ。"
+    ],
+    [
+      "story.onini.2.outro.2",
+      "Cuando ya pensaba vengarme y hacerlos explotar con su propia piedra verde, apareció un demonio.",
+      "Just as I considered blowing them up with their own green rock, a demon appeared.",
+      "Quando pensei em explodir tudo com a própria pedra verde deles, apareceu um demônio.",
+      "連中の緑の石で仕返しに吹き飛ばしてやろうかと思ったところで、悪魔が現れた。"
+    ],
+    [
+      "story.onini.2.outro.3",
+      "Me ofreció un trato: no me llevaría de vuelta al infierno si iba al cielo a recuperar una reliquia que, según él, nos habían robado.",
+      "He offered a deal: he wouldn't drag me back to hell if I recovered a relic that heaven had supposedly stolen from us.",
+      "Ele propôs um trato: não me levaria ao inferno se eu recuperasse uma relíquia que o céu supostamente roubou.",
+      "取引を持ちかけてきた。天国が地獄から盗んだという遺物を取り戻せば、連れ戻さずに済ませるらしい。"
+    ],
+    [
+      "story.onini.2.outro.4",
+      "Otro encargo, otro destino. Al menos esta vez sabía a quién culpar si faltaba leer la letra pequeña.",
+      "Another job, another destination. At least this time I knew who to blame for the fine print.",
+      "Outra missão, outro destino. Ao menos agora eu sabia quem culpar pelas letras miúdas.",
+      "またお使い、また行き先変更。少なくとも今回は契約の細かい字の責任者がはっきりしている。"
+    ],
+    [
+      "story.onini.3.title",
+      "LA RELIQUIA MÁS SAGRADA",
+      "THE HOLIEST RELIC",
+      "A RELÍQUIA MAIS SAGRADA",
+      "とびきり神聖な遺物"
+    ],
+    [
+      "story.onini.3.intro.1",
+      "El cielo. Mucho mármol, muchas nubes y ni un puesto de comida a la vista. Empezábamos mal.",
+      "Heaven. Lots of marble, lots of clouds, and not a food stall in sight. A bad start.",
+      "O céu. Muito mármore, muitas nuvens e nenhuma barraca de comida. Começamos mal.",
+      "天国。大理石と雲ばかりで、屋台が一つも見当たらない。出だしから最悪だ。"
+    ],
+    [
+      "story.onini.3.intro.2",
+      "La reliquia tenía un guardián: ruedas doradas, alas y demasiados ojos. Nadie podía decir que no estaba vigilando.",
+      "The relic had a guardian: golden wheels, wings, and far too many eyes. Nobody could accuse it of not watching.",
+      "A relíquia tinha um guardião: rodas douradas, asas e olhos demais. Ninguém podia dizer que ele não vigiava.",
+      "遺物の番人は金の車輪と翼、それに多すぎる目。見張りを怠っているとは誰にも言わせない姿だ。"
+    ],
+    [
+      "story.onini.3.before.1",
+      "Detente, visitante. El trofeo permanece bajo nuestra custodia.",
+      "Stop, visitor. The trophy remains in our custody.",
+      "Pare, visitante. O troféu permanece sob nossa guarda.",
+      "止まれ、来訪者。トロフィーは我々が保管する。"
+    ],
+    [
+      "story.onini.3.before.2",
+      "¿Trofeo? A mí me dijeron reliquia. Ya me lo explicarás después.",
+      "Trophy? They told me relic. You can explain afterward.",
+      "Troféu? Disseram que era uma relíquia. Você explica depois.",
+      "トロフィー？遺物だって聞いたけど。説明は後でいい！"
+    ],
+    [
+      "story.onini.3.before.3",
+      "Entonces procura mirar dónde pisas.",
+      "Then watch your step.",
+      "Então veja onde pisa.",
+      "ならば、足元に気をつけることだ。"
+    ],
+    [
+      "story.onini.3.after.1",
+      "Muy bien, muchos ojos. ¿Dónde está la famosa reliquia?",
+      "All right, many-eyes. Where is this famous relic?",
+      "Muito bem, muitos-olhos. Onde está a famosa relíquia?",
+      "さて、目だらけさん。そのご大層な遺物はどこ？"
+    ],
+    [
+      "story.onini.3.after.2",
+      "En la sala de trofeos. Quizá convenga que alguien te explique el partido.",
+      "In the trophy room. Perhaps someone should explain the match.",
+      "Na sala de troféus. Talvez alguém deva explicar a partida.",
+      "トロフィー室だ。試合について説明を受けたほうがよさそうだな。"
+    ],
+    [
+      "story.onini.3.outro.1",
+      "La reliquia era un trofeo. Un trofeo de fútbol. El cielo lo había ganado en un partido y el infierno decía que hubo trampa.",
+      "The relic was a trophy. A football trophy. Heaven had won a match, and hell claimed they had cheated.",
+      "A relíquia era um troféu. De futebol. O céu venceu uma partida e o inferno alegava que houve trapaça.",
+      "遺物の正体はトロフィー。サッカーのトロフィーだ。天国が試合に勝ち、地獄は反則があったと騒いでいた。"
+    ],
+    [
+      "story.onini.3.outro.2",
+      "Pero vamos, el cielo es el bueno, ¿no? Aunque el ángel tardó bastante en explicar aquel penalti.",
+      "But heaven are the good guys, right? Although that angel spent a long time explaining the penalty.",
+      "Mas o céu é do bem, não é? Embora o anjo tenha levado bastante tempo para explicar aquele pênalti.",
+      "でも天国っていい側でしょ？その天使は例のPKについてずいぶん長く説明していたけど。"
+    ],
+    [
+      "story.onini.3.outro.3",
+      "Mientras un ángel me explicaba todo, otro de esos con muchos ojos se escapó. Creo que iba al espacio de la Tierra a buscar a su novio.",
+      "While an angel explained, another of those many-eyed things slipped away. I think it headed for Earth's space to find its boyfriend.",
+      "Enquanto um anjo explicava tudo, outro daqueles cheios de olhos fugiu. Acho que foi ao espaço da Terra procurar o namorado.",
+      "説明を聞いている間に、別の目だらけのやつが逃げていった。地球の宇宙まで彼氏を探しに行くらしい。"
+    ],
+    [
+      "story.onini.3.outro.4",
+      "Y entonces vi un cactus bastante peculiar. Mi pasión por la comida pudo más que el sentido común. Me lo comí mientras los ángeles me miraban espantados.",
+      "Then I spotted a peculiar cactus. My love of food beat my common sense. I ate it while the angels stared in horror.",
+      "Então vi um cacto peculiar. Meu amor por comida venceu o bom senso. Comi enquanto os anjos olhavam apavorados.",
+      "そこで妙なサボテンを見つけた。食への情熱が常識に勝った。怯える天使たちの前で、私はかじりついた。"
+    ],
+    [
+      "story.onini.3.outro.5",
+      "Una mala idea excelente. El cielo se dobló, las vías cambiaron de color y terminé en un sitio que definitivamente no aparecía en el contrato.",
+      "An excellent bad idea. Heaven folded, the rails changed color, and I ended up somewhere definitely not in the contract.",
+      "Uma péssima ideia excelente. O céu dobrou, os trilhos mudaram de cor e fui parar num lugar fora do contrato.",
+      "最高にまずい思いつきだった。天国が折れ曲がり、線路の色が変わり、契約には絶対なかった場所に着いた。"
+    ],
+    [
+      "story.onini.4.title",
+      "MESA PARA DOS ONINIS",
+      "A TABLE FOR TWO ONINIS",
+      "MESA PARA DUAS ONINIS",
+      "オニニ二名様"
+    ],
+    [
+      "story.onini.4.intro.1",
+      "Psicoworlds. Un nombre elegante para un lugar donde todo parecía mirarme. Incluidas las puertas. Incluidas las vías.",
+      "Psychoworlds. A fancy name for a place where everything stared at me. Even the doors. Even the rails.",
+      "Psicoworlds. Um nome elegante para um lugar onde tudo me encarava. Até as portas. Até os trilhos.",
+      "サイコワールド。何もかもが私を見つめる場所の、妙に立派な名前だ。ドアも、線路まで。"
+    ],
+    [
+      "story.onini.4.intro.2",
+      "Al otro lado apareció mi locomotora. Y yo. Pero todo era negro, como una sombra. Perfecto: mi peor rival también tenía mi pésimo carácter.",
+      "Across from me stood my locomotive. And me. All black, like a shadow. Perfect: my worst rival had my terrible temper too.",
+      "Do outro lado estavam minha locomotiva. E eu. Tudo preto, como uma sombra. Ótimo: minha pior rival também tinha meu péssimo humor.",
+      "向こうに私の機関車と、私がいた。全部が影みたいに真っ黒。最悪のライバルは性格まで私そっくりらしい。"
+    ],
+    [
+      "story.onini.4.before.1",
+      "Ni fama, ni poder. Siempre acabarás de vuelta donde empezaste.",
+      "No fame. No power. You'll always end up back where you started.",
+      "Nem fama, nem poder. Você sempre voltará ao começo.",
+      "名声も力も手に入らない。結局、いつも振り出しに戻る。"
+    ],
+    [
+      "story.onini.4.before.2",
+      "¿Encima de copiarme vas a arruinarme la cena?",
+      "You copy me and now you're ruining dinner too?",
+      "Você me copia e ainda vai estragar meu jantar?",
+      "私をコピーした上に夕飯まで台無しにする気？"
+    ],
+    [
+      "story.onini.4.before.3",
+      "Tú sabes que no perteneces a ningún lugar.",
+      "You know you don't belong anywhere.",
+      "Você sabe que não pertence a lugar nenhum.",
+      "自分の居場所なんてどこにもないと、わかっているはずだ。"
+    ],
+    [
+      "story.onini.4.before.4",
+      "Entonces me haré uno. ¡Y tendrá comida decente!",
+      "Then I'll make one. And it will have decent food!",
+      "Então vou criar um. E terá comida decente!",
+      "なら作ってやる。まともな料理付きの居場所を！"
+    ],
+    [
+      "story.onini.4.after.1",
+      "Si vas a ser yo, al menos aprende a perder con estilo.",
+      "If you're going to be me, at least learn to lose with style.",
+      "Se vai ser eu, ao menos aprenda a perder com estilo.",
+      "私を名乗るなら、負け方くらい格好よくしな！"
+    ],
+    [
+      "story.onini.4.outro.1",
+      "Aquellas cosas eran nuestros miedos. Al vencerlos, este mundo te muestra el camino al lugar al que perteneces.",
+      "Those things were our fears. Defeat them, and this world shows you the way to where you belong.",
+      "Aquelas coisas eram nossos medos. Ao vencê-los, este mundo mostra o caminho para onde pertencemos.",
+      "あれは自分の恐怖だった。打ち勝てば、この世界は本当の居場所へ続く道を示してくれる。"
+    ],
+    [
+      "story.onini.4.outro.2",
+      "Para mí, el camino llevaba de vuelta al infierno. Donde resulta que preparan la mejor comida del universo.",
+      "For me, the path led back to hell. Turns out they make the best food in the universe there.",
+      "Para mim, o caminho levava ao inferno. Onde, pelo visto, fazem a melhor comida do universo.",
+      "私の道は地獄へ続いていた。どうやら宇宙で一番うまい料理は、そこで作られていたらしい。"
+    ],
+    [
+      "story.onini.4.outro.3",
+      "Puede que la fama y el poder esperaran un poco. Yo tenía una mesa llena y un hambre que daba miedo de verdad.",
+      "Fame and power could wait a little. I had a full table and an appetite that was truly frightening.",
+      "A fama e o poder podiam esperar. Eu tinha uma mesa cheia e uma fome realmente assustadora.",
+      "名声と力は少し待ってもらおう。目の前には料理でいっぱいのテーブル、本当に恐ろしいのは今の空腹だった。"
+    ],
+    [
+      "story.onini.4.outro.4",
+      "Aunque no duden que intentaré escapar de nuevo. ¡Todavía me faltan demasiadas cosas raras por probar!",
+      "But don't doubt I'll try to escape again. There are still too many strange foods I haven't tried!",
+      "Mas podem apostar que tentarei fugir de novo. Ainda há comidas estranhas demais para provar!",
+      "でもまた脱走するのは間違いない。まだ食べたことのない変な料理が山ほどあるんだから！"
+    ],
+    [
+      "story.onini.shadow",
+      "Sombra de Onini",
+      "Onini's Shadow",
+      "Sombra de Onini",
+      "オニニの影"
+    ],
+    [
+      "eyeboss.heaven.name",
+      "Custodio de la reliquia",
+      "Relic Custodian",
+      "Guardião da relíquia",
+      "遺物の守護者"
+    ],
+    [
+      "eyeboss.heaven.intro",
+      "¡El custodio vigila cada paso!",
+      "The custodian watches every step!",
+      "O guardião vigia cada passo!",
+      "守護者は一歩も見逃さない！"
+    ],
+    [
+      "biome.hell",
+      "Infierno",
+      "Hell",
+      "Inferno",
+      "地獄"
+    ],
+    [
+      "biome.heaven",
+      "Cielo",
+      "Heaven",
+      "Céu",
+      "天国"
+    ],
+    [
+      "biome.psychoworlds",
+      "Psicoworlds",
+      "Psychoworlds",
+      "Psicoworlds",
+      "サイコワールド"
+    ],
+    [
+      "boss.name.hell",
+      "Carcelero infernal",
+      "Hell Warden",
+      "Carcereiro infernal",
+      "地獄の獄卒"
+    ],
+    [
+      "boss.name.heaven",
+      "Vigilante celestial",
+      "Heaven Watcher",
+      "Vigia celestial",
+      "天上の監視者"
+    ],
+    [
+      "boss.name.psychoworlds",
+      "Pesadilla rodante",
+      "Rolling Nightmare",
+      "Pesadelo sobre trilhos",
+      "走る悪夢"
+    ]
+  ]
+}

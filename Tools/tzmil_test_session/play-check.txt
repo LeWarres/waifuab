@@ -1,0 +1,7 @@
+RUNNING
+PASS chapter 1: volcano, correct finale, before/after dialogue and next pages
+PASS chapter 2: government, correct finale, before/after dialogue and next pages
+PASS chapter 3: hell, correct finale, before/after dialogue and next pages
+PASS chapter 4: heaven, correct finale, before/after dialogue and next pages
+PASS: X, Tzmil palette, same-image continuity, four biome/finale chains and Thanks.
+PASS frames=2660 consoleErrors=0. Victories accelerated; combat balance not fully tested.

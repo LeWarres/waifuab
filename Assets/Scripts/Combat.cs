@@ -116,8 +116,8 @@ public class Combat : MonoBehaviour
     {
         (1f, 1f, 1f, 1, Color.white),
         (1.3f, 2.5f, 1.2f, 2, new Color(0.45f, 0.8f, 1.9f)),
-        (1.7f, 6f, 1.5f, 4, new Color(1.9f, 0.3f, 0.35f)),
-        (2.1f, 14f, 2.2f, 8, new Color(2.2f, 1.6f, 0.25f)),
+        (1.7f, 4.5f, 1.5f, 4, new Color(1.9f, 0.3f, 0.35f)),
+        (2.1f, 9f, 2f, 8, new Color(2.2f, 1.6f, 0.25f)),
     };
     readonly Dictionary<(EnemyType, int), EnemyType> variants = new();
     EnemyType Variant(EnemyType type, int tier)
@@ -209,7 +209,11 @@ public class Combat : MonoBehaviour
         // Nieve
         new EnemyType { name = "Yeti", biome = 1, color = new Color(0.8f, 0.9f, 1f), health = 18f, speed = 3f, damage = 10f, size = 1.5f, reward = 3, firstLevel = 5, weight = 0.2f, regen = 3f, model = "Enemy_yeti" },
         new EnemyType { name = "Lobo", biome = 1, color = new Color(0.45f, 0.5f, 0.55f), health = 1.5f, speed = 9f, damage = 2f, size = 0.6f, firstLevel = 2, weight = 0.2f, pack = 4, model = "Enemy_wolf", flies = true },
-        // Jungla
+        // Jungla: a bestiary of its own too (OwnBestiary), bright poison-frog and beetle colours on the green (Tools/make_mechs.py)
+        new EnemyType { name = "Libélula", biome = 2, color = new Color(1f, 0.45f, 0.12f), health = 3f, speed = 4f, damage = 5f, size = 1f, weight = 1f, model = "Enemy_dragonfly", flies = true },
+        new EnemyType { name = "Avispa", biome = 2, color = new Color(1f, 0.85f, 0.12f), health = 2f, speed = 8.5f, damage = 3f, size = 0.7f, firstLevel = 2, weight = 0.5f, pack = 3, model = "Enemy_wasp", flies = true },
+        new EnemyType { name = "Gorila", biome = 2, color = new Color(0.42f, 0.24f, 0.14f), health = 12f, speed = 2.5f, damage = 12f, size = 1.6f, reward = 3, firstLevel = 4, weight = 0.2f, model = "Enemy_ape" },
+        new EnemyType { name = "Escarabajo", biome = 2, color = new Color(0.2f, 0.35f, 0.95f), health = 18f, speed = 2.5f, damage = 3.5f, size = 1.5f, reward = 4, firstLevel = 7, weight = 0.1f, ranged = 14f, interval = 3.5f, armor = 0.6f, model = "Enemy_beetle" },
         new EnemyType { name = "Nido", biome = 2, color = new Color(0.1f, 0.3f, 0.1f), health = 10f, speed = 3f, damage = 6f, size = 1.4f, reward = 2, firstLevel = 4, weight = 0.25f, split = 3, model = "Enemy_nest" },
         new EnemyType { name = "Escupidor", biome = 2, color = new Color(0.6f, 1f, 0.2f), health = 4f, speed = 4f, damage = 3f, size = 0.9f, firstLevel = 6, weight = 0.25f, ranged = 12f, interval = 1.5f, model = "Enemy_spitter" },
         // Volcán
@@ -237,7 +241,7 @@ public class Combat : MonoBehaviour
         new EnemyType { name = "Pelusa", biome = 7, color = new Color(1f, 0.55f, 0.8f), health = 3f, speed = 4f, damage = 5f, size = 1f, weight = 1f, model = "Enemy_fluff" },
         new EnemyType { name = "Hexa", biome = 7, color = new Color(0.35f, 1f, 0.85f), health = 2f, speed = 8.5f, damage = 3f, size = 0.7f, firstLevel = 2, weight = 0.5f, model = "Enemy_hexa", flies = true },
         new EnemyType { name = "Hexágono mayor", biome = 7, color = new Color(1f, 0.82f, 0.25f), health = 12f, speed = 2.5f, damage = 12f, size = 1.6f, reward = 3, firstLevel = 4, weight = 0.2f, model = "Enemy_hexgiant" },
-        new EnemyType { name = "Colmena", biome = 7, color = new Color(0.4f, 0.5f, 0.1f), health = 30f, speed = 1.5f, damage = 10f, size = 2f, reward = 5, firstLevel = 7, weight = 0.15f, spawner = true, interval = 2.5f, model = "Enemy_hive" },
+        new EnemyType { name = "Colmena", biome = 7, color = new Color(0.4f, 0.5f, 0.1f), health = 30f, speed = 1.5f, damage = 10f, size = 2f, reward = 5, firstLevel = 7, weight = 0.15f, spawner = true, interval = 4f, model = "Enemy_hive" },
         new EnemyType { name = "Saboteador", biome = 7, color = new Color(0f, 0.6f, 0.6f), health = 5f, speed = 7f, damage = 2f, size = 0.8f, firstLevel = 3, weight = 0.3f, stun = 5f, model = "Enemy_saboteur", flies = true },
         // Fortaleza alienígena
         // Base alienígena: its guards (Tools/make_mechs.py)
@@ -249,8 +253,9 @@ public class Combat : MonoBehaviour
     };
 
     // A biome with a bestiary of its own gets none of the enemies from everywhere: the city looks nothing like the desert.
-    static bool OwnBestiary(int biome) => biome >= 5;
-    static bool Here(EnemyType t, int biome) => t.biome == biome || (t.biome < 0 && !OwnBestiary(biome));
+    static bool OwnBestiary(int biome) => biome >= 5 || biome == 2; // the jungle, the city and on: their own enemies, not the ones from everywhere
+    // The government's security uses the city's human-built drones and machines.
+    static bool Here(EnemyType t, int biome) => t.biome == (biome switch {9=>5,10=>4,11=>6,12=>7,13=>7,14=>5,_=>biome}) || (t.biome < 0 && !OwnBestiary(biome));
     // The biome's commonest enemy: what a wave always brings, and what comes when nothing else can.
     EnemyType RankAndFile => System.Array.Find(Types, t => t.weight >= 1f && Here(t, train.Biome)) ?? Types[0];
 
@@ -271,6 +276,7 @@ public class Combat : MonoBehaviour
         public float punch = 1f;  // its blow on a wagon, times its type's (a stampede's come in hard)
         public int index, pick; // pick: a number of its own, which decides the wagon it goes for
         public int id; // changes when the enemy dies; whoever targets it compares ids to notice
+        public System.Func<float, float> onUltimateHit; // a proxy body can account against its owner's actual HP
     }
 
     class Bullet
@@ -317,6 +323,10 @@ public class Combat : MonoBehaviour
     }
 
     public static Combat Instance { get; private set; }
+    // DIAG: train damage by enemy type (name, +tier for big/elite), read and cleared by the chapter probe.
+    public static readonly System.Collections.Generic.Dictionary<string, float> TrainHurtBy = new System.Collections.Generic.Dictionary<string, float>();
+    static void Tally(string k, float amount) { TrainHurtBy.TryGetValue(k, out float v); TrainHurtBy[k] = v + amount; }
+    static void Tally(Enemy e, float amount) => Tally(e.type.name + (e.type.tier > 0 ? "+" + e.type.tier : ""), amount);
     public bool Paused => train.Swarming || train.AtStation || train.UltimatePresenting; // turrets hold their fire too
     public int EnemyCount => enemies.Count;
 
@@ -410,12 +420,21 @@ public class Combat : MonoBehaviour
         train.Shake(0.25f);
         if (!meteorLooks.TryGetValue(weapon, out Batch look))
             meteorLooks[weapon] = look = new Batch(weapon.color, false, Resources.GetBuiltinResource<Mesh>("Sphere.fbx"), glow: 3f);
-        // Cover all four outer corners and the centre, with jitter and shuffled landing order.
+        // On the crowd closest to the train (what is about to hit it); with few enemies about, the four outer corners
+        // and the centre, with jitter and shuffled landing order.
+        var near = enemies.FindAll(e => !e.type.projectile && e.type.loot < 0);
+        near.Sort((a, b) => (a.position - train.Focus).sqrMagnitude.CompareTo((b.position - train.Focus).sqrMagnitude));
         var ground = new Plane(Vector3.up, Vector3.zero);
         int[] order = { 0, 1, 2, 3, 4 };
         for (int k = order.Length - 1; k > 0; k--) { int j = Random.Range(0, k + 1); (order[k], order[j]) = (order[j], order[k]); }
         for (int k = 0; k < MeteorCount; k++)
         {
+            if (near.Count >= MeteorCount * 4)
+            {
+                Vector3 on = near[Random.Range(0, Mathf.Min(near.Count, 30))].position;
+                meteors.Add(new Meteor { at = new Vector3(on.x, 0f, on.z), landAt = Time.time + MeteorDelay + MeteorFall + k * MeteorGap, look = look, weapon = weapon });
+                continue;
+            }
             int zone = order[k];
             float x = zone == 4 ? Random.Range(0.35f, 0.65f)
                 : zone % 2 == 0 ? Random.Range(0.08f, 0.24f) : Random.Range(0.76f, 0.92f);
@@ -451,7 +470,7 @@ public class Combat : MonoBehaviour
             for (int j = enemies.Count - 1; j >= 0; j--)
             {
                 Vector3 d = enemies[j].position - m.at;
-                if (d.x * d.x + d.z * d.z <= MeteorRadius * MeteorRadius) Hurt(enemies[j], damage, false);
+                if (d.x * d.x + d.z * d.z <= MeteorRadius * MeteorRadius) Hurt(enemies[j], damage, false, true);
             }
             heroHit = false;
             Burst("grenade", m.at, 9f);
@@ -489,8 +508,13 @@ public class Combat : MonoBehaviour
     // Every so often a horde: a pack of the small ones all at once, from all round.
     [System.NonSerialized] public Vector2 hordeEvery = new Vector2(12f, 18f);
     [System.NonSerialized] public int hordeSize = 28, hordeMax = 110;
-    [System.NonSerialized] public float healthPerLevel = 0.13f;   // +13% enemy health per difficulty level
-    [System.NonSerialized] public float damagePerLevel = 0.06f;   // +6% enemy damage per difficulty level (Vampire Survivors: fixed per type)
+    [System.NonSerialized] public float healthPerLevel = 0.12f;   // composition and density carry most of the pressure
+    [System.NonSerialized] public float damagePerLevel = 0.025f;  // slower growth for a train that cannot dodge; capped at +100%
+    public float DamageScale => (1f + damagePerLevel * Mathf.Min(level, 40)) * enemyDamage * Balance.Scale;
+    // Vampire Survivors' TimeMods (+2 to 2.5% speed a minute): faster crowds reach a train that cannot step aside.
+    // Gentler here (+1.2%/min): the chapter's difficulty already climbs faster at its end. 0.012 lost whole chapters.
+    [System.NonSerialized] public float speedPerLevel = 0.008f;   // capped at +32%
+    float SpeedScale => 1f + speedPerLevel * Mathf.Min(level, 40);
     // Vampire Survivors' waves: a minimum of enemies on the field that grows with time, filled at once whenever the
     // field falls short of it, and a ceiling past which nobody new comes (bosses and events excepted).
     [System.NonSerialized] public int minOnField = 15, minPerLevel = 6, maxOnField = 220;
@@ -616,14 +640,15 @@ public class Combat : MonoBehaviour
         rosterLevel = level;
         if ((rosterTimer -= dt) <= 0f || unlocked) { rosterTimer = rosterEvery; NewRoster(); }
         int onField = OnField;
-        while (spawnTimer <= 0f)
+        while (!calm && !train.BossFight && spawnTimer <= 0f)
         {
             spawnTimer += 1f / (spawnRate + spawnRatePerLevel * level);
             if (onField < maxOnField) SpawnWave();
+            onField = OnField;
         }
         // Short of the minimum: topped up fast (a few a frame, so it comes in as a tide and not all in one frame).
         if (!calm && !train.BossFight && !train.AtStation)
-            for (int k = 0; k < 6 && onField < MinOnField; k++, onField++) SpawnWave();
+            for (int k = 0; k < 6 && onField < MinOnField; k++) { SpawnWave(); onField = OnField; }
         if (!calm && !train.BossFight && !train.AtStation && (hordeTimer -= dt) <= 0f)
         {
             hordeTimer = Random.Range(hordeEvery.x, hordeEvery.y);
@@ -664,7 +689,7 @@ public class Combat : MonoBehaviour
 
         // Enemies head for the closest wagon that is still standing.
         // Faster than cruise: everyone slides towards the rear, so the front arrives sooner and the rear lags.
-        float damageScale = (1f + damagePerLevel * level) * enemyDamage * Balance.Scale, drift = (train.Speed - train.maxSpeed) * speedDrift * dt;
+        float damageScale = DamageScale, drift = (train.Speed - train.maxSpeed) * speedDrift * dt;
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
             Enemy e = enemies[i];
@@ -722,7 +747,7 @@ public class Combat : MonoBehaviour
                 if (atPlayer) player.Damage(t.damage * damageScale);
                 else
                 {
-                    train.Damage(wagon, t.damage * damageScale * e.punch);
+                    train.Damage(wagon, t.damage * damageScale * e.punch); Tally(e, t.damage * damageScale * e.punch);
                     if (t.stun > 0f) train.Stun(wagon, t.stun);
                     Burst("smoke", e.position, 0.7f + t.size * 0.4f); // dust where it slams into the wagon
                 }
@@ -741,13 +766,13 @@ public class Combat : MonoBehaviour
                     if (atPlayer) player.Damage(t.damage * damageScale);
                     else
                     {
-                        train.Damage(wagon, t.damage * damageScale);
+                        train.Damage(wagon, t.damage * damageScale); Tally(e, t.damage * damageScale);
                         Burst("smoke", e.position + toWagon + Vector3.up * 0.5f, 0.6f + t.size * 0.4f);
                     }
                     Spawn(e.position + toWagon + Vector3.up, Vector3.one * 0.6f, t.Batch, 0.1f);
                 }
                 else if (t.blink > 0f) e.position += toWagon.normalized * Mathf.Min(t.blink, Mathf.Sqrt(sqr) - radius);
-                else if (t.spawner) Add(Larva, e.position + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)));
+                else if (t.spawner && OnField < maxOnField) Add(Larva, e.position + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)));
                 else if (t.heal > 0f)
                 {
                     foreach (Enemy other in enemies)
@@ -757,7 +782,7 @@ public class Combat : MonoBehaviour
             }
             if (inRange) continue; // shooters hold their ground
 
-            float speed = t.speed;
+            float speed = t.speed * SpeedScale;
             if (t.chargeRange > 0f && sqr <= t.chargeRange * t.chargeRange) speed *= t.chargeSpeed;
             if (now < e.slowUntil) speed *= 0.5f;
             // Never further in one step than the wagon ahead, nor than any wagon on the way: a fast one (or a long
@@ -916,7 +941,7 @@ public class Combat : MonoBehaviour
     void LateUpdate()
     {
         if (train.Swarming) return; // nothing of the ordinary fight is drawn meanwhile
-        if (!train.UltimatePresenting) ResolveBlasts((1f + damagePerLevel * level) * enemyDamage * Balance.Scale); // kills made by turrets after our Update
+        if (!train.UltimatePresenting) ResolveBlasts(DamageScale); // kills made by turrets after our Update
         // Robots face the train, hover and bob if they fly, and turn on the spot if that is their thing.
         float clock = Time.time;
         foreach (Enemy e in enemies)
@@ -1065,6 +1090,8 @@ public class Combat : MonoBehaviour
     // horde: that many of one small kind, together, instead of the usual one (or its pack).
     void SpawnWave(int horde = 0)
     {
+        int room = maxOnField - OnField;
+        if (room <= 0) return;
         int biome = train.Biome;
         // The big ones are as many as ever, so they take a smaller share of the many more spawns; a horde has none.
         float Share(EnemyType t) => t.firstLevel > level || !Here(t, biome) || (roster.Count > 0 && !roster.Contains(t)) ? 0f
@@ -1079,7 +1106,7 @@ public class Combat : MonoBehaviour
             type = t;
             if ((roll -= Share(t)) <= 0f) break;
         }
-        type = Variant(type, RollTier());
+        type = Variant(type, horde > 0 ? 0 : RollTier()); // hordes are fodder; elites arrive individually
 
         float angle = Random.value * Mathf.PI * 2f;
         // Always out of the picture: the ring goes round what the camera shows of the ground right now (it pulls
@@ -1091,14 +1118,14 @@ public class Combat : MonoBehaviour
         {
             // From every side at once, each from a point of its own on the ring: a tide closing in, not a clump
             // falling on one end of the train.
-            for (int i = 0; i < horde; i++)
+            for (int i = 0; i < Mathf.Min(horde, room); i++)
             {
                 float from = Random.value * Mathf.PI * 2f, far = radius + Random.Range(0f, 8f);
                 Add(type, train.Focus + new Vector3(Mathf.Cos(from) * far, 0f, Mathf.Sin(from) * far));
             }
             return;
         }
-        for (int i = 0; i < type.pack; i++)
+        for (int i = 0; i < Mathf.Min(type.pack, room); i++)
             Add(type, center + new Vector3(Random.Range(-1.5f, 1.5f), 0f, Random.Range(-1.5f, 1.5f)) * (type.pack - 1));
     }
 
@@ -1200,6 +1227,8 @@ public class Combat : MonoBehaviour
     // (an odd pick is never a hunter).
     void Stampede(int count)
     {
+        count = Mathf.Min(count, maxOnField - OnField);
+        if (count <= 0) return;
         Vector3 along = train.Forward(train.CarCount / 2);
         along.y = 0f;
         along.Normalize();
@@ -1209,7 +1238,7 @@ public class Combat : MonoBehaviour
         var pool = System.Array.FindAll(Types, t => t.Fodder && t.firstLevel <= level && Here(t, biome));
         for (int i = 0; i < count; i++)
         {
-            EnemyType type = Variant(pool.Length > 0 ? pool[Random.Range(0, pool.Length)] : RankAndFile, RollTier());
+            EnemyType type = pool.Length > 0 ? pool[Random.Range(0, pool.Length)] : RankAndFile;
             Enemy e = Add(type, start + across * Random.Range(0f, 12f) + along * Random.Range(-14f, 14f));
             e.pick |= 1;
             e.punch = Mathf.Min(3f, 1.2f + 0.12f * level); // harder with the difficulty (soft early: the first one comes with two wagons)
@@ -1258,6 +1287,7 @@ public class Combat : MonoBehaviour
         Enemy e = enemyPool.Count > 0 ? enemyPool.Pop() : new Enemy();
         e.position = new Vector3(ground.x, type.size * 0.5f, ground.z);
         e.type = type;
+        e.onUltimateHit = null;
         e.hp = e.maxHp = type.health * (1f + healthPerLevel * level) * enemyHealth * Balance.Scale;
         e.velocity = Vector3.zero;
         e.slowUntil = 0f;
@@ -1277,6 +1307,7 @@ public class Combat : MonoBehaviour
         Enemy e = enemyPool.Count > 0 ? enemyPool.Pop() : new Enemy();
         e.position = at;
         e.type = type;
+        e.onUltimateHit = null;
         e.hp = e.maxHp = hp;
         e.velocity = Vector3.zero;
         e.slowUntil = 0f;
@@ -1304,6 +1335,25 @@ public class Combat : MonoBehaviour
             if (d < best && (except == null || !except.Contains(enemies[i]))) { best = d; nearest = enemies[i]; }
         }
         return nearest;
+    }
+
+    // The one a wagon's gun picks in its reach, by the weapon's aim (Weapon.AimNearest...). Never loot or hero-only.
+    public Enemy Pick(Vector3 from, Weapon weapon)
+    {
+        if (weapon.aim == Weapon.AimNearest) return Nearest(from, weapon.range);
+        Enemy pick = null;
+        float best = float.MaxValue, reach = weapon.range * weapon.range;
+        int seen = 0;
+        foreach (Enemy e in enemies)
+        {
+            if (e.type.loot >= 0 || e.type.heroOnly || (e.position - from).sqrMagnitude > reach) continue;
+            float score;
+            if (weapon.aim == Weapon.AimRandom) { if (Random.Range(0, ++seen) == 0) pick = e; continue; } // even odds for each
+            else if (weapon.aim == Weapon.AimStrongest) score = -e.hp;
+            else { train.ClosestWagon(e.position, out Vector3 toWagon); score = toWagon.sqrMagnitude; } // AimDanger
+            if (score < best) { best = score; pick = e; }
+        }
+        return pick;
     }
 
     // The nearest of what only the hero can bring down (the truck's bombs), if one is in reach: it goes first.
@@ -1643,7 +1693,7 @@ public class Combat : MonoBehaviour
     // The hero's upgrades that reach every weapon (TrainSim.Passives): wider blasts and sweeps, more shots, longer effects.
     float Area => 1f + 0.12f * train.PassiveLevel("area");
     // The Amount passive, the hero's weapon only (Volley's extra): two more shots at most, as Vampire Survivors' Duplicator.
-    int Amount { get { int l = train.PassiveLevel("amount"); return l >= 4 ? 2 : l >= 1 ? 1 : 0; } }
+    int Amount => Mathf.Min(2, train.PassiveLevel("amount"));
     float Duration => 1f + 0.2f * train.PassiveLevel("duration");
 
     public void Volley(Vector3 from, Enemy first, Weapon weapon, int level, bool hero = false)
@@ -1952,7 +2002,7 @@ public class Combat : MonoBehaviour
             Blast blast = blasts[n];
             float radius = blast.type.explode;
             Burst("enemy", blast.center, radius * BurstSize);
-            train.DamageArea(blast.center, radius, blast.type.explodeDamage * damageScale);
+            train.DamageArea(blast.center, radius, blast.type.explodeDamage * damageScale); Tally("BLAST " + blast.type.name, blast.type.explodeDamage * damageScale);
             if (player.Alive && (player.Position - blast.center).sqrMagnitude <= radius * radius)
                 player.Damage(blast.type.explodeDamage * damageScale);
             for (int i = enemies.Count - 1; i >= 0; i--)
@@ -2023,27 +2073,31 @@ public class Combat : MonoBehaviour
         }
     }
 
-    float Power => heroHit ? player.damageBonus : 1f;
-    Weapon source; // the weapon of the hit being dealt (RunStats); null for blasts of the enemies' own // the hero's damage upgrades, on the hero's shots only
+    float Power => heroHit ? player.damageBonus : 1f + Balance.DamagePerRank * train.PassiveLevel("damage") + (Story.Active ? 0f : Workshop.DamageBonus);
+    Weapon source; // RunStats credits this weapon; null for enemies' own blasts
 
-    void Hurt(Enemy e, float damage, bool weaponHit = true)
+    void Hurt(Enemy e, float damage, bool weaponHit = true, bool ultimateHit = false)
     {
         if ((e.type.loot >= 0 || e.type.heroOnly) && !heroHit) return;
         bool critical = false;
         if (weaponHit) damage = train.CriticalDamage(damage, out critical);
         if (Time.time < e.markedUntil) damage *= 2f;
         float applied = Mathf.Max(damage - e.type.armor * Balance.Scale, damage * 0.2f);
-        RunStats.Deal(source, Mathf.Min(applied, Mathf.Max(0f, e.hp))); // what it really took, not the overkill
-        e.hp -= applied;
+        bool redirected = ultimateHit && e.onUltimateHit != null;
+        if (redirected) applied = e.onUltimateHit(applied);
+        RunStats.Deal(source, Mathf.Min(applied, Mathf.Max(0f, e.hp)), ultimateHit); // what it really took, not the overkill
+        if (!redirected) e.hp -= applied;
         if (applied > 0f) train.DamageNumber(e.position + Vector3.up * (e.type.size + 0.5f), applied, false, critical);
         if (applied > 0f && e.type.loot < 0)
         {
-            // knocked back, away from the train, the more the smaller it is (a boss hardly moves)
+            // knocked back, away from the train, the more the smaller it is (a boss hardly moves), by how hard the
+            // weapon hits (Weapon.push: a shotgun shoves, a minigun's many small hits barely do)
             Vector3 away = new Vector3(e.position.x, 0f, e.position.z);
             if (!IsMiniBoss(e.type) && !e.type.projectile && away.sqrMagnitude > 0.01f)
-                e.position += away.normalized * Mathf.Clamp(0.5f / e.type.size, 0.04f, 0.35f) * (critical ? 2f : 1f);
+                e.position += away.normalized * Mathf.Clamp(0.5f / e.type.size, 0.04f, 0.35f) * (critical ? 2f : 1f) * (source != null ? source.push : 1f);
         }
-        if (e.hp > 0f) return;
+        if (redirected || e.hp > 0f) return;
+        if (ultimateHit && e.type.loot < 0) RunStats.UltimateKills++;
         if (e.type.loot < 0 && !e.type.Fodder) { train.HitStop(IsMiniBoss(e.type) ? 0.16f : 0.045f); train.Shake(IsMiniBoss(e.type) ? 0.5f : 0.08f); }
         if (e.type.loot < 0) train.Charge(); // a kill counts and fills the ultimate (the station's guns kill elsewhere: they do not)
         if (IsMiniBoss(e.type))
@@ -2074,7 +2128,7 @@ public class Combat : MonoBehaviour
         }
         if (killed && t.loot >= 0) train.AddLoot(t.loot);
         if (t.explode > 0f) blasts.Add(new Blast { center = at, type = t });
-        for (int i = 0; killed && i < t.split; i++)
+        for (int i = 0; killed && i < t.split && OnField < maxOnField; i++)
             Add(Larva, at + new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)));
     }
 

@@ -224,6 +224,7 @@ public class BrawlEvent : MonoBehaviour
         if (!room) Build();
         string id = Locomotives.HeroId(rival);
         if (!drivers.TryGetValue(id, out Boarder driver)) drivers[id] = driver = NewDriver(id);
+        if(Story.ShadowRival) Locomotives.Shadow(driver.rig.root);
         crew.Clear();
         crew.AddRange(boarders);
         foreach (Boarder b in boarders) b.rig.root.gameObject.SetActive(false);
@@ -239,6 +240,7 @@ public class BrawlEvent : MonoBehaviour
         string who = "Characters/" + id + "/" + id;
         Animator rig = Body(Resources.Load<GameObject>(who), leaper);
         Player.Skin(rig.transform, who);
+        if(Story.ShadowRival) Locomotives.Shadow(leaper);
         rig.enabled = false;
         leaperHips = leaper.InverseTransformPoint(rig.GetBoneTransform(HumanBodyBones.Hips).position);
         return Begin(true);

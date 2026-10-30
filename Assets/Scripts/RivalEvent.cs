@@ -23,7 +23,7 @@ public class RivalEvent : MonoBehaviour
     public float hitPerDifficulty = 0.012f; // harder and quicker shots and bombs: gentler, the fight now lasts
     // So that evolved weapons and the ultimate cannot just melt it: its health also grows with the arsenal, it
     // takes only part of each hit unless overheated or hexed weak, and it never loses more than a share of its
-    // health a second (the ultimate's meteors included). Under half health it fights harder.
+    // health a second from normal weapons. Ultimate hits have a separate burst cap. Under half health it fights harder.
     public float armour = 0.5f;          // share of a hit it takes outside the weak windows
     public float maxLossPerSecond = 0.006f, weakLossPerSecond = 0.01f; // shares of its health: two to three minutes
     // Three acts, by its health: as it was; then under two thirds its driver comes aboard twice a round (in place of
@@ -80,6 +80,7 @@ public class RivalEvent : MonoBehaviour
 
     TrainSim train;
     Transform root, track;
+    BrawlEvent.Rig shadowDriver;
     readonly List<Transform> sleepers = new();
     readonly List<Transform> guns = new();
     Combat.Enemy body;
@@ -155,13 +156,26 @@ public class RivalEvent : MonoBehaviour
             cargo.Add(car);
         }
 
+        if(Story.ShadowRival)
+        {
+            var driver=new GameObject("ShadowOnini").transform;driver.SetParent(engine,false);
+            driver.localPosition=new Vector3(0f,2.6f,0f);
+            var avatar=BrawlEvent.Body(Resources.Load<GameObject>("Characters/onini/onini"),driver,.9f);
+            Player.Skin(avatar.transform,"Characters/onini/onini");
+            shadowDriver=new BrawlEvent.Rig(driver,avatar);
+            shadowDriver.Play(Resources.Load<BrawlClips>("Brawl/BrawlClips").idle,true,1f,0f);
+            Locomotives.Shadow(root);
+        }
         Combat.Instance.ClearField(); // nobody else on the field while the two trains fight it out
         maxHp = health * (1f + perDifficulty * train.Difficulty) * Mathf.Max(1f, train.Strength / 14f); // with how hard the train hits, as the truck
         hp = maxHp;
         // The engine itself is never shot down: its hits are read off it every frame and counted here, under the cap.
         body = Combat.Instance.AddProjectile(Engine, EnginePosition, maxHp * 100f);
+        body.onUltimateHit = UltimateHit;
         bodyId = body.id;
         label = L10n.T(Locomotives.HeroNameKey(rival)) + " · " + L10n.T(Locomotives.NameKeys[rival]);
+        if(Story.MachineRival) label=L10n.T(Locomotives.NameKeys[rival]);
+        if(Story.ShadowRival) label=L10n.T("story.onini.shadow")+" · "+L10n.T(Locomotives.NameKeys[rival]);
         tracers = new Combat.Batch(new Color(1f, 0.35f, 0.25f), false);
         phase = 0f;
         wasRaging = announcedSecond = false;
@@ -197,9 +211,19 @@ public class RivalEvent : MonoBehaviour
 
     Vector3 EnginePosition => root.TransformPoint(Vector3.right * WagonStep) + Vector3.up * 2f;
 
+    float UltimateHit(float damage)
+    {
+        bool weak = Turns[turn].kind == Overheated || OnThem(Weak);
+        // Five meteorites can remove at most 5% per cast, independently of frame rate and normal gunfire.
+        float taken = Mathf.Min(Mathf.Max(0f, hp), Mathf.Min(damage * (weak ? 2f : armour), maxHp * 0.01f));
+        hp -= taken;
+        return taken;
+    }
+
     void Update()
     {
         if (!Active || train.Paused || train.UltimatePresenting) return;
+        shadowDriver?.Tick(Time.deltaTime);
         if (train.Health <= 0f) { End(); return; }
         if (body == null || body.id != bodyId) { Win(); return; } // its engine is wrecked
 
@@ -209,12 +233,15 @@ public class RivalEvent : MonoBehaviour
         train.cameraZoom = Mathf.Lerp(train.cameraZoom, zoomTo, 4f * dt);
 
         // Its turns. Overheated, it slows down and every hit on it counts twice.
+        bool machine = Story.MachineRival;
         int kind = Turns[turn].kind;
+        if (machine && (kind == Driver || (kind == Hex && Act >= 2))) kind = Boarders;
         if (Time.unscaledTime >= startsAt && (turnLeft -= dt) <= 0f)
         {
             turn = (turn + 1) % Turns.Length;
             turnLeft = Turns[turn].seconds;
             kind = Turns[turn].kind;
+            if (machine && (kind == Driver || (kind == Hex && Act >= 2))) kind = Boarders; // these two locomotives have no hero; do not borrow BBA's driver
             if (kind == Bombs) { train.Toast(L10n.T("rival.bombs")); bombIn = 0.4f; }
             else if (kind == Boarders)
             {
@@ -409,6 +436,7 @@ public class RivalEvent : MonoBehaviour
 
     void End()
     {
+        shadowDriver?.Free();shadowDriver=null;
         Active = false;
         if (phrase) phrase.Drop();
         if (train) train.cameraZoom = 1f;
@@ -422,4 +450,5 @@ public class RivalEvent : MonoBehaviour
         bombs.Clear();
         shots.Clear();
     }
+    void OnDestroy()=>shadowDriver?.Free();
 }
