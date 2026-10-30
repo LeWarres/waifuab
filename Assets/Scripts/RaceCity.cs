@@ -34,13 +34,12 @@ public partial class RaceEvent
         var ads = new List<Material>();
         foreach (Texture2D t in Resources.LoadAll<Texture2D>("Menu")) if (t.name.StartsWith("loco_")) ads.Add(Poster(t));
 
-        // The road's edges: red and white kerbs, a neon strip along the foot of each wall.
+        // The road's edges: red and white kerbs (the barriers carry their own neon: RaceEvent.Barriers).
         for (int s = -1; s <= 1; s += 2)
         {
             float a = s * w, b = s * (w - 1.4f);
             Ribbon("Kerb", Mathf.Min(a, b), Mathf.Max(a, b), 0.06f, kerbRed);
             Ribbon("KerbWhite", Mathf.Min(a, b), Mathf.Max(a, b), 0.065f, kerbWhite, 1);
-            Band("WallGlow", s * (w - 0.02f), 0.45f, 0.75f, s < 0 ? cyan : pink);
         }
 
         // The grid: a chequered line, the arch over it with the five lights and the game's title.
@@ -51,10 +50,7 @@ public partial class RaceEvent
             for (int z = 0; z < 2; z++)
                 Block(line + side0 * ((x + 0.5f) / 16f - 0.5f) * roadWidth + fwd * (z - 0.5f) * 2.2f + Vector3.up * 0.07f, look, new Vector3(roadWidth / 16f, 0.05f, 2.2f), (x + z) % 2 == 0 ? white : dark);
         Vector3 arch = Origin + fwd * 82f;
-        for (int s = -1; s <= 1; s += 2)
-            for (int y = 0; y < 6; y++) Block(arch + side0 * s * (w + 2.5f) + Vector3.up * (y * 3f + 1.5f), look, new Vector3(2.6f, 3f, 2.6f), y % 2 == 0 ? white : kerbRed);
-        Block(arch + Vector3.up * 19f, look, new Vector3(roadWidth + 8f, 2.4f, 2.4f), dark);
-        Block(arch + Vector3.up * 17.7f - fwd * 1.25f, look, new Vector3(roadWidth + 6f, 0.3f, 0.2f), gold);
+        Kit("arch", arch, look * Quaternion.Euler(0f, 180f, 0f), cyan); // its lights' side (the model's front) towards the grid
         lightOff = TrainSim.Mat(new Color(0.18f, 0.05f, 0.05f), false);
         lightRed = Glow(new Color(4f, 0.25f, 0.15f));
         lightGreen = Glow(new Color(0.3f, 4f, 0.6f));
@@ -119,26 +115,27 @@ public partial class RaceEvent
         Material seat = TrainSim.Mat(new Color(0.3f, 0.32f, 0.4f)), steel = TrainSim.Mat(new Color(0.55f, 0.58f, 0.64f));
         Color[] shirts = { new(0.9f, 0.2f, 0.2f), new(0.2f, 0.6f, 0.9f), new(0.95f, 0.8f, 0.2f), new(0.85f, 0.3f, 0.75f), new(0.3f, 0.8f, 0.3f), new(0.92f, 0.92f, 0.92f), new(0.5f, 0.3f, 0.9f) };
         var people = System.Array.ConvertAll(shirts, s => TrainSim.Mat(s));
-        Material skin = TrainSim.Mat(new Color(0.95f, 0.75f, 0.6f));
         for (int side = -1; side <= 1; side += 2)
         {
             float x0 = roadWidth / 2f + 5f;
+            // The models (Tools/make_race_kit.py) face the road along their +x, and run back along -z: turned round
+            // on the right, where the road is to the left.
+            Quaternion facing = side < 0 ? rot : rot * Quaternion.Euler(0f, 180f, 0f);
             for (int t = 0; t < 4; t++)
             {
                 float top = 0.8f + t * 1.4f, x = x0 + t * 2.4f;
                 Block(c + right * side * x + Vector3.up * top / 2f, rot, new Vector3(2.4f, top, length), seat);
-                for (float z = -length / 2f + 1f; z < length / 2f; z += Random.Range(1.8f, 2.6f))
+                for (float z = -length / 2f; z < length / 2f - 1f; z += 10f) // a row of seats on each step, 10 m a piece
+                    Kit("seats", c + right * side * (x - 1.2f) + d * (side < 0 ? z + 10f : z) + Vector3.up * top, facing, trim);
+                for (float z = -length / 2f + 1f; z < length / 2f; z += Random.Range(1.4f, 2.2f))
                 {
-                    Vector3 at = c + right * side * (x + Random.Range(-0.4f, 0.4f)) + d * z + Vector3.up * (top + 0.6f);
-                    var guy = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    Destroy(guy.GetComponent<Collider>());
-                    guy.transform.SetParent(course, false);
-                    guy.transform.SetPositionAndRotation(at, rot);
-                    guy.transform.localScale = new Vector3(0.7f, 1.2f, 0.6f);
-                    var look = guy.GetComponent<Renderer>();
-                    look.sharedMaterial = people[Random.Range(0, people.Length)];
+                    Vector3 at = c + right * side * (x - 0.5f + Random.Range(-0.2f, 0.2f)) + d * z + Vector3.up * top;
+                    GameObject guy = Kit(Random.value < 0.5f ? "fan" : "fan2", at, facing * Quaternion.Euler(0f, Random.Range(-20f, 20f), 0f), trim);
+                    var look = guy.GetComponentInChildren<Renderer>();
+                    var mats = look.sharedMaterials;
+                    for (int k = 0; k < mats.Length; k++) if (mats[k].name == "Shirt") mats[k] = people[Random.Range(0, people.Length)];
+                    look.sharedMaterials = mats;
                     look.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-                    Ball(at + Vector3.up * 0.95f, 0.65f, skin).SetParent(guy.transform, true); // a head
                     crowd.Add((guy.transform, at.y, Random.value * 10f));
                 }
             }

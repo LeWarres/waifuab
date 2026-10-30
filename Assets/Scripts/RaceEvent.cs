@@ -72,8 +72,9 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
     Vector3 camVelocity;
 
     Canvas board;
-    Text place, speedo, countdown, standings, hint, message, turboLabel;
-    Slanted heatFill, track, briefing;
+    Text place, placeOf, speedo, countdown, standings, hint, message, turboLabel;
+    Slanted heatFill, track, briefing, band;
+    readonly List<(Slanted strip, Text rank, Text name)> rows = new();
     readonly List<Slanted> dots = new();
 
     void Awake()
@@ -132,36 +133,63 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             streaks.Add(line.transform);
         }
 
+        // The HUD, Persona 3 style (the race's blues, UiKit "race"): hard slanted plates, big leaning numbers with a hard
+        // shadow, the standings a staircase of strips with ours lit white, a band sweeping across for the count and the end.
         board = UiKit.NewCanvas("Race", 6);
         var glass = new Color(0.06f, 0.09f, 0.19f, 0.62f);
-        Slanted left = UiKit.Panel(board.transform, new Vector2(170f, -70f), new Vector2(300f, 96f), glass, glass, 0.12f);
-        UiKit.Persona(left);
-        left.rectTransform.anchorMin = left.rectTransform.anchorMax = new Vector2(0f, 1f);
-        place = UiKit.Label(left.transform, UiKit.Display, 46, UiKit.Gold, TextAnchor.MiddleLeft, new Vector2(10f, 14f), new Vector2(260f, 56f), true);
-        speedo = UiKit.Label(left.transform, UiKit.Body, 22, Color.white, TextAnchor.MiddleLeft, new Vector2(10f, -24f), new Vector2(260f, 30f), true);
-        // The turbo's heat, bottom right: its name, the bar, the warning near the top.
-        Slanted gauge = UiKit.Panel(board.transform, new Vector2(-210f, 90f), new Vector2(340f, 90f), glass, glass, 0.12f);
-        UiKit.Persona(gauge);
+        // Top left: the place, huge, and out of how many.
+        RectTransform left = UiKit.Group(board.transform, new Vector2(0f, 1f), new Vector2(40f, -20f));
+        UiKit.Paint(UiKit.Panel(left, new Vector2(150f, -92f), new Vector2(300f, 34f), Color.white, Color.white, 0.5f), UiKit.Ink.Main).rectTransform.localRotation = Quaternion.Euler(0f, 0f, 6f);
+        place = Leaning(left, 170, new Vector2(80f, -70f), new Vector2(200f, 170f), TextAnchor.MiddleCenter);
+        placeOf = Leaning(left, 48, new Vector2(220f, -92f), new Vector2(160f, 60f), TextAnchor.MiddleLeft);
+        // Bottom right: the speed, big, its unit, and under it the turbo's heat.
+        Slanted gauge = UiKit.Persona(UiKit.Panel(board.transform, new Vector2(-230f, 110f), new Vector2(380f, 150f), glass, glass, 0.14f), 4f, 10f);
         gauge.rectTransform.anchorMin = gauge.rectTransform.anchorMax = new Vector2(1f, 0f);
-        turboLabel = UiKit.Label(gauge.transform, UiKit.Display, 22, UiKit.Ice, TextAnchor.MiddleLeft, new Vector2(10f, 22f), new Vector2(300f, 30f), true);
-        UiKit.Panel(gauge.transform, new Vector2(0f, -14f), new Vector2(290f, 22f), new Color(0f, 0f, 0f, 0.55f), new Color(0f, 0f, 0f, 0.55f), 0f);
-        heatFill = UiKit.Panel(gauge.transform, new Vector2(-142f, -14f), new Vector2(0f, 16f), UiKit.Gold, UiKit.Gold, 0f);
+        speedo = Leaning(gauge.transform, 84, new Vector2(-30f, 26f), new Vector2(260f, 96f), TextAnchor.MiddleRight);
+        UiKit.Paint(UiKit.Label(gauge.transform, UiKit.Display, 26, Color.white, TextAnchor.MiddleLeft, new Vector2(150f, 10f), new Vector2(80f, 34f), true), UiKit.Ink.Hot).text = "KM/H";
+        turboLabel = UiKit.Label(gauge.transform, UiKit.Display, 20, UiKit.Ice, TextAnchor.MiddleLeft, new Vector2(-30f, -34f), new Vector2(300f, 26f), true);
+        UiKit.Panel(gauge.transform, new Vector2(0f, -58f), new Vector2(300f, 18f), new Color(0f, 0f, 0f, 0.6f), new Color(0f, 0f, 0f, 0.6f), 0.5f);
+        heatFill = UiKit.Panel(gauge.transform, new Vector2(-148f, -58f), new Vector2(0f, 14f), UiKit.Gold, UiKit.Gold, 0.5f);
         heatFill.rectTransform.pivot = new Vector2(0f, 0.5f);
         track = UiKit.Persona(UiKit.Panel(board.transform, new Vector2(0f, -40f), new Vector2(620f, 12f), glass, glass, 0f), 3f, 5f);
         track.rectTransform.anchorMin = track.rectTransform.anchorMax = new Vector2(0.5f, 1f);
-        Slanted right = UiKit.Panel(board.transform, new Vector2(-170f, -150f), new Vector2(300f, 220f), glass, glass, 0.12f);
-        UiKit.Persona(right);
-        right.rectTransform.anchorMin = right.rectTransform.anchorMax = new Vector2(1f, 1f);
-        standings = UiKit.Label(right.transform, UiKit.Body, 20, Color.white, TextAnchor.UpperLeft, Vector2.zero, new Vector2(270f, 200f));
-        standings.supportRichText = true;
-        countdown = UiKit.Label(board.transform, UiKit.Display, 120, UiKit.Gold, TextAnchor.MiddleCenter, new Vector2(0f, 60f), new Vector2(600f, 160f), true);
-        message = UiKit.Label(board.transform, UiKit.Display, 38, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 160f), new Vector2(1200f, 60f), true);
+        // Top right: the standings, one strip a racer, each a little further in than the one above.
+        RectTransform right = UiKit.Group(board.transform, new Vector2(1f, 1f), new Vector2(-30f, -110f));
+        standings = UiKit.Label(right, UiKit.Display, 24, Color.white, TextAnchor.MiddleRight, Vector2.zero, Vector2.zero); // holds the group (hidden in the trench)
+        for (int i = 0; i < 6; i++)
+        {
+            Slanted strip = UiKit.Panel(right, new Vector2(-170f - i * 12f, -i * 46f), new Vector2(320f, 40f), glass, glass, 0.35f);
+            Text rank = UiKit.Label(strip.transform, UiKit.Display, 30, Color.white, TextAnchor.MiddleCenter, new Vector2(-130f, 2f), new Vector2(50f, 40f), true);
+            Text name = UiKit.Label(strip.transform, UiKit.Body, 20, Color.white, TextAnchor.MiddleLeft, new Vector2(30f, 0f), new Vector2(230f, 34f), true);
+            rows.Add((strip, rank, name));
+        }
+        // The count and the result: a band in the race's blue sweeping across the screen behind them.
+        band = UiKit.Paint(UiKit.Panel(board.transform, Vector2.zero, new Vector2(2600f, 190f), Color.white, Color.white, 0f), UiKit.Ink.Main, 0.92f);
+        band.rectTransform.localRotation = Quaternion.Euler(0f, 0f, -7f);
+        band.gameObject.SetActive(false);
+        countdown = Leaning(board.transform, 150, new Vector2(0f, 10f), new Vector2(900f, 190f), TextAnchor.MiddleCenter);
+        message = Leaning(board.transform, 64, new Vector2(0f, 10f), new Vector2(1600f, 120f), TextAnchor.MiddleCenter);
         // The controls, shown once on the grid before the countdown (not all race long).
         briefing = UiKit.Persona(UiKit.Panel(board.transform, new Vector2(0f, 20f), new Vector2(760f, 420f), glass, glass, 0.06f), 6f, 14f);
         UiKit.Label(briefing.transform, UiKit.Display, 40, UiKit.Gold, TextAnchor.MiddleCenter, new Vector2(0f, 160f), new Vector2(700f, 56f), true).text = L10n.T("race.controls.title");
         hint = UiKit.Label(briefing.transform, UiKit.Body, 24, Color.white, TextAnchor.MiddleLeft, new Vector2(20f, -10f), new Vector2(640f, 260f));
         UiKit.Label(briefing.transform, UiKit.Display, 24, UiKit.Ice, TextAnchor.MiddleCenter, new Vector2(0f, -172f), new Vector2(700f, 40f), true).text = L10n.T("race.controls.start");
         board.gameObject.SetActive(false);
+    }
+
+    // A big number or word leaning into the race: white, a hard shadow in the race's blue, a dark outline.
+    static Text Leaning(Transform parent, int size, Vector2 at, Vector2 box, TextAnchor anchor)
+    {
+        Text text = UiKit.Label(parent, UiKit.Display, size, Color.white, anchor, at, box, true);
+        text.rectTransform.localRotation = Quaternion.Euler(0f, 0f, 6f);
+        UiKit.Tones blue = UiKit.Biome("race");
+        var shadow = text.gameObject.AddComponent<Shadow>();
+        shadow.effectColor = blue.main;
+        shadow.effectDistance = new Vector2(1f, -1f) * Mathf.Max(3f, size * 0.05f);
+        var outline = text.gameObject.AddComponent<Outline>();
+        outline.effectColor = blue.deep;
+        outline.effectDistance = Vector2.one * 2f;
+        return text;
     }
 
     // ---------------- the course ----------------
@@ -490,10 +518,11 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
     }
 
     // A piece of the city's roadside kit (Resources/Models/Race_<name>), toon materials, GlowAccent lit in accent.
-    void Kit(string name, Vector3 at, Quaternion turn, Material accent)
+    GameObject Kit(string name, Vector3 at, Quaternion turn, Material accent)
     {
         var go = Instantiate(Resources.Load<GameObject>("Models/Race_" + name), at, turn, course);
         foreach (var r in go.GetComponentsInChildren<Renderer>()) Dress(r, accent);
+        return go;
     }
 
     static void Dress(Renderer r, Material accent)
@@ -719,6 +748,10 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         bool going = now >= startsAt;
         if (!briefing.gameObject.activeSelf) raceSound.Countdown(going ? 0 : Mathf.CeilToInt(startsAt - now));
         countdown.text = briefing.gameObject.activeSelf ? "" : now < startsAt ? Mathf.CeilToInt(startsAt - now).ToString() : now < startsAt + 1f ? L10n.T("race.go") : "";
+        bool banner = countdown.text != "" || message.text != "";
+        if (band.gameObject.activeSelf != banner) band.gameObject.SetActive(banner);
+        if (banner) // sweeps in from the side, then a slight pulse on each count
+            band.rectTransform.anchoredPosition = new Vector2(0f, 10f) + Vector2.right * 2600f * (1f - UiKit.Back(Mathf.Repeat(Mathf.Min(now - startsAt + 3.6f, 99f), 1f) * 4f)) * (countdown.text != "" ? 1f : 0f);
 
         for (int i = effects.Count - 1; i >= 0; i--)
         {
@@ -1028,21 +1061,30 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
     void Show(float now)
     {
         int mine = racers.IndexOf(me);
-        place.text = L10n.T("race.position", mine + 1, racers.Count);
+        place.text = (mine + 1).ToString();
+        placeOf.text = "/ " + racers.Count;
         bool hot = me.heat > 0.8f && (int)(now * 6f) % 2 == 0; // near the top: the warning flashes
-        speedo.text = me.heat > 0.8f ? L10n.T("race.overheat") : L10n.T("race.speed", Mathf.RoundToInt(me.speed * 4f));
+        speedo.text = me.heat > 0.8f ? L10n.T("race.overheat") : Mathf.RoundToInt(me.speed * 4f).ToString();
         speedo.color = hot ? UiKit.Rose : Color.white;
-        heatFill.rectTransform.sizeDelta = new Vector2(284f * me.heat, 16f);
+        heatFill.rectTransform.sizeDelta = new Vector2(296f * me.heat, 14f);
         heatFill.color = me.turboLocked ? UiKit.Slate : me.heat > 0.75f ? UiKit.Rose : UiKit.Gold; // grey: cooling, not ready yet
         turboLabel.text = L10n.T(me.turboLocked ? "race.turbo.cooling" : "race.turbo");
-        var lines = new System.Text.StringBuilder();
-        for (int i = 0; i < racers.Count; i++)
+        // Ours lit white with dark writing, the leader in the race's blue, the rest dark glass.
+        UiKit.Tones blue = UiKit.Biome("race");
+        for (int i = 0; i < rows.Count; i++)
         {
+            var (strip, rank, name) = rows[i];
+            bool shown = i < racers.Count;
+            if (strip.gameObject.activeSelf != shown) strip.gameObject.SetActive(shown);
+            if (!shown) continue;
             Racer r = racers[i];
-            string line = $"{i + 1}. {r.name}";
-            lines.AppendLine(r.player ? $"<color=#FFCC1A>{line}</color>" : line);
+            Color back = r.player ? Color.white : i == 0 ? blue.main : new Color(0.04f, 0.08f, 0.2f, 0.78f);
+            strip.color = strip.bottom = back;
+            rank.text = (i + 1).ToString();
+            name.text = r.name;
+            rank.color = name.color = r.player ? blue.deep : Color.white;
+            strip.rectTransform.localScale = Vector3.one * (r.player ? 1.06f : 1f);
         }
-        standings.text = lines.ToString();
         int k = 0;
         foreach (Racer r in BySlot())
         {

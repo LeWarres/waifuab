@@ -1441,7 +1441,7 @@ public partial class TrainSim : MonoBehaviour
             hitStopUntil = -1f;
             if (Time.timeScale == hitStopScale) Time.timeScale = 1f; // unless something else has changed time meanwhile
         }
-        UiKit.SetBiome(BiomeId); // the UI's colours: this biome's
+        UiKit.SetBiome(race && race.Active ? "race" : BiomeId); // the UI's colours: this biome's (a race has its own)
         if (lookBiome != BiomeId) Grade();
         Scroll = 0f; // the ground only slides while the train is running (below)
         if (UltimatePresenting) return;

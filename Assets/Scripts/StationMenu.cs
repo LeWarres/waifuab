@@ -365,6 +365,7 @@ public static class UiKit
         "city" => new Tones { main = new(1f, 0.2f, 0.6f), deep = new(0.08f, 0.04f, 0.13f), hot = new(0.25f, 0.9f, 1f) },
         "space" => new Tones { main = new(0.58f, 0.38f, 1f), deep = new(0.04f, 0.02f, 0.11f), hot = new(1f, 0.85f, 0.25f) },
         "alien" => new Tones { main = new(0.1f, 0.92f, 0.75f), deep = new(0.1f, 0.03f, 0.14f), hot = new(1f, 0.3f, 0.8f) },
+        "race" => new Tones { main = new(0.1f, 0.6f, 1f), deep = new(0.02f, 0.05f, 0.17f), hot = new(0.6f, 0.95f, 1f) }, // a race: Persona 3's blues
         "menu" => new Tones { main = new(0.9f, 0.12f, 0.2f), deep = new(0.06f, 0.03f, 0.06f), hot = new(1f, 0.82f, 0.2f) }, // outside a run: the menus, the story
         "fortress" => new Tones { main = new(0.45f, 1f, 0.2f), deep = new(0.03f, 0.06f, 0.05f), hot = new(1f, 0.28f, 0.2f) },
         "government" => new Tones { main = new(.2f, .65f, 1f), deep = new(.05f, .08f, .13f), hot = new(1f, .66f, .1f) },

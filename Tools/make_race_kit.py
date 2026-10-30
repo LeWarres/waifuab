@@ -14,7 +14,8 @@ from lowpoly import _added
 M = dict(
     concrete=("RaceConcrete", (0.42, 0.44, 0.5)), joint=("RaceJoint", (0.14, 0.15, 0.18)), kerb=("RaceKerb", (0.13, 0.13, 0.15)),
     steel=("RaceSteel", (0.55, 0.58, 0.66)), dark=("RaceDark", (0.1, 0.11, 0.14)), stripe=("RaceStripe", (1.0, 0.75, 0.1)),
-    accent=("GlowAccent", (1.0, 1.0, 1.0)), amber=("GlowAmber", (1.0, 0.55, 0.12)), light=("GlowLamp", (1.0, 0.95, 0.85)),
+    accent=("GlowAccent", (1.0, 1.0, 1.0)), white=("RaceWhite", (0.92, 0.93, 0.96)), seat=("RaceSeat", (0.1, 0.45, 0.95)),
+    shirt=("Shirt", (0.9, 0.9, 0.9)), skin=("Skin", (0.95, 0.75, 0.6)), hair=("Hair", (0.12, 0.08, 0.06)), pants=("Pants", (0.16, 0.18, 0.28)), amber=("GlowAmber", (1.0, 0.55, 0.12)), light=("GlowLamp", (1.0, 0.95, 0.85)),
 )
 def m(key):
     name, rgb = M[key]
@@ -97,11 +98,72 @@ def lamp():
     box(-2.6, 0.0, -0.05, 0.05, 9.42, 9.5, m("accent"))
     return finish("Race_lamp")
 
+# A low ball for the crowd (an icosphere: 20 faces at level 1, 80 at 2).
+def nub(center, radius, mk, level=1, scale=(1, 1, 1)):
+    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=level, radius=radius, location=center)
+    ob = _added(m(mk), "nub", False)
+    ob.scale = scale
+    return ob
+
+# A fan in the stands, facing -x (the road), feet at the origin: arms both up, or one waving (wave=True).
+def fan(name, wave=False):
+    box(-0.16, 0.16, -0.26, -0.03, 0, 0.8, m("pants"))
+    box(-0.16, 0.16, 0.03, 0.26, 0, 0.8, m("pants"))
+    prism([(-0.17, 0.8), (0.17, 0.8), (0.15, 1.42), (-0.15, 1.42)], -0.3, 0.3, m("shirt"))   # torso, a little narrower up top
+    nub((0, 0, 1.66), 0.2, "skin", 2, scale=(1, 0.95, 1.1))
+    nub((0.03, 0, 1.73), 0.2, "hair", 1, scale=(1.02, 1.02, 0.75))
+    for y, up in ((-0.36, True), (0.36, not wave)):
+        hand = (-0.12, y * 1.25, 2.15) if up else (0, y * 1.05, 0.75)
+        strut((0, y * 0.9, 1.36), hand, 0.075, "shirt", sides=5)
+        nub(hand, 0.09, "skin")
+    return finish(name)
+
+# A row of stadium seats, 10 m along y, its front edge at x = 0 and the stand behind it towards +x.
+def seats():
+    box(0, 2.4, 0, 10, -0.12, 0, m("concrete"))
+    for k in range(16):
+        y = 0.32 + k * 0.62
+        box(0.9, 1.35, y - 0.24, y + 0.24, 0, 0.42, m("seat"))                  # the pan
+        box(1.3, 1.42, y - 0.24, y + 0.24, 0.42, 0.95, m("seat"))               # its back
+    box(0.02, 0.08, 0, 10, 0.0, 1.0, m("steel"))                                 # the rail along the front
+    for k in range(6):
+        box(0.0, 0.1, k * 2.0 - 0.04 + (0.04 if k == 0 else 0), k * 2.0 + 0.04 + (0.04 if k == 0 else 0), 0, 1.0, m("steel"))
+    return finish("Race_seats")
+
+# The start arch over the grid: two octagonal pylons in white with light bands and a dark beam housing the start
+# lights (RaceCity puts them in, at 19 m, on its front). Centred on the road, x across, y along (front: -y).
+def arch():
+    span = 24.5
+    octa = lambda r: [(r * math.cos(math.radians(22.5 + 45 * k)), r * math.sin(math.radians(22.5 + 45 * k))) for k in range(8)]
+    for s in (-1, 1):
+        cx = s * span
+        box(cx - 1.8, cx + 1.8, -1.8, 1.8, 0, 0.8, m("concrete"))
+        for k in range(6):  # sections, each a little narrower, a band of light between them
+            z0, z1, r = 0.8 + k * 3.0, 0.8 + (k + 1) * 3.0 - 0.25, 1.45 - k * 0.06
+            ring_ = octa(r)
+            verts = [(cx + x, y, z0) for x, y in ring_] + [(cx + x, y, z1) for x, y in ring_]
+            faces = [tuple(range(8))[::-1], tuple(range(8, 16))] + [(i, (i + 1) % 8, 8 + (i + 1) % 8, 8 + i) for i in range(8)]
+            mesh("pylon", verts, faces, m("white"))
+            lit = octa(r - 0.05)
+            verts = [(cx + x, y, z1) for x, y in lit] + [(cx + x, y, z1 + 0.25) for x, y in lit]
+            mesh("band", verts, faces, m("accent"))
+    box(-span - 1.6, span + 1.6, -1.2, 1.2, 17.8, 20.2, m("dark"))
+    box(-span - 1.7, span + 1.7, -1.3, 1.3, 20.2, 20.5, m("steel"))
+    box(-span + 1.6, span - 1.6, -1.3, -1.2, 17.6, 17.85, m("accent"))      # a line of light under its front
+    box(-12, 12, -1.32, -1.2, 18.0, 20.0, m("kerb"))                          # the lights' black panel
+    return finish("Race_arch")
+
 reset()
-made = [barrier(), gantry(), lamp()]  # finish() exports each one on its own
+made = [barrier(), gantry(), lamp(), fan("Race_fan"), fan("Race_fan2", wave=True), seats(), arch()]  # finish() exports each one on its own
 
 if "--" in sys.argv and "shot" in sys.argv[sys.argv.index("--") + 1:]:
-    b, g, l = made
+    b, g, l, f1, f2, st, ar = made
+    ar.location = (0, 60, 0)
+    st.location = (-30, -4, 2.2)
+    for k in range(10):
+        c = (f1 if k % 2 == 0 else f2).copy()
+        bpy.context.scene.collection.objects.link(c)
+        c.location = (-29.6, -3.5 + k * 0.9, 2.2)
     for side, x in ((1, 22.0), (-1, -22.0)):  # both sides of a 44 m road, three stretches each
         for s in range(3):
             c = b if (side, s) == (1, 0) else b.copy()
@@ -111,4 +173,4 @@ if "--" in sys.argv and "shot" in sys.argv[sys.argv.index("--") + 1:]:
             c.scale = (side, 1, 1)
     g.location = (0, 22, 0)
     l.location = (24.2, 4, 0)
-    render([("race_kit_preview", (30, -34, 12), (0, 14, 5)), ("race_kit_close", (14, -8, 2.2), (23, 8, 0.8))], lens=30)
+    render([("race_kit_preview", (30, -34, 12), (0, 14, 5)), ("race_kit_close", (14, -8, 2.2), (23, 8, 0.8)), ("race_kit_crowd", (-22, -6, 4.2), (-30, 0.5, 3.0))], lens=30)
