@@ -507,7 +507,7 @@ public class Combat : MonoBehaviour
     readonly Batch dragonDark = new Batch(new Color(0.05f, 0.14f, 0.55f), false);             // the Masamune dragon's deep blue hide, outlined
     readonly Batch dragonScale = new Batch(new Color(0.2f, 0.5f, 1f), false, glow: 1.4f);   // its scales, a lighter blue
     readonly Batch giantCut = new Batch(new Color(1f, 0.85f, 0.15f), false, glow: 4f);       // Onini's ultimate cut, gold
-    const float GiantCutReach = 120f, GiantCutHalf = 14f;                                   // far past the screen's edge; its half width
+    const float GiantCutReach = 120f, GiantCutHalf = 28f;                                   // far past the screen's edge; its half width
     readonly Batch dragonFire = new Batch(new Color(0.35f, 0.7f, 1f), false, glow: 2.6f);   // and the blue flames all over it: only these glow
     readonly Batch stain = new Batch(new Color(0.02f, 0.02f, 0.025f), false, round: true); // round black marks left by the dead
     readonly Batch blob = new Batch(new Color(0.03f, 0.03f, 0.04f), false, round: true); // a dark spot under each robot: it stands out from any ground
@@ -1578,7 +1578,7 @@ public class Combat : MonoBehaviour
                 float u = s / (Pieces - 1f) * 2f - 1f;
                 Vector3 at = b.position + Vector3.up * 0.8f + side * (u * half) - b.dir * (u * u * half * 0.55f);
                 Vector3 tangent = side - b.dir * (1.1f * u);
-                float thick = 0.45f * (b.phase < 0f ? 6f : 1f) * (1f - u * u * 0.75f);
+                float thick = 0.45f * (b.phase < 0f ? 12f : 1f) * (1f - u * u * 0.75f);
                 b.batch.Add(at, new Vector3(thick, 0.1f, half * 2.6f / (Pieces - 1)), Quaternion.LookRotation(tangent));
             }
             return;
