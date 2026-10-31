@@ -83,14 +83,7 @@ public class Player : MonoBehaviour
     // (Tools/make_hero_gear.py) with a flame under each nozzle.
     void Dress()
     {
-        if (Locomotives.Selected == 9)
-        {
-            // The machine has no humanoid pilot: its combat avatar uses its own model.
-            var machine = Locomotives.Create(visuals.transform, 9);
-            machine.localScale = Vector3.one * .3f;
-            machine.localRotation = Quaternion.Euler(0f, 90f, 0f);
-            return;
-        }
+        if (Orbs) { Orb(visuals.transform, 1.6f); return; }
         string who = "Characters/" + Locomotives.Hero + "/" + Locomotives.Hero; // each locomotive has its own
         Transform body = Instantiate(Resources.Load<GameObject>(who), visuals.transform).transform;
         Skin(body, who);
@@ -130,6 +123,36 @@ public class Player : MonoBehaviour
         foreach (Renderer part in parts) part.sharedMaterials = System.Array.ConvertAll(part.sharedMaterials, _ => skin);
     }
     static readonly System.Collections.Generic.Dictionary<string, Material> skins = new();
+
+    // Giger Machine and Crochtrain have no pilot: a glowing orb in their engine's colours flies with them instead
+    // (and fights the boarders with rays, BrawlEvent).
+    public static bool Orbs => Locomotives.Selected == 9 || Locomotives.Selected == 11;
+    public static Color OrbCore => Locomotives.Selected == 9 ? new Color(0.55f, 1f, 0.2f) : new Color(0.25f, 0.75f, 0.3f);
+    public static Transform Orb(Transform parent, float size)
+    {
+        Color shell = Locomotives.Selected == 9 ? new Color(0.68f, 0.42f, 0.23f) : new Color(0.95f, 0.92f, 0.78f);
+        var orb = new GameObject("Orb").transform;
+        orb.SetParent(parent, false);
+        orb.localScale = Vector3.one * size;
+        void Part(Vector3 scale, Vector3 tilt, Material paint)
+        {
+            Transform part = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
+            Destroy(part.GetComponent<Collider>());
+            part.SetParent(orb, false);
+            part.localScale = scale;
+            part.localRotation = Quaternion.Euler(tilt);
+            part.GetComponent<Renderer>().sharedMaterial = paint;
+        }
+        Part(Vector3.one * 0.7f, Vector3.zero, TrainSim.Mat(OrbCore * 2.5f, false)); // the core, bright enough to bloom
+        Material moon = TrainSim.Mat(shell);
+        for (int i = 0; i < 3; i++) // three small moons round it, on a tilted ring (the orb spins)
+        {
+            float a = i * 2.0944f;
+            Part(Vector3.one * 0.2f, Vector3.zero, moon);
+            orb.GetChild(i + 1).localPosition = Quaternion.Euler(20f, 0f, 0f) * new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a)) * 0.6f;
+        }
+        return orb;
+    }
 
     void Pose(Transform body, Animator rig)
     {
@@ -226,7 +249,7 @@ public class Player : MonoBehaviour
         kick = Mathf.Max(0f, kick - dt * 7f);
         float time = Time.time, paddle = Mathf.Sin(time * 2.3f) * 5f;
         visuals.transform.rotation = facing * Quaternion.Euler(lean.z * 20f, 0f, -lean.x * 16f);
-        if (Locomotives.Selected == 9) return;
+        if (Orbs) { visuals.transform.GetChild(0).Rotate(0f, 120f * dt, 0f); return; }
         Quaternion turn = visuals.transform.rotation;
         for (int leg = 0; leg < 2; leg++)
         {
