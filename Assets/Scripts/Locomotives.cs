@@ -18,7 +18,7 @@ public static class Locomotives
     // All locomotives are temporarily available for trying them out.
     public static bool Locked(int index) => !SaveGame.Unlocked(index); // what the save has opened
     // Who flies beside each locomotive: Resources/Characters/<name>/<name>. null: bba.
-    public static readonly string[] Heroes = { null, "nath", "onini", "tzmil", "sentinel", null, "culu", "cerebron", "xiuhtecuhtli", null, "faceless", null };
+    public static readonly string[] Heroes = { null, "nath", "onini", "tzmil", "sentinel", "gabriel", "culu", "cerebron", "xiuhtecuhtli", null, "faceless", null };
     public static string Hero => HeroId(Selected);
     public static void Shadow(Transform body)
     {
