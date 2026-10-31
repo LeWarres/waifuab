@@ -137,7 +137,8 @@ public class BrawlEvent : MonoBehaviour
     Rig hero;
     Transform orb;       // Giger Machine's and Crochtrain's hero (Player.Orb): it fires rays instead of punching
     Material rayPaint;
-    const float RayReach = 9f;
+    const float RayReach = 8f, RayGap = 0.35f, RayDamage = 0.7f, RaySlow = 0.45f, BlastWait = 3f; // a ray every RayGap seconds while held, at RayDamage of a punch, flying at RaySlow of her speed; BlastWait between two heavy ones
+    float rayReady;
     readonly List<(Transform beam, float width, float until)> rays = new();
     Transform heroBody;  // her model, under the root: grown back to an android's size while in a throw or a hold
     Vector3 heroSize;
@@ -710,6 +711,7 @@ public class BrawlEvent : MonoBehaviour
         Keyboard keys = Keyboard.current;
         Mouse mouse = Mouse.current;
         bool light = (pad != null && pad.buttonWest.wasPressedThisFrame) || (keys != null && keys.jKey.wasPressedThisFrame) || (mouse != null && mouse.leftButton.wasPressedThisFrame);
+        bool firing = light || (orb && ((pad != null && pad.buttonWest.isPressed) || (keys != null && keys.jKey.isPressed) || (mouse != null && mouse.leftButton.isPressed)));
         bool heavy = (pad != null && pad.buttonNorth.wasPressedThisFrame) || (keys != null && keys.kKey.wasPressedThisFrame) || (mouse != null && mouse.rightButton.wasPressedThisFrame);
         bool dodge = (pad != null && pad.buttonSouth.wasPressedThisFrame) || (keys != null && keys.spaceKey.wasPressedThisFrame);
         bool grab = !orb && (pad != null && pad.buttonEast.wasPressedThisFrame) || (!Story.Active && keys != null && keys.lKey.wasPressedThisFrame);
@@ -728,8 +730,14 @@ public class BrawlEvent : MonoBehaviour
             grab = far <= 1.5f && Random.value < 0.004f;
             dodge = boarders.Exists(b => b.move == Grabbing && Flat(b.Position - at).magnitude < 2f) && Random.value < 0.05f;
             if (far <= 1.5f && far > 0f) hero.root.rotation = Quaternion.LookRotation(Flat(target.Position - at));
+            if (orb && target != null) // the orb backs off and fires
+            {
+                way = far < 4.5f ? -Flat(target.Position - at).normalized : far > 7f ? way : Vector3.zero;
+                firing = true;
+                heavy = Random.value < 0.03f;
+            }
         }
-        if (ending != null) { light = heavy = dodge = grab = false; way = Vector3.zero; }
+        if (ending != null) { light = heavy = dodge = grab = firing = false; way = Vector3.zero; }
 
         void Face(Vector3 toward, float rate)
         {
@@ -738,7 +746,7 @@ public class BrawlEvent : MonoBehaviour
         }
         void Lock() // the blows go to the nearest boarder in reach, whichever way the hero was facing
         {
-            Boarder target = Nearest(orb ? RayReach : 3.5f, at);
+            Boarder target = Nearest(3.5f, at);
             if (target != null) Face(Flat(target.Position - at), 900f);
         }
         void Strike(float range, float cone, float damage, bool knock)
@@ -753,24 +761,25 @@ public class BrawlEvent : MonoBehaviour
                 stopUntil = now + (knock ? 0.09f : 0.05f);
             }
         }
-        void Fire(bool heavy) // the orb's blow: a ray to the first one in its line, through all of them on a heavy one
+        void Fire(bool heavy) // the orb's blow: a ray at the nearest one; a heavy one goes through all in a wide cone and floors them
         {
             Vector3 from = orb.position, facing = hero.root.forward, end = from + facing * RayReach;
-            Boarder first = null;
-            foreach (Boarder b in boarders)
+            Boarder first = Nearest(RayReach, at);
+            if (heavy)
             {
-                if (!Standing(b)) continue;
-                Vector3 to = Flat(b.Position - at);
-                if (to.magnitude > RayReach || Vector3.Angle(facing, to) > (heavy ? 30f : 20f)) continue;
-                if (heavy) HitBoarder(b, heavyDamage, true, to.normalized, now);
-                else if (first == null || to.sqrMagnitude < Flat(first.Position - at).sqrMagnitude) first = b;
+                foreach (Boarder b in boarders)
+                {
+                    if (!Standing(b)) continue;
+                    Vector3 to = Flat(b.Position - at);
+                    if (to.magnitude <= RayReach && Vector3.Angle(facing, to) <= 35f) HitBoarder(b, heavyDamage, true, to.normalized, now);
+                }
+                stopUntil = now + 0.08f;
             }
-            if (first != null)
+            else if (first != null)
             {
-                HitBoarder(first, lightDamage, combo == 2, Flat(first.Position - at).normalized, now);
+                HitBoarder(first, lightDamage * RayDamage, false, Flat(first.Position - at).normalized, now);
                 end = first.Position + Vector3.up * 1.2f;
             }
-            stopUntil = now + 0.05f;
             Transform beam = GameObject.CreatePrimitive(PrimitiveType.Cylinder).transform;
             Destroy(beam.GetComponent<Collider>());
             beam.SetParent(room, true);
@@ -841,12 +850,11 @@ public class BrawlEvent : MonoBehaviour
             case Kicking:
                 bool kick = heroMove == Kicking;
                 if (hero.Done < 0.3f) Lock();
-                if (hero.Done < 0.45f && !orb) Place(hero.root, at + hero.root.forward * (1.6f * dt)); // a step into it
+                if (hero.Done < 0.45f) Place(hero.root, at + hero.root.forward * (1.6f * dt)); // a step into it
                 if (!heroLanded && hero.Done >= (kick ? 0.42f : 0.35f))
                 {
                     heroLanded = true;
-                    if (orb) Fire(kick);
-                    else Strike(kick ? heavyReach : reach, kick ? 100f : 70f, kick ? heavyDamage : lightDamage, kick || combo == 2);
+                    Strike(kick ? heavyReach : reach, kick ? 100f : 70f, kick ? heavyDamage : lightDamage, kick || combo == 2);
                 }
                 if (light && !kick && hero.Done > 0.2f) queued = true;
                 if (dodge && heroLanded) { StartDodge(way); return; } // a dodge cuts a move short once its blow is dealt
@@ -857,6 +865,16 @@ public class BrawlEvent : MonoBehaviour
         }
         // Free.
         if (dodge) { StartDodge(way); return; }
+        if (orb) // the orb keeps its distance: it flies about freely, turned on the nearest, and fires as it goes
+        {
+            Boarder aim = Nearest(RayReach, at);
+            Face(aim != null ? Flat(aim.Position - at) : way, aim != null ? 1080f : 720f);
+            if (heavy && now >= kickReady) { kickReady = now + BlastWait; Fire(true); }
+            else if (firing && now >= rayReady) { rayReady = now + RayGap; Fire(false); }
+            Place(hero.root, at + way * (heroSpeed * (firing ? RaySlow : 1f) * dt)); // firing, it cannot also run away
+            hero.Play(way.sqrMagnitude > 0.01f ? moves.run : moves.idle, false, 1f, 0.15f);
+            return;
+        }
         if (grab && Grab()) return;
         if (light) { StartCombo(0, now); return; }
         if (heavy && now >= kickReady)
@@ -942,7 +960,7 @@ public class BrawlEvent : MonoBehaviour
         if (now - b.takenAt > 1.4f) b.taken = 0;
         b.taken++;
         b.takenAt = now;
-        if (now < b.armourUntil || (b.taken >= BurstAfter && !knock))
+        if (now < b.armourUntil || (b.taken >= BurstAfter && !knock && !orb)) // the orb's rays from afar build no burst
         {
             bool bursting = now >= b.armourUntil;
             Effect("spark", chest - away * 0.3f, bursting ? 1.6f : 0.7f);
@@ -1071,7 +1089,7 @@ public class BrawlEvent : MonoBehaviour
         Vector3 go = Flat(spot - b.Position);
         if (Random.value < dt * 0.25f) b.side = -b.side;
         if (go.magnitude < 0.25f) { b.rig.Play(moves.boarderIdle, false, 1f, 0.2f); return; }
-        Vector3 step = go.normalized * Mathf.Min(boarderSpeed * dt, go.magnitude);
+        Vector3 step = go.normalized * Mathf.Min(boarderSpeed * (orb ? 1.4f : 1f) * dt, go.magnitude); // they rush the orb: it must stop firing to get away
         Place(b.rig.root, b.Position + step);
         // The walk that matches the way it goes, seen from where it faces (the hero).
         float ahead = Vector3.Dot(go.normalized, b.rig.root.forward), across = Vector3.Dot(go.normalized, b.rig.root.right);
