@@ -190,11 +190,18 @@ public class SelectLocomotive : MonoBehaviour
 
     // The hero that goes with a locomotive, built the first time it is asked for: its model in its toon looks,
     // facing the viewer, with the greeting bba has (they are all humanoids, so her gesture fits them).
+    string PilotKey => selected == 11 ? Locomotives.NameKeys[11] : Locomotives.HeroNameKey(selected); // Crochtrain's orb goes by its name
+
     Transform HeroFor(string id)
     {
         if (heroes.Count == 0 && heroPreview) heroes["bba"] = heroPreview;
         if (heroes.TryGetValue(id, out Transform hero)) return hero;
-        if (id == "giger") return null;
+        if (id.StartsWith("orb")) // Giger Machine's and Crochtrain's orb (Player.Orb), floating where a hero stands
+        {
+            hero = Player.Orb(transform, 1f, int.Parse(id.Substring(3)));
+            hero.name = "Orb";
+            return heroes[id] = hero;
+        }
         string who = "Characters/" + id + "/" + id;
         hero = Instantiate(Resources.Load<GameObject>(who), transform).transform;
         hero.name = id + "HeroPreview";
@@ -276,10 +283,11 @@ public class SelectLocomotive : MonoBehaviour
             var parts = heroPreview.GetComponentsInChildren<Renderer>(true);
             Bounds bounds = parts[0].bounds;
             foreach (Renderer part in parts) bounds.Encapsulate(part.bounds);
-            heroPreview.localScale *= 4.6f / Mathf.Max(0.01f, bounds.size.y);
+            bool orb = heroPreview.name == "Orb";
+            heroPreview.localScale *= (orb ? 2.2f : 4.6f) / Mathf.Max(0.01f, bounds.size.y);
             bounds = parts[0].bounds;
             foreach (Renderer part in parts) bounds.Encapsulate(part.bounds);
-            Vector3 anchor = new Vector3(bounds.center.x, bounds.min.y, bounds.center.z);
+            Vector3 anchor = orb ? bounds.center + Vector3.down * 2.6f : new Vector3(bounds.center.x, bounds.min.y, bounds.center.z); // the orb floats at a hero's chest
             var animator = heroPreview.GetComponent<Animator>();
             if (animator && animator.isHuman && animator.runtimeAnimatorController)
             {
@@ -294,6 +302,7 @@ public class SelectLocomotive : MonoBehaviour
         Vector3 screen = RectTransformUtility.WorldToScreenPoint(canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera, heroAnchor.position);
         Vector3 foot = cam.ScreenToWorldPoint(new Vector3(screen.x, screen.y, 18f));
         heroPreview.position = foot - heroPreview.TransformVector(heroFootOffset);
+        if (heroPreview.name == "Orb") heroPreview.Rotate(0f, 90f * Time.unscaledDeltaTime, 0f);
     }
 
     void Update()
@@ -458,8 +467,8 @@ public class SelectLocomotive : MonoBehaviour
         if (heroName)
         {
             // The selected locomotive's own hero stands there; the one that stood there before steps out.
-            string id = Exists && !random ? Locomotives.CampaignHeroId(selected) : null;
-            Texture2D picture = (pictures || id == "giger") && id != null && Application.isPlaying ? Resources.Load<Texture2D>(id == "giger" ? "Menu/loco_beast" : "Menu/hero_" + id) : null;
+            string id = Exists && !random ? Player.IsOrb(selected) ? "orb" + selected : Locomotives.CampaignHeroId(selected) : null;
+            Texture2D picture = pictures && id != null && Application.isPlaying ? Resources.Load<Texture2D>("Menu/hero_" + id) : null;
             if (picture && !heroFrame)
             {
                 heroFrame = UiKit.Panel(heroPlaceholderPanel.transform.parent, new Vector2(880f, 62f), new Vector2(304f, 437f), UiKit.Now.main, UiKit.Now.main, 0f);
@@ -498,7 +507,7 @@ public class SelectLocomotive : MonoBehaviour
             }
             heroPlaceholderPanel.gameObject.SetActive(!hero && !picture && !photo);
             heroPlaceholder.text = "?";
-            heroName.text = Localized("loco.hero", random ? "?" : Localized(Exists ? Locomotives.HeroNameKey(selected) : "hero.character.test"));
+            heroName.text = Localized("loco.hero", random ? "?" : Localized(Exists ? PilotKey : "hero.character.test"));
             PositionHeroPreview();
         }
         eyebrow.text="1P  /  "+Localized(Locomotives.StoryMode ? "loco.mode.story":"loco.mode.endless");
@@ -526,7 +535,7 @@ public class SelectLocomotive : MonoBehaviour
         weaponName.text=gun!=null ? Localized("weapon."+gun.id+".name").ToUpperInvariant() : "?";
         weaponInfo.text=gun!=null ? Localized("weapon."+gun.id+".info") : Localized(random ? "loco.random.description":"loco.locked.description");
         bool soon=Exists && !random && Soon(selected);
-        if (pilotData) pilotData.text = Localized("loco.pilot.data", random ? "?" : Localized(Exists ? Locomotives.HeroNameKey(selected) : "hero.character.test"),
+        if (pilotData) pilotData.text = Localized("loco.pilot.data", random ? "?" : Localized(Exists ? PilotKey : "hero.character.test"),
             random || !Exists ? "" : Localized(Story.Route(Locomotives.CampaignHeroId(selected)) != null ? "loco.story.yes" : "loco.soon"));
         startText.text=Localized(lockIn>=0 ? "loco.go" : soon && !Locomotives.Locked(selected) ? "loco.soon" : locked ? "loco.locked":"loco.start");backText.text=Localized("menu.back");
         startPanel.color=startPanel.bottom=locked ? new Color(.12f,.15f,.20f) : focus==Start && (lockIn<0 || Time.unscaledTime*12f%2f<1f) ? UiKit.Now.hot : UiKit.Now.main;

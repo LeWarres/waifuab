@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
     // (Tools/make_hero_gear.py) with a flame under each nozzle.
     void Dress()
     {
-        if (Orbs) { Orb(visuals.transform, 1.6f); return; }
+        if (Orbs) { Orb(visuals.transform, 1.6f, Locomotives.Selected); return; }
         string who = "Characters/" + Locomotives.Hero + "/" + Locomotives.Hero; // each locomotive has its own
         Transform body = Instantiate(Resources.Load<GameObject>(who), visuals.transform).transform;
         Skin(body, who);
@@ -126,11 +126,12 @@ public class Player : MonoBehaviour
 
     // Giger Machine and Crochtrain have no pilot: a glowing orb in their engine's colours flies with them instead
     // (and fights the boarders with rays, BrawlEvent).
-    public static bool Orbs => Locomotives.Selected == 9 || Locomotives.Selected == 11;
-    public static Color OrbCore => Locomotives.Selected == 9 ? new Color(0.55f, 1f, 0.2f) : new Color(0.25f, 0.75f, 0.3f);
-    public static Transform Orb(Transform parent, float size)
+    public static bool IsOrb(int locomotive) => locomotive == 9 || locomotive == 11;
+    public static bool Orbs => IsOrb(Locomotives.Selected);
+    public static Color OrbCore(int locomotive) => locomotive == 9 ? new Color(0.3f, 1f, 0.12f) : new Color(0.25f, 0.75f, 0.3f);
+    public static Transform Orb(Transform parent, float size, int locomotive)
     {
-        Color shell = Locomotives.Selected == 9 ? new Color(0.68f, 0.42f, 0.23f) : new Color(0.95f, 0.92f, 0.78f);
+        Color shell = locomotive == 9 ? new Color(0.68f, 0.42f, 0.23f) : new Color(0.95f, 0.92f, 0.78f);
         var orb = new GameObject("Orb").transform;
         orb.SetParent(parent, false);
         orb.localScale = Vector3.one * size;
@@ -143,7 +144,7 @@ public class Player : MonoBehaviour
             part.localRotation = Quaternion.Euler(tilt);
             part.GetComponent<Renderer>().sharedMaterial = paint;
         }
-        Part(Vector3.one * 0.7f, Vector3.zero, TrainSim.Mat(OrbCore * 2.5f, false)); // the core, bright enough to bloom
+        Part(Vector3.one * 0.7f, Vector3.zero, TrainSim.Mat(OrbCore(locomotive) * 2.5f, false)); // the core, bright enough to bloom
         Material moon = TrainSim.Mat(shell);
         for (int i = 0; i < 3; i++) // three small moons round it, on a tilted ring (the orb spins)
         {

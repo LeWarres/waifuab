@@ -446,8 +446,8 @@ public class BrawlEvent : MonoBehaviour
         if (Player.Orbs) // no pilot: the body still moves (unseen) and the orb rides on its hips
         {
             foreach (Renderer part in body.GetComponentsInChildren<Renderer>()) part.enabled = false;
-            orb = Player.Orb(heroRoot, 0.55f);
-            rayPaint = TrainSim.Mat(Player.OrbCore * 3f, false);
+            orb = Player.Orb(heroRoot, 0.55f, Locomotives.Selected);
+            rayPaint = TrainSim.Mat(Player.OrbCore(Locomotives.Selected) * 3f, false);
         }
         heroBody = body.transform;
         heroSize = heroBody.localScale;
@@ -590,7 +590,9 @@ public class BrawlEvent : MonoBehaviour
         // The grab's key shows its wait while it cannot be used.
         float wait = grabReady - now;
         string grabKey = heroMove != Throwing && wait > 0f ? Key(3) + " " + Mathf.CeilToInt(wait) + "s" : Key(3);
-        hintLine.Set(L10n.T("brawl.hint", Key(0), Key(1), Key(2), grabKey));
+        string hint = L10n.T("brawl.hint", Key(0), Key(1), Key(2), grabKey);
+        if (orb) hint = hint.Substring(0, hint.LastIndexOf(grabKey)).TrimEnd(); // the orb grabs nobody: no grab key
+        hintLine.Set(hint);
         bool mashing = heroMove == Held && holdPhase == 1;
         if (mashPanel.gameObject.activeSelf != mashing) mashPanel.gameObject.SetActive(mashing);
         if (mashing)
