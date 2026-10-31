@@ -74,7 +74,7 @@ public class Weapon
     // Each hero's weapon, for good (Locomotives.Heroes' ids): it levels up and evolves, it is never swapped.
     static readonly System.Collections.Generic.Dictionary<string, string> HeroWeapons = new()
     {
-        { "bba", "blaster" }, { "skullmonk", "nova" }, { "onini", "masamune" }, { "tzmil", "scatter" }, { "sentinel", "rail" },
+        { "bba", "blaster" }, { "nath", "nova" }, { "onini", "masamune" }, { "tzmil", "scatter" }, { "sentinel", "rail" },
         { "culu", "grenade" }, { "cerebron", "spark" }, { "xiuhtecuhtli", "smg" }, { "faceless", "rail" },
     };
     public static Weapon ForHero(string hero) =>

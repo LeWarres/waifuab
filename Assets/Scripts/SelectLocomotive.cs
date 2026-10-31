@@ -194,7 +194,7 @@ public class SelectLocomotive : MonoBehaviour
     {
         if (heroes.Count == 0 && heroPreview) heroes["bba"] = heroPreview;
         if (heroes.TryGetValue(id, out Transform hero)) return hero;
-        if (id == "giger" || id == "gabriel" || id == "nath") return null;
+        if (id == "giger" || id == "gabriel") return null;
         string who = "Characters/" + id + "/" + id;
         hero = Instantiate(Resources.Load<GameObject>(who), transform).transform;
         hero.name = id + "HeroPreview";
@@ -459,7 +459,7 @@ public class SelectLocomotive : MonoBehaviour
         {
             // The selected locomotive's own hero stands there; the one that stood there before steps out.
             string id = Exists && !random ? Locomotives.CampaignHeroId(selected) : null;
-            Texture2D picture = (pictures || id == "giger" || id == "gabriel" || id == "nath") && id != null && Application.isPlaying ? Resources.Load<Texture2D>(id == "giger" ? "Menu/loco_beast" : "Menu/hero_" + id) : null;
+            Texture2D picture = (pictures || id == "giger" || id == "gabriel") && id != null && Application.isPlaying ? Resources.Load<Texture2D>(id == "giger" ? "Menu/loco_beast" : "Menu/hero_" + id) : null;
             if (picture && !heroFrame)
             {
                 heroFrame = UiKit.Panel(heroPlaceholderPanel.transform.parent, new Vector2(880f, 62f), new Vector2(304f, 437f), UiKit.Now.main, UiKit.Now.main, 0f);
