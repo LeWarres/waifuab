@@ -76,16 +76,18 @@ public class MainMenu : MonoBehaviour
     void Shuffle()
     {
         var heroes=new List<(string id,Texture2D art)>();
-        foreach(string id in Locomotives.Heroes) {
-            var art=Resources.Load<Texture2D>("Menu/hero_"+(id ?? "bba")+"_cut");
-            if(art && !heroes.Exists(h=>h.id==(id ?? "bba"))) heroes.Add((id ?? "bba",art));
+        for(int i=0;i<Locomotives.Models.Length;i++) {
+            string id=i==11 ? "crochtrain" : Locomotives.CampaignHeroId(i);
+            var art=Resources.Load<Texture2D>("Menu/hero_"+id+"_cut");
+            if(art && !heroes.Exists(h=>h.id==id)) heroes.Add((id,art));
         }
         if(heroes.Count>0) {
             var (id,art)=heroes[Random.Range(0,heroes.Count)];
             UiKit.SetHeroTones(id);
             heroArt.texture=heroShade.texture=art;
             heroShade.color=UiKit.Now.main;
-            heroName.text=Localized("hero.character."+id).ToUpperInvariant();
+            heroName.text=Localized(id=="crochtrain" ? "loco.crochet" : "hero.character."+id).ToUpperInvariant();
+            FrameHero();
         }
         var backdrops=new List<Texture2D>();
         foreach(string biome in new[] { "desert","snow","jungle","ocean","volcano","city","space","alien","fortress" }) {

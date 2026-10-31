@@ -17,7 +17,7 @@ public class UltimateCutIn : MonoBehaviour
     public void Play(Action completed)
     {
         if (Active) return;
-        string hero = Locomotives.Hero;
+        string hero = Locomotives.Selected switch { 9 => "giger", 11 => "crochtrain", _ => Locomotives.Hero };
         var texture = Resources.Load<Texture2D>("Ultimate/" + hero + "_cut_in");
         if (!texture) { completed?.Invoke(); return; }
         if (!canvas) Build(texture);
@@ -31,6 +31,11 @@ public class UltimateCutIn : MonoBehaviour
             "tzmil" => new Color(1f, 0.12f, 0.65f),
             "culu" => new Color(1f, 0.85f, 0.12f),
             "onini" => new Color(1f, 0.2f, 0.08f),
+            "gabriel" => new Color(1f, 0.62f, 0.27f),
+            "nath" => new Color(0.68f, 0.4f, 0.92f),
+            "xiuhtecuhtli" => new Color(0.1f, 0.92f, 0.78f),
+            "giger" => new Color(0.65f, 1f, 0.08f),
+            "crochtrain" => new Color(0.35f, 0.95f, 0.72f),
             _ => new Color(0.35f, 1f, 0.5f)
         };
         streaks.powerColor = power;

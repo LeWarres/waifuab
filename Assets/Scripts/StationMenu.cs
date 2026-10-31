@@ -386,6 +386,7 @@ public static class UiKit
         "nath" => new Tones { main = new(.68f,.4f,.92f), deep = new(.12f,.06f,.17f), hot = new(1f,.66f,.24f) },
         "gabriel" => new Tones { main = new(1f,.62f,.27f), deep = new(.12f,.07f,.1f), hot = new(1f,.68f,.82f) },
         "giger" => new Tones { main = new(.68f, .42f, .23f), deep = new(.09f, .05f, .03f), hot = new(.55f, 1f, .2f) },
+        "crochtrain" => new Tones { main = new(.25f, .75f, .5f), deep = new(.03f, .1f, .07f), hot = new(1f, .85f, .3f) },
         "sentinel" => new Tones { main = new(1f, 0.5f, 0.08f), deep = new(0.1f, 0.05f, 0.02f), hot = new(1f, 0.86f, 0.3f) },
         "tzmil" => new Tones { main = new(0.95f, 0.2f, 0.8f), deep = new(0.09f, 0.03f, 0.1f), hot = new(0.72f, 0.5f, 1f) },
         "xiuhtecuhtli" => new Tones { main = new(0.1f, 0.92f, 0.78f), deep = new(0.02f, 0.09f, 0.08f), hot = new(1f, 0.45f, 0.15f) },
