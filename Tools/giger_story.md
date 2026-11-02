@@ -1,155 +1,127 @@
-# Giger Machine
+# Historia de Giger Machine
 
-Pscoworld (Culu) → Thulu (Crochtrain) → infierno (35/40 cajas, controles de carrera) → cielo (Gora-P) → Pscoworld y Gracias.
+Giger es agresivo, brusco, impulsivo y alocado. Busca ruido, resistencia y velocidad; se enfurece cuando lo frenan y se entusiasma hasta con los golpes que recibe. Narra lo que hace, oye y siente en primera persona, sin conocer planes ajenos. La curiosidad lo mete en problemas antes de pensar. Las voces de sus rivales conservan sus diferencias.
 
-Boceto principiante: papel blanco, línea negra insegura, construcción roja/azul, sin rellenos ni fondos detallados.
+Ruta: Pscoworld/Culu → Thulu/Crochtrain → infierno/reto de destrucción → cielo/Gora-P → regreso a Pscoworld → Gracias. Pscoworld no tiene otros habitantes; los visitantes llegan de fuera. Las cifras del reto permanecen exclusivamente en su interfaz. Arte y mecánicas conservados.
 
-story.giger.0.title
-Hecha de locura
+Arte aprobado: boceto principiante con papel blanco, línea negra insegura y construcción roja/azul; fondos escasos, sin rellenos ni sombreado elaborado.
 
-story.giger.1.title
-Una indigestión cósmica
+## 1. Hecha de locura
 
-story.giger.2.title
-Mercancía frágil
+### intro
 
-story.giger.3.title
-El paraíso equivocado
+¡Giger Machine! Ese soy yo. Aquí no hubo taller, planos ni un idiota apretando tornillos. Pscoworld se volvió loco y me escupió sobre las vías. Arranqué en cuanto pude mover las ruedas.
 
-hero.character.giger
-Giger Machine
+Vivo aquí solo, así que voy por donde me da la gana. Si cae algo de fuera, voy directo a reventarlo. Primero lo embisto, luego ya veo qué era. ¡No voy a frenar para leer una etiqueta!
 
-story.giger.0.intro.1
-Soy Giger Machine. No me construyó un ingeniero ni me encargó ningún gobierno. Me creó la misma locura de este mundo. Eso explica bastantes cosas.
+A veces no cae nada en un buen rato y me pongo a dar vueltas. Me aburro, acelero, arranco un pedazo de vía... vuelve a salir torcido. ¡Otra vez! Me encanta cuando este sitio se pone bruto conmigo.
 
-story.giger.0.intro.2
-Mi única pasión es recorrer Pscoworld y destruir cualquier cosa de fuera que termine aquí. Algunos coleccionan recuerdos. Yo los mastico.
+¡Eh, mira eso! Una chica con tentáculos en el pelo y un tren con dientes. Viene despacio, mirando a todas partes. Voy a acercarme... ¡Más rápido! ¡Quiero oír cómo cruje esa máquina!
 
-story.giger.0.intro.3
-Aquí nunca faltan visitantes confundidos, cajas que nadie reclama y cosas que no deberían tener ojos. Es un lugar encantador.
+### before
 
-story.giger.0.intro.4
-Hoy apareció una chica con pelo de tentáculos y una locomotora con dientes. Me gusta su idea, aunque le faltan unos cuantos. Voy a darle la bienvenida.
+¡Tú, la de los tentáculos! ¡Dale velocidad! ¡Quiero ver si esos dientes sirven para algo!
 
-story.giger.0.before.1
-¡Otra visita! ¿Tu locomotora también mastica?
+Busco la ciudad. Si me indica una salida, puedo apartarme y dejarle pasar. No hace falta chocar.
 
-story.giger.0.before.2
-¿Esto es la ciudad? El pollo no mencionó las vías con ojos.
+¿Apartarte? ¡Ni se te ocurra! ¡Acabo de encontrarte!
 
-story.giger.0.before.3
-No, pero puedo hacer que veas las estrellas.
+### after
 
-story.giger.0.after.1
-¡Solo quería llegar a la ciudad! Esa salida parece bastante menos peligrosa.
+No voy a seguir chocando con usted. Hay un paso detrás de esas vías; intentaré salir por allí.
 
-story.giger.0.after.2
-Siempre dicen eso antes de cruzar. Es mi parte favorita.
+¡Ya te estás largando! ¡Pero si tu tren todavía hace ruido!
 
-story.giger.0.outro.1
-Lo mejor de este mundo es que quienes caen aquí siempre terminan en un lugar peor. Me daban tantas ganas de conocer esos sitios y causar un poquito de terror.
+### outro
 
-story.giger.0.outro.2
-Me distraje viendo a la chica pulpo cruzar a otro mundo. Una roca verde cayó de su locomotora. Pensé que sería un buen aperitivo y la mordí.
+Se fue directa a una de esas salidas que aparecen y desaparecen. Quise asomarme detrás de ella, porque siempre oigo cosas al otro lado y me revienta no poder ir a ver qué está haciendo tanto ruido.
 
-story.giger.0.outro.3
-Resultó ser bastante explosiva. Salí volando directo al portal. ¡Al fin unas vacaciones! Y este lugar nuevo tiene muchísimas cosas por romper.
+Entonces algo verde se soltó de su tren y vino rebotando hacia mí. Lo agarré con la boca. ¡CRAC! Quería partirlo, nada más, pero empezó a zumbar entre mis dientes y... bueno, no lo solté a tiempo.
 
-story.giger.1.intro.1
-Todo es verde, húmedo y extrañamente blando. Creo que estoy dentro de algo enorme. Mejor no preguntar por dónde queda la salida.
+¡La explosión me lanzó por el paso! Me dolía toda la mandíbula y todavía estaba riéndome cuando aterricé. Había atravesado. ¡Había atravesado de verdad! Y justo enfrente tenía algo enorme que se movía.
 
-story.giger.1.intro.2
-Una locomotora tejida viene a detenerme. Parece muy bien cuidada. Qué lástima que yo no haya venido a cuidar nada.
+## 2. Una indigestión cósmica
 
-story.giger.1.before.1
-¿Todo esto se puede romper?
+### intro
 
-story.giger.1.before.2
-No. Y vas a dejar de intentarlo.
+Todo se pega a mis ruedas. Está húmedo, el suelo se mueve y cuando le pego se contrae. Creo que me metí dentro de algo vivo. ¡Eh! ¡Eso quiere decir que me está sintiendo!
 
-story.giger.1.before.3
-¡Entonces sí se puede!
+Ahí viene un tren tejido a cortarme el camino. Intenté pasar por un lado y se puso delante otra vez. ¡Eso! ¡Que me empuje! Estoy harto de romper cosas que no devuelven el golpe.
 
-story.giger.1.after.1
-Thulu no está disfrutando tu visita.
+### before
 
-story.giger.1.after.2
-¡Pero si apenas estaba empezando!
+¡Quítate o embísteme! ¡Pero deja de taparme la vía!
 
-story.giger.1.outro.1
-Al parecer, a ese lugar verde y extraño no le gustó nada el caos que llevaba conmigo. Sentí cómo todo se retorcía a mi alrededor.
+FUUU... TAC, TAC.
 
-story.giger.1.outro.2
-Y después me escupió. Literalmente. Aterricé en otro sitio que pronto aprendí que llamaban infierno. Tiene un nombre prometedor.
+¡Vete tú para atrás! ¡Yo quiero ver qué hay después de esa curva!
 
-story.giger.2.intro.1
-Fuego, cadenas y diablitos nerviosos. Por fin alguien entiende cómo decorar un lugar.
+### after
 
-story.giger.2.intro.2
-Los diablitos intentaron apartarme de su mercancía. Grave error: si algo no quieren que toque, seguro es lo más divertido de romper.
+tac... fuuu...
 
-story.giger.2.before.1
-¡Acelerar, girar y romper! Eso sí que es un trabajo a mi medida.
+¡Eh! ¡Que no he terminado! ¿Por qué se mueve todo tanto?
 
-story.giger.2.before.2
-¡No hace falta que griten! Ya vi por dónde guardan sus cosas.
+### outro
 
-story.giger.2.after.1
-¡Entrega completada! Ahora ocupan muchísimo menos espacio.
+El suelo se cerró debajo de mí y me empujó contra una pared blanda. Intenté arrancarla de un mordisco, pero me apretó todavía más. ¡Aceleré a fondo! Las ruedas giraban y yo seguía clavado ahí.
 
-story.giger.2.outro.1
-Parece que a los diablitos tampoco les gustó tenerme de visita. Abrieron un portal y me pidieron amablemente que me fuera. Bueno, gritando.
+De golpe aflojó y salí disparado. Caí entre cadenas, fuego y unos tipos con cuernos que empezaron a gritar «¡fuera del almacén!». Había un letrero que decía INFIERNO. Me puse de pie sobre las ruedas y entré más.
 
-story.giger.2.outro.2
-Me mandaron al primer mundo que encontraron. Por las risas, creo que acababan de enviarles el problema a sus mayores enemigos. Qué considerados.
+## 3. Mercancía frágil
 
-story.giger.3.intro.1
-Nubes, puertas doradas y un silencio insoportable. Qué lugar tan delicado. No debería costarme mucho mejorarlo.
+### intro
 
-story.giger.3.intro.2
-Los ángeles enviaron a su mejor guerrero: Gora-P. Tiene cara de gato y va sobre raíles. Empiezo a entenderme con este lugar.
+¡Este sitio sí hace ruido! Todo arde, las cadenas golpean las paredes y esos diablitos me gritan cada vez que doblo una esquina. Al principio pensé que querían correr conmigo, pero se apartan demasiado pronto.
 
-story.giger.3.before.1
-¿Eres lo mejor que tienen? ¡Qué ganas de comprobarlo!
+Ahora han cerrado el almacén. Les oigo mover cosas detrás de la puerta y uno acaba de decir «que no vea lo de dentro». Pues ya quiero verlo. ¡Que se aparten! ¡Voy a entrar por en medio!
 
-story.giger.3.before.2
-Hasta aquí llegó tu paseo.
+### before
 
-story.giger.3.before.3
-¡Eso me dijeron en los otros dos sitios!
+¡Abran paso! ¡No voy a esquivar nada de lo que dejaron aquí!
 
-story.giger.3.after.1
-Esto no puede seguir así...
+¿Eso era frágil? ¡Pues quiten lo demás antes de que dé otra vuelta!
 
-story.giger.3.after.2
-¡Ni su mejor guerrero pudo detener mi destrucción!
+### after
 
-story.giger.3.outro.1
-Ni su mejor guerrero pudo pararme. Ya estaba pensando qué romper después cuando se acercó uno de esos ángeles.
+¡Otra pasada! ¿Cómo que ya no queda nada? ¡Pues tráiganme más!
 
-story.giger.3.outro.2
-Me habló de un mundo donde podría destruir cosas para siempre, sin que nadie me echara. Sonaba demasiado bueno. Así que crucé el portal sin preguntar nada.
+### outro
 
-story.giger.3.outro.3
-Era Pscoworld. Mi propio mundo. Me habían engañado. Reconocí hasta la seta torcida que siempre muerdo al pasar.
+Me rodearon desde lejos y abrieron un portal justo delante. Ni uno quiso acercarse. Yo aún tenía ganas de correr, así que metí la cabeza por el hueco mientras ellos gritaban «¡sí, por ahí, sigue!». ¡No hacía falta empujar!
 
-story.giger.3.outro.4
-Pero pronto entendí que este sí era mi lugar. Aquí podía romper lo que quisiera. Y siempre terminaba llegando algo nuevo de otro mundo.
+Oí a uno reírse y decir que ahora les tocaba aguantarnos a «los de arriba». No me quedé a preguntar quiénes eran. Al otro lado había una puerta enorme, toda brillante. La crucé de un golpe y seguí acelerando.
 
-story.giger.3.outro.5
-Sobre todo visitantes nuevos. Esa cara de confusión cuando me ven acercarme... ¡Eso es lo que más me gusta!
+## 4. El paraíso equivocado
 
-giger.crates.controls
-Rompe al menos 35 de las 40 cajas. R2 / W / ↑: acelerar · Stick / A-D: dirigir · X / Shift: turbo · □ / S / L2: frenar y derrapar. Tienes 3 minutos. Las cajas no detienen tu tren.
+### intro
 
-giger.crates.count
-CAJAS: {0} / {1}
+Blanco por todas partes, voces bajitas... ¡Hablen más fuerte! Los ángeles me piden que pare desde que llegué. Ya les arranqué un trozo de puerta y siguen pidiéndomelo. A ver si se acercan de una vez.
 
-giger.crates.target
-OBJETIVO: {0} DE {1}
+¡Por fin! Viene una locomotora con cara de gato y no se aparta. Gora-P, gritan detrás. Me está apuntando. ¡Sí, tú! ¡Dispara! ¡Quiero saber cuánto aguantas!
 
-giger.crates.won
-¡DESTROZO COMPLETADO! {0} / {1}
+### before
 
-giger.crates.lost
-FALTARON CAJAS: {0} / {1}
+¡Dale, gato! ¡No me apuntes para luego pedir que me calme!
+
+Aléjate de la puerta. No voy a dejar que sigas dañando este lugar.
+
+¡Pues ven a quitarme! ¡Estoy aquí mismo!
+
+### after
+
+Detén el motor. Hay gente detrás de mí.
+
+¡Todavía gira! ¡Mira, mira! ¡No vas a frenarme quedándote ahí!
+
+### outro
+
+Gora-P seguía en medio y yo ya estaba buscando por dónde embestir otra vez cuando un ángel se acercó por un lado. Se quedó lejos de mi boca. Hacía bien, porque yo todavía tenía el motor a todo lo que daba.
+
+Me gritó que conocía un sitio donde podía romper todo sin que nadie viniera a echarme. ¡Que abriera ya! Ni esperé a que terminara de hablar; en cuanto cupo mi cabeza, me lancé por el portal con todo el cuerpo detrás.
+
+¡La misma vía torcida! ¡La misma seta! Me había mandado a casa, el muy... Quise dar la vuelta, pero el portal ya no estaba. Frené tan fuerte que abrí un surco con las ruedas. Me quedé gruñendo un buen rato.
+
+Luego le pegué a la vía y volvió a crecer, todavía más torcida. Le di otra vez. ¡Y otra! Me puse a correr detrás del tramo que iba saliendo. Nadie me cortaba el paso, nadie gritaba que parara. Seguí hasta que volvió a dolerme la mandíbula.
+
+Ahora mismo no hay nadie más aquí. Estoy dando una vuelta por las salidas, a ver qué cae. Si oigo un motor, voy directo. ¡Esta vez que no se me escape tan pronto!

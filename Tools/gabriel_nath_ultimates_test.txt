@@ -1,0 +1,4 @@
+RUNNING
+PASS gabriel: menu shuffle portrait, Ultimate image, color, advancing frames, freeze and resume
+PASS nath: menu shuffle portrait, Ultimate image, color, advancing frames, freeze and resume
+PASS consoleErrors=0

@@ -1,194 +1,293 @@
 # Historia de Onini
 
-Ruta: infierno/BBA; desierto/BBA (victoria mecánica, derrota narrativa por daños); base del gobierno/Golem; cielo/custodio celestial con la mecánica del jefe de ojos; Psicoworlds/Onini de sombra. Termina con su regreso al infierno y la pantalla Gracias.
+Voz rebelde, despreocupada y aventurera. Narración conversacional en primera persona. Le atraen los caminos nuevos y se resiste al control; la comida y las peleas forman parte de la aventura, no sustituyen su personalidad.
+
+Ruta: infierno/BBA; desierto/BBA (daños impiden seguirla); base del gobierno/Golem; cielo/custodio; Psicoworlds/sombra; regreso al infierno y Gracias.
 
 story.onini.0.title
 
 LA REBELDE DEL INFIERNO
+
 story.onini.0.intro.1
 
-Nací rebelde en el infierno. Sí, imagina lo difícil que es escandalizar a tus vecinos cuando tus vecinos son demonios.
+Yo nací en el infierno, y ahí también hay gente empeñada en decirte cómo tienes que vivir. Que no cruces por aquí, que no salgas por allá… A mí me señalaban una puerta prohibida y ya me quedaba pensando qué habría del otro lado.
+
 story.onini.0.intro.2
 
-Desde pequeña soñaba con tres cosas: fama, poder y comer todas las cosas raras que pudiera encontrar. Sobre todo la tercera.
+Me daban ganas de tener poder para irme cuando quisiera y que conocieran mi nombre fuera de aquí. Pero sobre todo quería ver qué había por ahí: ciudades, peleas, comida que no hubiera probado… Escuchaba a alguien contar un viaje y ya quería meterme.
+
 story.onini.0.intro.3
 
-Salir del infierno es bastante difícil para un demonio. Pero yo ya había escapado un par de veces. Digamos que encontré mi público.
+Así que me escapé un par de veces. No voy a contarte por dónde, que luego me cierran el paso, pero en una de esas salidas acabé metida en una arena de lucha libre. Yo iba a mirar y terminé preguntando cuándo me tocaba subir.
+
 story.onini.0.intro.4
 
-Una arena, un cinturón de lucha libre y gente gritando mi nombre. Eso sí era música. Aunque los golpes también hacían bastante ruido.
+Y me gustó. Te dejaban pelear, te daban un cinturón si ganabas y encima la gente quería verte volver. Yo feliz, aunque el problema seguía siendo regresar al infierno y tener que buscar otra manera de salir para la siguiente función.
+
 story.onini.0.intro.5
 
-Entonces el gobierno de la Tierra consiguió contactarme. Me ayudarían a escapar si llevaba una roca verde a otro planeta.
+Entonces me contactaron unos del gobierno de la Tierra. Según ellos, podían sacarme de aquí si llevaba una roca verde hasta una base alienígena. Les pregunté qué tan lejos quedaba, y mientras me lo explicaban ya estaba pensando qué podía conocer por el camino.
+
 story.onini.0.intro.6
 
-¿Libertad, un viaje y la posibilidad de probar comida extraterrestre? Claro que acepté. Solo faltaba sacar mi locomotora de aquí.
+Acepté antes de que se arrepintieran. Ya vería cómo resolvía la entrega cuando llegara; de momento tenía un viaje fuera del infierno y una locomotora esperando. Con que me abrieran la salida bastaba, que para seguir indicaciones ya habría tiempo después.
+
 story.onini.0.before.1
 
-¿Otra vez intentando escapar, Onini?
+Mira quién anda por aquí. ¿Otra escapadita, Onini? Vas bastante cargada para volver antes de la cena.
+
 story.onini.0.before.2
 
-Esta vez tengo patrocinador. Y una piedra. ¡Apártate, BBA!
+Esta va para largo, bruja. Hasta me pagan por llevar una piedra. Ven si quieres, pero no me tapes la salida, que no pienso quedarme a pedir permiso.
+
 story.onini.0.before.3
 
-Entonces tendrás que ganarte el paso.
+¡Pues hazte el hueco! A ver si sigues tan fresca cuando tengas a RicMar al lado.
+
 story.onini.0.after.1
 
-¡Y con ustedes, la próxima estrella fuera del infierno!
+Ahí está mi salida. ¿Ves? Si tanto querías despedirte podías haberlo hecho sin disparar.
+
 story.onini.0.after.2
 
-Guarda aire para el camino. Nos volveremos a encontrar.
+¡Tú corre! Yo todavía tengo que recuperar mi nave, pero si nos cruzamos no me vengas con que ya estás cansada.
+
 story.onini.0.outro.1
 
-Escapé del infierno. Otra vez. Ahora tenía que llegar a la ciudad para que me lanzaran al espacio.
+Cuando por fin dejé el infierno atrás hasta aflojé un poco el acelerador para mirar alrededor. Ya tendría rato para correr. Me habían dicho que fuera a la ciudad para el lanzamiento al espacio, pero quería disfrutar aunque fuera un momento de estar fuera.
+
 story.onini.0.outro.2
 
-Fama, poder, comida de otros mundos... y un desierto entero entre mi cena y yo. Mejor no perder tiempo.
+Tenía el desierto por delante y ni idea de qué encontraría después. Me gustaba eso, aunque no tanto el ruido que empezó a hacer la máquina. Decidí que la revisaría en cuanto encontrara un sitio donde parar; todavía me quedaban ganas de seguir mirando.
+
 story.onini.1.title
 
 LA VICTORIA QUE SE ESCAPÓ
+
 story.onini.1.intro.1
 
-Mi máquina seguía avanzando, pero el escape no había sido precisamente suave. Algo dentro sonaba como una caja de cubiertos cayendo por una escalera.
+Yo quería hacer como que aquel ruido no era importante, pero ya empezaba a vibrarme hasta el asiento. Salir del infierno nos había costado más de lo que pensé, y por mucho que le diera al acelerador mi máquina ya no respondía igual.
+
 story.onini.1.intro.2
 
-Y entonces apareció BBA otra vez. Justo lo que necesitaba: una bruja compitiendo por el último viaje a la ciudad.
+Y justo cuando me estaba buscando un lugar para revisarla apareció BBA. Con ella siempre acababa metida en algún lío, pero me dio gusto verla. Si iba hacia la ciudad, por lo menos podía acompañarla un tramo. No tenía por qué admitirle lo de la avería todavía.
+
 story.onini.1.before.1
 
-¡BBA! Esta vez la victoria es mía.
+Otra vez tú. ¿Vamos hasta la ciudad o prefieres ir contando cómo te dejé atrás?
+
 story.onini.1.before.2
 
-Tu locomotora no parece estar de acuerdo.
+¡Pero si te estoy alcanzando! ¿No oyes lo que está haciendo tu locomotora?
+
 story.onini.1.before.3
 
-¡No la distraigas! Está haciendo su mejor esfuerzo.
+Sí, sí, ya la voy a revisar. Mientras no vengas a darme clases de conducir, todavía nos podemos divertir un rato.
+
 story.onini.1.after.1
 
-¡Maldita sea, BBA! ¡La victoria era mía, pero mi locomotora está demasiado dañada para seguir a máxima velocidad!
+Ah, maldita sea… Ya no da más. Te llevaste unos buenos golpes, bruja, pero así no te voy a alcanzar la próxima recta.
+
 story.onini.1.after.2
 
-Busca un taller, Onini. Yo tengo que seguir.
+¡Eso por no escucharme! Busca un taller, ¿sí? Yo tengo que llegar al lanzador.
+
 story.onini.1.after.3
 
-¡A la siguiente te derrotaré! ¡Y no cuenta si no me escuchaste!
+Ve, ve. Pero otro día te toca a ti tragarte mi humo. Me debes esa carrera sin tanto ruido de por medio.
+
 story.onini.1.outro.1
 
-Tras el escape del infierno y aquella derrota en el desierto, mi locomotora necesitaba reparaciones de verdad.
+BBA se fue alejando y yo acabé parando. Me fastidiaba darle la razón, pero ya no era cosa de apretar más el acelerador: si seguía así podía quedarme tirada de verdad. Bajé a mirar qué se había soltado y encontré más daños de los que podía arreglar sola.
+
 story.onini.1.outro.2
 
-Llegar así a la ciudad sería perder el tiempo. Así que pedí ayuda a mis flamantes patrocinadores: el gobierno.
+Así que llamé al gobierno. Si querían su roca en otro planeta, podían ayudarme a llevar la locomotora hasta allá. No iba a romperme la cabeza por un retraso; me arreglaban esto y ya buscaría cómo seguir con el viaje.
+
 story.onini.1.outro.3
 
-Al parecer, para ellos «necesito un taller» significaba «los he traicionado». La atención al cliente era peor que en el infierno.
+Pero en cuanto dije que tenía que desviarme, empezaron a hablarme de desobediencia y de entregar la carga. Yo les explicaba lo del motor y ellos seguían con lo suyo. Acabé yendo a su base para hablarlo de frente, porque por radio no había manera.
+
 story.onini.2.title
 
 SERVICIO TÉCNICO HOSTIL
+
 story.onini.2.intro.1
 
-Solo quería una reparación. Una llave inglesa, unos tornillos... quizá un refrigerio mientras esperaba.
+Conseguí llevar la máquina hasta la base a duras penas, pensando que por fin me dejarían parar en algún taller. Mientras la revisaban podía echar un vistazo por ahí. Ya que el viaje se había torcido, al menos quería ver algo nuevo.
+
 story.onini.2.intro.2
 
-Me recibieron con alarmas y el Golem. Supongo que había marcado mal la extensión del taller.
+En vez de abrirme salieron con alarmas y un robot enorme. Ahí ya me empezó a molestar la bienvenida. Había cruzado medio desierto para pedir una reparación, no para cambiar un montón de reglas infernales por otro uniforme dándome órdenes.
+
 story.onini.2.before.1
 
-Objetivo localizado. Entrega la roca y detén tu locomotora.
+Detén la locomotora y entrega la roca. No tienes autorización para entrar en la base.
+
 story.onini.2.before.2
 
-¡Eso intento! ¡Detenerla en un taller, no contra tus cañones!
+Pues alguien tendrá que abrirme un taller. La roca no va a llegar andando y yo no pienso cargarla hasta el espacio.
+
 story.onini.2.before.3
 
-Resistencia registrada. Iniciando protocolo de contención.
+Última advertencia. Si avanzas, tendré que detenerte por la fuerza.
+
 story.onini.2.after.1
 
-Bueno, ¿ahora sí podemos hablar de la reparación?
+¿Ves lo que pasa por ponerse así? Podíamos habernos ahorrado los golpes. Dime que por lo menos tú sabes dónde reparan cosas.
+
 story.onini.2.after.2
 
-Unidad fuera de servicio. Solicitud de taller... pendiente.
+Servicio de mantenimiento… al fondo. Mi unidad también va a necesitarlo.
+
 story.onini.2.outro.1
 
-Estos tontos habían malinterpretado todo. Y tenían un montón de esos robots. Ni siquiera parecía un problema de presupuesto.
+Me abrieron paso después de la pelea, aunque seguían vigilándome como si fuera a robarles el edificio. Vi más robots iguales al que acababa de tumbar y les pregunté si no podían prestar uno para ayudar con el motor. No les hizo gracia, pero a mí sí me pareció buena idea.
+
 story.onini.2.outro.2
 
-Cuando ya pensaba vengarme y hacerlos explotar con su propia piedra verde, apareció un demonio.
+Entre cómo me habían recibido y las órdenes que no dejaban de darme, acabé pensando en dejarles su piedra donde más les molestara. Ya se me estaba pasando la paciencia cuando apareció un demonio. Con la suerte que llevaba, supuse que venía a devolverme al infierno.
+
 story.onini.2.outro.3
 
-Me ofreció un trato: no me llevaría de vuelta al infierno si iba al cielo a recuperar una reliquia que, según él, nos habían robado.
+Pero me ofreció dejarme seguir fuera si iba al cielo por una reliquia que, según él, nos habían robado. Le dije que no me interesaba volver a recibir órdenes, y él me señaló por dónde podía subir. Eso sí me llamó la atención; nunca había estado ahí.
+
 story.onini.2.outro.4
 
-Otro encargo, otro destino. Al menos esta vez sabía a quién culpar si faltaba leer la letra pequeña.
+Al final acepté echar un vistazo. El gobierno podía esperar un poco, sobre todo después de lo amables que habían sido, y yo tenía una máquina reparada y un camino nuevo delante. Si la reliquia resultaba tan importante, ya le pediría al demonio que me contara el resto.
+
 story.onini.3.title
 
 LA RELIQUIA MÁS SAGRADA
+
 story.onini.3.intro.1
 
-El cielo. Mucho mármol, muchas nubes y ni un puesto de comida a la vista. Empezábamos mal.
+El cielo me gustó más de lo que pensaba, aunque no se lo habría dicho al demonio. Había unas vistas que daban ganas de salirse de la vía para mirar mejor. Yo iba buscando la reliquia, pero tampoco tenía prisa por terminar la visita.
+
 story.onini.3.intro.2
 
-La reliquia tenía un guardián: ruedas doradas, alas y demasiados ojos. Nadie podía decir que no estaba vigilando.
+Hasta que me salió al paso una de esas cosas de muchos ojos y ruedas doradas. No sabía por dónde empezar a mirarla. Probé saludar por un lado y giró entera hacia mí, así que supuse que ya tenía su atención y podía preguntar.
+
 story.onini.3.before.1
 
-Detente, visitante. El trofeo permanece bajo nuestra custodia.
+Si vienes por el trofeo, no voy a entregártelo. Ya se lo hemos dicho a los otros.
+
 story.onini.3.before.2
 
-¿Trofeo? A mí me dijeron reliquia. Ya me lo explicarás después.
+¿Un trofeo? Me dijeron reliquia. Bueno, puedo mirarlo sin llevármelo, pero no me cierres el paso antes de enseñarme qué tiene de especial.
+
 story.onini.3.before.3
 
-Entonces procura mirar dónde pisas.
+Ya han intentado ese truco. Quédate fuera del recinto y no tendremos problemas.
+
 story.onini.3.after.1
 
-Muy bien, muchos ojos. ¿Dónde está la famosa reliquia?
+Ya, ya, guarda las alas. Ahora que me gané la visita, cuéntame por qué hay tanto lío con ese trofeo.
+
 story.onini.3.after.2
 
-En la sala de trofeos. Quizá convenga que alguien te explique el partido.
+Ve a la sala de trofeos. Allí pueden enseñarte cómo terminó el partido; quizá esta vez sí escuchen.
+
 story.onini.3.outro.1
 
-La reliquia era un trofeo. Un trofeo de fútbol. El cielo lo había ganado en un partido y el infierno decía que hubo trampa.
+Pues era una copa de fútbol. Me explicaron que el cielo había ganado un partido y los del infierno seguían diciendo que les habían hecho trampa. Yo venía pensando en una reliquia rarísima y acabé escuchando una discusión sobre un penalti.
+
 story.onini.3.outro.2
 
-Pero vamos, el cielo es el bueno, ¿no? Aunque el ángel tardó bastante en explicar aquel penalti.
+Le pregunté al ángel si de verdad iba a tener que llevármela por aquello, y se puso a explicarme la jugada otra vez. Yo ya había visto la copa y tenía más ganas de recorrer el lugar que de seguir discutiendo un partido al que ni siquiera había ido.
+
 story.onini.3.outro.3
 
-Mientras un ángel me explicaba todo, otro de esos con muchos ojos se escapó. Creo que iba al espacio de la Tierra a buscar a su novio.
+Mientras hablaba vi salir a otro de muchos ojos, y alcancé a oír que iba a ver a su novio cerca de la Tierra. Me habría gustado preguntarle cómo se habían conocido, pero ya se estaba alejando y el de mi lado seguía señalando la jugada.
+
 story.onini.3.outro.4
 
-Y entonces vi un cactus bastante peculiar. Mi pasión por la comida pudo más que el sentido común. Me lo comí mientras los ángeles me miraban espantados.
+Y ahí vi el cactus. Tenía una pinta rarísima y me entró curiosidad por el sabor; después de todo, no había viajado tanto para pedir lo de siempre. Le di un bocado antes de preguntar, y por la cara de los ángeles supe que eso debía haberlo hecho al revés.
+
 story.onini.3.outro.5
 
-Una mala idea excelente. El cielo se dobló, las vías cambiaron de color y terminé en un sitio que definitivamente no aparecía en el contrato.
+Primero pensé que me había mareado, pero después vi cómo cambiaban los rieles delante de mí y ya no encontré las nubes por ninguna parte. Me sujeté a la cabina y seguí mirando. No sabía dónde estaba, aunque sí empezaba a entender por qué me habían mirado así.
+
 story.onini.4.title
 
 MESA PARA DOS ONINIS
+
 story.onini.4.intro.1
 
-Psicoworlds. Un nombre elegante para un lugar donde todo parecía mirarme. Incluidas las puertas. Incluidas las vías.
+No había visto nada como Psicoworlds. Cada vez que intentaba seguir una vía me parecía que se movía a otro sitio, así que dejé de dar vueltas buscando la ruta que conocía. Ya estaba ahí; prefería averiguar por dónde podía avanzar.
+
 story.onini.4.intro.2
 
-Al otro lado apareció mi locomotora. Y yo. Pero todo era negro, como una sombra. Perfecto: mi peor rival también tenía mi pésimo carácter.
+Entonces vi venir una locomotora igual a la mía, pero negra por completo, y encima llevaba a otra yo. Al principio hasta levanté la mano para saludar. Fue cuando empezó a hablar como si me conociera que ya no me hizo tanta gracia encontrar compañía.
+
 story.onini.4.before.1
 
-Ni fama, ni poder. Siempre acabarás de vuelta donde empezaste.
+Ya puedes seguir escapando. Al final van a devolverte al mismo sitio y ni siquiera se acordarán de tu nombre.
+
 story.onini.4.before.2
 
-¿Encima de copiarme vas a arruinarme la cena?
+¿Y tú qué sabes de lo que voy a hacer? Si querías venir conmigo podías pedirlo sin ponerte tan desagradable.
+
 story.onini.4.before.3
 
-Tú sabes que no perteneces a ningún lugar.
+Tú también lo piensas. Por eso nunca te quedas mucho tiempo: prefieres irte antes de que te echen.
+
 story.onini.4.before.4
 
-Entonces me haré uno. ¡Y tendrá comida decente!
+No siempre me reciben bien, ¿y qué? Voy a seguir saliendo. Apártate o tendrás que aprender a perder con mi cara.
+
 story.onini.4.after.1
 
-Si vas a ser yo, al menos aprende a perder con estilo.
+Ya me extrañaba que yo tuviera tantas ganas de quedarme hablando. Vamos a ver qué hay detrás de ti.
+
 story.onini.4.outro.1
 
-Aquellas cosas eran nuestros miedos. Al vencerlos, este mundo te muestra el camino al lugar al que perteneces.
+Cuando desapareció la sombra quedó abierto un camino que antes no había visto. Todavía me rondaba lo que me había dicho; a veces sí me preocupaba que en ningún sitio quisieran que me quedara. Pero no iba a dejar que aquella voz decidiera por dónde tenía que seguir.
+
 story.onini.4.outro.2
 
-Para mí, el camino llevaba de vuelta al infierno. Donde resulta que preparan la mejor comida del universo.
+Lo seguí y acabé de vuelta en el infierno. Reconocí el lugar y después me llegó el olor de la comida, así que decidí parar. Esta vez no me habían arrastrado de regreso ni tenía a nadie delante explicándome por qué no podía irme.
+
 story.onini.4.outro.3
 
-Puede que la fama y el poder esperaran un poco. Yo tenía una mesa llena y un hambre que daba miedo de verdad.
+Me senté con los demás y acabé contando lo del cielo entre un plato y otro. Se rieron cuando mencioné el trofeo, pero quisieron saber qué había pasado con el cactus. Les dije que probaran ellos si tenían tanta curiosidad y seguí comiendo. Esa comida sí la había echado de menos.
+
 story.onini.4.outro.4
 
-Aunque no duden que intentaré escapar de nuevo. ¡Todavía me faltan demasiadas cosas raras por probar!
+Eso sí, cuando me preguntaron si ahora iba a quedarme, les dije que un rato. Todavía había muchos sitios que no conocía y quería ver si BBA había encontrado su nave. Primero iba a terminar de comer; después ya buscaría otra salida.
 
+story.onini.shadow
+
+Sombra de Onini
+
+eyeboss.heaven.name
+
+Custodio de la reliquia
+
+eyeboss.heaven.intro
+
+¡El custodio vigila cada paso!
+
+biome.hell
+
+Infierno
+
+biome.heaven
+
+Cielo
+
+biome.psychoworlds
+
+Psicoworlds
+
+boss.name.hell
+
+Carcelero infernal
+
+boss.name.heaven
+
+Vigilante celestial
+
+boss.name.psychoworlds
+
+Pesadilla rodante

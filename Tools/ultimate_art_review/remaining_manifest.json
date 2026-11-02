@@ -1,0 +1,13 @@
+{
+  "tool": "built-in image_gen",
+  "outputs": [
+    "Assets\\Resources\\Ultimate\\xiuhtecuhtli_cut_in.png",
+    "Assets\\Resources\\Ultimate\\giger_cut_in.png",
+    "Assets\\Resources\\Ultimate\\crochtrain_cut_in.png"
+  ],
+  "prompts": {
+    "xiuhtecuhtli": "Model-faithful bird skull and hooked beak, no eyeballs or human face, turquoise feathers and energy; wide anime Ultimate closeup.",
+    "giger": "Actual bronze skull locomotive with lateral tusks, open block-toothed jaw, acid lime energy; wide anime Ultimate closeup.",
+    "crochtrain": "Actual emerald crochet locomotive, cab windows and lamps, pompom and button wheels, mint gold energy; wide Ultimate closeup, no separate driver."
+  }
+}

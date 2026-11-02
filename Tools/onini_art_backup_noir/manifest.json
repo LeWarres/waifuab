@@ -1,0 +1,175 @@
+[
+  {
+    "id": "rebel",
+    "prompt": "Create one 16:9 landscape game-story illustration. The first image is ONLY the ART STYLE reference: bold supernatural NOIR COMIC, heavy irregular black ink, enormous black shadow shapes, angular graphic silhouettes, extremely limited FLAT colors: vivid red, ivory white, muted blue-grey, dusty ochre. No gradients, painterly rendering, photorealism, anime, Aztec codex, crayon, collage, speech balloons or text. ONE scene. The second and third images are the ACTUAL GAME CHARACTER reference: ONINI is a powerful ADULT FEMALE red-skinned oni wrestler, two very tall black tapered horns in a V, huge unruly WHITE mane, narrow yellow eyes, angular red demon face with pointed jaw (her actual face, not a human face under a mask), athletic build, fitted black sleeveless chest top with gold edging, red exposed muscular abdomen, black gauntlets, loose black wrestler pants with BROAD WHITE OUTER LEG STRIPES and red/black boots. Preserve these identity markers and feminine adult silhouette. Do NOT draw the red male character from the style reference, no trench coat, giant stone fist or added tail. SCENE: Onini standing defiantly on an iron platform before the enormous closed gates of hell, holding a skewer of bizarre fantasy street food with a confident rebellious pose, gigantic chain silhouettes and slanting orange-red flames behind her. Black fortress rock and cool blue-grey smoke form simple atmospheric shapes. Strong readable composition, hero inside central 80%, leave edges uncluttered. Dark humorous adventure, not gore.",
+    "refs": [
+      "Tools/hero_renders/onini.png",
+      "Assets/Resources/Menu/hero_onini_cut.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png",
+    "destination": "Assets/Resources/Story/onini_rebel.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "champion",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. Onini victorious in a human wrestling ring holding a GOLD WRESTLING CHAMPIONSHIP BELT high, ropes crossing foreground, dim crowded arena in black silhouettes, spotlight cut as a flat ivory triangle, she grins triumphantly, no writing on belt.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-be1ecad0-a1ea-4a8f-aa7a-0408ff55ec66.png",
+    "destination": "Assets/Resources/Story/onini_champion.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "deal",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. Inside a dark rail depot: two HUMAN government men in BLACK SUITS, white shirts, black ties and sunglasses present the GREEN ROCK on a crate and a blank contract to Onini. She accepts with a confident handshake. The enormous hell gate appears as a silhouette behind her, visual bargain to escape.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-8f761618-b85f-4965-a2db-80630015cf3c.png",
+    "destination": "Assets/Resources/Story/onini_deal.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "hell_escape",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. Onini leaning from the CAB of her GRAY-BLACK STEAM LOCOMOTIVE with cylindrical boiler, tall chimney, RED wheel coupling rods, red window trim and pale gray slatted cowcatcher (reference 3). The train is moving OUT THROUGH HELL GATES toward a cool desert horizon. Orange flames behind, big black chain broken across the gateway, powerful white steam. Train much larger than driver.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Menu/loco_steam.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-460e44e3-d604-4b68-956a-132a0bd9fe0f.png",
+    "destination": "Assets/Resources/Story/onini_hell_escape.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "desert_chase",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. A desperate desert race: foreground Onini in the cab of her DAMAGED gray-black STEAM LOCOMOTIVE (reference 3) with red wheel rods, leaking WHITE STEAM and bent cowcatcher, reaching frustrated toward a distant BLUE/YELLOW BOXY DIESEL locomotive escaping AHEAD toward a city far right. Tiny BBA in that diesel has pink hair and giant red pointed witch hat. No fireball destroying BBA, she escapes. Trains much larger than people.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Menu/loco_steam.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Menu/loco_classic.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-cf7acd99-c226-4cca-92cd-2c4993bf9620.png",
+    "destination": "Assets/Resources/Story/onini_desert_chase.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "repair",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. Inside Onini's cramped STEAM ENGINE CAB: Onini slumps over the controls, holding a radio handset in one hand and pointing at a broken pressure gauge with the other. Through the window a disabled piston leaks steam and desert stretches beyond. Red warning lamp, bolt heads, grease rag; solid believable cab perspective, no floating arms.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-8522af4f-bfda-4ff2-8812-0205011ac7b8.png",
+    "destination": "Assets/Resources/Story/onini_repair.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "security",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. Onini facing a HUMAN GOVERNMENT military checkpoint and an imposing white-and-gold cylindrical futuristic locomotive GOLEM with huge round turbine front (reference 3), guarded by orange-black armored ROBOT SENTINEL (reference 4). Blue government banners, industrial steel, two black-suited human officials behind barrier, Onini raises empty hands to request repairs.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Menu/loco_future.png",
+      "C:/Users/r20/WaifuTren/Tools/hero_renders/sentinel.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-750f5ce8-e26a-4286-9244-7a6e7de217cf.png",
+    "destination": "Assets/Resources/Story/onini_security.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "bargain",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. Onini in an industrial government depot about to throw the GREEN ROCK at a power core. A distinct smaller DEMON with a black hooded robe, thin purple-red face and short curled horns appears in a jagged red doorway and offers a BLANK parchment contract. Onini pauses with rock in one hand and points skeptically at the contract with the other. Clear bargaining composition, no additional Onini clones.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-2ba323e4-b275-4f94-b786-7e3d907820c6.png",
+    "destination": "Assets/Resources/Story/onini_bargain.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "heaven_entry",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. Onini's gray-black steam locomotive (reference 3) riding along a bright elevated track INTO HEAVEN: enormous ivory marble columns, gold ring gate, broad flat white cloud shapes over deep blue shadows. Onini tiny in cab looks unimpressed. Retain noir inking despite brighter ivory/cool-blue heaven. No realistic ethereal glow.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Menu/loco_steam.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-5eede123-1efc-4e76-908e-b2782b0ee344.png",
+    "destination": "Assets/Resources/Story/onini_heaven_entry.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "guardian",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. Onini stands ready on a floating train wagon facing a CELESTIAL GUARDIAN: three intersecting GOLDEN WHEELS adorned with MANY EYES, ivory feather-shaped wings, dark central core, no human face. It floats over a circular ring of wagons among clouds and marble columns. This is a white/gold OPHANIM, not a purple fleshy eyeball sphere. Onini normal size; guardian enormous.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-b716a45b-da5d-46da-accd-c2196c324c39.png",
+    "destination": "Assets/Resources/Story/onini_guardian.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "trophy",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. Inside heaven's marble trophy room: a friendly adult ANGEL in ivory tunic, blue sash, wings and golden halo explains a GOLD FOOTBALL TROPHY (a soccer ball on a cup) on a pedestal to a baffled Onini. Tiny stylized football field tapestry behind them visually explains heaven won a football match. Onini points incredulously at this mundane trophy. No writing.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-027d8b19-1714-4114-a9fe-79184d5b6df8.png",
+    "destination": "Assets/Resources/Story/onini_trophy.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "cactus",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. In heaven's cloud garden Onini takes ONE big bite from a bizarre PURPLE-GREEN CACTUS shaped like a twisted spiral, delighted curiosity. TWO frightened ivory-clad angels recoil with open hands. In the distant upper right a small gold wheel angel flies away through a cloud gap toward a tiny Earth and space. Her tall black horns/white hair/red skin remain exact, cactus clearly visible, no gore.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-d6053ac6-d558-436f-9d22-59e36c5ca54d.png",
+    "destination": "Assets/Resources/Story/onini_cactus.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "psycho",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. Onini and her steam train (reference 3) entering PSICOWORLDS: impossible magenta/teal railway loops, black checkerboard islands, floating doors and gigantic simple white eyes peering from black voids. Distorted but clear nightmare landscape, use flat acid teal/magenta as accent against noir black/red/ivory, no gradients. Onini looks alert, not drunk or sexualized.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Menu/loco_steam.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-3cf72d38-67ad-4c3b-b0d3-a2d525fa275c.png",
+    "destination": "Assets/Resources/Story/onini_psycho.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "shadow",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. NORMAL COLORED Onini at left atop her GRAY/BLACK steam train confronts her exact SHADOW DOUBLE on an adjacent track to right: the double's entire BODY, FACE, HORNS, HAIR, CLOTHES, locomotive and ALL WAGONS are SOLID BLACK SILHOUETTES. No white hair or red face on shadow. Same horn shape/white-haired silhouette but filled black, no new monster. Nightmare magenta/teal background and ivory rim separates silhouettes. The real Onini retains white mane/red skin and normal train colors.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Menu/loco_steam.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-9ad1e2b4-a05d-4544-9976-234a2e63fd76.png",
+    "destination": "Assets/Resources/Story/onini_shadow.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  },
+  {
+    "id": "home_feast",
+    "prompt": "One 16:9 landscape game-story illustration, ONE integrated scene, no panels, captions, lettering, logos or speech bubbles. MATCH reference 1's SUPERNATURAL NOIR COMIC ink style and reference 2's established ONINI: adult FEMALE red-skinned oni wrestler, TWO tall black tapered horns, huge unruly WHITE mane, narrow YELLOW eyes, angular red demonic actual face (no human face underneath), athletic muscular build, black sleeveless top/gold edging, red midriff, black gauntlets, loose BLACK PANTS with broad WHITE OUTER STRIPES, red-black boots. Keep her IDENTICAL across all scenes; never replace her with a male trenchcoat demon, no stone fist or added tail. Strong black brush contours, huge black shadow masses, angular shapes, limited FLAT red/ivory/cool blue-grey/dusty ochre pigments. Color-blocked backgrounds, no 3D rendering, gradients, photorealism, glossy anime or Aztec codex/crayon. Expressive dark adventure humor, clear anatomy TWO arms, key action inside central 80%. Onini back in hell happily eating the most extravagant fantasy street-food banquet: steaming skewers, oversized dumplings, spicy noodles, colorful mushrooms, no human remains. She sits confidently on a crate beside her familiar STEAM locomotive in a warm red-black infernal market, one hand holding chopsticks and the other a huge bowl. Two adult harmless demon vendors cheer in background. A portal to other worlds in the distance hints she will escape again. White mane/two black horns/red face and black-white wrestler pants remain identical.",
+    "refs": [
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-290c1b92-be72-44aa-ad30-28bde9a4160a.png",
+      "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-056a4cd0-ba15-4dc4-8e11-3a6fb9f23972.png"
+    ],
+    "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-5e00c674-495b-4cc9-a536-0d43a513ab2f.png",
+    "destination": "Assets/Resources/Story/onini_home_feast.png",
+    "review": "Actual Onini model/design checked; noir comic style; anatomy checked. Trophy extra arm removed; shadow train entirely black; final train boiler restored."
+  }
+]

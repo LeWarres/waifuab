@@ -1,0 +1,6 @@
+{
+  "tool": "built-in imagegen",
+  "path": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-c7d08300-8de8-4f29-9745-3b57a7ad26ad.png",
+  "asset": "Tools/nath_art_trials/nath_fighter_skin_matched.png",
+  "prompt": "Precise localized color correction ONLY. Edit the skin fill of Nath Star's FACE, ears' human skin areas and exposed NECK so it matches EXACTLY the same warm light peach skin color already present on her bare arms, abdomen and thighs in this image. Currently face is paler than body; eliminate that mismatch. Sample the existing upper arm's base skin tone and apply it to face/neck while preserving all black facial lines, tiny existing shadow shapes, sharp GREEN eyes, exaggerated martial arts/Baki-like jaw and cheek expression, smile, teeth, brows, black hair, cat ears pink interiors. Do not redraw face or change its shape. Do not modify body skin or anything else in the picture. Preserve simple awkward amateur webcomic drawing, purple outfit, train and plain volcanic background exactly. No new detail, no lighting changes, no gradients or words."
+}

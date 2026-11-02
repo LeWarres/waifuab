@@ -5,7 +5,7 @@ public static class Locomotives
 {
     public static bool StoryMode { get; set; }
     public static string HeroId(int index) => (index >= 0 && index < Heroes.Length ? Heroes[index] : null) ?? "bba";
-    public static string CampaignHeroId(int index) => index == 1 ? "nath" : index == 5 ? "gabriel" : index == 9 ? "giger" : HeroId(index);
+    public static string CampaignHeroId(int index) => index == 1 ? "nath" : index == 5 ? "gabriel" : index == 9 ? "giger" : index == 11 ? "crochtrain" : HeroId(index);
     public static string HeroNameKey(int index) => "hero.character." + CampaignHeroId(index);
     // One entry per locomotive, in the order of the selection screen. To add one: its model (Tools/make_locos.py
     // builds them), its picture in Resources/Menu, and its two texts.

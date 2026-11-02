@@ -1,0 +1,8 @@
+RUNNING
+PASS 204 localized values and actual narrative/gameplay heights in four languages
+PASS chapter 1: thulu, exact thoughts/rival lines and saved progress
+PASS chapter 2: hell, exact thoughts/rival lines and saved progress
+PASS chapter 3: heaven, exact thoughts/rival lines and saved progress
+PASS chapter 4: ocean, exact thoughts/rival lines and saved progress
+PASS final Doris/Cerebron café, Culu promise and Thanks
+PASS frames=4215 consoleErrors=0. Biome time and combat victories accelerated; balance not evaluated.

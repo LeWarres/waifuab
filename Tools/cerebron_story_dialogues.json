@@ -43,234 +43,234 @@
   },
   {
     "key": "story.cerebron.0.intro.1",
-    "es": "Soy Cerebron, un valiente guerrero del espacio. Un nombre que debería despertar respeto, admiración y, si hay presupuesto, una estatua.",
-    "en": "I am Cerebron, a valiant warrior of space. A name that should inspire respect, admiration and, budget permitting, a statue.",
-    "pt": "Sou Cerebron, um valente guerreiro do espaço. Um nome que deveria despertar respeito, admiração e, se houver verba, uma estátua.",
-    "ja": "私はCerebron、勇敢なる宇宙戦士だ。敬意と憧れ、予算が許せば銅像まで呼ぶべき名だ。"
+    "es": "Soy Cerebron. Guerrero espacial, especialista en armamento y bastante bueno encontrando una salida cuando alguien decide cerrarla. En la Tierra prefieren presentarme como el lunático que intentó conquistarla. Les concedo una cosa: aquella operación terminó fatal.",
+    "en": "I am Cerebron. Space warrior, weapons specialist, and good at finding an exit when someone closes it. Earth prefers introducing me as the lunatic who tried conquering it. I will give them this: that operation ended badly.",
+    "pt": "Sou Cerebron. Guerreiro espacial, especialista em armas e bom em achar saída quando alguém fecha. Na Terra sou o maluco que tentou conquistá-la. Concedo uma coisa: a operação terminou mal.",
+    "ja": "俺はセレブロン。宇宙の戦士で兵器の専門家、閉ざされた出口を見つけるのも得意だ。地球では侵略を企んだ変人で通っている。一つは認めよう。あの作戦は大失敗だった。"
   },
   {
     "key": "story.cerebron.0.intro.2",
-    "es": "En la Tierra solo me conocen como otro de los loquitos que intentaron conquistarla. Fracasé y me quedé a vivir aquí. Hay varios de mi especie; tampoco soy una rareza tan exclusiva.",
-    "en": "On Earth, I'm just another nut who tried to conquer it. I failed and stayed. Plenty of my kind live here; I'm hardly an exclusive curiosity.",
-    "pt": "Na Terra, sou só mais um maluco que tentou conquistá-la. Fracassei e fiquei morando aqui. Há vários da minha espécie; nem sou uma raridade tão exclusiva.",
-    "ja": "地球では征服に失敗した変人の一人扱いだ。失敗して、そのまま住み着いた。同族も結構いる。珍品というほどでもない。"
+    "es": "Me quedé a vivir allí después del fracaso. Había otros de mi especie y sabía reparar cosas que los humanos apenas podían encender. Trabajo no faltaba. Respeto, algo menos. Sobre todo cuando intentaba cobrar una reparación y me recordaban lo de la invasión.",
+    "en": "I stayed afterward. Others of my kind lived there, and I could repair things humans barely knew how to switch on. Work was plentiful. Respect, less so. Particularly when I asked for payment and they brought up the invasion.",
+    "pt": "Fiquei depois do fracasso. Havia outros da minha espécie e eu consertava coisas que humanos mal ligavam. Trabalho sobrava. Respeito, menos. Principalmente ao cobrar e lembrarem da invasão.",
+    "ja": "失敗の後も住み続けた。同族もいたし、人間には起動すら難しい機械を直せた。仕事には困らない。敬意は別だ。修理代を請求するたび、侵略の話を持ち出されるからな。"
   },
   {
     "key": "story.cerebron.0.intro.3",
-    "es": "Lo peor no fue perder la invasión. Fue el trato de la gente después. En especial el de Doris, la anciana del supermercado.",
-    "en": "Losing the invasion wasn't the worst part. It was how people treated me afterward. Especially Doris, the old woman at the supermarket.",
-    "pt": "O pior não foi perder a invasão. Foi como as pessoas passaram a me tratar. Principalmente Doris, a velhinha do supermercado.",
-    "ja": "侵略の敗北より、その後の扱いがひどかった。特にスーパーの老婆、ドリスだ。"
+    "es": "Luego estaba Doris, la anciana del supermercado. Yo podía desmontar un cañón sin perder un tornillo, pero no conseguía comprar verduras sin que me hiciera esperar mientras atendía a medio barrio. Le decía que tenía prisa. Ella señalaba la fila.",
+    "en": "Then there was Doris, the old woman at the supermarket. I could strip a cannon without losing a screw, but buying vegetables meant waiting while she served half the neighborhood. I said I was in a hurry. She pointed to the queue.",
+    "pt": "Havia Doris, a senhora do supermercado. Desmontava um canhão sem perder parafuso, mas comprava verduras esperando meio bairro. Dizia ter pressa. Ela apontava a fila.",
+    "ja": "スーパーにはドリスという婆さんがいた。大砲ならねじ一本なくさず分解できるが、野菜を買うのには近所中の客を待たされる。急いでいると言うと、列を指さされた。"
   },
   {
     "key": "story.cerebron.0.intro.4",
-    "es": "Doris siempre encontraba algo que criticar. Que si iba a pagar, que si no tocara la fruta, que si ese cerebro mío no tenía descuento. Mi paciencia tiene límites.",
-    "en": "Doris always found something to criticize. Was I going to pay? Would I stop touching the fruit? Did my brain come with a discount? My patience has limits.",
-    "pt": "Doris sempre achava algo para criticar. Se eu ia pagar, se podia parar de tocar nas frutas, se meu cérebro estava em promoção. Minha paciência tem limites.",
-    "ja": "払うのか、果物に触るな、その脳みそは値引き品か。ドリスは文句ばかりだ。私の忍耐にも限界はある。"
+    "es": "Un día le dije que se estaba metiendo con el cerebro equivocado. Ni levantó la voz. Me pidió que dejara de tocar los tomates y pagara lo del día anterior. La deuda era correcta. Eso hizo que me fastidiara todavía más.",
+    "en": "One day I told her she was messing with the wrong brain. She never raised her voice. She told me to stop touching the tomatoes and pay yesterday's bill. The debt was accurate. That annoyed me even more.",
+    "pt": "Disse que mexia com o cérebro errado. Nem levantou a voz. Mandou parar de tocar os tomates e pagar ontem. A dívida estava certa. Irritou ainda mais.",
+    "ja": "ある日、相手にする脳を間違えたなと言ってやった。声も荒らげず、トマトに触るのをやめて昨日の代金を払えと言われた。借りは本当だった。だから余計に腹が立った。"
   },
   {
     "key": "story.cerebron.0.intro.5",
-    "es": "Ya tenía el plan perfecto: una zanahoria que volaría por los aires cuando ella la comprara. Una venganza vegetal, elegante y totalmente desproporcionada.",
-    "en": "I had the perfect plan: a carrot that would blow up when she bought it. A vegetable revenge, elegant and completely disproportionate.",
-    "pt": "Eu já tinha o plano perfeito: uma cenoura que explodiria quando ela a comprasse. Uma vingança vegetal, elegante e totalmente desproporcional.",
-    "ja": "完璧な計画もあった。彼女が買った途端に吹き飛ぶニンジンだ。優雅で、どう考えてもやりすぎな野菜の復讐。"
+    "es": "Preparé un detonador diminuto para esconderlo en una zanahoria. Un trabajo fino para una idea miserable. Lo tenía sobre la mesa cuando llamaron a la puerta. Dejé las herramientas y fui a abrir, todavía repasando una amenaza que Doris probablemente habría interrumpido.",
+    "en": "I built a tiny detonator to hide in a carrot. Fine work for a lousy idea. It was on the table when someone knocked. I put down the tools and answered, still rehearsing a threat Doris would probably have interrupted.",
+    "pt": "Preparei um detonador numa cenoura. Trabalho fino para ideia miserável. Estava na mesa quando bateram. Larguei as ferramentas e abri, ensaiando uma ameaça que Doris interromperia.",
+    "ja": "ニンジンに隠す小さな起爆装置を作った。ろくでもない案には見事すぎる出来だった。机に置いた時、戸を叩かれた。工具を置いて開けに行きながら、ドリスなら途中で遮るだろう脅し文句を考えていた。"
   },
   {
     "key": "story.cerebron.0.intro.6",
-    "es": "Entonces llegaron unos sujetos del gobierno con una orden: llevar una piedra verde a la estación de los Pulxsar. Para seguir viviendo en la Tierra, a veces me tocaban encargos de estos.",
-    "en": "Then government agents arrived with an order: deliver a green rock to the Pulxsar station. Staying on Earth occasionally meant doing jobs like this.",
-    "pt": "Então chegaram agentes do governo com uma ordem: levar uma pedra verde à estação dos Pulxsar. Para continuar na Terra, às vezes eu precisava aceitar esses serviços.",
-    "ja": "そこへ政府の連中が来た。緑の石をPulxsarの駅へ届けろという。地球に住み続けるには、時々こういう仕事も必要だった。"
+    "es": "Eran agentes del gobierno. Querían que dejara una roca verde en la estación de los Pulxsar. Pregunté qué transportaba. Me enseñaron mi permiso de residencia en lugar de una ficha técnica. Entendí el mensaje y les hice repetir las coordenadas.",
+    "en": "Government agents. They wanted a green rock delivered to the Pulxsar station. I asked what I was transporting. Instead of technical specifications, they showed my residency permit. I understood and made them repeat the coordinates.",
+    "pt": "Agentes do governo queriam uma pedra verde na estação dos Pulxsar. Perguntei a carga. Mostraram meu visto em vez da ficha técnica. Entendi e pedi as coordenadas de novo.",
+    "ja": "政府の連中だった。プルクサールの駅へ緑の石を届けろと言う。荷物の正体を聞くと、仕様書の代わりに俺の居住許可を見せた。意味はわかった。座標をもう一度言わせた。"
   },
   {
     "key": "story.cerebron.0.intro.7",
-    "es": "Todo olía mal. Los Pulxsar son comerciantes, y esa piedra volaría cien veces más cosas que mi zanahoria. Pero discutir con el gobierno requería más paciencia que soportar a Doris. Rumbo al espacio.",
-    "en": "Something smelled wrong. The Pulxsar are traders, and that rock would blow up a hundred times more than my carrot. But arguing with the government took more patience than enduring Doris. Off to space.",
-    "pt": "Tudo cheirava mal. Os Pulxsar são comerciantes, e aquela pedra explodiria cem vezes mais coisas que minha cenoura. Mas discutir com o governo exigia mais paciência que aguentar Doris. Rumo ao espaço.",
-    "ja": "怪しい話だ。Pulxsarは商人で、あの石の爆発は私のニンジンの百倍では済まない。だが政府との口論はドリス以上に面倒だ。宇宙へ行くとしよう。"
+    "es": "Conozco a los Pulxsar: comercian. También reconozco una fuente de energía mal contenida, y esa roca tenía una lectura que no me gustaba. Podía hacer muchísimo más daño que mi invento. La aseguré en el vagón y salí con una pregunta pendiente: quién iba a pagar por aquello.",
+    "en": "I know the Pulxsar: traders. I also recognize poorly contained energy, and I disliked that rock's readings. It could cause far more damage than my invention. I secured it aboard and left wondering who would pay for this.",
+    "pt": "Conheço os Pulxsar: comerciantes. E reconheço energia mal contida; a leitura da pedra não agradou. Faria muito mais estrago que meu invento. Prendi no vagão e saí pensando quem pagaria aquilo.",
+    "ja": "プルクサールは商売人だ。それは知っている。封じ込めの甘いエネルギーもわかる。石の測定値は気に食わなかった。俺の発明よりはるかに危険だ。車両に固定し、誰が代償を払うのか考えながら出発した。"
   },
   {
     "key": "story.cerebron.0.before.1",
     "es": "Nadie pasa por mi órbita.",
-    "en": "Nobody crosses my orbit.",
-    "pt": "Ninguém cruza a minha órbita.",
-    "ja": "私の軌道は通さない。"
+    "en": "Nobody passes through my orbit.",
+    "pt": "Ninguém passa pela minha órbita.",
+    "ja": "この軌道は誰も通さん。"
   },
   {
     "key": "story.cerebron.0.before.2",
-    "es": "Roger, llevo una entrega. ¿Podemos ahorrarnos la parte en la que intentas matarme?",
-    "en": "Roger, I'm making a delivery. Can we skip the part where you try to kill me?",
-    "pt": "Roger, estou fazendo uma entrega. Podemos pular a parte em que você tenta me matar?",
-    "ja": "ロジャー、配達中だ。殺し合いの部分は省略できないか？"
+    "es": "Roger. He visto tu alcance y no voy a regalarte el primer disparo. Abre la vía y los dos nos ahorramos reparaciones.",
+    "en": "Roger. I have measured your range, and I am not giving you the first shot. Clear the track and we both save on repairs.",
+    "pt": "Roger. Medi seu alcance, não darei o primeiro tiro. Libere a via e poupamos reparos.",
+    "ja": "ロジャー。射程は見た。先制攻撃はくれてやらない。道を空ければ互いに修理代が浮く。"
   },
   {
     "key": "story.cerebron.0.before.3",
-    "es": "No.",
-    "en": "No.",
-    "pt": "Não.",
-    "ja": "断る。"
+    "es": "Acércate y compruébalo.",
+    "en": "Come closer and find out.",
+    "pt": "Chegue perto e confira.",
+    "ja": "近づいて確かめろ。"
   },
   {
     "key": "story.cerebron.0.after.1",
-    "es": "Te golpearía otra hora, pero tengo una entrega pendiente.",
-    "en": "I'd hit you for another hour, but I've got a delivery to make.",
-    "pt": "Eu bateria em você por mais uma hora, mas tenho uma entrega pendente.",
-    "ja": "あと一時間は殴れるが、配達が残っている。"
+    "es": "Ahí tienes tu respuesta. Ya conozco el intervalo entre tus ataques; no pienso quedarme para que lo cambies.",
+    "en": "There is your answer. I know your attack interval now; I am not staying for you to change it.",
+    "pt": "Aí está. Conheço o intervalo dos ataques; não espero mudar.",
+    "ja": "答えは出た。攻撃間隔もわかった。変えるまで待ってやるつもりはない。"
   },
   {
     "key": "story.cerebron.0.after.2",
-    "es": "Descansa, Roger. O consigue un pasatiempo.",
-    "en": "Rest, Roger. Or find a hobby.",
-    "pt": "Descansa, Roger. Ou arranja um passatempo.",
-    "ja": "休め、ロジャー。それか趣味を見つけろ。"
+    "es": "Deja enfriar esas armas, Roger. Mi tren se va.",
+    "en": "Let those weapons cool, Roger. My train is leaving.",
+    "pt": "Deixe as armas esfriar, Roger. Meu trem vai sair.",
+    "ja": "武器を冷やしておけ、ロジャー。俺の列車は行くぞ。"
   },
   {
     "key": "story.cerebron.0.outro.1",
-    "es": "No entiendo por qué Roger siempre está de tan mal humor. Lo peor es que puedes golpearlo por horas y siempre quiere más.",
-    "en": "I don't understand why Roger is always in such a bad mood. The worst part is you can hit him for hours and he still wants more.",
-    "pt": "Não entendo por que Roger está sempre de mau humor. O pior é que você pode bater nele por horas e ele sempre quer mais.",
-    "ja": "なぜロジャーはいつも不機嫌なんだ。何時間殴っても、まだ足りないらしいのが厄介だ。"
+    "es": "Roger seguía moviéndose cuando me aparté. Le había desmontado defensas suficientes para dos batallas y todavía buscaba por dónde disparar. La próxima vez llevaría más munición y menos ganas de discutir. Aunque prefería no tener que comprobar qué consideraba él una derrota.",
+    "en": "Roger was still moving when I withdrew. I had dismantled enough defenses for two battles, yet he still sought a shot. Next time, more ammunition and less discussion. I would rather not discover what he considered defeat.",
+    "pt": "Roger ainda se mexia ao sair. Desmontei defesas para duas batalhas e buscava atirar. Na próxima, mais munição, menos discussão. Preferia não descobrir o que considerava derrota.",
+    "ja": "離れる時もロジャーは動いていた。二戦分の防御を壊したのに、まだ射撃位置を探していた。次は弾を増やし、口論は減らす。ただ、奴の考える敗北を確かめるのはごめんだった。"
   },
   {
     "key": "story.cerebron.0.outro.2",
-    "es": "Creo que lleva ahí desde antes de que yo naciera. En fin, ya podía bajar al planeta de los Pulxsar. La piedra seguía verde. Eso no me tranquilizaba.",
-    "en": "I think he's been there since before I was born. Anyway, I could finally descend to the Pulxsar planet. The rock was still green. That wasn't reassuring.",
-    "pt": "Acho que ele está lá desde antes de eu nascer. Enfim, já podia descer ao planeta dos Pulxsar. A pedra continuava verde. Nada tranquilizador.",
-    "ja": "私が生まれる前から、あそこにいる気がする。ともかくPulxsarの惑星へ降りられる。石は相変わらず緑色だ。安心はできない。"
+    "es": "Lo recuerdo vigilando esa zona desde que era joven. No sé quién lo puso allí ni cuánto lleva sin descansar. Yo sí tenía que seguir. Revisé la sujeción de la roca antes de bajar al planeta. Las lecturas no habían mejorado.",
+    "en": "I remember him guarding that area when I was young. I do not know who stationed him there or how long he has gone without rest. I had to move. I checked the rock before descending. Its readings had not improved.",
+    "pt": "Lembro dele guardando desde jovem. Não sei quem pôs nem há quanto não descansa. Eu precisava seguir. Conferi a pedra antes de descer. As leituras não melhoraram.",
+    "ja": "若い頃からあの場所を守っていたのを覚えている。誰に置かれたのか、どれだけ休んでいないかは知らない。俺は進む必要があった。降下前に石の固定を確認した。測定値は改善していなかった。"
   },
   {
     "key": "story.cerebron.1.intro.1",
-    "es": "Aterrizar sin que Roger volviera a abrir todos sus ojos ya me parecía una victoria. Solo faltaba encontrar la estación y terminar este absurdo encargo.",
-    "en": "Landing before Roger opened all his eyes again already felt like a victory. All I had to do was find the station and finish this absurd job.",
-    "pt": "Pousar antes que Roger abrisse todos os olhos de novo já parecia uma vitória. Faltava encontrar a estação e terminar esse serviço absurdo.",
-    "ja": "ロジャーが目を全部開く前に着陸できた。それだけで勝利だ。あとは駅を見つけ、この馬鹿げた仕事を終えるだけ。"
+    "es": "Llegué al planeta y busqué una ruta a la estación. Primero comprobé las salidas; entregar algo al gobierno no significa que me guste quedarme encerrado mientras lo reciben. Había demasiada actividad militar para una visita a unos comerciantes. Guardé los datos.",
+    "en": "I reached the planet and sought the station, checking exits first. Delivering government cargo does not mean I enjoy being locked in during receipt. Too much military activity for a visit to traders. I saved the data.",
+    "pt": "Cheguei e busquei a estação, conferindo saídas primeiro. Entregar carga não me faz gostar de ficar trancado. Atividade militar demais para comerciantes. Salvei os dados.",
+    "ja": "惑星に着き、まず出口を確認して駅への道を探した。政府の荷物を届けるからといって、受け取りの間閉じ込められたいわけではない。商人への訪問にしては軍の動きが多すぎた。記録した。"
   },
   {
     "key": "story.cerebron.1.intro.2",
-    "es": "Claro que alguien decidió ponerse en medio. BBA. La bruja. Otra excelente razón para que en el espacio no viaje el sonido.",
-    "en": "Of course, someone decided to get in the way. BBA. The witch. Another excellent reason for sound not to travel in space.",
-    "pt": "Claro que alguém resolveu ficar no caminho. BBA. A bruxa. Mais uma ótima razão para o som não viajar no espaço.",
-    "ja": "当然、邪魔者が現れた。BBA、あの魔女だ。音が宇宙を伝わらないのは実にありがたい。"
+    "es": "Entonces apareció BBA, hablando por radio como si pudiera apartar el tráfico a base de entusiasmo. Reconocí la carga de su tren. Otro encargo igual. Quise preguntarle qué le habían contado, pero ya estaba proponiendo que midiéramos las locomotoras en marcha.",
+    "en": "Then BBA appeared, speaking as though enthusiasm could clear traffic. I recognized her cargo. The same assignment. I wanted to ask what they had told her, but she was already proposing a race between our locomotives.",
+    "pt": "BBA apareceu falando como se entusiasmo abrisse trânsito. Reconheci a carga: mesma missão. Queria perguntar o que contaram, mas já propunha comparar locomotivas andando.",
+    "ja": "BBAが現れ、元気だけで道を空けられそうな勢いで無線を使っていた。荷物には見覚えがある。同じ任務だ。何を聞かされたか尋ねたかったが、もう走り比べを提案してきた。"
   },
   {
     "key": "story.cerebron.1.before.1",
-    "es": "¡Cerebron! ¿También vas con la piedra? ¡A ver quién llega primero!",
-    "en": "Cerebron! Are you carrying the rock too? Let's see who gets there first!",
-    "pt": "Cerebron! Também está levando a pedra? Vamos ver quem chega primeiro!",
-    "ja": "Cerebron！あなたも石を運んでるの？どっちが先に着くか勝負！"
+    "es": "¡Cerebron! ¡También llevas la verde! ¿Vamos hasta la base? ¡El que llegue después se pierde mi entrada triunfal!",
+    "en": "Cerebron! You have a green one too! Shall we head for the base? Whoever arrives late misses my grand entrance!",
+    "pt": "Cerebron! Também tem a verde! Vamos à base? Quem atrasar perde minha entrada triunfal!",
+    "ja": "セレブロン！あなたも緑のやつ！基地まで行こうよ。遅れたら私の華々しい登場を見逃すからね！"
   },
   {
     "key": "story.cerebron.1.before.2",
-    "es": "¿No podemos hacer una entrega sin convertirla en una competición?",
-    "en": "Can't we make a delivery without turning it into a competition?",
-    "pt": "Não dá para fazer uma entrega sem transformar tudo numa competição?",
-    "ja": "配達くらい競争にせず済ませられないのか？"
+    "es": "Baja una marcha, bruja. ¿Te explicaron qué hace esa roca o solo dónde soltarla? Antes de abrir la puerta, conviene saber qué llevas al otro lado.",
+    "en": "Down a gear, witch. Did they explain what the rock does, or only where to drop it? Before opening a door, know what you are taking through it.",
+    "pt": "Baixe uma marcha, bruxa. Explicaram a pedra ou só onde largar? Antes de abrir a porta, saiba o que leva.",
+    "ja": "一段落とせ、魔女。石の働きは聞いたか、それとも置き場所だけか。扉を開ける前に、何を向こうへ運ぶか知っておくものだ。"
   },
   {
     "key": "story.cerebron.1.before.3",
-    "es": "¡Si ganas, puedes quejarte todo el camino!",
-    "en": "If you win, you can complain the whole way!",
-    "pt": "Se ganhar, pode reclamar o caminho inteiro!",
-    "ja": "勝ったら道中ずっと愚痴っていいよ！"
+    "es": "¡Ya sé, ya sé! Tú haces las preguntas importantes y yo intento que no nos hagan pedazos mientras llegamos. ¡Vamos!",
+    "en": "I know, I know! You ask the important questions; I keep us in one piece until we arrive. Come on!",
+    "pt": "Eu sei! Você pergunta o importante, eu tento manter inteiros até chegar. Vamos!",
+    "ja": "わかってるって！大事な質問はあなた、着くまで壊されないようにするのは私。行くよ！"
   },
   {
     "key": "story.cerebron.1.after.1",
-    "es": "Perfecto. Ya gané. Ahora puedes encargarte tú de la entrega.",
-    "en": "Perfect. I won. Now you can handle the delivery.",
-    "pt": "Perfeito. Ganhei. Agora você pode cuidar da entrega.",
-    "ja": "よし、勝った。では配達は君に任せる。"
+    "es": "Bien. Ya has visto mi tren de cerca. Tú conoces mejor la entrada; encárgate de la entrega. Si algo no cuadra, mantén abierta la radio.",
+    "en": "Good. You have seen my train up close. You know the entrance better; handle the delivery. If anything looks wrong, keep the radio open.",
+    "pt": "Certo. Viu meu trem de perto. Conhece a entrada; cuide da entrega. Se algo não fechar, rádio aberto.",
+    "ja": "よし、俺の列車はよく見ただろう。入口はお前の方が詳しい。配達は任せる。妙なことがあれば無線を開けておけ。"
   },
   {
     "key": "story.cerebron.1.after.2",
-    "es": "¡Lo que tú digas! ¡Nos vemos en la base!",
-    "en": "Whatever you say! See you at the base!",
-    "pt": "Como quiser! A gente se vê na base!",
-    "ja": "はいはい！基地で会おうね！"
+    "es": "¡Hecho! Pero nada de desaparecer justo cuando se ponga interesante. ¡Nos vemos dentro!",
+    "en": "Deal! But do not disappear just when it gets interesting. See you inside!",
+    "pt": "Feito! Mas não suma quando ficar interessante. Até lá dentro!",
+    "ja": "了解！でも面白くなった途端に消えないでよね。中で会おう！"
   },
   {
     "key": "story.cerebron.1.outro.1",
-    "es": "Nunca entiendo una sola palabra de lo que dice esa loca. Supongo que también trabaja para el gobierno. Aunque me cueste admitirlo, es mucho mejor maquinista que yo.",
-    "en": "I never understand a word that lunatic says. I suppose she works for the government too. Hard as it is to admit, she's a much better train driver than I am.",
-    "pt": "Nunca entendo uma palavra do que aquela maluca diz. Imagino que também trabalhe para o governo. Por mais difícil que seja admitir, ela é uma maquinista muito melhor que eu.",
-    "ja": "あの変人の言葉は一言も理解できない。政府の使いだろう。認めたくないが、運転の腕は私よりずっと上だ。"
+    "es": "Hablar con BBA requiere elegir el hueco entre dos frases y entrar sin miedo. Le hice las preguntas que pude. También trabajaba para el gobierno, y había visto cómo manejaba el tren. Podía dejarle la entrega, aunque seguía sin gustarme la carga.",
+    "en": "Talking to BBA means finding a gap between sentences and charging in. I asked what I could. She worked for the government too, and I had seen her drive. I could leave her the delivery, though I still disliked the cargo.",
+    "pt": "Falar com BBA exige achar intervalo e entrar sem medo. Perguntei o possível. Também trabalhava para o governo e vi como dirigia. Podia deixar a entrega, embora não gostasse da carga.",
+    "ja": "BBAと話すには台詞の隙間へ飛び込む必要がある。聞けるだけ聞いた。同じく政府の仕事で、運転の腕も見た。配達は任せられる。荷物はまだ気に食わなかったが。"
   },
   {
     "key": "story.cerebron.1.outro.2",
-    "es": "Así que dejaré que ella haga la entrega. Yo puedo aprovechar para robar piezas de la mejor calidad. Eso también es una forma de cooperación.",
-    "en": "So I'll let her make the delivery. I can take the opportunity to steal top-quality parts. That's a form of cooperation too.",
-    "pt": "Então vou deixar que ela faça a entrega. Eu aproveito para roubar peças da melhor qualidade. Também é uma forma de cooperação.",
-    "ja": "だから配達は彼女に任せる。私は最高級の部品を盗めばいい。それも協力の一種だ。"
+    "es": "Yo quería revisar los talleres. Los equipos que había visto usaban reguladores difíciles de conseguir en la Tierra, y sabía reconocer los que podían servirle a mi máquina. Aproveché que todos miraban a la bruja para acercarme. No estaba buscando una tienda.",
+    "en": "I wanted the workshops. Their equipment used regulators scarce on Earth, and I knew which would fit my engine. While everyone watched the witch, I moved closer. I was not looking for a shop.",
+    "pt": "Queria as oficinas. Usavam reguladores raros na Terra e reconhecia os úteis ao trem. Enquanto olhavam a bruxa, me aproximei. Não buscava uma loja.",
+    "ja": "俺は工房を調べたかった。地球で手に入りにくい調整器が使われ、俺の機関車に合う物もわかった。皆が魔女を見る間に近づいた。店を探していたわけではない。"
   },
   {
     "key": "story.cerebron.1.outro.3",
-    "es": "No era abandonar la misión. Era repartir el trabajo según nuestros talentos. Ella conduce. Yo tengo muy buen ojo para el material ajeno.",
-    "en": "I wasn't abandoning the mission. I was assigning work according to our talents. She drives. I've got a very good eye for other people's equipment.",
-    "pt": "Não era abandonar a missão. Era dividir o trabalho conforme nossos talentos. Ela dirige. Eu tenho um ótimo olho para o equipamento dos outros.",
-    "ja": "任務放棄ではない。適材適所だ。彼女は運転する。私は他人の装備を見抜く目がある。"
+    "es": "Lo llamo por su nombre: iba a robar repuestos. Llevaba una misión impuesta, una locomotora castigada y las herramientas adecuadas. No me convierte en un ciudadano ejemplar. Pero cuando abrí el primer panel, al menos sabía exactamente qué estaba haciendo.",
+    "en": "Call it what it was: I intended to steal spare parts. A forced mission, a battered engine and the right tools. Not model-citizen material. But opening that first panel, at least I knew exactly what I was doing.",
+    "pt": "Era roubo de peças. Missão imposta, trem castigado e ferramentas certas. Não sou cidadão exemplar. Mas ao abrir o painel sabia o que fazia.",
+    "ja": "はっきり言えば部品泥棒だ。押し付けられた任務、傷んだ機関車、適切な工具がそろっていた。模範市民ではない。だが最初のパネルを開けた時、少なくとも何をしているかはわかっていた。"
   },
   {
     "key": "story.cerebron.2.intro.1",
-    "es": "La base alienígena estaba llena de piezas caras. Algunas hasta seguían atornilladas a cosas que sus dueños todavía estaban usando. Un pequeño inconveniente.",
-    "en": "The alien base was full of expensive parts. Some were still bolted to things their owners were using. A minor inconvenience.",
-    "pt": "A base alienígena estava cheia de peças caras. Algumas ainda presas a coisas que os donos estavam usando. Um pequeno inconveniente.",
-    "ja": "宇宙人の基地は高価な部品の山だった。持ち主が使用中の機械に付いたままの物もある。些細な問題だ。"
+    "es": "En la base encontré lo que buscaba. Revisé conexiones, descarté dos piezas dañadas y guardé las que podían sacarme de un apuro. No iba a llenar el vagón de chatarra por mucho que brillara. Fue entonces cuando oí acercarse a T.exe.",
+    "en": "The base had what I needed. I checked connections, rejected two damaged parts and kept those that could get me out of trouble. Shiny scrap was still scrap. Then I heard T.exe approaching.",
+    "pt": "Achei o necessário. Conferi conexões, descartei duas peças danificadas e guardei as úteis. Não lotaria o vagão de sucata brilhante. Então ouvi T.exe.",
+    "ja": "基地には欲しい物があった。接続を調べ、壊れた部品を二つ捨て、役立つ物をしまった。光るだけのがらくたで車両を埋めるつもりはない。その時T.exeの音が近づいた。"
   },
   {
     "key": "story.cerebron.2.intro.2",
-    "es": "Entonces apareció Faceless, el campeón de ese planeta. Parecía menos interesado en detenerme que en estar en cualquier otro sitio. Su jefe, por lo visto, opinaba distinto.",
-    "en": "Then Faceless appeared, the planet's champion. He seemed more interested in being anywhere else than in stopping me. Apparently, his boss disagreed.",
-    "pt": "Então apareceu Faceless, o campeão do planeta. Parecia mais interessado em estar em qualquer outro lugar do que em me deter. Pelo visto, o chefe discordava.",
-    "ja": "そこへ惑星の王者Facelessが現れた。私を止めるより、どこかへ行きたそうだった。上司の考えは違うらしい。"
+    "es": "Faceless venía a detenerme. Eso dijo, pero después habló de una renuncia que no le habían aceptado. Lo dejé terminar. Conocía a tipos obligados a hacer un trabajo que ya detestaban; había uno dentro de mi propia cabina.",
+    "en": "Faceless came to stop me. So he said, before mentioning a rejected resignation. I let him finish. I knew people forced into jobs they hated; there was one in my own cab.",
+    "pt": "Faceless veio deter. Disse, depois falou da renúncia recusada. Deixei terminar. Conhecia quem fazia trabalho odiado à força; havia um na minha cabine.",
+    "ja": "フェイスレスは俺を止めに来た。そう言った後、辞職を認められなかった話をした。最後まで聞いた。嫌な仕事を強制される奴には覚えがある。俺の運転室にも一人いた。"
   },
   {
     "key": "story.cerebron.2.outro.1",
-    "es": "No es que me sintiera mal por la cosita fea de Faceless. Pero se notaba que quería escapar, y eso me recordó bastante a mí.",
-    "en": "It's not that I felt sorry for that ugly little thing, Faceless. But he clearly wanted to escape, and that reminded me quite a bit of myself.",
-    "pt": "Não é que eu sentisse pena daquela coisinha feia do Faceless. Mas dava para ver que queria fugir, e isso me lembrou bastante de mim.",
-    "ja": "Facelessという不細工な奴に同情したわけではない。だが逃げたいのは明らかで、少し昔の自分を思い出した。"
+    "es": "Faceless quería marcharse y su jefe no lo dejaba. No necesitaba un escáner para reconocer el problema. Le di tiempo para subir a T.exe y mantuve despejada la vía. Si iban a buscar un culpable, les convenía llegar antes de que yo terminara de guardar las herramientas.",
+    "en": "Faceless wanted out; his boss refused. No scanner needed for that problem. I gave him time to board T.exe and kept the track clear. Anyone seeking someone to blame had better arrive before I packed my tools.",
+    "pt": "Faceless queria sair; o chefe recusava. Não precisava escâner. Dei tempo para subir na T.exe e liberei a via. Quem buscasse culpado chegasse antes de eu guardar ferramentas.",
+    "ja": "フェイスレスは去りたくて、上司は許さなかった。その問題に走査機は要らない。T.exeに乗る時間を作り、線路を空けた。責めたい奴がいるなら、俺が工具をしまう前に来ることだ。"
   },
   {
     "key": "story.cerebron.2.outro.2",
-    "es": "Lo vi partir con T.exe y pensé que era mi día de suerte. Él conseguía una excusa para largarse y yo podía seguir robando sin interrupciones.",
-    "en": "I watched him leave with T.exe and thought it was my lucky day. He got an excuse to leave, and I could keep stealing without interruptions.",
-    "pt": "Vi ele partir com T.exe e achei que era meu dia de sorte. Ele conseguia uma desculpa para ir embora, e eu podia continuar roubando sem interrupções.",
-    "ja": "T.exeと去っていく彼を見て、今日はついていると思った。彼には逃げる口実、私には邪魔の入らない部品回収だ。"
+    "es": "Cuando partieron volví al trabajo. Había dejado un regulador a medio desmontar y no pienso estropear una pieza buena por las prisas de otro. Terminé, guardé los tornillos y busqué mi tren. Ahí vi al jefe de Faceless abrir un portal.",
+    "en": "Once they left I resumed work. A regulator was half dismantled, and I would not ruin a good part over someone else's hurry. I finished, saved the screws and sought my train. Then I saw Faceless's boss open a portal.",
+    "pt": "Voltei ao trabalho. Um regulador estava pela metade; não estragaria peça boa pela pressa alheia. Terminei, guardei parafusos e busquei o trem. Vi o chefe abrir um portal.",
+    "ja": "彼らが去ると作業に戻った。調整器を分解しかけていた。他人の急ぎで良い部品を壊す気はない。終えてねじをしまい、列車を探すと、フェイスレスの上司が門を開くのが見えた。"
   },
   {
     "key": "story.cerebron.2.outro.3",
-    "es": "Hasta que vi a su jefe abrir un portal a la garganta de Thulu. Supongo que buscaba protección. Yo solo vi un lugar donde acababan de comprar armas muy caras.",
-    "en": "Until I saw his boss open a portal into Thulu's throat. I suppose he wanted protection. All I saw was a place that had just bought very expensive weapons.",
-    "pt": "Até que vi o chefe dele abrir um portal para a garganta de Thulu. Imagino que buscasse proteção. Eu só vi um lugar que acabara de comprar armas caríssimas.",
-    "ja": "ところが上司がThuluの喉への門を開いた。保護を求めたのだろう。私には、高価な武器を買ったばかりの場所にしか見えなかった。"
+    "es": "Al otro lado reconocí los arcos verdes de Thulu. Estaban trasladando cajas de armamento y pude ver los conectores de una: material caro, compatible con el que acababa de sacar. El jefe cruzó detrás. No sé qué había acordado, pero parecía tener bastante prisa.",
+    "en": "Beyond it I recognized Thulu's green arches. Weapon crates were being moved; the connectors on one were expensive and compatible with my finds. The boss followed. I did not know the deal, but he seemed in a hurry.",
+    "pt": "Reconheci os arcos verdes de Thulu. Passavam caixas de armas com conectores caros compatíveis com minhas peças. O chefe seguiu. Não sabia o acordo, mas tinha pressa.",
+    "ja": "向こうにはトゥルの緑のアーチが見えた。兵器の箱が運ばれ、一つの接続部を見た。高価で、拾った部品と互換性がある。上司も続いた。取引の内容は知らないが、急いでいるようだった。"
   },
   {
     "key": "story.cerebron.2.outro.4",
-    "es": "¿Seguir a un desconocido a la garganta de un dios? Una pésima idea. ¿Dejar pasar semejante oportunidad de conseguir repuestos? Una idea todavía peor.",
-    "en": "Follow a stranger into a god's throat? A terrible idea. Pass up that chance to get spare parts? An even worse one.",
-    "pt": "Seguir um desconhecido até a garganta de um deus? Péssima ideia. Perder aquela chance de conseguir peças? Uma ideia ainda pior.",
-    "ja": "知らない奴を追って神の喉に入る？ひどい考えだ。あの部品を見逃す？それはもっとひどい。"
+    "es": "Podía haberme ido con lo que llevaba. En cambio revisé la batería, cerré los compartimentos y seguí las cajas. Sabía que entrar por un portal ajeno era jugarse el regreso. Me dije que encontraría otra salida. Tenía más confianza de la que aquel lugar merecía.",
+    "en": "I could have left with what I had. Instead I checked the battery, sealed compartments and followed the crates. Another's portal put my return at risk. I told myself I would find another exit. More confidence than that place deserved.",
+    "pt": "Podia ir com o que tinha. Conferi bateria, fechei e segui caixas. Portal alheio arriscava o retorno. Disse que acharia saída. Confiança demais para aquele lugar.",
+    "ja": "持ち帰ることもできた。だが電池を確認し、区画を閉じ、箱を追った。他人の門は帰還を賭けることになる。別の出口を見つけると自分に言った。あの場所に見合わない自信だった。"
   },
   {
     "key": "story.cerebron.3.intro.1",
-    "es": "Por dentro, Thulu era exactamente lo que esperaba y nada de lo que quería pisar. Huesos, cosas que se movían y la desagradable sensación de estar en el menú.",
-    "en": "Inside, Thulu was exactly what I expected and nothing I wanted to step on. Bones, moving things and the unpleasant feeling of being on the menu.",
-    "pt": "Por dentro, Thulu era exatamente o que eu esperava e nada do que queria pisar. Ossos, coisas se mexendo e a sensação desagradável de estar no cardápio.",
-    "ja": "Thuluの中は予想通り、踏み込みたくない場所だった。骨、動く何か、そして自分が献立に載っているような嫌な感覚。"
+    "es": "Dentro de Thulu, las paredes se movían y el equipo empezó a registrar cosas que no figuraban en mis tablas. Comprobé la presión y mantuve el tren en marcha. No me gustaba aquel sitio, pero quedarme quieto esperando a gustarle tampoco era un plan.",
+    "en": "Inside Thulu the walls moved and instruments registered things outside my tables. I checked pressure and kept moving. I disliked the place, but sitting still waiting for it to like me was no plan either.",
+    "pt": "Dentro, paredes se moviam e leituras fugiam das tabelas. Conferi pressão e segui. Não gostava do lugar, mas parado esperando gostar de mim não era plano.",
+    "ja": "トゥルの中では壁が動き、機器が表にない値を示した。圧力を確認し、列車を動かし続けた。気に入らない場所だが、気に入られるまで止まって待つのも策ではない。"
   },
   {
     "key": "story.cerebron.3.intro.2",
-    "es": "Y allí estaba Crochtrain. Una locomotora tejida, enorme, que parecía proteger algo. Lo raro no era la lana: era esa forma de quedarse mirando al vacío.",
-    "en": "And there was Crochtrain. An enormous knitted locomotive, apparently guarding something. The strange part wasn't the yarn: it was the way it stared into nothing.",
-    "pt": "E lá estava Crochtrain. Uma locomotiva enorme de tricô que parecia proteger algo. O estranho não era a lã: era o jeito de ficar olhando para o vazio.",
-    "ja": "そこにCrochtrainがいた。何かを守る巨大な編み物の機関車だ。奇妙なのは毛糸ではなく、虚空を見つめる様子だった。"
+    "es": "Crochtrain bloqueaba la vía. Su tamaño no me preocupó tanto como la falta de respuesta: tardó en reaccionar, luego corrigió el rumbo de golpe. Revisé mis opciones y llamé por radio. Quería saber si custodiaba algo antes de acercarme lo suficiente para descubrirlo a golpes.",
+    "en": "Crochtrain blocked the track. Its size worried me less than its response: slow at first, then a sudden correction. I checked options and radioed. I wanted to know what it guarded before getting close enough to learn through impact.",
+    "pt": "Crochtrain bloqueava. O tamanho preocupou menos que a resposta lenta, depois brusca. Revisei opções e chamei. Queria saber o que guardava antes de descobrir no impacto.",
+    "ja": "クロシュトレインが道をふさいだ。大きさより反応が気になった。遅れて反応し、急に針路を直した。選択肢を調べ、無線で呼んだ。体当たりで知る前に、何を守っているか聞きたかった。"
   },
   {
     "key": "story.cerebron.3.before.1",
-    "es": "Busco la salida. Y, si sobra alguna, una caja de piezas.",
-    "en": "I'm looking for the exit. And, if you've got a spare one, a box of parts.",
-    "pt": "Procuro a saída. E, se sobrar alguma, uma caixa de peças.",
-    "ja": "出口を探している。ついでに余った部品箱も。"
+    "es": "Escúchame, Crochtrain. Quiero una salida. Puedes dejarme pasar o enseñarme qué tramo de vía tengo que abrir yo.",
+    "en": "Listen, Crochtrain. I want an exit. You can let me pass, or show me which stretch of track I must clear myself.",
+    "pt": "Escute, Crochtrain. Quero saída. Pode deixar passar ou mostrar qual trecho abrirei eu.",
+    "ja": "聞け、クロシュトレイン。出口が欲しい。通すか、俺が切り開く線路を教えるかだ。"
   },
   {
     "key": "story.cerebron.3.before.2",
@@ -281,10 +281,10 @@
   },
   {
     "key": "story.cerebron.3.before.3",
-    "es": "Estupendo. Un tren que me ignora. Me siento otra vez en el supermercado.",
-    "en": "Wonderful. A train that's ignoring me. I feel like I'm back at the supermarket.",
-    "pt": "Maravilha. Um trem me ignorando. Parece que voltei ao supermercado.",
-    "ja": "素晴らしい。機関車にも無視される。スーパーに戻った気分だ。"
+    "es": "Sin respuesta. Bien. Ya he visto cómo corriges a la derecha. Voy a pasar por el otro lado.",
+    "en": "No answer. Fine. I have seen your rightward correction. I will pass on the other side.",
+    "pt": "Sem resposta. Certo. Vi sua correção à direita. Passarei pelo outro lado.",
+    "ja": "返答なしか。いいだろう。右への修正は見た。反対側を抜ける。"
   },
   {
     "key": "story.cerebron.3.after.1",
@@ -295,86 +295,86 @@
   },
   {
     "key": "story.cerebron.3.after.2",
-    "es": "No sé qué te pasa, pero yo no pienso quedarme a averiguarlo.",
-    "en": "I don't know what's wrong, but I'm not staying to find out.",
-    "pt": "Não sei o que está acontecendo com você, mas não vou ficar para descobrir.",
-    "ja": "何を考えているか知らないが、調べるために居残るつもりはない。"
+    "es": "La vía es mía. Quédate ahí; no voy a rematarte por no haber sabido escuchar.",
+    "en": "The track is mine. Stay there; I will not finish you off for failing to listen.",
+    "pt": "A via é minha. Fique; não vou acabar por não escutar.",
+    "ja": "線路はもらった。そこで休め。話を聞かなかっただけで、とどめまでは刺さん。"
   },
   {
     "key": "story.cerebron.3.outro.1",
-    "es": "Me pareció curioso que la máquina de Croche estuviera tan distraída. ¿Nostálgica? Algo estaba pasando dentro de Thulu. Por una vez, preferí no meter mi ojo donde no me llamaban.",
-    "en": "It was odd how distracted Croche's machine seemed. Nostalgic? Something was happening inside Thulu. For once, I kept my eye out of other people's business.",
-    "pt": "Achei curioso como a máquina de Croche estava distraída. Nostálgica? Algo acontecia dentro de Thulu. Pela primeira vez, preferi não meter meu olho onde não fui chamado.",
-    "ja": "Crocheの機械は妙に上の空だった。懐かしんでいたのか？Thuluの中で何かが起きていた。今回ばかりは、余計な所へ目を向けなかった。"
+    "es": "Me aparté de Crochtrain y esperé a que dejara de corregir el rumbo. No sabía si estaba averiado o atendiendo algo que yo no podía ver. Tampoco iba a desmontarlo para averiguarlo. Ya había conseguido pasar y quería salir antes de provocar otro problema.",
+    "en": "I moved clear of Crochtrain and waited for its corrections to stop. Damage, or something I could not see? I would not dismantle it to find out. I had passed and wanted out before causing another problem.",
+    "pt": "Afastei e esperei parar de corrigir. Avaria ou algo invisível para mim? Não desmontaria para descobrir. Tinha passado; queria sair antes de outro problema.",
+    "ja": "離れて、針路修正が止まるのを待った。故障か、俺には見えない何かかはわからない。調べるために分解するつもりもなかった。通れたのだから、問題を増やす前に出たかった。"
   },
   {
     "key": "story.cerebron.3.outro.2",
-    "es": "Thulu me dejó ir a cambio de una sola promesa: visitar de vez en cuando un maid café en medio del mar y no permitir que nadie lo destruyera.",
-    "en": "Thulu let me go in exchange for one promise: visit a maid café in the middle of the sea now and then, and stop anyone from destroying it.",
-    "pt": "Thulu me deixou ir em troca de uma promessa: visitar de vez em quando um maid café no meio do mar e não deixar ninguém destruí-lo.",
-    "ja": "Thuluは一つ約束すれば出してくれると言った。海の真ん中のメイドカフェに時々通い、誰にも壊させないこと。"
+    "es": "Entonces escuché a Thulu. Me ofreció una salida si prometía visitar un maid café sobre el mar y protegerlo cuando hiciera falta. Le pedí que repitiera el nombre. Baratito. Después de lo que acababa de cruzar, esperaba unas condiciones bastante peores.",
+    "en": "Then Thulu spoke, offering an exit if I visited a maid café at sea and protected it when needed. I asked the name again. Baratito. After that journey, I had expected worse terms.",
+    "pt": "Thulu ofereceu saída por visitar um maid café no mar e proteger se necessário. Pedi o nome de novo. Baratito. Esperava condições piores.",
+    "ja": "そこでトゥルの声を聞いた。海のメイドカフェへ通い、必要な時は守ると約束すれば出すという。名前を聞き直した。バラティート。通ってきた道を考えると、もっと厳しい条件を覚悟していた。"
   },
   {
     "key": "story.cerebron.3.outro.3",
-    "es": "Ah, y llevar amigos como clientes. Hasta los dioses cósmicos necesitan publicidad. Acepté. No iba a discutir con alguien que podía digerirme.",
-    "en": "Oh, and bring friends as customers. Even cosmic gods need advertising. I agreed. I wasn't arguing with someone who could digest me.",
-    "pt": "Ah, e levar amigos como clientes. Até deuses cósmicos precisam de publicidade. Aceitei. Não ia discutir com alguém capaz de me digerir.",
-    "ja": "それと友達も客として連れてこい、と。宇宙の神にも宣伝が必要らしい。承知した。私を消化できる相手と口論はしない。"
+    "es": "Añadió que llevara amigos como clientes. Le dije que podía conseguir compañía, pero no obligar a nadie a tomarse un café. Aceptó. Cerramos el trato sin disparar una sola vez. Me guardé las condiciones en la memoria y pedí que abriera la salida.",
+    "en": "He added that I should bring friends as customers. I said I could find company, not force anyone to drink coffee. He agreed. We closed without a shot. I saved the terms and asked him to open the exit.",
+    "pt": "Pediu amigos como clientes. Disse que conseguiria companhia, não obrigaria a beber café. Aceitou. Fechamos sem tiro. Guardei as condições e pedi saída.",
+    "ja": "友達も客として連れてこいと付け加えられた。誘いはできるが、飲ませる強制はしないと言うと承諾した。一発も撃たず契約成立だ。条件を記憶し、出口を開けるよう頼んだ。"
   },
   {
     "key": "story.cerebron.3.outro.4",
-    "es": "Y así aparecí en mitad del mar, frente al Baratito. Entré al café y llamé a unos amigos. Ya que había prometido ser cliente, por lo menos iba a hacerlo acompañado.",
-    "en": "And that's how I appeared in the middle of the sea, outside Baratito. I went in and called some friends. If I'd promised to be a customer, I might as well have company.",
-    "pt": "E foi assim que apareci no meio do mar, diante do Baratito. Entrei e liguei para uns amigos. Já que prometera ser cliente, pelo menos teria companhia.",
-    "ja": "こうして海の真ん中、Baratitoの前に出た。店に入り、友人たちを呼んだ。客になると約束したなら、せめて連れが欲しい。"
+    "es": "Aparecí frente al café, con el mar debajo y la locomotora todavía entera. Entré, comprobé dónde estaba la puerta de atrás y pedí sitio para tres. Llamé a un amigo y a Doris. Con ella tendría que arreglar unas cuantas cosas antes de discutir quién pagaba.",
+    "en": "I appeared before the café, sea below and locomotive intact. Inside I checked the back exit and requested three seats. I called a friend and Doris. She and I had things to settle before arguing over the bill.",
+    "pt": "Apareci no café, mar abaixo, trem inteiro. Conferi a saída e pedi três lugares. Chamei um amigo e Doris. Tínhamos coisas para resolver antes da conta.",
+    "ja": "海の上の店の前へ出た。機関車も無事だ。入って裏口を確かめ、三人席を頼んだ。友人とドリスを呼んだ。勘定の話の前に、彼女とは片づけることがあった。"
   },
   {
     "key": "story.cerebron.3.outro.5",
-    "es": "La entrega ya era problema de la bruja. Yo tenía repuestos, café y la excusa perfecta para arreglar las cosas con Doris. Para un valiente guerrero del espacio, no era un mal final.",
-    "en": "The delivery was the witch's problem now. I had spare parts, coffee and the perfect excuse to make things right with Doris. Not a bad ending for a valiant warrior of space.",
-    "pt": "A entrega agora era problema da bruxa. Eu tinha peças, café e a desculpa perfeita para fazer as pazes com Doris. Nada mal para um valente guerreiro do espaço.",
-    "ja": "配達はもう魔女の仕事だ。私には部品とコーヒー、そしてドリスと仲直りする絶好の口実がある。勇敢な宇宙戦士には悪くない結末だ。"
+    "es": "Antes de salir de la Tierra había desconectado el detonador. Ahora le dije a Doris que me había pasado con las amenazas. No fue cómodo, pero la dejé terminar. Cuando llegó el café seguía allí. Aparté las herramientas para que pudiera apoyar su taza.",
+    "en": "Before leaving Earth I had disconnected the detonator. Now I told Doris I had gone too far with the threats. Uncomfortable, but I let her finish. When coffee arrived she was still there. I moved the tools so she could set her cup down.",
+    "pt": "Antes de sair da Terra desligara o detonador. Disse a Doris que exagerei nas ameaças. Desconfortável, mas ouvi até terminar. Chegou café e ainda estava ali. Afastei ferramentas para apoiar a xícara.",
+    "ja": "地球を出る前に起爆装置は外してあった。今度はドリスに、脅しが過ぎたと伝えた。楽ではなかったが、最後まで話を聞いた。コーヒーが来ても彼女はいた。カップを置けるよう工具をよけた。"
   },
   {
     "key": "story.cerebron.2.before.1",
-    "es": "Así que llegaste hasta la base, Faceless.",
-    "en": "So you made it all the way to the base, Faceless.",
-    "pt": "Então você chegou até a base, Faceless.",
-    "ja": "基地までたどり着いたか、フェイスレス。"
+    "es": "Faceless. Tranquilo. Necesito cruzar, no llevarme tu cabeza de recuerdo. Dime qué te han ordenado y buscamos una salida.",
+    "en": "Faceless. Easy. I need to cross, not take your head as a souvenir. Tell me your orders and we will find a way out.",
+    "pt": "Faceless. Calma. Quero cruzar, não sua cabeça de lembrança. Diga a ordem e achamos saída.",
+    "ja": "フェイスレス、落ち着け。通りたいのであって、お前の頭を土産にしたいわけじゃない。命令を聞かせろ。抜け道を探そう。"
   },
   {
     "key": "story.cerebron.2.before.2",
-    "es": "Cerebron. Mi jefe insiste en que debo detenerte.",
-    "en": "Cerebron. My boss insists I must stop you.",
-    "pt": "Cerebron. Meu chefe insiste que preciso deter você.",
-    "ja": "Cerebron。上司が君を止めろと言って聞かないんだ。"
+    "es": "Buenas tardes, Cerebron. Yo también. Mi jefe sigue pidiendo que te detenga, aunque preferiría que ninguno tuviera que volver al taller.",
+    "en": "Good afternoon, Cerebron. So would I. My boss still wants me to stop you, though I would prefer neither of us needing a workshop afterward.",
+    "pt": "Boa tarde, Cerebron. Eu também. Meu chefe ainda quer que eu te detenha, mas preferia que nenhum precisasse voltar à oficina.",
+    "ja": "こんにちは、セレブロン。僕も同じ気持ちだ。上司は君を止めろと言っているけれど、どちらも修理工場へ行かずに済ませたい。"
   },
   {
     "key": "story.cerebron.2.before.3",
-    "es": "Intenté renunciar. Al parecer, el papeleo es más resistente que tu locomotora.",
-    "en": "I tried resigning. Apparently, paperwork is tougher than your locomotive.",
-    "pt": "Tentei me demitir. Pelo visto, a burocracia é mais resistente que sua locomotiva.",
-    "ja": "辞めようとはしたんだよ。どうやら書類仕事は、君の機関車より手ごわい。"
+    "es": "Por cierto, te quedaría muy bien un retrato de perfil. Perdona, no era el momento de comentarlo. Te escucho.",
+    "en": "Incidentally, a profile portrait would suit you very well. Forgive me, that was poorly timed. I am listening.",
+    "pt": "Aliás, um retrato de perfil ficaria muito bem em você. Desculpe, não era a hora de comentar. Estou ouvindo.",
+    "ja": "ところで、君は横顔の肖像画がよく似合いそうだ。ごめん、今言うことではなかったね。続けて。"
   },
   {
     "key": "story.cerebron.2.before.4",
-    "es": "Veo que eres un gran rival. Si luchamos en este momento, alguno terminará muerto. Te propongo que mejor lo resolvamos en un Holo-Duelo: que nuestras mentes resuelvan el problema, no las armas.",
-    "en": "I can see you are a great rival. If we fight right now, one of us will end up dead. I propose we settle this with a Holo-Duel instead: let our minds solve the problem, not our weapons.",
-    "pt": "Vejo que você é um grande rival. Se lutarmos agora, um de nós vai acabar morto. Proponho que resolvamos isso num Holo-Duelo: que nossas mentes resolvam o problema, não as armas.",
-    "ja": "お前は手強い相手だ。今ここで戦えば、どちらかが死ぬことになる。ホロ・デュエルで決着をつけよう。武器ではなく、頭脳で解決するんだ。"
+    "es": "Entonces deja las armas quietas y saca el Holo-Duelo. Tú podrás informar de una batalla y yo conservaré mis piezas. Vamos a ver cómo mueves esas fichas.",
+    "en": "Then leave the weapons idle and bring out the Holo-Duel. You get a battle to report; I keep my parts. Let us see how you move those pieces.",
+    "pt": "Armas quietas, Holo-Duelo na mesa. Você relata uma batalha, eu conservo minhas peças. Mostre como move as fichas.",
+    "ja": "それなら武器を止めてホロ盤を出せ。報告する戦いはできるし、俺の部品も無事だ。その駒さばきを見せてみろ。"
   },
   {
     "key": "story.cerebron.2.after.1",
-    "es": "No fue gran problema. Aunque quizá deberías haberme contado que vienen refuerzos...",
-    "en": "Not much trouble. Although perhaps you should have told me reinforcements were coming...",
-    "pt": "Não foi tão difícil. Mas talvez você devesse ter contado que vêm reforços...",
-    "ja": "大したことはなかった。でも、増援が来ると教えてくれてもよかったのに……。"
+    "es": "Gracias por la partida. Si por radio digo que venían refuerzos, ¿te importaría no corregirme todavía? Necesito alejarme de aquí.",
+    "en": "Thank you for the game. If I say over the radio that reinforcements were coming, would you mind not correcting me yet? I need to get away from here.",
+    "pt": "Obrigado pela partida. Se eu disser no rádio que vinham reforços, se importaria de não me corrigir ainda? Preciso sair daqui.",
+    "ja": "対局をありがとう。無線で援軍が来ると言っても、今は訂正しないでもらえるかな。ここから離れたいんだ。"
   },
   {
     "key": "story.cerebron.2.after.2",
-    "es": "¿Refuerzos? Yo no he dicho nada de...",
-    "en": "Reinforcements? I never said anything about...",
-    "pt": "Reforços? Eu não disse nada de...",
-    "ja": "増援？そんなこと一言も……。"
+    "es": "No he oído nada. Lárgate. Yo vigilo la entrada y tú no me debes ninguna explicación más.",
+    "en": "I heard nothing. Get going. I will watch the entrance, and you owe me no more explanations.",
+    "pt": "Não ouvi nada. Saia. Vigio a entrada, não me deve mais explicações.",
+    "ja": "何も聞いていない。行け。入口は俺が見ている。もう説明は要らん。"
   }
 ]

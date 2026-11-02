@@ -526,7 +526,7 @@ public partial class TrainSim : MonoBehaviour
             Story.Duel(false,out string[] names,out string[] lines,out bool[] rivals);
             talk.Show(names,lines,rivals,()=>RaceFinished(true));return;
         }
-        talk.Show(new[] { L10n.T(Locomotives.HeroNameKey(Locomotives.Selected)) }, new[] { L10n.T(Story.Active && Story.Hero == "faceless" ? "story.faceless.2.after.1" : "eyeboss.post") }, new[] { false }, () => RaceFinished(true));
+        talk.Show(new[] { L10n.T(Locomotives.HeroNameKey(Locomotives.Selected)) }, new[] { L10n.T(Story.Active && Story.Hero == "bba" ? "story.bba.2.after.1" : Story.Active && Story.Hero == "faceless" ? "story.faceless.2.after.1" : "eyeboss.post") }, new[] { false }, () => RaceFinished(true));
     }
 
     // The board game won: the rival's last word, then the chapter is.
@@ -1519,7 +1519,7 @@ public partial class TrainSim : MonoBehaviour
                 Time.timeScale = 0f;
                 if (Story.Current.race)
                 {
-                    if (Story.Hero == "xiuhtecuhtli")
+                    if (Story.Hero == "xiuhtecuhtli" || Story.Hero == "bba" || Story.Hero == "nath")
                     {
                         Story.Duel(true, out string[] names, out string[] lines, out bool[] rivals);
                         names[0] = L10n.T("race.radio.name");
@@ -1534,13 +1534,21 @@ public partial class TrainSim : MonoBehaviour
                 }
                 else if (Story.Current.trench)
                 {
-                    // The radio: uncouple the engine, down the trench, the rock into a vent. Sounds familiar.
-                    string her = L10n.T(Locomotives.HeroNameKey(Locomotives.Selected)), radio = L10n.T("race.radio.name");
-                    talk.Show(new[] { radio, her }, new[] { L10n.T("trench.radio"), L10n.T("trench.joke") }, new[] { true, false }, StartFinale);
+                    if (Story.Hero == "bba")
+                    {
+                        Story.Duel(true, out string[] names, out string[] lines, out bool[] rivals);
+                        talk.Show(names, lines, rivals, StartFinale);
+                    }
+                    else
+                    {
+                        // The radio: uncouple the engine, down the trench, the rock into a vent. Sounds familiar.
+                        string her = L10n.T(Locomotives.HeroNameKey(Locomotives.Selected)), radio = L10n.T("race.radio.name");
+                        talk.Show(new[] { radio, her }, new[] { L10n.T("trench.radio"), L10n.T("trench.joke") }, new[] { true, false }, StartFinale);
+                    }
                 }
                 else if (Story.Current.eyeBoss)
                 {
-                    if (Story.Hero == "faceless" || Story.Hero == "onini" || Story.Hero == "cerebron" || Story.Hero == "tzmil")
+                    if (Story.Hero == "bba" || Story.Hero == "faceless" || Story.Hero == "onini" || Story.Hero == "cerebron" || Story.Hero == "tzmil")
                     {
                         Story.Duel(true, out string[] names, out string[] lines, out bool[] rivals);
                         names[0] = L10n.T(Story.Hero=="onini" || Story.Hero=="tzmil" ? "eyeboss.heaven.name" : Story.Hero=="cerebron" ? "story.cerebron.roger" : "eyeboss.name");

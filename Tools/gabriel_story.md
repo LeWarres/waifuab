@@ -1,159 +1,129 @@
 # Gabriel
 
-Gora-P; cielo, 30 minutos y suerte inicial +3. Onini → arma y pasiva → Tzmil → arma y pasiva → Giger Machine → arma y pasiva → ReyMar. Diálogos intermedios sobre la misma escena, conservando tren y equipo. Final romántico con el conductor de R-20 y Gracias. Modelo 3D de Gabriel pendiente; retrato ilustrado disponible.
+Gabriel es consentida, berrinchuda y muy amorosa. Quiere atención, agradecimientos y tiempo para ella; protesta con dramatismo, pero ayuda y protege antes de atender su propio disgusto. Su preocupación por el hermano de Tzmil conserva la seriedad del momento. Voz conversacional en primera persona y conocimientos limitados a lo que ve o le cuentan.
 
-story.gabriel.0.title
-Sin alas y sin vacaciones
+Gora-P; cielo, apertura de 30 minutos y suerte +3. Onini → arma/pasiva → Tzmil → arma/pasiva → Giger Machine → arma/pasiva → Nath Moon/ReyMar. Mismo tren y equipo entre encuentros. Reencuentro con el conductor de R-20, cita en Baratito sobre el mar y Gracias. Arte conservado.
 
-story.gabriel.1.title
-Una derrota por amistad
+## 1. Sin alas y sin vacaciones
 
-story.gabriel.2.title
-Ni un día libre
+### intro
 
-story.gabriel.3.title
-Cuando termine mi turno
+Soy Gabriel. Arcángel, por si alguien pregunta, aunque haya nacido sin alas. Yo creía que eso significaba que no podían mandarme a luchar. Hasta había elegido dónde poner la tumbona. Pues no. Alguien encontró una locomotora.
 
-hero.character.gabriel
-Gabriel
+«Gabriel puede ocuparse de la estación». Así lo dijeron, sin preguntarme nada. Yo quería explicarles que tenía planes, que una también necesita tiempo para arreglarse y existir tranquilamente, pero ya me estaban enseñando los controles de Gora-P.
 
-story.gabriel.0.intro.1
-Ser un arcángel y nacer sin alas suena a vacaciones de por vida, ¿verdad? Si no puedes salir volando a luchar, alguien tendrá que dejarte descansar.
+Encima escucho que tengo un trabajo facilísimo. ¡Que vengan un rato, entonces! Todos los días aparece alguien queriendo conquistar el cielo y yo tengo que dejar lo que esté haciendo para pedirle que no rompa la entrada. Nunca hacen caso a la primera.
 
-story.gabriel.0.intro.2
-Pues me presento: soy Gabriel, la mujer con la peor suerte del universo. Vieron mi caso y pensaron: qué buena oportunidad para encargarle la defensa desde una locomotora.
+A veces digo que voy a quedarme sentada y que lo resuelva otro. Luego veo a alguien cruzando las vías justo cuando suena la alarma y ya estoy corriendo a apartarlo. Después vuelvo a enfadarme, claro. Podrían darme las gracias antes de encargarme otra cosa.
 
-story.gabriel.0.intro.3
-Y todavía dicen: qué trabajo tan fácil tiene Gabriel. ¡Para nada! Todos los días aparece un demonio, un monstruo o algún loco religioso que quiere conquistar el cielo.
+También les molesta que me vista como una gal. A mí me gusta, así que no pienso cambiarme. Me han dicho que no parezco una guardiana seria. Qué pena; soy la que lleva vendas de sobra por si se hacen daño bajando de una nube.
 
-story.gabriel.0.intro.4
-No tengo ni un momento para mí. Mi Gora-P y yo llevamos tantas guardias que ya reconozco a los invasores por cómo pisan los rieles.
+Ay, no. La alarma otra vez. Dicen que se acerca una demonio y yo ni siquiera he podido terminar de peinarme. Dame un segundo, Gora-P... ya voy. Pero cuando esto termine quiero sentarme y que nadie me pida absolutamente nada.
 
-story.gabriel.0.intro.5
-Encima soy la rara del cielo por vestirme como una gal. Perdón por querer verme bien mientras hago el trabajo que nadie más quiere hacer.
+### before
 
-story.gabriel.0.intro.6
-Como les decía: aquí no hay días libres. La alarma acaba de sonar. Parece que una demonio vino a visitarnos. Vamos, Gora-P... otro turno tranquilo.
+Vengo por una reliquia. Si está por aquí, me la llevo y te dejo seguir con lo tuyo.
 
-story.gabriel.0.before.1
-Solo vengo por una reliquia. Si te apartas, acabamos antes.
+¡No puedes venir y llevarte cosas porque sí! Llevo todo el día cuidando esta entrada. Si necesitas algo, me lo pides antes de romperla. Y sin gritarme, que bastante tengo.
 
-story.gabriel.0.before.2
-Eso me dicen todos. Luego rompen la puerta y a mí me toca rellenar el informe.
+Bueno, yo lo estaba pidiendo bastante tranquila. Pero si hay que pelear, al menos que sea una buena pelea.
 
-story.gabriel.0.before.3
-Entonces procura escribir que peleé bastante bien.
+### after
 
-story.gabriel.0.after.1
-¡Una menos! A ver si ahora puedo sentarme cinco minutos.
+¡Ya está! Ahora déjame respirar. Y espera, que tienes un golpe ahí... no te lo toques. Puedo darte una venda y seguir enfadada contigo, ¿vale?
 
-story.gabriel.0.after.2
-Todavía me falta hablar con la guardiana. Esto no termina aquí.
+Vale, gracias. Todavía tengo que ver a la de muchos ojos. Espero que atienda mejor las visitas.
 
-story.gabriel.0.outro.1
-Claro. Yo hago el trabajo difícil y después la guardiana de muchos ojos se queda con el crédito de la pelea final. Bla, bla, bla... qué gran defensa del cielo.
+### outro
 
-story.gabriel.0.outro.2
-¿Qué les dije? Ya viene otra. No apaguen la alarma, que así nos ahorramos volver a encenderla.
+Después oí por radio que la guardiana se encargaría de la demonio. A ella le van a agradecer la defensa y a mí me han preguntado si quedan vendas. Sí, quedan. Las he dejado donde siempre. También me gustaría que alguien preguntara cómo estoy yo.
 
-story.gabriel.1.intro.1
-Un momento... conozco a esa chica. Es Tzmil. Y ese bulto que trae es mi amigo de la infancia. Más le vale no estar durmiendo otra vez.
+Estaba intentando sentarme cuando anunciaron otra locomotora. Me quedé con los brazos cruzados unos segundos, para que constara que no me parecía bien. Luego pedí que despejaran la vía. Si viene alguien herido, no voy a dejarlo esperando por mi mal humor.
 
-story.gabriel.1.before.1
-Gabriel, necesito llevar a mi hermano con nuestro padre. Por favor, déjanos pasar.
+## 2. Una derrota por amistad
 
-story.gabriel.1.before.2
-Tzmil... tengo órdenes de detener a cualquiera que cruce. Dame una buena excusa para perder esta pelea.
+### intro
 
-story.gabriel.1.before.3
-Creo que puedo ayudarte con eso.
+Era Tzmil. Reconocí a su hermano en cuanto pude verlo y se me quitaron las ganas de protestar. No respondía. Llamé a Tzmil para que se acercara, aunque desde el control ya me estaban recordando que no podía dejarlos pasar así.
 
-story.gabriel.1.after.1
-¡Oh, no! Qué derrota tan terrible. No podré detenerlos... pasa rápido antes de que alguien pregunte.
+### before
 
-story.gabriel.1.after.2
-Gracias, Gabriel. Se lo contaré cuando despierte.
+Gabriel, necesito llevar a mi hermano con nuestro padre. Por favor, ayúdame a pasar.
 
-story.gabriel.1.outro.1
-No esperaba que su hermana quisiera traerlo al cielo. No me quedaba otra que hacerme la derrotada y dejarlos pasar. Una actuación impecable, si me preguntan.
+Claro que voy a ayudarte. Pero me están mirando desde el control. Haz que parezca que no puedo detenerte y pasa en cuanto te avise. Y tú, pollo, aguanta un poquito, ¿me oyes?
 
-story.gabriel.1.outro.2
-Espero que por fin me invite esa comida que me prometió ese pollo estafador. Lleva pendiente desde antes de que lo mandaran a la Tierra...
+Te entiendo. Tendré cuidado contigo. Gracias por estar aquí.
 
-story.gabriel.1.outro.3
-Y no, no estoy sonriendo. Es la luz del cielo. La luz hace cosas raras con mi cara.
+### after
 
-story.gabriel.2.intro.1
-Otra alarma. Esta vez viene una locomotora con una boca enorme. ¿A quién se le ocurrió dejar entrar eso?
+¡Ay, no, qué derrota! ¡No puedo hacer nada! ...Ya, Tzmil, ahora. Llévalo con vuestro padre. Luego me avisas, por favor. No me dejes esperando sin saber cómo está.
 
-story.gabriel.2.before.1
-¡Eh! Este lugar no es un buffet.
+Te avisaré en cuanto pueda. Gracias, Gabriel. De verdad.
 
-story.gabriel.2.before.2
-¡Entonces voy a probarlo todo!
+### outro
 
-story.gabriel.2.before.3
-Sí, claro. La comprensión lectora también está de vacaciones.
+Me quedé mirando hasta que pasaron. Después volví a mi puesto, porque alguien tenía que seguir ahí, pero dejé la radio al lado de la mano. Quería que Tzmil me llamara. Lo demás podía esperar un ratito, aunque en el control pensaran otra cosa.
 
-story.gabriel.2.after.1
-¡Fuera de mi estación! Y no muerdas el letrero al salir.
+Lo conozco desde que éramos pequeños. Me prometió una comida antes de que lo mandaran a la Tierra y yo todavía la estaba esperando. Ahora solo quería que pudiera venir a discutir conmigo dónde íbamos a comer. Hasta le habría dejado escoger.
 
-story.gabriel.2.outro.1
-¿Ven a lo que me refiero? ¿Qué rayos era esa cosa? Hay días en que hasta extraño a los fanáticos que solo querían discutir.
+Bueno, casi escoger. Yo también tengo preferencias. Me di cuenta de que estaba pensando en eso y me quedé apretando la radio contra el pecho. No tenía ninguna respuesta todavía. Ojalá llegara pronto.
 
-story.gabriel.2.outro.2
-Aunque creo que el pollo ya dejó de comer con su padre y me ha estado buscando. Quién sabe... por él quizá podría pedir un día libre.
+## 3. Ni un día libre
 
-story.gabriel.2.outro.3
-Llevo casi cinco años sin pedir ni uno. Seguro que el formulario ya ni se acuerda de mí.
+### intro
 
-story.gabriel.3.intro.1
-No. No puede estar sonando otra vez. Hay una ReyMar acercándose... Gora-P, dime que trae a alguien de relevo.
+El siguiente aviso era por una locomotora con una boca enorme. Miré hacia la entrada y ya estaba mordiendo cosas. ¡Mis cosas! Guardé la radio, pedí que se apartaran de los andenes y subí a Gora-P. Hoy no iba a quedarme sin estación también.
 
-story.gabriel.3.before.1
-¡Dicen que aquí hay una guardia que nunca deja pasar una buena pelea!
+### before
 
-story.gabriel.3.before.2
-No. Dicen que nunca me dejan terminar el turno. Es distinto.
+¡Suelta eso ahora mismo! Esa estación la cuido yo y no te he dado permiso para comértela. ¡Y los demás, detrás de mí, por favor!
 
-story.gabriel.3.before.3
-¡Entonces acabemos con una pelea memorable!
+¡Entonces tendré que romperlo primero!
 
-story.gabriel.3.after.1
-¡Se acabó! No acepto revancha, encuesta de satisfacción ni otra visita.
+¡Eso es todavía peor! Gora-P, vamos. Después me dejas quejarme todo lo que quiera.
 
-story.gabriel.3.after.2
-¡Qué carácter! Me gusta.
+### after
 
-story.gabriel.3.outro.1
-¡Maldita loca! ¿Cómo hay gente que solo quiere pelear? Estoy cansada de todo esto. Hoy necesito algo que no intente conquistar, romper o morder el cielo.
+¡Se acabó! Vas a salir por allí y no vas a morder a nadie por el camino. Quiero comprobar que todos estén bien antes de mirar lo que has roto.
 
-story.gabriel.3.outro.2
-Fue entonces cuando apareció el conductor de R-20. Mi pollo estafador. Dijo que estaba esperando a que terminara mi turno. Como si eso fuera a ocurrir por sí solo.
+### outro
 
-story.gabriel.3.outro.3
-Me contó que tardó un poco en regresar y bastante más en entender qué quería su padre para él. Pero hubo algo de lo que estuvo seguro todo el tiempo.
+Cuando pude bajar, fui a comprobar si quedaba alguien entre los destrozos. Todos los que encontré estaban bien. Ahí sí me senté y me quejé, con ganas. Había dicho que no pensaba levantarme otra vez y ya estaba recogiendo cosas del suelo.
 
-story.gabriel.3.outro.4
-No quería volver solo para ver a su padre. Esta vez quería hacer las cosas bien y no dejarlo todo a la mitad. Aunque la primera vez lo mandaron a la Tierra, no es que él quisiera irse.
+Más tarde me avisaron de que el pollo estaba mejor y había preguntado por mí. Le dije al mensajero que repitiera esa parte. Por si había oído mal, nada más. También le encargué que, si lo veía, le recordara que yo seguía aquí esperando.
 
-story.gabriel.3.outro.5
-Yo sonreí. He oído que abrieron un maid café nuevo en el mundo humano. Se llama Baratito. Tal vez podrías llevarme en mi próximo día libre.
+Casi cinco años sin pedir un día libre y justo ahora me daban ganas de hacerlo. Saqué la solicitud. Volví a guardarla. La saqué otra vez. No quería que pareciera que iba a dejarlo todo solo porque él había vuelto... pero sí quería verlo.
 
-story.gabriel.3.outro.6
-Solo espero que esta vez sí pague él. Y que, por una vez, la alarma pueda esperar.
+## 4. Cuando termine mi turno
 
-gabriel.upgrade.weapon
-Antes del siguiente turno: elige un arma
+### intro
 
-gabriel.upgrade.passive
-Ahora elige una mejora secundaria
+Y sonó otra vez. ¡No, no y no! Tenía la solicitud delante y ni siquiera la había firmado. Se acercaba una ReyMar. Le dije a Gora-P que, si traía al relevo, prometía recibirlo con una sonrisa. No traía al relevo.
 
-gabriel.upgrade.hint
-Conservas tu tren y tus mejoras. Después comienza el siguiente duelo.
+### before
 
-gabriel.upgrade.repair
-Equipo al máximo: reparación completa
+¡Tú debes de ser Gabriel! Me dijeron que eras buenísima. Quiero comprobarlo ahora mismo.
 
-gabriel.upgrade.take
-Mejorar: {0}
+Pues sí, soy buenísima. ¡Y estoy ocupada! No puedes presentarte exigiendo una pelea. Si vas a insistir, aléjate de los andenes; ahí hay gente y no pienso dejar que les pase nada.
+
+Me aparto lo que quieras. ¡Pero luego no te guardes nada, que yo tampoco voy a hacerlo!
+
+### after
+
+¡Ya! ¡He ganado y mi turno se acaba! ¿Puedes mover el brazo? Bien. Allí tienes agua. Te la tomas sentada y sin pedir revancha, que te estoy viendo venir.
+
+¡Ja! Mándame lo que quieras, pero la próxima vez quiero otra pelea así.
+
+### outro
+
+La vi apartarse por fin y dejé caer los brazos. Tenía ganas de llorar del cansancio, pero también de que alguien me trajera algo frío y me dijera que hoy lo había hecho bien. No otra alarma. Una cosa bonita, para variar.
+
+Entonces apareció él. Mi pollo. Dijo que llevaba esperando a que terminara el turno y yo empecé a regañarlo por no avisar. Me acerqué enseguida, eso sí. Necesitaba verlo de cerca y asegurarme de que esta vez podía contestarme.
+
+Me contó que le había costado entender lo que su padre quería y que sentía haber tardado tanto. Yo tenía preparadas muchas quejas, de verdad, pero lo dejé terminar. Seguía sujetándole el brazo. No me apetecía soltarlo todavía.
+
+Luego dijo que no había querido volver solo por su padre. Le pregunté si podía decir esa parte otra vez, mirándome. Me hice la ofendida por todo lo que me había hecho esperar y acabé abrazándolo antes de escuchar la respuesta completa.
+
+Le hablé de Baratito, un maid café nuevo sobre el mar del mundo humano. «Podrías llevarme en mi día libre. Y esta vez eliges un día de verdad, no algún día». Después le pedí que descansara antes del viaje. Yo podía esperar un poco más si era para ir juntos.
+
+Antes de que se fuera le acomodé una muñequera y volví a recordarle la comida. Sí, pensaba dejarme consentir. Pero cuando me preguntó si quería algo más, le pedí que se quedara conmigo hasta que llegara el relevo.

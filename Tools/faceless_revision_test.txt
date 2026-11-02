@@ -1,0 +1,10 @@
+RUNNING
+PASS 300 localized values and actual narrative/gameplay text heights in four languages
+PASS alien questionnaire arrest/retry/pass and rejected resignation
+PASS chapter 1: alien, actual before/after dialogue and transition
+PASS chapter 2: fortress, actual before/after dialogue and transition
+PASS X, descent three-hit failure, retry and own arrival dialogue
+PASS chapter 3: space, actual before/after dialogue and transition
+PASS chapter 4: jungle, actual before/after dialogue and transition
+PASS forest, eight drawings, six-page epilogue, Thanks and manual dialogue
+PASS frames=1036 consoleErrors=0. Travel, combat and drawing retrieval accelerated; not a balance test.

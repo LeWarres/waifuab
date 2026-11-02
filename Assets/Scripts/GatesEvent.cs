@@ -221,12 +221,12 @@ public partial class GatesEvent : MonoBehaviour
     {
         Time.timeScale = 0f;
         string her = L10n.T(Locomotives.HeroNameKey(Locomotives.Selected));
-        train.Say(new[] { her }, new[] { L10n.T("gates.before") }, new[] { false }, () => Begin(won =>
+        train.Say(new[] { her }, new[] { L10n.T(Story.Active && Story.Hero == "bba" ? "story.bba.gates.before" : "gates.before") }, new[] { false }, () => Begin(won =>
         {
             if (!won) { train.FinaleToStory(); return; }
             Story.GatesPassed = true;
             Time.timeScale = 0f;
-            train.Say(new[] { her }, new[] { L10n.T("gates.after") }, new[] { false }, () => Time.timeScale = 1f);
+            train.Say(new[] { her }, new[] { L10n.T(Story.Active && Story.Hero == "bba" ? "story.bba.gates.after" : "gates.after") }, new[] { false }, () => Time.timeScale = 1f);
         }));
     }
 

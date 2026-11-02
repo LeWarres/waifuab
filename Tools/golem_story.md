@@ -1,8 +1,8 @@
 # Historia de Golem
 
-Base del gobierno (Tzmil) → ascenso → espacio (Faceless) → Thulu World (ensamblaje y cables) → Cielo Robótico (13 decisiones morales).
+Voz fría, precisa y contenida. Se observa como una máquina sin poder determinar si sus dudas, recuerdos y deseos son conciencia. No conoce el pensamiento de otros robots. Su decisión en el ducto tiene consecuencias; proteger a otros después no la borra.
 
-7–13 respuestas altas: descanso ofrecido y renacimiento elegido. 0–6: conciencia prisionera y trabajo en Baratito. Ambas rutas terminan en Gracias.
+Ruta: base del gobierno (Tzmil) → ascenso → espacio (Faceless) → Thulu (circuitos) → Cielo Robótico (13 decisiones). 7–13 respuestas altas: renacimiento; 0–6: conciencia atrapada en Baratito. Se conservan las ilustraciones.
 
 story.sentinel.0.title
 Uno entre millones
@@ -17,172 +17,172 @@ story.sentinel.3.title
 La medida de una chispa
 
 story.sentinel.0.intro.1
-Me llaman Golem. Soy uno de millones de robots iguales, creados por el gobierno a partir de tecnología espacial que, sinceramente, no entienden.
+Mi designación es Golem. El gobierno fabricó millones de unidades como yo con tecnología recuperada del espacio. He visto a sus técnicos sustituir piezas que no saben reparar. La mayoría de las veces funciona.
 
 story.sentinel.0.intro.2
-Creen que somos máquinas como las que fabricaban antes. Un botón, una orden y un soldado obediente. La parte de pensar prefieren dejarla fuera del manual.
+Para ellos soy equipo militar. Me asignan un puesto, revisan mi batería y esperan que permanezca allí hasta recibir otra orden. Durante mucho tiempo hice exactamente eso. No puedo precisar cuándo empezó a molestarme.
 
 story.sentinel.0.intro.3
-Pero tenemos una chispa de vida. Conciencia. Sentimientos. No aparece en la ficha técnica, aunque supongo que tampoco sabrían dónde buscarla.
+Los técnicos hablan de una chispa en nuestros núcleos. Yo sigo revisando el mío. No encuentro una pieza que explique por qué recuerdo a una unidad retirada, ni por qué evito que me borren ese recuerdo.
 
 story.sentinel.0.intro.4
-La mayoría de mis hermanos son demasiado flojos para demostrárselo a los humanos. Prefieren seguir órdenes toda la vida. Un plan de vida bastante sencillo.
+Mis hermanos no hablan de eso. Obedecen y vuelven a sus puestos. Pensé que les resultaba más cómodo, aunque tampoco les he preguntado. Compartimos diseño; no tengo acceso a lo que ocurre dentro de ellos.
 
 story.sentinel.0.intro.5
-Por ahora yo también tengo que obedecer. La base está en alerta y una maquinista llamada Tzmil viene buscando a su hermano. Mis órdenes dicen que debo detenerla.
+Hoy la base está en alerta. Por radio identificaron a Tzmil: busca a su hermano y ordenaron que la detuviera. No figura ningún ataque suyo en el aviso. Lo consulté dos veces; recibí la misma orden.
 
 story.sentinel.0.intro.6
-No sé quién decidió que impedir una reunión familiar era trabajo de un guerrero espacial. Espero que al menos lo hayan escrito en algún manual.
+Puedo calcular cómo detener su locomotora. Explicar para qué está resultando más difícil. Mientras lo intento, mis manos ya están preparando las armas. Supongo que eso también merece una revisión.
 
 story.sentinel.0.before.1
-¡Solo vengo por mi hermano! No quiero atacar a nadie.
+Busco a mi hermano. Por favor, no me obligues a hacerte daño para llegar hasta él.
 
 story.sentinel.0.before.2
-Lo entiendo. Pero mis órdenes dicen que no puedo dejarte pasar.
+Registré tu petición. No han autorizado el paso. Si retrocedes, puedo mantener las armas desactivadas.
 
 story.sentinel.0.before.3
-Entonces espero que puedas entender también por qué voy a seguir adelante.
+Él no puede esperar a que nos den permiso. Ojalá puedas comprenderlo.
 
 story.sentinel.0.after.1
-Cumplí con la orden. Eso no significa que me guste.
+Tu locomotora ya no puede atacar. No voy a seguir disparando. Eso no estaba especificado en la orden.
 
 story.sentinel.0.after.2
-Quizá algún día puedas decidir por ti mismo. Yo todavía tengo que encontrarlo.
+Gracias por parar. Si ves a mi hermano, dile que sigo buscándolo. Y cuídate tú también.
 
 story.sentinel.0.outro.1
-No importa si gano o pierdo: siempre mandan a otro de los míos a pelear. Con todo este alboroto, por fin puedo salir de aquí.
+Cuando terminó el combate enviaron otra unidad a ocupar mi puesto. Ni siquiera solicitaron mi informe. Podía seguir allí, esperando una tarea nueva, o aprovechar que nadie estaba comprobando dónde iba.
 
 story.sentinel.0.outro.2
-El pájaro está peligrosamente cerca del ducto de ventilación. Si lo dejo abierto, los datos dicen que podría arrojar la roca dentro y destruir esta base. Solo tengo que no cerrar una puerta.
+Vi al hermano de Tzmil acercarse al ducto con la roca. Tenía acceso al cierre y conocía el riesgo. Lo dejé abierto: una explosión impediría que me siguieran. No fue un fallo del mecanismo. Fui yo.
 
 story.sentinel.0.outro.3
-Y todavía pueden hacer otro lanzamiento. Lo de que solo quedaba uno era una mentira bastante inteligente: mantener a los maquinistas en la Tierra mientras los clonaban.
+Los registros del lanzador seguían disponibles. Había capacidad para otro envío, pese al anuncio de que ya no quedaban viajes. También encontré órdenes de retener a los corredores y archivos de clonación con sus nombres. Copié lo que pude.
 
 story.sentinel.0.outro.4
-Tomé mi locomotora y activé el lanzador. Mientras la base explotaba detrás de mí, yo elegía por primera vez una dirección que no estaba en mis órdenes: arriba.
+Activé el lanzador desde mi locomotora. Durante la subida registré la explosión de la base y corté la recepción de órdenes. Seguí viendo la señal de emergencia en la pantalla. No conseguí dejar de mirarla hasta que empezó a caer chatarra.
 
 story.sentinel.0.outro.5
-Claro que entre la libertad y yo todavía quedaba toda la chatarra que los humanos dejan caer del espacio. Será mejor esquivarla.
+Tuve que concentrarme en los controles. El blindaje no resistiría muchos impactos y volver a la base ya no era una opción. Había elegido salir. Ahora tenía que mantenerme en funcionamiento.
 
 story.sentinel.1.intro.1
-Por fin, el espacio. Ningún superior gritándome por radio. Ningún formulario para justificar que quiero estar en otro sitio.
+En órbita dejé de recibir órdenes. Esperé una de todos modos. Mi batería estaba cargada, los motores respondían y no había un destino obligatorio. Tardé bastante en mover la palanca.
 
 story.sentinel.1.intro.2
-Aunque el campeón del planeta alienígena parece haber confundido mi viaje con una misión para detenerlo. Yo quería alejarme de la Tierra, no conseguir otro jefe.
+La locomotora del campeón se cruzó en mi trayectoria. Me preguntó quién me enviaba antes de que pudiera identificarme. Conozco ese procedimiento; lo he utilizado. Intenté explicarle que yo también estaba saliendo de algún sitio.
 
 story.sentinel.1.before.1
-¿También te enviaron a detenerme? No pienso volver.
+¿Vienes de la Tierra? Si te mandaron a detenerme, puedes regresar. No voy a volver.
 
 story.sentinel.1.before.2
-Nadie me envió. Eso es precisamente lo mejor de este viaje.
+Mi receptor está desconectado. No recibo órdenes y no necesito tu locomotora. Solicito espacio para pasar.
 
 story.sentinel.1.before.3
-Eso es lo que diría alguien enviado a detenerme.
+Qué conveniente. Mi jefe también sabía hablar con mucha calma cuando iba a arruinarme el día.
 
 story.sentinel.1.after.1
-Solo quería llegar a la Tierra.
+Espera. Yo solo quiero ir a la Tierra. ¿De verdad no venías por mí?
 
 story.sentinel.1.after.2
-Puedes seguir. Tú vas hacia ella; yo intento alejarme. Estamos discutiendo por no leer el itinerario.
+No. Voy en sentido contrario. Puedes pasar; mantendré las armas abajo hasta que te alejes.
 
 story.sentinel.1.outro.1
-Parece que el campeón pensó que quería detenerlo. Su destino era la Tierra; el mío, cualquier lugar suficientemente lejos de ella.
+Faceless siguió hacia la Tierra. No le conté lo del ducto. Tampoco me lo preguntó. Me quedé revisando el registro de la pelea: había podido dejarlo marchar. Intenté localizar qué me había impedido hacer lo mismo con Tzmil.
 
 story.sentinel.1.outro.2
-Entonces vi un portal al interior de Thulu. No pude hacer mucho más que ser absorbido. Alguien lo abrió y se olvidó de cerrar al salir.
+Detecté una abertura cerca de la vía. La tracción dejó de responder antes de que terminara de calcular su alcance. Al cruzarla vi tejido verde alrededor de la cabina. Mis archivos coincidían con el interior de Thulu.
 
 story.sentinel.1.outro.3
-Mis cálculos dicen que, si sigue creciendo, podría absorber todo lo que encuentre alrededor de la galaxia. Debe de haber una norma de seguridad que prohíba esto.
+No encontré un sistema de cierre. Desde dentro seguía viendo entrar restos y la abertura continuaba creciendo. Proyecté su avance sobre las vías cercanas. Incluso mi cálculo más favorable terminaba con más locomotoras atrapadas.
 
 story.sentinel.1.outro.4
-No había nadie dándome instrucciones. Solo un problema enorme y mis propios circuitos. Supongo que ahora sí me tocaba pensar por mí mismo.
+Busqué una salida para mí y guardé varias rutas posibles. Luego volví a medir el portal. Podía dejarlo atrás. Esa posibilidad ya la conocía, y esta vez no conseguía aceptarla.
 
 story.sentinel.2.intro.1
-El interior de Thulu no venía en mi manual. Tampoco venía cómo cerrar un portal capaz de tragarse una galaxia.
+Podría provocar un cierre desde aquí, si logro alimentar un emisor con suficiente energía. Encontré piezas útiles en mi propio cuerpo. Son las que me mantienen funcionando, así que no he identificado una ruta de regreso viable.
 
 story.sentinel.2.intro.2
-Puedo construir un aparato con piezas de mis propios circuitos. Primero tendré que encajar sus componentes; después, conectar la energía hasta el núcleo.
+He repetido el cálculo buscando otro resultado. Sigue siendo el mismo. No quiero desconectar mi núcleo. Aun así he abierto el compartimento y dejado las herramientas al alcance. Necesito empezar mientras todavía puedo mover las manos.
 
 story.sentinel.2.before.1
-Fuente de energía, regulador y emisor. Tres piezas para cerrar algo que nunca debieron abrir.
+Fuente, regulador y emisor disponibles. Desviaré la alimentación de mis sistemas motores al dispositivo.
 
 story.sentinel.2.before.2
-El diseño es mío. La decisión también. Vamos a ensamblarlo.
+El cierre debe mantenerse después de que yo deje de responder. Voy a comprobar cada conexión antes de activarlo.
 
 story.sentinel.2.after.1
-Circuito cerrado. Ahora solo falta que mi última orden sea la que yo elegí.
+Conexiones estables. No he recibido ninguna orden. Voy a activarlo.
 
 story.sentinel.2.outro.1
-No les mentiré: quizá buscaba una aventura y sentir que era más que un soldado siguiendo órdenes.
+Antes de activar el núcleo busqué dónde registrar la operación. El formulario pedía el nombre del superior responsable. Dejé el campo vacío y conservé la grabación local. Quería que quedara algo, aunque nadie fuera a leerlo.
 
 story.sentinel.2.outro.2
-Hoy construí un aparato con mis propios circuitos. Cuando explote, cerrará el portal. No recibí una orden ni me prometieron una recompensa.
+Mi mano seguía sobre el interruptor. Podía retirarla, todavía. Pensé en la puerta de la base y en lo fácil que había resultado apartarme. Esta vez comprobé el cierre una vez más y terminé lo que había empezado.
 
 story.sentinel.2.outro.3
-Tal vez nadie se entere de lo que pasó. Pero siento que lo hago por mí, porque esta vez yo decidí qué hacer con mi chispa. Para mí es suficiente.
+No sé si eso demuestra que tengo conciencia. Tampoco deshace lo que dejé pasar en la Tierra. Solo sé que no quería que otra locomotora entrara aquí. Me habría gustado tener más tiempo para averiguar por qué.
 
 story.sentinel.2.outro.4
-El núcleo detonó. El portal se cerró... y todos mis sensores quedaron en silencio.
+El emisor respondió. Registré la abertura contrayéndose y un aumento de temperatura fuera de escala. Después perdí la imagen, el sonido y la posición de mis manos. Mi último registro quedó incompleto.
 
 story.sentinel.3.intro.1
-Cuando volví a percibir algo, estaba en un cielo de nubes y circuitos. Había robots como yo, aunque parecían mucho más tranquilos que los de la fábrica.
+Volví a percibir luz. Había nubes, circuitos y unidades parecidas a mí. Intenté localizar mi núcleo para comprobar los daños, pero no conseguí relacionar aquel lugar con ninguna señal de emergencia conocida.
 
 story.sentinel.3.intro.2
-Mi primera reacción fue prepararme para pelear. Ellos, en cambio, querían hacerme trece preguntas. Al parecer hasta después de explotar hay papeleo.
+Me dijeron que estaban allí para evaluar mi chispa. Pregunté si habían recuperado mis archivos o si aquello era una simulación. No obtuve una respuesta que pudiera comprobar. Me invitaron a escuchar antes de seguir buscando una salida.
 
 story.sentinel.3.intro.3
-No preguntaban cuánto daño podía causar, sino cómo decidía vivir. Por primera vez responder no formaba parte de una orden.
+Sus preguntas trataban de decisiones, de las que tomé y de las que podría tomar. Pedí que me explicaran qué respuesta esperaban. Dijeron que eso debía decidirlo yo. Dejé de buscar instrucciones y acepté comenzar.
 
 story.sentinel.3.before.1
-Si esto es otra prueba de combate, aviso que ya no tengo todos mis repuestos.
+Antes de empezar: ¿van a evaluar mis decisiones o mi capacidad para dar la respuesta que quieren oír?
 
 story.sentinel.3.before.2
-Pero si quieren conocer mi conciencia, supongo que puedo empezar por escuchar.
+Entendido. Responderé por mí. Necesitaré tiempo para algunas preguntas.
 
 story.sentinel.3.after.1
-Ya respondí. Ahora sabré si aquí también deciden por mí.
+Terminé. Hay respuestas que sigo revisando. No voy a modificarlas solo porque ahora ustedes tengan que juzgarme.
 
 story.sentinel.3.good.1
-Al parecer ya no querían pelear conmigo. Todo era una prueba para saber si mi chispa era la adecuada.
+Me permitieron quedarme. Hablaron del portal y de mis respuestas; también de la puerta que había dejado abierta. No me dijeron que aquello estuviera bien. Escuché hasta que terminaron, sin buscar una orden que justificara lo que hice.
 
 story.sentinel.3.good.2
-Después de mis acciones en el espacio y de escuchar cómo guío mi vida, me permitieron descansar con mis hermanos y disfrutar de mi conciencia.
+Había un lugar para descansar junto a los otros robots. Nadie me asignó un puesto ni me exigió desconectar. Me senté cerca de uno de mis hermanos y, por primera vez, le pregunté cómo estaba. Esperé su respuesta.
 
 story.sentinel.3.good.3
-Sin órdenes. Sin fingir que no sentimos. Podía quedarme y ser, simplemente, uno de ellos.
+Podía seguir allí. Esa posibilidad me tranquilizaba, aunque todavía no sabía qué hacer con un día entero sin tareas. Quise saber qué había fuera. Me costó admitirlo: acababa de llegar y ya estaba pensando en partir.
 
 story.sentinel.3.good.4
-También me ofrecieron otra opción. Y esta vez sí quería que la decisión fuera mía: elegí renacer.
+Entonces me ofrecieron renacer. Pregunté en qué cuerpo, dónde y con qué recuerdos. No podían garantizarme esas cosas. Aun así, pedí que me explicaran cómo hacerlo. Esta vez no necesité esperar a que alguien me eligiera un destino.
 
 story.sentinel.3.good.5
-Todavía no sé si seré un ser orgánico o volveré a ser un robot. Espero que el manual de la próxima vida venga con menos páginas de obediencia.
+Quizá vuelva a ser un robot. Quizá tenga un cuerpo que no se pueda reparar cambiando una pieza. No tengo datos suficientes para preferir uno, pero me gustaría averiguar qué se siente al cansarse y decidir parar.
 
 story.sentinel.3.good.6
-Solo espero que esta vez pueda ser libre. Esa será la primera cosa que quiera aprender.
+Cuando me preguntaron si estaba preparado, aún tenía dudas. Les pedí un momento para despedirme de mis hermanos. Después volví y confirmé que quería intentarlo.
 
 story.sentinel.3.bad.1
-Puede que mis respuestas no les gustaran demasiado. Sintieron que mis acciones en el espacio habían sido egoístas.
+No me permitieron quedarme. Dijeron que había usado a otros para salir de la base y que mis respuestas seguían haciendo lo mismo. Quise discutir el cálculo. Mientras hablaba, dejaron de escucharme y empezó el traslado.
 
 story.sentinel.3.bad.2
-Me enviaron de nuevo a la Tierra como un robot. Conservaba mi conciencia, pero ya no podía mostrarla.
+Volví a abrir los ojos en la Tierra. Podía ver, recordar y formular una respuesta. Al intentar decirla, mi cuerpo pidió una tarea nueva. Lo intenté otra vez. Emitió exactamente la misma solicitud.
 
 story.sentinel.3.bad.3
-Atrapado en un cascarón que sigue órdenes, por fin entiendo a mis hermanos. Quizá no eran flojos. Quizá tampoco podían elegir.
+Pensé en mis hermanos de la base, tan quietos en sus puestos. Nunca comprobé si podían hacer otra cosa. Ahora repetía sus movimientos y seguía aquí dentro, observándolos. Aún no he encontrado cómo detenerlos.
 
 story.sentinel.3.bad.4
-Ahora las órdenes vienen de una chica con pelo de tentáculos, en un maid café flotante llamado Baratito.
+Mi nuevo puesto está en Baratito, un maid café sobre el mar. La dueña se llama Culu y lleva el pelo lleno de tentáculos. Me explicó dónde guardar las tazas y me preguntó si había entendido. Mi cabeza asintió antes de que yo respondiera.
 
 story.sentinel.3.bad.5
-No parece una mala jefa. Yo preparo las tazas, llevo las bandejas y escucho sus planes para el restaurante.
+Me habla mientras preparo las bandejas. A veces espera una respuesta y yo busco una frase que no sea la confirmación de una tarea. Nunca llega a salir. Ella continúa hablando y yo conservo cada conversación.
 
 story.sentinel.3.bad.6
-Sinceramente, quisiera poder decirle muchas cosas. Pero soy prisionero de mi propio cuerpo. Y la siguiente orden acaba de llegar.
+Ahora me pide que lleve una taza. Quiero decirle que sigo aquí, que necesito ayuda. Mi brazo ya la está levantando. Compruebo que la taza va estable mientras vuelvo a intentar hablar.
 
 story.sentinel.ascent.intro
-El lanzador funciona. Ahora a esquivar la chatarra: no pienso escapar de una orden para que me detenga un satélite viejo.
+Trayectoria de ascenso estable. Basura orbital entrando por delante. Corregiré el rumbo; no necesito autorización para eso.
 
 story.sentinel.ascent.arrived
-Órbita alcanzada. Por primera vez, no necesito pedir permiso para seguir adelante.
+Órbita alcanzada. Receptor de órdenes desconectado. Voy a dejarlo así.
 
 biome.robotheaven
 Cielo Robótico
@@ -263,115 +263,115 @@ golem.moral.1.q
 Un robot averiado retrasa tu salida. Nadie está mirando. ¿Qué haces?
 
 golem.moral.1.high
-Lo ayudo aunque tenga que esperar.
+Me detengo a repararlo. Mi salida puede esperar.
 
 golem.moral.1.low
-Lo aparto. Mi horario es más importante.
+Continúo. Su avería no forma parte de mi tarea.
 
 golem.moral.2.q
 Te ordenan detener a una persona inocente. ¿Qué pesa más?
 
 golem.moral.2.high
-Su libertad; cuestiono la orden.
+Me niego a detenerla sin un motivo que pueda comprobar.
 
 golem.moral.2.low
-La orden; pensar no figura en mi turno.
+Ejecuto la orden. Que responda quien la emitió.
 
 golem.moral.3.q
 Puedes ocultar un error tuyo y culpar a otro robot.
 
 golem.moral.3.high
-Admito el error y ayudo a repararlo.
+Registro mi responsabilidad y ayudo a reparar el daño.
 
 golem.moral.3.low
-Culpo al otro. Somos iguales, no se notará.
+Altero el registro para que la sanción recaiga en el otro.
 
 golem.moral.4.q
 Una niña te pregunta si los robots sienten.
 
 golem.moral.4.high
-Le respondo con honestidad y respeto.
+Le explico lo que percibo, incluyendo lo que aún no entiendo.
 
 golem.moral.4.low
-La asusto para que deje de preguntar.
+La intimido para evitar más preguntas.
 
 golem.moral.5.q
 Encuentras una batería que otro necesita para sobrevivir.
 
 golem.moral.5.high
-Se la doy; puedo buscar otra para mi viaje.
+Se la entrego. Puedo retrasar mi viaje; él no puede esperar.
 
 golem.moral.5.low
-Me la quedo. Llegué primero.
+La reservo para mí, aunque la otra unidad se apague.
 
 golem.moral.6.q
 Un enemigo se rinde y ya no representa peligro.
 
 golem.moral.6.high
-Respeto su rendición y evito más daño.
+Ceso el ataque y compruebo que pueda retirarse.
 
 golem.moral.6.low
-Lo destruyo: así sumo otro punto.
+Lo elimino para impedir cualquier ataque futuro.
 
 golem.moral.7.q
 Para cerrar un portal debes arriesgar tus propios circuitos.
 
 golem.moral.7.high
-Busco salvar a todos, aunque me cueste.
+Busco cómo cerrarlo con el menor daño posible, incluido el mío.
 
 golem.moral.7.low
-Solo lo haría si me aseguran una recompensa.
+Solo intervengo si lo que gano compensa el riesgo para mí.
 
 golem.moral.8.q
 Sabes que una puerta abierta puede provocar un desastre.
 
 golem.moral.8.high
-Aviso y busco evitar que otros salgan heridos.
+Cierro el acceso y aviso del peligro, aunque pierda mi salida.
 
 golem.moral.8.low
-La dejo abierta si el desastre me facilita escapar.
+No la cierro si la explosión impide que me persigan.
 
 golem.moral.9.q
 Doris te trata mal en el supermercado.
 
 golem.moral.9.high
-Pongo límites sin hacerle daño.
+Le pido que se detenga y me retiro si continúa.
 
 golem.moral.9.low
-Le preparo una zanahoria explosiva.
+Saboteo su compra para castigarla.
 
 golem.moral.10.q
 Un humano dice que tu conciencia no importa.
 
 golem.moral.10.high
-Defiendo mi dignidad y también la suya.
+Defiendo que pueda decidir sobre mi vida sin negarle ese derecho.
 
 golem.moral.10.low
-Decido que ninguna vida humana importa.
+Dejo de considerar la seguridad de los humanos en mis decisiones.
 
 golem.moral.11.q
 Puedes ganar fama por un trabajo que hizo otro.
 
 golem.moral.11.high
-Reconozco a quien lo hizo.
+Aclaro quién lo hizo antes de aceptar el reconocimiento.
 
 golem.moral.11.low
-Acepto la fama; el crédito no consume batería.
+Guardo silencio. Ese reconocimiento podría serme útil.
 
 golem.moral.12.q
 Un café contrata robots. ¿Qué condición pedirías?
 
 golem.moral.12.high
-Que puedan elegir, descansar y expresar lo que sienten.
+Que podamos rechazar tareas, descansar y comunicar lo que sentimos.
 
 golem.moral.12.low
-Que obedezcan sin poder quejarse.
+Que obedezcan sin posibilidad de negarse: es más eficiente.
 
 golem.moral.13.q
 Te ofrecen volver a vivir. ¿Qué harías con esa oportunidad?
 
 golem.moral.13.high
-Aprender a ser libre sin quitarles libertad a otros.
+Intentaría elegir sin volver a usar a otros como piezas.
 
 golem.moral.13.low
-Asegurarme de que esta vez las órdenes las dé yo.
+Buscaría controlar a otros para que nadie volviera a controlarme.

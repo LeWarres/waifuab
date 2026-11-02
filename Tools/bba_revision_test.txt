@@ -1,0 +1,14 @@
+RUNNING
+PASS 296 imported translations and text heights in actual UI rectangles
+Gameplay chapter 0 biome=desert
+PASS chapter 0: opening, real pre-finale dialogue, finale start and ending
+Gameplay chapter 1 biome=city
+PASS chapter 1: opening, real pre-finale dialogue, finale start and ending
+Gameplay chapter 2 biome=space
+PASS chapter 2: opening, real pre-finale dialogue, finale start and ending
+Gameplay chapter 3 biome=alien
+PASS chapter 3: opening, real pre-finale dialogue, finale start and ending
+Gameplay chapter 4 biome=fortress
+PASS BBA gate dialogue before/after
+PASS chapter 4: opening, real pre-finale dialogue, finale start and ending
+PASS: five BBA chapter openings/endings, real pre-finale dispatch, localized layout, manual dialogue and Thanks; consoleErrors=0. Combat wins accelerated; not a balance test.

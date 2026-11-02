@@ -1,0 +1,30 @@
+[
+  {
+    "id": "wingless",
+    "prompt": "Edit target image1. Recompose the foreground so ONLY Gabriel's LEGS are visible at the left: camera at leg height, her upper body and face completely OUTSIDE the top edge. Two naturally long adult tan legs, lower hem of slate skirt with orange panel at upper edge, loose slate legwarmers and white/orange sneakers. Not short child proportions. Background retain the two small angels walking away toward pink heaven gate on clouds, bell wall and simple pastel sky. Same basic amateur rough pencil lines and uneven sparse pastel coloring, deliberately clumsy beginner drawing, no polished rendering. Wide 16:9. No words. Keep the angels visible and small in distance.",
+    "references": [
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/gabriel_wingless.png"
+    ],
+    "path": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-d0edf5ba-c9de-4903-a0ca-96849877e375.png"
+  },
+  {
+    "id": "reymar",
+    "prompt": "Image1 edit target; image2 ONLY identity for replacement driver. Replace the masked white-shirt driver at ReyMar cab with the adult cat-eared woman from image2: human face, GREEN eyes, long BLACK hair, black cat ears pink inside, cropped PURPLE sailor blouse black necktie/trim, purple pleated skirt black belt, black fingerless gloves, tall black boots. She smiles and waves from cab. NO mask, no red pants, no skull face. Preserve Gabriel and her outfit/pose at left and red-white locomotive silhouette. Simplify train details and ALL characters to the SAME amateur shaky thin black-pencil drawing, awkward simple limbs and hands, uneven flat pastel fills, no glossy anime details, simple cloud background. Do not insert photoreal or 3D woman. Landscape16:9, no text.",
+    "references": [
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/gabriel_reymar.png",
+      "C:/Users/r20/AppData/Local/Temp/codex-clipboard-ada12b6d-9d97-4736-ba0b-40ddbb9d0e3f.png"
+    ],
+    "path": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-8af08a65-8542-4ee6-9e82-90693ae6150d.png"
+  },
+  {
+    "id": "tzmil",
+    "prompt": "Image1 edit target and STYLE. Images2 Tzmil and3/4 her brother are IDENTITY ONLY 3D models, redraw as extremely simple beginner pencil-pastel figures, never paste/render3D. Replace BOTH right characters accurately. TZMIL: pale ivory skeletal humanoid woman, NOT normal human girl, pale skull-like face with dark hollow eye areas, teal-darkblue short hair under tall narrow blue/teal feather crown and a few small skull ornaments; fitted BLACK bodysuit with ivory RIB/BONE markings, ivory arms, gold intertwined serpent-shaped belt, black thighs with bone marks, gold shoes. No cream dress, no bare normal anime human face. BROTHER: adult black-bodied bird deity with BONE-IVORY UPPER CRANIUM merging into LONG BLACK hooked beak, actual head not mask/human underneath, NO eyes or humanface. Feather fan TURQUOISE/GREEN and gold band, a few crude ivory skulls at shoulder collar/waist, red hanging waistcloth, orange-gold cuffs, black clawhands. His expression comes from posture. Tzmil supports unconscious tired brother, Gabriel permits them to pass heavenly gate. Preserve Gabriel identity/white sailororange tie/slateskirt and no wings. Crucial SAME BEGINNER style on ALL THREE: wobbly sparse black pencil lines, awkward proportions, elementary shapes, flat uneven grainy pastel fills; skulls are simple ovals and two tiny marks, ribs 3 crude arcs, feathers only5-7 rough shapes. No intricate armor, no realism, no fine ornamental rendering. Wide16:9 no words.",
+    "references": [
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/gabriel_tzmil.png",
+      "C:/Users/r20/WaifuTren/Tools/hero_renders/tzmil.png",
+      "C:/Users/r20/WaifuTren/Tools/hero_renders/xiuhtecuhtli.png",
+      "C:/Users/r20/WaifuTren/Tools/r20_model_reference/profile.png"
+    ],
+    "path": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-b6111bf4-ae3d-4460-8d8d-c92538f56b19.png"
+  }
+]

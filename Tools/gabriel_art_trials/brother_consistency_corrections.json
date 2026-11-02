@@ -1,0 +1,29 @@
+[
+  {
+    "id": "crush",
+    "prompt": "Precise edit. Image1 target, image2 new CORRECT character-design and amateur drawing reference. Replace ONLY the bird-deity in Gabriel's thought bubble to match the brother in image2 exactly: bone-ivory elongated upper avian cranium continuing into long BLACK hooked BEAK, black sides/neck, never a human face or mask, no eyeballs; turquoise/green feather fan and gold foreheadband, black torso with few small ivory skulls collar, red bib/cloth, gold/orange bands. Same simplified body as image2, NOT all-black crow head. Preserve Gabriel and cabin composition. Draw the bubble figure in same wobbly beginner pencil lines, flat grainy pastel and awkward simple shapes as Gabriel, very few feathers/skulls and no detailed realistic texturing. No words. Wide16:9.",
+    "references": [
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/gabriel_crush.png",
+      "C:/Users/r20/.codex/generated_images/01a12978-3b64-74e2-9b22-a8917b1167d8/exec-b6111bf4-ae3d-4460-8d8d-c92538f56b19.png"
+    ],
+    "path": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-fc84101f-a4c7-4957-8560-761529e7e143.png"
+  },
+  {
+    "id": "reunion",
+    "prompt": "Precise edit. Image1 target, image2 corrected brother identity and drawing style. Replace the bird man on right to match image2's brother: bone-ivory long upper AVIAN CRANIUM over long BLACK hooked BEAK, black sides/neck with no human face, no eyeballs, not a mask; turquoise/green featherfan gold foreheadband, black body, simple ivory skull ornaments on collar/belt, red waistcloth and orange/gold cuffs. Keep his pose offering takeaway paper bag and Gabriel blushing beside him, same bench/sky. DO NOT make a generic smooth crow head or human face. Reduce body/muscle contour and fingers to amateur rough simple shapes, uneven black pencil lines and flat grainy pastel fill, same novice level as Gabriel. Not realistic armor, not glossy anime, no added train, no lettering. Wide16:9.",
+    "references": [
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/gabriel_reunion.png",
+      "C:/Users/r20/.codex/generated_images/01a12978-3b64-74e2-9b22-a8917b1167d8/exec-b6111bf4-ae3d-4460-8d8d-c92538f56b19.png"
+    ],
+    "path": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-f0243249-5d06-40ec-b8de-296eecaf905c.png"
+  },
+  {
+    "id": "date",
+    "prompt": "Precise edit. Image1 target, image2 corrected brother character design and style. Replace only the bird man on right to match image2: BONE-IVORY long upper AVIAN CRANIUM over long BLACK hooked beak, black sides/neck, no humanface, not a mask, no eyeballs; green/turquoise simple feather fan with gold foreheadband; blacktorso, a few simple ivory skulls collar, red bib/cloth and orange/gold cuffs. Maintain Gabriel expression pointing and hearts and thoughtbubble of maidcafe on BROWN wood platform over BLUE SEA. Both figures must remain equally awkward beginner pencil/pastel illustration: wobbly thin black contours, plain flat grainy fills, crude shapes, no detailed muscles or ornamental rendering. Keep cafe VERY simple, no text. Landscape16:9.",
+    "references": [
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/gabriel_date.png",
+      "C:/Users/r20/.codex/generated_images/01a12978-3b64-74e2-9b22-a8917b1167d8/exec-b6111bf4-ae3d-4460-8d8d-c92538f56b19.png"
+    ],
+    "path": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-dd72ef9b-8670-4258-a370-6572db47fa01.png"
+  }
+]

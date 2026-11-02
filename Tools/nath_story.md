@@ -1,8 +1,8 @@
-# Nath Star / ReyMar
+# Nath Moon / ReyMar
 
 Volcán (Tzmil) → cuestionario humano → ciudad/carrera → cielo (Gabriel/Gora-P) → infierno (Onini) → bosque/selva (Faceless/T.exe) → Gracias.
 
-Arte aficionado de trazos simples y caras exageradas de combate. Nath siempre morena, con cara y cuerpo del mismo tono, uniforme morado y ojos verdes.
+Nath es ruda, peleonera e impulsiva. Se adelanta a las explicaciones, entiende los desafíos como una invitación y expresa afecto a regañadientes. Narra en primera persona, como una conversación, sin saber lo que otros piensan. Conserva su piel morena, uniforme morado, ojos verdes y las ilustraciones existentes.
 
 story.nath.0.title
 Una chica sencilla
@@ -20,157 +20,157 @@ story.nath.4.title
 Una revancha para mañana
 
 hero.character.nath
-Nath Star
+Nath Moon
 
 story.nath.0.intro.1
-Soy Nath Star. Una chica sencilla, de gustos normales y costumbres tranquilas. No se rían antes de que termine.
+Soy Nath Moon. Y antes de que empieces a mirarme raro, sí, yo soy la que conduce ReyMar. Si vienes a decirme que voy demasiado rápido, ahórratelo, que eso ya me lo han dicho y todavía no me han alcanzado para explicármelo.
 
 story.nath.0.intro.2
-Desde pequeña hice boxeo, muay thai y carreras de autos monstruo. Así que lo normal era que terminara siendo maquinista. Es una evolución bastante lógica.
+De pequeña me metieron a boxeo y después hice muay thai, porque con una sola cosa no me bastaba. Las carreras de autos monstruo vinieron luego. Ahí ya podía golpear y acelerar sin tener que escoger, así que me gustaron bastante.
 
 story.nath.0.intro.3
-La verdad es que simplemente me gusta pelear. Mi ReyMar y yo entendemos muy bien eso de avanzar sin pedir permiso.
+Por eso terminé de maquinista. Con ReyMar tengo por dónde correr y casi siempre aparece alguien con ganas de cerrarme el paso. A mí eso de tocar el claxon y esperar nunca se me ha dado; si quieres detenerme, más te vale intentarlo bien.
 
 story.nath.0.intro.4
-Entonces llegaron unos sujetos del gobierno. Me ofrecieron una batalla legendaria contra alienígenas. Solo tenía que aventar una roca verde en su nave o en su base, algo así.
+Un día vinieron unos del gobierno a ofrecerme una batalla legendaria contra alienígenas. Apenas dijeron «batalla» ya estaba preguntando dónde, así que lo de aventar una roca verde en su base lo escuché mientras buscaba las llaves.
 
 story.nath.0.intro.5
-No me lo pensé dos veces. ¡Salté a la acción! Y si el camino al viaje espacial empieza en un volcán, pues se empieza en un volcán.
+Ahora me toca cruzar un volcán para llegar al lanzador, y ya me dijeron que por aquí anda una hija de dioses. Pues mejor. Antes de irme al espacio quiero ver si de verdad pega tan fuerte o si todos le tienen miedo por el apellido.
 
 story.nath.0.before.1
-No sé qué te prometieron, pero esta zona está bajo mi cuidado.
+Oye, baja un poco la velocidad. Esta zona está bajo mi cuidado y no quiero que nadie salga lastimado.
 
 story.nath.0.before.2
-¿Una hija de dioses? Perfecto. Ya me estaba preocupando que la primera pelea fuera aburrida.
+¿Tú eres la hija del dios? Pues ven a frenarme. Quiero ver qué tienes, no escuchar cómo cuidas el tráfico.
 
 story.nath.0.before.3
-Con esa actitud vas a conseguir muchas peleas y muy pocas respuestas.
+No hace falta que me provoques. Si vas a poner a los demás en peligro, sí voy a detenerte.
 
 story.nath.0.after.1
-¡Ni siquiera los hijos de dioses pueden con mi grandeza!
+¡Eso quería ver! Para ser hija de un dios pegas bien, pero te faltó para frenarme.
 
 story.nath.0.after.2
-Solo te pedí que bajaras la velocidad.
+¿Ya puedes irte sin atropellar a nadie? Porque eso era lo que estaba intentando pedirte.
 
 story.nath.0.outro.1
-Ni siquiera los hijos de dioses pudieron pararme. Ahora solo tenía que llegar antes de que alguien me ganara ese viaje espacial.
+Tzmil sí me dio pelea, no voy a quitarle eso. Pero le gané, y si una hija de dioses no pudo pararme, ya quería ver qué me iban a poner los alienígenas. Me fui acelerando antes de que quisiera seguir hablándome de ir con cuidado.
 
 story.nath.0.outro.2
-Solo tenía que ir a la estúpida ciudad. Fácil. Aunque primero había una oficial empeñada en hacerme preguntas.
+Lo malo era tener que pasar por la ciudad para subir al espacio, porque ya iban todos para allá y no pensaba hacer fila detrás de ninguno. Encima había una oficial parando trenes para hacer preguntas. A ver cuánto tardaba en dejarme seguir.
 
 story.nath.1.intro.1
-¿Un cuestionario para comprobar que soy humana? Está bien. También puedo derrotar cinco preguntas. Después voy directa al lanzador.
+Resulta que tengo que demostrar que soy humana. ¿Quieres que me baje o puedo contestar desde aquí? Porque si basta con responder, pregunta de una vez; llevo un rato viendo pasar trenes y ya me estás poniendo de malas.
 
 story.nath.1.before.1
-El último lanzamiento no va a esperar a nadie.
+Control a corredores: queda un solo lanzamiento. La primera locomotora que llegue será la que suba.
 
 story.nath.1.before.2
-¡Pues será mejor que todos se aparten de mi ReyMar!
+¡Pues apártense de ReyMar! Si todavía me están oyendo por la radio es porque ya me tienen detrás.
 
 story.nath.1.after.1
-¡Eso también cuenta como ganar una pelea! ¡Al lanzador!
+¡Se acabó! Que preparen ese lanzador, que todavía me deben una pelea.
 
 story.nath.1.outro.1
-No entiendo qué pasó. Entré en el lanzador, pisé a fondo y de repente vi unas luces muy bonitas. Hasta ahí, todo excelente.
+Entré al lanzador sin soltar el acelerador y todavía alcancé a gritarles que se dieran prisa. Después se llenó todo de luces y perdí de vista la vía. Yo seguí sujetando los mandos, porque nadie me había dicho que hiciera otra cosa.
 
 story.nath.1.outro.2
-Pero ahora estaba en un mundo esponjoso lleno de ángeles. Yo pedí alienígenas. Esto tenía demasiadas plumas.
+Pero cuando pude mirar afuera, aquello estaba lleno de nubes y de ángeles. Me quedé esperando a ver dónde empezaba el espacio, hasta que uno de esos tipos me dijo que estaba en el cielo. Le pregunté si se estaba burlando de mí.
 
 story.nath.1.outro.3
-¡Estoy segura de que esos tontos del gobierno cometieron un error! ¡Y esto no se va a quedar así!
+Yo había pedido alienígenas, no que me mandaran al cielo sin avisarme. No sabía qué habían hecho los del gobierno con el lanzador, pero en cuanto regresara me lo iban a explicar. Por lo pronto necesitaba encontrar por dónde salir, aunque tuviera que abrirme paso.
 
 story.nath.2.intro.1
-Si esto era el cielo, alguien tendría que explicarme cómo salir. Y si su mejor guerrera prefería pelear, pues tampoco iba a quejarme.
+Al final me señalaron la locomotora de su guardiana. Yo iba a preguntarle cómo regresar, pero después de ver a Gora-P también quería saber si aguantaba a ReyMar. Ya que me habían hecho venir hasta acá, por lo menos quería una pelea que valiera el viaje.
 
 story.nath.2.before.1
-¡Otra más! ¿Nadie sabe leer el horario de visitas?
+¿Ahora qué pasó? Llevo todo el día peleando; dime por lo menos que tú solo vienes a preguntar algo.
 
 story.nath.2.before.2
-No vine de visita. Vine por una batalla legendaria y a exigir una explicación. En ese orden.
+Iba a preguntar cómo salir, pero ya que estás calentando, peleamos primero. No voy a irme sin probar a tu Gora-P.
 
 story.nath.2.before.3
-Me debían un día libre. Ahora me deben dos.
+No he dicho que… ¿Sabes qué? De acuerdo. Cuanto antes terminemos, antes vas a dejarme descansar.
 
 story.nath.2.after.1
-¿Eso era lo mejor del cielo? ¿Hay otra fila para las peleas legendarias?
+Por fin alguien que responde. ¿Tienen otro más fuerte o ya tengo que irme a buscarlo a otro lado?
 
 story.nath.2.after.2
-Sí. Al fondo. Muy, muy al fondo.
+Si quieres seguir peleando, conozco un camino. Te lo abro encantada. Encantadísima.
 
 story.nath.2.outro.1
-Después de ganarle a sus mejores guerreros, los del cielo aceptaron darme otra batalla legendaria. Qué atentos.
+Gabriel acabó ofreciéndome un camino a otra pelea. Eso ya me sonó mejor que toda la conversación del lanzador, así que le dije que lo abriera. No le pregunté demasiado; si había alguien más fuerte al otro lado, quería llegar antes de que se fuera.
 
 story.nath.2.outro.2
-Aunque sonaba a que solo querían deshacerse de mí. Abrieron un camino y me mandaron derechito al infierno. Por fin un lugar con ganas de pelear.
+Y crucé tan tranquila hasta que vi el fuego y a los demonios. Me habían mandado directo al infierno. Ahí ya sospeché que la guardiana quería quitárseme de encima, pero tampoco iba a volver para darle el gusto de verme reclamar. Primero vería qué tenían por acá.
 
 story.nath.3.intro.1
-El infierno tenía comida, trenes y gente dispuesta a discutir. Bastante prometedor. La diablita de pelo blanco parecía conocer todas las salidas.
+No tardé en encontrar a una diablita de pelo blanco que andaba pendiente de su comida. A mí me urgía volver, pero le vi los brazos y pensé que podía aguantar un rato contra mí. Me acerqué a preguntarle; para comer tenía tiempo después.
 
 story.nath.3.before.1
-¿Tú también vienes a escapar o solo a arruinarme la comida?
+Si vienes por mi comida, ya te puedes ir dando la vuelta. Hoy no voy a compartir.
 
 story.nath.3.before.2
-Primero peleamos. Después podemos hablar del menú.
+Quédate tu comida. Quiero saber si esos brazos sirven para algo más que llevarte cosas a la boca.
 
 story.nath.3.before.3
-Como enfríes mi cena, esta pelea sí va a ser personal.
+Mira, ya me hiciste dejar el plato. Ahora sí vas a tener que darme una buena razón para que no me lo cobre contigo.
 
 story.nath.3.after.1
-No eres mala, diablita. Otro día repetimos.
+Así sí, diablita. Acaba de comer, que otro día vuelvo por la revancha.
 
 story.nath.3.after.2
-Otro día que no tenga hambre. O sea, nunca.
+Pues avisa antes de venir, para que me dé tiempo de irme a comer a otra parte.
 
 story.nath.3.outro.1
-La diablita no era mala, pero yo ya estaba cansándome de todo esto. Todavía tenía que vengarme del gobierno por su error.
+Onini sí me hizo sudar, y por eso le dije que otro día repetíamos. Pero ya llevaba demasiado rato lejos de la Tierra por culpa del gobierno. Me habían prometido alienígenas y yo estaba peleando con todo el mundo menos con ellos; alguien me debía una explicación.
 
 story.nath.3.outro.2
-Creo que los demonios también se cansaron de luchar conmigo a todas horas. Simplemente dejaron abierta la puerta de regreso. Qué descuido tan conveniente.
+Cuando les pregunté a los demonios por la salida ya ni discutieron: me dejaron el camino abierto. Creo que se habían cansado de que retara a cualquiera que se me cruzara, porque esta vez nadie intentó detenerme. Mejor, así no tuve que perder más tiempo.
 
 story.nath.3.outro.3
-Lamentablemente, cuando llegué a la base por mi venganza, ya no quedaba nadie. Ni un guardia para calentar. Una falta de respeto.
+Yo venía preparando lo que iba a decirles a los del gobierno, pero al llegar a la base encontré puro destrozo. No había nadie esperándome ni un lugar donde preguntar por el lanzador. Me bajé a buscar, aunque conforme avanzaba ya no sabía ni a quién quería encontrar.
 
 story.nath.3.outro.4
-Vi a BBA, pero como siempre solo balbuceaba cosas. Creo que estaba triste o algo. Yo tampoco encontré a quién reclamarle.
+Por ahí vi a BBA y fui a preguntarle qué había pasado, pero casi no me contestó. Al principio pensé que me estaba ignorando, hasta que le vi la cara. Ya no insistí. Me quedé un rato cerca de ReyMar y después seguí buscando por mi cuenta.
 
 story.nath.3.outro.5
-Entonces escuché por radio una invitación a un maid café. Odio admitirlo, pero me encantan esas cosas. ¡Y Tzmil había abierto un puesto de helados! Ya quería comprar uno y retarlas a un duelo.
+Más tarde escuché la invitación por radio a un maid café y que Tzmil había abierto un puesto de helados. A mí esos lugares me gustan, ¿y qué? Pensaba pasar por los dos; quería probar el helado y ver si la del volcán seguía con ganas de detenerme.
 
 story.nath.3.outro.6
-Pero por el camino encontré algo mucho más interesante en el bosque. Un tren que parecía disfrutar las peleas tanto como yo.
+Pero me desvié al ver una locomotora entre los árboles. No se parecía a las que había dejado en la ciudad, y cuando acerqué ReyMar pareció moverse hacia nosotras. Frené para mirar mejor. El helado podía esperar un poco; quería saber qué hacía esa máquina ahí.
 
 story.nath.4.intro.1
-Un tipo blanco, alto y sin cara estaba junto a una locomotora que casi sonreía al verme. No iba a dejar pasar esa invitación.
+Junto a la máquina había un tipo altísimo y sin cara, ocupado con unos dibujos. Le pregunté si esa locomotora era suya, porque entre cómo se movía y cómo se me había acercado ya me habían dado ganas de probarla. No iba a quedarme ahí mirándola nada más.
 
 story.nath.4.intro.2
-¡Eh, rarito! No sé qué dibujas, pero tu máquina y mi ReyMar tienen una conversación pendiente.
+No entendía bien si el interesado era él o su máquina, pero yo ya estaba acomodando a ReyMar. Le hice señas para que saliera al claro, esperando que no me fuera a responder con otra explicación de por qué ahí tampoco se podía pelear.
 
 story.nath.4.before.1
-Solo quiero dibujar tranquilo. Aunque T.exe parece bastante interesada en tu propuesta.
+Yo quería seguir dibujando, pero T.exe se ha acercado a tu locomotora. Creo que a ella sí le interesa.
 
 story.nath.4.before.2
-¡Lo sabía! Esa máquina tiene la batalla por dentro.
+Pues no la hagas esperar. Si tiene ganas de competir, quiero que venga con todo; no voy a frenar para quedar bien contigo.
 
 story.nath.4.before.3
-Mientras no rompan mis dibujos, adelante.
+A ella le parece bien. Solo apártense de los dibujos, que estos todavía no los he terminado.
 
 story.nath.4.after.1
-¡Por fin alguien que lo hace interesante! Mañana repetimos.
+¡Así se pelea! Pero mañana volvemos a hacerlo, que ya te vi cómo tomas esas curvas.
 
 story.nath.4.after.2
-Creo que a ella también le gustaría. Yo voy a necesitar más papel.
+T.exe dice que te espera. Si puedes volver un poco más temprano, yo alcanzo a preparar el papel.
 
 story.nath.4.outro.1
-El chico era realmente bueno. Y podía sentir que su máquina amaba competir. No tenía que explicarle nada: la batalla estaba dentro de ella.
+Faceless no me lo puso fácil, y T.exe menos. Cada vez que pensaba que ya la tenía, se me escapaba por otro lado. Acabé queriendo repetir la pelea antes de que terminara, porque me molestaba no haberle encontrado todavía la manera de cerrarle el paso.
 
 story.nath.4.outro.2
-Desde entonces, cada vez que su locomotora salía del trabajo, yo la retaba a una batalla. ¡Parecía disfrutarlo tanto como yo!
+Desde entonces la espero cuando sale del trabajo y nos buscamos un tramo donde correr. Si me ve llegar tarde, T.exe se pone a hacer ruido antes de que me baje. Yo le digo que se aguante, pero me apuro, porque tampoco quiero que se vaya sin pelear.
 
 story.nath.4.outro.3
-A Faceless, que así se llama el rarito, le encantaba dibujarnos. No lo culpo. ¡Soy toda una preciosura!
+Y Faceless se queda dibujándonos. Al principio pensé que iba a perderse media pelea por andar con la libreta, pero después me enseñó los dibujos. Hasta le pedí uno. Que no se le suba; si vas a dibujarme, por lo menos quiero llevarme la prueba de que quedé bien.
 
 story.nath.4.outro.4
-No obtuve mi venganza contra el gobierno. Pero encontré a alguien con quien luchar todos los días, y eso terminó importándome bastante más.
+A los del gobierno no les pude cobrar lo del lanzador. Eso todavía me molesta, pero ya no estoy recorriendo el planeta para encontrar a alguien que quiera pelear conmigo. Sé dónde me esperan, y si no aparezco me lo van a reclamar al día siguiente.
 
 story.nath.4.outro.5
-Lo mejor es que siempre lo hace interesante. Bien, ReyMar... mañana toca revancha. Y después podemos ir por ese helado.
+Mañana voy a salir antes para no volver a darles esa ventaja. También quiero pasar por el helado de Tzmil y llevarle uno a Faceless. Si pregunta por qué, le digo que para que no se duerma mientras pierde. Lo que no pienso hacer es irme sin mi revancha.

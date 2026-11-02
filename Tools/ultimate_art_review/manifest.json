@@ -1,0 +1,20 @@
+{
+  "tool": "built-in image_gen",
+  "references": [
+    "Tools/gabriel_ultimate_reference.png",
+    "Tools/nath_ultimate_reference.png",
+    "Assets/Resources/Ultimate/bba_cut_in.png"
+  ],
+  "outputs": [
+    "Assets/Resources/Ultimate/gabriel_cut_in.png",
+    "Assets/Resources/Ultimate/nath_cut_in.png",
+    "Assets/Resources/Menu/hero_gabriel_cut.png",
+    "Assets/Resources/Menu/hero_nath_cut.png"
+  ],
+  "prompts": {
+    "gabriel": "Extreme closeup of both eyes, polished luminous anime matching BBA banner; model-faithful warm brown skin, platinum wavy hair, gray-hazel eyes, gold peach energy streaks.",
+    "nath": "Extreme closeup of both eyes, polished luminous anime matching BBA banner; model-faithful morena skin, black fringe and cat ears, green eyes, violet energy streaks.",
+    "menu_gabriel": "Full-body transparent graphic anime ink cutout matching Onini menu style, exact Gabriel model costume, tan skin, blonde curls, casual V sign pose, no wings.",
+    "menu_nath": "Full-body transparent graphic anime ink cutout matching Onini menu style, exact Nath model costume, tan skin, black hair and cat ears, purple sailor uniform, black boots, boxer pose."
+  }
+}

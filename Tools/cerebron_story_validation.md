@@ -1,5 +1,15 @@
 # Validación de Cerebron
 
+## Revisión de personalidad — 2026-11-02
+
+- Cerebron habla con inteligencia práctica, rudeza y humor seco de héroe de acción de los noventa. La narración conserva primera persona y conocimientos limitados; su decisión de cubrir a Faceless y su reconciliación con Doris tienen espacio sin remates forzados.
+- 43 entradas revisadas en ES/EN/PT/JA (172 valores). Las 54 claves completas de Cerebron (216 valores) y las seis líneas compartidas de Faceless (24 valores) se importaron y comprobaron en Unity. El encuentro coincide en ambas campañas, con bandos invertidos y la voz amable de Faceless conservada.
+- `CheckCerebronStory.Run`: cuatro capítulos, rutas y finales correctos, trece ilustraciones y enlace a Thanks.
+- `PlayCerebronStory.Run`: 3622 fotogramas, cero errores de consola. Se comprobaron las conversaciones previas y posteriores de los cuatro capítulos, control X, avance manual, retratos, Crochtrain sin conductor y final Thanks. Se verificaron los 216 textos y su altura real en narrativa y gameplay en los cuatro idiomas.
+- Se inspeccionó `Temp/cerebron-baratito-ending.png` en Play Mode con el arte actual: Doris aparece en el café sobre el mar y el texto se lee completo. Esta revisión actualiza la comprobación visual pendiente que figura en el registro histórico de abajo.
+- Las victorias se aceleraron para recorrer la campaña; esta prueba no mide el balance de combate.
+- Se restauraron partida, selección y escena originales. `TzmilPlaySession.Verify`: partida idéntica a la copia previa, escena historiaDialogos y Editor fuera de Play Mode.
+
 ## Revisión posterior del arte
 
 Se aplicaron trece imágenes en el estilo aprobado de `cerebron_doris_indie_test.png`, revisando cuerpos, siluetas, pintura y fondos. Las versiones de horror y su manifiesto se conservaron en `Tools/cerebron_art_backup_horror/`. `ImportCerebronArt.Run` importó las trece imágenes sin alterar sus GUID y verificó su formato horizontal. Prompts y fuentes: `cerebron_story_art_indie.json` y manifiesto final actualizado.

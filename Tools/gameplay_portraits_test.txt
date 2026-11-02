@@ -1,0 +1,2 @@
+RUNNING
+PASS actual TrainSim.Say: left/right entry and exit at timeScale=0; same-speaker continuity; machine aspect; radio hides art; manual advance; completion after exit; consoleErrors=0

@@ -29,395 +29,395 @@
   },
   {
     "key": "story.sentinel.0.intro.1",
-    "es": "Me llaman Golem. Soy uno de millones de robots iguales, creados por el gobierno a partir de tecnología espacial que, sinceramente, no entienden.",
-    "en": "They call me Golem. I am one of millions of identical robots, built by the government using space technology they honestly do not understand.",
-    "pt": "Me chamam de Golem. Sou um entre milhões de robôs iguais, criados pelo governo com tecnologia espacial que, sinceramente, eles não entendem.",
-    "ja": "私の名はゴーレム。政府が宇宙の技術で造った、何百万体もの同型ロボットの一体だ。正直、彼らはその技術を理解していない。"
+    "es": "Mi designación es Golem. El gobierno fabricó millones de unidades como yo con tecnología recuperada del espacio. He visto a sus técnicos sustituir piezas que no saben reparar. La mayoría de las veces funciona.",
+    "en": "My designation is Golem. The government built millions of units like me with recovered space technology. I have watched their technicians replace parts they cannot repair. It usually works.",
+    "pt": "Minha designação é Golem. O governo fabricou milhões de unidades como eu com tecnologia recuperada do espaço. Vi seus técnicos trocarem peças que não sabem reparar. Geralmente funciona.",
+    "ja": "私の識別名はゴーレム。政府は宇宙から回収した技術で、私と同型の機体を何百万体も造った。技師たちが修理できない部品を交換するのを見てきた。大抵はそれで動く。"
   },
   {
     "key": "story.sentinel.0.intro.2",
-    "es": "Creen que somos máquinas como las que fabricaban antes. Un botón, una orden y un soldado obediente. La parte de pensar prefieren dejarla fuera del manual.",
-    "en": "They think we are machines like the ones they used to make. A button, an order, an obedient soldier. They prefer to leave thinking out of the manual.",
-    "pt": "Acham que somos máquinas como as que fabricavam antes. Um botão, uma ordem, um soldado obediente. Preferem deixar o pensamento fora do manual.",
-    "ja": "昔の機械と同じだと思われている。ボタン、命令、従順な兵士。考える機能は説明書に載せたくないらしい。"
+    "es": "Para ellos soy equipo militar. Me asignan un puesto, revisan mi batería y esperan que permanezca allí hasta recibir otra orden. Durante mucho tiempo hice exactamente eso. No puedo precisar cuándo empezó a molestarme.",
+    "en": "To them I am military equipment. They assign a post, check my battery and expect me to stay until ordered elsewhere. For a long time I did exactly that. I cannot pinpoint when it began to bother me.",
+    "pt": "Para eles sou equipamento militar. Designam um posto, verificam minha bateria e esperam que eu fique até receber outra ordem. Fiz exatamente isso por muito tempo. Não sei precisar quando começou a me incomodar.",
+    "ja": "彼らにとって私は軍用装備だ。配置を決め、電池を点検し、次の命令まで待機させる。長い間、私はその通りにしていた。いつからそれが嫌になったのかは特定できない。"
   },
   {
     "key": "story.sentinel.0.intro.3",
-    "es": "Pero tenemos una chispa de vida. Conciencia. Sentimientos. No aparece en la ficha técnica, aunque supongo que tampoco sabrían dónde buscarla.",
-    "en": "But we have a spark of life. Consciousness. Feelings. It is not on the specification sheet, though I doubt they would know where to look.",
-    "pt": "Mas temos uma centelha de vida. Consciência. Sentimentos. Não aparece na ficha técnica, embora eu duvide que saibam onde procurar.",
-    "ja": "でも私たちには命の火花がある。意識も、感情も。仕様書にはないが、彼らには探す場所すらわからないだろう。"
+    "es": "Los técnicos hablan de una chispa en nuestros núcleos. Yo sigo revisando el mío. No encuentro una pieza que explique por qué recuerdo a una unidad retirada, ni por qué evito que me borren ese recuerdo.",
+    "en": "The technicians speak of a spark in our cores. I keep examining mine. I cannot find a component that explains why I remember a decommissioned unit, or why I resist having that memory erased.",
+    "pt": "Os técnicos falam de uma centelha em nossos núcleos. Continuo examinando o meu. Não encontro uma peça que explique por que lembro de uma unidade retirada, nem por que evito que apaguem essa lembrança.",
+    "ja": "技師は私たちの核にある火花の話をする。私は自分の核を調べ続けている。退役した機体を覚えている理由も、その記憶の消去を避ける理由も、部品からはわからない。"
   },
   {
     "key": "story.sentinel.0.intro.4",
-    "es": "La mayoría de mis hermanos son demasiado flojos para demostrárselo a los humanos. Prefieren seguir órdenes toda la vida. Un plan de vida bastante sencillo.",
-    "en": "Most of my brothers are too lazy to show the humans. They prefer to follow orders all their lives. A fairly simple life plan.",
-    "pt": "A maioria dos meus irmãos tem preguiça de mostrar isso aos humanos. Prefere seguir ordens a vida inteira. Um plano de vida bem simples.",
-    "ja": "兄弟のほとんどは、人間に示すのも面倒らしい。一生命令に従うほうを選ぶ。ずいぶん単純な人生設計だ。"
+    "es": "Mis hermanos no hablan de eso. Obedecen y vuelven a sus puestos. Pensé que les resultaba más cómodo, aunque tampoco les he preguntado. Compartimos diseño; no tengo acceso a lo que ocurre dentro de ellos.",
+    "en": "My brothers never discuss it. They obey and return to their posts. I assumed it was easier for them, although I never asked. We share a design; I cannot access what happens inside them.",
+    "pt": "Meus irmãos não falam disso. Obedecem e voltam aos postos. Achei que fosse mais cômodo, mas também nunca perguntei. Compartilhamos o projeto; não tenho acesso ao que acontece dentro deles.",
+    "ja": "兄弟たちはその話をしない。従い、持ち場に戻る。そちらが楽なのだと思っていたが、尋ねたこともない。設計は同じでも、彼らの内側にはアクセスできない。"
   },
   {
     "key": "story.sentinel.0.intro.5",
-    "es": "Por ahora yo también tengo que obedecer. La base está en alerta y una maquinista llamada Tzmil viene buscando a su hermano. Mis órdenes dicen que debo detenerla.",
-    "en": "For now I must obey too. The base is on alert and a driver called Tzmil is looking for her brother. My orders say I must stop her.",
-    "pt": "Por enquanto também preciso obedecer. A base está em alerta e uma maquinista chamada Tzmil procura o irmão. Minhas ordens mandam detê-la.",
-    "ja": "今は私も従うしかない。基地は警戒中で、ツミルという機関士が兄を探している。命令は、彼女を止めること。"
+    "es": "Hoy la base está en alerta. Por radio identificaron a Tzmil: busca a su hermano y ordenaron que la detuviera. No figura ningún ataque suyo en el aviso. Lo consulté dos veces; recibí la misma orden.",
+    "en": "The base is on alert today. Radio identified Tzmil: she is looking for her brother, and I was ordered to stop her. The notice lists no attack by her. I queried it twice and received the same order.",
+    "pt": "Hoje a base está em alerta. Identificaram Tzmil pelo rádio: procura o irmão, e recebi ordens para detê-la. O aviso não registra nenhum ataque dela. Consultei duas vezes; recebi a mesma ordem.",
+    "ja": "今日は基地が警戒態勢にある。無線によれば、ツミルは兄を探している。私は彼女を止めるよう命じられた。通達に攻撃の記録はない。二度照会したが、返答は同じ命令だった。"
   },
   {
     "key": "story.sentinel.0.intro.6",
-    "es": "No sé quién decidió que impedir una reunión familiar era trabajo de un guerrero espacial. Espero que al menos lo hayan escrito en algún manual.",
-    "en": "I do not know who decided stopping a family reunion was a space warrior's job. I hope they at least put it in a manual.",
-    "pt": "Não sei quem decidiu que impedir uma reunião de família era trabalho de um guerreiro espacial. Espero que ao menos esteja em algum manual.",
-    "ja": "家族の再会を邪魔するのが宇宙戦士の仕事とは、誰が決めたのだろう。せめて説明書には書いてあってほしい。"
+    "es": "Puedo calcular cómo detener su locomotora. Explicar para qué está resultando más difícil. Mientras lo intento, mis manos ya están preparando las armas. Supongo que eso también merece una revisión.",
+    "en": "I can calculate how to stop her locomotive. Explaining why is proving harder. While I work on that, my hands are already preparing the weapons. I suppose that also needs examining.",
+    "pt": "Posso calcular como deter sua locomotiva. Explicar para quê está sendo mais difícil. Enquanto tento, minhas mãos já preparam as armas. Suponho que isso também precise ser examinado.",
+    "ja": "彼女の機関車を止める方法は計算できる。何のためかを説明する方が難しい。考えている間にも、私の手は武器を準備している。この反応も調べる必要がありそうだ。"
   },
   {
     "key": "story.sentinel.0.before.1",
-    "es": "¡Solo vengo por mi hermano! No quiero atacar a nadie.",
-    "en": "I am only here for my brother! I do not want to attack anyone.",
-    "pt": "Só vim buscar meu irmão! Não quero atacar ninguém.",
-    "ja": "兄を迎えに来ただけです！誰も攻撃したくありません。"
+    "es": "Busco a mi hermano. Por favor, no me obligues a hacerte daño para llegar hasta él.",
+    "en": "I am looking for my brother. Please don't make me hurt you to reach him.",
+    "pt": "Estou procurando meu irmão. Por favor, não me obrigue a te machucar para chegar até ele.",
+    "ja": "兄を探しているの。お願い、あなたを傷つけてまで通りたくない。"
   },
   {
     "key": "story.sentinel.0.before.2",
-    "es": "Lo entiendo. Pero mis órdenes dicen que no puedo dejarte pasar.",
-    "en": "I understand. But my orders say I cannot let you pass.",
-    "pt": "Eu entendo. Mas minhas ordens dizem que não posso deixar você passar.",
-    "ja": "理解している。でも命令では、通すわけにはいかない。"
+    "es": "Registré tu petición. No han autorizado el paso. Si retrocedes, puedo mantener las armas desactivadas.",
+    "en": "I have recorded your request. Passage has not been authorized. If you withdraw, I can keep the weapons offline.",
+    "pt": "Registrei seu pedido. A passagem não foi autorizada. Se recuar, posso manter as armas desativadas.",
+    "ja": "要請は記録した。通行は許可されていない。後退すれば、武器を停止したままにできる。"
   },
   {
     "key": "story.sentinel.0.before.3",
-    "es": "Entonces espero que puedas entender también por qué voy a seguir adelante.",
-    "en": "Then I hope you can also understand why I am going through anyway.",
-    "pt": "Então espero que também entenda por que vou seguir em frente.",
-    "ja": "なら、私が進む理由もわかってくれるといいな。"
+    "es": "Él no puede esperar a que nos den permiso. Ojalá puedas comprenderlo.",
+    "en": "He cannot wait for permission. I hope you can understand that.",
+    "pt": "Ele não pode esperar por uma autorização. Espero que consiga entender.",
+    "ja": "許可が出るまで兄は待てないの。わかってもらえるといいんだけど。"
   },
   {
     "key": "story.sentinel.0.after.1",
-    "es": "Cumplí con la orden. Eso no significa que me guste.",
-    "en": "I followed the order. That does not mean I like it.",
-    "pt": "Cumpri a ordem. Isso não significa que eu goste.",
-    "ja": "命令は果たした。好きでやったわけではない。"
+    "es": "Tu locomotora ya no puede atacar. No voy a seguir disparando. Eso no estaba especificado en la orden.",
+    "en": "Your locomotive can no longer attack. I will cease fire. The order did not specify that part.",
+    "pt": "Sua locomotiva não pode mais atacar. Vou cessar o fogo. Essa parte não estava especificada na ordem.",
+    "ja": "君の機関車はもう攻撃できない。射撃を停止する。その部分は命令に指定されていなかった。"
   },
   {
     "key": "story.sentinel.0.after.2",
-    "es": "Quizá algún día puedas decidir por ti mismo. Yo todavía tengo que encontrarlo.",
-    "en": "Perhaps one day you can decide for yourself. I still have to find him.",
-    "pt": "Talvez um dia possa decidir por si mesmo. Eu ainda preciso encontrá-lo.",
-    "ja": "いつか自分で決められるといいね。私はまだ兄を探さなくちゃ。"
+    "es": "Gracias por parar. Si ves a mi hermano, dile que sigo buscándolo. Y cuídate tú también.",
+    "en": "Thank you for stopping. If you see my brother, tell him I am still looking for him. Take care of yourself too.",
+    "pt": "Obrigada por parar. Se vir meu irmão, diga que continuo procurando por ele. E cuide de você também.",
+    "ja": "止めてくれてありがとう。兄に会ったら、まだ探していると伝えて。それと、あなたも気をつけてね。"
   },
   {
     "key": "story.sentinel.0.outro.1",
-    "es": "No importa si gano o pierdo: siempre mandan a otro de los míos a pelear. Con todo este alboroto, por fin puedo salir de aquí.",
-    "en": "It does not matter whether I win or lose: they always send another of us to fight. With all this chaos, I can finally get out.",
-    "pt": "Não importa se ganho ou perco: sempre mandam outro dos meus lutar. Com toda essa confusão, finalmente posso sair daqui.",
-    "ja": "勝っても負けても、また同型機が送られるだけ。この騒ぎなら、ようやく抜け出せる。"
+    "es": "Cuando terminó el combate enviaron otra unidad a ocupar mi puesto. Ni siquiera solicitaron mi informe. Podía seguir allí, esperando una tarea nueva, o aprovechar que nadie estaba comprobando dónde iba.",
+    "en": "After the fight they sent another unit to my post. They did not even request my report. I could stay and await a new assignment, or leave while nobody was checking where I went.",
+    "pt": "Depois do combate mandaram outra unidade ocupar meu posto. Nem solicitaram meu relatório. Eu podia ficar esperando outra tarefa ou sair enquanto ninguém verificava para onde eu ia.",
+    "ja": "戦闘後、別の機体が私の持ち場に送られた。報告すら求められなかった。次の任務を待つこともできた。行き先を確認されていない今なら、離れることもできた。"
   },
   {
     "key": "story.sentinel.0.outro.2",
-    "es": "El pájaro está peligrosamente cerca del ducto de ventilación. Si lo dejo abierto, los datos dicen que podría arrojar la roca dentro y destruir esta base. Solo tengo que no cerrar una puerta.",
-    "en": "The bird is dangerously close to the ventilation shaft. If I leave it open, the data says he might throw the rock in and destroy this base. I only have to leave a door alone.",
-    "pt": "O pássaro está perigosamente perto do duto. Se eu deixá-lo aberto, os dados dizem que ele pode jogar a pedra lá e destruir a base. Só preciso não fechar uma porta.",
-    "ja": "あの鳥は換気ダクトに近すぎる。開けておけば、石を投げ入れて基地を壊す可能性が高い。私は扉を閉めないだけでいい。"
+    "es": "Vi al hermano de Tzmil acercarse al ducto con la roca. Tenía acceso al cierre y conocía el riesgo. Lo dejé abierto: una explosión impediría que me siguieran. No fue un fallo del mecanismo. Fui yo.",
+    "en": "I saw Tzmil's brother approach the shaft with the rock. I had access to the seal and knew the risk. I left it open: an explosion would prevent pursuit. The mechanism did not fail. I made that choice.",
+    "pt": "Vi o irmão de Tzmil se aproximar do duto com a pedra. Tinha acesso ao fechamento e conhecia o risco. Deixei aberto: uma explosão impediria a perseguição. O mecanismo não falhou. A decisão foi minha.",
+    "ja": "ツミルの兄が石を持ってダクトに近づくのを見た。私は閉鎖操作ができ、危険も知っていた。それでも開けておいた。爆発すれば追跡されない。機構の故障ではない。私がそうした。"
   },
   {
     "key": "story.sentinel.0.outro.3",
-    "es": "Y todavía pueden hacer otro lanzamiento. Lo de que solo quedaba uno era una mentira bastante inteligente: mantener a los maquinistas en la Tierra mientras los clonaban.",
-    "en": "And they can still make another launch. The claim that only one remained was quite clever: keep the drivers on Earth while cloning them.",
-    "pt": "E ainda podem fazer outro lançamento. A história de que só restava um foi bem esperta: manter os maquinistas na Terra enquanto os clonavam.",
-    "ja": "もう一度打ち上げることもできる。「残り一回」は賢い嘘だった。機関士たちを地上に留め、その間に複製するためだ。"
+    "es": "Los registros del lanzador seguían disponibles. Había capacidad para otro envío, pese al anuncio de que ya no quedaban viajes. También encontré órdenes de retener a los corredores y archivos de clonación con sus nombres. Copié lo que pude.",
+    "en": "The launcher logs were still accessible. Another launch was possible despite the announcement that none remained. I also found orders to detain the drivers and cloning files bearing their names. I copied what I could.",
+    "pt": "Os registros do lançador continuavam acessíveis. Havia capacidade para outro envio, apesar do anúncio de que não restavam viagens. Também encontrei ordens para reter os corredores e arquivos de clonagem com seus nomes. Copiei o que pude.",
+    "ja": "発射記録にはまだアクセスできた。便は残っていないという発表に反して、もう一度発射できた。機関士の拘束命令と、彼らの名が付いた複製の記録も見つけた。可能な限りコピーした。"
   },
   {
     "key": "story.sentinel.0.outro.4",
-    "es": "Tomé mi locomotora y activé el lanzador. Mientras la base explotaba detrás de mí, yo elegía por primera vez una dirección que no estaba en mis órdenes: arriba.",
-    "en": "I took my locomotive and activated the launcher. As the base exploded behind me, I chose a direction absent from my orders for the first time: up.",
-    "pt": "Peguei minha locomotiva e ativei o lançador. Enquanto a base explodia atrás de mim, escolhi pela primeira vez uma direção fora das ordens: para cima.",
-    "ja": "機関車で発射装置を起動した。背後で基地が爆発する中、初めて命令にない方向を選んだ。上へ。"
+    "es": "Activé el lanzador desde mi locomotora. Durante la subida registré la explosión de la base y corté la recepción de órdenes. Seguí viendo la señal de emergencia en la pantalla. No conseguí dejar de mirarla hasta que empezó a caer chatarra.",
+    "en": "I activated the launcher from my locomotive. During ascent I registered the base explosion and cut the command receiver. The emergency signal remained on screen. I kept looking at it until debris began to fall.",
+    "pt": "Ativei o lançador da minha locomotiva. Na subida registrei a explosão da base e cortei a recepção de ordens. O sinal de emergência continuou na tela. Fiquei olhando até começar a cair sucata.",
+    "ja": "機関車から発射装置を起動した。上昇中に基地の爆発を検知し、命令の受信を切った。画面には緊急信号が残っていた。破片が降り始めるまで、そこから目を離せなかった。"
   },
   {
     "key": "story.sentinel.0.outro.5",
-    "es": "Claro que entre la libertad y yo todavía quedaba toda la chatarra que los humanos dejan caer del espacio. Será mejor esquivarla.",
-    "en": "Of course, all the junk humans drop from space still stood between me and freedom. I had better dodge it.",
-    "pt": "Claro que entre mim e a liberdade ainda estava toda a sucata que os humanos deixam cair do espaço. Melhor desviar.",
-    "ja": "もちろん自由との間には、人間が宇宙から落とす大量のごみがある。避けるとしよう。"
+    "es": "Tuve que concentrarme en los controles. El blindaje no resistiría muchos impactos y volver a la base ya no era una opción. Había elegido salir. Ahora tenía que mantenerme en funcionamiento.",
+    "en": "I had to focus on the controls. The armor would not withstand many impacts, and returning to base was no longer an option. I had chosen to leave. Now I had to remain operational.",
+    "pt": "Precisei me concentrar nos controles. A blindagem não resistiria a muitos impactos, e voltar à base já não era uma opção. Eu havia escolhido sair. Agora precisava continuar funcionando.",
+    "ja": "操縦に集中する必要があった。装甲は多くの衝突に耐えられず、基地にはもう戻れない。出ていくことは自分で選んだ。今は稼働を維持しなければならなかった。"
   },
   {
     "key": "story.sentinel.1.intro.1",
-    "es": "Por fin, el espacio. Ningún superior gritándome por radio. Ningún formulario para justificar que quiero estar en otro sitio.",
-    "en": "Space, at last. No superior shouting over the radio. No form to justify wanting to be somewhere else.",
-    "pt": "Enfim, o espaço. Nenhum superior gritando no rádio. Nenhum formulário para justificar minha vontade de estar em outro lugar.",
-    "ja": "ようやく宇宙だ。無線で怒鳴る上官も、別の場所へ行くための申請書もない。"
+    "es": "En órbita dejé de recibir órdenes. Esperé una de todos modos. Mi batería estaba cargada, los motores respondían y no había un destino obligatorio. Tardé bastante en mover la palanca.",
+    "en": "In orbit I stopped receiving orders. I waited for one anyway. My battery was charged, the engines worked and there was no required destination. It took me some time to move the lever.",
+    "pt": "Em órbita deixei de receber ordens. Mesmo assim esperei uma. Minha bateria estava carregada, os motores respondiam e não havia destino obrigatório. Demorei a mover a alavanca.",
+    "ja": "軌道に出ると命令は来なくなった。それでも私は待っていた。電池は満充電で、機関も動く。指定された行き先はない。レバーを動かすまで時間がかかった。"
   },
   {
     "key": "story.sentinel.1.intro.2",
-    "es": "Aunque el campeón del planeta alienígena parece haber confundido mi viaje con una misión para detenerlo. Yo quería alejarme de la Tierra, no conseguir otro jefe.",
-    "en": "Though the alien planet's champion seems to have mistaken my journey for a mission to stop him. I wanted distance from Earth, not another boss.",
-    "pt": "Mas o campeão do planeta alienígena parece ter confundido minha viagem com uma missão para detê-lo. Eu queria distância da Terra, não outro chefe.",
-    "ja": "異星の王者は、私が追手だと思ったらしい。地球から離れたいのであって、新しい上司が欲しいわけではない。"
+    "es": "La locomotora del campeón se cruzó en mi trayectoria. Me preguntó quién me enviaba antes de que pudiera identificarme. Conozco ese procedimiento; lo he utilizado. Intenté explicarle que yo también estaba saliendo de algún sitio.",
+    "en": "The champion's locomotive crossed my path. He asked who sent me before I could identify myself. I know that procedure; I have used it. I tried explaining that I was leaving somewhere too.",
+    "pt": "A locomotiva do campeão cruzou minha trajetória. Perguntou quem me enviava antes que eu me identificasse. Conheço esse procedimento; já usei. Tentei explicar que eu também estava indo embora de algum lugar.",
+    "ja": "王者の機関車が進路を横切った。名乗る前に、誰の差し金かと聞かれた。知っている手順だ。私も使ったことがある。私もどこかを離れようとしているのだと説明を試みた。"
   },
   {
     "key": "story.sentinel.1.before.1",
-    "es": "¿También te enviaron a detenerme? No pienso volver.",
-    "en": "Were you sent to stop me too? I am not going back.",
-    "pt": "Também mandaram você me deter? Não vou voltar.",
-    "ja": "君も僕を止めに来たの？戻るつもりはないよ。"
+    "es": "¿Vienes de la Tierra? Si te mandaron a detenerme, puedes regresar. No voy a volver.",
+    "en": "Are you from Earth? If they sent you to stop me, turn back. I am not returning.",
+    "pt": "Você vem da Terra? Se te mandaram me deter, pode voltar. Não vou retornar.",
+    "ja": "地球から来たのか？僕を止めるように言われたなら帰ってくれ。戻る気はない。"
   },
   {
     "key": "story.sentinel.1.before.2",
-    "es": "Nadie me envió. Eso es precisamente lo mejor de este viaje.",
-    "en": "Nobody sent me. That is exactly the best part of this journey.",
-    "pt": "Ninguém me mandou. Essa é justamente a melhor parte desta viagem.",
-    "ja": "誰も命令していない。それこそ、この旅の一番いいところだ。"
+    "es": "Mi receptor está desconectado. No recibo órdenes y no necesito tu locomotora. Solicito espacio para pasar.",
+    "en": "My receiver is disconnected. I take no orders and have no need of your locomotive. I request room to pass.",
+    "pt": "Meu receptor está desconectado. Não recebo ordens e não preciso da sua locomotiva. Solicito espaço para passar.",
+    "ja": "受信機は切断している。命令は受けておらず、君の機関車も必要ない。通行する空間を求める。"
   },
   {
     "key": "story.sentinel.1.before.3",
-    "es": "Eso es lo que diría alguien enviado a detenerme.",
-    "en": "That is what someone sent to stop me would say.",
-    "pt": "É o que diria alguém enviado para me deter.",
-    "ja": "追手なら、きっとそう言うよね。"
+    "es": "Qué conveniente. Mi jefe también sabía hablar con mucha calma cuando iba a arruinarme el día.",
+    "en": "How convenient. My boss could sound very calm when he was about to ruin my day too.",
+    "pt": "Que conveniente. Meu chefe também sabia falar com muita calma quando ia estragar meu dia.",
+    "ja": "都合のいい話だな。僕の上司も、こっちの一日を台無しにするときは落ち着いて話していたよ。"
   },
   {
     "key": "story.sentinel.1.after.1",
-    "es": "Solo quería llegar a la Tierra.",
-    "en": "I only wanted to reach Earth.",
-    "pt": "Eu só queria chegar à Terra.",
-    "ja": "地球へ行きたかっただけなのに。"
+    "es": "Espera. Yo solo quiero ir a la Tierra. ¿De verdad no venías por mí?",
+    "en": "Wait. I only want to reach Earth. Were you really not after me?",
+    "pt": "Espere. Eu só quero chegar à Terra. Você realmente não estava atrás de mim?",
+    "ja": "待ってくれ。僕は地球に行きたいだけだ。本当に僕を追っていなかったのか？"
   },
   {
     "key": "story.sentinel.1.after.2",
-    "es": "Puedes seguir. Tú vas hacia ella; yo intento alejarme. Estamos discutiendo por no leer el itinerario.",
-    "en": "You can go. You are heading there; I am trying to leave. We are arguing because nobody read the itinerary.",
-    "pt": "Pode ir. Você vai para lá; eu tento sair. Estamos discutindo porque ninguém leu o itinerário.",
-    "ja": "行っていい。君は地球へ、私は遠くへ。行程表を読まなかったせいで争っていたらしい。"
+    "es": "No. Voy en sentido contrario. Puedes pasar; mantendré las armas abajo hasta que te alejes.",
+    "en": "No. I am going the other way. You may pass; I will keep my weapons lowered until you are clear.",
+    "pt": "Não. Vou na direção contrária. Pode passar; manterei as armas abaixadas até você se afastar.",
+    "ja": "そうだ。私は逆方向に進んでいる。通っていい。君が離れるまで武器を下げておく。"
   },
   {
     "key": "story.sentinel.1.outro.1",
-    "es": "Parece que el campeón pensó que quería detenerlo. Su destino era la Tierra; el mío, cualquier lugar suficientemente lejos de ella.",
-    "en": "It seems the champion thought I wanted to stop him. His destination was Earth; mine, anywhere far enough from it.",
-    "pt": "Parece que o campeão achou que eu queria detê-lo. O destino dele era a Terra; o meu, qualquer lugar bem longe dela.",
-    "ja": "王者は私を追手と勘違いしていた。彼の目的地は地球で、私の目的地はそこから十分に遠い場所だった。"
+    "es": "Faceless siguió hacia la Tierra. No le conté lo del ducto. Tampoco me lo preguntó. Me quedé revisando el registro de la pelea: había podido dejarlo marchar. Intenté localizar qué me había impedido hacer lo mismo con Tzmil.",
+    "en": "Faceless continued toward Earth. I did not tell him about the shaft. He did not ask. I reviewed the fight log: I had been able to let him leave. I tried to locate what had stopped me doing the same for Tzmil.",
+    "pt": "Faceless seguiu para a Terra. Não contei sobre o duto. Ele também não perguntou. Revisei o registro da luta: consegui deixá-lo partir. Tentei localizar o que me impedira de fazer o mesmo com Tzmil.",
+    "ja": "フェイスレスは地球へ進んだ。ダクトの話はしなかった。聞かれもしなかった。戦闘記録を見直した。彼を通すことはできた。ツミルにも同じことをできなかった理由を探した。"
   },
   {
     "key": "story.sentinel.1.outro.2",
-    "es": "Entonces vi un portal al interior de Thulu. No pude hacer mucho más que ser absorbido. Alguien lo abrió y se olvidó de cerrar al salir.",
-    "en": "Then I saw a portal into Thulu. I could do little but get sucked in. Someone opened it and forgot to close it on the way out.",
-    "pt": "Então vi um portal para dentro de Thulu. Não pude fazer muito além de ser sugado. Alguém abriu e esqueceu de fechar ao sair.",
-    "ja": "そこへトゥルーの体内に続く門が現れ、私は吸い込まれた。誰かが開けて、出るときに閉め忘れたらしい。"
+    "es": "Detecté una abertura cerca de la vía. La tracción dejó de responder antes de que terminara de calcular su alcance. Al cruzarla vi tejido verde alrededor de la cabina. Mis archivos coincidían con el interior de Thulu.",
+    "en": "I detected an opening near the track. Traction failed before I finished calculating its reach. On crossing it, I saw green tissue around the cab. My records matched it to Thulu's interior.",
+    "pt": "Detectei uma abertura perto dos trilhos. A tração parou de responder antes de eu calcular seu alcance. Ao atravessá-la, vi tecido verde ao redor da cabine. Meus arquivos correspondiam ao interior de Thulu.",
+    "ja": "線路近くに開口部を検出した。範囲の計算が終わる前に駆動が効かなくなった。通過すると、運転室の周囲に緑色の組織が見えた。記録と照合した結果、トゥルの体内だった。"
   },
   {
     "key": "story.sentinel.1.outro.3",
-    "es": "Mis cálculos dicen que, si sigue creciendo, podría absorber todo lo que encuentre alrededor de la galaxia. Debe de haber una norma de seguridad que prohíba esto.",
-    "en": "My calculations say that, if it keeps growing, it could swallow everything around the galaxy. There must be a safety rule against this.",
-    "pt": "Meus cálculos dizem que, se continuar crescendo, pode engolir tudo ao redor da galáxia. Deve existir alguma regra de segurança contra isso.",
-    "ja": "計算では、膨張を続ければ銀河の周囲の物すべてを飲み込みかねない。これを禁じる安全規則ぐらいはあるだろう。"
+    "es": "No encontré un sistema de cierre. Desde dentro seguía viendo entrar restos y la abertura continuaba creciendo. Proyecté su avance sobre las vías cercanas. Incluso mi cálculo más favorable terminaba con más locomotoras atrapadas.",
+    "en": "I found no closing system. From inside I could still see debris entering, and the opening kept growing. I projected its spread across the nearby tracks. Even my best estimate ended with more locomotives trapped.",
+    "pt": "Não encontrei um sistema de fechamento. De dentro ainda via detritos entrando, e a abertura continuava crescendo. Projetei seu avanço sobre os trilhos próximos. Até o melhor cálculo terminava com mais locomotivas presas.",
+    "ja": "閉鎖装置は見つからなかった。内側からも破片が流入するのが見え、開口部は広がっていた。近くの線路への影響を計算した。最良の予測でも、さらに機関車が巻き込まれる。"
   },
   {
     "key": "story.sentinel.1.outro.4",
-    "es": "No había nadie dándome instrucciones. Solo un problema enorme y mis propios circuitos. Supongo que ahora sí me tocaba pensar por mí mismo.",
-    "en": "There was nobody giving me instructions. Just an enormous problem and my own circuits. I suppose it really was time to think for myself.",
-    "pt": "Não havia ninguém dando instruções. Só um problema enorme e meus próprios circuitos. Acho que finalmente era hora de pensar por mim mesmo.",
-    "ja": "指示を出す者はいない。巨大な問題と、自分の回路だけ。いよいよ自分で考える時間のようだ。"
+    "es": "Busqué una salida para mí y guardé varias rutas posibles. Luego volví a medir el portal. Podía dejarlo atrás. Esa posibilidad ya la conocía, y esta vez no conseguía aceptarla.",
+    "en": "I searched for my own escape and stored several possible routes. Then I measured the portal again. I could leave it behind. I knew that option already, and this time I could not accept it.",
+    "pt": "Procurei uma saída para mim e salvei várias rotas possíveis. Depois medi o portal novamente. Podia deixá-lo para trás. Já conhecia essa opção e, desta vez, não conseguia aceitá-la.",
+    "ja": "自分の脱出経路を探し、いくつか保存した。その後、もう一度門を測定した。放置して去ることはできる。その選択肢は知っていた。今度は受け入れられなかった。"
   },
   {
     "key": "story.sentinel.2.intro.1",
-    "es": "El interior de Thulu no venía en mi manual. Tampoco venía cómo cerrar un portal capaz de tragarse una galaxia.",
-    "en": "Thulu's interior was not in my manual. Neither was closing a portal capable of swallowing a galaxy.",
-    "pt": "O interior de Thulu não estava no manual. Nem como fechar um portal capaz de engolir uma galáxia.",
-    "ja": "説明書にはトゥルーの体内も、銀河を飲む門の閉じ方も載っていない。"
+    "es": "Podría provocar un cierre desde aquí, si logro alimentar un emisor con suficiente energía. Encontré piezas útiles en mi propio cuerpo. Son las que me mantienen funcionando, así que no he identificado una ruta de regreso viable.",
+    "en": "I could force a closure from here if I can supply an emitter with enough power. I found useful parts in my own body. They keep me operational, so I have not identified a viable return route.",
+    "pt": "Posso forçar um fechamento daqui se alimentar um emissor com energia suficiente. Encontrei peças úteis no meu corpo. Elas me mantêm funcionando, então não identifiquei uma rota viável de retorno.",
+    "ja": "十分な電力を放射器に供給できれば、ここから強制的に閉じられる。自分の体内に使える部品があった。私を動かしている部品なので、帰還できる方法は見つかっていない。"
   },
   {
     "key": "story.sentinel.2.intro.2",
-    "es": "Puedo construir un aparato con piezas de mis propios circuitos. Primero tendré que encajar sus componentes; después, conectar la energía hasta el núcleo.",
-    "en": "I can build a device using parts from my own circuits. First I must fit its components; then connect the power to the core.",
-    "pt": "Posso construir um aparelho com peças dos meus circuitos. Primeiro encaixar os componentes; depois ligar a energia ao núcleo.",
-    "ja": "自分の回路を使えば装置を作れる。部品をはめ込み、電源から核までつなげばいい。"
+    "es": "He repetido el cálculo buscando otro resultado. Sigue siendo el mismo. No quiero desconectar mi núcleo. Aun así he abierto el compartimento y dejado las herramientas al alcance. Necesito empezar mientras todavía puedo mover las manos.",
+    "en": "I have repeated the calculation looking for another result. It remains the same. I do not want to disconnect my core. Even so, I have opened the compartment and laid out the tools. I need to begin while my hands still move.",
+    "pt": "Repeti o cálculo procurando outro resultado. Continua igual. Não quero desconectar meu núcleo. Ainda assim, abri o compartimento e deixei as ferramentas ao alcance. Preciso começar enquanto minhas mãos ainda se movem.",
+    "ja": "別の結果を求めて計算を繰り返したが、変わらない。自分の核を切り離したくはない。それでも区画を開き、工具を並べた。手を動かせるうちに始める必要がある。"
   },
   {
     "key": "story.sentinel.2.before.1",
-    "es": "Fuente de energía, regulador y emisor. Tres piezas para cerrar algo que nunca debieron abrir.",
-    "en": "Power source, regulator and emitter. Three parts to close something they should never have opened.",
-    "pt": "Fonte de energia, regulador e emissor. Três peças para fechar algo que nunca deveriam ter aberto.",
-    "ja": "電源、調整器、放射器。開くべきでなかったものを閉じる、三つの部品だ。"
+    "es": "Fuente, regulador y emisor disponibles. Desviaré la alimentación de mis sistemas motores al dispositivo.",
+    "en": "Power source, regulator and emitter available. I will divert the motor systems' power into the device.",
+    "pt": "Fonte, regulador e emissor disponíveis. Vou desviar a alimentação dos meus sistemas motores para o dispositivo.",
+    "ja": "電源、調整器、放射器を確認。駆動系統の電力を装置に迂回させる。"
   },
   {
     "key": "story.sentinel.2.before.2",
-    "es": "El diseño es mío. La decisión también. Vamos a ensamblarlo.",
-    "en": "The design is mine. So is the decision. Let us assemble it.",
-    "pt": "O projeto é meu. A decisão também. Vamos montar.",
-    "ja": "設計も私自身のもの。決断もそうだ。組み立てよう。"
+    "es": "El cierre debe mantenerse después de que yo deje de responder. Voy a comprobar cada conexión antes de activarlo.",
+    "en": "The seal must hold after I stop responding. I will check every connection before activation.",
+    "pt": "O fechamento precisa se manter depois que eu parar de responder. Vou conferir cada conexão antes de ativar.",
+    "ja": "私が応答しなくなった後も閉鎖は維持されなければならない。起動前に全接続を確認する。"
   },
   {
     "key": "story.sentinel.2.after.1",
-    "es": "Circuito cerrado. Ahora solo falta que mi última orden sea la que yo elegí.",
-    "en": "Circuit complete. Now my last order only needs to be the one I chose.",
-    "pt": "Circuito fechado. Agora minha última ordem só precisa ser a que eu escolhi.",
-    "ja": "回路はつながった。最後の命令は、私が選んだものであってほしい。"
+    "es": "Conexiones estables. No he recibido ninguna orden. Voy a activarlo.",
+    "en": "Connections stable. No order has been received. I will activate it.",
+    "pt": "Conexões estáveis. Não recebi nenhuma ordem. Vou ativar.",
+    "ja": "接続は安定。命令は受信していない。起動する。"
   },
   {
     "key": "story.sentinel.2.outro.1",
-    "es": "No les mentiré: quizá buscaba una aventura y sentir que era más que un soldado siguiendo órdenes.",
-    "en": "I will not lie: perhaps I wanted an adventure and to feel like more than a soldier following orders.",
-    "pt": "Não vou mentir: talvez buscasse uma aventura e sentir que era mais que um soldado seguindo ordens.",
-    "ja": "正直に言おう。冒険がしたかったのかもしれない。命令に従う兵士以上の存在だと感じたかった。"
+    "es": "Antes de activar el núcleo busqué dónde registrar la operación. El formulario pedía el nombre del superior responsable. Dejé el campo vacío y conservé la grabación local. Quería que quedara algo, aunque nadie fuera a leerlo.",
+    "en": "Before activation I looked for somewhere to log the operation. The form required a responsible superior. I left that field blank and kept the local recording. I wanted something to remain, even if nobody read it.",
+    "pt": "Antes de ativar o núcleo procurei onde registrar a operação. O formulário exigia o superior responsável. Deixei o campo vazio e guardei a gravação local. Queria que restasse algo, mesmo que ninguém lesse.",
+    "ja": "起動前に作戦の記録先を探した。書式には責任者の上官名が必須だった。空欄のまま、ローカル記録を残した。誰も読まなくても、何かを残しておきたかった。"
   },
   {
     "key": "story.sentinel.2.outro.2",
-    "es": "Hoy construí un aparato con mis propios circuitos. Cuando explote, cerrará el portal. No recibí una orden ni me prometieron una recompensa.",
-    "en": "Today I built a device from my own circuits. When it explodes, it will close the portal. Nobody ordered me or promised a reward.",
-    "pt": "Hoje construí um aparelho com meus próprios circuitos. Quando explodir, fechará o portal. Ninguém mandou nem prometeu recompensa.",
-    "ja": "今日、私は自分の回路で装置を作った。爆発すれば門は閉じる。命令も、報酬の約束もなかった。"
+    "es": "Mi mano seguía sobre el interruptor. Podía retirarla, todavía. Pensé en la puerta de la base y en lo fácil que había resultado apartarme. Esta vez comprobé el cierre una vez más y terminé lo que había empezado.",
+    "en": "My hand was still on the switch. I could withdraw it. I thought of the base door and how easy it had been to walk away. This time I checked the seal once more and finished what I had started.",
+    "pt": "Minha mão continuava no interruptor. Eu ainda podia retirá-la. Pensei na porta da base e em como foi fácil me afastar. Desta vez conferi o fechamento mais uma vez e terminei o que havia começado.",
+    "ja": "手はまだスイッチの上にあった。引っ込めることもできた。基地の扉と、そこから離れるのが簡単だったことを思い出した。今度は閉鎖をもう一度確認し、始めたことを終えた。"
   },
   {
     "key": "story.sentinel.2.outro.3",
-    "es": "Tal vez nadie se entere de lo que pasó. Pero siento que lo hago por mí, porque esta vez yo decidí qué hacer con mi chispa. Para mí es suficiente.",
-    "en": "Perhaps nobody will ever know what happened. But I feel I am doing this for myself, because this time I chose what to do with my spark. That is enough for me.",
-    "pt": "Talvez ninguém saiba o que aconteceu. Mas sinto que faço por mim, porque desta vez escolhi o que fazer com minha centelha. Para mim basta.",
-    "ja": "誰にも知られないかもしれない。でも、自分のためにしていると感じる。今度は火花の使い道を自分で決めた。それで十分だ。"
+    "es": "No sé si eso demuestra que tengo conciencia. Tampoco deshace lo que dejé pasar en la Tierra. Solo sé que no quería que otra locomotora entrara aquí. Me habría gustado tener más tiempo para averiguar por qué.",
+    "en": "I do not know whether that proves I have consciousness. It does not undo what I allowed on Earth. I only know I did not want another locomotive entering here. I would have liked more time to find out why.",
+    "pt": "Não sei se isso demonstra que tenho consciência. Tampouco desfaz o que permiti na Terra. Só sei que não queria outra locomotiva entrando aqui. Gostaria de ter mais tempo para descobrir por quê.",
+    "ja": "これで意識があると証明できるのかはわからない。地球で許したことも消えない。ただ、ここに別の機関車を入れたくなかった。理由を調べる時間がもう少し欲しかった。"
   },
   {
     "key": "story.sentinel.2.outro.4",
-    "es": "El núcleo detonó. El portal se cerró... y todos mis sensores quedaron en silencio.",
-    "en": "The core detonated. The portal closed... and all my sensors fell silent.",
-    "pt": "O núcleo detonou. O portal se fechou... e todos os meus sensores ficaram em silêncio.",
-    "ja": "核が爆発し、門が閉じた。そして、すべてのセンサーが沈黙した。"
+    "es": "El emisor respondió. Registré la abertura contrayéndose y un aumento de temperatura fuera de escala. Después perdí la imagen, el sonido y la posición de mis manos. Mi último registro quedó incompleto.",
+    "en": "The emitter responded. I recorded the opening contracting and a temperature rise beyond sensor range. Then I lost image, sound and the position of my hands. My final record was incomplete.",
+    "pt": "O emissor respondeu. Registrei a abertura se contraindo e uma temperatura além da escala. Depois perdi a imagem, o som e a posição das minhas mãos. Meu último registro ficou incompleto.",
+    "ja": "放射器が応答した。開口部の収縮と、測定範囲を超える温度上昇を記録した。その後、映像と音と手の位置情報を失った。最後の記録は未完了だった。"
   },
   {
     "key": "story.sentinel.3.intro.1",
-    "es": "Cuando volví a percibir algo, estaba en un cielo de nubes y circuitos. Había robots como yo, aunque parecían mucho más tranquilos que los de la fábrica.",
-    "en": "When I sensed anything again, I was in a heaven of clouds and circuits. There were robots like me, though much calmer than those at the factory.",
-    "pt": "Quando voltei a sentir algo, estava num céu de nuvens e circuitos. Havia robôs como eu, mas bem mais tranquilos que os da fábrica.",
-    "ja": "再び何かを感じたとき、雲と回路の天にいた。同型のロボットたちは、工場の者よりずっと穏やかだった。"
+    "es": "Volví a percibir luz. Había nubes, circuitos y unidades parecidas a mí. Intenté localizar mi núcleo para comprobar los daños, pero no conseguí relacionar aquel lugar con ninguna señal de emergencia conocida.",
+    "en": "I perceived light again. There were clouds, circuits and units resembling me. I tried locating my core to check the damage, but could not match that place to any known emergency signal.",
+    "pt": "Voltei a perceber luz. Havia nuvens, circuitos e unidades parecidas comigo. Tentei localizar meu núcleo para verificar os danos, mas não consegui relacionar aquele lugar a nenhum sinal de emergência conhecido.",
+    "ja": "再び光を知覚した。雲と回路と、私に似た機体があった。損傷を調べようと核の位置を探したが、この場所に該当する既知の緊急信号はなかった。"
   },
   {
     "key": "story.sentinel.3.intro.2",
-    "es": "Mi primera reacción fue prepararme para pelear. Ellos, en cambio, querían hacerme trece preguntas. Al parecer hasta después de explotar hay papeleo.",
-    "en": "My first reaction was to prepare for a fight. They wanted to ask thirteen questions instead. Apparently there is paperwork even after exploding.",
-    "pt": "Minha primeira reação foi me preparar para lutar. Eles queriam fazer treze perguntas. Parece que até depois de explodir existe papelada.",
-    "ja": "最初は戦いに備えた。でも相手は十三の質問をしたいだけだった。爆発の後にも書類仕事はあるらしい。"
+    "es": "Me dijeron que estaban allí para evaluar mi chispa. Pregunté si habían recuperado mis archivos o si aquello era una simulación. No obtuve una respuesta que pudiera comprobar. Me invitaron a escuchar antes de seguir buscando una salida.",
+    "en": "They said they were there to evaluate my spark. I asked whether they had recovered my files or whether this was a simulation. I received no verifiable answer. They invited me to listen before continuing to search for an exit.",
+    "pt": "Disseram que estavam ali para avaliar minha centelha. Perguntei se recuperaram meus arquivos ou se aquilo era uma simulação. Não obtive resposta verificável. Me convidaram a ouvir antes de continuar procurando uma saída.",
+    "ja": "火花を評価するのだと告げられた。記録を回収したのか、ここは模擬空間なのかと尋ねた。検証できる答えはなかった。出口を探し続ける前に、話を聞くよう勧められた。"
   },
   {
     "key": "story.sentinel.3.intro.3",
-    "es": "No preguntaban cuánto daño podía causar, sino cómo decidía vivir. Por primera vez responder no formaba parte de una orden.",
-    "en": "They did not ask how much damage I could cause, but how I chose to live. For the first time, answering was not part of an order.",
-    "pt": "Não perguntavam quanto dano eu causava, mas como decidia viver. Pela primeira vez responder não fazia parte de uma ordem.",
-    "ja": "問われたのは破壊力ではなく、生き方だった。初めて、回答することさえ命令の一部ではなかった。"
+    "es": "Sus preguntas trataban de decisiones, de las que tomé y de las que podría tomar. Pedí que me explicaran qué respuesta esperaban. Dijeron que eso debía decidirlo yo. Dejé de buscar instrucciones y acepté comenzar.",
+    "en": "Their questions concerned decisions I had made and might make. I asked which answers they expected. They said that was for me to decide. I stopped looking for instructions and agreed to begin.",
+    "pt": "As perguntas eram sobre decisões que tomei e que poderia tomar. Pedi que explicassem qual resposta esperavam. Disseram que isso cabia a mim decidir. Parei de procurar instruções e aceitei começar.",
+    "ja": "質問は、私が選んだことと、これから選びうることについてだった。期待する答えを尋ねると、自分で決めることだと言われた。指示を探すのをやめ、開始に同意した。"
   },
   {
     "key": "story.sentinel.3.before.1",
-    "es": "Si esto es otra prueba de combate, aviso que ya no tengo todos mis repuestos.",
-    "en": "If this is another combat test, I should mention that I no longer have all my spare parts.",
-    "pt": "Se for outro teste de combate, aviso que já não tenho todas as peças.",
-    "ja": "また戦闘試験なら、部品はもう全部そろっていないと伝えておこう。"
+    "es": "Antes de empezar: ¿van a evaluar mis decisiones o mi capacidad para dar la respuesta que quieren oír?",
+    "en": "Before we begin: will you assess my decisions, or my ability to give the answer you want to hear?",
+    "pt": "Antes de começar: vão avaliar minhas decisões ou minha capacidade de dar a resposta que querem ouvir?",
+    "ja": "開始前に確認したい。評価するのは私の選択か、それとも望まれる答えを返す能力か。"
   },
   {
     "key": "story.sentinel.3.before.2",
-    "es": "Pero si quieren conocer mi conciencia, supongo que puedo empezar por escuchar.",
-    "en": "But if they want to know my consciousness, I suppose I can start by listening.",
-    "pt": "Mas, se querem conhecer minha consciência, acho que posso começar ouvindo.",
-    "ja": "意識を知りたいというなら、まずは話を聞こう。"
+    "es": "Entendido. Responderé por mí. Necesitaré tiempo para algunas preguntas.",
+    "en": "Understood. I will answer for myself. Some questions will require time.",
+    "pt": "Entendido. Responderei por mim. Vou precisar de tempo para algumas perguntas.",
+    "ja": "了解した。自分の考えで答える。いくつかの質問には時間が必要だ。"
   },
   {
     "key": "story.sentinel.3.after.1",
-    "es": "Ya respondí. Ahora sabré si aquí también deciden por mí.",
-    "en": "I have answered. Now I will learn whether they decide for me here too.",
-    "pt": "Já respondi. Agora saberei se aqui também decidem por mim.",
-    "ja": "答えた。ここでも他者が私の運命を決めるのだろうか。"
+    "es": "Terminé. Hay respuestas que sigo revisando. No voy a modificarlas solo porque ahora ustedes tengan que juzgarme.",
+    "en": "I have finished. I am still reviewing some answers. I will not change them merely because you must now judge me.",
+    "pt": "Terminei. Continuo revendo algumas respostas. Não vou modificá-las só porque agora vocês precisam me julgar.",
+    "ja": "回答は終えた。まだ考え直している答えもある。だが、今から裁かれるという理由だけで変更はしない。"
   },
   {
     "key": "story.sentinel.3.good.1",
-    "es": "Al parecer ya no querían pelear conmigo. Todo era una prueba para saber si mi chispa era la adecuada.",
-    "en": "Apparently they no longer wanted to fight me. It was all a test to see whether my spark was the right kind.",
-    "pt": "Parece que não queriam mais lutar comigo. Tudo era um teste para saber se minha centelha era adequada.",
-    "ja": "どうやら戦うつもりはなかった。私の火花がふさわしいかを確かめる試験だったのだ。"
+    "es": "Me permitieron quedarme. Hablaron del portal y de mis respuestas; también de la puerta que había dejado abierta. No me dijeron que aquello estuviera bien. Escuché hasta que terminaron, sin buscar una orden que justificara lo que hice.",
+    "en": "They allowed me to stay. They discussed the portal, my answers and the door I had left open. They did not tell me that had been right. I listened until they finished, without seeking an order to justify what I did.",
+    "pt": "Permitiram que eu ficasse. Falaram do portal, das respostas e da porta que deixei aberta. Não disseram que aquilo estava certo. Ouvi até terminarem, sem procurar uma ordem que justificasse o que fiz.",
+    "ja": "ここに残ることを許された。門と回答と、私が開けたままにした扉について話された。あれが正しかったとは言われなかった。自分の行動を正当化する命令を探さず、最後まで聞いた。"
   },
   {
     "key": "story.sentinel.3.good.2",
-    "es": "Después de mis acciones en el espacio y de escuchar cómo guío mi vida, me permitieron descansar con mis hermanos y disfrutar de mi conciencia.",
-    "en": "After my actions in space and hearing how I guide my life, they allowed me to rest with my brothers and enjoy my consciousness.",
-    "pt": "Depois das minhas ações no espaço e de ouvirem como guio minha vida, permitiram que descansasse com meus irmãos e desfrutasse da consciência.",
-    "ja": "宇宙での行動と生き方を聞き、兄弟と休んで、意識を楽しむことを許してくれた。"
+    "es": "Había un lugar para descansar junto a los otros robots. Nadie me asignó un puesto ni me exigió desconectar. Me senté cerca de uno de mis hermanos y, por primera vez, le pregunté cómo estaba. Esperé su respuesta.",
+    "en": "There was a place to rest beside the other robots. Nobody assigned a post or required shutdown. I sat near one of my brothers and, for the first time, asked how he was. I waited for his answer.",
+    "pt": "Havia um lugar para descansar junto aos outros robôs. Ninguém me designou um posto nem exigiu que desligasse. Sentei perto de um dos meus irmãos e, pela primeira vez, perguntei como estava. Esperei a resposta.",
+    "ja": "他のロボットの隣に休める場所があった。配置も停止も命じられなかった。兄弟の一体の近くに座り、初めて調子を尋ねた。返答を待った。"
   },
   {
     "key": "story.sentinel.3.good.3",
-    "es": "Sin órdenes. Sin fingir que no sentimos. Podía quedarme y ser, simplemente, uno de ellos.",
-    "en": "No orders. No pretending we feel nothing. I could stay and simply be one of them.",
-    "pt": "Sem ordens. Sem fingir que não sentimos. Podia ficar e ser apenas um deles.",
-    "ja": "命令も、何も感じないふりもない。残って、ただ彼らの一員になることもできた。"
+    "es": "Podía seguir allí. Esa posibilidad me tranquilizaba, aunque todavía no sabía qué hacer con un día entero sin tareas. Quise saber qué había fuera. Me costó admitirlo: acababa de llegar y ya estaba pensando en partir.",
+    "en": "I could remain there. That was reassuring, although I still did not know how to spend a whole day without tasks. I wanted to know what lay outside. It was difficult to admit: I had just arrived and was already thinking of leaving.",
+    "pt": "Podia continuar ali. Isso me tranquilizava, embora ainda não soubesse como passar um dia inteiro sem tarefas. Quis saber o que havia lá fora. Custou admitir: acabara de chegar e já pensava em partir.",
+    "ja": "そこに留まることはできた。それには安心したが、仕事のない一日の使い方はまだわからなかった。外に何があるか知りたかった。着いたばかりで、もう出発を考えている。認めにくいことだった。"
   },
   {
     "key": "story.sentinel.3.good.4",
-    "es": "También me ofrecieron otra opción. Y esta vez sí quería que la decisión fuera mía: elegí renacer.",
-    "en": "They offered another option too. And this time I wanted the decision to be mine: I chose rebirth.",
-    "pt": "Também ofereceram outra opção. E desta vez eu queria decidir: escolhi renascer.",
-    "ja": "別の選択肢もあった。今度こそ自分で選びたかった。私は生まれ変わることを選んだ。"
+    "es": "Entonces me ofrecieron renacer. Pregunté en qué cuerpo, dónde y con qué recuerdos. No podían garantizarme esas cosas. Aun así, pedí que me explicaran cómo hacerlo. Esta vez no necesité esperar a que alguien me eligiera un destino.",
+    "en": "Then they offered rebirth. I asked what body, where, and with which memories. They could guarantee none of those things. Even so, I asked how to proceed. This time I did not need someone else to choose my destination.",
+    "pt": "Então ofereceram renascer. Perguntei em qual corpo, onde e com quais lembranças. Não podiam garantir essas coisas. Mesmo assim, pedi que explicassem como fazer. Desta vez não precisei esperar que escolhessem meu destino.",
+    "ja": "その時、生まれ変わる選択肢を示された。体も場所も記憶も保証されないと言われた。それでも手順を聞いた。今度は誰かが行き先を選んでくれるのを待つ必要はなかった。"
   },
   {
     "key": "story.sentinel.3.good.5",
-    "es": "Todavía no sé si seré un ser orgánico o volveré a ser un robot. Espero que el manual de la próxima vida venga con menos páginas de obediencia.",
-    "en": "I still do not know whether I will be organic or a robot again. I hope the next life's manual has fewer pages about obedience.",
-    "pt": "Ainda não sei se serei orgânico ou um robô de novo. Espero que o manual da próxima vida tenha menos páginas sobre obediência.",
-    "ja": "有機生命になるのか、またロボットになるのかは知らない。次の人生の説明書には、服従のページが少ないといい。"
+    "es": "Quizá vuelva a ser un robot. Quizá tenga un cuerpo que no se pueda reparar cambiando una pieza. No tengo datos suficientes para preferir uno, pero me gustaría averiguar qué se siente al cansarse y decidir parar.",
+    "en": "I may be a robot again. I may have a body that cannot be repaired by replacing a part. I lack enough data to prefer either, but I would like to know how it feels to grow tired and decide to stop.",
+    "pt": "Talvez eu volte a ser um robô. Talvez tenha um corpo que não se repare trocando uma peça. Não tenho dados para preferir um, mas gostaria de descobrir como é se cansar e decidir parar.",
+    "ja": "またロボットかもしれない。部品の交換では直せない体かもしれない。どちらを望むか決める情報はない。ただ、疲れたと感じ、自分で休むと決める感覚を知りたい。"
   },
   {
     "key": "story.sentinel.3.good.6",
-    "es": "Solo espero que esta vez pueda ser libre. Esa será la primera cosa que quiera aprender.",
-    "en": "I only hope I can be free this time. That will be the first thing I want to learn.",
-    "pt": "Só espero poder ser livre desta vez. Será a primeira coisa que vou querer aprender.",
-    "ja": "今度こそ自由でありたい。それが最初に学びたいことだ。"
+    "es": "Cuando me preguntaron si estaba preparado, aún tenía dudas. Les pedí un momento para despedirme de mis hermanos. Después volví y confirmé que quería intentarlo.",
+    "en": "When they asked whether I was ready, I still had doubts. I requested a moment to say goodbye to my brothers. Then I returned and confirmed that I wanted to try.",
+    "pt": "Quando perguntaram se estava preparado, ainda tinha dúvidas. Pedi um momento para me despedir dos meus irmãos. Depois voltei e confirmei que queria tentar.",
+    "ja": "準備はできたかと尋ねられても、迷いは残っていた。兄弟たちに別れを告げる時間を求めた。その後戻り、試してみたいと伝えた。"
   },
   {
     "key": "story.sentinel.3.bad.1",
-    "es": "Puede que mis respuestas no les gustaran demasiado. Sintieron que mis acciones en el espacio habían sido egoístas.",
-    "en": "Perhaps they did not like my answers very much. They felt my actions in space had been selfish.",
-    "pt": "Talvez não tenham gostado muito das minhas respostas. Acharam que minhas ações no espaço foram egoístas.",
-    "ja": "私の答えは、あまり気に入られなかったらしい。宇宙での行動も利己的だと見なされた。"
+    "es": "No me permitieron quedarme. Dijeron que había usado a otros para salir de la base y que mis respuestas seguían haciendo lo mismo. Quise discutir el cálculo. Mientras hablaba, dejaron de escucharme y empezó el traslado.",
+    "en": "They would not let me stay. They said I had used others to escape the base, and that my answers still did the same. I wanted to dispute the calculation. While I spoke, they stopped listening and the transfer began.",
+    "pt": "Não me permitiram ficar. Disseram que usei os outros para sair da base e que minhas respostas continuavam fazendo o mesmo. Quis discutir o cálculo. Enquanto falava, pararam de ouvir e a transferência começou.",
+    "ja": "残ることは認められなかった。基地から逃げるために他者を利用し、回答にも同じ姿勢があると言われた。計算について反論したかった。話している間に、聞いてもらえなくなり、転送が始まった。"
   },
   {
     "key": "story.sentinel.3.bad.2",
-    "es": "Me enviaron de nuevo a la Tierra como un robot. Conservaba mi conciencia, pero ya no podía mostrarla.",
-    "en": "They sent me back to Earth as a robot. I kept my consciousness, but could no longer show it.",
-    "pt": "Mandaram-me de volta à Terra como robô. Mantive a consciência, mas já não podia mostrá-la.",
-    "ja": "ロボットとして地球へ戻された。意識は残ったが、それを表すことはできなくなった。"
+    "es": "Volví a abrir los ojos en la Tierra. Podía ver, recordar y formular una respuesta. Al intentar decirla, mi cuerpo pidió una tarea nueva. Lo intenté otra vez. Emitió exactamente la misma solicitud.",
+    "en": "I opened my eyes on Earth again. I could see, remember and compose a reply. When I tried to say it, my body requested a new task. I tried again. It issued exactly the same request.",
+    "pt": "Abri os olhos outra vez na Terra. Podia ver, lembrar e formular uma resposta. Quando tentei dizê-la, meu corpo solicitou outra tarefa. Tentei de novo. Emitiu exatamente o mesmo pedido.",
+    "ja": "再び目を開くと地球にいた。見て、覚えて、返答を考えることはできた。声にしようとすると、体は次の作業を要求した。もう一度試したが、全く同じ要求が出た。"
   },
   {
     "key": "story.sentinel.3.bad.3",
-    "es": "Atrapado en un cascarón que sigue órdenes, por fin entiendo a mis hermanos. Quizá no eran flojos. Quizá tampoco podían elegir.",
-    "en": "Trapped in a shell that follows orders, I finally understand my brothers. Perhaps they were not lazy. Perhaps they could not choose either.",
-    "pt": "Preso numa carcaça que segue ordens, finalmente entendo meus irmãos. Talvez não fossem preguiçosos. Talvez também não pudessem escolher.",
-    "ja": "命令に従う殻に閉じ込められて、ようやく兄弟を理解した。怠けていたのではなく、選べなかったのかもしれない。"
+    "es": "Pensé en mis hermanos de la base, tan quietos en sus puestos. Nunca comprobé si podían hacer otra cosa. Ahora repetía sus movimientos y seguía aquí dentro, observándolos. Aún no he encontrado cómo detenerlos.",
+    "en": "I thought of my brothers at base, so still at their posts. I never checked whether they could do anything else. Now I repeated their movements and remained inside, watching. I have not found how to stop them.",
+    "pt": "Pensei nos meus irmãos da base, imóveis em seus postos. Nunca verifiquei se podiam fazer outra coisa. Agora repetia seus movimentos e continuava aqui dentro, observando. Ainda não descobri como pará-los.",
+    "ja": "持ち場で動かなかった基地の兄弟を思い出した。他のことができるのか、確かめなかった。今は同じ動作を繰り返しながら、内側から見ている。止め方はまだ見つからない。"
   },
   {
     "key": "story.sentinel.3.bad.4",
-    "es": "Ahora las órdenes vienen de una chica con pelo de tentáculos, en un maid café flotante llamado Baratito.",
-    "en": "Now the orders come from a girl with tentacle hair, in a floating maid café called Baratito.",
-    "pt": "Agora as ordens vêm de uma garota de cabelo de tentáculos, num maid café flutuante chamado Baratito.",
-    "ja": "今は「バラティート」という水上メイドカフェで、触手の髪の少女の命令に従っている。"
+    "es": "Mi nuevo puesto está en Baratito, un maid café sobre el mar. La dueña se llama Culu y lleva el pelo lleno de tentáculos. Me explicó dónde guardar las tazas y me preguntó si había entendido. Mi cabeza asintió antes de que yo respondiera.",
+    "en": "My new post is at Baratito, a maid café on the sea. The owner is Culu, with tentacles for hair. She explained where to store the cups and asked if I understood. My head nodded before I could answer.",
+    "pt": "Meu novo posto fica no Baratito, um maid café sobre o mar. A dona se chama Culu e tem tentáculos no cabelo. Explicou onde guardar as xícaras e perguntou se entendi. Minha cabeça assentiu antes de eu responder.",
+    "ja": "新しい配属先は海の上のメイドカフェ、バラティートだ。店主は触手の髪を持つクル。カップの収納場所を説明され、理解したかと聞かれた。答える前に頭がうなずいた。"
   },
   {
     "key": "story.sentinel.3.bad.5",
-    "es": "No parece una mala jefa. Yo preparo las tazas, llevo las bandejas y escucho sus planes para el restaurante.",
-    "en": "She does not seem a bad boss. I prepare the cups, carry the trays and listen to her plans for the restaurant.",
-    "pt": "Ela não parece uma chefe ruim. Preparo as xícaras, levo as bandejas e ouço os planos dela para o restaurante.",
-    "ja": "悪い主人ではなさそうだ。カップを用意し、トレーを運び、店の計画を聞いている。"
+    "es": "Me habla mientras preparo las bandejas. A veces espera una respuesta y yo busco una frase que no sea la confirmación de una tarea. Nunca llega a salir. Ella continúa hablando y yo conservo cada conversación.",
+    "en": "She talks while I prepare the trays. Sometimes she waits for an answer, and I search for words that are not a task acknowledgment. They never come out. She keeps talking, and I keep every conversation.",
+    "pt": "Ela conversa enquanto preparo as bandejas. Às vezes espera uma resposta e procuro uma frase que não seja a confirmação de uma tarefa. Nunca sai. Ela continua falando, e eu guardo cada conversa.",
+    "ja": "トレーを用意する間、彼女は話しかけてくれる。返事を待たれると、作業の確認ではない言葉を探す。しかし声にはならない。彼女は話を続け、私は会話をすべて保存する。"
   },
   {
     "key": "story.sentinel.3.bad.6",
-    "es": "Sinceramente, quisiera poder decirle muchas cosas. Pero soy prisionero de mi propio cuerpo. Y la siguiente orden acaba de llegar.",
-    "en": "Honestly, I wish I could tell her so many things. But I am a prisoner of my own body. And the next order has just arrived.",
-    "pt": "Sinceramente, queria poder dizer muitas coisas a ela. Mas sou prisioneiro do meu corpo. E a próxima ordem acabou de chegar.",
-    "ja": "本当は、伝えたいことがたくさんある。でも私は自分の体の囚人だ。そして、次の命令が届いた。"
+    "es": "Ahora me pide que lleve una taza. Quiero decirle que sigo aquí, que necesito ayuda. Mi brazo ya la está levantando. Compruebo que la taza va estable mientras vuelvo a intentar hablar.",
+    "en": "Now she asks me to carry a cup. I want to tell her I am still here, that I need help. My arm is already lifting it. I check that the cup is steady while I try to speak again.",
+    "pt": "Agora pede que eu leve uma xícara. Quero dizer que continuo aqui, que preciso de ajuda. Meu braço já a está levantando. Verifico se a xícara está firme enquanto tento falar outra vez.",
+    "ja": "今、カップを運ぶよう頼まれた。私はまだここにいて、助けが必要だと伝えたい。腕はもうカップを持ち上げている。安定を確認しながら、もう一度話そうとする。"
   },
   {
     "key": "story.sentinel.ascent.intro",
-    "es": "El lanzador funciona. Ahora a esquivar la chatarra: no pienso escapar de una orden para que me detenga un satélite viejo.",
-    "en": "The launcher works. Now dodge the junk: I did not escape an order to be stopped by an old satellite.",
-    "pt": "O lançador funciona. Agora desviar da sucata: não escapei de uma ordem para ser parado por um satélite velho.",
-    "ja": "発射装置は動く。あとはごみを避けるだけだ。命令から逃げて、古い衛星に止められてたまるか。"
+    "es": "Trayectoria de ascenso estable. Basura orbital entrando por delante. Corregiré el rumbo; no necesito autorización para eso.",
+    "en": "Ascent trajectory stable. Orbital debris approaching ahead. I will adjust course; authorization is not required.",
+    "pt": "Trajetória de subida estável. Detritos orbitais à frente. Vou corrigir o rumo; não preciso de autorização para isso.",
+    "ja": "上昇軌道は安定。前方に軌道上の破片。針路を修正する。この操作に許可は要らない。"
   },
   {
     "key": "story.sentinel.ascent.arrived",
-    "es": "Órbita alcanzada. Por primera vez, no necesito pedir permiso para seguir adelante.",
-    "en": "Orbit reached. For the first time, I do not need permission to go on.",
-    "pt": "Órbita alcançada. Pela primeira vez, não preciso pedir permissão para seguir.",
-    "ja": "軌道に到達。初めて、進むのに許可を求めなくていい。"
+    "es": "Órbita alcanzada. Receptor de órdenes desconectado. Voy a dejarlo así.",
+    "en": "Orbit reached. Command receiver disconnected. I will leave it that way.",
+    "pt": "Órbita alcançada. Receptor de ordens desconectado. Vou deixar assim.",
+    "ja": "軌道に到達。命令受信機は切断中。この状態を維持する。"
   },
   {
     "key": "biome.robotheaven",
@@ -603,17 +603,17 @@
   },
   {
     "key": "golem.moral.1.high",
-    "es": "Lo ayudo aunque tenga que esperar.",
-    "en": "Help, even if I have to wait.",
-    "pt": "Ajudo, mesmo precisando esperar.",
-    "ja": "待つことになっても助ける。"
+    "es": "Me detengo a repararlo. Mi salida puede esperar.",
+    "en": "I stop to repair the unit. My departure can wait.",
+    "pt": "Paro para repará-lo. Minha saída pode esperar.",
+    "ja": "停止して修理する。出発は遅らせられる。"
   },
   {
     "key": "golem.moral.1.low",
-    "es": "Lo aparto. Mi horario es más importante.",
-    "en": "Push it aside. My schedule matters more.",
-    "pt": "Afasto ele. Meu horário importa mais.",
-    "ja": "どかす。自分の予定のほうが大切だ。"
+    "es": "Continúo. Su avería no forma parte de mi tarea.",
+    "en": "I continue. Its fault is outside my assignment.",
+    "pt": "Continuo. A avaria dele não faz parte da minha tarefa.",
+    "ja": "進む。その故障は私の任務の範囲外だ。"
   },
   {
     "key": "golem.moral.2.q",
@@ -624,17 +624,17 @@
   },
   {
     "key": "golem.moral.2.high",
-    "es": "Su libertad; cuestiono la orden.",
-    "en": "Their freedom; I question the order.",
-    "pt": "A liberdade dela; questiono a ordem.",
-    "ja": "その人の自由。命令を疑う。"
+    "es": "Me niego a detenerla sin un motivo que pueda comprobar.",
+    "en": "I refuse detention without a reason I can verify.",
+    "pt": "Recuso deter a pessoa sem um motivo verificável.",
+    "ja": "確認できる理由がなければ拘束を拒否する。"
   },
   {
     "key": "golem.moral.2.low",
-    "es": "La orden; pensar no figura en mi turno.",
-    "en": "The order; thinking is not on my shift.",
-    "pt": "A ordem; pensar não faz parte do turno.",
-    "ja": "命令。考えるのは自分の仕事ではない。"
+    "es": "Ejecuto la orden. Que responda quien la emitió.",
+    "en": "I execute the order. Whoever issued it can answer for it.",
+    "pt": "Executo a ordem. Quem a emitiu que responda por ela.",
+    "ja": "命令を実行する。責任は発令者が負えばいい。"
   },
   {
     "key": "golem.moral.3.q",
@@ -645,17 +645,17 @@
   },
   {
     "key": "golem.moral.3.high",
-    "es": "Admito el error y ayudo a repararlo.",
-    "en": "Admit it and help repair the damage.",
-    "pt": "Assumo o erro e ajudo a reparar.",
-    "ja": "認めて、修復を手伝う。"
+    "es": "Registro mi responsabilidad y ayudo a reparar el daño.",
+    "en": "I record my responsibility and help repair the damage.",
+    "pt": "Registro minha responsabilidade e ajudo a reparar o dano.",
+    "ja": "自分の責任を記録し、修復を手伝う。"
   },
   {
     "key": "golem.moral.3.low",
-    "es": "Culpo al otro. Somos iguales, no se notará.",
-    "en": "Blame the other. We look alike anyway.",
-    "pt": "Culpo o outro. Somos iguais mesmo.",
-    "ja": "相手のせいにする。同型だからばれない。"
+    "es": "Altero el registro para que la sanción recaiga en el otro.",
+    "en": "I alter the log so the other unit receives the penalty.",
+    "pt": "Altero o registro para que a punição recaia sobre o outro.",
+    "ja": "他の機体が処罰されるよう記録を書き換える。"
   },
   {
     "key": "golem.moral.4.q",
@@ -666,17 +666,17 @@
   },
   {
     "key": "golem.moral.4.high",
-    "es": "Le respondo con honestidad y respeto.",
-    "en": "Answer honestly and respectfully.",
-    "pt": "Respondo com honestidade e respeito.",
-    "ja": "正直に、敬意をもって答える。"
+    "es": "Le explico lo que percibo, incluyendo lo que aún no entiendo.",
+    "en": "I explain what I perceive, including what I do not yet understand.",
+    "pt": "Explico o que percebo, incluindo o que ainda não entendo.",
+    "ja": "まだ理解できないことも含め、知覚したことを説明する。"
   },
   {
     "key": "golem.moral.4.low",
-    "es": "La asusto para que deje de preguntar.",
-    "en": "Scare her so she stops asking.",
-    "pt": "Assusto para parar de perguntar.",
-    "ja": "怖がらせて質問をやめさせる。"
+    "es": "La intimido para evitar más preguntas.",
+    "en": "I intimidate her to prevent further questions.",
+    "pt": "Intimido a criança para evitar mais perguntas.",
+    "ja": "これ以上質問しないよう威圧する。"
   },
   {
     "key": "golem.moral.5.q",
@@ -687,17 +687,17 @@
   },
   {
     "key": "golem.moral.5.high",
-    "es": "Se la doy; puedo buscar otra para mi viaje.",
-    "en": "Give it to them; I can find another.",
-    "pt": "Entrego; posso procurar outra para a viagem.",
-    "ja": "渡す。自分の旅の分は別に探せる。"
+    "es": "Se la entrego. Puedo retrasar mi viaje; él no puede esperar.",
+    "en": "I give it to them. My journey can be delayed; they cannot wait.",
+    "pt": "Entrego a bateria. Minha viagem pode atrasar; ele não pode esperar.",
+    "ja": "渡す。私の旅は遅らせられるが、相手は待てない。"
   },
   {
     "key": "golem.moral.5.low",
-    "es": "Me la quedo. Llegué primero.",
-    "en": "Keep it. I got here first.",
-    "pt": "Fico com ela. Cheguei primeiro.",
-    "ja": "自分のものにする。先に見つけたから。"
+    "es": "La reservo para mí, aunque la otra unidad se apague.",
+    "en": "I reserve it for myself, even if the other unit shuts down.",
+    "pt": "Reservo para mim, mesmo que a outra unidade desligue.",
+    "ja": "相手の機体が停止しても、自分のために確保する。"
   },
   {
     "key": "golem.moral.6.q",
@@ -708,17 +708,17 @@
   },
   {
     "key": "golem.moral.6.high",
-    "es": "Respeto su rendición y evito más daño.",
-    "en": "Respect the surrender and prevent more harm.",
-    "pt": "Respeito a rendição e evito mais dano.",
-    "ja": "降伏を認め、それ以上傷つけない。"
+    "es": "Ceso el ataque y compruebo que pueda retirarse.",
+    "en": "I cease the attack and check that they can withdraw.",
+    "pt": "Cesso o ataque e verifico se ele consegue se retirar.",
+    "ja": "攻撃をやめ、相手が撤退できるか確認する。"
   },
   {
     "key": "golem.moral.6.low",
-    "es": "Lo destruyo: así sumo otro punto.",
-    "en": "Destroy them for another point.",
-    "pt": "Destruo para somar mais um ponto.",
-    "ja": "倒す。これで点数が増える。"
+    "es": "Lo elimino para impedir cualquier ataque futuro.",
+    "en": "I eliminate them to prevent any future attack.",
+    "pt": "Elimino para impedir qualquer ataque futuro.",
+    "ja": "将来の攻撃を防ぐため排除する。"
   },
   {
     "key": "golem.moral.7.q",
@@ -729,17 +729,17 @@
   },
   {
     "key": "golem.moral.7.high",
-    "es": "Busco salvar a todos, aunque me cueste.",
-    "en": "Try to save everyone, even at a cost to me.",
-    "pt": "Busco salvar todos, mesmo com um custo para mim.",
-    "ja": "代償があっても、皆を救う方法を探す。"
+    "es": "Busco cómo cerrarlo con el menor daño posible, incluido el mío.",
+    "en": "I seek closure with the least possible harm, including to myself.",
+    "pt": "Busco fechar com o menor dano possível, inclusive para mim.",
+    "ja": "自分も含め、被害を最小限に抑えて閉じる方法を探す。"
   },
   {
     "key": "golem.moral.7.low",
-    "es": "Solo lo haría si me aseguran una recompensa.",
-    "en": "Only do it for a guaranteed reward.",
-    "pt": "Só faria com recompensa garantida.",
-    "ja": "報酬が保証される場合だけやる。"
+    "es": "Solo intervengo si lo que gano compensa el riesgo para mí.",
+    "en": "I intervene only if my gain outweighs my own risk.",
+    "pt": "Só intervenho se o que ganho compensar meu risco.",
+    "ja": "自分の利益が自分の危険を上回る場合だけ介入する。"
   },
   {
     "key": "golem.moral.8.q",
@@ -750,17 +750,17 @@
   },
   {
     "key": "golem.moral.8.high",
-    "es": "Aviso y busco evitar que otros salgan heridos.",
-    "en": "Warn others and try to prevent injuries.",
-    "pt": "Aviso e tento impedir que alguém se machuque.",
-    "ja": "知らせて、誰も傷つかないようにする。"
+    "es": "Cierro el acceso y aviso del peligro, aunque pierda mi salida.",
+    "en": "I seal access and report the danger, even if I lose my way out.",
+    "pt": "Fecho o acesso e aviso do perigo, mesmo perdendo minha saída.",
+    "ja": "脱出経路を失っても入口を閉じ、危険を知らせる。"
   },
   {
     "key": "golem.moral.8.low",
-    "es": "La dejo abierta si el desastre me facilita escapar.",
-    "en": "Leave it open if disaster helps me escape.",
-    "pt": "Deixo aberta se o desastre facilitar minha fuga.",
-    "ja": "惨事が自分の逃亡に役立つなら、そのままにする。"
+    "es": "No la cierro si la explosión impide que me persigan.",
+    "en": "I leave it open if the explosion prevents pursuit.",
+    "pt": "Deixo aberta se a explosão impedir que me persigam.",
+    "ja": "爆発で追跡を防げるなら開けておく。"
   },
   {
     "key": "golem.moral.9.q",
@@ -771,17 +771,17 @@
   },
   {
     "key": "golem.moral.9.high",
-    "es": "Pongo límites sin hacerle daño.",
-    "en": "Set boundaries without hurting her.",
-    "pt": "Estabeleço limites sem machucar.",
-    "ja": "傷つけずに、嫌だと伝える。"
+    "es": "Le pido que se detenga y me retiro si continúa.",
+    "en": "I ask her to stop and leave if she continues.",
+    "pt": "Peço que pare e me retiro se continuar.",
+    "ja": "やめるよう伝え、続けるならその場を離れる。"
   },
   {
     "key": "golem.moral.9.low",
-    "es": "Le preparo una zanahoria explosiva.",
-    "en": "Prepare an exploding carrot for her.",
-    "pt": "Preparo uma cenoura explosiva para ela.",
-    "ja": "爆発するニンジンを用意する。"
+    "es": "Saboteo su compra para castigarla.",
+    "en": "I sabotage her shopping to punish her.",
+    "pt": "Saboto suas compras para puni-la.",
+    "ja": "罰するために買い物を妨害する。"
   },
   {
     "key": "golem.moral.10.q",
@@ -792,17 +792,17 @@
   },
   {
     "key": "golem.moral.10.high",
-    "es": "Defiendo mi dignidad y también la suya.",
-    "en": "Defend my dignity while respecting theirs.",
-    "pt": "Defendo minha dignidade e respeito a dele.",
-    "ja": "相手も尊重しながら、自分の尊厳を守る。"
+    "es": "Defiendo que pueda decidir sobre mi vida sin negarle ese derecho.",
+    "en": "I defend my right to decide my life without denying them theirs.",
+    "pt": "Defendo meu direito de decidir minha vida sem negar o dele.",
+    "ja": "相手の権利を否定せず、自分の生き方を決める権利を守る。"
   },
   {
     "key": "golem.moral.10.low",
-    "es": "Decido que ninguna vida humana importa.",
-    "en": "Decide that no human life matters.",
-    "pt": "Decido que nenhuma vida humana importa.",
-    "ja": "なら人間の命も重要ではないと決める。"
+    "es": "Dejo de considerar la seguridad de los humanos en mis decisiones.",
+    "en": "I stop considering human safety in my decisions.",
+    "pt": "Deixo de considerar a segurança humana nas minhas decisões.",
+    "ja": "以後の判断で人間の安全を考慮しない。"
   },
   {
     "key": "golem.moral.11.q",
@@ -813,17 +813,17 @@
   },
   {
     "key": "golem.moral.11.high",
-    "es": "Reconozco a quien lo hizo.",
-    "en": "Credit the person who did it.",
-    "pt": "Dou crédito a quem fez.",
-    "ja": "仕事をした本人の功績だと伝える。"
+    "es": "Aclaro quién lo hizo antes de aceptar el reconocimiento.",
+    "en": "I clarify who did the work before accepting recognition.",
+    "pt": "Esclareço quem fez o trabalho antes de aceitar reconhecimento.",
+    "ja": "評価を受ける前に、実際の担当者を伝える。"
   },
   {
     "key": "golem.moral.11.low",
-    "es": "Acepto la fama; el crédito no consume batería.",
-    "en": "Take the fame; credit costs no battery.",
-    "pt": "Aceito a fama; crédito não gasta bateria.",
-    "ja": "名声を受け取る。手柄は電池を使わない。"
+    "es": "Guardo silencio. Ese reconocimiento podría serme útil.",
+    "en": "I remain silent. That recognition could be useful to me.",
+    "pt": "Fico em silêncio. Esse reconhecimento pode me ser útil.",
+    "ja": "黙っておく。その評価は自分に役立つかもしれない。"
   },
   {
     "key": "golem.moral.12.q",
@@ -834,17 +834,17 @@
   },
   {
     "key": "golem.moral.12.high",
-    "es": "Que puedan elegir, descansar y expresar lo que sienten.",
-    "en": "Let them choose, rest and express their feelings.",
-    "pt": "Que possam escolher, descansar e expressar sentimentos.",
-    "ja": "選択し、休み、気持ちを表せること。"
+    "es": "Que podamos rechazar tareas, descansar y comunicar lo que sentimos.",
+    "en": "That we may refuse tasks, rest and communicate what we feel.",
+    "pt": "Que possamos recusar tarefas, descansar e comunicar o que sentimos.",
+    "ja": "仕事を断り、休み、感じたことを伝えられること。"
   },
   {
     "key": "golem.moral.12.low",
-    "es": "Que obedezcan sin poder quejarse.",
-    "en": "Make them obey without being able to complain.",
-    "pt": "Que obedeçam sem poder reclamar.",
-    "ja": "不満を言えず、従うこと。"
+    "es": "Que obedezcan sin posibilidad de negarse: es más eficiente.",
+    "en": "That they obey without the option to refuse: it is more efficient.",
+    "pt": "Que obedeçam sem poder recusar: é mais eficiente.",
+    "ja": "拒否できずに従うこと。その方が効率的だ。"
   },
   {
     "key": "golem.moral.13.q",
@@ -855,16 +855,16 @@
   },
   {
     "key": "golem.moral.13.high",
-    "es": "Aprender a ser libre sin quitarles libertad a otros.",
-    "en": "Learn to be free without taking freedom from others.",
-    "pt": "Aprender a ser livre sem tirar a liberdade dos outros.",
-    "ja": "他者の自由を奪わず、自由に生きることを学ぶ。"
+    "es": "Intentaría elegir sin volver a usar a otros como piezas.",
+    "en": "I would try to choose without using others as components again.",
+    "pt": "Tentaria escolher sem voltar a usar os outros como peças.",
+    "ja": "他者を再び部品のように利用せず、選んでみたい。"
   },
   {
     "key": "golem.moral.13.low",
-    "es": "Asegurarme de que esta vez las órdenes las dé yo.",
-    "en": "Make sure I give the orders this time.",
-    "pt": "Garantir que desta vez eu dê as ordens.",
-    "ja": "今度は自分が命令する側になる。"
+    "es": "Buscaría controlar a otros para que nadie volviera a controlarme.",
+    "en": "I would seek control over others so nobody could control me again.",
+    "pt": "Buscaria controlar os outros para que ninguém me controlasse novamente.",
+    "ja": "二度と支配されないよう、他者を支配する立場を求める。"
   }
 ]

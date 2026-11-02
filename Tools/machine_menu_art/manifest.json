@@ -1,0 +1,11 @@
+{
+  "tool": "built-in image_gen",
+  "outputs": [
+    "Assets\\Resources\\Menu\\hero_giger_cut.png",
+    "Assets\\Resources\\Menu\\hero_crochtrain_cut.png"
+  ],
+  "prompts": {
+    "giger": "Full actual bronze skull locomotive, open block teeth, tusks, black boiler, diagonal full-train transparent anime ink cutout matching other menu heroes.",
+    "crochtrain": "Full actual green locomotive, yellow trim, pompom and button wheels; sparse drawn stitches, bold contours and flat cel shadows, diagonal transparent cutout; no realistic yarn."
+  }
+}

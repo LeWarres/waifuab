@@ -36,366 +36,366 @@
   },
   {
     "key": "hero.character.nath",
-    "es": "Nath Star",
-    "en": "Nath Star",
-    "pt": "Nath Star",
-    "ja": "ナス・スター"
+    "es": "Nath Moon",
+    "en": "Nath Moon",
+    "pt": "Nath Moon",
+    "ja": "ナス・ムーン"
   },
   {
     "key": "story.nath.0.intro.1",
-    "es": "Soy Nath Star. Una chica sencilla, de gustos normales y costumbres tranquilas. No se rían antes de que termine.",
-    "en": "I am Nath Star. A simple girl with normal tastes and peaceful habits. Let me finish before you laugh.",
-    "pt": "Sou Nath Star. Uma garota simples, com gostos normais e hábitos tranquilos. Deixem eu terminar antes de rir.",
-    "ja": "私はナス・スター。普通の趣味で、穏やかに暮らす普通の女の子。笑うのは最後まで聞いてからね。"
+    "es": "Soy Nath Moon. Y antes de que empieces a mirarme raro, sí, yo soy la que conduce ReyMar. Si vienes a decirme que voy demasiado rápido, ahórratelo, que eso ya me lo han dicho y todavía no me han alcanzado para explicármelo.",
+    "en": "I'm Nath Moon. And before you start looking at me like that, yes, I'm the one driving ReyMar. If you're here to say I go too fast, save it. I've heard it before, and nobody's caught up long enough to explain it to me.",
+    "pt": "Sou Nath Moon. E antes de me olhar assim, sim, sou eu que dirijo a ReyMar. Se veio dizer que vou rápido demais, poupe saliva. Já disseram isso antes e ainda não me alcançaram para explicar.",
+    "ja": "私はナス・ムーン。変な顔する前に言っておくけど、レイマーを運転してるのは私よ。速すぎるって説教ならいらないわ。何度も聞いたし、説明するために追いつけたやつはまだいないから。"
   },
   {
     "key": "story.nath.0.intro.2",
-    "es": "Desde pequeña hice boxeo, muay thai y carreras de autos monstruo. Así que lo normal era que terminara siendo maquinista. Es una evolución bastante lógica.",
-    "en": "Since I was little I did boxing, Muay Thai and monster-truck races. Naturally I became a train driver. A perfectly logical progression.",
-    "pt": "Desde pequena fiz boxe, muay thai e corridas de monster truck. Então virei maquinista, naturalmente. Uma evolução bem lógica.",
-    "ja": "小さい頃からボクシング、ムエタイ、モンスタートラックのレース。だから機関士になった。すごく自然な流れでしょ。"
+    "es": "De pequeña me metieron a boxeo y después hice muay thai, porque con una sola cosa no me bastaba. Las carreras de autos monstruo vinieron luego. Ahí ya podía golpear y acelerar sin tener que escoger, así que me gustaron bastante.",
+    "en": "I started boxing as a kid, then took up Muay Thai because one thing wasn't enough. Monster-truck racing came later. That let me hit things and accelerate without choosing between them, so I liked it quite a bit.",
+    "pt": "Comecei no boxe pequena e depois fiz muay thai, porque uma coisa só não bastava. As corridas de monster truck vieram depois. Ali podia bater e acelerar sem escolher entre os dois, então gostei bastante.",
+    "ja": "小さい頃にボクシングを始めて、それだけじゃ足りなくてムエタイもやったの。モンスタートラックのレースはそのあと。ぶつけるのも加速するのもできるから、けっこう気に入ったわ。"
   },
   {
     "key": "story.nath.0.intro.3",
-    "es": "La verdad es que simplemente me gusta pelear. Mi ReyMar y yo entendemos muy bien eso de avanzar sin pedir permiso.",
-    "en": "The truth is I just like fighting. ReyMar and I understand moving forward without asking permission.",
-    "pt": "A verdade é que eu simplesmente gosto de lutar. Eu e ReyMar entendemos bem essa história de avançar sem pedir licença.",
-    "ja": "本当は、ただ戦うのが好きなだけ。レイマーも私も、許可なんか待たずに進むのが得意なの。"
+    "es": "Por eso terminé de maquinista. Con ReyMar tengo por dónde correr y casi siempre aparece alguien con ganas de cerrarme el paso. A mí eso de tocar el claxon y esperar nunca se me ha dado; si quieres detenerme, más te vale intentarlo bien.",
+    "en": "That's how I became a train driver. ReyMar gives me room to run, and there's nearly always someone trying to block me. I've never been good at honking and waiting; if you're stopping me, you'd better make a proper attempt.",
+    "pt": "Foi assim que virei maquinista. Com a ReyMar tenho onde correr e quase sempre aparece alguém para bloquear o caminho. Nunca fui de buzinar e esperar; se quer me parar, é melhor tentar direito.",
+    "ja": "それで運転士になったの。レイマーなら思い切り走れるし、進路を塞ぎたがる相手もたいていいる。警笛を鳴らして待つのは性に合わないのよ。止めたいなら本気で来なさい。"
   },
   {
     "key": "story.nath.0.intro.4",
-    "es": "Entonces llegaron unos sujetos del gobierno. Me ofrecieron una batalla legendaria contra alienígenas. Solo tenía que aventar una roca verde en su nave o en su base, algo así.",
-    "en": "Then some government agents offered me a legendary battle against aliens. I just had to throw a green rock into their ship or base. Something like that.",
-    "pt": "Então uns agentes do governo ofereceram uma batalha lendária contra alienígenas. Era só jogar uma pedra verde na nave ou na base deles. Algo assim.",
-    "ja": "そこへ政府の人たちが来て、宇宙人との伝説の戦いを持ちかけた。緑の石を宇宙船か基地に投げ込めばいいらしい。そんな感じ。"
+    "es": "Un día vinieron unos del gobierno a ofrecerme una batalla legendaria contra alienígenas. Apenas dijeron «batalla» ya estaba preguntando dónde, así que lo de aventar una roca verde en su base lo escuché mientras buscaba las llaves.",
+    "en": "One day some government people offered me a legendary battle against aliens. The moment they said 'battle' I was asking where, so I heard the bit about throwing a green rock into their base while I looked for my keys.",
+    "pt": "Um dia veio gente do governo oferecer uma batalha lendária contra alienígenas. Mal disseram «batalha» e eu já perguntava onde, então ouvi a parte de jogar uma pedra verde na base enquanto procurava as chaves.",
+    "ja": "ある日、政府の連中が宇宙人との伝説の戦いを持ちかけてきた。「戦い」って聞いた瞬間、どこでやるのか聞いてたわ。基地へ緑の石を投げ込む話は、鍵を探しながら聞いた。"
   },
   {
     "key": "story.nath.0.intro.5",
-    "es": "No me lo pensé dos veces. ¡Salté a la acción! Y si el camino al viaje espacial empieza en un volcán, pues se empieza en un volcán.",
-    "en": "I did not think twice. I jumped straight into action! If the road to space starts in a volcano, then a volcano it is.",
-    "pt": "Não pensei duas vezes. Pulei para a ação! Se o caminho para o espaço começa num vulcão, então vamos ao vulcão.",
-    "ja": "迷わず飛び込んだ！宇宙への道が火山から始まるなら、火山から始めればいい！"
+    "es": "Ahora me toca cruzar un volcán para llegar al lanzador, y ya me dijeron que por aquí anda una hija de dioses. Pues mejor. Antes de irme al espacio quiero ver si de verdad pega tan fuerte o si todos le tienen miedo por el apellido.",
+    "en": "Now I have to cross a volcano to reach the launcher, and I've heard a god's daughter is around here. Good. Before I leave for space, I want to see whether she really hits that hard or everyone's just scared of the family name.",
+    "pt": "Agora tenho que cruzar um vulcão para chegar ao lançador e disseram que a filha de um deus anda por aqui. Melhor. Antes do espaço quero ver se bate tão forte assim ou se todos só têm medo do sobrenome.",
+    "ja": "発射装置へ行くには火山を越えるんだけど、ここには神の娘がいるらしい。ちょうどいいわ。宇宙へ行く前に、本当に強いのか、みんな家柄にびびってるだけなのか確かめたい。"
   },
   {
     "key": "story.nath.0.before.1",
-    "es": "No sé qué te prometieron, pero esta zona está bajo mi cuidado.",
-    "en": "I do not know what they promised you, but this area is under my protection.",
-    "pt": "Não sei o que prometeram, mas esta área está sob meus cuidados.",
-    "ja": "何を約束されたか知らないけど、ここは私が守っているの。"
+    "es": "Oye, baja un poco la velocidad. Esta zona está bajo mi cuidado y no quiero que nadie salga lastimado.",
+    "en": "Hey, slow down a little. This area's under my care, and I don't want anyone getting hurt.",
+    "pt": "Ei, diminua um pouco. Esta área está sob meus cuidados e não quero ninguém machucado.",
+    "ja": "ねえ、少し速度を落として。ここは私が守っている場所なの。誰にも怪我をしてほしくないわ。"
   },
   {
     "key": "story.nath.0.before.2",
-    "es": "¿Una hija de dioses? Perfecto. Ya me estaba preocupando que la primera pelea fuera aburrida.",
-    "en": "A daughter of gods? Perfect. I was worried the first fight would be boring.",
-    "pt": "Uma filha de deuses? Perfeito. Já estava com medo de a primeira luta ser chata.",
-    "ja": "神様の娘？最高。最初の戦いが退屈だったらどうしようかと思ってた。"
+    "es": "¿Tú eres la hija del dios? Pues ven a frenarme. Quiero ver qué tienes, no escuchar cómo cuidas el tráfico.",
+    "en": "You're the god's daughter? Then come stop me. I want to see what you've got, not hear about your traffic duties.",
+    "pt": "Você é a filha do deus? Então venha me parar. Quero ver do que é capaz, não ouvir sobre cuidar do trânsito.",
+    "ja": "あんたが神の娘？　なら止めに来なさいよ。交通整理の話より、何ができるか見たいの。"
   },
   {
     "key": "story.nath.0.before.3",
-    "es": "Con esa actitud vas a conseguir muchas peleas y muy pocas respuestas.",
-    "en": "With that attitude you will get plenty of fights and very few answers.",
-    "pt": "Com essa atitude vai conseguir muitas lutas e poucas respostas.",
-    "ja": "その態度なら、答えより戦いの方がたくさん見つかるわね。"
+    "es": "No hace falta que me provoques. Si vas a poner a los demás en peligro, sí voy a detenerte.",
+    "en": "You don't have to provoke me. If you're going to endanger other people, I will stop you.",
+    "pt": "Não precisa me provocar. Se vai colocar os outros em perigo, vou deter você.",
+    "ja": "挑発しなくてもいいの。他の人を危険にさらすなら、本当に止めるわよ。"
   },
   {
     "key": "story.nath.0.after.1",
-    "es": "¡Ni siquiera los hijos de dioses pueden con mi grandeza!",
-    "en": "Even the children of gods cannot handle my greatness!",
-    "pt": "Nem os filhos de deuses aguentam minha grandeza!",
-    "ja": "神様の子だって、私の偉大さには勝てない！"
+    "es": "¡Eso quería ver! Para ser hija de un dios pegas bien, pero te faltó para frenarme.",
+    "en": "That's what I wanted to see! For a god's daughter, you hit well, but not well enough to stop me.",
+    "pt": "Era isso que queria ver! Para filha de um deus bate bem, mas faltou para me parar.",
+    "ja": "そう、それが見たかった！　神の娘だけあって悪くないけど、私を止めるには足りなかったわね。"
   },
   {
     "key": "story.nath.0.after.2",
-    "es": "Solo te pedí que bajaras la velocidad.",
-    "en": "I only asked you to slow down.",
-    "pt": "Eu só pedi para diminuir a velocidade.",
-    "ja": "速度を落としてって言っただけなんだけど。"
+    "es": "¿Ya puedes irte sin atropellar a nadie? Porque eso era lo que estaba intentando pedirte.",
+    "en": "Can you leave without running anyone over now? Because that's what I was trying to ask.",
+    "pt": "Agora pode ir sem atropelar ninguém? Era isso que estava tentando pedir.",
+    "ja": "もう、誰も轢かずに行ってくれる？　私が頼みたかったのはそれなんだけど。"
   },
   {
     "key": "story.nath.0.outro.1",
-    "es": "Ni siquiera los hijos de dioses pudieron pararme. Ahora solo tenía que llegar antes de que alguien me ganara ese viaje espacial.",
-    "en": "Even the children of gods could not stop me. Now I only had to arrive before somebody stole my trip to space.",
-    "pt": "Nem os filhos de deuses me pararam. Agora era só chegar antes que alguém pegasse minha viagem espacial.",
-    "ja": "神様の子でも止められなかった。あとは誰かに宇宙行きを取られる前に着くだけ。"
+    "es": "Tzmil sí me dio pelea, no voy a quitarle eso. Pero le gané, y si una hija de dioses no pudo pararme, ya quería ver qué me iban a poner los alienígenas. Me fui acelerando antes de que quisiera seguir hablándome de ir con cuidado.",
+    "en": "Tzmil did put up a fight, I'll give her that. But I won, and if a god's daughter couldn't stop me, I wanted to see what the aliens had. I sped off before she could give me another speech about being careful.",
+    "pt": "Tzmil deu trabalho, não vou negar. Mas ganhei, e se a filha de um deus não me parou, queria ver o que os alienígenas tinham. Saí acelerando antes de ouvir mais sobre tomar cuidado.",
+    "ja": "ツミルはちゃんと戦ってくれた。そこは認めるわ。でも勝ったのは私。神の娘でも止められないなら、宇宙人はどんな相手を出してくるのか楽しみだった。安全の話を再開される前に加速して出た。"
   },
   {
     "key": "story.nath.0.outro.2",
-    "es": "Solo tenía que ir a la estúpida ciudad. Fácil. Aunque primero había una oficial empeñada en hacerme preguntas.",
-    "en": "I just had to reach the stupid city. Easy. Except there was an officer determined to ask me questions first.",
-    "pt": "Era só chegar à cidade idiota. Fácil. Só que primeiro havia uma oficial decidida a fazer perguntas.",
-    "ja": "あのバカな街に行くだけ。簡単。なのに、その前に質問したがる係員がいた。"
+    "es": "Lo malo era tener que pasar por la ciudad para subir al espacio, porque ya iban todos para allá y no pensaba hacer fila detrás de ninguno. Encima había una oficial parando trenes para hacer preguntas. A ver cuánto tardaba en dejarme seguir.",
+    "en": "The annoying part was going through the city to get into space, because everyone was heading there and I wasn't queuing behind any of them. And now an officer was stopping trains to ask questions. Let's see how long she'd keep me waiting.",
+    "pt": "A parte chata era passar pela cidade para subir ao espaço, porque todo mundo ia para lá e eu não ia pegar fila atrás deles. Ainda tinha uma oficial parando trens para fazer perguntas. Vamos ver quanto ia me fazer esperar.",
+    "ja": "面倒なのは宇宙へ行くのに街を通らなきゃいけないこと。もう全員向かっているし、誰かの後ろに並ぶ気はなかった。なのに警官が質問のために列車を止めてるの。いつまで待たせるつもりかしら。"
   },
   {
     "key": "story.nath.1.intro.1",
-    "es": "¿Un cuestionario para comprobar que soy humana? Está bien. También puedo derrotar cinco preguntas. Después voy directa al lanzador.",
-    "en": "A questionnaire to prove I am human? Fine. I can defeat five questions too. Then straight to the launcher.",
-    "pt": "Um questionário para provar que sou humana? Tudo bem. Também consigo derrotar cinco perguntas. Depois vou direto ao lançador.",
-    "ja": "人間か確かめる質問？いいわ。五問くらい倒してあげる。それが済んだら発射台へ一直線よ。"
+    "es": "Resulta que tengo que demostrar que soy humana. ¿Quieres que me baje o puedo contestar desde aquí? Porque si basta con responder, pregunta de una vez; llevo un rato viendo pasar trenes y ya me estás poniendo de malas.",
+    "en": "Apparently I have to prove I'm human. Do you need me to get down, or can I answer from here? If answering is all it takes, start asking; I've been watching trains go past, and you're starting to annoy me.",
+    "pt": "Pelo visto tenho que provar que sou humana. Quer que desça ou respondo daqui? Se basta responder, pergunte logo; já faz um tempo que vejo trens passando e estou ficando de mau humor.",
+    "ja": "人間だと証明しなきゃいけないんだって。降りるの？　ここから答えてもいい？　答えれば済むなら早く聞いて。列車が何両も通りすぎて、もう機嫌が悪くなってきたわ。"
   },
   {
     "key": "story.nath.1.before.1",
-    "es": "El último lanzamiento no va a esperar a nadie.",
-    "en": "The last launch will not wait for anyone.",
-    "pt": "O último lançamento não vai esperar ninguém.",
-    "ja": "最後の打ち上げは誰も待たないぞ。"
+    "es": "Control a corredores: queda un solo lanzamiento. La primera locomotora que llegue será la que suba.",
+    "en": "Control to racers: one launch remains. The first locomotive there gets to go up.",
+    "pt": "Controle aos corredores: resta um lançamento. A primeira locomotiva a chegar será a que sobe.",
+    "ja": "管制より全参加者へ。打ち上げは残り一回。最初に着いた機関車を発射する。"
   },
   {
     "key": "story.nath.1.before.2",
-    "es": "¡Pues será mejor que todos se aparten de mi ReyMar!",
-    "en": "Then everyone had better get out of ReyMar’s way!",
-    "pt": "Então é melhor todos saírem da frente da minha ReyMar!",
-    "ja": "じゃあ、全員レイマーの前からどいて！"
+    "es": "¡Pues apártense de ReyMar! Si todavía me están oyendo por la radio es porque ya me tienen detrás.",
+    "en": "Then get out of ReyMar's way! If you can still hear me on the radio, I'm already right behind you.",
+    "pt": "Então saiam da frente da ReyMar! Se ainda estão me ouvindo no rádio, já estou atrás de vocês.",
+    "ja": "ならレイマーの前を空けなさい！　まだ無線が聞こえてるなら、もう後ろにいるからね。"
   },
   {
     "key": "story.nath.1.after.1",
-    "es": "¡Eso también cuenta como ganar una pelea! ¡Al lanzador!",
-    "en": "That counts as winning a fight too! To the launcher!",
-    "pt": "Isso também conta como vencer uma luta! Ao lançador!",
-    "ja": "これも勝ったってことでしょ！発射台へ！"
+    "es": "¡Se acabó! Que preparen ese lanzador, que todavía me deben una pelea.",
+    "en": "That's that! Get the launcher ready. I'm still owed a fight.",
+    "pt": "Acabou! Preparem o lançador, que ainda me devem uma luta.",
+    "ja": "終わりよ！　発射装置を準備して。約束の戦いはまだなんだから。"
   },
   {
     "key": "story.nath.1.outro.1",
-    "es": "No entiendo qué pasó. Entré en el lanzador, pisé a fondo y de repente vi unas luces muy bonitas. Hasta ahí, todo excelente.",
-    "en": "I do not understand what happened. I entered the launcher, floored it and suddenly saw lovely lights. So far, excellent.",
-    "pt": "Não entendo o que aconteceu. Entrei no lançador, acelerei tudo e vi umas luzes lindas. Até aí, excelente.",
-    "ja": "何が起きたのかわからない。発射台に入って全開にしたら、きれいな光が見えた。そこまでは最高だった。"
+    "es": "Entré al lanzador sin soltar el acelerador y todavía alcancé a gritarles que se dieran prisa. Después se llenó todo de luces y perdí de vista la vía. Yo seguí sujetando los mandos, porque nadie me había dicho que hiciera otra cosa.",
+    "en": "I entered the launcher without easing off and still had time to shout at them to hurry up. Then everything filled with light and I lost sight of the track. I kept hold of the controls because nobody had told me to do anything else.",
+    "pt": "Entrei no lançador sem aliviar e ainda gritei para se apressarem. Depois tudo se encheu de luz e perdi a via de vista. Continuei segurando os controles porque ninguém mandara fazer outra coisa.",
+    "ja": "アクセルを戻さず発射装置に入って、早くしろって叫んでやった。そしたら光だらけになって線路が見えなくなったの。他に何をしろとも言われていないから、操縦桿を握ったままでいたわ。"
   },
   {
     "key": "story.nath.1.outro.2",
-    "es": "Pero ahora estaba en un mundo esponjoso lleno de ángeles. Yo pedí alienígenas. Esto tenía demasiadas plumas.",
-    "en": "But now I was in a fluffy world full of angels. I asked for aliens. This place had far too many feathers.",
-    "pt": "Mas agora estava num mundo fofinho cheio de anjos. Eu pedi alienígenas. Havia penas demais por aqui.",
-    "ja": "でも着いたのは、天使だらけのふわふわした世界。頼んだのは宇宙人よ。ここは羽が多すぎる。"
+    "es": "Pero cuando pude mirar afuera, aquello estaba lleno de nubes y de ángeles. Me quedé esperando a ver dónde empezaba el espacio, hasta que uno de esos tipos me dijo que estaba en el cielo. Le pregunté si se estaba burlando de mí.",
+    "en": "But when I could look outside, it was all clouds and angels. I waited to see where space started, until one of them told me I was in heaven. I asked if he was making fun of me.",
+    "pt": "Mas quando consegui olhar para fora, só havia nuvens e anjos. Fiquei esperando onde começava o espaço até um deles dizer que estava no céu. Perguntei se estava tirando sarro de mim.",
+    "ja": "外が見えるようになったら、雲と天使だらけだった。宇宙はどこから始まるのかと思っていたら、天国だと言われたの。私をからかってるのかって聞いたわ。"
   },
   {
     "key": "story.nath.1.outro.3",
-    "es": "¡Estoy segura de que esos tontos del gobierno cometieron un error! ¡Y esto no se va a quedar así!",
-    "en": "Those government idiots definitely made a mistake! And they are not getting away with it!",
-    "pt": "Tenho certeza de que os idiotas do governo erraram! E isso não vai ficar assim!",
-    "ja": "政府のバカどもが絶対に間違えた！このままじゃ済まさない！"
+    "es": "Yo había pedido alienígenas, no que me mandaran al cielo sin avisarme. No sabía qué habían hecho los del gobierno con el lanzador, pero en cuanto regresara me lo iban a explicar. Por lo pronto necesitaba encontrar por dónde salir, aunque tuviera que abrirme paso.",
+    "en": "I'd asked for aliens, not to be sent to heaven without warning. I didn't know what the government had done with the launcher, but they'd explain when I got back. First I needed a way out, even if I had to fight through.",
+    "pt": "Pedi alienígenas, não que me mandassem ao céu sem avisar. Não sabia o que o governo fizera com o lançador, mas iam explicar quando voltasse. Primeiro precisava sair, nem que tivesse que abrir caminho na luta.",
+    "ja": "頼んだのは宇宙人よ。黙って天国へ送ってなんて言ってない。政府が発射装置に何をしたか知らないけど、戻ったら説明させるわ。まずは出口を探す。戦って通ることになってもね。"
   },
   {
     "key": "story.nath.2.intro.1",
-    "es": "Si esto era el cielo, alguien tendría que explicarme cómo salir. Y si su mejor guerrera prefería pelear, pues tampoco iba a quejarme.",
-    "en": "If this was heaven, someone had to tell me how to leave. If their best warrior preferred fighting, I would not complain.",
-    "pt": "Se isto era o céu, alguém teria que me explicar como sair. Se a melhor guerreira preferisse lutar, não ia reclamar.",
-    "ja": "ここが天国なら、誰か出口を教えなさいよ。最強の戦士が戦いたいなら、それでも大歓迎だけど。"
+    "es": "Al final me señalaron la locomotora de su guardiana. Yo iba a preguntarle cómo regresar, pero después de ver a Gora-P también quería saber si aguantaba a ReyMar. Ya que me habían hecho venir hasta acá, por lo menos quería una pelea que valiera el viaje.",
+    "en": "Eventually they pointed me to their guardian's locomotive. I was going to ask how to get back, but seeing Gora-P made me want to know whether she could handle ReyMar too. Since they'd brought me all this way, I wanted a fight worth the trip.",
+    "pt": "No fim apontaram a locomotiva da guardiã. Ia perguntar como voltar, mas vendo a Gora-P também queria saber se aguentava a ReyMar. Já que me trouxeram até ali, queria uma luta que valesse a viagem.",
+    "ja": "結局、守護者の機関車を教えられた。帰り方を聞くつもりだったけど、ゴラPを見たらレイマーに耐えられるかも知りたくなったの。ここまで来させたんだから、せめて旅に見合う戦いが欲しかった。"
   },
   {
     "key": "story.nath.2.before.1",
-    "es": "¡Otra más! ¿Nadie sabe leer el horario de visitas?",
-    "en": "Another one! Can nobody read the visiting hours?",
-    "pt": "Outra! Ninguém sabe ler o horário de visitas?",
-    "ja": "また来た！誰も面会時間を読めないの？"
+    "es": "¿Ahora qué pasó? Llevo todo el día peleando; dime por lo menos que tú solo vienes a preguntar algo.",
+    "en": "What is it now? I've been fighting all day. At least tell me you're only here to ask something.",
+    "pt": "O que foi agora? Estou lutando o dia inteiro. Pelo menos diga que só veio perguntar alguma coisa.",
+    "ja": "今度は何？　一日中戦ってるのよ。せめて質問だけしに来たって言って。"
   },
   {
     "key": "story.nath.2.before.2",
-    "es": "No vine de visita. Vine por una batalla legendaria y a exigir una explicación. En ese orden.",
-    "en": "I am not visiting. I came for a legendary battle and an explanation. In that order.",
-    "pt": "Não vim visitar. Vim por uma batalha lendária e uma explicação. Nessa ordem.",
-    "ja": "面会じゃない。伝説の戦いと説明を求めに来た。その順番でね。"
+    "es": "Iba a preguntar cómo salir, pero ya que estás calentando, peleamos primero. No voy a irme sin probar a tu Gora-P.",
+    "en": "I was going to ask how to leave, but since you're warmed up, we'll fight first. I'm not going without testing Gora-P.",
+    "pt": "Ia perguntar como sair, mas já que está aquecida, lutamos primeiro. Não vou embora sem testar sua Gora-P.",
+    "ja": "出口を聞くつもりだったけど、もう体が温まってるなら先に戦おうか。ゴラPを試さず帰る気はないわ。"
   },
   {
     "key": "story.nath.2.before.3",
-    "es": "Me debían un día libre. Ahora me deben dos.",
-    "en": "They owed me a day off. Now they owe me two.",
-    "pt": "Me deviam um dia de folga. Agora devem dois.",
-    "ja": "一日休みをもらうはずだったのに。これで二日分ね。"
+    "es": "No he dicho que… ¿Sabes qué? De acuerdo. Cuanto antes terminemos, antes vas a dejarme descansar.",
+    "en": "I didn't say… You know what? Fine. The sooner we finish, the sooner you'll let me rest.",
+    "pt": "Não falei que… Quer saber? Está bem. Quanto antes acabar, antes vai me deixar descansar.",
+    "ja": "そんなこと言って…もういいわ。早く終わらせれば、その分早く休ませてもらえるものね。"
   },
   {
     "key": "story.nath.2.after.1",
-    "es": "¿Eso era lo mejor del cielo? ¿Hay otra fila para las peleas legendarias?",
-    "en": "Was that heaven’s best? Is there another queue for legendary fights?",
-    "pt": "Era o melhor do céu? Tem outra fila para lutas lendárias?",
-    "ja": "これが天国の最強？伝説の戦いは別の列なの？"
+    "es": "Por fin alguien que responde. ¿Tienen otro más fuerte o ya tengo que irme a buscarlo a otro lado?",
+    "en": "Finally, someone who fights back. Have you got anyone stronger, or do I need to look somewhere else?",
+    "pt": "Finalmente alguém que reage. Tem outro mais forte ou preciso procurar em outro lugar?",
+    "ja": "やっと手応えのある相手ね。もっと強いのはいる？　それとも別の場所で探さなきゃだめ？"
   },
   {
     "key": "story.nath.2.after.2",
-    "es": "Sí. Al fondo. Muy, muy al fondo.",
-    "en": "Yes. Down there. Very, very far down.",
-    "pt": "Sim. Lá embaixo. Muito, muito embaixo.",
-    "ja": "あるわ。下の方。ずっと、ずーっと下。"
+    "es": "Si quieres seguir peleando, conozco un camino. Te lo abro encantada. Encantadísima.",
+    "en": "If you want to keep fighting, I know a way. I'd be happy to open it for you. Very happy.",
+    "pt": "Se quer continuar lutando, conheço um caminho. Abro com prazer. Com muito prazer.",
+    "ja": "まだ戦いたいなら道はあるわ。喜んで開けてあげる。本当に、喜んで。"
   },
   {
     "key": "story.nath.2.outro.1",
-    "es": "Después de ganarle a sus mejores guerreros, los del cielo aceptaron darme otra batalla legendaria. Qué atentos.",
-    "en": "After I beat their best warriors, heaven agreed to give me another legendary battle. How considerate.",
-    "pt": "Depois de vencer seus melhores guerreiros, o céu aceitou me dar outra batalha lendária. Que gentileza.",
-    "ja": "最強の戦士たちに勝ったら、天国は次の伝説の戦いを用意してくれた。親切ね。"
+    "es": "Gabriel acabó ofreciéndome un camino a otra pelea. Eso ya me sonó mejor que toda la conversación del lanzador, así que le dije que lo abriera. No le pregunté demasiado; si había alguien más fuerte al otro lado, quería llegar antes de que se fuera.",
+    "en": "Gabriel ended up offering me a route to another fight. That sounded better than all the launcher talk, so I told her to open it. I didn't ask much; if someone stronger was waiting, I wanted to get there before they left.",
+    "pt": "Gabriel acabou oferecendo um caminho para outra luta. Soou melhor que toda a conversa do lançador, então mandei abrir. Não perguntei muito; se tinha alguém mais forte do outro lado, queria chegar antes que fosse embora.",
+    "ja": "最後にはガブリエルが、次の戦いへの道を開くと言ったの。発射装置の説明よりよほどいい話だったから、開けてって頼んだ。細かいことは聞かなかったわ。強いやつがいるなら、いなくなる前に会いたかったもの。"
   },
   {
     "key": "story.nath.2.outro.2",
-    "es": "Aunque sonaba a que solo querían deshacerse de mí. Abrieron un camino y me mandaron derechito al infierno. Por fin un lugar con ganas de pelear.",
-    "en": "Though it sounded like they just wanted rid of me. They opened a path straight to hell. Finally, somewhere ready to fight.",
-    "pt": "Mas parecia que só queriam se livrar de mim. Abriram um caminho direto ao inferno. Finalmente um lugar disposto a lutar.",
-    "ja": "どうも追い払いたかっただけみたい。開いた道は地獄に直通。ようやく戦う気のある場所に来たわ。"
+    "es": "Y crucé tan tranquila hasta que vi el fuego y a los demonios. Me habían mandado directo al infierno. Ahí ya sospeché que la guardiana quería quitárseme de encima, pero tampoco iba a volver para darle el gusto de verme reclamar. Primero vería qué tenían por acá.",
+    "en": "I crossed quite happily until I saw the fire and demons. They'd sent me straight to hell. Then I suspected the guardian wanted rid of me, but I wasn't going back to give her the satisfaction of seeing me complain. I'd see what this place had first.",
+    "pt": "Cruzei tranquila até ver o fogo e os demônios. Me mandaram direto para o inferno. Aí suspeitei que a guardiã queria se livrar de mim, mas não ia voltar para dar o gosto de reclamar. Primeiro veria o que havia ali.",
+    "ja": "気楽に通ったら、炎と悪魔が見えた。地獄へ直行だったのよ。守護者は私を追い払いたかったんじゃないかと思ったけど、戻って文句を言う顔を見せてやる気はなかった。まずはこっちの相手を確かめるわ。"
   },
   {
     "key": "story.nath.3.intro.1",
-    "es": "El infierno tenía comida, trenes y gente dispuesta a discutir. Bastante prometedor. La diablita de pelo blanco parecía conocer todas las salidas.",
-    "en": "Hell had food, trains and people ready to argue. Promising. The white-haired demon girl seemed to know every exit.",
-    "pt": "O inferno tinha comida, trens e gente pronta para discutir. Promissor. A diabinha de cabelo branco parecia conhecer todas as saídas.",
-    "ja": "地獄には食べ物と列車と、喧嘩っ早い連中がいた。有望ね。白髪の悪魔の子は出口を全部知っていそうだった。"
+    "es": "No tardé en encontrar a una diablita de pelo blanco que andaba pendiente de su comida. A mí me urgía volver, pero le vi los brazos y pensé que podía aguantar un rato contra mí. Me acerqué a preguntarle; para comer tenía tiempo después.",
+    "en": "It didn't take long to find a white-haired demon fussing over her food. I needed to get back, but I saw her arms and figured she'd last a while against me. I went over to ask; she could eat afterwards.",
+    "pt": "Logo achei uma diabinha de cabelo branco cuidando da comida. Precisava voltar, mas vi os braços dela e achei que aguentaria um pouco contra mim. Fui perguntar; podia comer depois.",
+    "ja": "白髪の悪魔はすぐ見つかった。食べ物を気にしていたけど、その腕なら私と少しはやれそうだったの。早く帰りたかったけど、声をかけに行ったわ。食事なんてあとでもできるでしょ。"
   },
   {
     "key": "story.nath.3.before.1",
-    "es": "¿Tú también vienes a escapar o solo a arruinarme la comida?",
-    "en": "Are you escaping too, or just ruining my meal?",
-    "pt": "Também veio fugir ou só estragar minha comida?",
-    "ja": "あんたも脱走？それとも食事の邪魔をしに来たの？"
+    "es": "Si vienes por mi comida, ya te puedes ir dando la vuelta. Hoy no voy a compartir.",
+    "en": "If you're here for my food, turn around now. I'm not sharing today.",
+    "pt": "Se veio pela minha comida, pode dar meia-volta. Hoje não vou dividir.",
+    "ja": "私の飯が目当てなら今すぐ帰りな。今日は分けないよ。"
   },
   {
     "key": "story.nath.3.before.2",
-    "es": "Primero peleamos. Después podemos hablar del menú.",
-    "en": "First we fight. Then we can discuss the menu.",
-    "pt": "Primeiro lutamos. Depois falamos do cardápio.",
-    "ja": "まず戦う。メニューの話はその後ね。"
+    "es": "Quédate tu comida. Quiero saber si esos brazos sirven para algo más que llevarte cosas a la boca.",
+    "en": "Keep your food. I want to know if those arms are good for more than feeding yourself.",
+    "pt": "Fique com a comida. Quero saber se esses braços servem para algo além de levar coisas à boca.",
+    "ja": "食べ物はいらないわ。その腕が口に物を運ぶ以外にも使えるか知りたいの。"
   },
   {
     "key": "story.nath.3.before.3",
-    "es": "Como enfríes mi cena, esta pelea sí va a ser personal.",
-    "en": "If my dinner gets cold, this fight gets personal.",
-    "pt": "Se meu jantar esfriar, essa luta vai ser pessoal.",
-    "ja": "夕飯が冷めたら、今度こそ本気で恨むからね。"
+    "es": "Mira, ya me hiciste dejar el plato. Ahora sí vas a tener que darme una buena razón para que no me lo cobre contigo.",
+    "en": "Look, you've already made me put my plate down. Now you'd better give me a good reason not to take it out on you.",
+    "pt": "Olha, já me fez largar o prato. Agora dê um bom motivo para eu não descontar em você.",
+    "ja": "ほら、皿を置かせたね。あんたで埋め合わせしない理由を、今すぐ言ってみな。"
   },
   {
     "key": "story.nath.3.after.1",
-    "es": "No eres mala, diablita. Otro día repetimos.",
-    "en": "Not bad, demon girl. We should do this again.",
-    "pt": "Nada mal, diabinha. Outro dia repetimos.",
-    "ja": "やるじゃない、悪魔ちゃん。またやりましょ。"
+    "es": "Así sí, diablita. Acaba de comer, que otro día vuelvo por la revancha.",
+    "en": "That's more like it, demon girl. Finish your food. I'll be back for another round.",
+    "pt": "Assim sim, diabinha. Termine de comer, que volto outro dia para outra rodada.",
+    "ja": "そうこなくちゃ。食事を終えておきなさい。次の一戦はまた今度よ。"
   },
   {
     "key": "story.nath.3.after.2",
-    "es": "Otro día que no tenga hambre. O sea, nunca.",
-    "en": "Another day when I am not hungry. So, never.",
-    "pt": "Outro dia em que eu não tenha fome. Ou seja, nunca.",
-    "ja": "お腹が空いてない日にね。つまり、一生ないわ。"
+    "es": "Pues avisa antes de venir, para que me dé tiempo de irme a comer a otra parte.",
+    "en": "Then warn me before you come, so I have time to eat somewhere else.",
+    "pt": "Então avise antes de vir, para eu ter tempo de comer em outro lugar.",
+    "ja": "なら来る前に知らせな。別の場所で食べる時間が欲しいから。"
   },
   {
     "key": "story.nath.3.outro.1",
-    "es": "La diablita no era mala, pero yo ya estaba cansándome de todo esto. Todavía tenía que vengarme del gobierno por su error.",
-    "en": "The demon girl was not bad, but I was getting tired of all this. I still had to get revenge on the government for its mistake.",
-    "pt": "A diabinha não era má, mas eu já estava cansando de tudo isso. Ainda precisava me vingar do governo pelo erro.",
-    "ja": "悪魔ちゃんは悪くなかったけど、そろそろうんざりしてきた。政府の間違いにも仕返ししないと。"
+    "es": "Onini sí me hizo sudar, y por eso le dije que otro día repetíamos. Pero ya llevaba demasiado rato lejos de la Tierra por culpa del gobierno. Me habían prometido alienígenas y yo estaba peleando con todo el mundo menos con ellos; alguien me debía una explicación.",
+    "en": "Onini made me work for it, which is why I told her we'd do it again. But I'd spent too long off Earth because of the government. They'd promised aliens, and I'd fought everyone else instead; someone owed me an explanation.",
+    "pt": "Onini me fez suar, por isso falei que repetiríamos. Mas já estava longe da Terra havia tempo demais por culpa do governo. Prometeram alienígenas e lutei com todos menos eles; alguém me devia uma explicação.",
+    "ja": "オニニには本気を出させられた。だからまたやろうって言ったの。でも政府のせいで、地球を離れて長くなりすぎていた。宇宙人と戦える約束だったのに、それ以外とばかり戦ってる。誰かに説明させなきゃ。"
   },
   {
     "key": "story.nath.3.outro.2",
-    "es": "Creo que los demonios también se cansaron de luchar conmigo a todas horas. Simplemente dejaron abierta la puerta de regreso. Qué descuido tan conveniente.",
-    "en": "I think the demons got tired of fighting me all day too. They simply left the way home open. A very convenient oversight.",
-    "pt": "Acho que os demônios cansaram de lutar comigo toda hora. Simplesmente deixaram a porta de volta aberta. Que descuido conveniente.",
-    "ja": "悪魔たちも四六時中の戦いに疲れたらしい。帰りの扉を開けっぱなしにしてくれた。ずいぶん都合のいい不注意ね。"
+    "es": "Cuando les pregunté a los demonios por la salida ya ni discutieron: me dejaron el camino abierto. Creo que se habían cansado de que retara a cualquiera que se me cruzara, porque esta vez nadie intentó detenerme. Mejor, así no tuve que perder más tiempo.",
+    "en": "When I asked the demons for the exit, they didn't even argue; they left the way open. I think they'd tired of me challenging everyone I met, because nobody tried to stop me this time. Good. That saved me more wasted time.",
+    "pt": "Quando perguntei aos demônios pela saída, nem discutiram: deixaram o caminho aberto. Acho que cansaram de me ver desafiar qualquer um, porque dessa vez ninguém tentou me parar. Melhor, não perdi mais tempo.",
+    "ja": "悪魔たちに出口を聞いたら、言い争いもせず道を空けてくれた。会うやつ全員に勝負を挑んでいたから、うんざりしたのかもね。今度は誰も止めなかった。よかったわ。これ以上、時間を無駄にしたくなかったから。"
   },
   {
     "key": "story.nath.3.outro.3",
-    "es": "Lamentablemente, cuando llegué a la base por mi venganza, ya no quedaba nadie. Ni un guardia para calentar. Una falta de respeto.",
-    "en": "Unfortunately, by the time I reached the base for revenge, nobody was left. Not even a guard to warm up against. Rude.",
-    "pt": "Infelizmente, quando cheguei à base para a vingança, não havia ninguém. Nem um guarda para aquecer. Uma falta de respeito.",
-    "ja": "でも仕返しに基地へ着いた時には誰もいなかった。準備運動の相手になる警備員すらいない。失礼しちゃう。"
+    "es": "Yo venía preparando lo que iba a decirles a los del gobierno, pero al llegar a la base encontré puro destrozo. No había nadie esperándome ni un lugar donde preguntar por el lanzador. Me bajé a buscar, aunque conforme avanzaba ya no sabía ni a quién quería encontrar.",
+    "en": "I'd been rehearsing what I'd say to the government people, but I found nothing but wreckage at the base. Nobody was waiting, and there was nowhere to ask about the launcher. I got down to search, though I soon wasn't sure who I expected to find.",
+    "pt": "Vinha ensaiando o que diria ao governo, mas na base só encontrei destroços. Ninguém esperava por mim, nem havia onde perguntar pelo lançador. Desci para procurar, embora já nem soubesse quem esperava encontrar.",
+    "ja": "政府の連中に言ってやることを考えていたのに、着いた基地は瓦礫だらけだった。待ってる人も、発射装置のことを聞ける場所もなかった。降りて探したけど、歩いているうちに誰を探しているのかもわからなくなった。"
   },
   {
     "key": "story.nath.3.outro.4",
-    "es": "Vi a BBA, pero como siempre solo balbuceaba cosas. Creo que estaba triste o algo. Yo tampoco encontré a quién reclamarle.",
-    "en": "I saw BBA, but she just babbled as usual. I think she was sad or something. I could not find anyone to complain to either.",
-    "pt": "Vi BBA, mas ela só balbuciava como sempre. Acho que estava triste ou algo assim. Também não achei a quem reclamar.",
-    "ja": "ＢＢＡはいたけど、いつも通り何かぶつぶつ言っていた。悲しんでいたのかも。私も文句を言う相手を見つけられなかった。"
+    "es": "Por ahí vi a BBA y fui a preguntarle qué había pasado, pero casi no me contestó. Al principio pensé que me estaba ignorando, hasta que le vi la cara. Ya no insistí. Me quedé un rato cerca de ReyMar y después seguí buscando por mi cuenta.",
+    "en": "I saw BBA there and went to ask what had happened, but she barely answered. At first I thought she was ignoring me, until I saw her face. I stopped pushing. I stayed near ReyMar for a while, then carried on looking by myself.",
+    "pt": "Vi BBA e fui perguntar o que houve, mas quase não respondeu. Primeiro achei que me ignorava, até ver o rosto dela. Não insisti. Fiquei um tempo perto da ReyMar e depois procurei por conta própria.",
+    "ja": "BBAがいたから何があったか聞きに行ったけど、ほとんど答えなかった。最初は無視してるのかと思ったけど、顔を見てやめたわ。しばらくレイマーのそばにいて、それから自分で探しに行った。"
   },
   {
     "key": "story.nath.3.outro.5",
-    "es": "Entonces escuché por radio una invitación a un maid café. Odio admitirlo, pero me encantan esas cosas. ¡Y Tzmil había abierto un puesto de helados! Ya quería comprar uno y retarlas a un duelo.",
-    "en": "Then the radio mentioned a maid café. I hate admitting it, but I love those places. And Tzmil had opened an ice-cream stand! I wanted a cone and a rematch.",
-    "pt": "Então ouvi no rádio um convite para um maid café. Odeio admitir, mas adoro essas coisas. E Tzmil abriu uma sorveteria! Queria um sorvete e uma revanche.",
-    "ja": "その時、ラジオからメイド喫茶の招待が聞こえた。認めたくないけど、大好きなの。しかもツミルがアイス屋を開いたって！買って再戦を申し込まないと。"
+    "es": "Más tarde escuché la invitación por radio a un maid café y que Tzmil había abierto un puesto de helados. A mí esos lugares me gustan, ¿y qué? Pensaba pasar por los dos; quería probar el helado y ver si la del volcán seguía con ganas de detenerme.",
+    "en": "Later I heard a radio invitation to a maid café, and that Tzmil had opened an ice-cream stand. I like those places, so what? I planned to visit both; I wanted ice cream and to see if the volcano girl still felt like stopping me.",
+    "pt": "Depois ouvi no rádio um convite para um maid café e que Tzmil abrira uma sorveteria. Eu gosto desses lugares, e daí? Ia aos dois; queria provar o sorvete e ver se a garota do vulcão ainda queria me parar.",
+    "ja": "そのあと無線でメイドカフェへの招待と、ツミルがアイス屋を開いた話を聞いた。そういう店は好きよ。悪い？　両方に寄るつもりだった。アイスを食べて、火山の娘がまだ私を止める気か確かめたかったの。"
   },
   {
     "key": "story.nath.3.outro.6",
-    "es": "Pero por el camino encontré algo mucho más interesante en el bosque. Un tren que parecía disfrutar las peleas tanto como yo.",
-    "en": "But on the way I found something much more interesting in the woods. A train that seemed to enjoy fighting as much as I did.",
-    "pt": "Mas no caminho encontrei algo muito mais interessante no bosque. Um trem que parecia gostar de lutar tanto quanto eu.",
-    "ja": "でも途中の森で、もっと面白いものを見つけた。私と同じくらい戦いを楽しみそうな列車をね。"
+    "es": "Pero me desvié al ver una locomotora entre los árboles. No se parecía a las que había dejado en la ciudad, y cuando acerqué ReyMar pareció moverse hacia nosotras. Frené para mirar mejor. El helado podía esperar un poco; quería saber qué hacía esa máquina ahí.",
+    "en": "But I turned off when I saw a locomotive among the trees. She didn't look like the ones I'd left in the city, and seemed to move towards us as I brought ReyMar closer. I braked for a better look. Ice cream could wait; I wanted to know what she was doing there.",
+    "pt": "Mas desviei quando vi uma locomotiva entre as árvores. Não parecia com as da cidade e, ao aproximar a ReyMar, pareceu vir na nossa direção. Freei para olhar melhor. O sorvete podia esperar; queria saber o que fazia ali.",
+    "ja": "でも木々の間に機関車が見えて、寄り道したの。街で見たのとは違って、レイマーを近づけたらこっちへ動いた気がした。よく見るために止まったわ。アイスは少し待てる。あの機関車が何をしているのか知りたかった。"
   },
   {
     "key": "story.nath.4.intro.1",
-    "es": "Un tipo blanco, alto y sin cara estaba junto a una locomotora que casi sonreía al verme. No iba a dejar pasar esa invitación.",
-    "en": "A tall white faceless fellow stood by a locomotive that almost smiled at me. I was not passing up that invitation.",
-    "pt": "Um sujeito branco, alto e sem rosto estava ao lado de uma locomotiva que quase sorriu para mim. Não ia recusar o convite.",
-    "ja": "背が高くて白くて顔のない男。その隣の機関車は、私を見て笑った気がした。この誘いは断れない。"
+    "es": "Junto a la máquina había un tipo altísimo y sin cara, ocupado con unos dibujos. Le pregunté si esa locomotora era suya, porque entre cómo se movía y cómo se me había acercado ya me habían dado ganas de probarla. No iba a quedarme ahí mirándola nada más.",
+    "en": "There was a very tall, faceless guy beside the engine, busy with drawings. I asked if she was his, because the way she'd moved and come towards me made me want to test her. I wasn't just going to stand there looking.",
+    "pt": "Ao lado da máquina havia um sujeito altíssimo e sem rosto, ocupado com desenhos. Perguntei se era dele, porque o jeito de se mover e chegar perto me deu vontade de testá-la. Não ia ficar só olhando.",
+    "ja": "機関車のそばには背の高い顔のない男がいて、絵を描いていた。あの動きと近づき方を見たら試したくなって、あんたの機関車かって聞いたの。眺めて帰るだけなんて嫌だった。"
   },
   {
     "key": "story.nath.4.intro.2",
-    "es": "¡Eh, rarito! No sé qué dibujas, pero tu máquina y mi ReyMar tienen una conversación pendiente.",
-    "en": "Hey, weirdo! No idea what you are drawing, but your engine and my ReyMar have something to discuss.",
-    "pt": "Ei, esquisito! Não sei o que desenha, mas sua máquina e minha ReyMar têm uma conversa pendente.",
-    "ja": "ねえ、変な人！何を描いてるか知らないけど、あんたの機関車とレイマーには話があるの。"
+    "es": "No entendía bien si el interesado era él o su máquina, pero yo ya estaba acomodando a ReyMar. Le hice señas para que saliera al claro, esperando que no me fuera a responder con otra explicación de por qué ahí tampoco se podía pelear.",
+    "en": "I wasn't sure whether he was interested or his engine was, but I was already lining ReyMar up. I waved him towards the clearing, hoping I wouldn't get another explanation of why I wasn't allowed to fight here either.",
+    "pt": "Não sabia se o interessado era ele ou a máquina, mas já estava posicionando a ReyMar. Fiz sinal para vir à clareira, torcendo para não ouvir outra explicação de por que ali também não podia lutar.",
+    "ja": "乗り気なのが男か機関車かはわからなかったけど、私はもうレイマーの位置を合わせていた。開けた場所へ来るよう合図したわ。ここでも戦えない理由を聞かされるのはごめんだったから。"
   },
   {
     "key": "story.nath.4.before.1",
-    "es": "Solo quiero dibujar tranquilo. Aunque T.exe parece bastante interesada en tu propuesta.",
-    "en": "I just want to draw in peace. Though T.exe seems interested in your proposal.",
-    "pt": "Só quero desenhar em paz. Mas T.exe parece interessada na proposta.",
-    "ja": "静かに絵を描きたいだけなんだ。でもＴ.exeは君の提案に興味があるみたいだね。"
+    "es": "Yo quería seguir dibujando, pero T.exe se ha acercado a tu locomotora. Creo que a ella sí le interesa.",
+    "en": "I wanted to keep drawing, but T.exe's gone over to your locomotive. I think she is interested.",
+    "pt": "Queria continuar desenhando, mas a T.exe chegou perto da sua locomotiva. Acho que ela está interessada.",
+    "ja": "私は絵の続きを描きたかったんだけど、T.exeは君の機関車に近づいた。彼女は興味があるみたいだ。"
   },
   {
     "key": "story.nath.4.before.2",
-    "es": "¡Lo sabía! Esa máquina tiene la batalla por dentro.",
-    "en": "I knew it! That engine has battle in her soul.",
-    "pt": "Eu sabia! Essa máquina tem a batalha na alma.",
-    "ja": "やっぱり！あの機関車、心の中から戦いたがってる。"
+    "es": "Pues no la hagas esperar. Si tiene ganas de competir, quiero que venga con todo; no voy a frenar para quedar bien contigo.",
+    "en": "Then don't keep her waiting. If she wants to compete, I want everything she's got; I'm not holding back to be polite.",
+    "pt": "Então não faça ela esperar. Se quer competir, venha com tudo; não vou aliviar para ser educada.",
+    "ja": "じゃあ待たせないで。競いたいなら全力で来てほしいわ。あんたへの気遣いで手加減なんてしないから。"
   },
   {
     "key": "story.nath.4.before.3",
-    "es": "Mientras no rompan mis dibujos, adelante.",
-    "en": "As long as you do not break my drawings, go ahead.",
-    "pt": "Desde que não estraguem meus desenhos, podem ir.",
-    "ja": "絵を壊さないなら、どうぞ。"
+    "es": "A ella le parece bien. Solo apártense de los dibujos, que estos todavía no los he terminado.",
+    "en": "She's fine with that. Just stay clear of the drawings. I haven't finished these yet.",
+    "pt": "Ela concorda. Só fiquem longe dos desenhos, que ainda não terminei estes.",
+    "ja": "彼女もそれでいいみたいだ。絵からは離れてくれ。まだ描き終わっていないから。"
   },
   {
     "key": "story.nath.4.after.1",
-    "es": "¡Por fin alguien que lo hace interesante! Mañana repetimos.",
-    "en": "Finally, someone who makes it interesting! Again tomorrow.",
-    "pt": "Finalmente alguém que deixa interessante! Amanhã repetimos.",
-    "ja": "ようやく面白い相手が見つかった！明日もやるわよ。"
+    "es": "¡Así se pelea! Pero mañana volvemos a hacerlo, que ya te vi cómo tomas esas curvas.",
+    "en": "That's how you fight! But we're doing this again tomorrow. I've seen how you take those turns now.",
+    "pt": "Assim se luta! Mas amanhã repetimos, que agora vi como faz aquelas curvas.",
+    "ja": "そう、それが戦いよ！　でも明日もやるわ。あのカーブの曲がり方はもう見たからね。"
   },
   {
     "key": "story.nath.4.after.2",
-    "es": "Creo que a ella también le gustaría. Yo voy a necesitar más papel.",
-    "en": "I think she would like that too. I will need more paper.",
-    "pt": "Acho que ela também gostaria. Vou precisar de mais papel.",
-    "ja": "彼女もそうしたいみたいだ。僕は紙を増やしておくよ。"
+    "es": "T.exe dice que te espera. Si puedes volver un poco más temprano, yo alcanzo a preparar el papel.",
+    "en": "T.exe says she'll be waiting. If you come a little earlier, I'll have time to get the paper ready.",
+    "pt": "T.exe diz que espera você. Se vier um pouco mais cedo, dá tempo de preparar o papel.",
+    "ja": "T.exeは待っていると言ってる。少し早めに来てくれれば、私も紙を用意できるよ。"
   },
   {
     "key": "story.nath.4.outro.1",
-    "es": "El chico era realmente bueno. Y podía sentir que su máquina amaba competir. No tenía que explicarle nada: la batalla estaba dentro de ella.",
-    "en": "The guy was really good. And I could feel how much his engine loved competing. No explanation needed: battle was in her soul.",
-    "pt": "O rapaz era muito bom. E eu sentia que sua máquina amava competir. Não precisava explicar: a batalha estava dentro dela.",
-    "ja": "あいつは本当に強かった。機関車も競うのが大好きだと伝わってきた。説明なんていらない。戦いが心に宿っていた。"
+    "es": "Faceless no me lo puso fácil, y T.exe menos. Cada vez que pensaba que ya la tenía, se me escapaba por otro lado. Acabé queriendo repetir la pelea antes de que terminara, porque me molestaba no haberle encontrado todavía la manera de cerrarle el paso.",
+    "en": "Faceless didn't make it easy, and T.exe even less so. Every time I thought I had her, she'd slip away somewhere else. I wanted another round before we'd even finished, because it annoyed me that I still hadn't worked out how to block her.",
+    "pt": "Faceless não facilitou, e T.exe menos ainda. Sempre que achava que a tinha, escapava pelo outro lado. Já queria repetir antes de acabar, porque me irritava ainda não saber como fechar o caminho.",
+    "ja": "フェイスレスもT.exeも簡単にはやらせてくれなかった。捕まえたと思うたび、別の方へ抜けていくの。終わる前からもう一回やりたくなってたわ。まだ進路を塞ぐ方法がわからなくて、悔しかったから。"
   },
   {
     "key": "story.nath.4.outro.2",
-    "es": "Desde entonces, cada vez que su locomotora salía del trabajo, yo la retaba a una batalla. ¡Parecía disfrutarlo tanto como yo!",
-    "en": "From then on, every time his locomotive finished work, I challenged her. She seemed to enjoy it as much as I did!",
-    "pt": "Desde então, sempre que a locomotiva saía do trabalho, eu a desafiava. Parecia se divertir tanto quanto eu!",
-    "ja": "それからは機関車の仕事が終わるたびに勝負を挑んだ。向こうも私と同じくらい楽しんでいたわ！"
+    "es": "Desde entonces la espero cuando sale del trabajo y nos buscamos un tramo donde correr. Si me ve llegar tarde, T.exe se pone a hacer ruido antes de que me baje. Yo le digo que se aguante, pero me apuro, porque tampoco quiero que se vaya sin pelear.",
+    "en": "Since then I wait for her after work and we find a stretch where we can race. If I'm late, T.exe starts making noise before I even get down. I tell her to wait, but I hurry; I don't want her leaving without a fight either.",
+    "pt": "Desde então espero quando sai do trabalho e buscamos um trecho para correr. Se chego tarde, T.exe faz barulho antes de eu descer. Mando esperar, mas me apresso; também não quero que vá embora sem lutar.",
+    "ja": "それからは仕事終わりを待って、走れる区間を探すようになったの。遅れて着くと、降りる前からT.exeが音を立てる。待ちなさいって言いながら、私も急ぐわ。戦わずに帰られたくないもの。"
   },
   {
     "key": "story.nath.4.outro.3",
-    "es": "A Faceless, que así se llama el rarito, le encantaba dibujarnos. No lo culpo. ¡Soy toda una preciosura!",
-    "en": "Faceless, that is the weirdo’s name, loved drawing us. Cannot blame him. I am gorgeous!",
-    "pt": "Faceless, esse é o nome do esquisito, adorava nos desenhar. Não o culpo. Sou uma preciosidade!",
-    "ja": "変な人の名前はフェイスレス。私たちを描くのが大好きらしい。無理もないわ。私はこんなに美人だもの！"
+    "es": "Y Faceless se queda dibujándonos. Al principio pensé que iba a perderse media pelea por andar con la libreta, pero después me enseñó los dibujos. Hasta le pedí uno. Que no se le suba; si vas a dibujarme, por lo menos quiero llevarme la prueba de que quedé bien.",
+    "en": "And Faceless sits there drawing us. At first I thought he'd miss half the fight with his notebook, but then he showed me the pictures. I even asked for one. He shouldn't let it go to his head; if he's drawing me, I want proof I looked good.",
+    "pt": "E Faceless fica desenhando a gente. Achei que perderia metade da luta com a caderneta, mas depois mostrou os desenhos. Até pedi um. Não deixe subir à cabeça; se vai me desenhar, quero levar a prova de que fiquei bonita.",
+    "ja": "フェイスレスは私たちを描いている。最初はノートなんか見ていたら戦いの半分を見逃すと思ったけど、あとで絵を見せてくれたの。一枚欲しいって頼んだわ。調子に乗らないでよ。描くなら、私がよく映ってる証拠はもらいたいもの。"
   },
   {
     "key": "story.nath.4.outro.4",
-    "es": "No obtuve mi venganza contra el gobierno. Pero encontré a alguien con quien luchar todos los días, y eso terminó importándome bastante más.",
-    "en": "I never got revenge on the government. But I found someone to fight every day, and that ended up mattering much more.",
-    "pt": "Não me vinguei do governo. Mas achei alguém com quem lutar todos os dias, e isso acabou importando muito mais.",
-    "ja": "政府への仕返しはできなかった。でも毎日戦える相手が見つかった。結局、そっちの方がずっと大事になったの。"
+    "es": "A los del gobierno no les pude cobrar lo del lanzador. Eso todavía me molesta, pero ya no estoy recorriendo el planeta para encontrar a alguien que quiera pelear conmigo. Sé dónde me esperan, y si no aparezco me lo van a reclamar al día siguiente.",
+    "en": "I never got even with the government over the launcher. It still annoys me, but I'm not travelling the planet looking for someone willing to fight anymore. I know where they're waiting, and if I don't show up, I'll hear about it the next day.",
+    "pt": "Não acertei as contas do lançador com o governo. Ainda me irrita, mas já não cruzo o planeta procurando alguém que queira lutar. Sei onde me esperam, e se não apareço vão cobrar no dia seguinte.",
+    "ja": "発射装置の件で政府に借りを返せなかったのは、まだ腹が立つ。でも今は戦う相手を探して星中を走り回らなくていい。待っている場所は知ってるし、行かなかったら翌日文句を言われるわ。"
   },
   {
     "key": "story.nath.4.outro.5",
-    "es": "Lo mejor es que siempre lo hace interesante. Bien, ReyMar... mañana toca revancha. Y después podemos ir por ese helado.",
-    "en": "Best of all, she always keeps it interesting. Well, ReyMar... rematch tomorrow. Then we can get that ice cream.",
-    "pt": "O melhor é que ela sempre deixa interessante. Bem, ReyMar... amanhã tem revanche. Depois podemos tomar aquele sorvete.",
-    "ja": "何より、いつも面白い勝負になる。さあレイマー、明日も再戦よ。その後は例のアイスを食べに行こう。"
+    "es": "Mañana voy a salir antes para no volver a darles esa ventaja. También quiero pasar por el helado de Tzmil y llevarle uno a Faceless. Si pregunta por qué, le digo que para que no se duerma mientras pierde. Lo que no pienso hacer es irme sin mi revancha.",
+    "en": "Tomorrow I'm leaving earlier so they don't get that advantage again. I also want to stop for Tzmil's ice cream and bring Faceless one. If he asks why, I'll say it's to keep him awake while he loses. I'm not leaving without my rematch.",
+    "pt": "Amanhã saio mais cedo para não dar essa vantagem de novo. Também quero pegar sorvete da Tzmil e levar um para Faceless. Se perguntar por quê, digo que é para não dormir enquanto perde. Só não vou embora sem minha revanche.",
+    "ja": "明日は早く出て、もうあんな有利にはさせないわ。ツミルのアイスにも寄って、フェイスレスの分も買いたい。理由を聞かれたら、負けてる間に寝ないようにって言う。再戦せずに帰る気だけはないから。"
   }
 ]

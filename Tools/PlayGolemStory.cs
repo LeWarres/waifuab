@@ -7,6 +7,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEditor.Localization;
+using UnityEngine.Localization.Tables;
 public static class PlayGolemStory
 {
     public static string Run()
@@ -20,6 +23,7 @@ public class GolemCampaignProbe:MonoBehaviour
     const BindingFlags F=BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic;
     const string Output="Tools/golem_test_session/";
     Gamepad pad;readonly List<InputDevice> disabled=new();int errors,firstFrame;
+    bool noEvents;
     object Get(object target,string name)=>target.GetType().GetField(name,F).GetValue(target);
     void Set(object target,string name,object value)=>target.GetType().GetField(name,F).SetValue(target,value);
     void Call(object target,string name,params object[] args)=>target.GetType().GetMethod(name,F).Invoke(target,args);
@@ -47,8 +51,42 @@ public class GolemCampaignProbe:MonoBehaviour
     }
     IEnumerator CloseTalk(Talk talk)
     {
-        for(int n=0;n<18&&(talk.Open||talk.Finishing);n++){if(talk.Open)talk.Advance();yield return null;yield return null;}
+        for(int n=0;n<18&&(talk.Open||talk.Finishing);n++){if(talk.Open)talk.Advance();yield return new WaitForSecondsRealtime(.3f);}
         Check(!talk.Open&&!talk.Finishing,"Dialogue callback stuck");
+    }
+    void Fits(Text target,string text,int size,string key)
+    {
+        var settings=target.GetGenerationSettings(new Vector2(target.rectTransform.rect.width,0));
+        settings.resizeTextForBestFit=false;settings.fontSize=size;
+        float height=new TextGenerator().GetPreferredHeight(text,settings)/target.pixelsPerUnit;
+        Check(height<=target.rectTransform.rect.height+1,"Text clips: "+key);
+    }
+    void ValidateCopy(Text story,Text talk)
+    {
+        var rows=File.ReadAllLines("Assets/Localization/strings.tsv");var header=rows[0].Split('\t');int count=0;
+        var collection=LocalizationEditorSettings.GetStringTableCollection("Game");
+        for(int c=1;c<header.Length;c++)
+        {
+            var table=(StringTable)collection.GetTable(header[c]);
+            foreach(string row in rows)
+            {
+                if(!row.StartsWith("story.sentinel.")&&!row.StartsWith("golem.")&&!row.StartsWith("biome.robotheaven\t")&&!row.StartsWith("boss.name.robotheaven\t"))continue;
+                var cells=row.Split('\t');string text=table.GetEntry(cells[0])?.LocalizedValue;
+                Check(text==cells[c].Replace("\\n","\n"),"Wrong imported copy: "+header[c]+" "+cells[0]);count++;
+                if(!cells[0].StartsWith("story.sentinel."))continue;
+                if(cells[0].Contains(".title"))continue;
+                bool dialogue=cells[0].Contains(".before.")||cells[0].Contains(".after.");
+                Fits(dialogue?talk:story,text,dialogue?31:25,header[c]+" "+cells[0]);
+            }
+        }
+        Check(count==496,"Unexpected localization count");Log("PASS 496 imported values; all Golem narrative/gameplay texts fit actual UI in four languages");
+    }
+    void CheckTalk(Talk talk,bool before)
+    {
+        Story.Duel(before,out var names,out var lines,out var speakers);
+        var actual=(string[])Get(talk,"lines");var actualNames=(string[])Get(talk,"names");
+        Check(actual.Length==lines.Length,"Wrong dialogue count");
+        for(int n=0;n<lines.Length;n++)Check(actual[n]==lines[n]&&actualNames[n]==names[n],"Wrong text/speaker: "+Story.Chapter+"/"+before+"/"+n);
     }
     IEnumerator Pick(GolemChallenge game,int index){game.Activate(index);yield return null;yield return null;}
     IEnumerator SolveCircuit(GolemChallenge game)
@@ -74,6 +112,14 @@ public class GolemCampaignProbe:MonoBehaviour
     IEnumerator Moral(GolemChallenge game,int highCount)
     {
         yield return new WaitForSecondsRealtime(.35f);yield return Press();Check(Get(game,"stage").ToString()=="Questions","X did not start moral test");
+        Canvas.ForceUpdateCanvases();
+        var labels=(List<Text>)Get(game,"labels");var message=(Text)Get(game,"message");
+        var collection=LocalizationEditorSettings.GetStringTableCollection("Game");
+        foreach(var table in collection.StringTables)for(int n=1;n<=13;n++)
+        {
+            Fits(message,table.GetEntry($"golem.moral.{n}.q").LocalizedValue,34,"moral question "+n);
+            foreach(string side in new[]{"high","low"})Fits(labels[0],table.GetEntry($"golem.moral.{n}.{side}").LocalizedValue,28,"moral option "+n+side);
+        }
         ScreenCapture.CaptureScreenshot(Output+"moral-"+highCount+".png");yield return new WaitForEndOfFrame();
         for(int q=0;q<13;q++)
         {
@@ -104,11 +150,14 @@ public class GolemCampaignProbe:MonoBehaviour
     }
     IEnumerator Run()
     {
+        noEvents=TrainSim.NoEvents;TrainSim.NoEvents=true;Application.runInBackground=true;
         foreach(var d in InputSystem.devices)if(d is Gamepad&&d.enabled){disabled.Add(d);InputSystem.DisableDevice(d);}
         pad=InputSystem.AddDevice<Gamepad>("GolemProbePad");InputSystem.onAfterUpdate+=Current;
         PlayerPrefs.SetInt("locomotive.selected",4);Locomotives.StoryMode=true;Story.TestChapter=-1;SaveGame.NewStory(4);Story.Play(0);SceneManager.LoadScene("historiaDialogos");yield return new WaitForSecondsRealtime(1);
         var intro=UnityEngine.Object.FindAnyObjectByType<StoryIntro>();Check(intro&&intro.pages.Length==6,"Golem prologue missing");Check(UiKit.Now.main==UiKit.Hero("sentinel").main,"Wrong Golem palette");
         yield return Press();Check((int)Get(intro,"visible")>0,"X did not reveal story");intro.ShowPage(0,true);ScreenCapture.CaptureScreenshot(Output+"prologue.png");yield return new WaitForEndOfFrame();
+        var layout=intro.gameObject.AddComponent<Talk>();layout.Show(new[]{L10n.T("hero.character.sentinel")},new[]{"Test"},new[]{false},null);
+        Canvas.ForceUpdateCanvases();ValidateCopy((Text)Get(intro,"narration"),(Text)Get(layout,"what"));yield return CloseTalk(layout);Destroy(layout);
         string[] biomes={"government","space","thulu","robotheaven"};int[] rivals={3,10};
         for(int c=0;c<4;c++)
         {
@@ -116,7 +165,9 @@ public class GolemCampaignProbe:MonoBehaviour
             var train=UnityEngine.Object.FindAnyObjectByType<TrainSim>();Check(train&&train.BiomeId==biomes[c]&&Locomotives.Hero=="sentinel","Wrong world/player "+c);
             if(c==3){ScreenCapture.CaptureScreenshot(Output+"robot-heaven.png");yield return new WaitForEndOfFrame();}
             Set(train,"storyClock",Story.Seconds);Set(train,"duelCalled",false);var talk=train.GetComponent<Talk>();float until=Time.unscaledTime+8;
-            while(!talk.Open&&Time.unscaledTime<until)yield return null;Check(talk.Open,"Timed finale did not start "+c);yield return CloseTalk(talk);yield return new WaitForSecondsRealtime(.8f);
+            while(!talk.Open&&Time.unscaledTime<until)yield return null;Check(talk.Open,"Timed finale did not start "+c);CheckTalk(talk,true);
+            yield return new WaitForSecondsRealtime(.35f);Check((int)Get(talk,"at")==0,"Automatic dialogue advance");
+            yield return CloseTalk(talk);yield return new WaitForSecondsRealtime(.8f);
             if(c<2)
             {
                 var rival=train.GetComponent<RivalEvent>();Check(rival.Active&&(int)Get(rival,"rivalIndex")==rivals[c],"Wrong train duel");rival.TestWin();
@@ -126,7 +177,7 @@ public class GolemCampaignProbe:MonoBehaviour
                 var game=train.GetComponent<GolemChallenge>();Check(game&&game.Active&&train.Racing,"Missing/passthrough challenge");
                 if(c==2)yield return SolveCircuit(game);else yield return Moral(game,7);
             }
-            until=Time.unscaledTime+5;while(!talk.Open&&Time.unscaledTime<until)yield return null;Check(talk.Open,"Post-finale dialogue missing");yield return CloseTalk(talk);
+            until=Time.unscaledTime+5;while(!talk.Open&&Time.unscaledTime<until)yield return null;Check(talk.Open,"Post-finale dialogue missing");CheckTalk(talk,false);yield return CloseTalk(talk);
             if(c<2)train.RaceFinished(true);yield return new WaitForSecondsRealtime(1.4f);intro=UnityEngine.Object.FindAnyObjectByType<StoryIntro>();Check(intro,"No post-chapter scene");
             if(c==0){Check(Story.AscentPending&&intro.pages.Length==5,"Missing pre-flight pages");Call(intro,"Finish");yield return new WaitForSecondsRealtime(1.4f);yield return Flight();intro=UnityEngine.Object.FindAnyObjectByType<StoryIntro>();}
             Log("PASS chapter "+(c+1)+": "+biomes[c]);
@@ -139,6 +190,6 @@ public class GolemCampaignProbe:MonoBehaviour
     }
     void OnDestroy()
     {
-        Application.logMessageReceived-=Error;InputSystem.onAfterUpdate-=Current;if(pad!=null&&pad.added)InputSystem.RemoveDevice(pad);foreach(var d in disabled)if(d.added)InputSystem.EnableDevice(d);
+        Application.logMessageReceived-=Error;TrainSim.NoEvents=noEvents;InputSystem.onAfterUpdate-=Current;if(pad!=null&&pad.added)InputSystem.RemoveDevice(pad);foreach(var d in disabled)if(d.added)InputSystem.EnableDevice(d);
     }
 }

@@ -423,6 +423,9 @@ public static class UiKit
     // Whose colours a line of dialogue is in: the hero whose name it is, else the rival's red or the biome's.
     public static Color Speaker(string name, bool rival)
     {
+        if (L10n.T("story.crochtrain.thoughts") == name || L10n.T("hero.character.crochtrain") == name) return Hero("crochtrain").main;
+        if (L10n.T("loco.crochet") == name) return Hero("crochtrain").main;
+        if (L10n.T("loco.beast") == name) return Hero("giger").main;
         if (L10n.T("hero.character.nath") == name) return Hero("nath").main;
         if (L10n.T("hero.character.gabriel") == name) return Hero("gabriel").main;
         if (L10n.T("hero.character.giger") == name) return Hero("giger").main;

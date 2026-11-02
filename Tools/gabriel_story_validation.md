@@ -1,5 +1,18 @@
 # Gabriel story validation — 2026-10-27
 
+## Revisión de personalidad — 2026-11-01
+
+- 42 claves narrativas y de combate reescritas en ES/EN/PT/JA. Gabriel es consentida, berrinchuda y muy amorosa: quiere atención, descanso y agradecimientos; protesta con dramatismo, pero protege a la gente y atiende a sus rivales heridos antes de ocuparse de sí misma.
+- El estado del hermano de Tzmil se trata con seriedad. Gabriel se preocupa, ayuda a dejarlos pasar y espera noticias; no lo confunde con alguien dormido por pereza. La noticia de su mejoría llega por un mensajero, sin conocimiento ajeno a su perspectiva.
+- El reencuentro mantiene su personalidad exigente y cariñosa, con la promesa de comida y una cita concreta en Baratito sobre el mar. Se conservan las once ilustraciones, los encuentros, las mejoras y la duración.
+- JSON, TSV y guion de lectura sincronizados. `build_gabriel_story.py` toma el JSON canónico para no regenerar la voz anterior. `ImportGabrielRevision.Run`: 208 valores importados y comprobados por lectura.
+- `CheckGabrielStory.Run`: PASS, cuatro encuentros en cielo, 1800 segundos, once ilustraciones, retrato y 208 valores; las demás campañas mantienen 1200 segundos.
+- `PlayGabrielStory.Run`: PASS, 386 fotogramas y 0 errores de consola. Se comprobaron 208 valores contra el TSV, altura real de narración/conversaciones en cuatro idiomas, hablantes y textos antes/después de cada rival y avance manual. Conservación del mismo TrainSim, tren y equipo entre los cuatro encuentros, X para elegir arma/pasiva, frontera 1798/1800 segundos, suerte +3, Gracias y recuperación de mejoras parciales/completas sin duplicación: PASS.
+- Viajes y victorias acelerados para comprobar la campaña; no es una prueba de balance de treinta minutos. El montaje artístico permanece intacto.
+- Revisión visual adicional con `PreviewGabrielArt.Run`: seis páginas con los textos nuevos renderizadas en StoryIntro, 127 fotogramas. La captura de la cita muestra el texto completo y legible. Partida, selección y escena originales restauradas; `TzmilPlaySession.Verify`: PASS, guardado idéntico al respaldo y editor fuera de Play Mode.
+
+## Validación anterior de integración
+
 Implemented Gora-P campaign: 30-minute heaven opening, three initial luck levels, then Onini, Tzmil, Giger Machine and ReyMar. Three intermediate dialogues retain the same TrainSim instance, scene, train and equipment; each gives one weapon and one passive choice before the next direct duel. Final reunion leads to Thanks.
 
 11 imported illustrations follow the approved simple amateur pencil/pastel sample. 52 localization keys / 208 translations (ES, EN, PT, JA). Gabriel portrait available in selection. Her dedicated 3D model remains pending; existing gameplay avatar fallback retained.

@@ -30,11 +30,11 @@ public static class Story
 
     static readonly Part[] Bba =
     {
-        new Part { biome = 0, rival = 2,  intro = 16, outro = 2, before = "hrh", after = "rh" }, // desert: Onini and the C-279
-        new Part { biome = 5, rival = 7,  intro = 2,  outro = 1, before = "rhr", after = "rh", inspection = true, questionnaire = QuestionnaireMode.Human, race = true }, // city: Cerebron and the R-2D-2
-        new Part { biome = 6, rival = 4,  intro = 2,  outro = 2, before = "rhr", after = "rh", eyeBoss = true }, // space: Sentinel and the Golem
-        new Part { biome = 7, rival = 10, intro = 2,  outro = 2, before = "rhr", after = "rh", questionnaire = QuestionnaireMode.Alien, cave = true }, // alien planet: Faceless and T.exe (its pages lead straight into the biome)
-        new Part { biome = 8, rival = 3,  intro = 2,  outro = 5, before = "rhr", after = "rh", gates = true, trench = true }, // the alien base: Tzmil and the Night Skull
+        new Part { biome = 0, rival = 2,  intro = 16, outro = 2, before = "hrhrh", after = "rh" }, // Onini
+        new Part { biome = 5, rival = 7,  intro = 2,  outro = 1, before = "rhrh", after = "rh", inspection = true, questionnaire = QuestionnaireMode.Human, race = true }, // control and Cerebron before the race
+        new Part { biome = 6, rival = 4,  intro = 2,  outro = 2, before = "rhrh", after = "h", eyeBoss = true }, // Moho, not the placeholder locomotive's driver
+        new Part { biome = 7, rival = 10, intro = 2,  outro = 2, before = "rhrhr", after = "rh", questionnaire = QuestionnaireMode.Alien, cave = true }, // Faceless and T.exe
+        new Part { biome = 8, rival = 3,  intro = 2,  outro = 5, before = "rhrh", after = "h", gates = true, trench = true }, // control guides the trench run; no Tzmil duel
     };
 
     static readonly Part[] Faceless =
@@ -104,6 +104,13 @@ public static class Story
         new Part { biome=10, rival=2, intro=2, outro=2, before="hh", after="h", crates=true },
         new Part { biome=11, rival=5, intro=2, outro=5, before="hrh", after="rh" },
     };
+    static readonly Part[] Crochtrain =
+    {
+        new Part { biome=13, rival=9, intro=7, outro=2, before="rhh", after="hh" },
+        new Part { biome=10, rival=2, intro=2, outro=2, before="rhr", after="hr" },
+        new Part { biome=11, rival=5, intro=2, outro=2, before="rhr", after="rh" },
+        new Part { biome=3, rival=7, intro=2, outro=6, before="rhr", after="rh" },
+    };
     static readonly Part[] Gabriel =
     {
         new Part { biome=11, rival=2, intro=6, outro=2, before="rhr", after="hr" },
@@ -119,11 +126,11 @@ public static class Story
         new Part { biome=10, rival=2, intro=1, outro=6, before="rhr", after="hr" },
         new Part { biome=2, rival=10, intro=2, outro=5, before="rhr", after="hr" },
     };
-    public static Part[] Route(string hero) => hero switch { "nath" => Nath, "gabriel" => Gabriel, "giger" => Giger, "bba" => Bba, "faceless" => Faceless, "xiuhtecuhtli" => R20, "onini" => Onini, "culu" => Culu, "cerebron" => Cerebron, "tzmil" => Tzmil, "sentinel" => Golem, _ => null };
+    public static Part[] Route(string hero) => hero switch { "crochtrain" => Crochtrain, "nath" => Nath, "gabriel" => Gabriel, "giger" => Giger, "bba" => Bba, "faceless" => Faceless, "xiuhtecuhtli" => R20, "onini" => Onini, "culu" => Culu, "cerebron" => Cerebron, "tzmil" => Tzmil, "sentinel" => Golem, _ => null };
     public static string Hero => Locomotives.CampaignHeroId(Locomotives.Selected);
     public static bool Active => Locomotives.StoryMode && Route(Hero) != null;
     public static bool ShadowRival => Active && Hero=="onini" && Chapter==4;
-    public static bool MachineRival => Active && (Current.rival==9 || Current.rival==11 || ((Hero=="giger" || Hero=="nath") && Current.rival==5));
+    public static bool MachineRival => Active && (Current.rival==9 || Current.rival==11 || ((Hero=="giger" || Hero=="nath" || Hero=="crochtrain") && Current.rival==5));
     public static int Chapter { get; set; }          // the one being played
     public static Part Current => Route(Hero)[Chapter];
     public static bool JustWon { get; private set; } // the story scene opens with that chapter's ending
@@ -227,7 +234,7 @@ public static class Story
                             _ => "bba_ending_reflection"
                         }),
                         _ => null
-                    } : Hero == "faceless" ? FacelessArt(ending, false, n) : Hero == "xiuhtecuhtli" ? R20Art(ending, false, n) : Hero == "onini" ? OniniArt(ending, false, n) : Hero == "culu" ? CuluArt(ending, false, n) : Hero == "cerebron" ? CerebronArt(ending, false, n) : Hero == "tzmil" ? TzmilArt(ending, false, n) : Hero == "sentinel" ? GolemArt(ending, false, n) : Hero == "giger" ? GigerArt(ending, false, n) : Hero == "gabriel" ? GabrielArt(ending,false,n) : Hero == "nath" ? NathArt(ending,false,n) : null });
+                    } : Hero == "faceless" ? FacelessArt(ending, false, n) : Hero == "xiuhtecuhtli" ? R20Art(ending, false, n) : Hero == "onini" ? OniniArt(ending, false, n) : Hero == "culu" ? CuluArt(ending, false, n) : Hero == "cerebron" ? CerebronArt(ending, false, n) : Hero == "tzmil" ? TzmilArt(ending, false, n) : Hero == "sentinel" ? GolemArt(ending, false, n) : Hero == "crochtrain" ? CrochtrainArt(ending, false, n) : Hero == "giger" ? GigerArt(ending, false, n) : Hero == "gabriel" ? GabrielArt(ending,false,n) : Hero == "nath" ? NathArt(ending,false,n) : null });
             replayArrival = false;
             if (JustWon)
             {
@@ -281,7 +288,7 @@ public static class Story
                         3 => n == 1 ? "Story/bba_alien_arrival" : "Story/bba_space_landing",
                         4 => "Story/bba_fortress_arrival",
                         _ => null
-                    } : Hero == "faceless" ? FacelessArt(Chapter, true, n) : Hero == "xiuhtecuhtli" ? R20Art(Chapter, true, n) : Hero == "onini" ? OniniArt(Chapter, true, n) : Hero == "culu" ? CuluArt(Chapter, true, n) : Hero == "cerebron" ? CerebronArt(Chapter, true, n) : Hero == "tzmil" ? TzmilArt(Chapter, true, n) : Hero == "sentinel" ? GolemArt(Chapter, true, n) : Hero == "giger" ? GigerArt(Chapter, true, n) : Hero == "gabriel" ? GabrielArt(Chapter,true,n) : Hero == "nath" ? NathArt(Chapter,true,n) : null });
+                    } : Hero == "faceless" ? FacelessArt(Chapter, true, n) : Hero == "xiuhtecuhtli" ? R20Art(Chapter, true, n) : Hero == "onini" ? OniniArt(Chapter, true, n) : Hero == "culu" ? CuluArt(Chapter, true, n) : Hero == "cerebron" ? CerebronArt(Chapter, true, n) : Hero == "tzmil" ? TzmilArt(Chapter, true, n) : Hero == "sentinel" ? GolemArt(Chapter, true, n) : Hero == "crochtrain" ? CrochtrainArt(Chapter, true, n) : Hero == "giger" ? GigerArt(Chapter, true, n) : Hero == "gabriel" ? GabrielArt(Chapter,true,n) : Hero == "nath" ? NathArt(Chapter,true,n) : null });
         InspectionPending = route[Chapter].inspection && !inspectionPassed;
         return pages.ToArray();
     }
@@ -299,10 +306,18 @@ public static class Story
             rival[i] = who[i] == 'r';
             names[i] = rival[i] && Hero == "xiuhtecuhtli" && Chapter == 4 ? L10n.T("story.xiuhtecuhtli.clone") : L10n.T(Locomotives.HeroNameKey(rival[i] ? part.rival : Locomotives.Selected));
             lines[i] = L10n.T($"story.{Hero}.{Chapter}.{side}.{i + 1}");
+            // Dorian cannot speak aloud; only Culu understands him at the ending.
+            if (!rival[i] && Hero=="crochtrain") names[i]=L10n.T("story.crochtrain.thoughts");
+            if (rival[i] && Hero == "bba")
+            {
+                if (Current.eyeBoss) names[i] = L10n.T("eyeboss.name");
+                else if (Current.trench || (Current.race && i == 0)) names[i] = L10n.T("race.radio.name");
+            }
             if(rival[i] && ShadowRival) names[i]=L10n.T("story.onini.shadow");
             else if(rival[i] && (Hero=="onini" || Hero=="tzmil") && Current.eyeBoss) names[i]=L10n.T("eyeboss.heaven.name");
             else if(rival[i] && MachineRival) names[i]=L10n.T(Locomotives.NameKeys[part.rival]);
             else if(rival[i] && Hero=="cerebron" && Current.eyeBoss) names[i]=L10n.T("story.cerebron.roger");
+            else if(rival[i] && Hero=="faceless" && Current.eyeBoss) names[i]=L10n.T("eyeboss.name");
         }
     }
 
@@ -450,6 +465,13 @@ public static class Story
         string id=opening ? chapter switch {0=>n<=2 ? "wingless" : n<=5 ? "origin" : "onini",1=>"tzmil",2=>"giger",_=>"reymar"}
             : chapter switch {0=>"credit",1=>n==1 ? "tzmil" : "crush",2=>n==1 ? "giger" : "dayoff",_=>n==1 ? "reymar" : n<=4 ? "reunion" : "date"};
         return "Story/gabriel_"+id;
+    }
+
+    public static string CrochtrainArt(int chapter,bool opening,int n)
+    {
+        string id=opening ? chapter switch {0=>n<=2 ? "gift" : n<=4 ? "book" : "service",1=>"hell",2=>"heaven",_=>"sea"}
+            : chapter switch {0=>"escape",1=>"hell",2=>"sea",_=>n<=3 ? "cafe" : "taken"};
+        return "Story/crochtrain_"+id;
     }
 
     public static string GigerArt(int chapter,bool opening,int n)

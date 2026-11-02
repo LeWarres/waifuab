@@ -1,5 +1,18 @@
 # Validación de la historia de Golem
 
+## Revisión de personalidad — 2026-11-01
+
+- 82 entradas revisadas en cuatro idiomas: 56 de narración, conversaciones y ascenso; 26 opciones de las trece preguntas. La puntuación, las preguntas, los rivales, las rutas, el arte y ambos finales se conservan.
+- Golem habla con precisión y contención, evita bromas constantes y no da por demostrada su conciencia. Observa recuerdos que no quiere perder, la espera involuntaria de una orden y su resistencia a desconectar el núcleo. No presupone que los otros robots sean perezosos ni sabe qué sienten.
+- Su decisión de dejar abierto el ducto sigue siendo deliberada y peligrosa. Volver a encontrarse con una abertura que puede abandonar enlaza la elección del portal con esa responsabilidad, sin absolverlo por sacrificarse después.
+- El final alto permite elegir renacer con dudas. El bajo conserva su voz interna mientras pierde el control de su cuerpo; Culu no conoce esa situación. Baratito sigue situado sobre el mar.
+- `golem_story_revision.tsv` conserva los cambios en ES/EN/PT/JA. `build_golem_story.py` exporta el JSON canónico sin restaurar el borrador anterior. Guion completo en `golem_story.md`.
+- `ImportGolemRevision.Run`: 496 valores importados y comprobados por lectura de las tablas reales. Comprobación adicional de igualdad entre JSON y TSV: PASS.
+- `CheckGolemStory.Run`: PASS en Unity, cuatro capítulos, ascenso/reintento, 16 imágenes, 496 traducciones, circuitos, frontera moral 6/7 y ambos finales.
+- `PlayGolemStory.Run`: PASS, 2819 fotogramas, 0 errores de consola. Comprobados textos y hablantes antes/después de los cuatro retos, avance manual, 496 valores contra TSV y altura real de narración/conversaciones en ES/EN/PT/JA. Preguntas y opciones caben también en los rectángulos reales del juicio en los cuatro idiomas.
+- Se probaron X, derrota/reintento del ascenso, montaje y rotación real del circuito, deshacer con Círculo y las trece respuestas en ambas ramas (7 altas y 6 altas), persistencia y pantallas Gracias. Viajes y victorias de duelos acelerados: no es una prueba de balance. Capturas del final y juicio revisadas visualmente.
+- Partida y selección originales restauradas al terminar; comprobación de igualdad con el respaldo: PASS.
+
 ## Contenido
 
 - Ruta del selector: locomotora Golem, héroe interno `sentinel` (índice 4).

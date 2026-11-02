@@ -1,5 +1,18 @@
 # Giger Machine — validación
 
+## Revisión de personalidad — 2026-11-02
+
+- Revisadas las 40 entradas narrativas y de combate en ES/EN/PT/JA: 160 valores. Giger habla con agresividad, brusquedad e impulsividad, provoca a sus rivales y disfruta la resistencia y el ruido. La narración sigue sus acciones y percepciones, sin conocer planes ajenos; el engaño del ángel se descubre al volver a casa. Pscoworld permanece sin otros habitantes.
+- Las respuestas de Culu conservan un tono correcto y práctico. Crochtrain y Gora-P mantienen sus propios rótulos y voces. Las cifras 35/40 permanecen en la interfaz, fuera de los diálogos. No se modificaron ilustraciones, rutas ni mecánicas.
+- Fuente canónica: `giger_story_dialogues.json`; cambios de voz: `giger_story_revision.tsv`; lectura española: `giger_story.md`. `build_giger_story.py` exporta el guion aprobado sin restaurar el borrador anterior ni cambiar filas ajenas.
+- `ImportGigerRevision.Run`: 200 valores importados y comprobados en Unity. `CheckGigerStory.Run`: cuatro capítulos, nueve ilustraciones, traducciones y límite 34/35 correctos.
+- `PlayGigerStory.Run`: 3147 fotogramas, cero errores de consola. Conversaciones previas y posteriores de los cuatro capítulos verificadas con sus hablantes, avance manual y control X; recorrido hasta Gracias. Se comprobaron 200 valores en los cuatro idiomas y la altura de los textos narrativos y de gameplay sobre sus controles reales.
+- El reto usó entrada R2, 40 resoluciones de colisión/omisión, derrota con 34/40, reintento limpio y victoria con 35/40. Trayectos y victorias de combate acelerados; las posiciones entre cajas se adelantaron para cubrir ambos límites. Esta prueba verifica integración y resultados, no el balance de una partida completa.
+- Capturas actuales `giger_test_session/prologue.png` y `giger_test_session/ending.png` inspeccionadas: arte aprobado conservado, texto legible y final sin personajes añadidos en Pscoworld.
+- Partida y selección originales restauradas y verificadas idénticas a la copia previa; escena `historiaDialogos`, Editor fuera de Play Mode.
+
+## Registro anterior
+
 Campaña conectada al selector: Pscoworld (Culu / Kairi Resha), Thulu (Crochtrain), infierno (romper 35 de 40 cajas), cielo (Gora-P), regreso a Pscoworld y pantalla Gracias.
 
 ## Arte y textos

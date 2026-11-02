@@ -38,99 +38,99 @@
     {
       "number": 1,
       "artwork": "Story/faceless_champion",
-      "es": "Soy el campeón de este planeta. Todos lo dicen con orgullo. A mí nunca me preguntaron si quería serlo.",
-      "en": "I am this planet's champion. Everyone says it with pride. Nobody ever asked whether I wanted to be.",
-      "pt": "Sou o campeão deste planeta. Todos dizem isso com orgulho. Nunca me perguntaram se eu queria ser.",
-      "ja": "僕はこの星の王者だ。みんな誇らしげにそう呼ぶ。僕がそうなりたいか、聞いた人はいない。"
+      "es": "Me llaman Faceless. Aquí suelen añadir «el campeón» y esperar que salude. Lo hago, por supuesto. Me preocupa que alguien crea que lo estoy ignorando; no tengo una cara que ayude mucho a aclararlo.",
+      "en": "My name is Faceless. Here they usually add “the champion” and expect a greeting. I oblige, of course. I worry someone might think I am ignoring them; my face does little to clarify things.",
+      "pt": "Me chamam de Faceless. Aqui costumam acrescentar «o campeão» e esperar uma saudação. Cumprimento, claro. Receio que pensem que estou ignorando alguém; meu rosto não ajuda muito a esclarecer.",
+      "ja": "僕はフェイスレス。この星では「王者」と付け加えられ、挨拶を期待される。もちろん応じるよ。無視したと思われたくないからね。表情では説明しにくい顔をしているし。"
     },
     {
       "number": 2,
       "artwork": "Story/faceless_orders",
-      "es": "Mi trabajo es competir. Ganar. Y destruir a quien me señalen. Cada victoria celebra un nombre que siento cada vez menos mío.",
-      "en": "My job is to compete. To win. And to destroy whoever they point at. Every victory celebrates a name that feels less and less like mine.",
-      "pt": "Meu trabalho é competir. Vencer. E destruir quem mandarem. Cada vitória celebra um nome que sinto cada vez menos meu.",
-      "ja": "僕の仕事は競い、勝ち、命じられた相手を倒すこと。勝つたびに、自分の名が少しずつ他人のものに思えてくる。"
+      "es": "Mi trabajo consiste en competir y destruir a quien me indiquen. Antes de salir pregunto si de verdad hace falta. La respuesta suele llegar con unas coordenadas, así que guardo el cuaderno y voy. No me gusta admitir lo bien que aprendí a hacerlo.",
+      "en": "My work is to compete and destroy whoever I am directed toward. Before leaving I ask if it is necessary. The answer usually includes coordinates, so I put my sketchbook away and go. I dislike admitting how well I learned the job.",
+      "pt": "Meu trabalho é competir e destruir quem me indicarem. Antes de sair pergunto se é mesmo necessário. A resposta costuma vir com coordenadas, então guardo o caderno e vou. Não gosto de admitir como aprendi bem esse trabalho.",
+      "ja": "仕事は競い、指定された相手を倒すことだ。出発前には本当に必要か尋ねる。大抵、座標付きの答えが来るので、画帳をしまって向かう。上達してしまったことは認めたくないね。"
     },
     {
       "number": 3,
       "artwork": "Story/faceless_legacy",
-      "es": "Mi padre hizo lo mismo antes que yo. Y antes de él, mi abuelo.",
-      "en": "My father did the same before me. And before him, my grandfather.",
-      "pt": "Meu pai fez o mesmo antes de mim. E, antes dele, meu avô.",
-      "ja": "僕の前には父が同じ仕事をしていた。その前は、祖父だった。"
+      "es": "Mi padre fue campeón antes que yo, y antes lo fue mi abuelo. En casa se hablaba de las victorias como si fueran recuerdos de viajes. Yo preguntaba cómo eran los lugares y acababan explicándome cómo habían ganado allí.",
+      "en": "My father was champion before me, and my grandfather before him. At home they discussed victories like travel memories. I would ask what the places looked like, and they would explain how they had won there.",
+      "pt": "Meu pai foi campeão antes de mim, e meu avô antes dele. Em casa falavam das vitórias como lembranças de viagem. Eu perguntava como eram os lugares e acabavam me explicando como venceram neles.",
+      "ja": "父も祖父も王者だった。家では勝利の話が旅行の思い出のように語られた。どんな場所だったか尋ねると、そこでどう勝ったかの説明になってしまうんだ。"
     },
     {
       "number": 4,
       "artwork": "Story/faceless_legacy",
-      "es": "No heredé una vocación. Heredé una obligación. A eso lo llaman legado.",
-      "en": "I did not inherit a calling. I inherited an obligation. They call that a legacy.",
-      "pt": "Não herdei uma vocação. Herdei uma obrigação. É isso que chamam de legado.",
-      "ja": "受け継いだのは夢じゃない。義務だった。みんなはそれを「伝統」と呼ぶ。"
+      "es": "Les tengo cariño y no quería decepcionarlos. Acepté la locomotora, los entrenamientos y el título. Lo de querer otra vida lo fui dejando para una conversación más tranquila. Siempre parecía haber una ceremonia antes.",
+      "en": "I love them and did not want to disappoint them. I accepted the locomotive, the training and the title. I kept postponing the conversation about wanting another life until a quieter moment. There always seemed to be a ceremony first.",
+      "pt": "Tenho carinho por eles e não queria decepcionar. Aceitei a locomotiva, os treinos e o título. Deixava a conversa sobre querer outra vida para um momento tranquilo. Sempre parecia haver uma cerimônia antes.",
+      "ja": "家族は大切だし、がっかりさせたくなかった。機関車も訓練も称号も受け入れた。別の人生を望む話は、落ち着いた時にと思っていた。その前にはいつも式典がある気がしたけれど。"
     },
     {
       "number": 5,
       "artwork": "Story/faceless_artist",
-      "es": "Yo quería otra cosa: una vida dedicada al arte. Aprender a dibujar lo que veo... y también lo que todavía no existe.",
-      "en": "I wanted something else: a life devoted to art. To learn to draw what I see... and what does not exist yet.",
-      "pt": "Eu queria outra coisa: uma vida dedicada à arte. Aprender a desenhar o que vejo... e o que ainda nem existe.",
-      "ja": "僕は別の人生が欲しかった。芸術に生きて、見えるものを描く。そして、まだ存在しないものも。"
+      "es": "Lo que me gusta es dibujar. Puedo pasarme una tarde intentando entender cómo se dobla una hoja. Luego alguien me pregunta si estoy preparando una estrategia. Suelo mostrarle el dibujo. Todavía no he convencido a todos de que solo era una hoja.",
+      "en": "What I enjoy is drawing. I can spend an afternoon studying how a leaf folds. Then someone asks if I am planning a strategy. I show them the sketch. I have not yet convinced everyone it was only a leaf.",
+      "pt": "Eu gosto mesmo é de desenhar. Posso passar a tarde entendendo como uma folha se dobra. Depois alguém pergunta se preparo uma estratégia. Mostro o desenho. Ainda não convenci todos de que era só uma folha.",
+      "ja": "僕が好きなのは絵を描くことだ。葉の折れ方を見ているだけで午後が終わる。戦略を練っているのかと聞かれたら絵を見せる。ただの葉だったと、まだ全員には信じてもらえていない。"
     },
     {
       "number": 6,
       "artwork": "Story/faceless_artist",
-      "es": "En lugar de contar derrotados, quería llenar cuadernos. Que mis manos sirvieran para crear algo.",
-      "en": "Instead of counting the defeated, I wanted to fill sketchbooks. To use my hands to create something.",
-      "pt": "Em vez de contar derrotados, eu queria encher cadernos. Usar minhas mãos para criar alguma coisa.",
-      "ja": "倒した相手を数えるより、スケッチブックを埋めたかった。この手で、何かを生み出したかった。"
+      "es": "Me gustaría aprender sin tener que mirar el reloj entre dos encargos. Dibujar personas que pudieran quedarse quietas porque están cómodas, no porque acabo de derrotarlas. Por ahora practico con lo que encuentro cerca de las vías.",
+      "en": "I would like to learn without watching the clock between assignments. To draw people sitting still because they are comfortable, not because I have just defeated them. For now I practice with what I find beside the tracks.",
+      "pt": "Gostaria de aprender sem olhar o relógio entre missões. Desenhar pessoas paradas porque estão confortáveis, não porque acabei de derrotá-las. Por enquanto pratico com o que encontro perto dos trilhos.",
+      "ja": "任務の合間に時計を気にせず学びたい。僕に倒されたからではなく、くつろいで座っている人を描きたい。今は線路の近くで見つけたものを描いて練習している。"
     },
     {
       "number": 7,
       "artwork": "Story/faceless_friend",
-      "es": "Mi locomotora es mi mejor amiga. No es una forma de hablar: tiene un alma, una conciencia y su propia manera de entenderme.",
-      "en": "My locomotive is my best friend. That is no figure of speech: she has a soul, a mind, and her own way of understanding me.",
-      "pt": "Minha locomotiva é minha melhor amiga. Não é força de expressão: ela tem alma, consciência e seu próprio jeito de me entender.",
-      "ja": "僕の機関車は親友だ。たとえ話じゃない。彼女には魂と意識があり、彼女なりに僕を理解してくれる。"
+      "es": "Mi mejor amiga es T.exe, mi locomotora. Está viva y tiene bastante carácter. Cuando le enseño un boceto, se inclina para verlo mejor. Le dediqué un cuaderno entero; sostiene que he dibujado su chimenea demasiado corta.",
+      "en": "My best friend is T.exe, my locomotive. She is alive and has quite a personality. When I show her a sketch, she leans closer. I devoted an entire sketchbook to her; she maintains I made her chimney too short.",
+      "pt": "Minha melhor amiga é T.exe, minha locomotiva. Está viva e tem bastante personalidade. Quando mostro um esboço, se inclina para ver melhor. Dediquei um caderno inteiro a ela; insiste que fiz sua chaminé curta demais.",
+      "ja": "親友は機関車のT.exe。生きていて、なかなかの性格だ。下絵を見せると身を傾けてのぞく。画帳一冊を彼女に捧げたのに、煙突が短すぎると言われている。"
     },
     {
       "number": 8,
       "artwork": "Story/faceless_friend",
-      "es": "No es ella quien me encadena. Es lo que todos esperan de nosotros. Mientras yo siguiera a sus mandos, tendría que seguir siendo el campeón.",
-      "en": "She is not the one who chains me down. It is what everyone expects of us. As long as I stayed at her controls, I had to remain the champion.",
-      "pt": "Não é ela que me prende. É o que todos esperam de nós. Enquanto eu estivesse no comando dela, teria que continuar sendo o campeão.",
-      "ja": "僕を縛るのは彼女じゃない。僕らに寄せられる期待だ。彼女を操縦する限り、僕は王者でいなければならなかった。"
+      "es": "Nos gusta viajar juntos. Lo que me agota es que cada viaje tenga que acabar en una pelea. Se lo conté una noche en la cabina, con el cuaderno sobre las rodillas. T.exe esperó a que terminara y acercó un poco más la luz.",
+      "en": "We enjoy traveling together. What exhausts me is every journey having to end in a fight. I told her one night in the cab, my sketchbook on my knees. T.exe waited until I finished and brought the light a little closer.",
+      "pt": "Gostamos de viajar juntos. O que me esgota é cada viagem precisar acabar numa luta. Contei isso numa noite na cabine, com o caderno no colo. T.exe esperou eu terminar e aproximou um pouco a luz.",
+      "ja": "一緒に旅をするのは好きだ。疲れるのは、毎回戦いで終わること。ある夜、膝に画帳を置いて運転室で話した。T.exeは最後まで聞いて、明かりを少し近づけてくれた。"
     },
     {
       "number": 9,
       "artwork": "Story/faceless_artist",
-      "es": "Guardaba mis dibujos entre un viaje y el siguiente. Siempre había otra orden. Siempre alguien más a quien vencer.",
-      "en": "I tucked my drawings away between journeys. There was always another order. Always someone else to defeat.",
-      "pt": "Eu guardava meus desenhos entre uma viagem e outra. Sempre havia outra ordem. Sempre mais alguém para vencer.",
-      "ja": "旅の合間に、描いた絵をしまい込んだ。次の命令が待っていた。次に倒す相手が待っていた。"
+      "es": "Desde entonces empecé a guardar también los dibujos que me salían mal. Antes los tiraba por vergüenza. Ahora me gusta volver a ellos y ver qué intentaba hacer. T.exe tiene algunos en la cabina. Le pedí que no los enseñara durante las inspecciones.",
+      "en": "After that I began keeping even the drawings that went wrong. I used to discard them out of embarrassment. Now I like revisiting what I was trying to do. T.exe keeps some in the cab. I asked her not to display them during inspections.",
+      "pt": "Depois comecei a guardar também os desenhos que saíam errados. Antes jogava fora por vergonha. Agora gosto de rever o que tentava fazer. T.exe guarda alguns na cabine. Pedi que não mostrasse durante as inspeções.",
+      "ja": "それから失敗した絵も残すようになった。以前は恥ずかしくて捨てていたけれど、何を描こうとしたか見返すのも好きになった。T.exeは運転室に何枚か置いている。点検中は見せないでと頼んだよ。"
     },
     {
       "number": 10,
       "artwork": "Story/faceless_idea",
-      "es": "Hasta que comenzó la guerra. El planeta entero dejó de hablar de mis victorias y empezó a hablar de sobrevivir.",
-      "en": "Then the war began. The whole planet stopped talking about my victories and started talking about survival.",
-      "pt": "Até que a guerra começou. O planeta inteiro parou de falar das minhas vitórias e começou a falar de sobreviver.",
-      "ja": "そして戦争が始まった。星中の人々は僕の勝利を語るのをやめ、生き残る方法を語り始めた。"
+      "es": "Cuando anunciaron la guerra, llegaron más encargos y empezaron a cambiar nuestras rutas. Oí a mi jefe prometer que el campeón se ocuparía de los invasores. Me habría gustado estar presente cuando me ofrecí voluntario.",
+      "en": "When war was announced, more assignments arrived and our routes changed. I heard my boss promise the champion would handle the invaders. I would have liked to be present when I volunteered.",
+      "pt": "Quando anunciaram a guerra, chegaram mais missões e mudaram nossas rotas. Ouvi meu chefe prometer que o campeão cuidaria dos invasores. Gostaria de ter estado presente quando me ofereci como voluntário.",
+      "ja": "開戦が告げられると任務が増え、経路も変わった。上司が、侵入者は王者に任せればいいと言うのを聞いた。僕が志願した時には、僕もその場にいたかったな。"
     },
     {
       "number": 11,
       "artwork": "Story/faceless_idea",
-      "es": "Miré a mi amiga. Luego miré mis dibujos. Por primera vez, aquel futuro que parecía escrito se había quedado en blanco.",
-      "en": "I looked at my friend. Then at my drawings. For the first time, the future that had seemed already written was a blank page.",
-      "pt": "Olhei para minha amiga. Depois, para meus desenhos. Pela primeira vez, aquele futuro que parecia escrito tinha virado uma página em branco.",
-      "ja": "親友を見た。それから、自分の絵を見た。決まりきっていたはずの未来が、初めて白紙になっていた。"
+      "es": "No quería seguir haciendo daño, pero tampoco sabía cómo decir que me iba. Ensayé una renuncia con T.exe. Me salió tan solemne que terminé pidiéndole disculpas a la puerta. Ella esperó. Volví a intentarlo.",
+      "en": "I did not want to keep hurting people, but I did not know how to say I was leaving. I rehearsed a resignation with T.exe. It sounded so solemn I ended up apologizing to the door. She waited. I tried again.",
+      "pt": "Não queria continuar machucando ninguém, mas não sabia dizer que ia embora. Ensaiei uma renúncia com T.exe. Ficou tão solene que terminei pedindo desculpas à porta. Ela esperou. Tentei outra vez.",
+      "ja": "誰かを傷つけ続けたくはなかった。でも辞めると言い出せなかった。T.exeと辞表の言い方を練習したら、仰々しくなりすぎて扉に謝ってしまった。彼女は待ってくれた。もう一度試したよ。"
     },
     {
       "number": 12,
       "artwork": "Story/faceless_idea",
-      "es": "Y entonces tuve una idea.",
-      "en": "And then I had an idea.",
-      "pt": "E então tive uma ideia.",
-      "ja": "その時、ひとつの考えが浮かんだ。"
+      "es": "Entonces pensé en el título. Si necesitaban un campeón que siempre ganara, quizá una derrota bastaría para que me dejaran marchar. Se lo expliqué a T.exe. No pareció impresionada con la idea, pero ya me había acercado el cuaderno para preparar la actuación.",
+      "en": "Then I thought about the title. If they needed a champion who always won, perhaps a defeat would let me leave. I explained it to T.exe. She did not seem impressed, but had already brought my sketchbook closer to plan the performance.",
+      "pt": "Então pensei no título. Se precisavam de um campeão que sempre vencesse, talvez uma derrota me deixasse partir. Expliquei a T.exe. Não pareceu impressionada, mas já havia aproximado o caderno para planejar a atuação.",
+      "ja": "そこで称号を思い出した。必ず勝つ王者が必要なら、一度負ければ辞めさせてもらえるかもしれない。T.exeに説明した。感心した様子はなかったけれど、演技を考えるための画帳はもう寄せてくれていた。"
     }
   ],
-  "scope": "Prólogo y primer tramo jugable. La continuación de la historia está pendiente."
+  "scope": "Prólogo integrado en la campaña completa de cinco capítulos; textos sincronizados con faceless_story_dialogues.json."
 }

@@ -16,22 +16,27 @@ public class Talk : MonoBehaviour
     bool[] rival;
     int at;
     float since;
+    TalkPortraits portraits;
+    bool closing;
     System.Action done, finished; // finished: done, held back a frame so the last press is not taken twice
 
     public bool Open => canvas && canvas.gameObject.activeSelf;
-    public bool Finishing => finished != null;
+    public bool Finishing => closing || finished != null;
 
     // names[i] says lines[i]; rival[i]: that one is the other side (its name in the rival's colour).
     public void Show(string[] names, string[] lines, bool[] rival, System.Action done)
     {
         if (!canvas) Build();
+        if (!Open) portraits.Clear();
         this.names = names;
         this.lines = lines;
         this.rival = rival;
         this.done = done;
         at = 0;
         since = 0f;
+        closing = false;
         canvas.gameObject.SetActive(true);
+        portraits.Show(names[at], rival[at]);
     }
 
     // The same box as StoryIntro.BuildUI's, without its buttons.
@@ -39,6 +44,12 @@ public class Talk : MonoBehaviour
     {
         canvas = UiKit.NewCanvas("Talk", 30);
         canvas.GetComponent<CanvasScaler>().matchWidthOrHeight = 0.5f;
+        var portraitLayer = new GameObject("GameplaySpeakers", typeof(RectTransform), typeof(TalkPortraits)).GetComponent<RectTransform>();
+        portraitLayer.SetParent(canvas.transform, false);
+        portraitLayer.anchorMin = Vector2.zero;
+        portraitLayer.anchorMax = Vector2.one;
+        portraitLayer.offsetMin = portraitLayer.offsetMax = Vector2.zero;
+        portraits = portraitLayer.GetComponent<TalkPortraits>();
         // Persona style: a dark plate tilted a touch, outlined in white on a hard shadow of the biome's colour, the
         // speaker's name on a tag breaking out of its top left.
         RectTransform dialog = UiKit.Group(canvas.transform, new Vector2(0.5f, 0f), new Vector2(0f, 150f));
@@ -76,6 +87,14 @@ public class Talk : MonoBehaviour
     {
         if (finished != null) { System.Action call = finished; finished = null; call(); return; }
         if (!Open) return;
+        if (closing)
+        {
+            if (portraits.Visible) return;
+            closing = false;
+            canvas.gameObject.SetActive(false);
+            finished = done ?? (() => { });
+            return;
+        }
         since += Time.unscaledDeltaTime;
         string line = lines[at];
         int shown = Mathf.Min(line.Length, Mathf.FloorToInt(since * 40f));
@@ -99,9 +118,11 @@ public class Talk : MonoBehaviour
     // On to the next line, or done after the last.
     public void Advance()
     {
-        if (!Open) return;
-        if (++at < lines.Length) { since = 0f; return; }
-        canvas.gameObject.SetActive(false);
-        finished = done ?? (() => { });
+        if (!Open || closing) return;
+        if (at + 1 < lines.Length) { at++; since = 0f; portraits.Show(names[at], rival[at]); return; }
+        closing = true;
+        portraits.Hide();
     }
+
+    void OnDestroy() { if (canvas) Destroy(canvas.gameObject); }
 }

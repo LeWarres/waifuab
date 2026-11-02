@@ -31,7 +31,7 @@ public static class CheckFacelessStory
                     for (int n = 1; n <= (side == "before" ? part.before : part.after).Length; n++) keys.Add($"story.faceless.{c}.{side}.{n}");
                 keys.Add($"story.faceless.{c}.title");
             }
-            Check(route[0].cave && route[1].cave && route[2].eyeBoss && route[4].drawings, "Wrong finales");
+            Check(route[0].cave && route[1].holo && route[2].eyeBoss && route[4].drawings, "Wrong finales");
             Story.Play(0); Check(Story.Pages().Length == 12 && !Story.InspectionPending, "Wrong prologue");
             typeof(Story).GetProperty("JustWon").SetValue(null, true);
             var pages = Story.Pages();

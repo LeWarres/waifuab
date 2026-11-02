@@ -7,6 +7,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEditor.Localization;
+using UnityEngine.Localization.Tables;
 public static class PlayGigerStory
 {
     public static string Run()
@@ -20,6 +23,7 @@ public class GigerCampaignProbe:MonoBehaviour
     const BindingFlags F=BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic;
     const string Output="Tools/giger_test_session/";
     Gamepad pad;readonly List<InputDevice> disabled=new();int errors,firstFrame;
+    bool noEvents;
     object Get(object target,string name)=>target.GetType().GetField(name,F).GetValue(target);
     void Set(object target,string name,object value)=>target.GetType().GetField(name,F).SetValue(target,value);
     void Call(object target,string name,params object[] args)=>target.GetType().GetMethod(name,F).Invoke(target,args);
@@ -47,8 +51,32 @@ public class GigerCampaignProbe:MonoBehaviour
     }
     IEnumerator CloseTalk(Talk talk)
     {
-        for(int n=0;n<18&&(talk.Open||talk.Finishing);n++){if(talk.Open)talk.Advance();yield return null;yield return null;}
+        for(int n=0;n<18&&(talk.Open||talk.Finishing);n++){if(talk.Open)talk.Advance();yield return new WaitForSecondsRealtime(.3f);}
         Check(!talk.Open&&!talk.Finishing,"Dialogue callback stuck");
+    }
+    void CheckTalk(Talk talk,bool before)
+    {
+        Story.Duel(before,out var names,out var lines,out var sides);var actual=(string[])Get(talk,"lines");var actualNames=(string[])Get(talk,"names");
+        Check(actual.Length==lines.Length,"Wrong dialogue count");for(int n=0;n<lines.Length;n++)Check(actual[n]==lines[n]&&actualNames[n]==names[n],"Wrong text/speaker: "+Story.Chapter+"/"+before+"/"+n);
+    }
+    void ValidateCopy(Text narration,Text gameplay)
+    {
+        var source=File.ReadAllLines("Assets/Localization/strings.tsv");var header=source[0].Split('\t');int values=0;
+        var collection=LocalizationEditorSettings.GetStringTableCollection("Game");
+        for(int c=1;c<header.Length;c++)
+        {
+            var table=(StringTable)collection.GetTable(header[c]);
+            foreach(string line in source)
+            {
+                var row=line.Split('\t');if(!row[0].StartsWith("story.giger.")&&!row[0].StartsWith("giger.")&&row[0]!="hero.character.giger")continue;
+                string text=table.GetEntry(row[0])?.LocalizedValue;Check(text==row[c],"Wrong imported text: "+header[c]+" "+row[0]);values++;
+                bool story=row[0].Contains(".intro.")||row[0].Contains(".outro."),talk=row[0].Contains(".before.")||row[0].Contains(".after.");if(!story&&!talk)continue;
+                Text target=story?narration:gameplay;var settings=target.GetGenerationSettings(new Vector2(target.rectTransform.rect.width,0));settings.resizeTextForBestFit=false;settings.fontSize=story?25:31;
+                float height=new TextGenerator().GetPreferredHeight(text,settings)/target.pixelsPerUnit;
+                Check(height<=target.rectTransform.rect.height+1f,"Clipped text: "+header[c]+" "+row[0]);
+            }
+        }
+        Check(values==200,"Unexpected localized count");Log("PASS 200 localized values in four languages; actual narrative/gameplay text heights fit");
     }
     IEnumerator Crates(RaceEvent game,int hits)
     {
@@ -79,19 +107,24 @@ public class GigerCampaignProbe:MonoBehaviour
     }
     IEnumerator Run()
     {
+        noEvents=TrainSim.NoEvents;TrainSim.NoEvents=true;Application.runInBackground=true;
         foreach(var d in InputSystem.devices)if(d is Gamepad&&d.enabled){disabled.Add(d);InputSystem.DisableDevice(d);}
         pad=InputSystem.AddDevice<Gamepad>("GigerProbePad");InputSystem.onAfterUpdate+=Current;
         PlayerPrefs.SetInt("locomotive.selected",9);Locomotives.StoryMode=true;Story.TestChapter=-1;SaveGame.NewStory(9);Story.Play(0);SceneManager.LoadScene("historiaDialogos");yield return new WaitForSecondsRealtime(1);
         var intro=UnityEngine.Object.FindAnyObjectByType<StoryIntro>();Check(intro&&intro.pages.Length==4,"Missing prologue");
         Check(UiKit.Now.main==UiKit.Hero("giger").main,"Wrong Giger palette");
-        yield return Press();Check((int)Get(intro,"visible")>0,"X did not reveal story");intro.ShowPage(0,true);ScreenCapture.CaptureScreenshot(Output+"prologue.png");yield return new WaitForEndOfFrame();
+        yield return Press();Check((int)Get(intro,"visible")>0,"X did not reveal story");
+        var layout=intro.gameObject.AddComponent<Talk>();layout.Show(new[]{L10n.T("hero.character.giger")},new[]{"Test"},new[]{false},null);Canvas.ForceUpdateCanvases();
+        ValidateCopy((Text)Get(intro,"narration"),(Text)Get(layout,"what"));yield return CloseTalk(layout);Destroy(layout);
+        intro.ShowPage(0,true);for(int frame=0;frame<18;frame++)yield return null;ScreenCapture.CaptureScreenshot(Output+"prologue.png");yield return new WaitForEndOfFrame();yield return null;
         string[] biomes={"psychoworlds","thulu","hell","heaven"};int[] rivals={6,11,2,5};
         for(int c=0;c<4;c++)
         {
             Check(Story.Chapter==c,"Wrong chapter");Call(intro,"Finish");yield return new WaitForSecondsRealtime(1.6f);
             var train=UnityEngine.Object.FindAnyObjectByType<TrainSim>();Check(train&&train.BiomeId==biomes[c]&&Story.Hero=="giger","Wrong biome/player "+c);
             Set(train,"storyClock",Story.Seconds);Set(train,"duelCalled",false);var talk=train.GetComponent<Talk>();float until=Time.unscaledTime+10;
-            while(!talk.Open&&Time.unscaledTime<until)yield return null;Check(talk.Open,"Timed finale missing "+c);yield return CloseTalk(talk);yield return new WaitForSecondsRealtime(.8f);
+            while(!talk.Open&&Time.unscaledTime<until)yield return null;Check(talk.Open,"Timed finale missing "+c);CheckTalk(talk,true);
+            yield return new WaitForSecondsRealtime(.35f);Check((int)Get(talk,"at")==0,"Auto dialogue advance");yield return CloseTalk(talk);yield return new WaitForSecondsRealtime(.8f);
             if(c==2)
             {
                 var race=train.GetComponent<RaceEvent>();yield return Crates(race,34);Check((bool)Get(train,"finaleRetry"),"34/40 did not fail");
@@ -103,15 +136,15 @@ public class GigerCampaignProbe:MonoBehaviour
                 if(c==1||c==3)Check(Story.MachineRival,"Phantom humanoid rival");
                 ScreenCapture.CaptureScreenshot(Output+"duel-"+c+".png");yield return new WaitForEndOfFrame();rival.TestWin();
             }
-            until=Time.unscaledTime+5;while(!talk.Open&&Time.unscaledTime<until)yield return null;Check(talk.Open,"After-duel text missing "+c);yield return CloseTalk(talk);
+            until=Time.unscaledTime+5;while(!talk.Open&&Time.unscaledTime<until)yield return null;Check(talk.Open,"After-duel text missing "+c);CheckTalk(talk,false);yield return CloseTalk(talk);
             if(c!=2)train.RaceFinished(true);yield return new WaitForSecondsRealtime(1.5f);intro=UnityEngine.Object.FindAnyObjectByType<StoryIntro>();Check(intro,"Missing story transition "+c);
             Log("PASS chapter "+(c+1)+": "+biomes[c]);
         }
-        Check(Story.Over&&intro.pages.Length==5,"Ending missing");intro.ShowPage(4,true);ScreenCapture.CaptureScreenshot(Output+"ending.png");yield return new WaitForEndOfFrame();
+        Check(Story.Over&&intro.pages.Length==5,"Ending missing");intro.ShowPage(4,true);for(int frame=0;frame<18;frame++)yield return null;ScreenCapture.CaptureScreenshot(Output+"ending.png");yield return new WaitForEndOfFrame();yield return null;
         Call(intro,"Finish");yield return new WaitForSecondsRealtime(1);Check(GameObject.Find("Thanks"),"Missing Thanks");Check(errors==0,"Console errors");Log("PASS ending and Thanks");
     }
     void OnDestroy()
     {
-        Application.logMessageReceived-=Error;InputSystem.onAfterUpdate-=Current;if(pad!=null&&pad.added)InputSystem.RemoveDevice(pad);foreach(var d in disabled)if(d.added)InputSystem.EnableDevice(d);
+        Application.logMessageReceived-=Error;TrainSim.NoEvents=noEvents;InputSystem.onAfterUpdate-=Current;if(pad!=null&&pad.added)InputSystem.RemoveDevice(pad);foreach(var d in disabled)if(d.added)InputSystem.EnableDevice(d);
     }
 }

@@ -6139,6 +6139,246 @@ MonoBehaviour:
     m_Key: story.nath.4.outro.5
     m_Metadata:
       m_Items: []
+  - m_Id: 8527343665885184
+    m_Key: story.bba.0.before.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8527343703633920
+    m_Key: story.bba.0.before.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8527343703633921
+    m_Key: story.bba.1.before.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8527343703633922
+    m_Key: story.bba.2.before.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8527343703633923
+    m_Key: story.bba.3.before.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8527343703633924
+    m_Key: story.bba.3.before.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8527343703633925
+    m_Key: story.bba.4.before.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8527343703633926
+    m_Key: story.bba.gates.before
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8527343703633927
+    m_Key: story.bba.gates.after
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373806473216
+    m_Key: hero.character.crochtrain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387776
+    m_Key: story.crochtrain.thoughts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387777
+    m_Key: story.crochtrain.0.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387778
+    m_Key: story.crochtrain.1.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387779
+    m_Key: story.crochtrain.2.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387780
+    m_Key: story.crochtrain.3.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387781
+    m_Key: story.crochtrain.0.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387782
+    m_Key: story.crochtrain.0.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387783
+    m_Key: story.crochtrain.0.intro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387784
+    m_Key: story.crochtrain.0.intro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387785
+    m_Key: story.crochtrain.0.intro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387786
+    m_Key: story.crochtrain.0.intro.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387787
+    m_Key: story.crochtrain.0.intro.7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387788
+    m_Key: story.crochtrain.0.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387789
+    m_Key: story.crochtrain.0.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387790
+    m_Key: story.crochtrain.0.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387791
+    m_Key: story.crochtrain.0.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387792
+    m_Key: story.crochtrain.0.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387793
+    m_Key: story.crochtrain.0.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387794
+    m_Key: story.crochtrain.0.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387795
+    m_Key: story.crochtrain.1.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387796
+    m_Key: story.crochtrain.1.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387797
+    m_Key: story.crochtrain.1.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387798
+    m_Key: story.crochtrain.1.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387799
+    m_Key: story.crochtrain.1.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387800
+    m_Key: story.crochtrain.1.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387801
+    m_Key: story.crochtrain.1.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387802
+    m_Key: story.crochtrain.1.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387803
+    m_Key: story.crochtrain.1.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387804
+    m_Key: story.crochtrain.2.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387805
+    m_Key: story.crochtrain.2.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387806
+    m_Key: story.crochtrain.2.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387807
+    m_Key: story.crochtrain.2.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387808
+    m_Key: story.crochtrain.2.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387809
+    m_Key: story.crochtrain.2.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387810
+    m_Key: story.crochtrain.2.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387811
+    m_Key: story.crochtrain.2.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387812
+    m_Key: story.crochtrain.2.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387813
+    m_Key: story.crochtrain.3.intro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387814
+    m_Key: story.crochtrain.3.intro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387815
+    m_Key: story.crochtrain.3.before.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387816
+    m_Key: story.crochtrain.3.before.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387817
+    m_Key: story.crochtrain.3.before.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387818
+    m_Key: story.crochtrain.3.after.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387819
+    m_Key: story.crochtrain.3.after.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387820
+    m_Key: story.crochtrain.3.outro.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387821
+    m_Key: story.crochtrain.3.outro.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387822
+    m_Key: story.crochtrain.3.outro.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387823
+    m_Key: story.crochtrain.3.outro.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387824
+    m_Key: story.crochtrain.3.outro.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9057373869387825
+    m_Key: story.crochtrain.3.outro.6
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -1,53 +1,51 @@
 # Faceless: Un legado en blanco
 
-Prólogo en primera persona. Personajes dibujados con tinta negra y blanca; fondos de colores saturados con formas deliberadamente simples.
+Voz respetuosa, amable y excéntrica de artista. Campaña completa integrada.
 
-## 1. champion
+## 1. Story/faceless_champion
 
-Soy el campeón de este planeta. Todos lo dicen con orgullo. A mí nunca me preguntaron si quería serlo.
+Me llaman Faceless. Aquí suelen añadir «el campeón» y esperar que salude. Lo hago, por supuesto. Me preocupa que alguien crea que lo estoy ignorando; no tengo una cara que ayude mucho a aclararlo.
 
-## 2. orders
+## 2. Story/faceless_orders
 
-Mi trabajo es competir. Ganar. Y destruir a quien me señalen. Cada victoria celebra un nombre que siento cada vez menos mío.
+Mi trabajo consiste en competir y destruir a quien me indiquen. Antes de salir pregunto si de verdad hace falta. La respuesta suele llegar con unas coordenadas, así que guardo el cuaderno y voy. No me gusta admitir lo bien que aprendí a hacerlo.
 
-## 3. legacy
+## 3. Story/faceless_legacy
 
-Mi padre hizo lo mismo antes que yo. Y antes de él, mi abuelo.
+Mi padre fue campeón antes que yo, y antes lo fue mi abuelo. En casa se hablaba de las victorias como si fueran recuerdos de viajes. Yo preguntaba cómo eran los lugares y acababan explicándome cómo habían ganado allí.
 
-## 4. legacy
+## 4. Story/faceless_legacy
 
-No heredé una vocación. Heredé una obligación. A eso lo llaman legado.
+Les tengo cariño y no quería decepcionarlos. Acepté la locomotora, los entrenamientos y el título. Lo de querer otra vida lo fui dejando para una conversación más tranquila. Siempre parecía haber una ceremonia antes.
 
-## 5. artist
+## 5. Story/faceless_artist
 
-Yo quería otra cosa: una vida dedicada al arte. Aprender a dibujar lo que veo... y también lo que todavía no existe.
+Lo que me gusta es dibujar. Puedo pasarme una tarde intentando entender cómo se dobla una hoja. Luego alguien me pregunta si estoy preparando una estrategia. Suelo mostrarle el dibujo. Todavía no he convencido a todos de que solo era una hoja.
 
-## 6. artist
+## 6. Story/faceless_artist
 
-En lugar de contar derrotados, quería llenar cuadernos. Que mis manos sirvieran para crear algo.
+Me gustaría aprender sin tener que mirar el reloj entre dos encargos. Dibujar personas que pudieran quedarse quietas porque están cómodas, no porque acabo de derrotarlas. Por ahora practico con lo que encuentro cerca de las vías.
 
-## 7. friend
+## 7. Story/faceless_friend
 
-Mi locomotora es mi mejor amiga. No es una forma de hablar: tiene un alma, una conciencia y su propia manera de entenderme.
+Mi mejor amiga es T.exe, mi locomotora. Está viva y tiene bastante carácter. Cuando le enseño un boceto, se inclina para verlo mejor. Le dediqué un cuaderno entero; sostiene que he dibujado su chimenea demasiado corta.
 
-## 8. friend
+## 8. Story/faceless_friend
 
-No es ella quien me encadena. Es lo que todos esperan de nosotros. Mientras yo siguiera a sus mandos, tendría que seguir siendo el campeón.
+Nos gusta viajar juntos. Lo que me agota es que cada viaje tenga que acabar en una pelea. Se lo conté una noche en la cabina, con el cuaderno sobre las rodillas. T.exe esperó a que terminara y acercó un poco más la luz.
 
-## 9. artist
+## 9. Story/faceless_artist
 
-Guardaba mis dibujos entre un viaje y el siguiente. Siempre había otra orden. Siempre alguien más a quien vencer.
+Desde entonces empecé a guardar también los dibujos que me salían mal. Antes los tiraba por vergüenza. Ahora me gusta volver a ellos y ver qué intentaba hacer. T.exe tiene algunos en la cabina. Le pedí que no los enseñara durante las inspecciones.
 
-## 10. idea
+## 10. Story/faceless_idea
 
-Hasta que comenzó la guerra. El planeta entero dejó de hablar de mis victorias y empezó a hablar de sobrevivir.
+Cuando anunciaron la guerra, llegaron más encargos y empezaron a cambiar nuestras rutas. Oí a mi jefe prometer que el campeón se ocuparía de los invasores. Me habría gustado estar presente cuando me ofrecí voluntario.
 
-## 11. idea
+## 11. Story/faceless_idea
 
-Miré a mi amiga. Luego miré mis dibujos. Por primera vez, aquel futuro que parecía escrito se había quedado en blanco.
+No quería seguir haciendo daño, pero tampoco sabía cómo decir que me iba. Ensayé una renuncia con T.exe. Me salió tan solemne que terminé pidiéndole disculpas a la puerta. Ella esperó. Volví a intentarlo.
 
-## 12. idea
+## 12. Story/faceless_idea
 
-Y entonces tuve una idea.
-
-La parte siguiente queda por escribir. Esta primera versión enlaza con el primer tramo jugable y cierra provisionalmente con «Continuará...».
+Entonces pensé en el título. Si necesitaban un campeón que siempre ganara, quizá una derrota bastaría para que me dejaran marchar. Se lo expliqué a T.exe. No pareció impresionada con la idea, pero ya me había acercado el cuaderno para preparar la actuación.

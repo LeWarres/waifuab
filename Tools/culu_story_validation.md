@@ -1,5 +1,17 @@
 # Validación de la historia de Culu
 
+## Revisión de personalidad — 2026-11-02
+
+- 50 claves de narración/conversaciones revisadas en ES/EN/PT/JA. Culu es amistosa, inteligente y correcta al hablar, con trato educado y natural. Escucha, pide datos concretos, reconoce errores y ofrece ayuda sin menospreciar a BBA ni a los demás.
+- Se conserva su ilusión por abrir un maid café, mostrando conocimientos de atención al cliente y administración. Asume la responsabilidad de la conquista anterior. Las indicaciones falsas de R-20, las señales, el calor y las reservas insuficientes mantienen su recorrido sin hacerla incapaz de razonar.
+- El cactus sigue siendo una decisión arriesgada tomada durante el agotamiento; no afirma conocer su especie ni interpreta con certeza lo ocurrido en Psicoworlds. Escucha con respeto las noticias del padre y se duerme por agotamiento. Baratito permanece sobre el mar y la piedra sigue perdida.
+- JSON, TSV y guion de lectura sincronizados; nuevo `build_culu_story.py` exporta desde el JSON canónico. Arte, rutas, rivales y mecánicas conservados.
+- `ImportCuluRevision.Run`: 236 valores de campaña importados y comprobados por lectura. `CheckCuluStory.Run`: PASS, cinco capítulos/rivales, 15 ilustraciones, 244 valores incluyendo el bioma, recursos de Thulu y final.
+- `PlayCuluStory.Run`: PASS, 4990 fotogramas y 0 errores de consola. Se verificaron los 236 valores, altura real de narración/conversaciones en cuatro idiomas, X y avance manual, diálogos reales y hablantes antes/después de los cinco duelos, rivales correctos, nombres propios de máquinas sin piloto BBA, abordadores, decorado de Thulu y Gracias.
+- Viajes y victorias acelerados para comprobar el recorrido, no el balance. Captura final revisada: `culu_revision_ending.png`. JSON y TSV coinciden en las 61 claves. Partida, selección y escena originales restauradas; `TzmilPlaySession.Verify`: PASS, guardado idéntico al respaldo y editor fuera de Play Mode.
+
+## Validación anterior de integración
+
 ## Contenido
 
 - Cinco capítulos conectados al selector de Kairi Resha/Culu: mar contra Onini; selva contra R-20; desierto contra BBA; Psicoworlds contra Giger Machine; Thulu World contra Crochetrain. Termina en la pantalla Gracias existente.

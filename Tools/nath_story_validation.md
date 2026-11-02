@@ -1,4 +1,18 @@
-# Nath Star / ReyMar — validation 2026-10-28
+# Nath Moon / ReyMar
+
+## Revisión de voz y nombre — 2026-11-01
+
+- Nombre público cambiado a Nath Moon en español, inglés y portugués; ナス・ムーン en japonés. El identificador interno `nath` se conserva para mantener partidas, modelos, arte y referencias.
+- 52 claves revisadas: presentación, narración y conversaciones. Los cinco títulos existentes se conservan: 57 claves y 228 valores localizados.
+- Voz ruda, peleonera e impulsiva: convierte las advertencias en desafíos, escucha las condiciones después de aceptar y oculta el afecto bajo protestas o invitaciones a una revancha. La narración se mantiene como una conversación en primera persona, con conocimientos limitados.
+- Gabriel, Tzmil, Onini y Faceless conservan sus propias motivaciones. Nath reconoce el estado de BBA en la base destruida y deja de insistir, sin bromear sobre su pérdida ni conocer lo ocurrido fuera de su perspectiva.
+- Se conserva el recorrido, las 14 ilustraciones, el diseño y las reglas. Su intervención antes de la carrera ahora se muestra mediante el diálogo específico de Nath, en vez de saltarse al anuncio genérico.
+- El generador toma `nath_story_dialogues.json` como fuente, evitando reponer la versión antigua al regenerar. Guion de lectura: `nath_story.md`.
+- Compilación: cero errores y advertencias. `CheckNathStory`: cinco capítulos, banderas de cuestionario/carrera, duración, 14 ilustraciones y 228 traducciones correctas.
+- `PlayNathStory`: selector al prólogo; X para completar texto; nombres y alturas de texto en los cuadros reales en cuatro idiomas; cuestionario humano con arresto, reintento y aprobación; carrera de ciudad; diálogos anteriores a los cinco finales; progresión completa y Thanks. PASS, 2251 fotogramas y cero errores de consola.
+- Relojes y victorias de combate/carrera acelerados; esto comprueba texto y flujo, no el balance completo de las partidas.
+
+## Integración original — 2026-10-28
 
 ## Delivered
 

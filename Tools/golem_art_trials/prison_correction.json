@@ -1,0 +1,8 @@
+{
+  "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-fd320827-e9aa-4972-a622-f641328738d1.png",
+  "prompt": "Make a tightly localized correction to this existing illustration. Preserve exact composition, robot sizes/poses, all four robots, yellow background, factory, thick marker chibi doodle style, white sticker borders and white interiors. Every robot uses only the same single orange ink; officer only the same single navy ink.\n1. Main large robot's chest: REMOVE the entire weird prison-bar/spark emblem: remove all three vertical bars AND the tiny star in the chest. Replace with the SAME simple EMPTY orange outlined circular chest core used on the smaller robots. Plain WHITE inside this circle, no bars, star, cross, icons, glow or extra decoration. Preserve surrounding chestplate.\n2. Officer at far left: repair confusing clothing ONLY. Keep existing cap, sunglasses, head, pointing arm and hand holding clipboard. Redraw torso as a neat, very simple readable uniform jacket with two clean symmetrical lapels, a small centered shirt collar and ONE straight narrow navy tie, sensible sleeve joins. Remove tangled overlapping V/W scribbles around neck and chest. One small plain rectangular chest pocket if needed. Jacket and trousers WHITE inside with navy outline, no filled navy torso, no extra colors, no gradients or detailing. Natural simple chibi human body inside the jacket. Preserve clipboard shape and hands without merged clothing strokes.\nDo not add anything else. No text.",
+  "changes": [
+    "Removed bars and spark symbol from Golem's chest; restored plain circular core.",
+    "Repaired officer collar, tie and jacket."
+  ]
+}

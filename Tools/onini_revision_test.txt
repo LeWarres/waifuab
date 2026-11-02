@@ -1,0 +1,8 @@
+RUNNING
+PASS 256 imported Onini values; narration and gameplay fit actual UI in four languages
+PASS chapter 0 hell: opening, real pre/post battle dialogue and ending
+PASS chapter 1 desert: opening, real pre/post battle dialogue and ending
+PASS chapter 2 government: opening, real pre/post battle dialogue and ending
+PASS chapter 3 heaven: opening, real pre/post battle dialogue and ending
+PASS chapter 4 psychoworlds: opening, real pre/post battle dialogue and ending
+PASS: five Onini chapters, real before/after dialogue, 4-language text fit, manual advancement and Thanks; consoleErrors=0. Travel clocks and wins accelerated; not a balance test.

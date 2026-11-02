@@ -1,0 +1,22 @@
+[
+  {
+    "id": "crush",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/gabriel_crush.png",
+      "C:/Users/r20/WaifuTren/Tools/hero_renders/xiuhtecuhtli.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/gabriel_reunion.png"
+    ],
+    "prompt": "Precise localized edit, image1 is target. Image2 is the ACTUAL 3D MODEL, source of truth for clothing placement. Image3 is supporting drawn consistency reference. Correct ONLY the bird man's COSTUME, leave head, pose, feathers, Gabriel, background, framing, paper texture and novice pencil/pastel linework unchanged. The actual model has an entirely BLACK chest and abdomen. NO red bib, NO red scarf, NO red chest fabric, NO red shoulder sash. Red fabric exists ONLY as the hanging loincloth BELOW the WAIST. Remove every red patch above the waist and refill with the same grainy flat BLACK as his body. Keep ivory skull ornaments on gold collar/shoulder and his ivory bird cranium/black beak. No human face, no eyes added. His orange-red-and-gold wrist cuffs belong at WRISTS/low forearms ONLY, never on biceps or upper arms. Preserve existing wrist cuffs. This is not a redesign or new rendering; maintain exact amateur drawing style. No words. In the tiny thought bubble remove the RED bib beneath the three ivory skulls, making the entire chest BLACK. Remove orange cuffs on the short-sleeve/bicep edges; the crop need not show wrists.",
+    "path": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-834d3233-2d36-4980-9efb-f5c96ab56db6.png"
+  },
+  {
+    "id": "date",
+    "refs": [
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/gabriel_date.png",
+      "C:/Users/r20/WaifuTren/Tools/hero_renders/xiuhtecuhtli.png",
+      "C:/Users/r20/WaifuTren/Assets/Resources/Story/gabriel_reunion.png"
+    ],
+    "prompt": "Precise localized edit, image1 is target. Image2 is the ACTUAL 3D MODEL, source of truth for clothing placement. Image3 is supporting drawn consistency reference. Correct ONLY the bird man's COSTUME, leave head, pose, feathers, Gabriel, background, framing, paper texture and novice pencil/pastel linework unchanged. The actual model has an entirely BLACK chest and abdomen. NO red bib, NO red scarf, NO red chest fabric, NO red shoulder sash. Red fabric exists ONLY as the hanging loincloth BELOW the WAIST. Remove every red patch above the waist and refill with the same grainy flat BLACK as his body. Keep ivory skull ornaments on gold collar/shoulder and his ivory bird cranium/black beak. No human face, no eyes added. His orange-red-and-gold wrist cuffs belong at WRISTS/low forearms ONLY, never on biceps or upper arms. Preserve existing wrist cuffs. This is not a redesign or new rendering; maintain exact amateur drawing style. No words. Remove the large RED upper-arm band bordered in gold: this upper arm must be plain black. Keep arms crossed, no pose change.",
+    "path": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-87577220-e60b-435d-befd-fc86a7981841.png"
+  }
+]

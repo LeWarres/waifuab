@@ -1,0 +1,359 @@
+[
+  {
+    "key": "hero.character.crochtrain",
+    "es": "Crochtrain",
+    "en": "Crochtrain",
+    "pt": "Crochtrain",
+    "ja": "クロクトレイン"
+  },
+  {
+    "key": "story.crochtrain.thoughts",
+    "es": "Dorian · pensamientos",
+    "en": "Dorian · thoughts",
+    "pt": "Dorian · pensamentos",
+    "ja": "ドリアン・心の声"
+  },
+  {
+    "key": "story.crochtrain.0.title",
+    "es": "Un regalo para mi amada",
+    "en": "A gift for my beloved",
+    "pt": "Um presente para minha amada",
+    "ja": "愛する人への贈り物"
+  },
+  {
+    "key": "story.crochtrain.1.title",
+    "es": "Con permiso, caballeros",
+    "en": "Excuse me, gentlemen",
+    "pt": "Com licença, senhores",
+    "ja": "失礼します、皆さん"
+  },
+  {
+    "key": "story.crochtrain.2.title",
+    "es": "Un poco más cerca de casa",
+    "en": "A little closer to home",
+    "pt": "Um pouco mais perto de casa",
+    "ja": "家まで、もう少し"
+  },
+  {
+    "key": "story.crochtrain.3.title",
+    "es": "Tan bella como entonces",
+    "en": "As lovely as ever",
+    "pt": "Tão bela quanto antes",
+    "ja": "あの日と同じ美しさ"
+  },
+  {
+    "key": "story.crochtrain.0.intro.1",
+    "es": "Me llamo Dorian. Si me hubiese conocido entonces, habría tenido que pedirme que bajara la voz. Siempre andaba tarareando, saludando al vecindario... y hablando de mi amada. ¡Vaya si me gustaba hacerla sonreír!",
+    "en": "My name is Dorian. Had you known me then, you would have asked me to keep my voice down. Always humming, greeting the neighbours... and talking about my beloved. My, how I loved making her smile!",
+    "pt": "Meu nome é Dorian. Se me conhecesse naquela época, teria pedido que eu baixasse a voz. Sempre cantarolando, cumprimentando os vizinhos... e falando da minha amada. Ah, como eu gostava de fazê-la sorrir!",
+    "ja": "私はドリアンと申します。昔の私をご存じなら、少し静かに、とおっしゃったでしょうな。鼻歌を歌い、ご近所に挨拶をし……愛する人の話ばかりしておりました。あの人を笑顔にするのが、何より好きでね。"
+  },
+  {
+    "key": "story.crochtrain.0.intro.2",
+    "es": "A ella le encantaban los libros. Yo iba muy ufano buscando uno que no hubiera leído y encontré aquel, apartado de los demás. La cubierta parecía cambiar cuando le daba la luz. «Con esto sí voy a sorprenderla», pensé. Lo compré y hasta elegí una cinta.",
+    "en": "She adored books. Off I went, pleased as punch, looking for one she hadn't read. I found it set apart from the others. The cover seemed to change in the light. \"This will surprise her,\" I thought. I bought it and even chose a ribbon.",
+    "pt": "Ela adorava livros. Fui todo contente procurar um que ainda não tivesse lido e encontrei aquele, separado dos outros. A capa parecia mudar com a luz. \"Com este vou surpreendê-la\", pensei. Comprei e até escolhi uma fita.",
+    "ja": "あの人は本が大好きでした。まだ読んでいない一冊を、と張り切って探し、ほかの本から離して置かれたあれを見つけたのです。光が当たると表紙が変わるようでね。「これは驚くぞ」と、リボンまで選びました。"
+  },
+  {
+    "key": "story.crochtrain.0.intro.3",
+    "es": "Antes de envolverlo quise echarle una ojeada. Solo para poder conversar con ella después, ya me entiende. Había dibujos que no conseguía mirar de frente y un nombre que terminé pronunciando: Thulu. Seguí leyendo aunque ya me temblaban las manos.",
+    "en": "Before wrapping it, I wanted a little peek. Just so I could discuss it with her later, you understand. There were drawings I couldn't look at straight, and a name I finally said aloud: Thulu. I kept reading, though my hands were shaking.",
+    "pt": "Antes de embrulhar, quis dar uma olhadinha. Só para poder conversar com ela depois, entende? Havia desenhos que eu não conseguia encarar e um nome que acabei pronunciando: Thulu. Continuei lendo, mesmo com as mãos tremendo.",
+    "ja": "包む前に、少しだけ読もうと思いましてな。後であの人と話せるように、と。まともに見つめられない絵と、とうとう声に出してしまった名前がありました。トゥルー。手が震えていたのに、読み続けてしまった。"
+  },
+  {
+    "key": "story.crochtrain.0.intro.4",
+    "es": "Luego empecé a oír voces aun con el libro cerrado. Veía figuras en los rincones y dejé de reconocer algunas calles. Recuerdo haber salido para buscar ayuda. Después hay días enteros que no consigo recordar. No llegué a entregarle el regalo.",
+    "en": "Then I heard voices even with the book shut. I saw figures in corners and stopped recognising some streets. I remember going out to find help. After that, whole days are missing. I never gave her the gift.",
+    "pt": "Depois passei a ouvir vozes mesmo com o livro fechado. Via figuras nos cantos e já não reconhecia algumas ruas. Lembro de sair para buscar ajuda. Depois faltam dias inteiros na memória. Não cheguei a entregar o presente.",
+    "ja": "本を閉じても声が聞こえ、部屋の隅に何かが見えるようになりました。見慣れた通りも分からなくなった。助けを求めて外へ出たことは覚えています。その後は、何日分も記憶がありません。贈り物は渡せませんでした。"
+  },
+  {
+    "key": "story.crochtrain.0.intro.5",
+    "es": "Cuando pude reconocer algo de nuevo, estaba dentro de Thulu. Ya no tenía manos. Aquella voz me hacía avanzar, detenerme, atacar... y mi cuerpo obedecía antes de que yo pudiera negarme. Me habían dejado allí para protegerlo por dentro.",
+    "en": "When I could recognise anything again, I was inside Thulu. My hands were gone. That voice made me move, stop, attack... and my body obeyed before I could refuse. They had left me there to guard him from within.",
+    "pt": "Quando voltei a reconhecer alguma coisa, estava dentro de Thulu. Já não tinha mãos. Aquela voz me fazia avançar, parar, atacar... e meu corpo obedecia antes de eu recusar. Tinham me deixado ali para protegê-lo por dentro.",
+    "ja": "また何かを見分けられるようになった時、私はトゥルーの中にいました。手はもうない。あの声が進め、止まれ、攻撃しろと言うと、断る前に体が従ってしまう。内側を守るため、ここに置かれたのです。"
+  },
+  {
+    "key": "story.crochtrain.0.intro.6",
+    "es": "Me aferro a la imagen de una locomotora tejida. Así consigo pensar dónde empiezo y dónde termino. Pero quienes se acercan hablan de algo que cambia de forma, de un arma. Yo intento darles las buenas tardes y solo me sale ese ruido.",
+    "en": "I cling to the image of a knitted locomotive. It helps me think where I begin and end. But those who approach speak of something shapeless, a weapon. I try to wish them good afternoon, and only that noise comes out.",
+    "pt": "Me agarro à imagem de uma locomotiva de crochê. Assim consigo pensar onde começo e termino. Mas quem se aproxima fala de algo sem forma, de uma arma. Tento desejar boa tarde e só sai aquele ruído.",
+    "ja": "編み物の機関車だと思うようにしています。そうすれば、自分の体がどこからどこまでか考えられる。けれど近づく者は、形の定まらぬ兵器だと言う。ご挨拶をしたくても、出るのはあの音だけです。"
+  },
+  {
+    "key": "story.crochtrain.0.intro.7",
+    "es": "Lo que todavía es mío es su recuerdo. La veo pasando una página, apartándose el cabello... Repito esas cosas despacito cuando la voz quiere taparlo todo. Estoy cansado, muy cansado. Pero todavía recuerdo a quién quería volver a ver.",
+    "en": "Her memory is still mine. I see her turning a page, brushing back her hair... I repeat those things softly when the voice tries to drown them out. I am tired, so very tired. But I still remember whom I wanted to see again.",
+    "pt": "A lembrança dela ainda é minha. Vejo-a virando uma página, afastando o cabelo... Repito essas coisas devagar quando a voz quer cobrir tudo. Estou cansado, tão cansado. Mas ainda lembro quem eu queria rever.",
+    "ja": "あの人の思い出は、まだ私のものです。ページをめくる姿、髪を払う仕草……声にかき消されそうになるたび、ゆっくり思い返します。疲れました。本当にね。それでも、もう一度会いたい人は覚えているのです。"
+  },
+  {
+    "key": "story.crochtrain.0.before.1",
+    "es": "¡Tú otra vez! ¡Quítate, que todavía me queda mucho por romper!",
+    "en": "You again! Move! I've still got plenty to smash!",
+    "pt": "Você de novo! Sai! Ainda tenho muita coisa para arrebentar!",
+    "ja": "またお前か！どけ！まだ壊すものが山ほどあるんだ！"
+  },
+  {
+    "key": "story.crochtrain.0.before.2",
+    "es": "Buenas tardes, caballero... No, tampoco ahora me ha salido una palabra. Esas mandíbulas van a partirlo todo. Tengo que detenerlo, aunque me duela moverme.",
+    "en": "Good afternoon, sir... No, not a word came out this time either. Those jaws will tear everything apart. I have to stop him, though it hurts to move.",
+    "pt": "Boa tarde, meu senhor... Não, também desta vez não saiu palavra alguma. Aquelas mandíbulas vão partir tudo. Tenho que detê-lo, mesmo doendo me mover.",
+    "ja": "こんにちは、旦那……いや、今度も言葉にはならなかった。あの顎では、何もかも壊されてしまう。動くのはつらいが、止めなくては。"
+  },
+  {
+    "key": "story.crochtrain.0.before.3",
+    "es": "Un momento. Con cada golpe, la voz se aleja un poco. Por esa grieta entra aire de fuera... Vamos, viejo, aguanta un poquito más.",
+    "en": "Wait a moment. With each blow, the voice gets a little farther away. Outside air is coming through that crack... Come along, old fellow. Hold on a little longer.",
+    "pt": "Um momento. A cada golpe, a voz se afasta um pouco. Está entrando ar de fora por aquela fenda... Vamos, meu velho, aguente só mais um pouco.",
+    "ja": "待てよ。衝撃のたびに、声が少し遠のく。あの裂け目から外の空気が……さあ、老いぼれ。もう少しだけ持ちこたえるんだ。"
+  },
+  {
+    "key": "story.crochtrain.0.after.1",
+    "es": "Lo están expulsando. La vía se ha abierto detrás de él y esta vez mis ruedas responden cuando quiero moverlas.",
+    "en": "They're forcing him out. The track has opened behind him, and this time my wheels move when I want them to.",
+    "pt": "Estão expulsando-o. A via se abriu atrás dele e, desta vez, minhas rodas respondem quando quero movê-las.",
+    "ja": "彼を追い出そうとしている。後ろの線路が開いた。今度は、動かしたいと思うと車輪が応えてくれる。"
+  },
+  {
+    "key": "story.crochtrain.0.after.2",
+    "es": "No tengo fuerzas para otra pelea. Si voy despacio por ese borde... Sí. Ahora, antes de que vuelva la voz.",
+    "en": "I haven't the strength for another fight. If I go slowly along that edge... Yes. Now, before the voice comes back.",
+    "pt": "Não tenho forças para outra briga. Se for devagar por aquela beirada... Sim. Agora, antes que a voz volte.",
+    "ja": "もう一戦する力などない。あの縁を、ゆっくり行けば……よし。声が戻る前に、今だ。"
+  },
+  {
+    "key": "story.crochtrain.0.outro.1",
+    "es": "Me deslicé por donde había salido aquella bestia. Nadie me dio la orden. Esperé el tirón de siempre, pero pude seguir. Cielo santo, estaba saliendo. No me atreví a detenerme para mirar atrás.",
+    "en": "I slipped through where that beast had gone. Nobody ordered me to. I waited for the usual tug, but I could keep going. Good heavens, I was getting out. I dared not stop to look back.",
+    "pt": "Passei por onde aquela fera tinha saído. Ninguém mandou. Esperei o puxão de sempre, mas pude continuar. Céus, eu estava saindo. Não ousei parar para olhar para trás.",
+    "ja": "あの獣が出た場所を、そっと抜けました。命令されたのではありません。いつもの引っ張られる感覚を待ちましたが、そのまま進めた。なんということだ、本当に外へ出られる。振り返るために止まる勇気もありませんでした。"
+  },
+  {
+    "key": "story.crochtrain.0.outro.2",
+    "es": "El calor me recibió antes de que supiera dónde estaba. Había fuego al otro lado y alguien gritaba que cerraran el paso. Yo solo pensaba en encontrar una calle conocida, un rostro... cualquier cosa que pudiera llevarme hasta ella.",
+    "en": "The heat reached me before I knew where I was. There was fire beyond, and someone shouting to shut the passage. I was only hoping for a familiar street, a face... anything that might lead me to her.",
+    "pt": "O calor me alcançou antes de eu saber onde estava. Havia fogo do outro lado e alguém gritava para fechar a passagem. Eu só queria achar uma rua conhecida, um rosto... qualquer coisa que me levasse até ela.",
+    "ja": "どこへ来たのか分かる前に、熱が伝わってきました。向こうには炎、通路を閉じろという声。見覚えのある道か、誰かの顔か……あの人につながる何かを、ただ探していました。"
+  },
+  {
+    "key": "story.crochtrain.1.intro.1",
+    "es": "He venido a parar al infierno. Lo oigo decir a quienes corren lejos de mí. Procuro darles espacio, pero cada vez que giro derribo algo. Antes sabía entrar en una habitación sin asustar a nadie, se lo aseguro.",
+    "en": "I've landed in hell. I hear it from those running away. I try to give them room, but every turn knocks something down. I used to know how to enter a room without frightening anyone, I assure you.",
+    "pt": "Vim parar no inferno. Ouço isso de quem foge de mim. Tento dar espaço, mas derrubo alguma coisa a cada curva. Antes eu sabia entrar num lugar sem assustar ninguém, pode acreditar.",
+    "ja": "地獄へ来てしまったようです。逃げる人たちが、そう言っている。道を譲ろうにも、曲がるたび何かを倒してしまう。昔は、人を怖がらせず部屋に入るくらいできたのですよ。"
+  },
+  {
+    "key": "story.crochtrain.1.intro.2",
+    "es": "Una muchacha con cuernos viene hacia mí. Lleva una máquina negra y todavía tiene fuerzas para protestar. Quisiera pedirle indicaciones, nada más. Con permiso, señorita... Ojalá pudiera oírme.",
+    "en": "A young lady with horns is coming my way. She has a black engine and still has the energy to complain. I only wish to ask directions. Excuse me, miss... If only you could hear me.",
+    "pt": "Uma moça de chifres vem na minha direção. Tem uma máquina preta e ainda lhe sobram forças para reclamar. Só queria pedir informação. Com licença, senhorita... Quem dera pudesse me ouvir.",
+    "ja": "角のあるお嬢さんが来ます。黒い機関車に乗って、文句を言う元気もおありだ。道を尋ねたいだけなのですが。失礼、お嬢さん……聞こえてくれればいいのに。"
+  },
+  {
+    "key": "story.crochtrain.1.before.1",
+    "es": "¿También nos mandaron esto? ¡Eh, tú! ¡No te acerques a donde está comiendo la gente!",
+    "en": "They sent us this thing too? Hey, you! Stay away from the people eating!",
+    "pt": "Mandaram isso também? Ei, você! Não chega perto de onde o pessoal está comendo!",
+    "ja": "今度はこれまで送ってきたの？おい、そっち！みんなが食べてる所へ来るんじゃないよ！"
+  },
+  {
+    "key": "story.crochtrain.1.before.2",
+    "es": "No quiero molestarles. Voy a apartarme... Ay, no responde esa parte. Hágame el favor de retroceder, muchacha. Estoy intentando frenar.",
+    "en": "I don't wish to trouble you. I'll move aside... Oh, that part won't respond. Please step back, young lady. I am trying to stop.",
+    "pt": "Não quero incomodar. Vou sair do caminho... Ai, essa parte não responde. Faça o favor de recuar, moça. Estou tentando frear.",
+    "ja": "ご迷惑をかけるつもりはないのです。横へ……ああ、そこが動かない。どうか下がってください、お嬢さん。止まろうとしているのです。"
+  },
+  {
+    "key": "story.crochtrain.1.before.3",
+    "es": "¡Que pares! No sé dónde tienes el frente, pero te voy a hacer dar la vuelta.",
+    "en": "Stop! I can't tell which end's your front, but I'm turning you around.",
+    "pt": "Para! Nem sei onde fica sua frente, mas vou fazer você dar meia-volta.",
+    "ja": "止まれって！どっちが前かも分からないけど、引き返してもらうよ。"
+  },
+  {
+    "key": "story.crochtrain.1.after.1",
+    "es": "Ya puede pasar. No voy a seguirla, se lo prometo. Necesito un momento... solo un momento para poder moverme otra vez.",
+    "en": "You may pass now. I won't follow, I promise. I need a moment... just a moment before I can move again.",
+    "pt": "Já pode passar. Não vou segui-la, prometo. Preciso de um momento... só um momento para voltar a me mover.",
+    "ja": "もう通れます。後は追いません、お約束します。少しだけ……また動けるまで、少しだけ待たなくては。"
+  },
+  {
+    "key": "story.crochtrain.1.after.2",
+    "es": "Te he visto pararte antes de la mesa. No sé qué demonios eres, pero por esa abertura puedes salir. ¡Y nada de volver!",
+    "en": "I saw you stop before the table. No idea what the hell you are, but that opening leads out. And don't come back!",
+    "pt": "Vi que parou antes da mesa. Não sei que diabos você é, mas pode sair por aquela abertura. E nada de voltar!",
+    "ja": "テーブルの手前では止まったね。何者か知らないけど、あそこから外へ出られるよ。戻ってくるんじゃないよ！"
+  },
+  {
+    "key": "story.crochtrain.1.outro.1",
+    "es": "Aquella muchacha señaló una abertura. Me costó llegar hasta ella, pero dejé atrás el fuego. Me habría gustado darle las gracias. Siempre me enseñaron a hacerlo cuando alguien me abría una puerta.",
+    "en": "The young lady pointed to an opening. Getting there took some doing, but I left the fire behind. I wish I could have thanked her. I was always taught to when someone held a door for me.",
+    "pt": "A moça apontou uma abertura. Custou chegar até lá, mas deixei o fogo para trás. Gostaria de ter agradecido. Sempre me ensinaram a agradecer quando alguém me abria uma porta.",
+    "ja": "あのお嬢さんは、出口を指してくれました。たどり着くまで苦労しましたが、炎は後ろへ遠ざかった。お礼を言いたかった。扉を開けてもらったら、きちんと感謝するよう教わりましたからね。"
+  },
+  {
+    "key": "story.crochtrain.1.outro.2",
+    "es": "Al cruzar pensé en las tardes en que volvía del trabajo. Solía llevar algo para compartir y llamarla antes de llegar a la puerta. Ahora voy ensayando ese saludo por dentro. No sé cuánto tiempo ha pasado ni si ella seguirá esperándome.",
+    "en": "As I crossed, I thought of coming home from work. I would bring something to share and call out before reaching the door. Now I practise that greeting inside. I don't know how long it's been, or if she's still waiting.",
+    "pt": "Ao atravessar, pensei nas tardes voltando do trabalho. Levava algo para dividir e chamava por ela antes de chegar à porta. Agora ensaio aquela saudação por dentro. Não sei quanto tempo passou nem se ela ainda me espera.",
+    "ja": "くぐる時、仕事帰りの夕方を思いました。二人で食べるものを持ち、扉に着く前からあの人を呼んだものです。今は心の中で、その挨拶を練習しています。どれほど時が過ぎたのか、まだ待っていてくれるのか、分かりません。"
+  },
+  {
+    "key": "story.crochtrain.2.intro.1",
+    "es": "Aquí hace fresco. Durante un rato creí que podía descansar, pero los de las puertas empezaron a gritar en cuanto me vieron. Entendí «arma» y «contención». Me quedé quieto para que vieran que no iba a atacarlos. No sirvió.",
+    "en": "It's cool here. For a little while I thought I could rest, but the gatekeepers shouted the moment they saw me. I caught \"weapon\" and \"containment.\" I stayed still so they'd see I wasn't attacking. It did no good.",
+    "pt": "Aqui está fresco. Por um momento achei que podia descansar, mas os guardas gritaram assim que me viram. Entendi \"arma\" e \"contenção\". Fiquei quieto para mostrar que não ia atacar. Não adiantou.",
+    "ja": "ここは涼しい。少し休めるかと思いましたが、門の人たちは私を見るなり叫び始めた。「兵器」「封じ込め」と聞こえました。攻撃する気はないと示そうと、じっとしていたのですが。駄目でした。"
+  },
+  {
+    "key": "story.crochtrain.2.intro.2",
+    "es": "Me han cerrado el camino con una locomotora con cara de gato. Yo tenía un gato, ¿sabe? Dormía sobre el periódico y no dejaba que lo leyera. Me cuesta hasta pensar en esas pequeñas cosas sin echar de menos mi casa.",
+    "en": "They've blocked the way with a cat-faced locomotive. I had a cat, you know. Slept on my newspaper so I couldn't read it. I can scarcely think of those little things without missing home.",
+    "pt": "Bloquearam o caminho com uma locomotiva de cara de gato. Eu tinha um gato, sabe? Dormia em cima do jornal e não me deixava ler. Mal consigo pensar nessas coisinhas sem sentir saudade de casa.",
+    "ja": "猫の顔の機関車が道を塞いでいます。私も猫を飼っておりましてね。新聞の上で寝て、読ませてくれなかった。そんな小さなことを思うだけでも、家が恋しくてたまらないのです。"
+  },
+  {
+    "key": "story.crochtrain.2.before.1",
+    "es": "Detente. No puedo dejar entrar una forma de guerra de Thulu por esta puerta.",
+    "en": "Stop. I cannot let a Thulu warform through this gate.",
+    "pt": "Pare. Não posso deixar uma forma de guerra de Thulu passar por este portão.",
+    "ja": "止まれ。トゥルーの戦闘形態を、この門に通すわけにはいかない。"
+  },
+  {
+    "key": "story.crochtrain.2.before.2",
+    "es": "Una forma de guerra... No soy eso, caballero. Pero no sé cómo mostrarle otra cosa. Apenas consigo sostenerme sobre lo que siento que son mis ruedas.",
+    "en": "A warform... That isn't what I am, sir. But I don't know how to show you otherwise. I can barely hold myself up on what I feel are my wheels.",
+    "pt": "Uma forma de guerra... Não sou isso, meu senhor. Mas não sei como mostrar outra coisa. Mal me sustento sobre o que sinto serem minhas rodas.",
+    "ja": "戦闘形態……私は、そんなものではないのです、旦那。けれど、どう示せばよいのか。車輪だと感じるものの上に、かろうじて体を支えているだけなのに。"
+  },
+  {
+    "key": "story.crochtrain.2.before.3",
+    "es": "Esa abertura vuelve al mundo humano. Aléjate de las puertas interiores. Si avanzas hacia ellas, dispararé.",
+    "en": "That opening returns to the human world. Stay away from the inner gates. Advance towards them and I will fire.",
+    "pt": "Aquela abertura leva ao mundo humano. Afaste-se dos portões internos. Se avançar até eles, vou atirar.",
+    "ja": "あの出口は人間の世界へ通じている。内側の門には近づくな。そちらへ進めば発砲する。"
+  },
+  {
+    "key": "story.crochtrain.2.after.1",
+    "es": "La salida sigue abierta. No te acerques más a las nubes habitadas.",
+    "en": "The exit is still open. Stay away from the inhabited clouds.",
+    "pt": "A saída continua aberta. Não se aproxime das nuvens habitadas.",
+    "ja": "出口はまだ開いている。人の住む雲には、これ以上近づくな。"
+  },
+  {
+    "key": "story.crochtrain.2.after.2",
+    "es": "Mundo humano, eso dijo. Voy a apartarme despacio. Si pudiera levantar una mano, vería que le estoy dando las gracias.",
+    "en": "The human world, that's what he said. I'll move aside slowly. If I could raise a hand, he'd see I was thanking him.",
+    "pt": "Mundo humano, foi o que disse. Vou me afastar devagar. Se pudesse levantar a mão, veria que estou agradecendo.",
+    "ja": "人間の世界、とおっしゃった。ゆっくり離れましょう。手を上げることができれば、お礼をしていると伝わるのに。"
+  },
+  {
+    "key": "story.crochtrain.2.outro.1",
+    "es": "Me dejé llevar por aquella salida. Por un momento no hubo suelo y pensé que ya no aguantaría otro golpe. Luego sentí una vía debajo, aire salado... y el mar, hasta donde podía ver.",
+    "en": "I let that exit take me. For a moment there was no ground and I thought I couldn't bear another fall. Then I felt track beneath me, salt air... and the sea as far as I could see.",
+    "pt": "Deixei aquela saída me levar. Por um momento não havia chão e pensei que não aguentaria outra queda. Depois senti trilhos embaixo, ar salgado... e o mar até onde conseguia ver.",
+    "ja": "あの出口に身を任せました。一瞬、地面がなくなり、もう一度落ちたら耐えられないと思った。その後、下に線路を感じ、潮風が……見渡す限りの海でした。"
+  },
+  {
+    "key": "story.crochtrain.2.outro.2",
+    "es": "Las voces no se habían ido del todo. A ratos sentía que algo tiraba de mí desde muy lejos. Me quedaba quieto, pensaba en ella y esperaba a poder avanzar. Ahora distingo música entre el ruido del agua. Voy hacia allí.",
+    "en": "The voices hadn't entirely gone. At times I felt something pulling from far away. I would stay still, think of her, and wait until I could move. Now I can hear music through the water. I'm going towards it.",
+    "pt": "As vozes não tinham sumido de todo. Às vezes sentia algo puxando de muito longe. Ficava quieto, pensava nela e esperava poder avançar. Agora ouço música no ruído da água. Vou naquela direção.",
+    "ja": "声は完全には消えていませんでした。遠くから引かれる気配がすると、じっとして、あの人を思い、動ける時を待ったものです。今、水音の向こうに音楽が聞こえます。そちらへ向かいます。"
+  },
+  {
+    "key": "story.crochtrain.3.intro.1",
+    "es": "Hay un pequeño café sobre el mar. Oigo tazas, conversaciones, una silla que arrastran... He pasado tanto tiempo oyendo cosas que no estaban allí que casi no me atrevo a acercarme a estos sonidos.",
+    "en": "There's a little café out on the sea. I hear cups, conversation, a chair scraping... I've spent so long hearing things that weren't there, I hardly dare approach these sounds.",
+    "pt": "Há um pequeno café sobre o mar. Ouço xícaras, conversas, uma cadeira sendo arrastada... Passei tanto tempo ouvindo coisas que não existiam que quase não ouso chegar perto desses sons.",
+    "ja": "海の上に、小さな喫茶店があります。カップの音、話し声、椅子を引く音……存在しないものの声を長く聞いてきたので、この音へ近づくのさえ怖いほどです。"
+  },
+  {
+    "key": "story.crochtrain.3.intro.2",
+    "es": "Una máquina se ha separado de la plataforma y viene a mi encuentro. Su conductor me apunta. No quiero que nadie salga herido por haberme acercado. Un poco más despacio, Dorian. Ya casi puedes ver las mesas.",
+    "en": "An engine has left the platform to meet me. Its driver is aiming at me. I don't want anyone hurt because I came near. A little slower, Dorian. You can almost see the tables now.",
+    "pt": "Uma máquina saiu da plataforma e vem ao meu encontro. O condutor mira em mim. Não quero ninguém ferido porque me aproximei. Mais devagar, Dorian. Já dá quase para ver as mesas.",
+    "ja": "機関車が一台、足場を離れてこちらへ来ます。運転士が私を狙っている。近づいたせいで誰かが傷つくのは嫌だ。もう少しゆっくりだ、ドリアン。もうテーブルが見えそうなのだから。"
+  },
+  {
+    "key": "story.crochtrain.3.before.1",
+    "es": "¡Tú! Quieto ahí. He visto lo que Thulu guarda dentro. No voy a dejar que llegue hasta las mesas.",
+    "en": "You! Hold there. I've seen what Thulu keeps inside. I'm not letting it reach those tables.",
+    "pt": "Você! Fica parado. Já vi o que Thulu guarda por dentro. Não vou deixar chegar até as mesas.",
+    "ja": "おい！そこで止まれ。トゥルーの中身は見てきた。あれを客のテーブルまで通す気はねえ。"
+  },
+  {
+    "key": "story.crochtrain.3.before.2",
+    "es": "Ya me había visto... Claro, por eso me teme. No se alarme, caballero. Yo tampoco quiero volver a aquel sitio. Estoy intentando decirlo, pero otra vez solo sale el ruido.",
+    "en": "He's seen me before... Of course. That's why he's afraid. Don't be alarmed, sir. I don't want to return there either. I'm trying to say it, but once again there's only the noise.",
+    "pt": "Já me tinha visto... Claro, por isso me teme. Não se assuste, meu senhor. Também não quero voltar àquele lugar. Tento dizer isso, mas outra vez só sai o ruído.",
+    "ja": "私を見たことがある……それで恐れているのですな。どうかご安心を、旦那。私も、あそこへ戻りたくはない。それを伝えようとしても、またあの音しか出ない。"
+  },
+  {
+    "key": "story.crochtrain.3.before.3",
+    "es": "Ese sonido no me dice nada. Retrocede. Si sigues avanzando, te freno yo.",
+    "en": "That sound tells me nothing. Back up. Keep advancing and I'll stop you myself.",
+    "pt": "Esse som não me diz nada. Recua. Se continuar avançando, eu mesmo te paro.",
+    "ja": "その音じゃ何も分からん。下がれ。まだ進むなら、俺が止める。"
+  },
+  {
+    "key": "story.crochtrain.3.after.1",
+    "es": "Te has detenido. Bien. Mantén esa distancia. Voy a comprobar que nadie salió herido.",
+    "en": "You've stopped. Good. Keep that distance. I'm checking nobody got hurt.",
+    "pt": "Você parou. Ótimo. Mantém essa distância. Vou ver se ninguém se machucou.",
+    "ja": "止まったな。よし。その距離を保て。けが人がいないか見てくる。"
+  },
+  {
+    "key": "story.crochtrain.3.after.2",
+    "es": "Aquí me quedo. Ya no me sostendría otra pelea. Desde este sitio puedo ver a la gente... Hay una señora junto a la baranda.",
+    "en": "I'll stay here. I couldn't stand another fight. I can see the people from this spot... There's a lady beside the railing.",
+    "pt": "Fico por aqui. Não aguentaria outra briga. Deste lugar consigo ver as pessoas... Há uma senhora junto à grade.",
+    "ja": "ここにおります。もう一度戦う力はありません。ここからなら人が見える……手すりのそばに、ご婦人がいらっしゃる。"
+  },
+  {
+    "key": "story.crochtrain.3.outro.1",
+    "es": "Era Doris. Había envejecido y llevaba el cabello recogido, pero era ella. Reconocí la forma de sujetar la taza con las dos manos. Me quedé tan quieto que por un momento dejé de notar cuánto me dolía todo.",
+    "en": "It was Doris. She had grown older and wore her hair up, but it was her. I knew the way she held a cup in both hands. I went so still that, for a moment, I stopped feeling how much everything hurt.",
+    "pt": "Era Doris. Tinha envelhecido e usava o cabelo preso, mas era ela. Reconheci o jeito de segurar a xícara com as duas mãos. Fiquei tão quieto que por um momento deixei de sentir quanto tudo doía.",
+    "ja": "ドリスでした。年を重ね、髪を結っていましたが、あの人です。両手でカップを持つ、その仕草で分かりました。身動きもせず見つめているうち、一瞬、体の痛みさえ感じなくなった。"
+  },
+  {
+    "key": "story.crochtrain.3.outro.2",
+    "es": "El hombre del cerebro se sentó cerca de ella. También había otro cliente y la muchacha del café iba de una mesa a otra. No alcanzaba a oír bien lo que decían. Doris se acomodó en su silla, tomó un sorbo y siguió conversando.",
+    "en": "The brain-headed gentleman sat near her. There was another customer too, and the café girl went between the tables. I couldn't quite hear them. Doris settled into her chair, took a sip, and kept talking.",
+    "pt": "O homem de cabeça de cérebro sentou perto dela. Havia outro cliente e a moça do café ia de uma mesa a outra. Eu não conseguia ouvir direito. Doris se acomodou, tomou um gole e continuou conversando.",
+    "ja": "脳の頭の紳士が、近くに座りました。もう一人のお客もいて、店のお嬢さんがテーブルを行き来している。話はよく聞き取れません。ドリスは椅子に座り直し、一口飲んで、また話し始めました。"
+  },
+  {
+    "key": "story.crochtrain.3.outro.3",
+    "es": "Me alegra que sigas con vida, querida. Tenía tanto miedo de llegar tarde. Sigues siendo tan bella como el último día que te vi. Quise decir su nombre en voz alta, solo una vez, aunque fuera desde allí.",
+    "en": "I'm glad you're still alive, my dear. I was so afraid I'd be too late. You're as lovely as the last day I saw you. I wanted to say her name aloud, just once, even from there.",
+    "pt": "Fico feliz que ainda esteja viva, minha querida. Tinha tanto medo de chegar tarde. Continua tão bela quanto no último dia em que a vi. Quis dizer seu nome em voz alta, só uma vez, mesmo dali.",
+    "ja": "生きていてくれて、うれしいよ、あなた。間に合わなかったらと、どれほど恐れたことか。最後に会った日と、変わらず美しい。一度だけでも、そこからでも、あの人の名を声にしたかった。"
+  },
+  {
+    "key": "story.crochtrain.3.outro.4",
+    "es": "Sentí el tirón por el medio antes de ver el tentáculo. Me levantó de la vía y la voz volvió a llenarme por dentro. Ya sabía adónde me llevaba. Intenté agarrarme, pero no tenía con qué. La mesa de Doris empezó a alejarse.",
+    "en": "I felt the pull around my middle before I saw the tentacle. It lifted me off the track, and the voice filled me again. I knew where it was taking me. I tried to hold on, but had nothing to hold with. Doris's table began to recede.",
+    "pt": "Senti o puxão no meio antes de ver o tentáculo. Me ergueu dos trilhos e a voz voltou a me encher por dentro. Já sabia para onde me levava. Tentei me agarrar, mas não tinha com quê. A mesa de Doris começou a se afastar.",
+    "ja": "触手が見える前に、胴を引かれる感覚がありました。線路から持ち上げられ、また声が内側を満たした。どこへ連れ戻すのかは分かっている。つかまろうにも、つかまる手がない。ドリスのテーブルが遠ざかり始めました。"
+  },
+  {
+    "key": "story.crochtrain.3.outro.5",
+    "es": "La muchacha del café se volvió hacia mí. No miró el tentáculo; me miró a mí. Pensé en pedirle que cuidara de Doris, que le dijera que no me había marchado por voluntad propia. Ella dejó de caminar y me habló con mucha suavidad.",
+    "en": "The café girl turned towards me. She wasn't looking at the tentacle; she was looking at me. I wished I could ask her to look after Doris, tell her I hadn't left of my own free will. She stopped walking and spoke very gently.",
+    "pt": "A moça do café se virou. Não olhou para o tentáculo; olhou para mim. Pensei em pedir que cuidasse de Doris, dissesse que não fui embora por vontade própria. Ela parou de andar e falou com muita delicadeza.",
+    "ja": "店のお嬢さんが振り返りました。触手ではなく、私を見ていた。ドリスを頼みたい、自分の意志で去ったのではないと伝えてほしい。そう思いました。お嬢さんは足を止め、とても優しく話しかけてくれたのです。"
+  },
+  {
+    "key": "story.crochtrain.3.outro.6",
+    "es": "«No te preocupes. Yo se lo diré. Puedo escuchar tus pensamientos, Dorian».",
+    "en": "Don't worry. I'll tell her. I can hear your thoughts, Dorian.",
+    "pt": "Não se preocupe. Eu vou contar a ela. Posso ouvir seus pensamentos, Dorian.",
+    "ja": "「心配しないで。私から伝えます。あなたの考えが聞こえるんです、ドリアン」"
+  }
+]

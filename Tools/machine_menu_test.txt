@@ -1,0 +1,6 @@
+RUNNING
+PASS giger: actual menu rotation, name, theme, shadow, preserved aspect and moving frames
+PASS crochtrain: actual menu rotation, name, theme, shadow, preserved aspect and moving frames
+PASS xiuhtecuhtli: actual menu rotation, name, theme, shadow, preserved aspect and moving frames
+PASS bba: actual menu rotation, name, theme, shadow, preserved aspect and moving frames
+PASS consoleErrors=0

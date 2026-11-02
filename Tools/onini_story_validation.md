@@ -1,5 +1,21 @@
 # Validación de la historia de Onini
 
+## Revisión de personalidad — 2026-11-01
+
+Se reescribieron 58 intervenciones en español, inglés, portugués y japonés. Onini mantiene una narración conversacional en primera persona, ahora con una voz rebelde, despreocupada y aventurera: se interesa por lo desconocido, se niega a cambiar las restricciones del infierno por órdenes de otros y suele buscar otra ruta antes que quedarse lamentando un contratiempo. Su curiosidad la lleva al cielo y al cactus; no se reduce a pelear o hacer bromas sobre comida.
+
+Los daños del tren tienen consecuencias: deja de poder seguir a BBA, busca reparaciones y continúa una vez reparada la máquina. BBA conserva su voz enérgica, y sus encuentros suenan a dos antiguas rivales que también se tienen aprecio. El final con la sombra expresa un temor de Onini, sin afirmar que conoce las reglas universales de Psicoworlds. Su regreso al infierno es una pausa que elige, no una renuncia a la aventura.
+
+Se mantienen los cinco capítulos, los hablantes, las ilustraciones y las reglas de combate. `onini_story_revision.tsv` contiene la pasada editorial; `apply_onini_revision.py` sincroniza el JSON original, las filas exclusivas de Onini en la localización y el guion de lectura `onini_story.md`. Las ocho claves compartidas de biomas/jefe celestial se conservan sin cambios.
+
+Pruebas de esta revisión:
+
+- `CheckOniniStory`: cinco capítulos, rivales correctos, 15 ilustraciones y 288 valores localizados de la campaña y sus claves compartidas; sin cambios de ruta.
+- `CheckOniniRevision` en Play Mode: 256 valores exclusivos de Onini comparados con las tablas de Unity; narración y gameplay caben en los cuadros reales en los cuatro idiomas. Se comprobaron las aperturas, conversaciones reales antes y después de cada batalla, desenlaces y pantalla Thanks de los cinco capítulos, con cero errores de consola.
+- Se aceleraron los relojes de viaje y las victorias. No es una prueba de balance de combate. La partida y la locomotora originales se restauraron y verificaron; escena historiaDialogos en Edit Mode.
+
+## Integración original
+
 Campaña conectada al selector: infierno → desierto → base del gobierno → cielo → Psicoworlds → Gracias por jugar.
 
 - 15 ilustraciones propias, revisadas contra el modelo de Onini y su locomotora C-279. Estética de tinta negra, sombras grandes y colores planos inspirada en las referencias.

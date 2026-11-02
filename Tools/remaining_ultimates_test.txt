@@ -1,0 +1,6 @@
+RUNNING
+PASS xiuhtecuhtli: correct card and color, moving frames, freeze and resume
+PASS giger: correct card and color, moving frames, freeze and resume
+PASS crochtrain: correct card and color, moving frames, freeze and resume
+PASS bba: correct card and color, moving frames, freeze and resume
+PASS shared presenter switches cards; BBA regression; consoleErrors=0

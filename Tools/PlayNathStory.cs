@@ -7,6 +7,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEditor.Localization;
+using UnityEngine.Localization.Tables;
 public static class PlayNathStory
 {
     public static string Run()
@@ -20,6 +23,7 @@ public class NathCampaignProbe:MonoBehaviour
     const BindingFlags F=BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic;
     const string Output="Tools/nath_test_session/";
     Gamepad pad;readonly List<InputDevice> disabled=new();int errors,firstFrame;
+    bool noEvents;
     object Get(object target,string name)=>target.GetType().GetField(name,F).GetValue(target);
     void Set(object target,string name,object value)=>target.GetType().GetField(name,F).SetValue(target,value);
     void Call(object target,string name,params object[] args)=>target.GetType().GetMethod(name,F).Invoke(target,args);
@@ -47,8 +51,34 @@ public class NathCampaignProbe:MonoBehaviour
     }
     IEnumerator CloseTalk(Talk talk)
     {
-        for(int n=0;n<18&&(talk.Open||talk.Finishing);n++){if(talk.Open)talk.Advance();yield return null;yield return null;}
+        for(int n=0;n<18&&(talk.Open||talk.Finishing);n++){if(talk.Open)talk.Advance();yield return new WaitForSecondsRealtime(.3f);}
         Check(!talk.Open&&!talk.Finishing,"Dialogue callback stuck");
+    }
+    void ValidateCopy(Text narration,Text gameplay)
+    {
+        var source=File.ReadAllLines("Assets/Localization/strings.tsv");var header=source[0].Split('\t');int values=0;
+        var collection=LocalizationEditorSettings.GetStringTableCollection("Game");
+        for(int c=1;c<header.Length;c++)
+        {
+            var table=(StringTable)collection.GetTable(header[c]);
+            Check(table.GetEntry("hero.character.nath").LocalizedValue==(header[c]=="ja"?"ナス・ムーン":"Nath Moon"),"Name not updated: "+header[c]);
+            foreach(string row in source)
+            {
+                if(!row.StartsWith("story.nath.")&&!row.StartsWith("hero.character.nath\t"))continue;
+                var cells=row.Split('\t');string text=table.GetEntry(cells[0])?.LocalizedValue;
+                Check(text==cells[c],"Wrong imported text: "+header[c]+" "+cells[0]);
+                Check(!text.Contains("Nath Star")&&!text.Contains("ナス・スター"),"Old name remains");
+                if(cells[0].Contains(".intro.")||cells[0].Contains(".outro.")||cells[0].Contains(".before.")||cells[0].Contains(".after."))
+                {
+                    bool story=cells[0].Contains(".intro.")||cells[0].Contains(".outro.");Text target=story?narration:gameplay;
+                    var settings=target.GetGenerationSettings(new Vector2(target.rectTransform.rect.width,0));settings.resizeTextForBestFit=false;settings.fontSize=story?25:31;
+                    float height=new TextGenerator().GetPreferredHeight(text,settings)/target.pixelsPerUnit;
+                    Check(height<=target.rectTransform.rect.height+1f,"Clipped text: "+header[c]+" "+cells[0]);
+                }
+                values++;
+            }
+        }
+        Log("PASS Nath Moon name and "+values+" imported values in four languages; narration/gameplay fit actual UI");
     }
     IEnumerator Quiz(bool pass)
     {
@@ -68,12 +98,15 @@ public class NathCampaignProbe:MonoBehaviour
     }
     IEnumerator Run()
     {
+        noEvents=TrainSim.NoEvents;TrainSim.NoEvents=true;Application.runInBackground=true;
         foreach(var d in InputSystem.devices)if((d is Gamepad||d is Keyboard||d is Mouse)&&d.enabled){disabled.Add(d);InputSystem.DisableDevice(d);}
         pad=InputSystem.AddDevice<Gamepad>("NathProbePad");InputSystem.onAfterUpdate+=Current;
         Locomotives.Select(1);Locomotives.StoryMode=true;Story.TestChapter=-1;SaveGame.NewStory(1);Story.Play(0);SceneManager.LoadScene("selectHero");yield return new WaitForSecondsRealtime(1);
         var menu=UnityEngine.Object.FindAnyObjectByType<SelectLocomotive>();Set(menu,"selected",1);Call(menu,"Refresh");Set(menu,"asking",true);Call(menu,"Go");yield return new WaitForSecondsRealtime(1.4f);
         var intro=UnityEngine.Object.FindAnyObjectByType<StoryIntro>();Check(intro&&intro.pages.Length==5&&Story.Hero=="nath","Selector did not open Nath prologue");
         Check(UiKit.Now.main==UiKit.Hero("nath").main,"Wrong Nath palette");yield return Press();Check((int)Get(intro,"visible")>0,"X did not reveal story");
+        var layout=intro.gameObject.AddComponent<Talk>();layout.Show(new[]{L10n.T("hero.character.nath")},new[]{"Test"},new[]{false},null);
+        Canvas.ForceUpdateCanvases();ValidateCopy((Text)Get(intro,"narration"),(Text)Get(layout,"what"));yield return CloseTalk(layout);UnityEngine.Object.Destroy(layout);
         intro.ShowPage(0,true);ScreenCapture.CaptureScreenshot(Output+"prologue.png");yield return null;
         string[] biomes={"volcano","city","heaven","hell","jungle"};int[] rivals={3,7,5,2,10};
         for(int c=0;c<5;c++)
@@ -86,7 +119,11 @@ public class NathCampaignProbe:MonoBehaviour
             var train=UnityEngine.Object.FindAnyObjectByType<TrainSim>();Check(train&&train.BiomeId==biomes[c]&&Story.Hero=="nath","Wrong biome/player "+c);
             Set(train,"junctionAsked",true);Set(train,"storyClock",Story.Duration);Set(train,"duelCalled",false);
             var talk=train.GetComponent<Talk>();float until=Time.unscaledTime+10;
-            while(!talk.Open&&Time.unscaledTime<until)yield return null;Check(talk.Open,"Finale talk missing "+c);yield return CloseTalk(talk);yield return new WaitForSecondsRealtime(.6f);
+            while(!talk.Open&&Time.unscaledTime<until)yield return null;Check(talk.Open,"Finale talk missing "+c);
+            Story.Duel(true,out var names,out var lines,out var speakers);var actual=(string[])Get(talk,"lines");
+            Check(actual.Length==lines.Length,"Wrong dialogue count "+c);for(int n=0;n<lines.Length;n++)Check(actual[n]==lines[n],"Wrong dialogue line "+c+"/"+n);
+            Check(((string[])Get(talk,"names"))[1]==L10n.T("hero.character.nath"),"Wrong Nath speaker label");
+            yield return CloseTalk(talk);yield return new WaitForSecondsRealtime(.6f);
             if(c==1)
             {
                 var race=train.GetComponent<RaceEvent>();Check(race.Active&&!race.CrateRun,"City did not start normal race");yield return Press();yield return new WaitForSecondsRealtime(.3f);race.TestWin();
@@ -107,6 +144,6 @@ public class NathCampaignProbe:MonoBehaviour
     }
     void OnDestroy()
     {
-        Application.logMessageReceived-=Error;InputSystem.onAfterUpdate-=Current;if(pad!=null&&pad.added)InputSystem.RemoveDevice(pad);foreach(var d in disabled)if(d.added)InputSystem.EnableDevice(d);
+        Application.logMessageReceived-=Error;TrainSim.NoEvents=noEvents;InputSystem.onAfterUpdate-=Current;if(pad!=null&&pad.added)InputSystem.RemoveDevice(pad);foreach(var d in disabled)if(d.added)InputSystem.EnableDevice(d);
     }
 }

@@ -1,0 +1,7 @@
+{
+  "tool": "built-in imagegen",
+  "id": "baratito",
+  "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-d170836c-1343-49f0-9788-417173a39d83.png",
+  "destination": "Assets/Resources/Story/cerebron_baratito.png",
+  "prompt": "Tiny LOCAL EDIT to this exact image only: REMOVE the one EXTRA coffee mug standing UNHELD on the tabletop between Doris and Cerebron, approximately x=685 y=650 in 1672x941 image (41% width,69% height). Fill its entire cup/handle/steam/shadow area with the SAME plain cream table surface behind it. There must be EXACTLY THREE mugs associated with the THREE SEATED customers: one in grayalien's hands on LEFT, one in DORIS's hands in MIDDLE, one in CEREBRON's hands on RIGHT. Keep those three held mugs and hands exactly. Culu's TWO mugs on her separate SERVING TRAY stay unchanged. Do not move characters or alter hands/poses/expressions, no phone, no other new object. Preserve all other drawing, loose brown outlines, awkward narrow bodies, simple soft pastel paint style, BARATITO sign, cafe, locomotive, distant god silhouette, composition16:9. Edit nothing else."
+}
