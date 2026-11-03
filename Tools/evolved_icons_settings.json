@@ -1,0 +1,29 @@
+{
+  "checkpoint": "gameIconInstitute_v4XL.safetensors",
+  "seed": 1,
+  "steps": 28,
+  "cfg": 6.0,
+  "sampler": "euler_ancestral",
+  "scheduler": "normal",
+  "subjects": {
+    "turret": "heavy artillery turret, twin blue cannon barrels, gold armor, muzzle blast",
+    "rocket": "advanced missile pod, red tipped rockets, gold and white launcher",
+    "minigun": "heavy gatling gun, oversized rotary barrels, silver and gold metal, cyan energy core",
+    "shotgun": "golden double barrel shotgun, ornate golden receiver, dark wooden stock",
+    "sniper": "advanced sniper rifle, golden hawk shaped scope, white and gold barrel",
+    "pulse": "glowing magenta energy core, golden ring, bright pink shockwave sphere",
+    "storm": "dark purple thundercloud, large golden lightning bolt, cyan electric glow",
+    "flame": "circular ring of orange flames, golden fire vortex, blazing fire halo",
+    "freeze": "large blue ice crystal, sharp ice crown, white frost, cyan aura",
+    "chain": "advanced tesla coil, golden tower, cyan lightning network, electric arcs",
+    "laser": "triangular glass prism, golden frame, rainbow laser beam, energy crystal",
+    "blaster": "bright blue plasma comet, round glowing energy core, long cyan flame tail, golden spark",
+    "grenade": "advanced cluster grenade, green shell, golden bands, glowing orange core",
+    "smg": "small futuristic combat drone, four white rotors, gold trim, cyan camera lens",
+    "scatter": "golden chakram, circular throwing blade, sharp orange rim, blue center gem",
+    "rail": "advanced ion cannon, purple energy barrel, white and gold sci-fi metal, glowing violet core",
+    "nova": "golden solar heart, pink star shaped energy core, bright orange sun rays",
+    "spark": "cyan orb shield, bright blue energy sphere surrounded by golden protective rings",
+    "masamune": "blue dragon head, flowing cyan dragon, golden horns, swirling blue magic"
+  }
+}

@@ -221,7 +221,7 @@ public class BrawlEvent : MonoBehaviour
 
     public bool BeginDriver(int rival, Vector3 from, System.Action<bool> done)
     {
-        if (!moves || !train.Player.Alive) return false;
+        if (Active || train.InEvent || !moves || !train.Player.Alive) return false;
         int alive = 0;
         wagon = -1;
         for (int i = 0; i < train.CarCount; i++) if (train.CarAlive(i) && Random.Range(0, ++alive) == 0) wagon = i;
@@ -271,8 +271,8 @@ public class BrawlEvent : MonoBehaviour
     {
         if (!driverFight)
         {
+            if (Active || train.InEvent || !moves || !train.Player.Alive || !train.Gunner(out wagon)) return false;
             DriverFight = false;
-            if (!moves || !train.Player.Alive || !train.Gunner(out wagon)) return false;
         }
         if (!room) Build();
         Active = true;

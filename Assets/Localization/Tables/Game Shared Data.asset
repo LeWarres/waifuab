@@ -6383,6 +6383,14 @@ MonoBehaviour:
     m_Key: shop.chest
     m_Metadata:
       m_Items: []
+  - m_Id: 9599754557534208
+    m_Key: kills.chest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9621011319566336
+    m_Key: kills.reached
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

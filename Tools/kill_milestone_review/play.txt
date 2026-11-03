@@ -1,0 +1,8 @@
+RUNNING
+PASS no reward at 1000, 2000 or 2499 kills
+PASS 2500 notice precedes single normal reward by 2 seconds
+PASS 5000 notice precedes single normal reward by 2 seconds
+PASS queued milestones announced as 2500 then 5000; no duplicate at 5001
+PASS 7500 notice precedes single normal reward by 2 seconds
+PASS interrupted notice repeats for full duration after pause
+PASS complete; console errors=0

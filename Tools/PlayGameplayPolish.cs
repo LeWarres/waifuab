@@ -31,6 +31,7 @@ public class GameplayPolishProbe:MonoBehaviour
     IEnumerator Load(string scene){SceneManager.LoadScene(scene);yield return new WaitForSecondsRealtime(1.2f);}
     List<Chest.Prize> Prizes(TrainSim t)=>(List<Chest.Prize>)Get(t.GetComponent<Chest>(),"showing");
     void Close(TrainSim t){while(t.ChestOpen)t.CloseChest();}
+    IEnumerator WaitMilestoneChest(TrainSim t){float timeout=Time.unscaledTime+8f;while(!t.ChestOpen&&Time.unscaledTime<timeout)yield return null;Check(t.ChestOpen,"Milestone chest timed out");}
     IEnumerator Shot(string id){yield return new WaitForEndOfFrame();ScreenCapture.CaptureScreenshot(Dir+id+".png");yield return new WaitForEndOfFrame();yield return null;}
     IEnumerator Run()
     {
@@ -69,10 +70,10 @@ public class GameplayPolishProbe:MonoBehaviour
             train.Player.level=Weapon.MaxLevel;levels[partner]=1;Call(train,"AwardChest",true,false);Check(Prizes(train).Count==1&&!Prizes(train)[0].evolution,"Simple chest evolved/multiple prizes");Close(train);
         }
         train.Player.level=Weapon.Evolved;levels[partner]=TrainSim.PassiveCap(partner);int money=train.money;Call(train,"AwardChest",true,false);Check(Prizes(train).Count==1&&Prizes(train)[0].icon=="money"&&train.money>money,"No capped fallback money");Close(train);
-        Set(train,"<Kills>k__BackingField",999);train.Charge();Check((int)Get(train,"pendingKillChests")==1,"1000 kill reward not queued");int count=train.Chests;
-        yield return null;yield return null;Check(train.ChestOpen&&train.Chests==count+1&&Prizes(train).Count==1,"1000 kill chest not delivered");Close(train);
-        train.Charge();yield return null;Check(!train.ChestOpen,"Duplicate milestone reward");Set(train,"<Kills>k__BackingField",1999);train.Charge();yield return null;yield return null;Check(train.ChestOpen,"2000 kill reward missing");Close(train);
-        Log("PASS 1000/2000 milestones once each; single normal prize; capped fallback money; boss evolution priority retained");
+        Set(train,"<Kills>k__BackingField",2499);train.Charge();Check((int)Get(train,"pendingKillChests")==1,"2500 kill reward not queued");int count=train.Chests;
+        yield return WaitMilestoneChest(train);Check(train.ChestOpen&&train.Chests==count+1&&Prizes(train).Count==1,"2500 kill chest not delivered");Close(train);
+        train.Charge();yield return null;Check(!train.ChestOpen,"Duplicate milestone reward");Set(train,"<Kills>k__BackingField",4999);train.Charge();yield return WaitMilestoneChest(train);Check(train.ChestOpen,"5000 kill reward missing");Close(train);
+        Log("PASS 2500/5000 milestones once each; single normal prize; capped fallback money; boss evolution priority retained");
         // Shop action: unaffordable disabled, correct debit, modal input block, return to the same shop.
         combat.ClearField();Set(train,"<AtStation>k__BackingField",true);Set(train,"deliveryPending",false);Set(train,"stage",3);train.money=799;Call(train,"BuildMenu");
         int option=-1;for(int i=0;i<train.OptionCount;i++)if(train.OptionIcon(i)=="chest")option=i;Check(option>=0&&!train.OptionEnabled(option),"Chest not disabled at 799");

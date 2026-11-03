@@ -13,7 +13,7 @@ public static class SetupGameplayPolish
         for(int c=1;c<header.Length;c++)
         {
             var table=(StringTable)collection.GetTable(header[c]);
-            foreach(string line in lines){var row=line.Split('\t');if(row[0]!="shop.chest"&&row[0]!="miniboss.coming")continue;table.AddEntry(row[0],row[c].Replace("\\n","\n"));count++;}
+            foreach(string line in lines){var row=line.Split('\t');if(row[0]!="shop.chest"&&row[0]!="miniboss.coming"&&row[0]!="kills.chest"&&row[0]!="kills.reached")continue;table.AddEntry(row[0],row[c].Replace("\\n","\n"));count++;}
             EditorUtility.SetDirty(table);
         }
         EditorUtility.SetDirty(collection.SharedData);AssetDatabase.SaveAssets();return "Imported "+count+" localized values";

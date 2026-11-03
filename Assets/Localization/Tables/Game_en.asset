@@ -8572,6 +8572,14 @@ MonoBehaviour:
     m_Localized: "Random chest \xB7 {0} coins\n1, 3 or 5 prizes. No evolution priority."
     m_Metadata:
       m_Items: []
+  - m_Id: 9599754557534208
+    m_Localized: "{0} kills! \xB7 Reward chest"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9621011319566336
+    m_Localized: '{0} KILLS!'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

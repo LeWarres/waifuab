@@ -28,6 +28,7 @@ public class Weapon
     public string evolvesWith; // the hero's upgrade (TrainSim.Passives) that, owned with this at its top level, evolves it
     public string EvolvedName => L10n.T($"weapon.{id}.evo");
     public const int Evolved = MaxLevel + 1; // the level an evolved weapon stands at
+    public string Icon(int level) => level >= Evolved && !string.IsNullOrEmpty(evolvesWith) ? id + "_evo" : id;
 
     // Straight: a glowing streak. Lob: thrown up and over. Swirl: curls in on its target. Boomerang: a spinning
     // blade out and back, through everyone. Orbit: orbs circling the hero. Wobble: a stream that snakes.

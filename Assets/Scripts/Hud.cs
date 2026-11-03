@@ -83,7 +83,7 @@ public class Hud : MonoBehaviour
     CanvasGroup ultimateNoticeFade;
     float ultimateNoticeUntil;
     const float UltimateNoticeSeconds = 2.5f;
-    public bool Toasting => Time.unscaledTime < toastUntil || Time.unscaledTime < ultimateNoticeUntil;
+    public bool Toasting => Time.unscaledTime < toastUntil || Time.unscaledTime < ultimateNoticeUntil || Time.unscaledTime < entranceAt + EntranceSeconds;
     Text rideTime;
     // Under the train's card, two rows of boxes: the weapons carried (the hero's first) and the hero's upgrades,
     // each with its level.
@@ -213,6 +213,8 @@ public class Hud : MonoBehaviour
         toastPanel.rectTransform.anchorMin = toastPanel.rectTransform.anchorMax = new Vector2(0.5f, 0f);
         toastPanel.rectTransform.localRotation = Quaternion.Euler(0f, 0f, 1.5f);
         toastText = UiKit.Label(toastPlate.transform, UiKit.Display, 42, Color.white, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(1040f, 70f), true);
+        toastText.enabled = false;
+        toastLine = Prompt.Make(toastPlate.transform, Vector2.zero, 38, Color.white, UiKit.Display);
         toastPanel.gameObject.SetActive(false);
 
         Slanted noticePlate = UiKit.Plate(canvas.transform, Vector2.zero, new Vector2(760f, 82f), 0.12f, 5f, 10f);
@@ -288,9 +290,9 @@ public class Hud : MonoBehaviour
     }
 
     // Call every frame while a boss is on the field; it hides itself a moment after the last call.
-    public void Boss(string name, float fraction)
+    public void Boss(string name, float fraction, bool announce = true)
     {
-        if (Time.unscaledTime > bossUntil + 4f) Entrance(name); // just came on
+        if (announce && Time.unscaledTime > bossUntil + 4f) Entrance(name); // just came on
         if (bossPanel == null)
         {
             Slanted plate = UiKit.Plate(canvas.transform, new Vector2(0f, -192f), new Vector2(720f, 84f), 0.1f, 4f, 9f); // under the clock and kill count
@@ -310,11 +312,13 @@ public class Hud : MonoBehaviour
     // ---- a boss's entrance: a dark band in the biome's colours across the screen, tilted, the boss's name huge on it
     // under a "BOSS!" tag; it slams in, holds while the game runs slow, and sweeps out.
     RectTransform entrance;
-    Text entranceName;
+    Text entranceName, entranceTag;
     float entranceAt = -10f;
     const float EntranceSeconds = 1.9f;
 
-    void Entrance(string name)
+    public void KillMilestone(int kills) => Entrance(L10n.T("kills.reached", kills), L10n.T("chest.common"), false);
+
+    void Entrance(string name, string tagText = null, bool dramatic = true)
     {
         if (!entrance)
         {
@@ -330,16 +334,16 @@ public class Hud : MonoBehaviour
             Slanted tag = UiKit.Paint(UiKit.Panel(entrance, new Vector2(-420f, 112f), new Vector2(300f, 62f), Color.white, Color.white, 0.25f), UiKit.Ink.Hot);
             tag.sprite = null;
             tag.rectTransform.localRotation = Quaternion.Euler(0f, 0f, 4f);
-            UiKit.Paint(UiKit.Label(tag.transform, UiKit.Display, 44, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 2f), new Vector2(290f, 58f), true), UiKit.Ink.Deep).text = L10n.T("boss.title");
+            entranceTag = UiKit.Paint(UiKit.Label(tag.transform, UiKit.Display, 44, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 2f), new Vector2(290f, 58f), true), UiKit.Ink.Deep);
             Text shadow = UiKit.Paint(UiKit.Label(entrance, UiKit.Display, 130, Color.white, TextAnchor.MiddleCenter, new Vector2(10f, -12f), new Vector2(1700f, 170f), true), UiKit.Ink.Main);
             entranceName = UiKit.Label(entrance, UiKit.Display, 130, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, -2f), new Vector2(1700f, 170f), true);
             shadow.gameObject.AddComponent<Echo>().of = entranceName;
         }
         entranceName.text = name.ToUpperInvariant();
+        entranceTag.text = (tagText ?? L10n.T("boss.title")).ToUpperInvariant();
         entranceAt = Time.unscaledTime;
         entrance.gameObject.SetActive(true);
-        train.SlowMotion(EntranceSeconds * 0.8f, 0.3f);
-        train.Shake(0.4f);
+        if (dramatic) { train.SlowMotion(EntranceSeconds * 0.8f, 0.3f); train.Shake(0.4f); }
         Sound.Play("newcard");
     }
 
@@ -495,9 +499,12 @@ public class Hud : MonoBehaviour
         if (!shown) Level(box, "");
     }
 
+    Prompt toastLine;
     public void Toast(string text, float seconds = 2.5f)
     {
         toastText.text = text;
+        toastLine.Set(text);
+        toastLine.transform.localScale = Vector3.one * Mathf.Min(1f, 1040f / Mathf.Max(1f, toastLine.Width));
         toastUntil = Time.unscaledTime + seconds;
     }
 
@@ -611,6 +618,7 @@ public class Hud : MonoBehaviour
             UiKit.Label(line, UiKit.Heading, 30, dim, TextAnchor.MiddleCenter, new Vector2(-240f, 0f), new Vector2(40f, 40f), true).text = "=";
             Text name = UiKit.Label(line, UiKit.Display, 28, Color.white, TextAnchor.MiddleLeft, new Vector2(0f, 10f), new Vector2(420f, 34f), true);
             name.text = weapon.EvolvedName;
+            UiKit.Picture(line, weapon.Icon(Weapon.Evolved), new Vector2(390f, 0f), 56f);
             UiKit.Label(line, UiKit.Body, 17, dim, TextAnchor.MiddleLeft, new Vector2(0f, -18f), new Vector2(420f, 24f), true).text =
                 L10n.T(hero ? "evo.hero" : "evo.wagon", weapon.Name, passive >= 0 ? L10n.T("passive." + weapon.evolvesWith) : "");
             recipes.Add((weapon, gun, partner, name));
@@ -756,7 +764,7 @@ public class Hud : MonoBehaviour
 
         heroBar.Set(hero.Health / hero.maxHealth);
         heroText.text = hero.Alive ? $"{hero.Health:0}/{hero.maxHealth:0}" : "0";
-        UiKit.SetIcon(ammoIcon, hero.ammo.id);
+        UiKit.SetIcon(ammoIcon, hero.ammo.Icon(hero.level));
         ammoText.text = (!hero.Alive ? L10n.T("player.down") : hero.level >= Weapon.Evolved ? L10n.T("player.evo", hero.ammo.EvolvedName) : L10n.T("player.slot", hero.ammo.Name, hero.level)).ToUpperInvariant();
         // The weapons on board, then those waiting for a wagon (faded).
         var arsenal = new List<(Weapon weapon, int level)>(train.Arsenal());
@@ -767,7 +775,7 @@ public class Hud : MonoBehaviour
             bool shown = i < arsenal.Count;
             Show(weapons[i], shown, i < Mathf.Max(BaseBoxes, arsenal.Count));
             if (!shown) continue;
-            UiKit.SetIcon(weapons[i].icon, arsenal[i].weapon.id);
+            UiKit.SetIcon(weapons[i].icon, arsenal[i].weapon.Icon(arsenal[i].level));
             weapons[i].icon.color = new Color(1f, 1f, 1f, i < onBoard ? 1f : 0.4f);
             int lv = arsenal[i].level;
             Level(weapons[i], lv >= Weapon.Evolved ? "EVO" : lv >= Weapon.MaxLevel ? "MAX" : lv.ToString());

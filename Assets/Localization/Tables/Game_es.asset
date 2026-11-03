@@ -7958,6 +7958,14 @@ MonoBehaviour:
       sin prioridad."
     m_Metadata:
       m_Items: []
+  - m_Id: 9599754557534208
+    m_Localized: "\xA1{0} bajas! \xB7 Cofre de recompensa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9621011319566336
+    m_Localized: "\xA1{0} BAJAS!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

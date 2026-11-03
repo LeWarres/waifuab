@@ -13,19 +13,19 @@ using UnityEngine;
 // (TrainSim.RivalBeaten). The biome's truck boss is something else: it may or may not turn up along the way.
 public class RivalEvent : MonoBehaviour
 {
-    public float apart = 10f;         // from the middle of our track to the middle of theirs
+    public float apart = 20f;         // room to read both trains and the crossfire
     public float slide = 8f;          // how far it drifts ahead of and behind the middle of our train
     public float trackLength = 320f;  // of the rails laid for it, centred on the train
     public float fireEvery = 1.3f;    // seconds between two shots of one of its guns, at difficulty 0
     public float shotDamage = 0.6f * Balance.Scale;
-    public float health = 800f * Balance.Scale;
+    public float health = 400f * Balance.Scale;
     public float perDifficulty = 0.03f; // more health for every level of difficulty
     public float hitPerDifficulty = 0.012f; // harder and quicker shots and bombs: gentler, the fight now lasts
     // So that evolved weapons and the ultimate cannot just melt it: its health also grows with the arsenal, it
     // takes only part of each hit unless overheated or hexed weak, and it never loses more than a share of its
     // health a second from normal weapons. Ultimate hits have a separate burst cap. Under half health it fights harder.
     public float armour = 0.5f;          // share of a hit it takes outside the weak windows
-    public float maxLossPerSecond = 0.006f, weakLossPerSecond = 0.01f; // shares of its health: two to three minutes
+    public float maxLossPerSecond = 0.012f, weakLossPerSecond = 0.02f; // preserve absolute damage caps with half the health
     // Three acts, by its health: as it was; then under two thirds its driver comes aboard twice a round (in place of
     // the hex) and its guns lob bombs too; under a third it rages (faster, more boarders).
     public float secondAct = 0.66f, rageAt = 0.33f, rage = 1.6f;
@@ -56,7 +56,7 @@ public class RivalEvent : MonoBehaviour
     static readonly (int kind, float seconds)[] Turns = { (0, 8f), (1, 5f), (3, 4f), (5, 1f), (0, 6f), (4, 2f), (2, 4f), (3, 4f) };
     const int Guns = 0, Bombs = 1, Boarders = 2, Overheated = 3, Hex = 4, Driver = 5;
     // The driver leaping aboard (BrawlEvent.BeginDriver): beaten in our wagon, its train loses this share of health.
-    public float driverShare = 0.06f;
+    public float driverShare = 0.12f;
     // Waves from the other side of our train, away from the rival: the hero has to fly over and deal with them.
     public float waveEvery = 20f;
     float waveIn, rivalSide;
@@ -77,6 +77,9 @@ public class RivalEvent : MonoBehaviour
     Combat.Batch bombLook;
 
     public bool Active { get; private set; }
+    public Vector3 CameraOffset => Vector3.Cross(Vector3.up, along) * (apart * rivalSide * 0.5f);
+    public float CameraReach => WagonStep * 4f + slide + train.flyRoom;
+    bool bossAnnounced;
 
     TrainSim train;
     Transform root, track;
@@ -91,7 +94,8 @@ public class RivalEvent : MonoBehaviour
     string label;
     Vector3 along, centre;
     Combat.Batch tracers;
-    readonly List<(Vector3 from, Vector3 to, float until)> shots = new();
+    const float ShotFlight = 0.5f;
+    readonly List<(Vector3 from, Vector3 to, float at, int car, bool miss, float damage)> shots = new();
 
     void Awake() => train = GetComponent<TrainSim>();
 
@@ -178,7 +182,7 @@ public class RivalEvent : MonoBehaviour
         if(Story.ShadowRival) label=L10n.T("story.onini.shadow")+" · "+L10n.T(Locomotives.NameKeys[rival]);
         tracers = new Combat.Batch(new Color(1f, 0.35f, 0.25f), false);
         phase = 0f;
-        wasRaging = announcedSecond = false;
+        wasRaging = announcedSecond = bossAnnounced = false;
         turn = 0;
         turnLeft = Turns[0].seconds;
         lastHp = body.hp;
@@ -214,15 +218,15 @@ public class RivalEvent : MonoBehaviour
     float UltimateHit(float damage)
     {
         bool weak = Turns[turn].kind == Overheated || OnThem(Weak);
-        // Five meteorites can remove at most 5% per cast, independently of frame rate and normal gunfire.
-        float taken = Mathf.Min(Mathf.Max(0f, hp), Mathf.Min(damage * (weak ? 2f : armour), maxHp * 0.01f));
+        // Keep the old absolute burst cap after halving health: five meteorites can remove up to 10% per cast.
+        float taken = Mathf.Min(Mathf.Max(0f, hp), Mathf.Min(damage * (weak ? 2f : armour), maxHp * 0.02f));
         hp -= taken;
         return taken;
     }
 
     void Update()
     {
-        if (!Active || train.Paused || train.UltimatePresenting) return;
+        if (!Active || train.Paused || train.UltimatePresenting || GetComponent<BrawlEvent>().Active || GetComponent<CaveEvent>().Active) return;
         shadowDriver?.Tick(Time.deltaTime);
         if (train.Health <= 0f) { End(); return; }
         if (body == null || body.id != bodyId) { Win(); return; } // its engine is wrecked
@@ -236,7 +240,7 @@ public class RivalEvent : MonoBehaviour
         bool machine = Story.MachineRival;
         int kind = Turns[turn].kind;
         if (machine && (kind == Driver || (kind == Hex && Act >= 2))) kind = Boarders;
-        if (Time.unscaledTime >= startsAt && (turnLeft -= dt) <= 0f)
+        if (Time.unscaledTime >= startsAt && !phrase.Active && (turnLeft -= dt) <= 0f)
         {
             turn = (turn + 1) % Turns.Length;
             turnLeft = Turns[turn].seconds;
@@ -253,13 +257,15 @@ public class RivalEvent : MonoBehaviour
                 GetComponent<CaveEvent>().Begin(rivalIndex, won =>
                 {
                     if (!Active) return;
-                    if (won) hp = Mathf.Max(1f, hp - maxHp * driverShare * 1.5f); // found it twice: it and its train take it
+                    phraseIn = phraseEvery;
+                    if (won) hp = Mathf.Max(0f, hp - maxHp * driverShare * 1.5f);
                     else for (int n = 0; n < 2; n++) { int car = Random.Range(0, train.CarCount); if (train.CarAlive(car)) train.HurtCar(car, 0.5f); }
                 });
             else if (kind == Driver || (kind == Hex && Act >= 2))
                 GetComponent<BrawlEvent>().BeginDriver(rivalIndex, EnginePosition, won =>
                 {
-                    if (won && Active) hp = Mathf.Max(1f, hp - maxHp * driverShare); // the engine finishes off the rest
+                    phraseIn = phraseEvery;
+                    if (won && Active) hp = Mathf.Max(0f, hp - maxHp * driverShare);
                 });
             else if (kind == Hex)
             {
@@ -269,7 +275,7 @@ public class RivalEvent : MonoBehaviour
             }
         }
         // A phrase of buttons (not for the bot, which cannot play them).
-        if (Time.unscaledTime >= startsAt && !phrase.Active && !TrainSim.NoEvents && (phraseIn -= dt) <= 0f)
+        if (Time.unscaledTime >= startsAt && !train.InEvent && !train.Racing && !TrainSim.NoEvents && (phraseIn -= dt) <= 0f)
         {
             phraseIn = phraseEvery;
             int status = Random.Range(0, Statuses);
@@ -311,6 +317,16 @@ public class RivalEvent : MonoBehaviour
             Lob();
         }
         Fly(now);
+        for (int i = shots.Count - 1; i >= 0; i--)
+        {
+            var shot = shots[i];
+            if (now - shot.at < ShotFlight) continue;
+            Vector3 impact = shot.miss || !train.CarAlive(shot.car) ? shot.to : train.CarPosition(shot.car) + Vector3.up * 1.5f;
+            if (!shot.miss && train.CarAlive(shot.car)) train.Damage(shot.car, shot.damage);
+            Combat.Instance.Burst("spark", impact, 2f);
+            Combat.Instance.Burst("smoke", impact, 1.5f);
+            shots.RemoveAt(i);
+        }
 
         // Drifts ahead and back along its rails (it slows when overheated); its sleepers slide past at the
         // speed of the ground.
@@ -333,12 +349,14 @@ public class RivalEvent : MonoBehaviour
                 Vector3 flat = at - guns[i].position;
                 flat.y = 0f;
                 if (flat.sqrMagnitude > 0.01f) guns[i].rotation = Quaternion.LookRotation(flat);
-                if (!miss) train.Damage(target, shotDamage * (1f + hitPerDifficulty * train.Difficulty));
-                Combat.Instance.Burst("spark", muzzle, 1.2f);
-                Combat.Instance.Burst("smoke", at, 1f);
-                shots.Add((muzzle, at, now + 0.08f));
+                Combat.Instance.Burst("spark", muzzle, 2f);
+                shots.Add((muzzle, at, now, target, miss, shotDamage * (1f + hitPerDifficulty * train.Difficulty)));
             }
-        if (!train.Swarming) train.BossBar(label, maxHp > 0f ? hp / maxHp : 0f);
+        if (!train.Swarming)
+        {
+            train.BossBar(label, maxHp > 0f ? hp / maxHp : 0f, !bossAnnounced);
+            bossAnnounced = true;
+        }
     }
 
     // A status on us (us) or on the rival. Jammed turrets of ours are stunned turrets.
@@ -397,11 +415,14 @@ public class RivalEvent : MonoBehaviour
         foreach (Shell b in bombs)
             if (b.e.id == b.id) bombLook.Add(b.e.position, Vector3.one * 1.4f, Quaternion.Euler(now * 200f, now * 140f, 0f));
         bombLook.Flush();
-        shots.RemoveAll(s => s.until < now);
         foreach (var s in shots)
         {
-            Vector3 d = s.to - s.from;
-            tracers.Add((s.from + s.to) * 0.5f, new Vector3(0.15f, 0.15f, d.magnitude), Quaternion.LookRotation(d));
+            Vector3 target = s.miss || !train.CarAlive(s.car) ? s.to : train.CarPosition(s.car) + Vector3.up * 1.5f;
+            float progress = Mathf.Clamp01((now - s.at) / ShotFlight);
+            Vector3 head = Vector3.Lerp(s.from, target, progress);
+            Vector3 tail = Vector3.Lerp(s.from, target, Mathf.Max(0f, progress - 0.25f));
+            Vector3 d = head - tail;
+            if (d.sqrMagnitude > 0.0001f) tracers.Add((head + tail) * 0.5f, new Vector3(0.55f, 0.55f, d.magnitude), Quaternion.LookRotation(d));
         }
         tracers.Flush();
     }

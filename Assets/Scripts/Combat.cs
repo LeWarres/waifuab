@@ -709,7 +709,7 @@ public class Combat : MonoBehaviour
         }
         if(miniBoss!=null&&miniBossAnnounced&&!miniBossHint&&Time.unscaledTime>=miniBossHintAt)
         {
-            miniBossHint=true;train.Toast(L10n.T("miniboss.coming",TauntKey));
+            miniBossHint=true;train.Toast(L10n.T("miniboss.coming","["+TauntKey+"]"));
         }
 
         lootTimer -= dt;
@@ -1172,7 +1172,7 @@ public class Combat : MonoBehaviour
         Vector3 hero = heroUp ? new Vector3(player.Position.x, 0f, player.Position.z) : Vector3.zero;
         if (miniBossHint && heroUp && (hero - flat).sqrMagnitude < TauntReach * TauntReach && bossMode != Chase)
         {
-            train.Panel.Mark(e.position + Vector3.up * (e.type.size + 2.2f), TauntKey, 3);
+            train.Panel.Mark(e.position + Vector3.up * (e.type.size + 2.2f), "["+TauntKey+"]", 3);
             bool taunt = (Keyboard.current != null && Keyboard.current.fKey.wasPressedThisFrame)
                          || (Gamepad.current != null && Gamepad.current.buttonWest.wasPressedThisFrame);
             if (taunt)
@@ -1239,7 +1239,7 @@ public class Combat : MonoBehaviour
     }
 
     const float TauntReach = 3.5f; // only right up against it
-    string TauntKey => player && player.UsingGamepad ? (Gamepad.current is DualShockGamepad ? "□" : "X") : "F";
+    string TauntKey => player && player.UsingGamepad ? (Gamepad.current is DualShockGamepad ? "□" : "xX") : "F";
 
     // A standing wagon at random, another than but if there is one; -1 if none stands.
     int RandomWagon(int but)

@@ -32,7 +32,7 @@ public class EventPanel : MonoBehaviour
     readonly Cell[] boxes = new Cell[MaxBoxes];
     RectTransform bar, barFill, barZone, barMarker, dial, needle;
     GameObject cardRoot;
-    readonly System.Collections.Generic.List<(RectTransform rect, Slanted back, Text text)> marks = new();
+    readonly System.Collections.Generic.List<(RectTransform rect, Slanted back, Text text, Prompt glyph)> marks = new();
     int cardFrame = -10, marksFrame = -10, marksUsed;
     readonly Image[] segments = new Image[31];
     int shownFrame = -10;
@@ -225,13 +225,17 @@ public class EventPanel : MonoBehaviour
             back.rectTransform.anchorMin = back.rectTransform.anchorMax = Vector2.zero;
             Text label = UiKit.Label(back.transform, UiKit.Display, 62, UiKit.Gold, TextAnchor.MiddleCenter, new Vector2(0f, 2f), new Vector2(88f, 76f), true);
             label.fontStyle = FontStyle.Normal;
-            marks.Add((back.rectTransform, back, label));
+            marks.Add((back.rectTransform, back, label, Prompt.Make(back.transform, Vector2.zero, 46, Color.white, UiKit.Display)));
         }
         var mark = marks[marksUsed++];
         mark.rect.gameObject.SetActive(true);
         Vector3 screen = Camera.main.WorldToScreenPoint(world);
         mark.rect.anchoredPosition = new Vector2(screen.x, screen.y) / canvas.scaleFactor + Vector2.up * 40f;
         mark.text.text = text;
+        bool button = text.StartsWith("[") && text.EndsWith("]");
+        mark.text.enabled = !button;
+        mark.glyph.gameObject.SetActive(button);
+        if (button) mark.glyph.Set(text);
         bool current = state >= 3;
         mark.rect.localScale = Vector3.one * (state == 4 ? 1.5f + Mathf.PingPong(Time.unscaledTime * 4f, 0.25f) : state == 3 ? 1.25f : 0.8f);
         Color ink = state == 1 || state == 4 ? UiKit.Mint : state == 2 ? UiKit.Rose : state == 3 ? UiKit.Gold : Color.white;

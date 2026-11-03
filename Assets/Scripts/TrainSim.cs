@@ -211,11 +211,13 @@ public partial class TrainSim : MonoBehaviour
     public float UltimateFill => Mathf.Clamp01(ultimateCharge / ultimateKills);
     public bool UltimateReady => ultimateCharge >= ultimateKills;
     public int Kills { get; private set; } // enemies shot down this run (the station's guns do not count)
+    public const int KillChestEvery = 2500;
     int pendingKillChests;
+    float killChestNoticeUntil;
     public void Charge()
     {
         Kills++;
-        if(Kills%1000==0)pendingKillChests++;
+        if(Kills%KillChestEvery==0)pendingKillChests++;
     }
     void ChargeUltimate(float dt)
     {
@@ -374,50 +376,58 @@ public partial class TrainSim : MonoBehaviour
         int rolls = simple?1:Random.value < 0.03f + 0.01f * luck ? 5 : Random.value < 0.22f + 0.03f * luck ? 3 : 1;
         if (rolls == 5) Achievements.Unlock("legendary");
         var prizes = new List<Chest.Prize>();
+        var usedWeapons = new HashSet<string>();
+        var usedPassives = new HashSet<string>();
+        bool heroReady = CanEvolve;
+        var readyGuns = new List<Turret>();
+        foreach (Car car in cars)
+            if (car.mount && car.mount.Level == Weapon.MaxLevel && PassiveLevel(car.mount.Weapon.evolvesWith) > 0) readyGuns.Add(car.mount);
         for (int roll = 0; roll < rolls; roll++)
         {
             // An evolution first, if one is earned (the hero's, then a wagon's): the only way to evolve.
-            if (!simple&&!fair&&CanEvolve)
+            if (!simple&&!fair&&heroReady&&!usedWeapons.Contains(Player.ammo.id))
             {
+                usedWeapons.Add(Player.ammo.id);
                 Player.level = Weapon.Evolved;
-                prizes.Add(new Chest.Prize { icon = Player.ammo.id, label = Player.ammo.EvolvedName, evolution = true });
+                prizes.Add(new Chest.Prize { icon = Player.ammo.Icon(Weapon.Evolved), label = Player.ammo.EvolvedName, evolution = true });
                 continue;
             }
-            Turret ready = Evolvable;
+            Turret ready = readyGuns.Find(g => !usedWeapons.Contains(g.Weapon.id));
             if (!simple&&!fair&&ready)
             {
+                usedWeapons.Add(ready.Weapon.id);
                 ready.Evolve();
                 Combat.Instance.Burst("levelup", ready.transform.position, 3f);
-                prizes.Add(new Chest.Prize { icon = ready.Weapon.id, label = ready.Weapon.EvolvedName, evolution = true });
+                prizes.Add(new Chest.Prize { icon = ready.Weapon.Icon(Weapon.Evolved), label = ready.Weapon.EvolvedName, evolution = true });
                 continue;
             }
             // Else a level on something already owned; weapons count twice, as in Vampire Survivors.
             var choices = new List<System.Func<Chest.Prize>>();
-            if(fair&&CanEvolve)choices.Add(()=>{Player.level=Weapon.Evolved;return new Chest.Prize{icon=Player.ammo.id,label=Player.ammo.EvolvedName,evolution=true};});
-            if(fair)foreach(var car in cars)
+            if(fair&&heroReady&&!usedWeapons.Contains(Player.ammo.id))choices.Add(()=>{usedWeapons.Add(Player.ammo.id);Player.level=Weapon.Evolved;return new Chest.Prize{icon=Player.ammo.Icon(Weapon.Evolved),label=Player.ammo.EvolvedName,evolution=true};});
+            if(fair)foreach(var gun in readyGuns)
             {
-                var gun=car.mount;
-                if(gun&&gun.Level==Weapon.MaxLevel&&PassiveLevel(gun.Weapon.evolvesWith)>0)
-                    choices.Add(()=>{gun.Evolve();return new Chest.Prize{icon=gun.Weapon.id,label=gun.Weapon.EvolvedName,evolution=true};});
+                if(!usedWeapons.Contains(gun.Weapon.id))
+                    choices.Add(()=>{usedWeapons.Add(gun.Weapon.id);gun.Evolve();return new Chest.Prize{icon=gun.Weapon.Icon(Weapon.Evolved),label=gun.Weapon.EvolvedName,evolution=true};});
             }
             for (int twice = 0; twice < (fair?1:2); twice++)
             {
-                if (Player.level < Weapon.MaxLevel)
-                    choices.Add(() => { Player.level++; return new Chest.Prize { icon = Player.ammo.id, label = L10n.T("chest.level", Player.ammo.Name, Player.level) }; });
+                if (Player.level < Weapon.MaxLevel && !usedWeapons.Contains(Player.ammo.id))
+                    choices.Add(() => { usedWeapons.Add(Player.ammo.id); Player.level++; return new Chest.Prize { icon = Player.ammo.id, label = L10n.T("chest.level", Player.ammo.Name, Player.level) }; });
                 for (int i = 0; i < cars.Count; i++)
                 {
                     int at = i;
                     Turret gun = cars[i].mount;
-                    if (gun && gun.Level < Weapon.MaxLevel)
-                        choices.Add(() => { Mount(at, gun.Weapon); return new Chest.Prize { icon = gun.Weapon.id, label = L10n.T("chest.level", gun.Weapon.Name, gun.Level) }; });
+                    if (gun && gun.Level < Weapon.MaxLevel && !usedWeapons.Contains(gun.Weapon.id))
+                        choices.Add(() => { usedWeapons.Add(gun.Weapon.id); Mount(at, gun.Weapon); return new Chest.Prize { icon = gun.Weapon.id, label = L10n.T("chest.level", gun.Weapon.Name, gun.Level) }; });
                 }
             }
             foreach (string id in passiveOrder)
-                if (PassiveLevel(id) < PassiveCap(id))
+                if (PassiveLevel(id) < PassiveCap(id) && !usedPassives.Contains(id))
                 {
                     string pick = id;
                     choices.Add(() =>
                     {
+                        usedPassives.Add(pick);
                         Apply(pick);
                         return new Chest.Prize { icon = PassiveIcons[System.Array.IndexOf(Passives, pick)], label = L10n.T("chest.level", L10n.T("passive." + pick), PassiveLevel(pick)) };
                     });
@@ -620,7 +630,7 @@ public partial class TrainSim : MonoBehaviour
         foreach (var h in triesHearts) { h.text = "♥"; h.rectTransform.localScale = Vector3.one; h.rectTransform.localRotation = Quaternion.identity; }
         triesBoard.gameObject.SetActive(on);
     }
-    public void BossBar(string name, float fraction) => hud.Boss(name, fraction);
+    public void BossBar(string name, float fraction, bool announce = true) => hud.Boss(name, fraction, announce);
     GolemChallenge golemChallenge;
     public bool Racing => (golemChallenge && golemChallenge.Active) || (cave && cave.Active) || (gates && gates.Active) || (race && (race.Active || race.Showing)) || (eyeBoss && (eyeBoss.Active || eyeBoss.Showing)) || (holo && holo.Active); // a finale of its own on screen (or held there, lost, while the player is asked whether to try again)
     public bool Swarming => swarm.Aiming || brawl.Fighting || Racing; // seen from the gunner's seat (or from inside a boarded wagon, or in the race) right now
@@ -928,7 +938,7 @@ public partial class TrainSim : MonoBehaviour
             var slot = new StationMenu.Slot { tag = (i + 1).ToString(), x = sideCam.WorldToViewportPoint(car.pos).x };
             if (i == chosen) { slot.icon = what; slot.label = effect; slot.state = 1; }
             else if (car.cargo >= 0) { slot.icon = Cargos[car.cargo].id; slot.state = weapons ? 2 : 0; } // cargo carries no weapon
-            else if (car.mount) { slot.icon = car.mount.Weapon.id; slot.label = car.mount.Level >= Weapon.Evolved ? "EVO" : L10n.T("strip.level", car.mount.Level); }
+            else if (car.mount) { slot.icon = car.mount.Weapon.Icon(car.mount.Level); slot.label = car.mount.Level >= Weapon.Evolved ? "EVO" : L10n.T("strip.level", car.mount.Level); }
             else { slot.icon = "slot"; slot.label = L10n.T("menu.empty"); }
             trainSlots.Add(slot);
         }
@@ -1470,11 +1480,24 @@ public partial class TrainSim : MonoBehaviour
         UiKit.SetBiome(race && race.Active ? "race" : BiomeId); // the UI's colours: this biome's (a race has its own)
         if (lookBiome != BiomeId) Grade();
         Scroll = 0f; // the ground only slides while the train is running (below)
-        if (UltimatePresenting) return;
+        if (UltimatePresenting) { killChestNoticeUntil = 0f; return; }
         if(pendingKillChests>0&&!ChestOpen&&!AtStation&&!Paused&&!InEvent&&!MenuOpen&&!talk.Open&&!talk.Finishing&&Health>0f)
         {
-            pendingKillChests--;AwardChest(true,false);return;
+            if (killChestNoticeUntil == 0f)
+            {
+                if (!hud.Toasting)
+                {
+                    hud.KillMilestone((Kills / KillChestEvery - pendingKillChests + 1) * KillChestEvery);
+                    killChestNoticeUntil = Time.unscaledTime + 2f;
+                }
+            }
+            else if (Time.unscaledTime >= killChestNoticeUntil)
+            {
+                killChestNoticeUntil = 0f;
+                pendingKillChests--;AwardChest(true,false);return;
+            }
         }
+        else killChestNoticeUntil = 0f;
         if (!Paused && !brawl.Active && Story.TakeTestAdvance()) // not in a wagon fight: K is its kick
         {
             testFinalePending = false;
@@ -1514,7 +1537,7 @@ public partial class TrainSim : MonoBehaviour
         }
         // Regeneration: the wagons and the hero mend a little every moment, between stations too.
         float regen = regenPerLevel * PassiveLevel("regen") * Time.deltaTime;
-        if (regen > 0f && Health > 0f && !Paused)
+        if (regen > 0f && Health > 0f && !Paused && !AtStation && !MenuOpen && !MenuShown && !ChestOpen && !talk.Open && !talk.Finishing)
         {
             // A longer train adds firing positions and health, not free regeneration per wagon.
             int standing = 0;
@@ -1623,20 +1646,22 @@ public partial class TrainSim : MonoBehaviour
         Camera view = Camera.main;
         // Big enough for the train from tail to nose plus flyRoom past each end and to each side, whichever way
         // the track runs across the picture.
-        float half = Reach, fit = 0f;
+        float half = rival.Active ? Mathf.Max(Reach, rival.CameraReach) : Reach, fit = 0f;
+        Vector3 duelOffset = rival.Active ? rival.CameraOffset : Vector3.zero;
         Vector3 right = view.transform.right, up = view.transform.up;
         // The wagons' tops count too: running up the screen, their height reaches further up it.
         for (int corner = 0; corner < 8; corner++)
         {
-            var point = new Vector3(corner % 4 < 2 ? half : -half, corner < 4 ? 0f : 3.5f, corner % 2 == 0 ? flyRoom : -flyRoom);
+            var point = new Vector3(corner % 4 < 2 ? half : -half, corner < 4 ? 0f : 3.5f, corner % 2 == 0 ? flyRoom : -flyRoom) - duelOffset;
             fit = Mathf.Max(fit, Mathf.Abs(Vector3.Dot(point, up)), Mathf.Abs(Vector3.Dot(point, right)) / view.aspect);
         }
         // The busier the field, the further the camera pulls back (up to a fifth), slowly; in close when it is quiet.
         busy = Mathf.MoveTowards(busy, Mathf.Clamp01((Combat.Instance ? Combat.Instance.EnemyCount : 0) / 90f), 0.25f * Time.unscaledDeltaTime);
-        float wanted = Mathf.Max(cameraSize, fit) * (Zigzag ? zigZoom : 1f) * cameraZoom * (1f + 0.2f * busy);
+        float downView = Mathf.Clamp01(-Vector3.Dot(Forward(cars.Count / 2), up) * 2f);
+        float wanted = Mathf.Max(cameraSize, fit) * (Zigzag ? zigZoom : 1f) * cameraZoom * (1f + 0.2f * busy) * (1f + 0.16f * downView);
         view.orthographicSize = Mathf.MoveTowards(view.orthographicSize, wanted, (Paused ? 0f : 9f) * Time.unscaledDeltaTime);
         shake = Mathf.Max(0f, shake - Time.unscaledDeltaTime);
-        view.transform.position = Focus - view.transform.forward * 60f + Random.insideUnitSphere * shake * 1.5f;
+        view.transform.position = Focus + duelOffset + up * (view.orthographicSize * 0.14f * downView) - view.transform.forward * 60f + Random.insideUnitSphere * shake * 1.5f;
 
         // Triangle / Y on a gamepad, R on the keyboard: the ultimate once charged (or, were they in use, a repair kit).
         // Not at stations and not mid-sequence. ponytail: reads the devices directly, like the curve's button sequence.

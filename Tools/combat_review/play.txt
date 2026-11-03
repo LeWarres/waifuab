@@ -1,0 +1,9 @@
+RUNNING
+PASS all 19 evolved icon assets load; base/truck icons preserved
+PASS train/hero regeneration paused in upgrade menus and resumes on road
+PASS large animated kill banner precedes chest; taunt toast renders shared QTE square glyph
+PASS 160 boss/shop chests; 48 multi including 6 five-prize; no repeat upgrade or upgrade-plus-evolution
+PASS downward long train focus at viewport y=0.430
+PASS half rival HP, 20m track separation, boarding win removes 12%, no repeated boss intro or immediate QTE
+PASS already-active QTE blocks boarding in both scheduler and entry point
+PASS complete; console errors=0

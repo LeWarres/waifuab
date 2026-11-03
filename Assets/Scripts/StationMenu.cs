@@ -21,6 +21,7 @@ public class Prompt : MonoBehaviour
     public Color ink = Color.white;
     public Font font;
     string shown;
+    public float Width { get; private set; }
 
     public static Prompt Make(Transform parent, Vector2 position, int size, Color ink, Font font = null)
     {
@@ -70,6 +71,7 @@ public class Prompt : MonoBehaviour
             i = close + 1;
         }
         foreach (RectTransform part in parts) x += part.sizeDelta.x + 4f;
+        Width = x;
         float at = -x * 0.5f;
         foreach (RectTransform part in parts)
         {
