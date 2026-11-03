@@ -272,7 +272,7 @@ public partial class RaceEvent
     {
         var key = new Vector2Int(Mathf.Max(1, Mathf.RoundToInt(wide / 12f)), Mathf.Max(1, Mathf.RoundToInt(high / 14f)));
         if (facades.TryGetValue(key, out Material m)) return m;
-        m = TrainSim.Mat(new Color(1.5f, 1.5f, 1.6f));
+        m = TrainSim.Mat(new Color(1.05f, 1.1f, 1.2f));
         m.mainTexture = FacadeTexture();
         m.mainTextureScale = new Vector2(key.x * 0.5f, key.y * 0.5f);
         facades[key] = m;
@@ -282,6 +282,7 @@ public partial class RaceEvent
     static Texture2D facadeTex;
     static Texture2D FacadeTexture()
     {
+        var painted=Resources.Load<Texture2D>("RaceSurfaces/facade");if(painted)return painted;
         if (facadeTex) return facadeTex;
         const int size = 256, cell = 32, cells = size / cell; // eight by eight windows
         facadeTex = new Texture2D(size, size, TextureFormat.RGBA32, true) { wrapMode = TextureWrapMode.Repeat, filterMode = FilterMode.Trilinear, anisoLevel = 4 };

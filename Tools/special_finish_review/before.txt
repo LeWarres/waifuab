@@ -1,0 +1,6 @@
+RUNNING
+PASS hell R2 moved 29.37881m / 152 frames
+PASS actual crate collision; 40 crates / goal 35 retained
+PASS trench R2 moved 33.1291m / 152 frames
+PASS damage and laser gates retained
+PASS errors=0

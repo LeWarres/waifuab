@@ -1,0 +1,15 @@
+{
+  "tool": "built-in imagegen",
+  "textures": [
+    {
+      "id": "enamel",
+      "prompt": "Use case: stylized-concept. Asset type: seamless neutral albedo game texture.\nPerfect orthographic flat square scan of clean painted train body sheet metal, neutral ivory white and pale light gray ONLY, to be multiplied by blue or yellow game paint. Minimal hand-painted anime game finish: large rectangular access panels, VERY subtle thin soft grey seams, a few tiny rivets and one small inset handle, restrained softly painted bevels near borders. Mostly clean near-white flat surface. Seamless tileable, no shadows cast across the surface, no blue, no rust, no dirt, no symbols, no lettering, no dark industrial grit, no realistic reflections. Sparse broad design; looks restrained at isometric camera distance. The panel background must be 90-98 percent white with only slender gray seams, avoid noisy microdetail.",
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-735315d6-60b0-4715-b601-2e81b8df003f.png"
+    },
+    {
+      "id": "glass",
+      "prompt": "Use case: stylized-concept. Asset type: seamless albedo game texture.\nSquare flat orthographic scan of a clean stylized locomotive window reflection, for a toon anime videogame. Pale desaturated blue grey base with two broad diagonal soft ivory reflection bands sweeping upper left to lower right, very simple painted gradients, mostly flat color. No window frame, no border, no scenery, no objects or text, no photorealistic reflections, no lens flare or glow. Calm and understated, seamless repeat. Should read as opaque painted glass with a softly reflected sky, not a glowing light.",
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-3c4ad986-c500-4f76-a90b-564b64160488.png"
+    }
+  ]
+}

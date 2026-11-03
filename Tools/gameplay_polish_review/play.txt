@@ -1,0 +1,11 @@
+RUNNING
+PASS story typewriter fixed font=27
+PASS central 42px elapsed clock advances
+PASS gameplay dialogue fixed font
+PASS mini boss warning before taunt; interval 70 to 55 seconds
+PASS desert truck health=1000 (two thirds)
+PASS shop evolution equal candidate weight: 59/128 first prizes with 2 candidates
+PASS 1000/2000 milestones once each; single normal prize; capped fallback money; boss evolution priority retained
+PASS 800 coin shop price, disabled under price, modal purchase and return without double input
+PASS boarding background moves with unscaled time while the outside simulation is paused
+PASS all gameplay checks; errors=0

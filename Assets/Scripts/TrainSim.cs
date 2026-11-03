@@ -211,7 +211,12 @@ public partial class TrainSim : MonoBehaviour
     public float UltimateFill => Mathf.Clamp01(ultimateCharge / ultimateKills);
     public bool UltimateReady => ultimateCharge >= ultimateKills;
     public int Kills { get; private set; } // enemies shot down this run (the station's guns do not count)
-    public void Charge() => Kills++;
+    int pendingKillChests;
+    public void Charge()
+    {
+        Kills++;
+        if(Kills%1000==0)pendingKillChests++;
+    }
     void ChargeUltimate(float dt)
     {
         if (UltimateReady || AtStation || Paused) return; // game time: frozen fights in a wagon do not count
@@ -349,24 +354,37 @@ public partial class TrainSim : MonoBehaviour
     public int Chests { get; private set; } // opened this run, for the bot's notes
     public void OpenChest()
     {
+        AwardChest(false,false);
+    }
+
+    public const int ShopChestPrice=800;
+    void BuyChest()
+    {
+        if(money<ShopChestPrice||ChestOpen)return;
+        money-=ShopChestPrice;
+        AwardChest(false,true);
+    }
+
+    void AwardChest(bool simple,bool fair)
+    {
         Chests++;
         Combat.Instance.Burst("levelup", Player.Position + Vector3.down * 2f, 3f);
         // One prize mostly; three now and then; five only with a lot of luck.
         int luck = PassiveLevel("luck");
-        int rolls = Random.value < 0.03f + 0.01f * luck ? 5 : Random.value < 0.22f + 0.03f * luck ? 3 : 1;
+        int rolls = simple?1:Random.value < 0.03f + 0.01f * luck ? 5 : Random.value < 0.22f + 0.03f * luck ? 3 : 1;
         if (rolls == 5) Achievements.Unlock("legendary");
         var prizes = new List<Chest.Prize>();
         for (int roll = 0; roll < rolls; roll++)
         {
             // An evolution first, if one is earned (the hero's, then a wagon's): the only way to evolve.
-            if (CanEvolve)
+            if (!simple&&!fair&&CanEvolve)
             {
                 Player.level = Weapon.Evolved;
                 prizes.Add(new Chest.Prize { icon = Player.ammo.id, label = Player.ammo.EvolvedName, evolution = true });
                 continue;
             }
             Turret ready = Evolvable;
-            if (ready)
+            if (!simple&&!fair&&ready)
             {
                 ready.Evolve();
                 Combat.Instance.Burst("levelup", ready.transform.position, 3f);
@@ -375,7 +393,14 @@ public partial class TrainSim : MonoBehaviour
             }
             // Else a level on something already owned; weapons count twice, as in Vampire Survivors.
             var choices = new List<System.Func<Chest.Prize>>();
-            for (int twice = 0; twice < 2; twice++)
+            if(fair&&CanEvolve)choices.Add(()=>{Player.level=Weapon.Evolved;return new Chest.Prize{icon=Player.ammo.id,label=Player.ammo.EvolvedName,evolution=true};});
+            if(fair)foreach(var car in cars)
+            {
+                var gun=car.mount;
+                if(gun&&gun.Level==Weapon.MaxLevel&&PassiveLevel(gun.Weapon.evolvesWith)>0)
+                    choices.Add(()=>{gun.Evolve();return new Chest.Prize{icon=gun.Weapon.id,label=gun.Weapon.EvolvedName,evolution=true};});
+            }
+            for (int twice = 0; twice < (fair?1:2); twice++)
             {
                 if (Player.level < Weapon.MaxLevel)
                     choices.Add(() => { Player.level++; return new Chest.Prize { icon = Player.ammo.id, label = L10n.T("chest.level", Player.ammo.Name, Player.level) }; });
@@ -410,6 +435,7 @@ public partial class TrainSim : MonoBehaviour
     }
     Chest chest;
     public bool ChestOpen => chest && chest.Open;
+    bool ChestBlocksInput => ChestOpen||(chest&&chest.ClosedFrame==Time.frameCount);
     public void CloseChest() { if (chest) chest.Close(); }
 
     // What the train and the hero are armed with, for the HUD: the hero's weapon first, then every wagon's, front
@@ -916,7 +942,7 @@ public partial class TrainSim : MonoBehaviour
     const bool mainMenu = false, settingsMenu = false; // the title screen is its own scene now (MainMenu.cs)
     InputAction navigate, confirm, stepRight, stepLeft;
     bool ListMenu => Paused || settingsMenu;  // both draw their options as a vertical list
-    bool MenuOpen => gabrielDraft > 0 || mainMenu || chapterWon || finaleRetry || junction || (AtStation && !Clearing && !deliveryPending) || Health <= 0f || Paused;
+    bool MenuOpen => !ChestBlocksInput&&(gabrielDraft > 0 || mainMenu || chapterWon || finaleRetry || junction || (AtStation && !Clearing && !deliveryPending) || Health <= 0f || Paused);
 
     // Pause: Start on a gamepad, Esc on the keyboard. Freezes time and opens its own menu.
     public bool Paused { get; private set; }
@@ -1445,6 +1471,10 @@ public partial class TrainSim : MonoBehaviour
         if (lookBiome != BiomeId) Grade();
         Scroll = 0f; // the ground only slides while the train is running (below)
         if (UltimatePresenting) return;
+        if(pendingKillChests>0&&!ChestOpen&&!AtStation&&!Paused&&!InEvent&&!MenuOpen&&!talk.Open&&!talk.Finishing&&Health>0f)
+        {
+            pendingKillChests--;AwardChest(true,false);return;
+        }
         if (!Paused && !brawl.Active && Story.TakeTestAdvance()) // not in a wagon fight: K is its kick
         {
             testFinalePending = false;
@@ -2751,6 +2781,8 @@ public partial class TrainSim : MonoBehaviour
                 menuMoney = true;
                 menuTitle = L10n.T("menu.shop");
                 menuSub = L10n.T("sub.shop");
+                Add("chest",L10n.T("shop.chest",ShopChestPrice),BuyChest,money>=ShopChestPrice);
+                Priced(ShopChestPrice);
                 Add("repair", L10n.T("menu.repair", repairReward, RepairPrice), () => { money -= RepairPrice; repairsBought++; Repair(); },
                     money >= RepairPrice && Health < MaxHealth);
                 Priced(RepairPrice);
@@ -2928,6 +2960,7 @@ public partial class TrainSim : MonoBehaviour
     // Left/right moves the focus (stick, d-pad, A/D, arrows or Q/E); Jump (cross / A button, Space) confirms.
     void ActivateOption(int index)
     {
+        if(ChestBlocksInput)return;
         if (index < 0 || index >= options.Count || !options[index].enabled) return;
         Sound.Play(options[index].icon == "back" || options[index].icon == "no" ? "menuback" : "confirm");
         options[index].run();
@@ -3167,6 +3200,11 @@ public partial class TrainSim : MonoBehaviour
         Material[] mats = renderer.sharedMaterials;
         for (int i = 0; i < mats.Length; i++)
         {
+            if(mats[i].name.StartsWith("Loco"))
+            {
+                var finish=Resources.Load<Material>("RicMarFinish/"+mats[i].name);
+                if(finish){mats[i]=finish;continue;}
+            }
             if (!toon || mats[i].shader == toon.shader) continue;
             if (!toons.TryGetValue(mats[i], out Material twin))
             {

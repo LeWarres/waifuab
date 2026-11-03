@@ -1,0 +1,8 @@
+RUNNING
+PASS hell textured surfaces: [hellstone, 108], [steel, 647], [hell, 1], [hellwood, 40]
+PASS hell R2 moved 33.00494m / 152 frames
+PASS actual crate collision; 40 crates / goal 35 retained
+PASS trench textured surfaces: [trenchdeck, 1], [trencharmor, 421], [steel, 58], [fortress, 1]
+PASS trench R2 moved 18.10192m / 152 frames
+PASS damage and laser gates retained
+PASS errors=0

@@ -39,7 +39,7 @@ public partial class RaceEvent
     void DressTrench()
     {
         Material cyan = Glow(new Color(0.45f, 1f, 1.35f)), pink = Glow(new Color(0.2f, 0.5f, 1.5f)), lime = Glow(new Color(0.9f, 1.2f, 1.5f)), red = Glow(new Color(2.4f, 0.3f, 0.2f));
-        Material plateDark = TrainSim.Mat(new Color(0.13f, 0.15f, 0.2f)), pipe = TrainSim.Mat(new Color(0.5f, 0.54f, 0.62f));
+        Material plateDark = PaintedSurface("trencharmor", new Color(.65f,.75f,.9f)), pipe = PaintedSurface("steel", new Color(.75f,.85f,1f));
         float w = roadWidth / 2f;
         Ribbon("Centre", -0.3f, 0.3f, 0.06f, lime, 4);                                   // a dashed lit line down the middle
         turrets.Clear();
@@ -181,7 +181,8 @@ public partial class RaceEvent
         DressTrench();
         Vector3 end = points[^1], fwd = dirs[^1];
         Quaternion look = Quaternion.LookRotation(fwd);
-        Material wall = TrainSim.Mat(new Color(0.3f, 0.34f, 0.38f)), ring = TrainSim.Mat(new Color(3f, 0.6f, 0.2f), false), core = TrainSim.Mat(new Color(0.4f, 2.8f, 0.6f), false), dark = TrainSim.Mat(new Color(0.05f, 0.05f, 0.07f));
+        Material wall = PaintedSurface("trencharmor", Color.white), ring = TrainSim.Mat(new Color(3f, 0.6f, 0.2f), false), core = TrainSim.Mat(new Color(0.4f, 2.8f, 0.6f), false), dark = TrainSim.Mat(new Color(0.05f, 0.05f, 0.07f));
+        wall.mainTextureScale=new Vector2((roadWidth+4f)/8f,22f/8f);
         Block(end + fwd * 40f + Vector3.up * 11f, look, new Vector3(roadWidth + 4f, 22f, 4f), wall);
         hatch = end + fwd * 37.8f + Vector3.up * 7f;
         Block(hatch, look * Quaternion.Euler(0f, 0f, 45f), new Vector3(6.4f, 6.4f, 0.2f), ring);

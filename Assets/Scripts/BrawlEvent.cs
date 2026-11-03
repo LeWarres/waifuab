@@ -177,7 +177,7 @@ public class BrawlEvent : MonoBehaviour
 
         board = UiKit.NewCanvas("Brawl", 6);
         // Persona plates: the count up top, the moves (their buttons drawn) at the foot, the headlock's panel.
-        Slanted bar = UiKit.Plate(board.transform, new Vector2(0f, -70f), new Vector2(560f, 56f), 0.12f, 4f, 8f);
+        Slanted bar = UiKit.Plate(board.transform, new Vector2(0f, -184f), new Vector2(560f, 56f), 0.12f, 4f, 8f);
         UiKit.Root(bar).anchorMin = UiKit.Root(bar).anchorMax = new Vector2(0.5f, 1f);
         counter = UiKit.Label(bar.transform, UiKit.Display, 32, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 2f), new Vector2(540f, 48f), true);
         Slanted help = UiKit.Plate(board.transform, new Vector2(0f, 64f), new Vector2(900f, 52f), 0.12f, 4f, 8f);
@@ -512,6 +512,7 @@ public class BrawlEvent : MonoBehaviour
         if (train.AtStation) { End(null); return; }
         if (Incoming) { Arrive(); return; }
         float dt = Mathf.Min(Time.unscaledDeltaTime, 0.05f), now = Time.unscaledTime;
+        groundPaint.mainTextureOffset=new Vector2(Mathf.Repeat(groundPaint.mainTextureOffset.x+train.RunSpeed*dt*.1f,1f),0f);
         if (!view.enabled)
         {
             view.enabled = true;
@@ -1219,6 +1220,7 @@ public class BrawlEvent : MonoBehaviour
         eye.z = Mathf.Clamp(eye.z, -HalfWidth + 0.3f, HalfWidth - 0.3f);
         eye.y = Mathf.Clamp(eye.y, 0.6f, Height - 0.35f);
         view.transform.position = Inside + eye;
+        view.transform.position+=Vector3.up*(Mathf.Sin(Time.unscaledTime*17f)*.012f*Comfort.Shake);
         view.transform.LookAt(target);
     }
 

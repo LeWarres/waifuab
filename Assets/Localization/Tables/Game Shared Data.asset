@@ -6379,6 +6379,10 @@ MonoBehaviour:
     m_Key: story.crochtrain.3.outro.6
     m_Metadata:
       m_Items: []
+  - m_Id: 9556696415678464
+    m_Key: shop.chest
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

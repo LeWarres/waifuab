@@ -37,6 +37,7 @@ public class Talk : MonoBehaviour
         closing = false;
         canvas.gameObject.SetActive(true);
         portraits.Show(names[at], rival[at]);
+        UiKit.FitDialogue(what,lines[at],31,25);
     }
 
     // The same box as StoryIntro.BuildUI's, without its buttons.
@@ -119,7 +120,7 @@ public class Talk : MonoBehaviour
     public void Advance()
     {
         if (!Open || closing) return;
-        if (at + 1 < lines.Length) { at++; since = 0f; portraits.Show(names[at], rival[at]); return; }
+        if (at + 1 < lines.Length) { at++; since = 0f; portraits.Show(names[at], rival[at]); UiKit.FitDialogue(what,lines[at],31,25); return; }
         closing = true;
         portraits.Hide();
     }

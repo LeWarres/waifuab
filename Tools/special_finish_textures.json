@@ -1,0 +1,26 @@
+{
+  "tool": "built-in imagegen",
+  "promptPrefix": "Use case: stylized-concept. Asset type: game surface texture.\n",
+  "textures": [
+    {
+      "id": "hellstone",
+      "prompt": "A seamless square tileable albedo game texture, straight top down orthographic flat scan. Stylized hand-painted anime game volcanic paving: large irregular charcoal basalt slabs, muted dark purple brown and burgundy undertones, a few broad broken seams with dim burnt orange edges. Calm large shapes, subtle painted bevels, restrained detail. NO bright lava rivers, no central object, no lettering, no directional lighting, no perspective, no photographic micrograin. Match a polished low-poly toon game, road hazards must remain more prominent. Texture covers roughly eight metres. Seamless borders.",
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-62b94544-6da4-4909-8b41-dc94d8a8b0c5.png"
+    },
+    {
+      "id": "hellwood",
+      "prompt": "A seamless square tileable albedo game texture, orthographic flat scan. Stylized painted heavy wooden crate planks, medium warm desaturated tan brown, chunky long boards vertical, broad slightly uneven dark joints, occasional simple wood knots and restrained broad strokes, mild scorched edges, sparse shallow chips. Minimal anime game material, readable from a driving camera. NO straps, no cross brace, no text, no perspective or realistic grain. Seamless borders. Neutral illumination, no cast shadows.",
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-a352e9ac-ae9a-4a3d-ad92-ab95aaf12746.png"
+    },
+    {
+      "id": "trencharmor",
+      "prompt": "A seamless square tileable albedo texture for huge futuristic alien military trench walls in a blue toon anime game. Orthographic flat front scan, large graphite steel blue armor plates, staggered broad rectangular panels and a few inset access hatches, restrained seams and beveled edges painted in cool grey blue, tiny sparse fasteners. A few muted cyan indicator slits, very little luminous area. Calm big shapes readable while driving. No rusty gritty photorealism, no text, no symbols, no perspective, no directional cast shadows. Seamless tile.",
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-730ccb2e-dc10-4a7e-8961-6882cadebd7d.png"
+    },
+    {
+      "id": "trenchdeck",
+      "prompt": "A seamless square tileable albedo for a sci-fi alien military trench floor in a painted anime game. Perfect orthographic overhead flat scan. Broad dark slate blue rectangular deck plates with large clean joints, restrained lighter painted edges, occasional maintenance grill insets, very sparse cool cyan dash markings running vertically to suggest driving direction. No text, no arrows, no yellow lanes, no photoreal scratches, no glow bloom, no perspective or cast shadows. Restrained medium dark values so train and red danger beams read easily. Seamless borders.",
+      "source": "C:\\Users\\r20\\.codex\\generated_images\\01a12978-3b64-74e2-9b22-a8917b1167d8\\exec-180aea29-8008-46ed-9244-b63fc6ba090c.png"
+    }
+  ]
+}

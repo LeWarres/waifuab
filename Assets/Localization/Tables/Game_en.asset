@@ -2141,8 +2141,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2732727704301568
-    m_Localized: "Mini boss! Bring it down for a chest \xB7 get close and press {0}
-      to draw it"
+    m_Localized: "Defeat it for a chest \xB7 get close and press {0} to draw it away"
     m_Metadata:
       m_Items: []
   - m_Id: 2732727737856000
@@ -8567,6 +8566,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 9057373869387825
     m_Localized: Don't worry. I'll tell her. I can hear your thoughts, Dorian.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9556696415678464
+    m_Localized: "Random chest \xB7 {0} coins\n1, 3 or 5 prizes. No evolution priority."
     m_Metadata:
       m_Items: []
   references:

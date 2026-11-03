@@ -251,12 +251,12 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         // the right), gantries over it now and then and lamps along it; the city's ground painting all round, and
         // far out a skyline of towers fading into the haze.
         Material asphalt = TrainSim.Mat(Color.white, false), wall = TrainSim.Mat(new Color(0.5f, 0.52f, 0.6f)), steel = TrainSim.Mat(new Color(0.62f, 0.65f, 0.72f));
-        asphalt.mainTexture = crateRun ? Resources.Load<Texture2D>("Ground/hell") : trench ? Resources.Load<Texture2D>("Ground/trench") : AsphaltTexture();
-        if (trench) asphalt.mainTextureScale = new Vector2(1f, 0.5f); // the trench's deck: its pattern once across, a repeat every 40 m
-        wall.SetInt("_Culling", 0);
+        asphalt.mainTexture = crateRun ? Resources.Load<Texture2D>("RaceSurfaces/hellstone") : trench ? Resources.Load<Texture2D>("RaceSurfaces/trenchdeck") : AsphaltTexture();
         Material cyan = TrainSim.Mat(new Color(0.3f, 2.2f, 2.6f), false), pink = TrainSim.Mat(new Color(2.6f, 0.45f, 1.7f), false), gold = TrainSim.Mat(new Color(2.8f, 1.9f, 0.4f), false);
         if (!crateRun) { Tint(cyan, new Color(0.45f, 1f, 1.35f)); Tint(pink, new Color(0.2f, 0.5f, 1.5f)); } // Persona 3's blues, ice and electric, and dimmer
         if (crateRun) { Tint(cyan,new Color(2.4f,.35f,.08f)); Tint(pink,new Color(2.6f,.85f,.12f)); Tint(steel,new Color(.17f,.1f,.12f)); Tint(wall,new Color(.2f,.09f,.12f)); }
+        if(crateRun){wall=PaintedSurface("hellstone",new Color(.85f,.72f,.8f));steel=PaintedSurface("steel",new Color(.42f,.3f,.28f));}
+        wall.SetInt("_Culling", 0);
         Ribbon("Road", -roadWidth / 2f, roadWidth / 2f, 0.05f, asphalt);
         float wallHigh = trench ? 22f : 1.2f; // the trench: sheer walls either side
         bool kit = !trench && !crateRun; // the city's roadside is modelled (Tools/make_race_kit.py)
@@ -335,7 +335,8 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
                 if (Random.value < 0.25f) continue;
                 Vector3 at = PointAt(s, out Vector3 dir) + Vector3.Cross(Vector3.up, dir) * side * (roadWidth / 2f + Random.Range(10f, 26f));
                 if (!OffRoad(at, 12f)) continue; // a bend's other leg runs close by: nothing on its road
-                Instantiate(tall[Random.Range(0, tall.Count)], at, Quaternion.LookRotation(dir) * Quaternion.Euler(0f, Random.Range(0, 4) * 90f, 0f), course);
+                var building=Instantiate(tall[Random.Range(0, tall.Count)], at, Quaternion.LookRotation(dir) * Quaternion.Euler(0f, Random.Range(0, 4) * 90f, 0f), course);
+                FinishRaceObject(building);
             }
         for (int i = 0, wreckCount = Mathf.RoundToInt(obstacles * (trench ? trenchLength * 0.5f : length) / 2600f); i < wreckCount && junk.Count > 0 && !crateRun; i++)
         {
@@ -348,6 +349,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             if (trench)
             {
                 Transform junkBody = Instantiate(junk[Random.Range(0, junk.Count)], at, flat * Quaternion.Euler(0f, Random.Range(-60f, 60f), 0f), course).transform;
+                FinishRaceObject(junkBody.gameObject);
                 junkBody.localScale *= 2f;
                 foreground.Add(junkBody);
             }
@@ -489,7 +491,11 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
             int v = verts.Count;
             verts.Add(a + r0 * from + Vector3.up * y); verts.Add(a + r0 * to + Vector3.up * y);
             verts.Add(b + r1 * from + Vector3.up * y); verts.Add(b + r1 * to + Vector3.up * y);
-            uvs.Add(new Vector2(0, 0)); uvs.Add(new Vector2(1, 0)); uvs.Add(new Vector2(0, 1)); uvs.Add(new Vector2(1, 1));
+            float tile=crateRun?12f:trench?8f:80f;
+            float v0=name=="Road" ? i*Step/tile : 0f;
+            float v1=name=="Road" ? (i+1)*Step/tile : 1f;
+            float u=name=="Road"&&(trench||crateRun) ? (to-from)/tile : 1f;
+            uvs.Add(new Vector2(0, v0)); uvs.Add(new Vector2(u, v0)); uvs.Add(new Vector2(0, v1)); uvs.Add(new Vector2(u, v1));
             tris.AddRange(new[] { v, v + 2, v + 1, v + 1, v + 2, v + 3 });
         }
         var mesh = new Mesh { name = name, indexFormat = UnityEngine.Rendering.IndexFormat.UInt32 };
@@ -538,6 +544,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
     static Texture2D asphaltTex;
     static Texture2D AsphaltTexture()
     {
+        var painted=Resources.Load<Texture2D>("RaceSurfaces/asphalt");if(painted)return painted;
         if (asphaltTex) return asphaltTex;
         const int w = 512, h = 128;
         asphaltTex = new Texture2D(w, h, TextureFormat.RGBA32, true) { wrapMode = TextureWrapMode.Repeat, filterMode = FilterMode.Trilinear, anisoLevel = 8 };
@@ -564,6 +571,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
     {
         var verts = new List<Vector3>();
         var tris = new List<int>();
+        var uvs = new List<Vector2>();
         for (int i = 0; i < points.Count - 1; i++)
         {
             Vector3 r0 = Vector3.Cross(Vector3.up, dirs[i]), r1 = Vector3.Cross(Vector3.up, dirs[i + 1]);
@@ -572,11 +580,14 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
                 int v = verts.Count;
                 verts.Add(points[i] + r0 * off); verts.Add(points[i] + r0 * off + Vector3.up * h);
                 verts.Add(points[i + 1] + r1 * off); verts.Add(points[i + 1] + r1 * off + Vector3.up * h);
+                uvs.Add(new Vector2(i*Step/4f,0));uvs.Add(new Vector2(i*Step/4f,h/4f));
+                uvs.Add(new Vector2((i+1)*Step/4f,0));uvs.Add(new Vector2((i+1)*Step/4f,h/4f));
                 tris.AddRange(new[] { v, v + 1, v + 2, v + 2, v + 1, v + 3 });
             }
         }
         var mesh = new Mesh { name = name, indexFormat = UnityEngine.Rendering.IndexFormat.UInt32 };
         mesh.SetVertices(verts);
+        mesh.SetUVs(0,uvs);
         mesh.SetTriangles(tris, 0);
         mesh.RecalculateNormals();
         var go = new GameObject(name);
@@ -590,6 +601,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
     {
         var go = Instantiate(Resources.Load<GameObject>("Models/Race_" + name), at, turn, course);
         foreach (var r in go.GetComponentsInChildren<Renderer>()) Dress(r, accent);
+        FinishRaceObject(go);
         return go;
     }
 
@@ -611,6 +623,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         Vector3[] sv = src.vertices, sn = src.normals;
         var verts = new List<Vector3>();
         var normals = new List<Vector3>();
+        var uvs = new List<Vector2>();
         var tris = new List<int>[src.subMeshCount];
         for (int k = 0; k < tris.Length; k++) tris[k] = new List<int>();
         for (int i = 0; i < points.Count - 1; i++)
@@ -622,6 +635,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
                 Vector3 dir = Vector3.Slerp(dirs[i], dirs[i + 1], t).normalized, right = Vector3.Cross(Vector3.up, dir);
                 verts.Add(Vector3.Lerp(points[i], points[i + 1], t) + right * side * (roadWidth / 2f + out_) + Vector3.up * sv[v].y);
                 normals.Add((right * side * -sn[v].x + Vector3.up * sn[v].y - dir * sn[v].z).normalized);
+                uvs.Add(SurfaceUV(sv[v],sn[v])*(trench?.5f:1f));
             }
             for (int k = 0; k < tris.Length; k++)
             {
@@ -633,6 +647,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         var mesh = new Mesh { name = "Barrier", indexFormat = UnityEngine.Rendering.IndexFormat.UInt32, subMeshCount = tris.Length };
         mesh.SetVertices(verts);
         mesh.SetNormals(normals);
+        mesh.SetUVs(0,uvs);
         for (int k = 0; k < tris.Length; k++) mesh.SetTriangles(tris[k], k);
         mesh.RecalculateBounds();
         var go = new GameObject(side < 0 ? "BarrierL" : "BarrierR");
@@ -641,6 +656,7 @@ public partial class RaceEvent : MonoBehaviour // the trench run, its other mode
         var r = go.AddComponent<MeshRenderer>();
         r.sharedMaterials = model.GetComponentInChildren<MeshRenderer>().sharedMaterials;
         Dress(r, accent);
+        FinishRaceObject(go);
     }
 
     // On the launcher's rail s metres past the line, and its pitch; past the top, off along the launch.

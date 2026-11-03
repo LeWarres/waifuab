@@ -25,6 +25,7 @@ public class Chest : MonoBehaviour
     bool opened;
 
     public bool Open => showing != null;
+    public int ClosedFrame { get; private set; }=-1;
 
     public void Show(List<Prize> prizes)
     {
@@ -55,6 +56,7 @@ public class Chest : MonoBehaviour
         showing = null;
         if (queue.Count > 0) { Next(); return; }
         canvas.gameObject.SetActive(false);
+        ClosedFrame=Time.frameCount;
         Time.timeScale = timeBefore;
     }
 

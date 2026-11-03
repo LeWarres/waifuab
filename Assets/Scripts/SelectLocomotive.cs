@@ -259,6 +259,7 @@ public class SelectLocomotive : MonoBehaviour
     public void ComposePreview()
     {
         if (previews == null || previews.Length == 0 || !previews[0] || !Camera.main) return;
+        foreach(var part in previews[0].GetComponentsInChildren<Renderer>()) TrainSim.Toon(part);
         Transform stage = previews[0].parent;
         stage.position = Camera.main.transform.right * -1.7f - Camera.main.transform.up * 0.25f;
         foreach (Transform preview in previews) if (preview) preview.localScale = Vector3.one * 1.0f;

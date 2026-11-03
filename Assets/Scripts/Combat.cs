@@ -184,7 +184,9 @@ public class Combat : MonoBehaviour
         model = "Enemy_demon", flies = true,
     };
     static bool IsMiniBoss(EnemyType t) => t == MiniBoss || t == MiniDemon;
-    [System.NonSerialized] public float miniBossEvery = 70f;
+    [System.NonSerialized] public float miniBossEvery = 55f;
+    bool miniBossAnnounced,miniBossHint;
+    float miniBossHintAt;
     float miniBossTimer = 170f; // the first comes near three minutes in, once the train has a few upgrades to meet it with
     Enemy miniBoss;
     int miniBossId;
@@ -698,9 +700,17 @@ public class Combat : MonoBehaviour
             miniBossLeft = 1f;
             bossMode = Ram;
             bossWagon = RandomWagon(-1);
-            train.Toast(L10n.T("miniboss.coming", TauntKey));
+            miniBossAnnounced=miniBossHint=false;
         }
-        if (miniBoss != null && !train.BossFight && OnScreen(miniBoss.position)) train.BossBar(L10n.T("miniboss.name"), miniBoss.hp / miniBoss.maxHp); // once it is in the picture
+        if (miniBoss != null && !train.BossFight && OnScreen(miniBoss.position))
+        {
+            train.BossBar(L10n.T("miniboss.name"), miniBoss.hp / miniBoss.maxHp);
+            if(!miniBossAnnounced){miniBossAnnounced=true;miniBossHintAt=Time.unscaledTime+2.1f;}
+        }
+        if(miniBoss!=null&&miniBossAnnounced&&!miniBossHint&&Time.unscaledTime>=miniBossHintAt)
+        {
+            miniBossHint=true;train.Toast(L10n.T("miniboss.coming",TauntKey));
+        }
 
         lootTimer -= dt;
         if (lootTimer <= 0f)
@@ -1160,7 +1170,7 @@ public class Combat : MonoBehaviour
         Vector3 flat = new Vector3(e.position.x, 0f, e.position.z);
         bool heroUp = player && player.Alive;
         Vector3 hero = heroUp ? new Vector3(player.Position.x, 0f, player.Position.z) : Vector3.zero;
-        if (heroUp && (hero - flat).sqrMagnitude < TauntReach * TauntReach && bossMode != Chase)
+        if (miniBossHint && heroUp && (hero - flat).sqrMagnitude < TauntReach * TauntReach && bossMode != Chase)
         {
             train.Panel.Mark(e.position + Vector3.up * (e.type.size + 2.2f), TauntKey, 3);
             bool taunt = (Keyboard.current != null && Keyboard.current.fKey.wasPressedThisFrame)

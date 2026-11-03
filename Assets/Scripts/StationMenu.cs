@@ -256,6 +256,19 @@ public static class UiKit
         return text;
     }
 
+    // Measure the complete line once, before its typewriter reveals any letters.
+    public static void FitDialogue(Text text,string full,int maximum,int minimum)
+    {
+        text.resizeTextForBestFit=false;
+        for(int size=maximum;size>=minimum;size--)
+        {
+            text.fontSize=size;
+            var settings=text.GetGenerationSettings(new Vector2(text.rectTransform.rect.width,0f));
+            settings.resizeTextForBestFit=false;
+            if(new TextGenerator().GetPreferredHeight(full??"",settings)/text.pixelsPerUnit<=text.rectTransform.rect.height)break;
+        }
+    }
+
     public static RawImage Picture(Transform parent, string icon, Vector2 position, float size)
     {
         var picture = new GameObject("Icon", typeof(RectTransform), typeof(RawImage)).GetComponent<RawImage>();

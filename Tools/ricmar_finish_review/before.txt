@@ -1,0 +1,4 @@
+RUNNING
+FAIL System.Exception: Train not advancing
+  at RicMarReview+<Run>d__8.MoveNext () [0x0047b] in C:\Users\r20\WaifuTren\Tools\ReviewRicMar.cs:44 
+  at RicMarReview+<Guard>d__7.MoveNext () [0x000b6] in C:\Users\r20\WaifuTren\Tools\ReviewRicMar.cs:23 

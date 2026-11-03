@@ -1,0 +1,5 @@
+RUNNING
+Renderers=7921
+PASS textures: concrete=1208, steel=2511, facade=571, shared surface materials=26; road/barrier UVs valid
+R2 distance=39.3207 frames=6955
+PASS errors=0

@@ -84,6 +84,7 @@ public class Hud : MonoBehaviour
     float ultimateNoticeUntil;
     const float UltimateNoticeSeconds = 2.5f;
     public bool Toasting => Time.unscaledTime < toastUntil || Time.unscaledTime < ultimateNoticeUntil;
+    Text rideTime;
     // Under the train's card, two rows of boxes: the weapons carried (the hero's first) and the hero's upgrades,
     // each with its level.
     readonly List<(RawImage icon, Text level)> weapons = new(), passives = new();
@@ -186,8 +187,10 @@ public class Hud : MonoBehaviour
         ultimateKey = Prompt.Make(ultimatePanel.transform, new Vector2(148f, 0f), 22, Color.white, UiKit.Display);
         Slanted hintPlate = Plate(right, new Vector2(-280f, -178f), new Vector2(560f, 46f));
         hintPanel = Whole(hintPlate);
-        RectTransform top = UiKit.Group(canvas.transform, new Vector2(0.5f, 1f), new Vector2(0f, -24f));
-        Slanted killsPanel = Plate(top, Vector2.zero, new Vector2(230f, 46f));
+        RectTransform top = UiKit.Group(canvas.transform, new Vector2(0.5f, 1f), new Vector2(0f, -46f));
+        Slanted clockPanel = Plate(top, Vector2.zero, new Vector2(230f, 64f));
+        rideTime=UiKit.Label(clockPanel.transform,UiKit.Display,42,Color.white,TextAnchor.MiddleCenter,Vector2.zero,new Vector2(210f,60f));
+        Slanted killsPanel = Plate(top, new Vector2(0f,-64f), new Vector2(230f, 46f));
         killsText = UiKit.Label(killsPanel.transform, UiKit.Display, 22, dim, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(210f, 42f), true);
         hint = UiKit.Label(hintPlate.transform, UiKit.Body, 16, dim, TextAnchor.MiddleCenter, Vector2.zero, new Vector2(540f, 30f), true);
         controls = Prompt.Make(hintPlate.transform, Vector2.zero, 19, Color.white);
@@ -290,13 +293,13 @@ public class Hud : MonoBehaviour
         if (Time.unscaledTime > bossUntil + 4f) Entrance(name); // just came on
         if (bossPanel == null)
         {
-            Slanted plate = UiKit.Plate(canvas.transform, new Vector2(0f, -104f), new Vector2(780f, 84f), 0.1f, 4f, 9f); // under the kill count
+            Slanted plate = UiKit.Plate(canvas.transform, new Vector2(0f, -192f), new Vector2(720f, 84f), 0.1f, 4f, 9f); // under the clock and kill count
             bossPanel = Whole(plate);
             bossPanel.rectTransform.anchorMin = bossPanel.rectTransform.anchorMax = new Vector2(0.5f, 1f);
             bossPanel.rectTransform.localRotation = Quaternion.Euler(0f, 0f, -1f);
-            UiKit.Paint(UiKit.Panel(plate.transform, new Vector2(-6f, 39f), new Vector2(768f, 6f), Color.white, Color.white, 0.1f), UiKit.Ink.Main).sprite = null;
-            bossName = UiKit.Label(plate.transform, UiKit.Display, 34, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 18f), new Vector2(740f, 38f), true);
-            bossBar = new Meter(plate.transform, new Vector2(0f, -18f), new Vector2(700f, 22f), 20);
+            UiKit.Paint(UiKit.Panel(plate.transform, new Vector2(-6f, 39f), new Vector2(708f, 6f), Color.white, Color.white, 0.1f), UiKit.Ink.Main).sprite = null;
+            bossName = UiKit.Label(plate.transform, UiKit.Display, 34, Color.white, TextAnchor.MiddleCenter, new Vector2(0f, 18f), new Vector2(680f, 38f), true);
+            bossBar = new Meter(plate.transform, new Vector2(0f, -18f), new Vector2(640f, 22f), 20);
         }
         bossName.text = name;
         bossBar.Set(fraction, false);
@@ -719,6 +722,8 @@ public class Hud : MonoBehaviour
         trainText.text = $"{Mathf.Round(health)}/{Mathf.Round(max)}";
         money.text = train.money.ToString();
         leg.text = Story.Active ? train.StoryTime + "  ·  " + train.LegLabel : train.LegLabel;
+        int seconds=Mathf.FloorToInt(train.RideClock);
+        rideTime.text=seconds>=3600?$"{seconds/3600}:{seconds/60%60:00}:{seconds%60:00}":$"{seconds/60:00}:{seconds%60:00}";
         tripBar.Set(train.LegProgress, false);
         tripMarker.anchoredPosition = new Vector2(-110f + 274f * Mathf.Clamp01(train.LegProgress), -20f + (train.AtStation ? 0f : Mathf.Abs(Mathf.Sin(Time.time * 9f)) * 1.5f));
         kits.text = $"{train.Kits}  ·  {train.KitButton}";

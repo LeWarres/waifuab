@@ -2108,8 +2108,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2732727704301568
-    m_Localized: "\xA1Mini jefe! Derr\xEDbalo para un cofre \xB7 ac\xE9rcate y pulsa
-      {0} para que te siga"
+    m_Localized: "Derr\xEDbalo para conseguir un cofre \xB7 ac\xE9rcate y pulsa {0}
+      para atraerlo"
     m_Metadata:
       m_Items: []
   - m_Id: 2732727737856000
@@ -7951,6 +7951,11 @@ MonoBehaviour:
   - m_Id: 9057373869387825
     m_Localized: "\xABNo te preocupes. Yo se lo dir\xE9. Puedo escuchar tus pensamientos,
       Dorian\xBB."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9556696415678464
+    m_Localized: "Cofre aleatorio \xB7 {0} monedas\n1, 3 o 5 premios. Evoluciones
+      sin prioridad."
     m_Metadata:
       m_Items: []
   references:

@@ -2091,8 +2091,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2732727704301568
-    m_Localized: "Mini chefe! Derrube-o por um ba\xFA \xB7 chegue perto e aperte
-      {0} para atra\xED-lo"
+    m_Localized: "Derrote-o por um ba\xFA \xB7 chegue perto e aperte {0} para atra\xED-lo"
     m_Metadata:
       m_Items: []
   - m_Id: 2732727737856000
@@ -7731,6 +7730,11 @@ MonoBehaviour:
   - m_Id: 9057373869387825
     m_Localized: "N\xE3o se preocupe. Eu vou contar a ela. Posso ouvir seus pensamentos,
       Dorian."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9556696415678464
+    m_Localized: "Ba\xFA aleat\xF3rio \xB7 {0} moedas\n1, 3 ou 5 pr\xEAmios. Evolu\xE7\xF5es
+      sem prioridade."
     m_Metadata:
       m_Items: []
   references:

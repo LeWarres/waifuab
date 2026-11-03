@@ -1,0 +1,4 @@
+RUNNING
+Renderers=7887
+R2 distance=32.8031 frames=177
+PASS errors=0

@@ -1,0 +1,4 @@
+RUNNING
+PASS hell crates: original road/materials retained, real frames advancing
+PASS alien trench: original road/materials retained, real frames advancing
+PASS errors=0

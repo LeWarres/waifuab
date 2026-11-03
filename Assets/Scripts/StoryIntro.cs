@@ -219,9 +219,7 @@ public class StoryIntro : MonoBehaviour
         storyName.rectTransform.sizeDelta = new Vector2(400f, 48f);
         narration.rectTransform.anchoredPosition = new Vector2(0f, 4f);
         narration.rectTransform.sizeDelta = new Vector2(1640f, 122f);
-        narration.resizeTextForBestFit = true;
-        narration.resizeTextMinSize = 25;
-        narration.resizeTextMaxSize = 31;
+        UiKit.FitDialogue(narration,currentText,31,25);
         skip.GetComponent<RectTransform>().anchoredPosition = new Vector2(220f, -88f);
         next.GetComponent<RectTransform>().anchoredPosition = new Vector2(650f, -88f);
         foreach (var button in new[] { skip, next })

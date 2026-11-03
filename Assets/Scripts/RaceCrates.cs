@@ -24,8 +24,8 @@ public partial class RaceEvent
     void BuildCrates()
     {
         crates.Clear(); resolvedCrates.Clear(); CratesBroken = CratesSeen = 0;
-        var wood = TrainSim.Mat(new Color(.46f, .22f, .09f));
-        var rim = TrainSim.Mat(new Color(.76f, .47f, .19f));
+        var wood = PaintedSurface("hellwood", Color.white);
+        var rim = PaintedSurface("steel", new Color(.8f,.63f,.45f));
         var rune = TrainSim.Mat(new Color(1f, .35f, .05f), false);
         float[] lanes = {0f, -9f, 0f, 9f, 9f, 0f, -9f, -9f};
         for (int i = 0; i < CrateCount; i++)
@@ -56,7 +56,8 @@ public partial class RaceEvent
         for (int i=0; i<60 && scenery.Length>0; i++)
         {
             Vector3 at=PointAt(100f+i*70f,out Vector3 d)+Vector3.Cross(Vector3.up,d)*(i%2==0 ? -32f : 32f);
-            Instantiate(scenery[i%scenery.Length],at,Quaternion.LookRotation(d),course);
+            var prop=Instantiate(scenery[i%scenery.Length],at,Quaternion.LookRotation(d),course);
+            FinishRaceObject(prop);
         }
     }
 
