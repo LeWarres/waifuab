@@ -1,0 +1,7 @@
+RUNNING regression
+PASS 100 seeded rolls and rare card rendering at 0 permanent containers
+PASS 100 seeded rolls and rare card rendering at 2 permanent containers
+PASS 100 seeded rolls and rare card rendering at 3 permanent containers
+PASS full train rejects new and stale container offers
+PASS station Update advanced 120 frames with capped container offer
+PASS complete; console errors=0

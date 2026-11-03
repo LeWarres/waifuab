@@ -1,0 +1,3 @@
+RUNNING reproduction
+PASS reproduced original IndexOutOfRangeException: capped Eternal=300 fell through to Weapon.Wagon[100]
+PASS complete

@@ -2232,7 +2232,7 @@ public partial class TrainSim : MonoBehaviour
         if (cars.Count < maxCars && Random.value < bonusOfferChance + 0.04f * PassiveLevel("luck"))
             offers[Random.Range(0, offers.Length)] = Random.value < 0.5f ? FreeCargo + Random.Range(0, Loadable)
                 : Escort + Random.Range(0, Weapon.Wagon.Length); // an escort comes with its own wagon
-        if (cars.Count < maxCars && Random.value < eternalOfferChance) offers[Random.Range(0, offers.Length)] = Eternal;
+        if (ContainerForSale && Random.value < eternalOfferChance) offers[Random.Range(0, offers.Length)] = Eternal;
 
         offerPool.Clear(); // the hero's weapon is her own for good: only her upgrades and its levels are offered
         // The upgrades: speed, armor, vitality, damage, money, (5: a level on the weapon), arsenal fire rate, critical
@@ -2902,9 +2902,9 @@ public partial class TrainSim : MonoBehaviour
                     Add("repair", L10n.T("menu.repair", Mathf.RoundToInt(mend)), () => { Repair(mend); Player.Heal(mend); Next(); });
                     Free();
                 }
-                else if (offer == Eternal && Eternals < MaxEternal)
+                else if (offer == Eternal)
                 {
-                    Add("container", L10n.T("offer.eternal"), () => { AddCar(cars.Count, Container, true); Next(); });
+                    Add("container", L10n.T("offer.eternal"), () => { if (ContainerForSale) { AddCar(cars.Count, Container, true); Next(); } }, ContainerForSale);
                     Tag(L10n.T("badge.rare"), 2);
                 }
                 else if (offer < Escort)
