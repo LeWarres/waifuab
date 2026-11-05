@@ -720,6 +720,8 @@ public partial class TrainSim : MonoBehaviour
         public float s, side, yaw;
         public int size;         // 0 clutter, 1 ordinary, 2 landmark, 3 the lie of the land (Ambience.Terrain)
         public float reach;      // size 3: how far it spreads from its middle, to keep it off the track
+        public Vector2 spread;   // size 3: its half width and half depth on the ground
+        public bool solid;       // size 3: tall enough to crash into
     }
     public int[] sceneryCount = { 90, 34, 12 }; // most of each size that can be out at once
     // The landscape comes in stretches, each with its own look: (share of the small, ordinary and big slots in use).
@@ -736,8 +738,9 @@ public partial class TrainSim : MonoBehaviour
     float stretchLeft;
     GameObject[][] stretchKinds = new GameObject[4][]; // the few kinds, per size, this stretch is made of
     GameObject[][][] sceneryKinds;              // [biome][size]: what Resources/Scenery/<biome> offers
+    const float SolidHeight = 1.1f;             // lower than this, a robot goes over it
     const int TerrainSlots = 60;                // how many swells and rocks can be out at once
-    readonly List<Prop> props = new();
+    readonly List<Prop> props = new(), land = new();
     readonly Dictionary<GameObject, Stack<Transform>> spareProps = new();
     readonly HashSet<GameObject> tallKinds = new(); // props tall enough to hide the train: never between it and the camera
     Transform sceneryRoot;
@@ -1015,7 +1018,7 @@ public partial class TrainSim : MonoBehaviour
         groundMat = Mat(Biomes[0].ground, false);
         PaintGround();
         sceneryMat = Mat(Biomes[Biome].scenery);
-        wagonMat = Mat(new Color(0.62f, 0.66f, 0.72f)); // an armed wagon with no weapon yet
+        wagonMat = Metal(new Color(0.62f, 0.66f, 0.72f)); // an armed wagon with no weapon yet
         deadMat = Mat(Color.black);
         escortMat = Mat(new Color(0.85f, 0.65f, 0.2f));
         cargoMats = new Material[Cargos.Length];
@@ -1130,6 +1133,7 @@ public partial class TrainSim : MonoBehaviour
             {
                 var prop = new Prop { size = 3, s = -viewRange + (i + Random.value) * (viewRange * 2f / TerrainSlots) };
                 props.Add(prop);
+                land.Add(prop);
                 Dress(prop);
             }
 
@@ -1160,6 +1164,10 @@ public partial class TrainSim : MonoBehaviour
         contact.intensity.value = 0.9f;
         contact.radius.value = 1.6f;
         contact.directLightingStrength.value = 0.35f;
+        // A hard sun casts hard shadows: the camera stands 60 off the track, so one sharp cascade covers all it sees.
+        var shadows = look.profile.Add<UnityEngine.Rendering.HighDefinition.HDShadowSettings>(true);
+        shadows.maxShadowDistance.value = 120f;
+        shadows.cascadeShadowSplitCount.value = 1;
         lookBiome = null;
 
         station = new GameObject("Station").transform;
@@ -1260,6 +1268,21 @@ public partial class TrainSim : MonoBehaviour
         }
         heading = kneeHeading[i];
         return kneeEnd[i] + kneeDir[i] * (u - kneeArc[i]) - pathOrigin;
+    }
+
+    // Whether a point on the ground is inside the body of a rock, its feet (where it runs low) not counted.
+    public bool RockAt(Vector3 at)
+    {
+        foreach (Prop prop in land)
+        {
+            if (!prop.solid || !prop.body || !prop.body.gameObject.activeSelf) continue;
+            Vector3 d = at - prop.body.position;
+            if (d.x * d.x + d.z * d.z > prop.reach * prop.reach) continue;
+            Vector3 p = prop.body.InverseTransformPoint(at);
+            float x = p.x / prop.spread.x, z = p.z / prop.spread.y;
+            if (x * x + z * z < 0.5f) return true;
+        }
+        return false;
     }
 
     // Whether a stretch of land lying at `at` would come up through a track: this one once it bends, or the rival's.
@@ -1457,6 +1480,8 @@ public partial class TrainSim : MonoBehaviour
         if (!sun) foreach (Light l in FindObjectsByType<Light>(FindObjectsSortMode.None)) if (l.type == LightType.Directional) sun = l.GetComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalLightData>();
         if (sun)
         {
+            sun.shadowResolution.useOverride = true;
+            sun.shadowResolution.@override = 2048;
             if (BiomeId == "jungle") sun.SetCookie(Canopy(), new Vector2(34f, 34f));
             else sun.GetComponent<Light>().cookie = null; // HDRP SetCookie dereferences null; clear through the Light.
         }
@@ -1500,6 +1525,7 @@ public partial class TrainSim : MonoBehaviour
         }
         UiKit.SetBiome(race && race.Active ? "race" : BiomeId); // the UI's colours: this biome's (a race has its own)
         if (lookBiome != BiomeId) Grade();
+        TurnSun();
         Scroll = 0f; // the ground only slides while the train is running (below)
         if (UltimatePresenting) { killChestNoticeUntil = 0f; return; }
         if(pendingKillChests>0&&!ChestOpen&&!AtStation&&!Paused&&!InEvent&&!MenuOpen&&!talk.Open&&!talk.Finishing&&Health>0f)
@@ -2250,7 +2276,7 @@ public partial class TrainSim : MonoBehaviour
         if (car.mount) Destroy(car.mount.gameObject);
         car.mount = Instantiate(turretPrefab, car.pos + Vector3.up * (0.45f + wagonSize.y), Quaternion.identity, transform);
         car.mount.Init(weapon);
-        Paint(car, weapon.Material);
+        Paint(car, weapon.Paintwork);
     }
 
     // Three different options each: wagon weapons unlocked in this biome plus money (and now and then
@@ -3173,8 +3199,11 @@ public partial class TrainSim : MonoBehaviour
         prop.body.localScale = Vector3.one * Random.Range(0.8f, 1.25f);
         if (prop.size == 3)
         {
-            Vector3 spread = prop.kind.GetComponent<MeshFilter>().sharedMesh.bounds.extents * prop.body.localScale.x;
-            prop.reach = Mathf.Max(spread.x, spread.z);
+            Bounds shape = prop.kind.GetComponent<MeshFilter>().sharedMesh.bounds;
+            float scale = prop.body.localScale.x;
+            prop.spread = new Vector2(shape.extents.x, shape.extents.z);
+            prop.reach = Mathf.Max(shape.extents.x, shape.extents.z) * scale;
+            prop.solid = shape.max.y * scale >= SolidHeight;
         }
         prop.yaw = city ? Random.Range(0, 4) * 90f : Random.Range(0f, 360f); // a city is square to its streets (the ground's, along the track)
         bool relief = prop.kind.transform.parent == sceneryRoot; // a template made by Ambience.Relief (prefabs have no parent)
@@ -3240,6 +3269,18 @@ public partial class TrainSim : MonoBehaviour
         groundMat.mainTexture = painting;
         groundMat.mainTextureScale = Vector2.one * (viewRange * 8f / GroundTile);
         Tint(groundMat, painting ? (Biomes[Biome].id == "jungle" ? new Color(0.76f, 0.84f, 0.7f) : Color.white) : Biomes[Biome].ground); // the jungle's floor in the canopy's shade
+    }
+
+    // Coloured sheet metal, brushed. The toon shader's metal effects do not hold up here, so this is the HDRP/Lit the
+    // wagon's model came with: it takes the sun and the sky on its own, as real metal would.
+    public static Material Metal(Color color)
+    {
+        var mat = new Material(System.Array.Find(Resources.Load<GameObject>("Models/Wagon").GetComponentInChildren<Renderer>().sharedMaterials, m => m.name == "WagonYellow")) { enableInstancing = true, name = "WagonMetal" };
+        mat.SetColor("_BaseColor", color);
+        mat.SetTexture("_BaseColorMap", Resources.Load<Texture2D>("Surfaces/metal"));
+        mat.SetFloat("_Metallic", 0.55f);
+        mat.SetFloat("_Smoothness", 0.6f);
+        return mat;
     }
 
     public static void Tint(Material mat, Color color) => mat.SetColor(MainColor, color.linear); // an HDR property: Unity does not convert it for us

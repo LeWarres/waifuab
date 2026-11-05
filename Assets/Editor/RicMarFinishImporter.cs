@@ -1,12 +1,12 @@
 using UnityEditor;
 using UnityEngine;
 
-// This model has flat faces but no useful body-panel UVs. Keep its geometry and project in model space.
+// These models have flat faces but no useful body-panel UVs. Keep its geometry and project in model space.
 public class RicMarFinishImporter:AssetPostprocessor
 {
     void OnPostprocessModel(GameObject model)
     {
-        if(assetPath!="Assets/Resources/Models/Locomotive.fbx")return;
+        if(assetPath!="Assets/Resources/Models/Locomotive.fbx"&&assetPath!="Assets/Resources/Models/Wagon.fbx")return;
         foreach(var filter in model.GetComponentsInChildren<MeshFilter>())
         {
             var mesh=filter.sharedMesh;var renderer=filter.GetComponent<Renderer>();if(!mesh||!renderer)continue;

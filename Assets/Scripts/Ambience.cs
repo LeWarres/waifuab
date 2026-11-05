@@ -49,19 +49,19 @@ public static class Ambience
     {
         var made = new List<GameObject>();
         if (id != "desert") return made;
-        void Add(string name, Mesh mesh) => made.Add(Template(name, Weathered(mesh), parent, Painted(false)));
+        void Add(string name, Mesh mesh, Material look = null) => made.Add(Template(name, Weathered(mesh), parent, look ? look : Painted(false)));
         // Vertex colours reach the shader as they are: written here in linear, to sit with the ground's painting.
         Color sand = new Color(0.76f, 0.56f, 0.2f).linear, sandTop = new Color(0.92f, 0.73f, 0.33f).linear;
         Color clay = new Color(0.66f, 0.45f, 0.24f).linear, clayTop = new Color(0.84f, 0.62f, 0.38f).linear;
         Color rock = new Color(0.4f, 0.25f, 0.17f).linear, rockTop = new Color(0.7f, 0.47f, 0.3f).linear;
         Add("Swell", Mound(71, 13f, 0.7f, 1f, 1.3f, sand, sandTop, -1f));
         Add("LongDrift", Stretched(Mound(72, 15f, 1.1f, 1f, 1.2f, sand, sandTop, -1f), 1.6f, 0.7f));
-        Add("Hummock", Mound(73, 8f, 0.9f, 1f, 0.9f, clay, clayTop, -1f));
-        Add("ClayBank", Stretched(Mesa(74, 10f, 0.6f, clay, clayTop), 1.5f, 0.75f));
-        Add("Shelf", Mesa(75, 11f, 0.9f, rock, rockTop));
-        Add("Ledge", Stretched(Mesa(76, 12f, 1.7f, rock, rockTop), 1.7f, 0.65f));
-        Add("Crag", Mound(77, 7f, 2.6f, 1f, 0.75f, rock, rockTop, -1f));
-        Add("Boulders", Mound(78, 5f, 1.5f, 1f, 0.6f, rock, rockTop, -1f));
+        Add("Hummock", Mound(73, 8f, 0.9f, 1f, 0.9f, clay, clayTop, -1f), Stone());
+        Add("ClayBank", Stretched(Mesa(74, 10f, 0.6f, clay, clayTop), 1.5f, 0.75f), Stone());
+        Add("Shelf", Mesa(75, 8.8f, 0.72f, rock, rockTop), Stone());
+        Add("Ledge", Stretched(Mesa(76, 9.6f, 1.36f, rock, rockTop), 1.7f, 0.65f), Stone());
+        Add("Crag", Mound(77, 5.6f, 2.08f, 1f, 0.75f, rock, rockTop, -1f), Stone());
+        Add("Boulders", Mound(78, 4f, 1.2f, 1f, 0.6f, rock, rockTop, -1f), Stone());
         return made;
     }
 
@@ -98,6 +98,19 @@ public static class Ambience
             }
         }
         mesh.colors = colors;
+        // Each facet has its own vertices: the texture is laid flat along whichever way the facet faces most.
+        var uv = new Vector2[at.Length];
+        for (int i = 0; i < tris.Length; i += 3)
+        {
+            Vector3 n = Vector3.Cross(at[tris[i + 1]] - at[tris[i]], at[tris[i + 2]] - at[tris[i]]);
+            n = new Vector3(Mathf.Abs(n.x), Mathf.Abs(n.y), Mathf.Abs(n.z));
+            for (int k = 0; k < 3; k++)
+            {
+                Vector3 p = at[tris[i + k]];
+                uv[tris[i + k]] = (n.y > n.x && n.y > n.z ? new Vector2(p.x, p.z) : n.x > n.z ? new Vector2(p.z, p.y) : new Vector2(p.x, p.y)) / StoneTile;
+            }
+        }
+        mesh.uv = uv;
         return mesh;
     }
 
@@ -109,6 +122,16 @@ public static class Ambience
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
         return mesh;
+    }
+
+    const float StoneTile = 4.5f; // units of ground to one repeat of the stone's texture
+    static Material stone;
+    static Material Stone()
+    {
+        if (stone) return stone;
+        stone = new Material(Painted(false));
+        stone.mainTexture = Resources.Load<Texture2D>("Surfaces/rock");
+        return stone;
     }
 
     static Material painted, paintedBare;

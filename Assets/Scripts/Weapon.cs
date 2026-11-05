@@ -44,6 +44,8 @@ public class Weapon
 
     Material material;
     public Material Material => material ? material : material = TrainSim.Mat(color);
+    Material paintwork;
+    public Material Paintwork => paintwork ? paintwork : paintwork = TrainSim.Metal(color); // the wagon it is mounted on
 
     Combat.Batch batch; // instanced draw of this weapon's bullets
     public Combat.Batch Batch => batch ??= new Combat.Batch(color, false, glow: 4f); // bright enough to bloom

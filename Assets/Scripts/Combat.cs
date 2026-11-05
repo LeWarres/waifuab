@@ -7,7 +7,7 @@ using UnityEngine.InputSystem.DualShock;
 // Enemies and bullets are plain data moved from this one Update and drawn with GPU instancing:
 // no GameObjects, no colliders, no physics, and nothing is allocated after warm-up.
 [RequireComponent(typeof(TrainSim))]
-public class Combat : MonoBehaviour
+public partial class Combat : MonoBehaviour
 {
     // One instanced draw call per 1023 cubes that share a material.
     public class Batch
@@ -302,6 +302,7 @@ public class Combat : MonoBehaviour
         public float power = 1f;   // share of the weapon's damage this one carries
         public Vector3 from, dir;  // where it was fired from; a boomerang's way out
         public readonly List<int> hits = new(); // piercing shots: who was already hit on this pass
+        public Lamp lamp;          // the light it throws, if it got one (CombatFx)
     }
 
     struct Blast
@@ -513,7 +514,6 @@ public class Combat : MonoBehaviour
     const float GiantCutReach = 120f, GiantCutHalf = 28f, GiantCutBand = 4f; // far past the screen's edge; its half width; how deep its hit runs
     readonly Batch dragonFire = new Batch(new Color(0.35f, 0.7f, 1f), false, glow: 2.6f);   // and the blue flames all over it: only these glow
     readonly Batch stain = new Batch(new Color(0.02f, 0.02f, 0.025f), false, round: true); // round black marks left by the dead
-    readonly Batch blob = new Batch(new Color(0.03f, 0.03f, 0.04f), false, round: true); // a dark spot under each robot: it stands out from any ground
     const float StationFlashSize = 2.2f; // the heavy guns leave a much bigger flare than a wagon turret
     public float calmDistance = 15f, calmRetreat = 12f; // how far enemies keep during a button game, and how fast they get there
     const float ModelScale = 1.4f;  // the robots are slimmer than the cubes they replace
@@ -823,6 +823,14 @@ public class Combat : MonoBehaviour
             if (near != wagon) stop = Mathf.Min(stop, Mathf.Max(0f, toNear.magnitude - radius * 0.8f));
             e.position += toWagon * (Mathf.Min(speed * dt, stop) / dist);
         }
+        // Whoever runs into a rock is wrecked on it: no money and no charge, it was not our kill.
+        for (int i = enemies.Count - 1; i >= 0; i--)
+        {
+            Enemy e = enemies[i];
+            if (e.type.projectile || e.type.loot >= 0 || IsMiniBoss(e.type) || !train.RockAt(e.position)) continue;
+            CrashBlast(e.position, e.type.size);
+            Die(e, true);
+        }
         ResolveBlasts(calm ? 0f : damageScale);
 
         // Each bullet tracks only its own target: one check per bullet, and it cannot miss or tunnel.
@@ -972,6 +980,7 @@ public class Combat : MonoBehaviour
     // Drawn after every script has moved, so nothing lags a frame behind.
     void LateUpdate()
     {
+        ShotLights();
         if (train.Swarming) return; // nothing of the ordinary fight is drawn meanwhile
         if (!train.UltimatePresenting) ResolveBlasts(DamageScale); // kills made by turrets after our Update
         // Robots face the train, hover and bob if they fly, and turn on the spot if that is their thing.
@@ -991,12 +1000,12 @@ public class Combat : MonoBehaviour
             if (t == MiniBoss && e.velocity.sqrMagnitude > 0.01f) toTrain = bossMode == BackOff ? -e.velocity : e.velocity; // it backs off facing the train
             Quaternion facing = t.Spins ? Quaternion.Euler(0f, clock * 140f + e.id * 47f, 0f)
                 : toTrain.sqrMagnitude > 0.01f ? Quaternion.LookRotation(toTrain) : Quaternion.identity;
-            blob.Add(new Vector3(at.x, 0.04f, at.z), new Vector3(t.size * 1.1f, 0.02f, t.size * 1.1f));
             if (t.flies) at.y += 0.7f + Mathf.Sin(clock * 3f + e.id) * 0.18f;
             t.Batch.Add(at, Vector3.one * (t.size * ModelScale), facing);
         }
         foreach (Bullet b in bullets) DrawBullet(b, clock);
         Shards(clock);
+        DrawCrashes();
         Meteors();
         if (player && player.Alive && player.ammo.id == "smg" && player.level >= Weapon.Evolved)
             for (int k = 0; k < 2; k++)
@@ -1035,7 +1044,6 @@ public class Combat : MonoBehaviour
         dragonFire.Flush();
         giantCut.Flush();
         stain.Flush();
-        blob.Flush();
         foreach (Weapon w in Weapon.Wagon) w.Batch.Flush();
         Weapon.Truck.Batch.Flush();
         foreach (Weapon w in Weapon.Hero) w.Batch.Flush();
@@ -1886,6 +1894,7 @@ public class Combat : MonoBehaviour
         float size = FlashSize(weapon);
         Burst("spark", at + forward * (size * 0.5f), size);
         AddFlash(at, forward, weapon.Batch, size);
+        if (weapon != Weapon.Truck) FlashLight(at + forward + Vector3.up, LightOf(weapon.color), ShotFlash, 0.09f);
     }
 
     // A quick star of cubes in the given colour and size, drawn through `batch` (see FlashMuzzles).
@@ -1947,6 +1956,7 @@ public class Combat : MonoBehaviour
         source = weapon;
         Bolt(target.position + new Vector3(Random.Range(-2f, 2f), 14f, Random.Range(-2f, 2f)), target.position, weapon.Batch, 5, 1.2f, 0.4f, 0.15f);
         Burst(weapon.id, target.position, 1.5f);
+        FlashLight(target.position + Vector3.up * 1.5f, LightOf(weapon.color), ShotFlash * 2f, 0.16f);
         if (level >= Weapon.Evolved)
         {
             // The Tempest: the bolt forks on to two more around it.
@@ -1970,6 +1980,7 @@ public class Combat : MonoBehaviour
         source = weapon;
         radius *= Area;
         Burst(weapon.id, center, radius * BurstSize);
+        if (weapon != Weapon.Truck) FlashLight(center + Vector3.up, LightOf(weapon.color), ShotFlash * 2f, 0.2f);
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
             Vector3 d = enemies[i].position - center;
@@ -1984,6 +1995,7 @@ public class Combat : MonoBehaviour
         bool evolved = level >= Weapon.Evolved;
         float range = weapon.range * (evolved ? 2f : 1f), damage = weapon.Damage(level) * Power, thick = evolved ? 0.6f : 0.28f;
         Spawn(from + direction * (range * 0.5f), new Vector3(thick, thick, range), look ?? weapon.Batch, evolved ? 0.14f : 0.08f, Quaternion.LookRotation(direction));
+        FlashLight(from + direction * (range * 0.35f) + Vector3.up, LightOf(weapon.color), ShotFlash * 2f, 0.14f);
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
             Enemy e = enemies[i];
@@ -2194,6 +2206,7 @@ public class Combat : MonoBehaviour
         b.power = 1f;
         b.from = position;
         b.hits.Clear();
+        b.lamp = null;
         bullets.Add(b);
         return b;
     }
@@ -2212,6 +2225,7 @@ public class Combat : MonoBehaviour
     void RemoveBullet(int i)
     {
         int last = bullets.Count - 1;
+        if (bullets[i].lamp != null) { bullets[i].lamp.shot = null; bullets[i].lamp = null; }
         bulletPool.Push(bullets[i]);
         bullets[i] = bullets[last];
         bullets.RemoveAt(last);
