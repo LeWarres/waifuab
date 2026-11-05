@@ -11,16 +11,7 @@ public static class Ambience
     public static List<GameObject> Relief(string id, Transform parent)
     {
         var made = new List<GameObject>();
-        void Add(string name, Mesh mesh)
-        {
-            var go = new GameObject(name);
-            go.SetActive(false);
-            go.transform.SetParent(parent, false);
-            go.AddComponent<MeshFilter>().sharedMesh = mesh;
-            var look = go.AddComponent<MeshRenderer>();
-            look.sharedMaterial = Painted();
-            made.Add(go);
-        }
+        void Add(string name, Mesh mesh) => made.Add(Template(name, mesh, parent, Painted()));
         switch (id)
         {
             case "desert":
@@ -52,14 +43,83 @@ public static class Ambience
         return made;
     }
 
-    static Material painted;
-    static Material Painted()
+    // The lie of the land close in, the desert's only: low swells of sand and hard clay, shelves and crags of rock, sunk
+    // into the ground so its cracked painting runs up to their feet. TrainSim's scenery lays them, clear of the track.
+    public static List<GameObject> Terrain(string id, Transform parent)
     {
-        if (painted) return painted;
-        painted = TrainSim.Mat(Color.white);
-        painted.SetFloat("_MVCOL", 1f); // RealToon: multiply by the vertex colours
-        painted.SetInt("_Culling", 0);  // both faces: the facets need not all wind the same way
-        return painted;
+        var made = new List<GameObject>();
+        if (id != "desert") return made;
+        void Add(string name, Mesh mesh) => made.Add(Template(name, Weathered(mesh), parent, Painted(false)));
+        // Vertex colours reach the shader as they are: written here in linear, to sit with the ground's painting.
+        Color sand = new Color(0.76f, 0.56f, 0.2f).linear, sandTop = new Color(0.92f, 0.73f, 0.33f).linear;
+        Color clay = new Color(0.66f, 0.45f, 0.24f).linear, clayTop = new Color(0.84f, 0.62f, 0.38f).linear;
+        Color rock = new Color(0.4f, 0.25f, 0.17f).linear, rockTop = new Color(0.7f, 0.47f, 0.3f).linear;
+        Add("Swell", Mound(71, 13f, 0.7f, 1f, 1.3f, sand, sandTop, -1f));
+        Add("LongDrift", Stretched(Mound(72, 15f, 1.1f, 1f, 1.2f, sand, sandTop, -1f), 1.6f, 0.7f));
+        Add("Hummock", Mound(73, 8f, 0.9f, 1f, 0.9f, clay, clayTop, -1f));
+        Add("ClayBank", Stretched(Mesa(74, 10f, 0.6f, clay, clayTop), 1.5f, 0.75f));
+        Add("Shelf", Mesa(75, 11f, 0.9f, rock, rockTop));
+        Add("Ledge", Stretched(Mesa(76, 12f, 1.7f, rock, rockTop), 1.7f, 0.65f));
+        Add("Crag", Mound(77, 7f, 2.6f, 1f, 0.75f, rock, rockTop, -1f));
+        Add("Boulders", Mound(78, 5f, 1.5f, 1f, 0.6f, rock, rockTop, -1f));
+        return made;
+    }
+
+    static GameObject Template(string name, Mesh mesh, Transform parent, Material look)
+    {
+        var go = new GameObject(name);
+        go.SetActive(false);
+        go.transform.SetParent(parent, false);
+        go.AddComponent<MeshFilter>().sharedMesh = mesh;
+        go.AddComponent<MeshRenderer>().sharedMaterial = look;
+        return go;
+    }
+
+    // Breaks up the surface (noise by position, so facets stay joined) and darkens the steep facets, so the shape reads
+    // under the toon shader's flat light whichever way the piece is turned.
+    static Mesh Weathered(Mesh mesh)
+    {
+        Vector3[] at = mesh.vertices;
+        for (int i = 0; i < at.Length; i++)
+            if (at[i].y > 0f) at[i].y = Mathf.Max(0.05f, at[i].y + (Mathf.PerlinNoise(at[i].x * 0.9f + 40f, at[i].z * 0.9f + 40f) - 0.5f) * 0.7f);
+        mesh.vertices = at;
+        mesh.RecalculateNormals();
+        Color[] colors = mesh.colors;
+        int[] tris = mesh.triangles;
+        for (int i = 0; i < tris.Length; i += 3)
+        {
+            float up = Mathf.Abs(Vector3.Cross(at[tris[i + 1]] - at[tris[i]], at[tris[i + 2]] - at[tris[i]]).normalized.y);
+            float shade = Mathf.Lerp(0.4f, 1.05f, Mathf.Pow(up, 12f));
+            for (int k = 0; k < 3; k++)
+            {
+                Color c = colors[tris[i + k]] * shade;
+                c.a = 1f;
+                colors[tris[i + k]] = c;
+            }
+        }
+        mesh.colors = colors;
+        return mesh;
+    }
+
+    static Mesh Stretched(Mesh mesh, float x, float z)
+    {
+        Vector3[] at = mesh.vertices;
+        for (int i = 0; i < at.Length; i++) at[i] = new Vector3(at[i].x * x, at[i].y, at[i].z * z);
+        mesh.vertices = at;
+        mesh.RecalculateNormals();
+        mesh.RecalculateBounds();
+        return mesh;
+    }
+
+    static Material painted, paintedBare;
+    static Material Painted(bool outline = true)
+    {
+        Material mat = outline ? painted : paintedBare;
+        if (mat) return mat;
+        mat = TrainSim.Mat(Color.white, outline);
+        mat.SetFloat("_MVCOL", 1f); // RealToon: multiply by the vertex colours
+        mat.SetInt("_Culling", 0);  // both faces: the facets need not all wind the same way
+        return outline ? painted = mat : paintedBare = mat;
     }
 
     // A hill: rings out from the top, rough, falling away with power `fall`; coloured from foot to top, and above

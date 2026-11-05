@@ -51,7 +51,7 @@ public partial class TrainSim : MonoBehaviour
     [Header("Track")]
     [System.NonSerialized] public float exposure = 13.7f;                      // fixed camera exposure (EV100), the same in every biome
     public float groundTile = 18f;                      // size on the ground of one repeat of the ground texture
-    float GroundTile => Biomes[Biome].id == "city" ? groundTile * 3f : Biomes[Biome].id == "space" ? groundTile * 4f : Biomes[Biome].id == "alien" || Biomes[Biome].id == "fortress" ? groundTile * 2f : groundTile; // the city's is a whole block of streets; space's stars must not repeat in sight
+    float GroundTile => Biomes[Biome].id == "desert" ? groundTile * 3f : Biomes[Biome].id == "city" ? groundTile * 3f : Biomes[Biome].id == "space" ? groundTile * 4f : Biomes[Biome].id == "alien" || Biomes[Biome].id == "fortress" ? groundTile * 2f : groundTile; // the city's is a whole block of streets; space's stars must not repeat in sight
     public float viewRange = 80f;
     public float sleeperSpacing = 1.5f;
     [System.NonSerialized] public float stationGap = 600f;     // the shortest a normal leg can be: about half a minute of riding
@@ -718,7 +718,8 @@ public partial class TrainSim : MonoBehaviour
         public Transform body;
         public GameObject kind;  // the prefab it is a copy of
         public float s, side, yaw;
-        public int size;         // 0 clutter, 1 ordinary, 2 landmark
+        public int size;         // 0 clutter, 1 ordinary, 2 landmark, 3 the lie of the land (Ambience.Terrain)
+        public float reach;      // size 3: how far it spreads from its middle, to keep it off the track
     }
     public int[] sceneryCount = { 90, 34, 12 }; // most of each size that can be out at once
     // The landscape comes in stretches, each with its own look: (share of the small, ordinary and big slots in use).
@@ -733,8 +734,9 @@ public partial class TrainSim : MonoBehaviour
     public Vector2 stretchLength = new Vector2(70f, 150f);
     Vector3 stretch = Stretches[0];
     float stretchLeft;
-    GameObject[][] stretchKinds = new GameObject[3][]; // the few kinds, per size, this stretch is made of
+    GameObject[][] stretchKinds = new GameObject[4][]; // the few kinds, per size, this stretch is made of
     GameObject[][][] sceneryKinds;              // [biome][size]: what Resources/Scenery/<biome> offers
+    const int TerrainSlots = 60;                // how many swells and rocks can be out at once
     readonly List<Prop> props = new();
     readonly Dictionary<GameObject, Stack<Transform>> spareProps = new();
     readonly HashSet<GameObject> tallKinds = new(); // props tall enough to hide the train: never between it and the camera
@@ -1087,7 +1089,7 @@ public partial class TrainSim : MonoBehaviour
         sceneryKinds = new GameObject[Biomes.Length][][];
         for (int b = 0; b < Biomes.Length; b++)
         {
-            var bySize = new[] { new List<GameObject>(), new List<GameObject>(), new List<GameObject>() };
+            var bySize = new[] { new List<GameObject>(), new List<GameObject>(), new List<GameObject>(), new List<GameObject>() };
             foreach (GameObject kind in Resources.LoadAll<GameObject>("Scenery/" + Biomes[b].id))
             {
                 Bounds box = default;
@@ -1107,6 +1109,7 @@ public partial class TrainSim : MonoBehaviour
                 bySize[2].Add(hill);
                 tallKinds.Add(hill); // always out on the far side: never between the train and the camera
             }
+            bySize[3].AddRange(Ambience.Terrain(Biomes[b].id, sceneryRoot));
             sceneryKinds[b] = System.Array.ConvertAll(bySize, list => list.ToArray());
         }
         for (int size = 0; size < sceneryCount.Length; size++)
@@ -1122,6 +1125,13 @@ public partial class TrainSim : MonoBehaviour
                 Dress(prop);
             }
         }
+        if (Biomes[Biome].id == "desert") // the world's first biome: any later one finds no kinds for these slots and leaves them empty
+            for (int i = 0; i < TerrainSlots; i++)
+            {
+                var prop = new Prop { size = 3, s = -viewRange + (i + Random.value) * (viewRange * 2f / TerrainSlots) };
+                props.Add(prop);
+                Dress(prop);
+            }
 
         // HDRP adapts exposure to the picture by default, which washes the train out over dark ground.
         var look = new GameObject("Look").AddComponent<UnityEngine.Rendering.Volume>();
@@ -1252,6 +1262,16 @@ public partial class TrainSim : MonoBehaviour
         return kneeEnd[i] + kneeDir[i] * (u - kneeArc[i]) - pathOrigin;
     }
 
+    // Whether a stretch of land lying at `at` would come up through a track: this one once it bends, or the rival's.
+    bool OverTrack(Prop prop, Vector3 at)
+    {
+        if (rival.Active && Mathf.Abs(Mathf.Abs(prop.side) - rival.apart) < prop.reach + 2f) return true;
+        if (!Bending) return false;
+        for (float s = prop.s - viewRange; s <= prop.s + viewRange; s += 4f)
+            if ((Path(s, out _) - at).sqrMagnitude < (prop.reach + 2f) * (prop.reach + 2f)) return true;
+        return false;
+    }
+
     void SetRails(int piece, Vector3 from, float heading, float length)
     {
         rails[piece].gameObject.SetActive(true);
@@ -1292,7 +1312,8 @@ public partial class TrainSim : MonoBehaviour
             Quaternion turn = Quaternion.Euler(0f, heading, 0f);
             prop.body.SetLocalPositionAndRotation(on + turn * new Vector3(0f, 0f, prop.side), Quaternion.Euler(0f, heading + prop.yaw, 0f));
             // Not through the station: its platform and hall stand on that strip.
-            bool show = !(prop.side > 2f && prop.side < 16.5f && Mathf.Abs(prop.s - stationX) < 19f);
+            bool show = !(prop.side + prop.reach > 2f && prop.side - prop.reach < 16.5f && Mathf.Abs(prop.s - stationX) < 19f + prop.reach);
+            if (show && prop.size == 3) show = !OverTrack(prop, on + turn * new Vector3(0f, 0f, prop.side));
             if (prop.body.gameObject.activeSelf != show) prop.body.gameObject.SetActive(show);
         }
         station.localPosition = Path(stationX, out float stationHeading);
@@ -3138,7 +3159,7 @@ public partial class TrainSim : MonoBehaviour
         }
         GameObject[] kinds = stretchKinds[prop.size] ?? sceneryKinds[Biome][prop.size];
         bool city = Biomes[Biome].id == "city";
-        float share = stretch[prop.size] * (Biomes[Biome].id == "ocean" ? 0.4f : city && prop.size == 0 ? 0.45f : 1f); // open water: most of it stays empty; the city's streets are kept clear
+        float share = stretch[prop.size == 3 ? 1 : prop.size] * (Biomes[Biome].id == "ocean" ? 0.4f : city && prop.size == 0 ? 0.45f : 1f); // open water: most of it stays empty; the city's streets are kept clear
         if (kinds.Length == 0 || Random.value > share) return; // this stretch leaves the slot empty
         prop.kind = kinds[Random.Range(0, kinds.Length)];
         if (!spareProps.TryGetValue(prop.kind, out Stack<Transform> spare)) spareProps[prop.kind] = spare = new Stack<Transform>();
@@ -3150,9 +3171,14 @@ public partial class TrainSim : MonoBehaviour
         }
         prop.body.gameObject.SetActive(true);
         prop.body.localScale = Vector3.one * Random.Range(0.8f, 1.25f);
+        if (prop.size == 3)
+        {
+            Vector3 spread = prop.kind.GetComponent<MeshFilter>().sharedMesh.bounds.extents * prop.body.localScale.x;
+            prop.reach = Mathf.Max(spread.x, spread.z);
+        }
         prop.yaw = city ? Random.Range(0, 4) * 90f : Random.Range(0f, 360f); // a city is square to its streets (the ground's, along the track)
         bool relief = prop.kind.transform.parent == sceneryRoot; // a template made by Ambience.Relief (prefabs have no parent)
-        float away = relief ? Random.Range(36f, 50f) : prop.size == 0 ? Random.Range(4.5f, 14f) : prop.size == 1 ? Random.Range(10f, 22f) : Random.Range(31f, 44f); // the big things and the relief stand past the hero's leash (Player.leash): the field she fights on stays clear
+        float away = prop.size == 3 ? prop.reach + Random.Range(3f, 30f) : relief ? Random.Range(36f, 50f) : prop.size == 0 ? Random.Range(4.5f, 14f) : prop.size == 1 ? Random.Range(10f, 22f) : Random.Range(31f, 44f); // the big things and the relief stand past the hero's leash (Player.leash): the field she fights on stays clear
         if (Biomes[Biome].id == "space") away = prop.size == 1 ? Random.Range(16f, 32f) : Random.Range(34f, 60f); // far off
         if (Biomes[Biome].id == "jungle" && !relief && tallKinds.Contains(prop.kind)) away = Random.Range(25f, 32f); // the jungle's trees close in round the line, on its far side
         prop.side = Random.value < 0.5f ? away : -away;
