@@ -3271,15 +3271,13 @@ public partial class TrainSim : MonoBehaviour
         Tint(groundMat, painting ? (Biomes[Biome].id == "jungle" ? new Color(0.76f, 0.84f, 0.7f) : Color.white) : Biomes[Biome].ground); // the jungle's floor in the canopy's shade
     }
 
-    // Coloured sheet metal, brushed. The toon shader's metal effects do not hold up here, so this is the HDRP/Lit the
-    // wagon's model came with: it takes the sun and the sky on its own, as real metal would.
+    // Coloured sheet metal, brushed: the toon look with the metal's texture on it (as the rocks wear stone, Stone), so an
+    // armed wagon is shaded and outlined like the rest of the train in every biome and at every hour.
     public static Material Metal(Color color)
     {
-        var mat = new Material(System.Array.Find(Resources.Load<GameObject>("Models/Wagon").GetComponentInChildren<Renderer>().sharedMaterials, m => m.name == "WagonYellow")) { enableInstancing = true, name = "WagonMetal" };
-        mat.SetColor("_BaseColor", color);
-        mat.SetTexture("_BaseColorMap", Resources.Load<Texture2D>("Surfaces/metal"));
-        mat.SetFloat("_Metallic", 0.55f);
-        mat.SetFloat("_Smoothness", 0.6f);
+        Material mat = Mat(color);
+        mat.name = "WagonMetal";
+        mat.mainTexture = Resources.Load<Texture2D>("Surfaces/metal");
         return mat;
     }
 
