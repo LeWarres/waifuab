@@ -78,10 +78,13 @@ public class Weapon
     static readonly System.Collections.Generic.Dictionary<string, string> HeroWeapons = new()
     {
         { "bba", "blaster" }, { "nath", "nova" }, { "onini", "masamune" }, { "tzmil", "scatter" }, { "sentinel", "rail" },
-        { "culu", "grenade" }, { "cerebron", "spark" }, { "xiuhtecuhtli", "smg" }, { "faceless", "rail" },
+        { "culu", "grenade" }, { "cerebron", "spark" }, { "xiuhtecuhtli", "smg" }, { "faceless", "laser" },
+        { "gabriel", "storm" }, { "giger", "flame" }, { "crochtrain", "chain" },
     };
     public static Weapon ForHero(string hero) =>
         HeroWeapons.TryGetValue(hero, out string id) ? System.Array.Find(Hero, w => w.id == id) ?? Hero[0] : Hero[0];
+    // A locomotive's hero's weapon: its campaign hero's, and Crochtrain's orb its own.
+    public static Weapon ForLocomotive(int index) => ForHero(index == 11 ? "crochtrain" : Locomotives.CampaignHeroId(index));
 
     public static readonly Weapon[] Wagon =
     {
@@ -110,5 +113,10 @@ public class Weapon
         new Weapon { id = "nova", push = 2.5f, color = new Color(1f, 0.4f, 0.8f), range = 7f, interval = 1f, damage = 3f, pulse = true, evolvesWith = "vitality" },
         new Weapon { id = "spark", color = new Color(0.8f, 1f, 1f), range = 8f, interval = 0.9f, damage = 2f, extraTargets = 1, style = Orbit, evolvesWith = "armor" },
         new Weapon { id = "masamune", push = 3f, color = new Color(0.3f, 0.6f, 1f), range = 14f, interval = 2.2f, speed = 22f, damage = 6f, style = Slash, evolvesWith = "damage" }, // slow, but cuts through a crowd
+        // The wagons' laser, lightning, flamethrower and chain gun, in the hands of the heroes who would otherwise share one.
+        new Weapon { id = "laser", push = 0.3f, color = new Color(0.3f, 0.75f, 1f), range = 22f, interval = 0.4f, damage = 0.9f, beam = true, fan = true, evolvesWith = "duration" },             // Faceless
+        new Weapon { id = "storm", color = new Color(1f, 0.8f, 0.35f), range = 18f, interval = 0.9f, damage = 2.5f, extraTargets = 1, strike = true, evolvesWith = "critChance" },                     // Gabriel
+        new Weapon { id = "flame", push = 0.25f, color = new Color(0.55f, 1f, 0.2f), range = 7f, interval = 0.09f, speed = 20f, damage = 0.55f, splash = 1.5f, style = Flame, evolvesWith = "area" }, // Giger Machine's acid
+        new Weapon { id = "chain", color = new Color(0.35f, 0.95f, 0.5f), range = 16f, interval = 0.75f, speed = 80f, damage = 1.4f, chain = 3, evolvesWith = "speed" },                                // Crochtrain's yarn
     };
 }

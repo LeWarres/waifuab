@@ -531,7 +531,7 @@ public class SelectLocomotive : MonoBehaviour
         question.text="?";
         description.text=random || !Exists ? "" : Localized(Locomotives.DescriptionKeys[selected]);
         dataTitle.text=Localized("loco.weapon");
-        Weapon gun=random || !Exists ? null : Weapon.ForHero(Locomotives.CampaignHeroId(selected));
+        Weapon gun=random || !Exists ? null : Weapon.ForLocomotive(selected);
         weaponIcon.texture=gun!=null ? UiKit.Icon(gun.id) : null;weaponIcon.enabled=gun!=null;
         weaponName.text=gun!=null ? Localized("weapon."+gun.id+".name").ToUpperInvariant() : "?";
         weaponInfo.text=gun!=null ? Localized("weapon."+gun.id+".info") : Localized(random ? "loco.random.description":"loco.locked.description");

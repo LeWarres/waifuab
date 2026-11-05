@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
     {
         this.train = train;
         Health = maxHealth;
-        ammo = Weapon.ForHero(Locomotives.Hero); // the hero's own, for good
+        ammo = Weapon.ForLocomotive(Locomotives.Selected); // the hero's own, for good
 
         transform.position = SpawnPoint;
         visuals = new GameObject("Hero");

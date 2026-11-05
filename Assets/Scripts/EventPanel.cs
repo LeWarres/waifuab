@@ -140,6 +140,11 @@ public class EventPanel : MonoBehaviour
         if (!cardRoot.activeSelf) cardRoot.SetActive(true);
         Dress();
         title.Set(Prompt.Upper(heading));
+        // A long title (Spanish runs long) widens its tag to the right, and shrinks once the tag is as wide as the card.
+        float wide = Mathf.Clamp(title.Width + 60f, 760f, 1180f);
+        titleTag.rectTransform.sizeDelta = new Vector2(wide, 84f);
+        titleTag.rectTransform.anchoredPosition = new Vector2(-630f + wide * 0.5f, 168f);
+        title.transform.localScale = Vector3.one * Mathf.Min(1f, (wide - 40f) / Mathf.Max(1f, title.Width));
         count = Mathf.Min(count, MaxBoxes);
         float total = count * (BoxSize + BoxGap) - BoxGap;
         for (int i = 0; i < MaxBoxes; i++)

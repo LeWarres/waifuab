@@ -604,7 +604,7 @@ public class Hud : MonoBehaviour
         UiKit.Label(root, UiKit.Body, 22, dim, TextAnchor.MiddleCenter, new Vector2(0f, 436f), new Vector2(1700f, 32f), true).text = L10n.T("evo.rule");
         var all = new List<(Weapon, bool)>();
         foreach (Weapon w in Weapon.Hero) all.Add((w, true));
-        foreach (Weapon w in Weapon.Wagon) all.Add((w, false));
+        foreach (Weapon w in Weapon.Wagon) if (!all.Exists(a => a.Item1.id == w.id)) all.Add((w, false)); // a hero's too: once (two columns of ten)
         var row = new Color(1f, 1f, 1f, 0.05f);
         for (int i = 0; i < all.Count; i++)
         {
